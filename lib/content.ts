@@ -1,0 +1,200 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+import matter from "gray-matter";
+import { resolveFlatCurriculumRoot } from "./curriculumConfig";
+import { parseMcQuizMarkdown } from "./parseMcQuiz";
+import { parseLessonMarkdown } from "./parseLesson";
+import {
+  extractDurationFromLessonBody,
+  parseModuleNumberFromFilename,
+  parseModuleTitleFromSource,
+  splitCursorModuleFile,
+} from "./splitCursorModule";
+import type { LessonMeta, ModuleMeta, QuizFile } from "./types";
+
+export { lessonHref, quizHref } from "./routes";
+
+const LEGACY_CONTENT_ROOT = path.join(process.cwd(), "content", "modules");
+
+async function listFlatModuleFiles(root: string): Promise<string[]> {
+  const files = await fs.readdir(root);
+  return files.filter((f) => /^module\d+\.md$/i.test(f)).sort((a, b) => {
+    const na = parseModuleNumberFromFilename(a);
+    const nb = parseModuleNumberFromFilename(b);
+    return na - nb || a.localeCompare(b);
+  });
+}
+
+async function readFlatModuleSource(root: string, slug: string): Promise<string | null> {
+  const n = /^module(\d+)$/.exec(slug)?.[1];
+  if (!n) return null;
+  const file = path.join(root, `module${n}.md`);
+  try {
+    return await fs.readFile(file, "utf8");
+  } catch {
+    return null;
+  }
+}
+
+function slugFromModuleFilename(file: string): string {
+  const n = parseModuleNumberFromFilename(file);
+  return `module${n}`;
+}
+
+export async function getAllModules(): Promise<ModuleMeta[]> {
+  const flatRoot = resolveFlatCurriculumRoot();
+  if (flatRoot) {
+    const files = await listFlatModuleFiles(flatRoot);
+    if (files.length > 0) {
+      const modules: ModuleMeta[] = [];
+      for (const file of files) {
+        const slug = slugFromModuleFilename(file);
+        const mod = await getModule(slug);
+        if (mod) modules.push(mod);
+      }
+      return modules;
+    }
+  }
+
+  try {
+    const entries = await fs.readdir(LEGACY_CONTENT_ROOT, { withFileTypes: true });
+    const dirs = entries.filter((e) => e.isDirectory()).map((e) => e.name);
+    const modules: ModuleMeta[] = [];
+    for (const slug of dirs.sort()) {
+      const mod = await getModule(slug);
+      if (mod) modules.push(mod);
+    }
+    return modules;
+  } catch {
+    return [];
+  }
+}
+
+export async function getModule(slug: string): Promise<ModuleMeta | null> {
+  const flatRoot = resolveFlatCurriculumRoot();
+  if (flatRoot) {
+    const src = await readFlatModuleSource(flatRoot, slug);
+    if (!src) return null;
+    const title = parseModuleTitleFromSource(src) ?? slug;
+    const { lessons: chunks } = splitCursorModuleFile(src);
+    const moduleNumber = Number(/^module(\d+)$/.exec(slug)?.[1] ?? 1);
+    const lessons: LessonMeta[] = chunks.map((c) => ({
+      slug: c.slug,
+      fileBase: c.slug,
+      title: c.title,
+      duration: extractDurationFromLessonBody(c.body),
+      moduleNumber,
+      lessonNumber: c.lessonId.includes(".") ? c.lessonId.split(".").slice(1).join(".") : c.lessonId,
+    }));
+    return { slug, title, description: undefined, lessons };
+  }
+
+  const base = path.join(LEGACY_CONTENT_ROOT, slug);
+  try {
+    const files = await fs.readdir(base);
+    const mdFiles = files.filter((f) => f.endsWith(".md")).sort();
+    const lessons: LessonMeta[] = [];
+
+    for (const file of mdFiles) {
+      const full = path.join(base, file);
+      const raw = await fs.readFile(full, "utf8");
+      const { data } = matter(raw);
+      const d = data as Record<string, unknown>;
+      const fileBase = file.replace(/\.md$/i, "");
+      lessons.push({
+        slug: fileBase,
+        fileBase,
+        title: (d.title as string) ?? fileBase,
+        duration: (d.duration as string) ?? "—",
+        moduleNumber: Number(d.moduleNumber ?? 1),
+        lessonNumber: (d.lessonNumber as number | string) ?? lessons.length + 1,
+      });
+    }
+
+    let title = slug;
+    let description: string | undefined;
+    const metaPath = path.join(base, "meta.json");
+    try {
+      const metaRaw = await fs.readFile(metaPath, "utf8");
+      const meta = JSON.parse(metaRaw) as { title?: string; description?: string };
+      if (meta.title) title = meta.title;
+      if (meta.description) description = meta.description;
+    } catch {
+      /* optional */
+    }
+
+    return { slug, title, description, lessons };
+  } catch {
+    return null;
+  }
+}
+
+function stripLeadingHr(body: string): string {
+  return body.replace(/^(\s*---\s*\n)+/, "").trim();
+}
+
+export async function getLessonRaw(
+  moduleSlug: string,
+  lessonSlug: string,
+): Promise<string | null> {
+  const flatRoot = resolveFlatCurriculumRoot();
+  if (flatRoot) {
+    const src = await readFlatModuleSource(flatRoot, moduleSlug);
+    if (!src) return null;
+    const { lessons } = splitCursorModuleFile(src);
+    const chunk = lessons.find((l) => l.slug === lessonSlug);
+    if (!chunk) return null;
+    const moduleNumber = Number(/^module(\d+)$/.exec(moduleSlug)?.[1] ?? 1);
+    const sub = chunk.lessonId.includes(".") ? chunk.lessonId.split(".").slice(1).join(".") : chunk.lessonId;
+    const fm = {
+      title: chunk.title,
+      duration: extractDurationFromLessonBody(chunk.body),
+      moduleNumber,
+      lessonNumber: sub,
+    };
+    const body = stripLeadingHr(chunk.body);
+    const yaml = `---
+title: ${JSON.stringify(fm.title)}
+duration: ${JSON.stringify(fm.duration)}
+moduleNumber: ${fm.moduleNumber}
+lessonNumber: ${JSON.stringify(sub)}
+---
+`;
+    return `${yaml}\n${body}`;
+  }
+
+  const file = path.join(LEGACY_CONTENT_ROOT, moduleSlug, `${lessonSlug}.md`);
+  try {
+    return await fs.readFile(file, "utf8");
+  } catch {
+    return null;
+  }
+}
+
+export async function getParsedLesson(moduleSlug: string, lessonSlug: string) {
+  const raw = await getLessonRaw(moduleSlug, lessonSlug);
+  if (!raw) return null;
+  return parseLessonMarkdown(raw);
+}
+
+export async function getQuiz(moduleSlug: string): Promise<QuizFile | null> {
+  const flatRoot = resolveFlatCurriculumRoot();
+  if (flatRoot) {
+    const src = await readFlatModuleSource(flatRoot, moduleSlug);
+    if (!src) return null;
+    const { moduleQuizMarkdown } = splitCursorModuleFile(src);
+    if (!moduleQuizMarkdown) return null;
+    const title =
+      moduleQuizMarkdown.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? "Modulquiz";
+    const parsed = parseMcQuizMarkdown(moduleQuizMarkdown, title);
+    return parsed.questions.length ? parsed : null;
+  }
+
+  const file = path.join(LEGACY_CONTENT_ROOT, moduleSlug, "quiz.json");
+  try {
+    const raw = await fs.readFile(file, "utf8");
+    return JSON.parse(raw) as QuizFile;
+  } catch {
+    return null;
+  }
+}
