@@ -35,13 +35,39 @@ Wenn GitHub den Push der Workflow-Datei mit einem PAT ablehnt, Token um Scope **
 
 ---
 
+## Automatisierung via GitHub (kein VPS noetig)
+
+Zwei Workflows arbeiten zusammen:
+
+1. **`Auto-import curriculum`** (`.github/workflows/auto-import.yml`) – läuft bei jedem Push auf `Module/**/*.md`, importiert Moduldateien nach `content/modules/` und committet das Ergebnis zurück auf `main`.
+2. **`Deploy Next.js site to Pages`** (`.github/workflows/nextjs.yml`) – läuft beim nächsten Push auf `main` (also u. a. nach dem Auto-Import-Commit) und deployt.
+
+Daraus ergeben sich drei Wege, einen Rebuild auszulösen:
+
+- **Push** einer neuen/aktualisierten Datei unter `Module/modul-*.md` → Auto-Import → Deploy
+- **Webhook** (`repository_dispatch`) mit Event `pages-deploy` → nur Deploy
+- **Webhook** (`repository_dispatch`) mit Event `content-import` → Auto-Import (+ automatischer Folge-Deploy)
+
 ## Deploy per Webhook (ohne Push)
 
-Der Workflow reagiert zusätzlich auf **`repository_dispatch`** mit dem Event-Typ **`pages-deploy`**. So kann ein externer Dienst (oder ein GitHub-Repo-Webhook, der an deinen Server feuert und dort diesen Aufruf auslöst) einen neuen Pages-Build starten.
+**Voraussetzungen:** GitHub-PAT mit Scope **`repo`** (klassisch) bzw. für Fine-grained: **Contents** read + **Metadata** read, und für Dispatches passende Repo-Berechtigung.
 
-**Voraussetzungen:** GitHub-PAT mit Scope **`repo`** (klassisch) bzw. für Fine-grained: **Contents** read + **Metadata** read, und für Dispatches ggf. **Actions** / passende Workflow-Berechtigung je nach Org-Policy.
+**Bequeme Helfer-Skripte im Repo:**
 
-**Beispiel (curl):**
+```powershell
+# Windows / PowerShell
+$env:GITHUB_TOKEN = "<PAT>"
+powershell -ExecutionPolicy Bypass -File .\scripts\trigger-pages-deploy.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\trigger-pages-deploy.ps1 -EventType content-import
+```
+
+```bash
+# bash
+GITHUB_TOKEN=<PAT> bash scripts/trigger-pages-deploy.sh
+GITHUB_TOKEN=<PAT> EVENT_TYPE=content-import bash scripts/trigger-pages-deploy.sh
+```
+
+**Roh-Beispiel (curl):**
 
 ```bash
 curl -sS -X POST \
@@ -55,6 +81,8 @@ curl -sS -X POST \
 `GITHUB_TOKEN` durch ein PAT oder ein **GitHub App**-Installationstoken ersetzen. Nach erfolgreichem Lauf erscheint der Lauf unter **Actions** wie bei einem Push auf `main`.
 
 **Hinweis:** `workflow_dispatch` kann alternativ per API getriggert werden (`POST .../actions/workflows/nextjs.yml/dispatches` mit `ref: main`); dafür braucht das Token typischerweise **`workflow`**-Scope. `repository_dispatch` ist oft einfacher für schlanke „nur neu bauen“-Webhooks.
+
+**Externe Quellen (SaaS, kein VPS):** Make.com, Zapier, n8n Cloud, Notion-Automations, CMS-Webhooks usw. können den obigen HTTP-Call direkt ausführen.
 
 ## Ops-Routine
 

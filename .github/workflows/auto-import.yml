@@ -1,0 +1,65 @@
+# Auto-Import: bei Aenderungen an Module/*.md wird das Kurrikulum automatisch
+# nach content/modules/ importiert und zurueck in main committet.
+# Danach triggert der Push den bestehenden Pages-Deploy.
+
+name: Auto-import curriculum
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "Module/**/*.md"
+  workflow_dispatch:
+  repository_dispatch:
+    types: [content-import]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: "auto-import"
+  cancel-in-progress: true
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm install
+      - run: npm run import:modules
+      - run: npm run validate:content
+      - name: Commit generated content
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain content/modules)" ]; then
+            git add content/modules
+            git commit -m "chore(content): auto-import from Module/*.md"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Kein Content-Diff — nichts zu committen."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+      # Pushes vom GITHUB_TOKEN triggern keinen Folge-Workflow.
+      # Deshalb hier explizit den Deploy per repository_dispatch anstossen.
+      - name: Trigger Pages deploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/${{ github.repository }}/dispatches \
+            -f event_type=pages-deploy
