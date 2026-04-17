@@ -1,15 +1,29 @@
 # DeFi Academy
 
-Next.js-Lernplattform (App Router, Tailwind, Markdown/MDX-Kurrikulum): Module, Lektionen, Quiz, Fortschritt im Browser.
+Next.js-Lernplattform (App Router, Tailwind, Markdown/MDX): Module, Lektionen, Quiz, Fortschritt im Browser.
 
 **Repo:** [github.com/noahdeitmerg-svg/Defi-Academy](https://github.com/noahdeitmerg-svg/Defi-Academy)
 
 ---
 
-## Schnellstart (lokal bauen)
+## Zielmodell (wie AlphaCycle): **ein Ordner**
 
-1. **Node.js 22+** installieren: [nodejs.org](https://nodejs.org/) – danach **neues Terminal**
-2. Im Repo-Ordner (mit `package.json`):
+Du hast **genau einen** lokalen Ordner = **Git-Klon** (mit `.git` und `package.json`):
+
+1. Repo klonen (einmal) oder bestehenden Klon nutzen.
+2. **Cursor:** **File → Open Folder** → diesen Klon-Ordner öffnen (nicht eine zweite Kopie ohne Git).
+3. Hier entwickeln → `git add` / `commit` / `push` → fertig.
+
+Kein robocopy, kein Sync zwischen zwei Arbeitskopien nötig.
+
+Details: [docs/GITHUB.md](docs/GITHUB.md)
+
+---
+
+## Schnellstart
+
+1. **Node.js 22+** ([nodejs.org](https://nodejs.org/) LTS) – danach **neues Terminal**
+2. Im **Klon-Ordner**:
 
 ```powershell
 npm install
@@ -18,36 +32,17 @@ npm run dev
 
 3. Browser: **http://localhost:3000**
 
-Optional vor dem ersten Commit:
+Optional:
 
 ```powershell
 npm run check
 ```
 
-oder:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check-build.ps1
-```
-
-(`npm run check` = lint + TypeScript + Production-Build)
-
 ---
 
-## Zwei Arbeitsordner (bei dir auf Windows)
+## Optional: zwei Ordner auf der Platte
 
-| Ort | Rolle |
-|-----|--------|
-| `C:\Users\noahd\defi-academy` | Arbeitskopie / Cursor |
-| `C:\Users\noahd\Documents\GitHub\Defi-Academy` | Git-Klon fuer `git push` |
-
-Sync: im **Arbeits**-Ordner:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\sync-to-github-clone.ps1
-```
-
-Dann im **GitHub**-Ordner: `git add` / `commit` / `push` (Details: [docs/GITHUB.md](docs/GITHUB.md)).
+Nur falls du **historisch** zwei Pfade hast (z.B. alter Ordner ohne `.git` + GitHub-Klon): dann kann `scripts/sync-to-github-clone.ps1` einmal helfen – **Standard ist trotzdem: nur der Klon.**
 
 ---
 
@@ -55,18 +50,18 @@ Dann im **GitHub**-Ordner: `git add` / `commit` / `push` (Details: [docs/GITHUB.
 
 | Datei | Inhalt |
 |-------|--------|
-| [docs/BUILD.md](docs/BUILD.md) | Checkliste: Node, build, Vercel, Kurrikulum |
-| [docs/GITHUB.md](docs/GITHUB.md) | Git, PAT, Push-Probleme, Sync |
-| `scripts/import-modules.ts` | Grosse `moduleN.md` nach `content/modules/` splitten |
+| [docs/BUILD.md](docs/BUILD.md) | Node, Build, Vercel, Kurrikulum |
+| [docs/GITHUB.md](docs/GITHUB.md) | Klonen, Push, PAT, optional Sync |
+| `scripts/import-modules.ts` | Große `moduleN.md` nach `content/modules/` |
 
----
+## GitHub Pages (optional)
+
+Statischer Build + GitHub Actions: [docs/GITHUB_PAGES.md](docs/GITHUB_PAGES.md)
 
 ## Vercel (optional)
 
-Repo bei Vercel importieren, Root = dieser Ordner, Branch `main`. `vercel.json` enthaelt `"framework": "nextjs"`.
-
----
+Repo verbinden, Root = dieser Ordner, Branch `main`. `vercel.json`: `"framework": "nextjs"`. (Funktioniert weiterhin mit `output: "export"`.)
 
 ## Kurrikulum
 
-Inhalt unter **`content/modules/`** (siehe Beispiel `module1/`). Neue Markdown-Dateien dort reichen fuer neue Lektionen (App liest zur Laufzeit).
+Inhalt unter **`content/modules/`**. Neue `.md`-Lektionen dort reichen; die App liest zur Laufzeit.

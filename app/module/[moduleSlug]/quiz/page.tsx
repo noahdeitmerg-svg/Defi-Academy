@@ -1,8 +1,11 @@
 import { notFound } from "next/navigation";
-import { getQuiz } from "@/lib/content";
+import { getAllModules, getQuiz } from "@/lib/content";
 import { QuizBlock } from "@/components/QuizBlock";
 
-export const dynamic = "force-dynamic";
+export async function generateStaticParams() {
+  const modules = await getAllModules();
+  return modules.map((m) => ({ moduleSlug: m.slug }));
+}
 
 type Props = { params: Promise<{ moduleSlug: string }> };
 

@@ -1,98 +1,76 @@
-# Code auf GitHub bringen — Kurzanleitung
+# GitHub & Git – Kurzanleitung
 
-**Dein Git-Klon (lokal):** `C:\Users\noahd\Documents\GitHub\Defi-Academy`  
-Dort liegt z. B. schon `defi_academy_system.md` und `.git` — der **Next.js-Code** aus Cursor muss **einmal** in denselben Ordner (siehe Sync-Skript unten).
+## Zielmodell: **ein Klon-Ordner** (wie AlphaCycle)
 
-## Was du brauchst
+- **Ein** Verzeichnis auf dem PC = **dieses Repository** (enthält `.git` + `package.json`).
+- In **Cursor** genau **diesen Ordner** öffnen.
+- Änderungen committen, `git push` – gleicher Workflow wie bei AlphaCycle (nur ohne VPS-Pflicht, wenn du Vercel nutzt).
 
-- **Git** installiert ([git-scm.com](https://git-scm.com/download/win))
-- **Node.js LTS** inkl. npm ([nodejs.org](https://nodejs.org/)) — nach der Installation **PowerShell / Terminal schließen und neu öffnen**, sonst findet Windows `npm` oft noch nicht. Prüfen: `node -v` und `npm -v`
-- Auf [github.com](https://github.com) eingeloggt — Repo: **noahdeitmerg-svg/Defi-Academy** (leer oder mit README ist ok)
-
-### Push-Fehler: `workflow` scope / `.github/workflows`
-
-Wenn `git push` mit **Personal Access Token** abgelehnt wird:
-
-`refusing to allow a Personal Access Token to create or update workflow ... without workflow scope`
-
-**Option 1 (empfohlen):** Unter GitHub **Settings → Developer settings → Personal access tokens** ein neues Token mit mindestens **`repo`** und zusätzlich **`workflow`** erzeugen und für Git (Credential Manager) hinterlegen, dann erneut `git push`.
-
-**Option 2:** Keine Workflow-Dateien im Repo (dieses Projekt hat keine zwingende CI-Datei). Ordner `.github/workflows` entfernen, committen, pushen:
-
-```powershell
-cd C:\Users\noahd\Documents\GitHub\Defi-Academy
-Remove-Item -Recurse -Force .github\workflows -ErrorAction SilentlyContinue
-git add -A
-git commit -m "Remove GitHub Actions workflow (PAT ohne workflow scope)"
-git push origin main
-```
-
-## A) Code aus Cursor in deinen GitHub-Ordner kopieren
-
-Wenn du in **Cursor** am Projekt `defi-academy` arbeitest und der Klon **`C:\Users\noahd\Documents\GitHub\Defi-Academy`** ist:
-
-1. **Quelle:** der Ordner mit `package.json` (Cursor-Projekt `defi-academy`).
-2. PowerShell **in diesem Quell-Ordner** öffnen.
-3. Ausführen:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\sync-to-github-clone.ps1
-```
-
-(Optional anderes Ziel: `-Destination "D:\..."`)
-
-4. Danach in **`C:\Users\noahd\Documents\GitHub\Defi-Academy`** wechseln und Git nutzen (Abschnitt B).
+Es gibt **keinen** zweiten „Arbeits-Ordner“ als Pflicht.
 
 ---
 
-## B) Schnellweg — Git im Klon-Ordner
-
-1. Ordner **`C:\Users\noahd\Documents\GitHub\Defi-Academy`** öffnen (nach dem Sync liegt dort `package.json`).
-2. **Adresszeile** → `powershell` → Enter.
-3. Ausführen:
+## Einmal: Repo holen
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\setup-repo.ps1
+cd C:\Users\noahd\Documents\GitHub
+git clone https://github.com/noahdeitmerg-svg/Defi-Academy.git
+cd Defi-Academy
 ```
 
-4. Remote setzen und pushen:
+Dann in Cursor: **Open Folder** → `...\Defi-Academy`.
+
+---
+
+## Täglich: pushen
 
 ```powershell
-git remote add origin https://github.com/noahdeitmerg-svg/Defi-Academy.git
-git push -u origin main
+git add -A
+git status
+git commit -m "kurze beschreibung"
+git push origin main
 ```
 
-- Wenn **`remote origin already exists`**:
+---
+
+## Was du brauchst
+
+- **Git:** [git-scm.com](https://git-scm.com/download/win)
+- **Node.js LTS + npm:** [nodejs.org](https://nodejs.org/) – nach Install **Terminal neu starten**, testen: `node -v`, `npm -v`
+
+---
+
+## Push-Fehler: PAT und `workflow`
+
+Wenn GitHub ablehnt:
+
+`refusing to allow a Personal Access Token ... workflow ... without workflow scope`
+
+**Option A:** Neues Token mit **`repo`** + **`workflow`**.
+
+**Option B:** Keine `.github/workflows/*.yml` ins Repo legen (dieses Projekt braucht keine Pflicht-CI-Datei).
+
+---
+
+## Anmeldung bei HTTPS-Push
+
+GitHub: kein Account-Passwort per HTTPS – **PAT**, **GitHub Desktop**, oder **SSH** (`git@github.com:noahdeitmerg-svg/Defi-Academy.git`).
+
+---
+
+## Optional: alter zweiter Ordner + Sync
+
+Nur wenn du **zwei** Kopien hast (z.B. `C:\Users\noahd\defi-academy` ohne `.git` und daneben den echten Klon):
 
 ```powershell
-git remote -v
-git remote set-url origin https://github.com/noahdeitmerg-svg/Defi-Academy.git
-git push -u origin main
+cd C:\Users\noahd\defi-academy
+powershell -ExecutionPolicy Bypass -File .\scripts\sync-to-github-clone.ps1
 ```
 
-- Wenn das **Repo auf GitHub schon Dateien** hat (z.B. README) und Push abgelehnt wird:
+Danach im **Klon** committen und pushen. **Besser:** Cursor nur noch auf den Klon zeigen lassen, dann entfällt das dauerhaft.
 
-```powershell
-git pull origin main --allow-unrelated-histories
-# Konflikte in Cursor loesen, dann:
-git push -u origin main
-```
+---
 
-## Anmeldung bei `git push`
+## KI / Cursor und „automatisch pushen“
 
-GitHub erlaubt **kein Passwort** mehr per HTTPS. Üblich:
-
-- **GitHub Desktop** installieren, Repo klonen/veröffentlichen — am einfachsten für Einsteiger, oder
-- **HTTPS + Personal Access Token** (Settings → Developer settings → PAT), oder
-- **SSH-Schlüssel** einrichten und Remote-URL auf `git@github.com:noahdeitmerg-svg/Defi-Academy.git` umstellen.
-
-## Kann Cursor / die KI automatisch für mich pushen?
-
-**Nur indirekt:** Die KI hat **keinen dauerhaften Zugriff** auf dein GitHub-Konto und sollte **kein Passwort/Token im Chat** bekommen.
-
-- **Cursor** nutzt beim Terminal oft **deine** bereits eingerichtete Git-Anmeldung (Credential Manager, SSH-Agent).
-- **Sicher:** Du führst `git push` lokal aus oder nutzt **GitHub Desktop**.
-
-## Optional: Cursor Source Control
-
-Links **Source Control** → Änderungen committen → **Publish Branch** / mit verbundenem GitHub-Konto pushen — gleicher Effekt wie in der Shell.
+Die KI hat **kein** eigenes GitHub-Konto. Pushen läuft über **deine** Anmeldung (Terminal, Cursor Source Control, GitHub Desktop).

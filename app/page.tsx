@@ -3,8 +3,6 @@ import { getAllModules } from "@/lib/content";
 import { lessonHref, quizHref } from "@/lib/routes";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
-export const dynamic = "force-dynamic";
-
 export default async function HomePage() {
   const modules = await getAllModules();
 

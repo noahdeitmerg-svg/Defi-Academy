@@ -13,7 +13,7 @@ git clone https://github.com/noahdeitmerg-svg/Defi-Academy.git
 cd Defi-Academy
 ```
 
-(Arbeitest du in `C:\Users\noahd\defi-academy` und synchronisierst in den GitHub-Klon: `scripts\sync-to-github-clone.ps1` – siehe [GITHUB.md](GITHUB.md).)
+**Cursor** öffnet genau diesen Ordner (ein Repo, ein Arbeitsbaum – siehe [GITHUB.md](GITHUB.md)).
 
 ## 3. Dependencies und Qualitaet
 
@@ -22,7 +22,9 @@ npm install
 npm run check
 ```
 
-(`check` = lint + TypeScript-Check + `next build`)
+(`check` = lint + TypeScript-Check + `next build` — inkl. statischer Export nach `out/`)
+
+GitHub Pages: [GITHUB_PAGES.md](GITHUB_PAGES.md)
 
 Oder:
 

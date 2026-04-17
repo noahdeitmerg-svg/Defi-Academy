@@ -1,8 +1,11 @@
 import { redirect } from "next/navigation";
-import { getModule } from "@/lib/content";
+import { getAllModules, getModule } from "@/lib/content";
 import { lessonHref } from "@/lib/routes";
 
-export const dynamic = "force-dynamic";
+export async function generateStaticParams() {
+  const modules = await getAllModules();
+  return modules.map((m) => ({ moduleSlug: m.slug }));
+}
 
 type Props = { params: Promise<{ moduleSlug: string }> };
 

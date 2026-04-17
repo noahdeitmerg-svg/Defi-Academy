@@ -4,8 +4,6 @@ import { getModule } from "@/lib/content";
 import { SidebarNav } from "@/components/SidebarNav";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
-export const dynamic = "force-dynamic";
-
 type Props = {
   children: React.ReactNode;
   params: Promise<{ moduleSlug: string }>;

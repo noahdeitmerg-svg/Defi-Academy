@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getParsedLesson } from "@/lib/content";
+import { getAllModules, getParsedLesson } from "@/lib/content";
 import { lessonQuizProgressKey } from "@/lib/progress";
 import { LessonCompleteButton } from "@/components/LessonCompleteButton";
 import { LessonLayout } from "@/components/LessonLayout";
@@ -7,7 +7,12 @@ import { LessonQuizMarkdown } from "@/components/LessonQuizMarkdown";
 import { MdxExplanation } from "@/components/MdxExplanation";
 import { QuizBlock } from "@/components/QuizBlock";
 
-export const dynamic = "force-dynamic";
+export async function generateStaticParams() {
+  const modules = await getAllModules();
+  return modules.flatMap((m) =>
+    m.lessons.map((l) => ({ moduleSlug: m.slug, lessonSlug: l.slug })),
+  );
+}
 
 type Props = {
   params: Promise<{ moduleSlug: string; lessonSlug: string }>;
