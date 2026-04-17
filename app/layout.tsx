@@ -13,11 +13,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const vercelUrl = process.env.VERCEL_URL;
+function siteUrlToMetadataBase(raw: string | undefined): URL | null {
+  if (raw == null || raw === "") return null;
+  const normalized = raw.startsWith("http") ? raw : `https://${raw}`;
+  return new URL(normalized);
+}
+
 const metadataBase =
-  vercelUrl != null
-    ? new URL(vercelUrl.startsWith("http") ? vercelUrl : `https://${vercelUrl}`)
-    : new URL("http://localhost:3000");
+  siteUrlToMetadataBase(process.env.NEXT_PUBLIC_SITE_URL) ??
+  siteUrlToMetadataBase(process.env.SITE_URL) ??
+  new URL("http://localhost:3000");
 
 export const metadata: Metadata = {
   metadataBase,

@@ -47,13 +47,9 @@ Browser: **http://localhost:3000**
 - **Standard:** `content/modules/<moduleSlug>/*.md` + optional `quiz.json`, `meta.json`
 - **Import** grosser `moduleN.md`: `npm run import:modules` (optional `--from "Pfad"`)
 
-## 6. Vercel (optional, oeffentliche URL)
+## 6. Oeffentliche URL: GitHub Pages
 
-1. [vercel.com](https://vercel.com) – Import **Defi-Academy** von GitHub  
-2. Root = Repo-Root (Ordner mit `package.json`)  
-3. Deploy – bei jedem Push auf `main` neu bauen  
-
-`vercel.json` ist vorhanden (`framework: nextjs`).
+Kein Vercel: Deploy nur über **GitHub Actions** → **Pages** (`out/` als Artifact). Anleitung und Webhook: [GITHUB_PAGES.md](GITHUB_PAGES.md).
 
 ## 7. Bekannte GitHub-Stolpersteine
 

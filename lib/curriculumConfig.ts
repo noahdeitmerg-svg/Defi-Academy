@@ -13,7 +13,7 @@ export const DEFAULT_CURSOR_MODULE_DIR = path.join(
 
 const LEGACY_MODULES_ROOT = path.join(process.cwd(), "content", "modules");
 
-/** Liegen bereits Lektions-`.md`-Dateien unter `content/modules/<slug>/`? Dann Vercel/Repo-Quelle nutzen. */
+/** Liegen bereits Lektions-`.md`-Dateien unter `content/modules/<slug>/`? Dann Repo-Quelle nutzen. */
 function legacyModulesHaveLessonsSync(): boolean {
   try {
     if (!fs.existsSync(LEGACY_MODULES_ROOT)) return false;

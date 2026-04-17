@@ -4,7 +4,7 @@
 
 - **Ein** Verzeichnis auf dem PC = **dieses Repository** (enthält `.git` + `package.json`).
 - In **Cursor** genau **diesen Ordner** öffnen.
-- Änderungen committen, `git push` – gleicher Workflow wie bei AlphaCycle (nur ohne VPS-Pflicht, wenn du Vercel nutzt).
+- Änderungen committen, `git push` – gleicher Workflow wie bei AlphaCycle; öffentliche URL über **GitHub Pages** (siehe [GITHUB_PAGES.md](GITHUB_PAGES.md)).
 
 Es gibt **keinen** zweiten „Arbeits-Ordner“ als Pflicht.
 

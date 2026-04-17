@@ -50,17 +50,13 @@ Nur falls du **historisch** zwei Pfade hast (z.B. alter Ordner ohne `.git` + Git
 
 | Datei | Inhalt |
 |-------|--------|
-| [docs/BUILD.md](docs/BUILD.md) | Node, Build, Vercel, Kurrikulum |
+| [docs/BUILD.md](docs/BUILD.md) | Node, Build, Kurrikulum |
 | [docs/GITHUB.md](docs/GITHUB.md) | Klonen, Push, PAT, optional Sync |
 | `scripts/import-modules.ts` | Große `moduleN.md` nach `content/modules/` |
 
-## GitHub Pages (optional)
+## GitHub Pages (Deploy)
 
-Statischer Build + GitHub Actions: [docs/GITHUB_PAGES.md](docs/GITHUB_PAGES.md)
-
-## Vercel (optional)
-
-Repo verbinden, Root = dieser Ordner, Branch `main`. `vercel.json`: `"framework": "nextjs"`. (Funktioniert weiterhin mit `output: "export"`.)
+Statischer Export, **GitHub Actions** → Pages: [docs/GITHUB_PAGES.md](docs/GITHUB_PAGES.md) (inkl. **Webhook** / `repository_dispatch`).
 
 ## Kurrikulum
 
