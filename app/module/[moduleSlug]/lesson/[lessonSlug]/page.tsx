@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import { getAllModules, getParsedLesson } from "@/lib/content";
+import { resolveLessonVideo } from "@/lib/lessonAssets";
 import { lessonQuizProgressKey } from "@/lib/progress";
 import { LessonCompleteButton } from "@/components/LessonCompleteButton";
 import { LessonLayout } from "@/components/LessonLayout";
 import { LessonQuizMarkdown } from "@/components/LessonQuizMarkdown";
+import { LessonVideoHero } from "@/components/LessonVideoHero";
 import { MdxExplanation } from "@/components/MdxExplanation";
 import { QuizBlock } from "@/components/QuizBlock";
 
@@ -25,6 +27,11 @@ export default async function LessonPage({ params }: Props) {
 
   const { frontmatter, explanationMdx, slides, narration, visuals, exercise, lessonQuiz, lessonQuizMarkdownFallback } =
     parsed;
+
+  const videoAsset = await resolveLessonVideo(moduleSlug, lessonSlug);
+  const videoHero = videoAsset ? (
+    <LessonVideoHero asset={videoAsset} title={frontmatter.title} />
+  ) : null;
 
   const quizPanel =
     lessonQuiz && lessonQuiz.questions.length > 0 ? (
@@ -49,6 +56,7 @@ export default async function LessonPage({ params }: Props) {
         exercise={exercise}
         exerciseStorageKey={`defi-academy-exercise-${moduleSlug}-${lessonSlug}`}
         quizPanel={quizPanel}
+        videoHero={videoHero}
       >
         <MdxExplanation source={explanationMdx} />
       </LessonLayout>

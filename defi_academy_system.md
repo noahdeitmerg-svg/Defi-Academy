@@ -262,7 +262,7 @@ Phase 1 -- Kursmodule erstellen (laufend, Modul 1-12 + 13A live; 13B-17 in Produ
 Phase 2 -- Plattformstruktur definieren ✅\
 Phase 3 -- Website bauen ✅ (Next.js auf GitHub Pages live)\
 Phase 4 -- Stabilität & Content-Pipeline-Automation ✅ (Auto-Import, Webhook-Deploy, Content-Validator, MDX-Safety)\
-Phase 5 -- Video Pipeline (als Nächstes: Asset-Erkennung pro Lektion, visuals.json, echte lesson.mp4)\
+Phase 5 -- Video Pipeline 🚧 (Asset-Erkennung pro Lektion + Hero-Player live; Content-Produktion laeuft)\
 Phase 6 -- Quiz-Statistik + Suche\
 Phase 7 -- Growth System
 
@@ -313,6 +313,16 @@ Zusätzliche Trigger ohne Git-Push:\
 -   Normalisiertes Ziel: `content/modules/moduleN/` mit `meta.json`, `N-1.md` … `N-6.md`, und `quiz.json` (MC) **oder** `open-quiz.md` (Freitext)
 -   Sanity-Check: `npm run validate:content` (läuft lokal via `npm run check` und in CI)
 
+### Video- und Poster-Assets (optional pro Lektion)
+
+-   Ablage: `public/videos/<moduleSlug>-<lessonSlug>.mp4`, optional `public/posters/<moduleSlug>-<lessonSlug>.jpg`
+-   Beispiel: Lektion `/module/module6/lesson/6-3` sucht `public/videos/module6-6-3.mp4`
+-   Erkennung: `lib/lessonAssets.ts::resolveLessonVideo` zur Build-Zeit (Server Component)
+-   Rendering: `components/LessonVideoHero.tsx` als HTML5-`<video controls>` mit `aspect-video`, `preload="metadata"`, `playsInline`, basePath-aware via `lib/assetPath.ts::withBasePath`
+-   Layout: Hero-Player erscheint **oberhalb der Tabs**, direkt unter dem Titel
+-   Fallback: Fehlt die Datei, rendert die Lesson ohne Player. Kein Code-Change pro Lektion noetig.
+-   Content Agent liefert Videos (oder Video Agent generiert sie), Dateinamen folgen exakt der Slug-Konvention
+
 ### Workflows
 
 | Workflow | Trigger | Zweck |
@@ -346,8 +356,9 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 -   ✅ MDX-Safety-Layer (`escapeUnsafeMdxLessThan`)
 -   ✅ Node-24-Opt-in für CI-Actions
 -   ✅ SSH-Auth mit Agent, direkte Pushes aus Cursor
--   ⏳ Video-/Asset-Pipeline (geplant, Phase 5)
--   ⏳ Quiz-Statistik, Suche (geplant, Phase 6)
+-   ✅ Video-Asset-Pipeline (auto-Erkennung `public/videos/<slug>.mp4`, Hero-Player, Poster, basePath-aware)
+-   ⏳ `visuals.json` / strukturierte Visual-Daten fuer AI-Pipeline (Phase 5, als Naechstes)
+-   ⏳ Quiz-Statistik, Suche (Phase 6)
 
 ------------------------------------------------------------------------
 

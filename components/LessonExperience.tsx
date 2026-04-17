@@ -23,6 +23,8 @@ type Props = {
   exercise: ExerciseData | null;
   exerciseStorageKey: string;
   quizPanel?: React.ReactNode | null;
+  /** Optionaler Hero-Video-Player (Server-gerendert, nur gesetzt wenn Asset existiert) */
+  videoHero?: React.ReactNode | null;
 };
 
 const tabs: { id: TabId; label: string }[] = [
@@ -44,6 +46,7 @@ export function LessonExperience({
   exercise,
   exerciseStorageKey,
   quizPanel,
+  videoHero,
 }: Props) {
   const tabList: { id: TabId; label: string }[] = quizPanel
     ? [...tabs, { id: "quiz" as const, label: "Quiz" }]
@@ -59,6 +62,8 @@ export function LessonExperience({
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--color-text)]">{title}</h1>
         <p className="mt-3 text-sm text-[var(--color-text-muted)]">Dauer: {duration}</p>
       </header>
+
+      {videoHero ?? null}
 
       <div
         role="tablist"
