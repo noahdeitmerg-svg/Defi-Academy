@@ -22,7 +22,7 @@ npm install
 npm run check
 ```
 
-(`check` = lint + TypeScript-Check + `next build` — inkl. statischer Export nach `out/`)
+(`check` = Content-Validation + lint + TypeScript-Check + `next build` — inkl. statischer Export nach `out/`)
 
 GitHub Pages: [GITHUB_PAGES.md](GITHUB_PAGES.md)
 
@@ -54,3 +54,7 @@ Kein Vercel: Deploy nur über **GitHub Actions** → **Pages** (`out/` als Artif
 ## 7. Bekannte GitHub-Stolpersteine
 
 - **PAT ohne `workflow`:** keine `.github/workflows/*.yml` per Token pushen – siehe [GITHUB.md](GITHUB.md)
+
+## 8. Betrieb/Smoke-Tests
+
+Siehe [OPS_CHECKLIST.md](OPS_CHECKLIST.md) fuer Deploy-Routine, Webhook-Rebuild und schnelle Fehlersuche.

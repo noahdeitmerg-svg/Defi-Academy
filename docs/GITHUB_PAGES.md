@@ -21,6 +21,7 @@ Der Pages-Workflow setzt **`GITHUB_PAGES=true`** und **`NEXT_PUBLIC_SITE_URL`**,
 - **`npm run dev`** – wie gewohnt unter `http://localhost:3000` (ohne `basePath`).
 - **`npm run build`** – erzeugt `out/` ohne GitHub-`basePath` (für lokale Prüfung).
 - **`GITHUB_PAGES=true npm run build`** – gleicher Export **mit** `basePath` wie auf GitHub Pages.
+- **`npm run validate:content`** – prüft alle Lektionsdateien auf Pflichtabschnitte.
 
 `npm run start` (Next-Server) gibt es bei reinem Static Export nicht; zum Testen des `out/`-Ordners z. B. `npx serve out`.
 
@@ -54,3 +55,7 @@ curl -sS -X POST \
 `GITHUB_TOKEN` durch ein PAT oder ein **GitHub App**-Installationstoken ersetzen. Nach erfolgreichem Lauf erscheint der Lauf unter **Actions** wie bei einem Push auf `main`.
 
 **Hinweis:** `workflow_dispatch` kann alternativ per API getriggert werden (`POST .../actions/workflows/nextjs.yml/dispatches` mit `ref: main`); dafür braucht das Token typischerweise **`workflow`**-Scope. `repository_dispatch` ist oft einfacher für schlanke „nur neu bauen“-Webhooks.
+
+## Ops-Routine
+
+Kompakte Betriebs- und Smoke-Test-Checkliste: [OPS_CHECKLIST.md](OPS_CHECKLIST.md)

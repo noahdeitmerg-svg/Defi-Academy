@@ -11,7 +11,7 @@ if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
 Write-Host "== npm install ==" -ForegroundColor Cyan
 npm install
 
-Write-Host "`n== npm run check (lint + typecheck + build) ==" -ForegroundColor Cyan
+Write-Host "`n== npm run check (content + lint + typecheck + build) ==" -ForegroundColor Cyan
 npm run check
 
 Write-Host "`nOK. Zum lokalen Test: npm run dev" -ForegroundColor Green

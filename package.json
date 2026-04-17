@@ -15,7 +15,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "verify": "npm run lint && npm run typecheck && npm run build",
+    "validate:content": "node ./node_modules/tsx/dist/cli.mjs scripts/validate-content.ts",
+    "verify": "npm run validate:content && npm run lint && npm run typecheck && npm run build",
     "import:modules": "node ./node_modules/tsx/dist/cli.mjs scripts/import-modules.ts",
     "check": "npm run verify"
   },

@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeFi Mastery — From Zero to Expert</title>
+<meta name="description" content="A complete DeFi learning course covering blockchain fundamentals through professional strategy design.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="app">
+
+<!-- ======== SIDEBAR ======== -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1>DeFi Mastery</h1>
+    <div class="subtitle">From Zero to Expert · EVM Edition</div>
+  </div>
+
+  <nav class="sidebar-nav">
+
+    <div class="module-group" data-module="0">
+      <button class="module-btn"><span class="mod-num"><span>0</span></span><span class="mod-label">Setup &amp; Security</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="0" data-slide="0">Wallet Fundamentals</button>
+        <button class="lesson-btn" data-module="0" data-slide="1">Security Essentials</button>
+        <button class="lesson-btn" data-module="0" data-slide="2">Testnet Practice</button>
+      </div>
+    </div>
+
+    <div class="module-group" data-module="1">
+      <button class="module-btn"><span class="mod-num"><span>1</span></span><span class="mod-label">Blockchain Fundamentals</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="1" data-slide="0">How Blockchains Work</button>
+        <button class="lesson-btn" data-module="1" data-slide="1">Smart Contracts</button>
+        <button class="lesson-btn" data-module="1" data-slide="2">Gas &amp; Transactions</button>
+      </div>
+    </div>
+
+    <div class="module-group" data-module="2">
+      <button class="module-btn"><span class="mod-num"><span>2</span></span><span class="mod-label">Decentralized Exchanges</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="2" data-slide="0">AMM Mechanics</button>
+        <button class="lesson-btn" data-module="2" data-slide="1">Impermanent Loss</button>
+        <button class="lesson-btn" data-module="2" data-slide="2">Uniswap Deep Dive</button>
+      </div>
+    </div>
+
+    <div class="module-group" data-module="3">
+      <button class="module-btn"><span class="mod-num"><span>3</span></span><span class="mod-label">Lending Protocols</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="3" data-slide="0">Supply &amp; Borrow</button>
+        <button class="lesson-btn" data-module="3" data-slide="1">Interest Rate Curves</button>
+        <button class="lesson-btn" data-module="3" data-slide="2">Health Factor &amp; Liquidation</button>
+        <button class="lesson-btn" data-module="3" data-slide="3">Leverage Loops</button>
+      </div>
+    </div>
+
+    <div class="module-group" data-module="4">
+      <button class="module-btn"><span class="mod-num"><span>4</span></span><span class="mod-label">Stablecoin Systems</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="4" data-slide="0">Stablecoin Types</button>
+        <button class="lesson-btn" data-module="4" data-slide="1">The Risk Spectrum</button>
+        <button class="lesson-btn" data-module="4" data-slide="2">Evaluating Stablecoins</button>
+      </div>
+    </div>
+
+    <div class="module-group" data-module="5">
+      <button class="module-btn"><span class="mod-num"><span>5</span></span><span class="mod-label">DeFi Strategies</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="5" data-slide="0">Lending Carry Trades</button>
+        <button class="lesson-btn" data-module="5" data-slide="1">ETH Staking Leverage</button>
+        <button class="lesson-btn" data-module="5" data-slide="2">Liquidity Providing</button>
+        <button class="lesson-btn" data-module="5" data-slide="3">Funding Arb &amp; Airdrops</button>
+      </div>
+    </div>
+
+    <div class="module-group" data-module="6">
+      <button class="module-btn"><span class="mod-num"><span>6</span></span><span class="mod-label">Risk Management</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="6" data-slide="0">Smart Contract &amp; Oracle Risk</button>
+        <button class="lesson-btn" data-module="6" data-slide="1">Liquidity &amp; Depeg Risk</button>
+        <button class="lesson-btn" data-module="6" data-slide="2">Cascading Liquidations</button>
+      </div>
+    </div>
+
+    <div class="module-group" data-module="7">
+      <button class="module-btn"><span class="mod-num"><span>7</span></span><span class="mod-label">Professional Research</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="7" data-slide="0">Reading Liquidity</button>
+        <button class="lesson-btn" data-module="7" data-slide="1">Interest Rate Markets</button>
+        <button class="lesson-btn" data-module="7" data-slide="2">Liquidation Analysis</button>
+        <button class="lesson-btn" data-module="7" data-slide="3">Tracking Capital Flows</button>
+      </div>
+    </div>
+
+    <div class="module-group" data-module="8">
+      <button class="module-btn"><span class="mod-num"><span>8</span></span><span class="mod-label">Strategy Portfolio</span></button>
+      <div class="lesson-list">
+        <button class="lesson-btn" data-module="8" data-slide="0">Portfolio Design</button>
+        <button class="lesson-btn" data-module="8" data-slide="1">Position Tracker</button>
+        <button class="lesson-btn" data-module="8" data-slide="2">Deployment Checklist</button>
+      </div>
+    </div>
+
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="progress-label">
+      <span>Course Progress</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+</aside>
+
+<!-- ======== MAIN ======== -->
+<div class="main">
+
+  <header class="topbar">
+    <button class="menu-toggle">☰</button>
+    <div class="breadcrumb" id="breadcrumb"></div>
+    <div class="topbar-right"></div>
+  </header>
+
+  <div class="content-area">
+
+<!-- ================================================================== -->
+<!-- MODULE 0 — SETUP & SECURITY                                        -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="0" data-slide="0">
+  <h2>Wallet Fundamentals</h2>
+  <p class="lead">Before you interact with any DeFi protocol, you need a wallet. Your wallet is your identity, your bank account, and your security perimeter in Web3.</p>
+
+  <h3>What Is a Crypto Wallet?</h3>
+  <p>A crypto wallet is software that stores your <strong>private keys</strong> — the cryptographic proof that you control your assets. When you "send" crypto, you're signing a transaction with your private key. The wallet itself doesn't hold tokens — they live on the blockchain. The wallet holds the key that proves they're yours.</p>
+
+  <h4>Key Concepts</h4>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Term</th><th>What It Means</th></tr>
+    <tr><td>Private Key</td><td>A secret 256-bit number that controls your funds. Never share this with anyone, ever.</td></tr>
+    <tr><td>Seed Phrase</td><td>12 or 24 words that encode your private key. Write on paper only — never store digitally.</td></tr>
+    <tr><td>Public Address</td><td>Your "account number" (starts with 0x on Ethereum). Safe to share for receiving funds.</td></tr>
+    <tr><td>Hot Wallet</td><td>Connected to the internet (browser extension). Convenient but higher risk.</td></tr>
+    <tr><td>Cold Wallet</td><td>Hardware device (Ledger, Trezor). Offline signing — much more secure for large amounts.</td></tr>
+  </table>
+  </div>
+
+  <h3>Recommended: Rabby Wallet</h3>
+  <p>For this course, we recommend <strong>Rabby Wallet</strong> over MetaMask for several reasons:</p>
+  <ul>
+    <li><strong>Transaction simulation</strong> — shows you exactly what a transaction will do before you sign it</li>
+    <li><strong>Auto network switching</strong> — detects which chain a dApp needs and switches automatically</li>
+    <li><strong>Lower swap fees</strong> — 0.25% vs MetaMask's 0.875%</li>
+    <li><strong>Multi-chain dashboard</strong> — see all your assets across 100+ EVM chains in one view</li>
+  </ul>
+
+  <div class="box tip">
+    <div class="box-title">Installation</div>
+    Visit <strong>rabby.io</strong> and install the browser extension. During setup, choose "Create New Address" and write your seed phrase on paper. Store it in a physically secure location separate from your computer.
+  </div>
+</div>
+
+<div class="slide" data-module="0" data-slide="1">
+  <h2>Security Essentials</h2>
+  <p class="lead">More money is lost to poor security practices than to market crashes. This lesson teaches you the habits that protect your capital.</p>
+
+  <h3>The Three Rules</h3>
+  <div class="box danger">
+    <div class="box-title">Rule 1: Never share your seed phrase</div>
+    No legitimate protocol, support agent, or wallet will ever ask for your seed phrase. If someone asks, it's a scam — 100% of the time, with zero exceptions.
+  </div>
+  <div class="box danger">
+    <div class="box-title">Rule 2: Verify before you sign</div>
+    Every transaction you sign with your wallet is a binding instruction. Use Rabby's transaction preview to see exactly what will happen. If a "free mint" asks to approve unlimited token spending, reject it immediately.
+  </div>
+  <div class="box danger">
+    <div class="box-title">Rule 3: Manage your approvals</div>
+    When you approve a DeFi protocol to spend your tokens, that approval persists forever unless you revoke it. Use <strong>revoke.cash</strong> to regularly audit and revoke unnecessary approvals.
+  </div>
+
+  <h3>Security Checklist</h3>
+  <ul class="checklist">
+    <li><input type="checkbox" id="sec-1"><span>Seed phrase written on paper and stored offline</span></li>
+    <li><input type="checkbox" id="sec-2"><span>No digital copy of seed phrase anywhere (no photos, no notes apps, no cloud)</span></li>
+    <li><input type="checkbox" id="sec-3"><span>Rabby Wallet installed with transaction simulation enabled</span></li>
+    <li><input type="checkbox" id="sec-4"><span>Bookmarked revoke.cash for monthly approval audits</span></li>
+    <li><input type="checkbox" id="sec-5"><span>Using a separate "DeFi browser" profile (no personal email or social media)</span></li>
+    <li><input type="checkbox" id="sec-6"><span>Hardware wallet purchased from official retailer (for amounts > $1,000)</span></li>
+  </ul>
+
+  <h3>Common Scam Patterns</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Scam Type</th><th>How It Works</th><th>Defense</th></tr>
+    <tr><td>Approval Exploit</td><td>Malicious dApp requests unlimited token approval, then drains your wallet later</td><td>Use Rabby's preview. Revoke approvals after use.</td></tr>
+    <tr><td>Phishing Site</td><td>Fake website that looks identical to a real protocol</td><td>Bookmark official URLs. Never click links from DMs.</td></tr>
+    <tr><td>Fake Token Airdrop</td><td>Tokens appear in your wallet; interacting with them triggers a drainer</td><td>Ignore unknown tokens. Never try to "sell" random airdrops.</td></tr>
+    <tr><td>Social Engineering</td><td>"Support" contacts you on Discord/Telegram asking to "verify your wallet"</td><td>Legitimate projects never DM you first. Ever.</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="slide" data-module="0" data-slide="2">
+  <h2>Testnet Practice</h2>
+  <p class="lead">Before using real money, practice on a testnet — a free copy of the blockchain where tokens have no value. This is where you learn without risk.</p>
+
+  <h3>Step 1: Add Base Sepolia Testnet</h3>
+  <p>Base Sepolia is a test version of the Base L2 network. With Rabby Wallet, you often don't need to manually add networks — it detects them automatically. But if needed:</p>
+  <div class="formula">
+Network Name: Base Sepolia Testnet
+RPC URL: https://sepolia.base.org
+Chain ID: 84532
+Currency: ETH
+Explorer: https://sepolia.basescan.org
+  </div>
+
+  <h3>Step 2: Claim Testnet ETH</h3>
+  <p>You need testnet ETH to pay for transactions. Faucets give you free test tokens:</p>
+  <ul>
+    <li><strong>Google Cloud Web3 Faucet</strong> — faucet.quicknode.com</li>
+    <li><strong>Chainlink Faucet</strong> — faucets.chain.link (0.1 Sepolia ETH daily)</li>
+    <li><strong>Alchemy Faucet</strong> — sepoliafaucet.com (requires Alchemy account)</li>
+  </ul>
+
+  <h3>Step 3: Practice Transactions</h3>
+  <p>Once you have testnet ETH, practice these operations:</p>
+  <ul class="checklist">
+    <li><input type="checkbox" id="test-1"><span>Send testnet ETH from your wallet to a second address you control</span></li>
+    <li><input type="checkbox" id="test-2"><span>Look up your transaction on sepolia.basescan.org — read every field</span></li>
+    <li><input type="checkbox" id="test-3"><span>Wrap ETH → WETH on a testnet Uniswap deployment</span></li>
+    <li><input type="checkbox" id="test-4"><span>Perform a swap on testnet Uniswap</span></li>
+    <li><input type="checkbox" id="test-5"><span>Supply testnet tokens to Aave on Sepolia</span></li>
+  </ul>
+
+  <div class="box tip">
+    <div class="box-title">Why This Matters</div>
+    Every DeFi operation costs gas. Every transaction is permanent. By practicing on a testnet, you internalize the flow — connect wallet, review transaction, confirm, verify — before real money is at stake. Do not skip this step.
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODULE 1 — BLOCKCHAIN FUNDAMENTALS                                 -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="1" data-slide="0">
+  <h2>How Blockchains Work</h2>
+  <p class="lead">A blockchain is a shared ledger maintained by thousands of computers. No single entity controls it. This property — decentralization — is the foundation of everything in DeFi.</p>
+
+  <h3>Web2 vs Web3</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th></th><th>Web2 (Traditional)</th><th>Web3 (Blockchain)</th></tr>
+    <tr><td>Account</td><td>Email + password (stored by company)</td><td>Private key (stored by you)</td></tr>
+    <tr><td>Data</td><td>Company's database (they control it)</td><td>Public blockchain (everyone can verify)</td></tr>
+    <tr><td>Trust</td><td>Trust the company won't cheat</td><td>Trust the math — anyone can audit</td></tr>
+    <tr><td>Permission</td><td>Company can freeze your account</td><td>Nobody can freeze your wallet</td></tr>
+    <tr><td>Uptime</td><td>Company servers can go down</td><td>Network runs as long as nodes exist</td></tr>
+  </table>
+  </div>
+
+  <h3>How a Block Gets Made</h3>
+  <div class="flow">
+    <div class="flow-step">You sign a<br>transaction</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Enters the<br>mempool</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Validator picks it<br>for a block</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Block is<br>proposed</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Other validators<br>attest</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Transaction<br>is final</div>
+  </div>
+
+  <p>On Ethereum, blocks are produced every ~12 seconds. Full finality takes ~12.8 minutes (2 epochs). On Layer 2s like Base and Arbitrum, blocks are faster and cheaper, but final settlement still relies on Ethereum.</p>
+
+  <h3>Key Numbers</h3>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val">12s</div><div class="stat-label">Ethereum block time</div></div>
+    <div class="stat-card"><div class="stat-val">~$2–50</div><div class="stat-label">L1 transaction cost</div></div>
+    <div class="stat-card"><div class="stat-val">~$0.01</div><div class="stat-label">L2 transaction cost</div></div>
+    <div class="stat-card"><div class="stat-val">900k+</div><div class="stat-label">Ethereum validators</div></div>
+  </div>
+</div>
+
+<div class="slide" data-module="1" data-slide="1">
+  <h2>Smart Contracts</h2>
+  <p class="lead">A smart contract is a program that lives on the blockchain. It executes automatically when conditions are met. Every DeFi protocol is a set of smart contracts.</p>
+
+  <h3>What Makes Them "Smart"?</h3>
+  <p>Smart contracts are <strong>deterministic</strong> — given the same inputs, they always produce the same outputs. They're <strong>trustless</strong> — you don't need to trust the developer because the code is public and auditable. And they're <strong>immutable</strong> — once deployed, the code cannot be changed (unless the contract was specifically designed to be upgradeable).</p>
+
+  <h3>How You Interact With Smart Contracts</h3>
+  <div class="flow">
+    <div class="flow-step">Open dApp<br>(website UI)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Click "Supply"<br>or "Swap"</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Wallet shows<br>transaction details</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">You review<br>and sign</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Contract<br>executes</div>
+  </div>
+  <p>When you "supply ETH to Aave," you're calling the <code>supply()</code> function on Aave's smart contract. The website is just a user-friendly interface for making that function call.</p>
+
+  <div class="box info">
+    <div class="box-title">Key Insight</div>
+    The website can go down, but the smart contract stays on the blockchain. If Uniswap.org went offline tomorrow, the Uniswap contracts would still work — you'd just need a different interface to interact with them.
+  </div>
+
+  <h3>Reading a Contract on Etherscan</h3>
+  <p>Every smart contract is viewable on Etherscan (or Basescan, Arbiscan for L2s). You can see:</p>
+  <ul>
+    <li><strong>Read functions</strong> — query data without paying gas (e.g., check your balance)</li>
+    <li><strong>Write functions</strong> — change state and cost gas (e.g., deposit, withdraw)</li>
+    <li><strong>Events/Logs</strong> — a record of everything the contract has done</li>
+    <li><strong>Source code</strong> — if verified, you can read the actual Solidity code</li>
+  </ul>
+</div>
+
+<div class="slide" data-module="1" data-slide="2">
+  <h2>Gas &amp; Transactions</h2>
+  <p class="lead">Every operation on Ethereum costs gas — it's the fee you pay validators to process your transaction. Understanding gas prevents you from overpaying or getting stuck.</p>
+
+  <h3>EIP-1559 Gas Model</h3>
+  <p>Since August 2021, Ethereum uses a two-part fee system:</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Component</th><th>What It Is</th><th>Where It Goes</th></tr>
+    <tr><td>Base Fee</td><td>Algorithmically set by the network. Adjusts up/down based on block fullness (targets 50% full).</td><td>Burned (destroyed permanently)</td></tr>
+    <tr><td>Priority Fee (Tip)</td><td>Optional tip to the validator. Higher tip = faster inclusion.</td><td>Goes to the validator</td></tr>
+  </table>
+  </div>
+
+  <div class="formula">
+Total fee = gas_units_used × (base_fee + priority_fee)
+
+Example: 
+  Simple ETH transfer: 21,000 gas units
+  Uniswap swap: ~150,000 gas units
+  Aave supply: ~250,000 gas units
+  
+  At 20 gwei base + 1 gwei tip:
+  Transfer cost = 21,000 × 21 gwei = 0.000441 ETH ≈ $1.10
+  Swap cost = 150,000 × 21 gwei = 0.00315 ETH ≈ $7.88
+  </div>
+
+  <h3>Why L2s Are Cheaper</h3>
+  <p>Layer 2 networks (Arbitrum, Base, Optimism) batch hundreds of transactions into a single Ethereum L1 transaction. You share the L1 cost with everyone else in the batch. This makes L2 transactions 10-100x cheaper.</p>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val">$7.88</div><div class="stat-label">Uniswap swap on L1</div></div>
+    <div class="stat-card"><div class="stat-val">$0.04</div><div class="stat-label">Same swap on Arbitrum</div></div>
+    <div class="stat-card"><div class="stat-val">$0.01</div><div class="stat-label">Same swap on Base</div></div>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Critical Knowledge</div>
+    Gas prices spike during market crashes — everyone is transacting at once. A $5 transaction can cost $50-200 during peak stress. This means your "emergency deleverage" might be extremely expensive precisely when you most need it. Factor this into your risk planning.
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODULE 2 — DECENTRALIZED EXCHANGES                                 -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="2" data-slide="0">
+  <h2>AMM Mechanics</h2>
+  <p class="lead">Decentralized exchanges don't use order books. Instead, they use Automated Market Makers — mathematical formulas that always quote a price based on the ratio of tokens in a pool.</p>
+
+  <h3>The Constant Product Formula</h3>
+  <p>Uniswap V2 (and most AMM forks) uses a deceptively simple formula:</p>
+  <div class="formula">x × y = k
+
+Where:
+  x = quantity of Token A in the pool
+  y = quantity of Token B in the pool
+  k = a constant (the product must stay the same after every trade)
+
+Example:
+  Pool has 100 ETH and 200,000 USDC
+  k = 100 × 200,000 = 20,000,000
+  Implied price = 200,000 / 100 = $2,000 per ETH
+  
+  Someone buys 1 ETH:
+  New ETH in pool = 99
+  New USDC needed: 20,000,000 / 99 = 202,020 USDC
+  Buyer paid: 202,020 - 200,000 = 2,020 USDC for 1 ETH
+  New price = 202,020 / 99 = $2,040.61 per ETH</div>
+
+  <p>The price moved because the trade changed the ratio. This is called <strong>price impact</strong> — the larger your trade relative to the pool, the more the price moves against you.</p>
+
+  <h3>Liquidity Providers (LPs)</h3>
+  <p>Someone has to put those tokens into the pool. Liquidity providers deposit equal values of both tokens and earn a share of the <strong>trading fees</strong> (typically 0.3% per trade). The more of the pool you own, the more fees you earn.</p>
+
+  <div class="flow">
+    <div class="flow-step">LP deposits<br>ETH + USDC</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Receives<br>LP tokens</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Traders swap<br>(pay 0.3% fee)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Fees accrue<br>to LP position</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">LP withdraws<br>tokens + fees</div>
+  </div>
+</div>
+
+<div class="slide" data-module="2" data-slide="1">
+  <h2>Impermanent Loss</h2>
+  <p class="lead">The price you pay for providing liquidity. Impermanent loss (IL) occurs because the AMM automatically rebalances your position — selling the winning asset and buying the losing one.</p>
+
+  <h3>The Math</h3>
+  <div class="formula">IL = 2 × √(price_ratio) / (1 + price_ratio) − 1
+
+Where price_ratio = new_price / original_price</div>
+
+  <h3>IL at Different Price Changes</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Price Change</th><th>Impermanent Loss</th><th>In Dollar Terms ($10,000 position)</th></tr>
+    <tr><td>±25%</td><td>-0.6%</td><td>-$60</td></tr>
+    <tr><td>±50%</td><td>-2.0%</td><td>-$200</td></tr>
+    <tr><td>2x (100% up)</td><td>-5.7%</td><td>-$570</td></tr>
+    <tr><td>3x (200% up)</td><td>-13.4%</td><td>-$1,340</td></tr>
+    <tr><td>5x (400% up)</td><td>-25.5%</td><td>-$2,550</td></tr>
+  </table>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Critical Understanding</div>
+    IL is symmetric — a 2x price increase and a 50% price decrease produce the same IL percentage. But the dollar impact is worse when price drops because your remaining assets are worth less. The loss becomes "permanent" if you withdraw while prices are diverged.
+  </div>
+
+  <h3>When LP Is Profitable</h3>
+  <p>The only question that matters: <strong>do fees earned exceed IL?</strong></p>
+  <ul>
+    <li><strong>High correlation pairs</strong> (ETH/stETH, USDC/USDT) — IL is minimal because prices move together</li>
+    <li><strong>High volume / low TVL</strong> — more trades per dollar of liquidity = more fees per LP</li>
+    <li><strong>Incentivized pools</strong> — additional token rewards offset IL</li>
+  </ul>
+  <p>If none of these apply, you'll almost certainly underperform simply holding the tokens.</p>
+</div>
+
+<div class="slide" data-module="2" data-slide="2">
+  <h2>Uniswap Deep Dive</h2>
+  <p class="lead">Uniswap is the dominant DEX in DeFi. Understanding its evolution from V2 to V3/V4 reveals how capital efficiency drives protocol design.</p>
+
+  <h3>V2 vs V3: The Concentration Revolution</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th></th><th>Uniswap V2</th><th>Uniswap V3</th></tr>
+    <tr><td>Liquidity Range</td><td>Spread across 0 to ∞</td><td>Concentrated in chosen range</td></tr>
+    <tr><td>Capital Efficiency</td><td>~1-5% of capital actively used</td><td>Up to 4,000x more efficient</td></tr>
+    <tr><td>LP Complexity</td><td>Passive — deposit and wait</td><td>Active — choose range, monitor, rebalance</td></tr>
+    <tr><td>IL Risk</td><td>Gradual, predictable</td><td>Amplified if price exits your range</td></tr>
+    <tr><td>Fee Tiers</td><td>Fixed 0.3%</td><td>0.01%, 0.05%, 0.3%, or 1%</td></tr>
+  </table>
+  </div>
+
+  <h3>Concentrated Liquidity: The Trade-off</h3>
+  <p>In V3, if you concentrate liquidity in a ±5% range, you earn ~20x the fees per dollar vs V2 for trades in that range. But if price moves outside your range:</p>
+  <ul>
+    <li>You earn <strong>zero fees</strong></li>
+    <li>You hold <strong>100% of the losing asset</strong></li>
+    <li>You must rebalance (costs gas, realizes loss)</li>
+  </ul>
+
+  <div class="diagram">
+    Price Range for Your LP Position
+    
+    ←──── Your Range ────→
+    |                      |
+$2,700                  $3,300     (±10% around $3,000)
+    
+If ETH = $3,000:  ✓ You earn fees. Position is 50/50 ETH/USDC.
+If ETH = $3,400:  ✗ Out of range. You hold 100% USDC. Zero fees.
+If ETH = $2,600:  ✗ Out of range. You hold 100% ETH. Zero fees.
+  </div>
+
+  <div class="box tip">
+    <div class="box-title">Practical Guidance</div>
+    For beginners, use wider ranges (±15-20%). The fee income is lower, but the position survives larger price moves. Only narrow your range as you develop the skill and habits to monitor and rebalance frequently.
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODULE 3 — LENDING PROTOCOLS                                       -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="3" data-slide="0">
+  <h2>Supply &amp; Borrow</h2>
+  <p class="lead">Lending protocols are DeFi's credit system. Lenders deposit assets to earn yield. Borrowers lock collateral to take out loans. Everything is managed by smart contracts — no bank, no credit check, no paperwork.</p>
+
+  <h3>How It Works</h3>
+  <div class="flow">
+    <div class="flow-step">Lender deposits<br>1,000 USDC</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Pool holds<br>USDC</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Borrower deposits<br>1 ETH collateral</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Borrows<br>750 USDC</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Pays interest<br>to the pool</div>
+  </div>
+
+  <h3>Key Parameters</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Parameter</th><th>What It Means</th><th>Typical Value</th></tr>
+    <tr><td>LTV (Loan-to-Value)</td><td>Maximum you can borrow relative to collateral</td><td>75-85%</td></tr>
+    <tr><td>Liquidation Threshold</td><td>Point where your position can be forcibly closed</td><td>80-90%</td></tr>
+    <tr><td>Liquidation Bonus</td><td>Discount liquidators get for closing risky positions</td><td>5-15%</td></tr>
+    <tr><td>Reserve Factor</td><td>Protocol's cut of interest paid by borrowers</td><td>10-20%</td></tr>
+    <tr><td>E-Mode (Efficiency Mode)</td><td>Higher LTV for correlated assets (ETH/wstETH)</td><td>90-93% LTV</td></tr>
+  </table>
+  </div>
+
+  <h3>Utilization Rate</h3>
+  <p>The utilization rate is the percentage of deposited assets currently borrowed. It's the most important metric for understanding a lending market's health:</p>
+  <div class="formula">Utilization = Total Borrowed / Total Supplied
+
+Example: 80M USDC borrowed out of 100M supplied = 80% utilization</div>
+  <p>When utilization is too high, lenders can't withdraw — there's literally no available liquidity in the pool. This is why interest rate curves spike aggressively above optimal utilization.</p>
+</div>
+
+<div class="slide" data-module="3" data-slide="1">
+  <h2>Interest Rate Curves</h2>
+  <p class="lead">DeFi lending rates aren't set by a central bank. They're calculated algorithmically based on supply and demand, expressed through the utilization rate.</p>
+
+  <h3>The Kink Model</h3>
+  <p>Most lending protocols use a "kinked" interest rate curve — rates increase slowly below optimal utilization, then spike dramatically above it.</p>
+
+  <div class="diagram">
+  Interest Rate
+  60% │                                         ╱
+      │                                        ╱
+  50% │                                       ╱
+      │                                      ╱
+  40% │                                     ╱  ← Slope 2 (steep!)
+      │                                    ╱
+  30% │                                   ╱
+      │                                  ╱
+  20% │                                 ╱
+      │                                ╱
+  10% │                               ╱
+      │                             ╱
+   4% │ · · · · · · · · · · · · ·•     ← Kink point (optimal utilization)
+      │                       ╱
+   2% │                 ╱╱╱╱╱   ← Slope 1 (gradual)
+      │           ╱╱╱╱╱
+   0% │─────╱╱╱╱╱─────────────────────────
+      0%   20%   40%   60%   80%  90%  100%
+                                    ↑
+                            Utilization Rate
+  </div>
+
+  <h3>Real Example: Aave USDC Market</h3>
+  <div class="formula">
+Parameters: Base rate = 0%, Slope1 = 4%, Optimal = 90%, Slope2 = 60%
+
+At 45% utilization:  rate = (45/90) × 4%  = 2.0%
+At 80% utilization:  rate = (80/90) × 4%  = 3.6%
+At 90% utilization:  rate = 4%             = 4.0%  ← KINK
+At 95% utilization:  rate = 4% + (5/10) × 60% = 34%  ← PAIN
+At 99% utilization:  rate = 4% + (9/10) × 60% = 58%  ← EXTREME</div>
+
+  <div class="box warn">
+    <div class="box-title">Strategic Implication</div>
+    If you're borrowing at 4% to leverage-loop for 7%, a utilization spike from 85% to 95% turns your 3% profit into a 30% loss. Monitoring utilization is mandatory for leveraged strategies.
+  </div>
+
+  <h3>Supply Rate Derivation</h3>
+  <div class="formula">Supply Rate = Borrow Rate × Utilization × (1 − Reserve Factor)
+
+If borrow = 4%, utilization = 80%, reserve factor = 15%:
+Supply rate = 4% × 0.80 × 0.85 = 2.72%</div>
+  <p>This is why supply rates are always lower than borrow rates — only the utilized portion generates yield, and the protocol takes a cut.</p>
+</div>
+
+<div class="slide" data-module="3" data-slide="2">
+  <h2>Health Factor &amp; Liquidation</h2>
+  <p class="lead">Your health factor tells you how close you are to being liquidated. Below 1.0, liquidators can forcibly close your position at a loss to you.</p>
+
+  <h3>Health Factor Formula</h3>
+  <div class="formula">Health Factor = (Collateral Value × Liquidation Threshold) / Debt Value
+
+Example:
+  Collateral: 10 ETH × $3,000 = $30,000
+  Liquidation threshold: 82.5%
+  Debt: $15,000 USDC
+  
+  HF = ($30,000 × 0.825) / $15,000 = 1.65 ✓ Safe
+  
+If ETH drops to $2,200:
+  HF = ($22,000 × 0.825) / $15,000 = 1.21 ⚠️ Getting dangerous
+  
+If ETH drops to $1,820:
+  HF = ($18,200 × 0.825) / $15,000 = 1.001 🔴 About to be liquidated</div>
+
+  <!-- LIQUIDATION CALCULATOR -->
+  <div class="calc">
+    <h4>⚡ Liquidation Calculator</h4>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>Collateral (ETH)</label>
+        <input type="number" id="liq-collateral" value="10" step="0.1">
+      </div>
+      <div class="calc-field">
+        <label>Current ETH Price ($)</label>
+        <input type="number" id="liq-price" value="3000" step="10">
+      </div>
+      <div class="calc-field">
+        <label>Debt (USD)</label>
+        <input type="number" id="liq-debt" value="15000" step="100">
+      </div>
+      <div class="calc-field">
+        <label>Liq. Threshold (%)</label>
+        <input type="number" id="liq-threshold" value="82.5" step="0.5">
+      </div>
+    </div>
+    <button class="calc-btn" id="calc-liq-btn">Calculate</button>
+    <div class="calc-result" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:16px;">
+      <div><div class="result-label">Health Factor</div><div class="result-value" id="liq-result-hf">—</div></div>
+      <div><div class="result-label">Liquidation Price</div><div class="result-value" id="liq-result-price">—</div></div>
+      <div><div class="result-label">Distance</div><div class="result-value" id="liq-result-drop">—</div></div>
+    </div>
+  </div>
+
+  <h3>What Happens During Liquidation</h3>
+  <p>When HF drops below 1.0, <strong>liquidator bots</strong> buy your collateral at a discount (the liquidation bonus, typically 5-10%). They repay part of your debt and take the discounted collateral as profit. You lose the collateral plus the bonus.</p>
+
+  <div class="box danger">
+    <div class="box-title">Never Let HF Drop Below 1.5</div>
+    Professional DeFi operators maintain HF above 1.5 at all times. Set alerts at HF 1.8 (warning) and HF 1.5 (immediate action required). Pre-plan your deleveraging steps before you ever need them.
+  </div>
+</div>
+
+<div class="slide" data-module="3" data-slide="3">
+  <h2>Leverage Loops</h2>
+  <p class="lead">A leverage loop amplifies your yield exposure by recursively supplying and borrowing correlated assets. It's the most popular advanced DeFi strategy — and the most dangerous if mismanaged.</p>
+
+  <h3>How It Works: wstETH/ETH Loop</h3>
+  <div class="diagram">
+Loop Construction:
+
+Step 1:  Deposit 10 wstETH → Borrow 9.3 ETH (93% LTV in E-Mode)
+Step 2:  Swap 9.3 ETH → wstETH → Deposit → Borrow 8.65 ETH
+Step 3:  Swap 8.65 ETH → wstETH → Deposit → Borrow 8.04 ETH
+  ...
+
+After ~5 loops at 93% LTV:
+  Total exposure: ~30 wstETH (3x leverage)
+  Total debt: ~20 ETH
+  Original capital: 10 ETH worth of wstETH
+  </div>
+
+  <h3>The Profit Equation</h3>
+  <div class="formula">Net Yield = leverage × staking_APY − (leverage − 1) × borrow_APY
+
+At 3x leverage, 3.5% staking, 2% borrow cost:
+Net = 3 × 3.5% − 2 × 2.0% = 10.5% − 4.0% = 6.5% on original capital</div>
+
+  <!-- LEVERAGE CALCULATOR -->
+  <div class="calc">
+    <h4>⚡ Leverage Loop Calculator</h4>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>Collateral (ETH)</label>
+        <input type="number" id="lev-collateral" value="10" step="0.5">
+      </div>
+      <div class="calc-field">
+        <label>LTV (%)</label>
+        <input type="number" id="lev-ltv" value="90" step="1">
+      </div>
+      <div class="calc-field">
+        <label>Loops</label>
+        <input type="number" id="lev-loops" value="5" min="1" max="15" step="1">
+      </div>
+      <div class="calc-field">
+        <label>Staking APY (%)</label>
+        <input type="number" id="lev-staking-apy" value="3.5" step="0.1">
+      </div>
+      <div class="calc-field">
+        <label>Borrow APY (%)</label>
+        <input type="number" id="lev-borrow-apy" value="2.0" step="0.1">
+      </div>
+    </div>
+    <button class="calc-btn" id="calc-leverage-btn">Calculate</button>
+    <div class="calc-result" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px;">
+      <div><div class="result-label">Leverage</div><div class="result-value" id="lev-result-leverage">—</div></div>
+      <div><div class="result-label">Total Exposure</div><div class="result-value" id="lev-result-exposure">—</div></div>
+      <div><div class="result-label">Total Debt</div><div class="result-value" id="lev-result-debt">—</div></div>
+      <div><div class="result-label">Net Yield</div><div class="result-value" id="lev-result-yield">—</div></div>
+      <div><div class="result-label">Annual Profit</div><div class="result-value" id="lev-result-profit">—</div></div>
+    </div>
+  </div>
+
+  <div class="box danger">
+    <div class="box-title">When It Breaks</div>
+    At 3x leverage, a <strong>5% wstETH/ETH depeg</strong> can trigger liquidation. In June 2022, stETH traded at 0.93 ETH — a 7% depeg that would have liquidated most 2.5x+ loops. Never run above 2.5x for positions held longer than 30 days.
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODULE 4 — STABLECOIN SYSTEMS                                      -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="4" data-slide="0">
+  <h2>Stablecoin Types</h2>
+  <p class="lead">Stablecoins are the unit of account in DeFi. They're also one of its biggest risk vectors. Not all stablecoins are created equal — they sit on a spectrum from centralized and reliable to decentralized and fragile.</p>
+
+  <h3>Three Categories</h3>
+
+  <button class="collapse-toggle">Fiat-Backed (USDC, USDT) <span class="arrow">▸</span></button>
+  <div class="collapse-body">
+    <p><strong>How they work:</strong> Centralized issuer holds reserves (bank deposits, T-bills). Promises to redeem 1:1 for USD.</p>
+    <p><strong>Advantages:</strong> Deepest liquidity. Most widely accepted. Simple mechanism.</p>
+    <p><strong>Risks:</strong> Bank failure (USDC depegged to $0.87 during SVB collapse, March 2023). Regulatory seizure. Censorship — both USDC and USDT can blacklist addresses and freeze your tokens.</p>
+    <div class="risk-meter med"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+  </div>
+
+  <button class="collapse-toggle">Crypto-Collateralized (DAI/USDS, LUSD) <span class="arrow">▸</span></button>
+  <div class="collapse-body">
+    <p><strong>How they work:</strong> Users lock crypto collateral (ETH, BTC) in smart contracts and mint stablecoins against it. Always over-collateralized (typically 150%+).</p>
+    <p><strong>DAI:</strong> Originally ETH-backed, now >60% backed by USDC and real-world assets. Effectively a wrapped centralized stablecoin.</p>
+    <p><strong>LUSD (Liquity V1):</strong> Purely ETH-backed with immutable contracts. The most decentralized stablecoin in existence — no governance, no admin keys, no upgrades.</p>
+    <div class="risk-meter med"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+  </div>
+
+  <button class="collapse-toggle">Synthetic / Delta-Neutral (USDe) <span class="arrow">▸</span></button>
+  <div class="collapse-body">
+    <p><strong>How it works:</strong> Hold stETH (long), short ETH perpetuals (on centralized exchanges). Net price exposure: zero. Yield comes from staking rewards + positive funding rates.</p>
+    <p><strong>Reality:</strong> USDe is not a stablecoin — it's a structured financial product with a soft peg. During periods of negative funding, the reserve fund is drained.</p>
+    <p><strong>Risks:</strong> Exchange counterparty risk (shorts sit on CEXs). Negative funding. stETH depeg. Liquidity crisis during unwind.</p>
+    <div class="risk-meter high"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+  </div>
+</div>
+
+<div class="slide" data-module="4" data-slide="1">
+  <h2>The Risk Spectrum</h2>
+  <p class="lead">Every stablecoin makes different trade-offs between decentralization, capital efficiency, and peg stability. Understanding where each sits on the spectrum is essential for portfolio construction.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Stablecoin</th><th>Type</th><th>Backing</th><th>Censorship</th><th>Peg History</th><th>Risk Level</th></tr>
+    <tr><td>USDC</td><td>Fiat-backed</td><td>USD reserves, T-bills</td><td><span class="tag red">Can freeze</span></td><td>Depegged to $0.87 (SVB)</td><td><span class="tag yellow">Medium</span></td></tr>
+    <tr><td>USDT</td><td>Fiat-backed</td><td>Mixed reserves</td><td><span class="tag red">Can freeze</span></td><td>Minor depegs, never major</td><td><span class="tag yellow">Medium</span></td></tr>
+    <tr><td>DAI / USDS</td><td>CDP</td><td>60%+ USDC/RWA</td><td><span class="tag yellow">Partial</span></td><td>Depegged to $1.10 (Black Thursday)</td><td><span class="tag yellow">Medium</span></td></tr>
+    <tr><td>LUSD</td><td>CDP</td><td>100% ETH</td><td><span class="tag green">Cannot freeze</span></td><td>Stable but premium ($1.00-1.05)</td><td><span class="tag yellow">Medium</span></td></tr>
+    <tr><td>crvUSD</td><td>CDP</td><td>Multi-collateral</td><td><span class="tag green">Cannot freeze</span></td><td>Soft liquidation mechanism</td><td><span class="tag yellow">Medium</span></td></tr>
+    <tr><td>USDe</td><td>Synthetic</td><td>stETH + short perps</td><td><span class="tag green">Cannot freeze</span></td><td>Depends on funding rates</td><td><span class="tag red">High</span></td></tr>
+  </table>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Portfolio Rule</div>
+    Never hold >50% of your stablecoin allocation in a single stablecoin. Diversify across at least two types (e.g., USDC for liquidity + LUSD for censorship resistance).
+  </div>
+</div>
+
+<div class="slide" data-module="4" data-slide="2">
+  <h2>Evaluating Stablecoins</h2>
+  <p class="lead">Before holding any stablecoin, answer these five questions. If you can't answer them all, you don't understand the risk you're taking.</p>
+
+  <h3>The 5-Question Framework</h3>
+  <ol>
+    <li><strong>What backs it?</strong> — Real USD? Crypto collateral? A derivative position? Nothing?</li>
+    <li><strong>What happens if the backing fails?</strong> — Can you redeem? Is there an insurance fund? Who absorbs the loss?</li>
+    <li><strong>Can your tokens be frozen?</strong> — Does the issuer have a blocklist? (USDC and USDT do.)</li>
+    <li><strong>Has it survived a stress test?</strong> — How did it perform during March 2020, May 2022 (Luna), March 2023 (SVB)?</li>
+    <li><strong>What's the worst-case scenario?</strong> — Complete loss? Temporary depeg? Frozen access?</li>
+  </ol>
+
+  <div class="box danger">
+    <div class="box-title">Dead Category: Algorithmic Stablecoins</div>
+    Any stablecoin that maintains its peg through its own token's market cap (like UST/LUNA) is fundamentally fragile. The backing is reflexive — when confidence drops, the peg drops, which drops confidence further. UST proved this with $40B evaporating in 72 hours. Avoid this category entirely.
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODULE 5 — DeFi STRATEGIES                                         -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="5" data-slide="0">
+  <h2>Lending Carry Trades</h2>
+  <p class="lead">A carry trade borrows at a low rate and deploys into a higher-yielding opportunity. The profit is the spread between the two rates.</p>
+
+  <h3>How It Works</h3>
+  <div class="flow">
+    <div class="flow-step">Borrow USDC<br>at 4% on Aave</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Deposit into<br>Pendle PT at 8%</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Earn 4%<br>net spread</div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Factor</th><th>Details</th></tr>
+    <tr><td>When It Works</td><td>Wide, stable spread between borrow and yield source. Low-volatility rate environment.</td></tr>
+    <tr><td>Expected Return</td><td>2-6% annualized net spread (after costs)</td></tr>
+    <tr><td>Key Risks</td><td>Borrow rate spikes above yield. Smart contract risk on the yield source. Pendle PT liquidity near maturity.</td></tr>
+    <tr><td>Risk Level</td><td><span class="tag yellow">Medium</span></td></tr>
+    <tr><td>Capital Needed</td><td>$5,000+ to make fees worthwhile</td></tr>
+  </table>
+  </div>
+
+  <h4>Risk Management Rules</h4>
+  <ul class="checklist">
+    <li><input type="checkbox" id="carry-1"><span>Use stablecoin collateral to isolate from price risk</span></li>
+    <li><input type="checkbox" id="carry-2"><span>Set a "kill switch" rate: unwind if borrow rate exceeds yield - 1%</span></li>
+    <li><input type="checkbox" id="carry-3"><span>Prefer 3-6 month duration to limit rate regime exposure</span></li>
+    <li><input type="checkbox" id="carry-4"><span>Never allocate >15% of portfolio to a single carry trade</span></li>
+  </ul>
+</div>
+
+<div class="slide" data-module="5" data-slide="1">
+  <h2>ETH Staking Leverage Loops</h2>
+  <p class="lead">The most popular advanced DeFi strategy. You amplify staking yield by recursively supplying wstETH and borrowing ETH on Aave V3 in Efficiency Mode.</p>
+
+  <h3>Step-by-Step Construction</h3>
+  <div class="diagram">
+Starting Capital: 10 ETH → Convert to wstETH
+
+Loop 1: Supply 10 wstETH → Borrow 9.3 ETH → Swap to wstETH
+Loop 2: Supply 9.3 wstETH → Borrow 8.65 ETH → Swap to wstETH
+Loop 3: Supply 8.65 wstETH → Borrow 8.04 ETH → Swap to wstETH
+Loop 4: Supply 8.04 wstETH → Borrow 7.48 ETH → Swap to wstETH
+Loop 5: Supply 7.48 wstETH → Borrow 6.96 ETH → Swap to wstETH
+
+Result at ~3x leverage:
+  Total wstETH supplied: ~30 ETH equivalent
+  Total ETH borrowed: ~20 ETH
+  Earning: 30 × 3.5% staking = 1.05 ETH/year
+  Paying:  20 × 2.0% borrow  = 0.40 ETH/year
+  Net profit: 0.65 ETH/year on 10 ETH = 6.5% yield (in ETH)
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Leverage</th><th>Net Yield*</th><th>wstETH Depeg to Liquidation</th><th>Risk Level</th></tr>
+    <tr><td>2.0x</td><td>~5.0%</td><td>~10% depeg</td><td><span class="tag green">Low-Med</span></td></tr>
+    <tr><td>2.5x</td><td>~5.75%</td><td>~7% depeg</td><td><span class="tag yellow">Medium</span></td></tr>
+    <tr><td>3.0x</td><td>~6.5%</td><td>~5% depeg</td><td><span class="tag yellow">Medium-High</span></td></tr>
+    <tr><td>4.0x</td><td>~7.5%</td><td>~3% depeg</td><td><span class="tag red">High</span></td></tr>
+  </table>
+  </div>
+  <p style="font-size:0.75rem;color:var(--text-muted);">*Assuming 3.5% staking yield, 2.0% borrow cost. Actual rates vary.</p>
+
+  <div class="box warn">
+    <div class="box-title">Risk Management</div>
+    Keep leverage ≤ 2.5x for positions held >30 days. Monitor wstETH/ETH ratio daily. Use DeFi Saver's automation for emergency deleverage. Keep 20% undeployed as a health-factor buffer.
+  </div>
+</div>
+
+<div class="slide" data-module="5" data-slide="2">
+  <h2>Liquidity Providing</h2>
+  <p class="lead">Providing liquidity to a DEX pool earns you trading fees — but only if the fees exceed impermanent loss. Most retail LPs lose money because they don't do this math.</p>
+
+  <h3>Strategy Decision Matrix</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Pair Type</th><th>Range</th><th>Expected Fee APY</th><th>IL Risk</th><th>Net Profitable?</th></tr>
+    <tr><td>Stable/Stable (USDC/USDT)</td><td>±0.5%</td><td>3-8%</td><td>Minimal</td><td><span class="tag green">Usually yes</span></td></tr>
+    <tr><td>Correlated (ETH/stETH)</td><td>±2%</td><td>2-5%</td><td>Low</td><td><span class="tag green">Usually yes</span></td></tr>
+    <tr><td>Major/Stable (ETH/USDC)</td><td>±10-15%</td><td>10-30%</td><td>High</td><td><span class="tag yellow">Depends</span></td></tr>
+    <tr><td>Volatile/Volatile</td><td>Wide</td><td>20-100%+</td><td>Very High</td><td><span class="tag red">Usually no</span></td></tr>
+  </table>
+  </div>
+
+  <h3>The Real PnL Formula</h3>
+  <div class="formula">Actual Return = Fees Earned − Impermanent Loss − Gas Costs − Opportunity Cost
+
+Your benchmark: would you have been better off just holding the tokens?
+If net return < 0, you're paying to be an LP.</div>
+
+  <h4>LP Checklist</h4>
+  <ul class="checklist">
+    <li><input type="checkbox" id="lp-1"><span>Calculated expected IL for your price range</span></li>
+    <li><input type="checkbox" id="lp-2"><span>Verified pool volume supports sufficient fee generation</span></li>
+    <li><input type="checkbox" id="lp-3"><span>Using L2 (Arbitrum/Base) to minimize gas costs for rebalancing</span></li>
+    <li><input type="checkbox" id="lp-4"><span>Set a rebalance rule (e.g., move range if price at boundary for >24h)</span></li>
+    <li><input type="checkbox" id="lp-5"><span>Tracking net PnL weekly (not just fee APY)</span></li>
+  </ul>
+</div>
+
+<div class="slide" data-module="5" data-slide="3">
+  <h2>Funding Rate Arbitrage &amp; Airdrop Farming</h2>
+  <p class="lead">Two additional strategies: delta-neutral funding capture, and speculative airdrop farming.</p>
+
+  <h3>Funding Rate Arbitrage</h3>
+  <div class="flow">
+    <div class="flow-step">Buy spot ETH<br>(or stETH)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Short equal ETH<br>on perps</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Net exposure:<br>Zero</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Earn staking yield<br>+ funding rate</div>
+  </div>
+
+  <p>In bull markets, longs pay shorts a funding rate (often 10-25% annualized). Combined with staking yield (~3.5%), total returns can reach 15-30%. This is the mechanism behind Ethena's USDe.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Risk</th><th>Impact</th><th>Mitigation</th></tr>
+    <tr><td>Negative funding</td><td>You pay instead of earning</td><td>Exit when 7-day avg funding goes negative</td></tr>
+    <tr><td>Exchange failure</td><td>Lose the short leg (FTX proved this)</td><td>Spread shorts across 2-3 venues</td></tr>
+    <tr><td>Margin call</td><td>ETH spike requires more margin</td><td>Keep 20% buffer beyond minimum margin</td></tr>
+  </table>
+  </div>
+
+  <h3>Airdrop Farming</h3>
+  <p>Many protocols reward early users with token airdrops. The strategy: deploy capital into point-earning activities and wait for the token launch.</p>
+
+  <h4>Framework</h4>
+  <ul>
+    <li><strong>Expected Value:</strong> Estimated FDV × airdrop % × your share of points</li>
+    <li><strong>Cost:</strong> Capital × duration × opportunity cost rate + gas</li>
+    <li><strong>Rule:</strong> Diversify across 3-5 opportunities. Never borrow to airdrop farm. Treat expected airdrop value as zero until it's realized.</li>
+  </ul>
+
+  <div class="box tip">
+    <div class="box-title">Professional Approach</div>
+    Calculate your cost basis weekly. If you're "earning" points at a cost of $10 each, and similar protocols airdropped tokens worth $5 per point equivalent, you're underwater. Airdrop farming is speculative — size accordingly.
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODULE 6 — RISK MANAGEMENT                                         -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="6" data-slide="0">
+  <h2>Smart Contract &amp; Oracle Risk</h2>
+  <p class="lead">Every DeFi position sits on a foundation of code and data feeds. When either fails, your funds are at risk — regardless of how "safe" the strategy looks on paper.</p>
+
+  <h3>Smart Contract Risk</h3>
+  <p>The code might have bugs. Even audited code. Even code that's been live for years.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Exploit</th><th>Amount Lost</th><th>What Happened</th><th>Was It Audited?</th></tr>
+    <tr><td>Euler Finance (2023)</td><td>$197M</td><td>Missing health check in donation function</td><td>Yes, twice</td></tr>
+    <tr><td>Wormhole (2022)</td><td>$320M</td><td>Signature verification bypass</td><td>Yes</td></tr>
+    <tr><td>Curve/Vyper (2023)</td><td>$73M</td><td>Reentrancy bug in the compiler itself</td><td>N/A — compiler bug</td></tr>
+  </table>
+  </div>
+
+  <h4>Mitigation Framework</h4>
+  <ul>
+    <li><strong>Time is the best audit.</strong> Protocols with >$1B TVL for >2 years without incident have passed the most rigorous test possible.</li>
+    <li><strong>Audit quality varies.</strong> Trail of Bits, OpenZeppelin, Spearbit are top tier. Unknown auditors are nearly meaningless.</li>
+    <li><strong>Bug bounties signal commitment.</strong> A $1M Immunefi bounty means the team is serious. A $10k bounty is cosmetic.</li>
+    <li><strong>Max 20% of capital in any single contract system.</strong></li>
+  </ul>
+
+  <h3>Oracle Risk</h3>
+  <p>DeFi protocols need price data from external sources. Wrong prices → wrong liquidations, exploitable swaps, drained pools.</p>
+  <ul>
+    <li><strong>Flash loan manipulation:</strong> Borrow millions in one transaction to manipulate a price oracle, exploit a protocol, repay — all in one block.</li>
+    <li><strong>Stale prices:</strong> Oracle stops updating during extreme volatility. Liquidations fire at wrong prices.</li>
+    <li><strong>Defense:</strong> Prefer protocols using Chainlink (multi-node, battle-tested). Be cautious with custom TWAP oracles.</li>
+  </ul>
+</div>
+
+<div class="slide" data-module="6" data-slide="1">
+  <h2>Liquidity &amp; Depeg Risk</h2>
+  <p class="lead">Two risks that feel invisible until they aren't: the inability to exit, and the failure of assets you assumed were stable.</p>
+
+  <h3>Liquidity Risk</h3>
+  <p>You need to exit but can't — or can only exit at a massive loss.</p>
+  <ul>
+    <li><strong>Lending pool at 100% utilization:</strong> Your supplied assets are fully borrowed. You cannot withdraw.</li>
+    <li><strong>Thin DEX pool:</strong> Your $100k position can only exit with 5% slippage.</li>
+    <li><strong>Bridge congestion:</strong> You need to move assets urgently but the bridge is paused.</li>
+  </ul>
+
+  <h4>Mitigation Rules</h4>
+  <div class="box tip">
+    <div class="box-title">Position Sizing</div>
+    Never be more than 5% of a pool's TVL. Check utilization trends before supplying. For positions >$50k, verify exit slippage before entry. Keep capital on L1 Ethereum for maximum optionality during crises.
+  </div>
+
+  <h3>Stablecoin Depeg Risk</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Event</th><th>What Happened</th><th>Recovery</th></tr>
+    <tr><td>USDC / SVB (Mar 2023)</td><td>$3.3B reserves stuck in failing bank. Depegged to $0.87.</td><td>3 days after FDIC backstop</td></tr>
+    <tr><td>UST / LUNA (May 2022)</td><td>Algorithmic design with reflexive backing. Death spiral.</td><td>Never. $40B lost permanently.</td></tr>
+    <tr><td>DAI / Black Thursday (Mar 2020)</td><td>ETH crashed 50%. Liquidation system jammed. DAI traded above $1.10.</td><td>Days, after protocol emergency measures</td></tr>
+  </table>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Key Insight</div>
+    Every DeFi strategy has stablecoin exposure somewhere in its dependency chain. A "safe" Aave position is only as safe as the stablecoins flowing through it.
+  </div>
+</div>
+
+<div class="slide" data-module="6" data-slide="2">
+  <h2>Cascading Liquidations</h2>
+  <p class="lead">DeFi's most dangerous systemic pattern. Liquidation cascades are reflexive — the act of liquidating positions creates the conditions for more liquidations.</p>
+
+  <h3>The Cascade Sequence</h3>
+  <div class="diagram">
+Phase 1 — TRIGGER
+  External shock → price drops → positions approach liquidation threshold
+
+Phase 2 — FIRST WAVE
+  Most leveraged positions hit threshold → liquidator bots buy collateral at discount
+  → sell on DEXs for profit
+
+Phase 3 — SELL PRESSURE
+  Liquidators dumping collateral → pushes price down further
+  On thin liquidity, impact is massive
+
+Phase 4 — SECOND WAVE
+  Additional price drop → next tier of positions liquidated
+  → more collateral sold → more sell pressure
+
+Phase 5 — LIQUIDITY EXHAUSTION
+  DEX pools absorb too much selling → slippage becomes extreme
+  → liquidations become unprofitable → liquidators stop bidding
+
+Phase 6 — BAD DEBT
+  Positions that can't be profitably liquidated → protocol absorbs loss
+  → insurance fund / safety module stakers take the hit
+  </div>
+
+  <h3>How to Survive</h3>
+  <ul class="checklist">
+    <li><input type="checkbox" id="cas-1"><span>Monitor liquidation walls on DeFiLlama (at what price levels are large positions liquidated?)</span></li>
+    <li><input type="checkbox" id="cas-2"><span>Keep HF above 1.5 at all times — cascades move fast</span></li>
+    <li><input type="checkbox" id="cas-3"><span>Pre-plan deleveraging steps and have gas ETH ready on the right chain</span></li>
+    <li><input type="checkbox" id="cas-4"><span>Remember: gas costs spike during crashes (your $5 deleverage might cost $200)</span></li>
+    <li><input type="checkbox" id="cas-5"><span>Maintain 20-30% in stablecoins or un-deployed assets as dry powder</span></li>
+  </ul>
+
+  <div class="box danger">
+    <div class="box-title">The Correlation Trap</div>
+    In a systemic event, all DeFi correlates to 1. Your "diversified" portfolio across 5 protocols is actually one trade: long DeFi infrastructure. The only real hedge is position sizing and cash reserves.
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODULE 7 — PROFESSIONAL DeFi RESEARCH                              -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="7" data-slide="0">
+  <h2>Skill 1: Reading Liquidity</h2>
+  <p class="lead">Liquidity is the ability to move capital without significant price impact. It's the most important variable in DeFi — and the least understood by retail users.</p>
+
+  <h3>What to Read</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Metric</th><th>Where to Find It</th><th>What It Tells You</th></tr>
+    <tr><td>DEX Pool Depth</td><td>Uniswap analytics, DEX Screener</td><td>Can your swap execute at <1% slippage?</td></tr>
+    <tr><td>Lending Utilization</td><td>Aave dashboard, DeFiLlama</td><td>Can lenders withdraw? Will borrow rates spike?</td></tr>
+    <tr><td>Order Book Depth</td><td>dYdX, Hyperliquid</td><td>How much liquidity at ±2%, ±5%, ±10% from price?</td></tr>
+    <tr><td>TVL Trends</td><td>DeFiLlama</td><td>Is capital entering or leaving? Declining TVL = higher risk.</td></tr>
+  </table>
+  </div>
+
+  <h3>Practice Exercise</h3>
+  <div class="box tip">
+    <div class="box-title">Weekly Drill</div>
+    Pick one protocol you're deployed in. Map its full liquidity picture: which DEX pools does it depend on? What's the depth? What's the utilization? What would happen if 10% of TVL exited in 24 hours? After doing this for 4 weeks, you'll start seeing liquidity structures instead of just numbers.
+  </div>
+
+  <h3>Liquidity Red Flags</h3>
+  <ul>
+    <li>Lending pool utilization consistently above 85%</li>
+    <li>Your position is >5% of a pool's total TVL</li>
+    <li>TVL declining for 3+ consecutive weeks</li>
+    <li>Only one DEX pool for the asset with <$5M liquidity</li>
+  </ul>
+</div>
+
+<div class="slide" data-module="7" data-slide="1">
+  <h2>Skill 2: Interest Rate Markets</h2>
+  <p class="lead">Interest rates in DeFi are prices — prices for the temporary use of capital. They encode information about supply, demand, risk, and market expectations.</p>
+
+  <h3>Three Rates to Track Daily</h3>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val">USDC Borrow</div>
+      <div class="stat-label">Aave V3 — cost of capital</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">ETH Funding</div>
+      <div class="stat-label">Perp exchanges — market positioning</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">Pendle PT</div>
+      <div class="stat-label">Implied yield — market expectations</div>
+    </div>
+  </div>
+
+  <h3>What Rate Movements Tell You</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Signal</th><th>What It Means</th><th>Implication</th></tr>
+    <tr><td>Borrow rates spiking</td><td>High demand for leverage, pool utilization rising</td><td>Carry trades become less profitable. Consider reducing leverage.</td></tr>
+    <tr><td>Funding rate very positive (>0.05%/8h)</td><td>Market heavily long. Longs paying shorts.</td><td>Good for delta-neutral short. But crowded — may snap back.</td></tr>
+    <tr><td>Funding rate negative</td><td>Market heavily short. Shorts paying longs.</td><td>Exit delta-neutral strategies. Bear sentiment dominant.</td></tr>
+    <tr><td>Pendle PT > current yield</td><td>Market expects rates to rise</td><td>Potential mispricing if you disagree with consensus.</td></tr>
+  </table>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Developing the Skill</div>
+    Track these three rates for two weeks straight. Note the numbers each morning. After two weeks, you'll see patterns — rates move together during risk-on/risk-off shifts, and divergences create opportunities.
+  </div>
+</div>
+
+<div class="slide" data-module="7" data-slide="2">
+  <h2>Skill 3: Liquidation Analysis</h2>
+  <p class="lead">Liquidations are DeFi's clearing mechanism. Understanding where liquidation walls sit tells you where the system's stress points are — and where cascades will trigger.</p>
+
+  <h3>Reading Liquidation Walls</h3>
+  <div class="diagram">
+ETH Liquidation Map (example)
+
+$3,200  ├──── $50M at risk
+$3,000  ├──────────── $150M at risk
+$2,800  ├────────────────── $300M at risk  ← Major wall
+$2,600  ├──────────────────────── $500M at risk  ← Cascade trigger
+$2,400  ├──── $80M at risk
+$2,200  ├── $30M at risk
+
+Reading: If ETH hits $2,800, $300M of collateral will be force-sold.
+That selling pressure will push price through $2,800 toward $2,600,
+triggering the $500M wall. This is a cascade scenario.
+  </div>
+
+  <h3>Where to Monitor</h3>
+  <ul>
+    <li><strong>DeFiLlama Liquidations</strong> — aggregated liquidation dashboards across major lending protocols</li>
+    <li><strong>Parsec Finance</strong> — real-time liquidation data with protocol breakdown</li>
+    <li><strong>Custom Dune queries</strong> — health factor distributions across Aave/Compound</li>
+  </ul>
+
+  <h3>Weekly Practice</h3>
+  <div class="box tip">
+    <div class="box-title">Exercise</div>
+    Every week, check the DeFiLlama liquidation dashboard. Identify the three largest liquidation walls for ETH and BTC on Aave. Write down: at what price they trigger, estimated sell pressure, and which DEX pools would absorb it. Over time, you'll develop an intuitive map of where the system breaks.
+  </div>
+</div>
+
+<div class="slide" data-module="7" data-slide="3">
+  <h2>Skill 4: Tracking Capital Flows</h2>
+  <p class="lead">Capital doesn't sit still in DeFi. It moves — between chains, between protocols, between strategies. Following the flow tells you where opportunities are emerging and risks are building.</p>
+
+  <h3>What to Track</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Flow Type</th><th>Tool</th><th>Signal</th></tr>
+    <tr><td>TVL by Chain</td><td>DeFiLlama</td><td>Which chains are gaining/losing capital? Migration = narrative shift.</td></tr>
+    <tr><td>Bridge Flows</td><td>DeBridge, LayerZero</td><td>Large flows into a chain often precede new launches or airdrops.</td></tr>
+    <tr><td>Protocol TVL Changes</td><td>DeFiLlama</td><td>+50% in a week = new incentives (temporary) or organic demand (sustainable).</td></tr>
+    <tr><td>Whale Movements</td><td>Arkham Intelligence</td><td>Where institutional wallets deploy = what professionals consider safe.</td></tr>
+    <tr><td>Stablecoin Supply</td><td>DeFiLlama Stables</td><td>Increasing = new capital entering DeFi. Decreasing = capital exiting.</td></tr>
+  </table>
+  </div>
+
+  <h3>Weekly Capital Flow Review</h3>
+  <div class="box tip">
+    <div class="box-title">Monday Ritual</div>
+    Every Monday, open DeFiLlama and note: (1) total DeFi TVL change for the week, (2) which chains gained/lost the most, (3) which protocols had the largest absolute TVL changes. After four weeks, you'll recognize capital rotation patterns — money flows to new protocols during risk-on, back to blue chips during risk-off.
+  </div>
+
+  <h3>Research Tool Stack</h3>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val">DeFiLlama</div><div class="stat-label">TVL, Yields, Liquidations</div></div>
+    <div class="stat-card"><div class="stat-val">Dune</div><div class="stat-label">Custom On-Chain Queries</div></div>
+    <div class="stat-card"><div class="stat-val">DeBank</div><div class="stat-label">Portfolio Tracking</div></div>
+    <div class="stat-card"><div class="stat-val">Arkham</div><div class="stat-label">Whale Tracking</div></div>
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODULE 8 — STRATEGY PORTFOLIO                                      -->
+<!-- ================================================================== -->
+
+<div class="slide" data-module="8" data-slide="0">
+  <h2>Portfolio Design</h2>
+  <p class="lead">Professional DeFi operators run multiple strategies simultaneously. Diversification across strategy types reduces the impact of any single failure.</p>
+
+  <h3>Model Portfolio Allocation</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Strategy</th><th>Allocation</th><th>Expected Yield</th><th>Risk</th><th>Purpose</th></tr>
+    <tr><td>ETH Staking Leverage (2.5x)</td><td><strong>40%</strong></td><td>5-7%</td><td><span class="tag yellow">Medium</span></td><td>Core yield engine, ETH-denominated</td></tr>
+    <tr><td>Stablecoin Lending (Aave/Pendle PT)</td><td><strong>20%</strong></td><td>4-8%</td><td><span class="tag green">Low</span></td><td>Stable income, USD-denominated</td></tr>
+    <tr><td>Delta-Neutral (Funding Arb)</td><td><strong>20%</strong></td><td>8-25%</td><td><span class="tag yellow">Medium</span></td><td>Market-neutral yield</td></tr>
+    <tr><td>Concentrated LP (Correlated Pairs)</td><td><strong>10%</strong></td><td>5-15%</td><td><span class="tag yellow">Medium</span></td><td>Fee income from market making</td></tr>
+    <tr><td>Experimental / Airdrop Farming</td><td><strong>10%</strong></td><td>Unknown</td><td><span class="tag red">High</span></td><td>Asymmetric upside, speculative</td></tr>
+  </table>
+  </div>
+
+  <h3>Position Sizing Rules</h3>
+  <ul>
+    <li>Maximum 20% of total DeFi capital in any single protocol</li>
+    <li>Maximum 10% in any single strategy</li>
+    <li>Keep 20-30% accessible within 24 hours (dry powder)</li>
+    <li>Total DeFi allocation = a defined % of net worth, not everything</li>
+  </ul>
+
+  <h3>Blended Portfolio Return</h3>
+  <div class="formula">
+Expected portfolio yield (mid-case):
+  40% × 6.0% + 20% × 6.0% + 20% × 15% + 10% × 8% + 10% × 0%
+= 2.4% + 1.2% + 3.0% + 0.8% + 0%
+= 7.4% blended annualized return
+
+On $50,000 deployed: ~$3,700/year
+On $100,000 deployed: ~$7,400/year
+  </div>
+</div>
+
+<div class="slide" data-module="8" data-slide="1">
+  <h2>Position Tracker</h2>
+  <p class="lead">Track every position. Update weekly. Honest accounting is the difference between profitable operators and retail users who "feel" like they're making money.</p>
+
+  <h3>Active Positions</h3>
+  <p style="font-size:0.78rem; color:var(--text-muted);">Click any cell in the editable columns to update your data. Data is stored in your browser.</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr>
+      <th>Protocol</th><th>Chain</th><th>Strategy</th><th>Capital</th><th>Entry Date</th><th>Health Factor</th><th>Gross APY</th><th>Net PnL</th><th>Exit Trigger</th>
+    </tr>
+    <tr>
+      <td contenteditable>Aave V3</td><td contenteditable>Arbitrum</td><td contenteditable>wstETH loop 2.5x</td><td contenteditable>8 ETH</td><td contenteditable>2026-01-15</td><td contenteditable>2.0</td><td contenteditable>7.1%</td><td contenteditable>+0.22 ETH</td><td contenteditable>HF&lt;1.5</td>
+    </tr>
+    <tr>
+      <td contenteditable>Pendle</td><td contenteditable>Ethereum</td><td contenteditable>sDAI PT 6mo</td><td contenteditable>$5,000</td><td contenteditable>2026-03-10</td><td contenteditable>N/A</td><td contenteditable>6.2%</td><td contenteditable>+$65</td><td contenteditable>Maturity</td>
+    </tr>
+    <tr>
+      <td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td>
+    </tr>
+    <tr>
+      <td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td>
+    </tr>
+    <tr>
+      <td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td><td contenteditable>—</td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>Quarterly Deep Review Questions</h3>
+  <ul>
+    <li>What's your total DeFi PnL vs benchmarks (ETH, BTC, S&P 500)?</li>
+    <li>Are you adding value as an active operator, or would passive strategies outperform?</li>
+    <li>Which positions are underperforming their benchmark for 3+ consecutive weeks?</li>
+    <li>Are any positions concentrated beyond the 20% per protocol rule?</li>
+  </ul>
+</div>
+
+<div class="slide" data-module="8" data-slide="2">
+  <h2>Deployment Checklist</h2>
+  <p class="lead">Before deploying capital into any new DeFi position, work through this checklist. If you can't check every item, don't deploy.</p>
+
+  <h3>Protocol Evaluation</h3>
+  <ul class="checklist">
+    <li><input type="checkbox" id="dep-1"><span>Can name the yield source in one sentence (borrowing demand, trading fees, funding rates, etc.)</span></li>
+    <li><input type="checkbox" id="dep-2"><span>Verified: protocol has been audited by a reputable firm (Trail of Bits, OZ, Spearbit)</span></li>
+    <li><input type="checkbox" id="dep-3"><span>Verified: protocol has held significant TVL for >6 months without incident</span></li>
+    <li><input type="checkbox" id="dep-4"><span>Verified: oracle system is Chainlink or equivalent multi-node solution</span></li>
+    <li><input type="checkbox" id="dep-5"><span>Verified: governance can't unilaterally drain funds (timelock, multisig)</span></li>
+  </ul>
+
+  <h3>Position Setup</h3>
+  <ul class="checklist">
+    <li><input type="checkbox" id="dep-6"><span>Position size is ≤10% of total DeFi capital</span></li>
+    <li><input type="checkbox" id="dep-7"><span>Can exit at my position size with &lt;1% slippage</span></li>
+    <li><input type="checkbox" id="dep-8"><span>Health factor is above 1.5 (if leveraged)</span></li>
+    <li><input type="checkbox" id="dep-9"><span>Exit triggers are defined and written down</span></li>
+    <li><input type="checkbox" id="dep-10"><span>Worst-case scenario (total loss) is survivable for my portfolio</span></li>
+  </ul>
+
+  <h3>Ongoing Management</h3>
+  <ul class="checklist">
+    <li><input type="checkbox" id="dep-11"><span>Daily: check portfolio dashboard, scan for incidents (5 min)</span></li>
+    <li><input type="checkbox" id="dep-12"><span>Weekly: calculate net PnL, update position tracker, check governance proposals (30 min)</span></li>
+    <li><input type="checkbox" id="dep-13"><span>Monthly: full portfolio review vs benchmarks, kill underperformers (60 min)</span></li>
+    <li><input type="checkbox" id="dep-14"><span>Quarterly: zoom out — am I adding value as an active operator? (2 hours)</span></li>
+  </ul>
+
+  <div class="box tip">
+    <div class="box-title">Final Mental Model</div>
+    <strong>"Where does the yield come from?"</strong> If you can't answer this in one sentence, you don't understand the position. Every yield in DeFi has a source: someone is paying for something. If the source is "new depositors," it might be a Ponzi. If the source is "token emissions," it's subsidized and will compress. Name the source, or don't deploy.
+  </div>
+
+  <div style="text-align:center; margin-top:40px; padding:32px; border:1px solid var(--border); border-radius:var(--radius-lg); background:var(--accent-glow);">
+    <h3 style="color:var(--accent); margin:0 0 8px; border:none; padding:0;">Course Complete</h3>
+    <p style="color:var(--text-dim); margin:0;">You now have the knowledge framework to evaluate protocols, design strategies, manage risk, and operate like a DeFi researcher. Apply it, track your results, and keep learning.</p>
+  </div>
+</div>
+
+  </div><!-- /content-area -->
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn" id="btn-prev">← Previous</button>
+    <span class="slide-counter" id="slide-counter">1 / 30</span>
+    <button class="nav-btn primary" id="btn-next">Next →</button>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<script src="script.js"></script>
+</body>
+</html>

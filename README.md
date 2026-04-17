@@ -52,6 +52,7 @@ Nur falls du **historisch** zwei Pfade hast (z.B. alter Ordner ohne `.git` + Git
 |-------|--------|
 | [docs/BUILD.md](docs/BUILD.md) | Node, Build, Kurrikulum |
 | [docs/GITHUB.md](docs/GITHUB.md) | Klonen, Push, PAT, optional Sync |
+| [docs/OPS_CHECKLIST.md](docs/OPS_CHECKLIST.md) | Deploy-, Webhook- und Smoke-Test-Checkliste |
 | `scripts/import-modules.ts` | Große `moduleN.md` nach `content/modules/` |
 
 ## GitHub Pages (Deploy)
