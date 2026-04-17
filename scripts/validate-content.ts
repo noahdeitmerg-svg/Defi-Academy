@@ -3,9 +3,12 @@ import path from "node:path";
 
 const CONTENT_ROOT = path.join(process.cwd(), "content", "modules");
 
+type Severity = "error" | "warn";
+
 type ValidationIssue = {
   file: string;
   message: string;
+  severity: Severity;
 };
 
 const REQUIRED_SECTION_ALIASES: Array<{ canonical: string; aliases: string[] }> = [
@@ -53,16 +56,27 @@ async function validateModule(moduleDir: string, issues: ValidationIssue[]) {
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 
   if (lessonFiles.length === 0) {
-    issues.push({ file: rel(moduleDir), message: "Keine Lektionsdateien (*.md) gefunden." });
+    issues.push({
+      file: rel(moduleDir),
+      message: "Keine Lektionsdateien (*.md) gefunden.",
+      severity: "error",
+    });
   }
 
+  // meta.json und Quiz sind runtime-safe (Fallbacks im Frontend vorhanden)
+  // → nur Warnung, damit Work-in-Progress-Module die CI nicht blockieren
   if (!files.includes("meta.json")) {
-    issues.push({ file: rel(moduleDir), message: "meta.json fehlt." });
+    issues.push({
+      file: rel(moduleDir),
+      message: "meta.json fehlt (Fallback: Slug als Titel).",
+      severity: "warn",
+    });
   }
   if (!files.includes("quiz.json") && !files.includes("open-quiz.md")) {
     issues.push({
       file: rel(moduleDir),
-      message: "Weder quiz.json noch open-quiz.md vorhanden.",
+      message: "Weder quiz.json noch open-quiz.md vorhanden (Quiz-Tab wird ausgeblendet).",
+      severity: "warn",
     });
   }
 
@@ -77,6 +91,7 @@ async function validateModule(moduleDir: string, issues: ValidationIssue[]) {
         issues.push({
           file: rel(full),
           message: `Pflichtabschnitt fehlt: ${req.canonical} (erwartet: ${req.aliases.join(" | ")})`,
+          severity: "error",
         });
       }
     }
@@ -95,16 +110,28 @@ async function main() {
     await validateModule(dir, issues);
   }
 
-  if (issues.length > 0) {
-    console.error(`[validate:content] Fehlgeschlagen mit ${issues.length} Problem(en):`);
-    for (const issue of issues) {
-      console.error(`- ${issue.file}: ${issue.message}`);
+  const errors = issues.filter((i) => i.severity === "error");
+  const warnings = issues.filter((i) => i.severity === "warn");
+
+  if (warnings.length > 0) {
+    console.warn(`[validate:content] ${warnings.length} Warnung(en):`);
+    for (const issue of warnings) {
+      console.warn(`- WARN  ${issue.file}: ${issue.message}`);
+    }
+  }
+
+  if (errors.length > 0) {
+    console.error(`[validate:content] Fehlgeschlagen mit ${errors.length} Fehler(n):`);
+    for (const issue of errors) {
+      console.error(`- ERROR ${issue.file}: ${issue.message}`);
     }
     process.exit(1);
   }
 
   console.log(
-    `[validate:content] OK. ${dirs.length} Module validiert (${REQUIRED_SECTION_ALIASES.length} Pflichtabschnitte je Lektion).`,
+    `[validate:content] OK. ${dirs.length} Module validiert (${REQUIRED_SECTION_ALIASES.length} Pflichtabschnitte je Lektion)${
+      warnings.length > 0 ? `, ${warnings.length} Warnung(en)` : ""
+    }.`,
   );
 }
 

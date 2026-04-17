@@ -312,6 +312,9 @@ Zusätzliche Trigger ohne Git-Push:\
     -   `lib/mdxSafe.ts` maskiert Prosa-`<` (z. B. `<$10k`, `<1 Jahr`), damit MDX sie nicht als JSX interpretiert
 -   Normalisiertes Ziel: `content/modules/moduleN/` mit `meta.json`, `N-1.md` … `N-6.md`, und `quiz.json` (MC) **oder** `open-quiz.md` (Freitext)
 -   Sanity-Check: `npm run validate:content` (läuft lokal via `npm run check` und in CI)
+    -   **errors** (blocken CI): Pflichtabschnitte in Lessons fehlen, keine Lessons im Modulordner
+    -   **warnings** (CI grün): kein `quiz.json`/`open-quiz.md` (Quiz-Tab wird im Frontend ausgeblendet), kein `meta.json` (Slug als Titel-Fallback)
+    -   → Work-in-Progress-Module mit nur Teil-A-Content blockieren die Pipeline nicht
 
 ### Video- und Poster-Assets (optional pro Lektion)
 
