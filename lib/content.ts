@@ -10,7 +10,7 @@ import {
   parseModuleTitleFromSource,
   splitCursorModuleFile,
 } from "./splitCursorModule";
-import type { LessonMeta, ModuleMeta, QuizFile } from "./types";
+import type { LessonMeta, ModuleMeta, ModuleQuizPayload, QuizFile } from "./types";
 
 export { lessonHref, quizHref } from "./routes";
 
@@ -177,7 +177,7 @@ export async function getParsedLesson(moduleSlug: string, lessonSlug: string) {
   return parseLessonMarkdown(raw);
 }
 
-export async function getQuiz(moduleSlug: string): Promise<QuizFile | null> {
+export async function getQuiz(moduleSlug: string): Promise<ModuleQuizPayload | null> {
   const flatRoot = resolveFlatCurriculumRoot();
   if (flatRoot) {
     const src = await readFlatModuleSource(flatRoot, moduleSlug);
@@ -185,15 +185,36 @@ export async function getQuiz(moduleSlug: string): Promise<QuizFile | null> {
     const { moduleQuizMarkdown } = splitCursorModuleFile(src);
     if (!moduleQuizMarkdown) return null;
     const title =
-      moduleQuizMarkdown.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? "Modulquiz";
+      moduleQuizMarkdown.match(/^#{1,2}\s+(.+)$/m)?.[1]?.trim() ?? "Modulquiz";
     const parsed = parseMcQuizMarkdown(moduleQuizMarkdown, title);
-    return parsed.questions.length ? parsed : null;
+    if (parsed.questions.length > 0) {
+      return { format: "multipleChoice", quiz: parsed };
+    }
+    return { format: "openMarkdown", title, markdown: moduleQuizMarkdown };
   }
 
-  const file = path.join(LEGACY_CONTENT_ROOT, moduleSlug, "quiz.json");
+  const base = path.join(LEGACY_CONTENT_ROOT, moduleSlug);
   try {
-    const raw = await fs.readFile(file, "utf8");
-    return JSON.parse(raw) as QuizFile;
+    const jsonPath = path.join(base, "quiz.json");
+    try {
+      const raw = await fs.readFile(jsonPath, "utf8");
+      const quiz = JSON.parse(raw) as QuizFile;
+      if (quiz.questions?.length > 0) {
+        return { format: "multipleChoice", quiz };
+      }
+    } catch {
+      /* kein quiz.json */
+    }
+
+    const openPath = path.join(base, "open-quiz.md");
+    try {
+      const markdown = await fs.readFile(openPath, "utf8");
+      const title =
+        markdown.match(/^#{1,2}\s+(.+)$/m)?.[1]?.trim() ?? "Modul-Abschluss";
+      return { format: "openMarkdown", title, markdown };
+    } catch {
+      return null;
+    }
   } catch {
     return null;
   }

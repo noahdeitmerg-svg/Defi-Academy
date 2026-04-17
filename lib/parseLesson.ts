@@ -9,6 +9,41 @@ import type {
 } from "./types";
 import { parseMcQuizMarkdown } from "./parseMcQuiz";
 
+/** Folien aus `**[Slide n] — Titel**`-Blöcken (deutsches Kurrikulum). */
+function parseSlidesFromBracketBlocks(section: string): Slide[] {
+  const slides: Slide[] = [];
+  const re = /^\*\*\[Slide\s*\d+\](?:\s*[—-]\s*([^*\n]+))?\*\*\s*$/gm;
+  const matches = [...section.matchAll(re)];
+  if (matches.length === 0) return [];
+
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i];
+    const slideTitle = (m[1] ?? "").trim() || `Folie ${i + 1}`;
+    const start = (m.index ?? 0) + m[0].length;
+    const end = i + 1 < matches.length ? (matches[i + 1].index ?? section.length) : section.length;
+    const body = section.slice(start, end).trim();
+    const bullets: string[] = [];
+    for (const line of body.split("\n")) {
+      const t = line.trim();
+      if (!t) continue;
+      const bullet = /^[-*•]\s+(.+)$/.exec(t);
+      const numbered = /^\d+\.\s+(.+)$/.exec(t);
+      if (bullet) bullets.push(bullet[1].trim());
+      else if (numbered) bullets.push(numbered[1].trim());
+    }
+    if (bullets.length === 0 && body) {
+      const paras = body
+        .split(/\n{2,}/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+      slides.push({ title: slideTitle, bullets: paras.length ? paras : [body] });
+    } else {
+      slides.push({ title: slideTitle, bullets });
+    }
+  }
+  return slides;
+}
+
 function parseSlides(section: string | undefined): Slide[] {
   if (!section) return [];
   const slides: Slide[] = [];
@@ -42,6 +77,11 @@ function parseSlides(section: string | undefined): Slide[] {
   }
 
   if (slides.length === 0) {
+    const bracketSlides = parseSlidesFromBracketBlocks(section);
+    if (bracketSlides.length) return bracketSlides;
+  }
+
+  if (slides.length === 0) {
     const fallbackBullets = (section ?? "")
       .split("\n")
       .map((l) => l.trim())
@@ -64,12 +104,16 @@ function parseVisuals(section: string | undefined): VisualSuggestion[] {
     let timestamp = "";
     let instruction = line;
 
+    const boldBracket = /^\*\*\[([^\]]+)\]\*\*\s*(.+)$/.exec(line);
     const bracket = /^\[([^\]]+)\]\s*(.*)$/.exec(line);
     const bold = /^\*\*([^*]+)\*\*\s*[—:-]?\s*(.*)$/.exec(line);
     const dash = /^[-*•]\s*\[([^\]]+)\]\s*(.*)$/.exec(line);
     const boldDash = /^[-*•]\s*\*\*([^*]+)\*\*\s*[—:-]?\s*(.*)$/.exec(line);
 
-    if (dash) {
+    if (boldBracket) {
+      timestamp = boldBracket[1].trim();
+      instruction = boldBracket[2].trim();
+    } else if (dash) {
       timestamp = dash[1].trim();
       instruction = dash[2].trim();
     } else if (boldDash) {
@@ -95,24 +139,30 @@ function parseVisuals(section: string | undefined): VisualSuggestion[] {
 function parseExercise(section: string | undefined): ExerciseData | null {
   if (!section) return null;
 
-  const goalMatch = /###\s*Goal\s*\n+([\s\S]*?)(?=###|\Z)/i.exec(section);
-  const stepsMatch = /###\s*Steps\s*\n+([\s\S]*?)(?=###|\Z)/i.exec(section);
-  const delMatch = /###\s*Deliverable\s*\n+([\s\S]*?)(?=###|\Z)/i.exec(section);
+  const goalMatch =
+    /###\s*(?:Goal|Ziel)\s*\n+([\s\S]*?)(?=###|\Z)/i.exec(section);
+  const stepsMatch =
+    /###\s*(?:Steps|Schritte)\s*\n+([\s\S]*?)(?=###|\Z)/i.exec(section);
+  const delMatch =
+    /###\s*(?:Deliverable|Ergebnis|Abgabe)\s*\n+([\s\S]*?)(?=###|\Z)/i.exec(section);
 
   let goal = goalMatch?.[1]?.trim() ?? "";
   let deliverable = delMatch?.[1]?.trim() ?? "";
   let stepsBlock = stepsMatch?.[1] ?? "";
 
   if (!goal && !stepsBlock && !deliverable) {
-    const gBold = /\*\*Goal:\*\*\s*([\s\S]*?)(?=\*\*Steps:\*\*|\*\*Deliverable:\*\*|##|\Z)/i.exec(
-      section,
-    );
-    const sBold = /\*\*Steps:\*\*\s*([\s\S]*?)(?=\*\*Deliverable:\*\*|\*\*Goal:\*\*|##|\Z)/i.exec(
-      section,
-    );
-    const dBold = /\*\*Deliverable:\*\*\s*([\s\S]*?)(?=\*\*Goal:\*\*|\*\*Steps:\*\*|##|\Z)/i.exec(
-      section,
-    );
+    const gBold =
+      /\*\*(?:Goal|Ziel):\*\*\s*([\s\S]*?)(?=\*\*(?:Steps|Schritte):\*\*|\*\*(?:Deliverable|Ergebnis):\*\*|#{2,3}\s|\Z)/i.exec(
+        section,
+      );
+    const sBold =
+      /\*\*(?:Steps|Schritte):\*\*\s*([\s\S]*?)(?=\*\*(?:Deliverable|Ergebnis|Goal|Ziel):\*\*|#{2,3}\s|\Z)/i.exec(
+        section,
+      );
+    const dBold =
+      /\*\*(?:Deliverable|Ergebnis):\*\*\s*([\s\S]*?)(?=\*\*(?:Goal|Ziel|Steps|Schritte):\*\*|#{2,3}\s|\Z)/i.exec(
+        section,
+      );
     goal = gBold?.[1]?.trim() ?? "";
     stepsBlock = sBold?.[1]?.trim() ?? "";
     deliverable = dBold?.[1]?.trim() ?? "";
@@ -125,7 +175,24 @@ function parseExercise(section: string | undefined): ExerciseData | null {
     .map((l) => l.replace(/^\d+\.\s+/, "").trim())
     .filter(Boolean);
 
-  if (!goal && steps.length === 0 && !deliverable) return null;
+  if (!goal && steps.length === 0 && !deliverable) {
+    const delLine = /\*\*(?:Deliverable|Ergebnis|Abgabe):\*\*\s*(.+)$/im.exec(section);
+    if (delLine?.[1]) deliverable = delLine[1].trim();
+    const lines = section.split("\n").map((l) => l.trim()).filter(Boolean);
+    const numbered = lines.filter((l) => /^\d+\.\s+/.test(l)).map((l) => l.replace(/^\d+\.\s+/, "").trim());
+    if (numbered.length) {
+      return {
+        goal: goal || lines.slice(0, 3).join(" ") || "Übung",
+        steps: numbered,
+        deliverable,
+      };
+    }
+    const trimmed = section.trim();
+    if (trimmed.length > 20) {
+      return { goal: trimmed, steps: [], deliverable: deliverable || "" };
+    }
+    return null;
+  }
   return { goal, steps, deliverable };
 }
 

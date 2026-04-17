@@ -64,7 +64,8 @@ export function splitLessonBody(body: string): LessonBodySections {
   };
 
   for (const line of lines) {
-    const m = /^##\s+(.+)$/.exec(line);
+    /** Kurrikulum: `##` (Legacy) oder `###` (z. B. deutsche Modul-Quelldateien). */
+    const m = /^#{2,3}\s+(.+)$/.exec(line);
     if (m) {
       const name = m[1].trim();
       const key = HEADER_ALIASES[name];

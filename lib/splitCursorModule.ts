@@ -7,8 +7,13 @@ export type CursorLessonChunk = {
   body: string;
 };
 
-const LESSON_HEADING = /^#\s+Lesson\s+(\d+\.[\w]+)\s*[—-]\s*(.+)$/gm;
-const MODULE_QUIZ_HEADING = /^#\s+Module\s+\d+\s*[—-]\s*Comprehensive Quiz\s*$/m;
+/** Englisch: `# Lesson 1.1 — …` · Deutsch: `## Lektion 1.1 — …` */
+const LESSON_HEADING =
+  /^#{1,2}\s+(?:Lesson|Lektion)\s+(\d+\.[\w]+)\s*[—-]\s*(.+)$/gm;
+
+/** Englisch: Modul-Endquiz · Deutsch: `## Modul-Abschluss-Quiz` */
+const MODULE_QUIZ_HEADING =
+  /^#{1,2}\s+(?:Module\s+\d+\s*[—-]\s*Comprehensive Quiz|Modul-Abschluss-Quiz)\s*$/m;
 
 export function splitCursorModuleFile(fullText: string): {
   lessons: CursorLessonChunk[];
@@ -38,17 +43,29 @@ export function splitCursorModuleFile(fullText: string): {
 }
 
 export function parseModuleTitleFromSource(fullText: string): string | null {
-  const line = fullText.split(/\r?\n/).find((l) => /^#\s+Module\s+\d+/.test(l.trim()));
+  const line = fullText.split(/\r?\n/).find((l) => /^#\s+Modul(?:e)?\s+\d+/i.test(l.trim()));
   if (!line) return null;
-  return line.replace(/^#\s+Module\s+\d+\s*[—-]\s*/i, "").trim() || null;
+  return line.replace(/^#\s+Modul(?:e)?\s+\d+\s*[—-]\s*/i, "").trim() || null;
 }
 
 export function parseModuleNumberFromFilename(file: string): number {
-  const m = /^module(\d+)\.md$/i.exec(file);
-  return m ? Number(m[1]) : 1;
+  const mFlat = /^module(\d+)\.md$/i.exec(file);
+  if (mFlat) return Number(mFlat[1]);
+  const mDe = /^modul-0*(\d+)/i.exec(file);
+  if (mDe) return Number(mDe[1]);
+  return 1;
 }
 
 export function extractDurationFromLessonBody(body: string): string {
-  const m = /^\*\*Duration:\*\*\s*(.+)$/im.exec(body);
-  return m?.[1]?.trim() ?? "—";
+  const patterns = [
+    /^\*\*Duration:\*\*\s*(.+)$/im,
+    /^\*\*Dauer:\*\*\s*(.+)$/im,
+    /^\*\*Lektionsdauer:\*\*\s*(.+)$/im,
+    /^\*\*Geschätzte Dauer:\*\*\s*(.+)$/im,
+  ];
+  for (const re of patterns) {
+    const m = re.exec(body);
+    if (m?.[1]?.trim()) return m[1].trim();
+  }
+  return "—";
 }

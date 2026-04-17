@@ -65,6 +65,11 @@ export type QuizFile = {
   questions: QuizQuestion[];
 };
 
+/** Modul-Ende: MC (`quiz.json`) oder Freitext (`open-quiz.md`). */
+export type ModuleQuizPayload =
+  | { format: "multipleChoice"; quiz: QuizFile }
+  | { format: "openMarkdown"; title: string; markdown: string };
+
 export type ProgressState = {
   version: 1;
   completedLessons: string[];
