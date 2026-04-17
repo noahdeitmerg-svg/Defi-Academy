@@ -1,4 +1,4 @@
-# DeFi Academy — einmalig: npm install + Git initialisieren + erster Commit
+# DeFi Academy - einmalig: npm install + Git initialisieren + erster Commit
 # Ausfuehrung (PowerShell):  cd zum Ordner defi-academy, dann:
 #   powershell -ExecutionPolicy Bypass -File .\scripts\setup-repo.ps1
 
@@ -33,6 +33,9 @@ if (-not $status) {
   git commit -m "Initial DeFi Academy platform build"
   git branch -M main 2>$null
 }
+
+Write-Host "`n== Optional: Build pruefen ==" -ForegroundColor Cyan
+Write-Host "  powershell -ExecutionPolicy Bypass -File .\scripts\check-build.ps1"
 
 Write-Host "`n== Naechste Schritte (Remote + Push) ==" -ForegroundColor Green
 Write-Host "Falls noch kein Remote:"

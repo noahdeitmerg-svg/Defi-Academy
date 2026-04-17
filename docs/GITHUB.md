@@ -6,8 +6,26 @@ Dort liegt z. B. schon `defi_academy_system.md` und `.git` — der **Next.js-C
 ## Was du brauchst
 
 - **Git** installiert ([git-scm.com](https://git-scm.com/download/win))
-- **Node.js LTS** inkl. npm ([nodejs.org](https://nodejs.org/))
+- **Node.js LTS** inkl. npm ([nodejs.org](https://nodejs.org/)) — nach der Installation **PowerShell / Terminal schließen und neu öffnen**, sonst findet Windows `npm` oft noch nicht. Prüfen: `node -v` und `npm -v`
 - Auf [github.com](https://github.com) eingeloggt — Repo: **noahdeitmerg-svg/Defi-Academy** (leer oder mit README ist ok)
+
+### Push-Fehler: `workflow` scope / `.github/workflows`
+
+Wenn `git push` mit **Personal Access Token** abgelehnt wird:
+
+`refusing to allow a Personal Access Token to create or update workflow ... without workflow scope`
+
+**Option 1 (empfohlen):** Unter GitHub **Settings → Developer settings → Personal access tokens** ein neues Token mit mindestens **`repo`** und zusätzlich **`workflow`** erzeugen und für Git (Credential Manager) hinterlegen, dann erneut `git push`.
+
+**Option 2:** Keine Workflow-Dateien im Repo (dieses Projekt hat keine zwingende CI-Datei). Ordner `.github/workflows` entfernen, committen, pushen:
+
+```powershell
+cd C:\Users\noahd\Documents\GitHub\Defi-Academy
+Remove-Item -Recurse -Force .github\workflows -ErrorAction SilentlyContinue
+git add -A
+git commit -m "Remove GitHub Actions workflow (PAT ohne workflow scope)"
+git push origin main
+```
 
 ## A) Code aus Cursor in deinen GitHub-Ordner kopieren
 
