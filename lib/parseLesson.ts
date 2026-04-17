@@ -1,4 +1,5 @@
 import matter from "gray-matter";
+import { escapeMdxLessThanBeforeDigit } from "./mdxSafe";
 import { splitLessonBody, type LessonBodySections } from "./lessonSectionParser";
 import type {
   ExerciseData,
@@ -223,7 +224,7 @@ function buildExplanationMdx(sections: LessonBodySections): string {
   if (sections.explanation.trim()) {
     parts.push(sections.explanation.trim());
   }
-  return parts.join("\n\n---\n\n");
+  return escapeMdxLessThanBeforeDigit(parts.join("\n\n---\n\n"));
 }
 
 export function parseLessonContent(content: string, fm: LessonFrontmatter): ParsedLesson {

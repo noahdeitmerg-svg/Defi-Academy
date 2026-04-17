@@ -43,7 +43,7 @@ lessonNumber: ${JSON.stringify(sub)}
 
 async function findModuleMarkdownFiles(dir: string): Promise<string[]> {
   const out: string[] = [];
-  let entries: Awaited<ReturnType<typeof fs.readdir>>;
+  let entries;
   try {
     entries = await fs.readdir(dir, { withFileTypes: true });
   } catch {
