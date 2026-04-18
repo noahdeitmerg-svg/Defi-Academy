@@ -1,0 +1,628 @@
+#!/usr/bin/env node
+/**
+ * scripts/generate-slides.js
+ *
+ * Gamma-Slides-Generator für die DeFi-Academy-Video-Pipeline.
+ *
+ * Flow pro Lektion (moduleXX-lessonYY)
+ * ------------------------------------
+ *   1. Finde `slides_prompt.txt` (priorisiert generator-output/<id>/,
+ *      dann lessons/<id>/, dann assets-input/<id>/).
+ *   2. Idempotenz-Gate: Wenn slide01.png bereits in
+ *      assets-input/<id>/ liegt und nicht `--force`, überspringen.
+ *   3. Slicing-Shortcut: Liegt assets-input/<id>/slides.pdf bereits vor
+ *      (z. B. manuell aus Gamma exportiert), wird direkt in PNGs
+ *      zerschnitten — kein API-Call.
+ *   4. Gamma-API-Pfad: Mit `GAMMA_API_KEY` ruft das Skript Gamma
+ *      `/generations` → polled bis `status=completed` → lädt das PDF →
+ *      zerschneidet via `pdftoppm` → schreibt slide01.png, slide02.png, …
+ *   5. Manual-Handoff-Fallback: Ohne Key oder ohne `pdftoppm` wird der
+ *      Prompt nach assets-input/<id>/slides_prompt.txt kopiert und eine
+ *      README hinterlegt, wie der User manuell weitermachen kann. Die
+ *      Lektion wird als "pending" markiert; der Batch-Renderer
+ *      überspringt sie dann per Preflight.
+ *
+ * Ausgabestruktur
+ *   assets-input/<id>/
+ *     slide01.png
+ *     slide02.png
+ *     ...
+ *     slides.pdf            (optional, nur wenn API-Flow oder manuell)
+ *     slides_prompt.txt     (Kopie, für manuelle Weiterverarbeitung)
+ *
+ * CLI
+ *   node scripts/generate-slides.js
+ *   node scripts/generate-slides.js --only module01-lesson01,module04-lesson02
+ *   node scripts/generate-slides.js --force --concurrency 3
+ *   node scripts/generate-slides.js --dry-run
+ *
+ * Flags
+ *   --generator-output <path>  default: ./generator-output
+ *   --assets-input <path>      default: ./assets-input
+ *   --lessons-dir <path>       default: ./lessons (Fallback-Quelle für
+ *                                                  slides_prompt.txt)
+ *   --only <csv>               nur diese Lesson-IDs
+ *   --force                    bestehende PNGs neu generieren
+ *   --concurrency <n>          default: 1 (Gamma-Rate-Limit schützen)
+ *   --dry-run                  kein API-Call, kein Slicing, nur Planung
+ *   --pdftoppm <path>          expliziter Pfad zur pdftoppm-Binary
+ *   --dpi <n>                  default: 150 (Auflösung für Slicing)
+ *   --help
+ *
+ * Env
+ *   GAMMA_API_KEY              Gamma Generate API Key (Beta). Fehlt er,
+ *                              läuft das Skript im Manual-Handoff-Modus.
+ *   GAMMA_API_URL              default: https://public-api.gamma.app/v0.2/generations
+ *   GAMMA_FORMAT               default: presentation
+ *   GAMMA_THEME                optional, Theme-Name aus Gamma-Account
+ *   GAMMA_POLL_INTERVAL_MS     default: 4000
+ *   GAMMA_POLL_TIMEOUT_MS      default: 300000 (5 Minuten)
+ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const ROOT = path.resolve(__dirname, '..');
+const LOG_DIR = path.join(ROOT, 'logs');
+const LOG_FILE = path.join(LOG_DIR, 'generate-slides.log');
+
+// --- CLI --------------------------------------------------------------------
+
+function parseArgs(argv) {
+  const args = {};
+  for (let i = 2; i < argv.length; i++) {
+    const a = argv[i];
+    if (!a.startsWith('--')) continue;
+    const key = a.slice(2);
+    const val = argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true;
+    args[key] = val;
+  }
+  return args;
+}
+
+function printUsage() {
+  console.log(String.raw`
+DeFi Academy — Gamma Slides Generator
+
+Usage:
+  node scripts/generate-slides.js [flags]
+
+Flags:
+  --generator-output <path>  default: ./generator-output
+  --assets-input <path>      default: ./assets-input
+  --lessons-dir <path>       default: ./lessons
+  --only <csv>               explizite Lesson-ID-Liste
+  --force                    bestehende PNGs neu rendern
+  --concurrency <n>          default: 1
+  --dry-run                  kein API-Call / Slicing
+  --pdftoppm <path>          expliziter pdftoppm-Pfad
+  --dpi <n>                  default: 150
+  --help                     Hilfe
+
+Env:
+  GAMMA_API_KEY              Gamma Generate API Key
+  GAMMA_API_URL              default: https://public-api.gamma.app/v0.2/generations
+  GAMMA_FORMAT               default: presentation
+  GAMMA_THEME                optional
+  GAMMA_POLL_INTERVAL_MS     default: 4000
+  GAMMA_POLL_TIMEOUT_MS      default: 300000
+`);
+}
+
+// --- Logger -----------------------------------------------------------------
+
+class Logger {
+  constructor(logPath) {
+    fs.mkdirSync(path.dirname(logPath), { recursive: true });
+    this.stream = fs.createWriteStream(logPath, { flags: 'w' });
+  }
+  _ts() {
+    return new Date().toISOString();
+  }
+  _write(level, msg, lessonId) {
+    const tag = lessonId ? `[${lessonId}]` : '';
+    const line = `${this._ts()} ${level} ${tag} ${msg}`.trimEnd();
+    this.stream.write(line + '\n');
+    const colored =
+      level === 'ERROR'
+        ? `\x1b[31m${line}\x1b[0m`
+        : level === 'WARN '
+        ? `\x1b[33m${line}\x1b[0m`
+        : line;
+    console.log(colored);
+  }
+  info(msg, lessonId) {
+    this._write('INFO ', msg, lessonId);
+  }
+  warn(msg, lessonId) {
+    this._write('WARN ', msg, lessonId);
+  }
+  error(msg, lessonId) {
+    this._write('ERROR', msg, lessonId);
+  }
+  async close() {
+    return new Promise((r) => this.stream.end(r));
+  }
+}
+
+// --- Discovery --------------------------------------------------------------
+
+function discoverLessons(generatorOutputDir, lessonsDir, log) {
+  const set = new Set();
+  const re = /^module\d{2}-lesson\d{2}$/;
+  const pushFromDir = (dir, kind) => {
+    if (!fs.existsSync(dir)) return;
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (e.isDirectory() && re.test(e.name)) set.add(e.name);
+      if (kind === 'lessons' && e.isFile()) {
+        const m = e.name.match(/^(module\d{2}-lesson\d{2})\.md$/);
+        if (m) set.add(m[1]);
+      }
+    }
+  };
+  pushFromDir(generatorOutputDir, 'gen');
+  pushFromDir(lessonsDir, 'lessons');
+  return [...set].sort();
+}
+
+function findPromptPath(lessonId, { generatorOutputDir, lessonsDir, assetsInputDir }) {
+  const candidates = [
+    path.join(generatorOutputDir, lessonId, 'slides_prompt.txt'),
+    path.join(lessonsDir, lessonId, 'slides_prompt.txt'),
+    path.join(assetsInputDir, lessonId, 'slides_prompt.txt'),
+  ];
+  for (const p of candidates) if (fs.existsSync(p)) return p;
+  return null;
+}
+
+// --- pdftoppm ---------------------------------------------------------------
+
+function resolvePdftoppm(explicit) {
+  const probes = [];
+  if (explicit) probes.push(explicit);
+  probes.push('pdftoppm');
+  for (const bin of probes) {
+    const r = spawnSync(bin, ['-v'], { encoding: 'utf8' });
+    // pdftoppm -v schreibt nach stderr und exit=0
+    if (r.status === 0 || (r.stderr || '').toLowerCase().includes('pdftoppm')) {
+      return bin;
+    }
+  }
+  return null;
+}
+
+function sliceePdfToPngs({ pdfPath, outputDir, dpi, pdftoppm, log, lessonId }) {
+  fs.mkdirSync(outputDir, { recursive: true });
+  // pdftoppm zerlegt ein PDF in <prefix>-1.png, <prefix>-2.png, ...
+  const prefix = path.join(outputDir, '__slide');
+  const res = spawnSync(
+    pdftoppm,
+    ['-r', String(dpi), '-png', pdfPath, prefix],
+    { encoding: 'utf8' }
+  );
+  if (res.status !== 0) {
+    log.error(
+      `pdftoppm schlug fehl (exit ${res.status}): ${(res.stderr || '').trim()}`,
+      lessonId
+    );
+    return [];
+  }
+  const produced = fs
+    .readdirSync(outputDir)
+    .filter((n) => n.startsWith('__slide-') && n.endsWith('.png'))
+    .map((n) => ({
+      full: path.join(outputDir, n),
+      index: parseInt(n.match(/__slide-(\d+)\.png$/)[1], 10),
+    }))
+    .sort((a, b) => a.index - b.index);
+
+  const renamed = [];
+  for (let i = 0; i < produced.length; i++) {
+    const pad = String(i + 1).padStart(2, '0');
+    const finalName = path.join(outputDir, `slide${pad}.png`);
+    // Falls alte Version existiert, überschreiben
+    if (fs.existsSync(finalName)) fs.rmSync(finalName);
+    fs.renameSync(produced[i].full, finalName);
+    renamed.push(finalName);
+    log.info(`Saved slide${pad}.png`, lessonId);
+  }
+  return renamed;
+}
+
+// --- Gamma-API --------------------------------------------------------------
+
+async function gammaCreateGeneration(promptText, log, lessonId) {
+  const apiKey = process.env.GAMMA_API_KEY;
+  if (!apiKey) return null;
+
+  const apiUrl =
+    process.env.GAMMA_API_URL ||
+    'https://public-api.gamma.app/v0.2/generations';
+  const format = process.env.GAMMA_FORMAT || 'presentation';
+  const body = {
+    inputText: promptText,
+    format,
+    exportAs: 'pdf',
+  };
+  if (process.env.GAMMA_THEME) body.themeName = process.env.GAMMA_THEME;
+
+  try {
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'X-API-KEY': apiKey,
+      },
+      body: JSON.stringify(body),
+    });
+    const raw = await res.text();
+    let data = null;
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      /* noop */
+    }
+    if (!res.ok) {
+      log.warn(
+        `Gamma API POST HTTP ${res.status} ${res.statusText}: ${raw.slice(0, 200)}`,
+        lessonId
+      );
+      return null;
+    }
+    const id =
+      (data && (data.generationId || data.id)) ||
+      null;
+    if (!id) {
+      log.warn(
+        `Gamma API POST ok, aber keine generationId im Body: ${raw.slice(0, 200)}`,
+        lessonId
+      );
+      return null;
+    }
+    return { generationId: id, raw: data };
+  } catch (err) {
+    log.warn(`Gamma API POST Fehler: ${err.message}`, lessonId);
+    return null;
+  }
+}
+
+function extractPdfUrl(statusBody) {
+  if (!statusBody || typeof statusBody !== 'object') return null;
+  const probes = [
+    statusBody.pdfUrl,
+    statusBody.pdf_url,
+    statusBody.exportUrl,
+    statusBody.export_url,
+    statusBody.export && statusBody.export.pdfUrl,
+    statusBody.export && statusBody.export.url,
+    statusBody.exports && statusBody.exports.pdf,
+    statusBody.data && statusBody.data.pdfUrl,
+  ];
+  for (const p of probes) if (typeof p === 'string' && p.startsWith('http')) return p;
+  return null;
+}
+
+async function gammaPollGeneration(generationId, log, lessonId) {
+  const apiKey = process.env.GAMMA_API_KEY;
+  const base =
+    process.env.GAMMA_API_URL ||
+    'https://public-api.gamma.app/v0.2/generations';
+  const statusUrl = `${base.replace(/\/$/, '')}/${encodeURIComponent(generationId)}`;
+  const interval = parseInt(process.env.GAMMA_POLL_INTERVAL_MS || '4000', 10);
+  const timeout = parseInt(process.env.GAMMA_POLL_TIMEOUT_MS || '300000', 10);
+  const deadline = Date.now() + timeout;
+
+  while (Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, interval));
+    try {
+      const res = await fetch(statusUrl, {
+        headers: { 'X-API-KEY': apiKey },
+      });
+      const raw = await res.text();
+      if (!res.ok) {
+        log.warn(
+          `Gamma status HTTP ${res.status}: ${raw.slice(0, 200)}`,
+          lessonId
+        );
+        continue;
+      }
+      let data = null;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        /* noop */
+      }
+      const status = (data && (data.status || data.state || '')) + '';
+      if (/completed|success|done|finished/i.test(status)) {
+        const pdf = extractPdfUrl(data);
+        if (!pdf) {
+          log.warn(
+            `Gamma fertig, aber keine PDF-URL im Body: ${raw.slice(0, 200)}`,
+            lessonId
+          );
+          return null;
+        }
+        return { pdfUrl: pdf, raw: data };
+      }
+      if (/failed|error|cancelled/i.test(status)) {
+        log.warn(`Gamma status=${status}: ${raw.slice(0, 200)}`, lessonId);
+        return null;
+      }
+      log.info(`Gamma poll: status=${status || 'pending'}`, lessonId);
+    } catch (err) {
+      log.warn(`Gamma poll Fehler: ${err.message}`, lessonId);
+    }
+  }
+  log.warn(`Gamma poll Timeout nach ${timeout}ms`, lessonId);
+  return null;
+}
+
+async function downloadToFile(url, destPath, log, lessonId) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      log.warn(`PDF-Download HTTP ${res.status} ${res.statusText}`, lessonId);
+      return false;
+    }
+    const buf = Buffer.from(await res.arrayBuffer());
+    fs.mkdirSync(path.dirname(destPath), { recursive: true });
+    fs.writeFileSync(destPath, buf);
+    return true;
+  } catch (err) {
+    log.warn(`PDF-Download Fehler: ${err.message}`, lessonId);
+    return false;
+  }
+}
+
+// --- Manual-Handoff ---------------------------------------------------------
+
+const HANDOFF_README = String.raw`# Manual Gamma Handoff
+
+Der automatische Gamma-Pfad war diesmal nicht verfuegbar (kein
+GAMMA_API_KEY oder pdftoppm fehlt). Schritte zum manuellen Abschluss:
+
+1. Oeffne slides_prompt.txt aus diesem Ordner in https://gamma.app/
+2. Lass Gamma das Deck generieren, ggf. Feinschliff.
+3. Exportiere als PDF, speichere als slides.pdf HIER ab.
+4. Fuehre dann erneut aus:
+
+   npm run generate:slides -- --only <moduleXX-lessonYY>
+
+Das Skript erkennt die slides.pdf und zerschneidet sie automatisch in
+slide01.png, slide02.png, ... Danach kann der Batch-Renderer loslaufen.
+`;
+
+function writeHandoff({ lessonId, promptText, assetsDir }) {
+  fs.mkdirSync(assetsDir, { recursive: true });
+  fs.writeFileSync(path.join(assetsDir, 'slides_prompt.txt'), promptText, 'utf8');
+  const readmePath = path.join(assetsDir, 'SLIDES_HANDOFF.md');
+  if (!fs.existsSync(readmePath)) {
+    fs.writeFileSync(
+      readmePath,
+      HANDOFF_README.replace('<moduleXX-lessonYY>', lessonId),
+      'utf8'
+    );
+  }
+}
+
+// --- Per-Lesson-Flow --------------------------------------------------------
+
+async function processLesson(lessonId, ctx) {
+  const { log } = ctx;
+  const assetsDir = path.join(ctx.assetsInputDir, lessonId);
+  fs.mkdirSync(assetsDir, { recursive: true });
+
+  const existingPng = path.join(assetsDir, 'slide01.png');
+  if (fs.existsSync(existingPng) && !ctx.force) {
+    log.info('Slides schon da (slide01.png) — skip.', lessonId);
+    return { lessonId, status: 'skipped' };
+  }
+
+  const promptPath = findPromptPath(lessonId, ctx);
+  if (!promptPath) {
+    log.warn('slides_prompt.txt nicht gefunden — skip.', lessonId);
+    return { lessonId, status: 'no-prompt' };
+  }
+  const promptText = fs.readFileSync(promptPath, 'utf8');
+
+  log.info(`Generating slides for ${lessonId}`, lessonId);
+
+  if (ctx.dryRun) {
+    log.info('[dry-run] kein API-Call, kein Slicing.', lessonId);
+    return { lessonId, status: 'dry-run' };
+  }
+
+  const pdfPath = path.join(assetsDir, 'slides.pdf');
+  let pdfReady = fs.existsSync(pdfPath);
+
+  if (!pdfReady) {
+    if (process.env.GAMMA_API_KEY) {
+      log.info('Rufe Gamma-API auf …', lessonId);
+      const created = await gammaCreateGeneration(promptText, log, lessonId);
+      if (created) {
+        log.info(`Gamma generationId=${created.generationId}`, lessonId);
+        const polled = await gammaPollGeneration(
+          created.generationId,
+          log,
+          lessonId
+        );
+        if (polled && polled.pdfUrl) {
+          log.info('Lade PDF …', lessonId);
+          const ok = await downloadToFile(polled.pdfUrl, pdfPath, log, lessonId);
+          if (ok) {
+            log.info(`Saved slides.pdf (${fs.statSync(pdfPath).size} bytes)`, lessonId);
+            pdfReady = true;
+          }
+        }
+      }
+    } else {
+      log.warn('GAMMA_API_KEY nicht gesetzt — Manual-Handoff.', lessonId);
+    }
+  } else {
+    log.info('slides.pdf liegt bereits vor — slicing only.', lessonId);
+  }
+
+  if (!pdfReady) {
+    writeHandoff({ lessonId, promptText, assetsDir });
+    log.info('Handoff-Hinweis geschrieben (SLIDES_HANDOFF.md).', lessonId);
+    return { lessonId, status: 'handoff' };
+  }
+
+  if (!ctx.pdftoppm) {
+    log.warn(
+      'pdftoppm nicht verfügbar — PDF liegt da, aber kein Slicing. ' +
+        'Installiere poppler-utils (Windows: choco install poppler).',
+      lessonId
+    );
+    writeHandoff({ lessonId, promptText, assetsDir });
+    return { lessonId, status: 'no-pdftoppm' };
+  }
+
+  const renamed = sliceePdfToPngs({
+    pdfPath,
+    outputDir: assetsDir,
+    dpi: ctx.dpi,
+    pdftoppm: ctx.pdftoppm,
+    log,
+    lessonId,
+  });
+
+  if (renamed.length === 0) {
+    log.error('Slicing lieferte 0 Bilder.', lessonId);
+    return { lessonId, status: 'slice-failed' };
+  }
+
+  // Prompt zur Nachvollziehbarkeit mitkopieren.
+  fs.writeFileSync(path.join(assetsDir, 'slides_prompt.txt'), promptText, 'utf8');
+
+  log.info(
+    `Fertig: ${renamed.length} PNGs in ${path.relative(ROOT, assetsDir)}`,
+    lessonId
+  );
+  return {
+    lessonId,
+    status: 'generated',
+    count: renamed.length,
+    files: renamed.map((f) => path.relative(ROOT, f)),
+  };
+}
+
+// --- Pool -------------------------------------------------------------------
+
+async function runPool(items, concurrency, worker) {
+  const results = [];
+  let i = 0;
+  async function lane() {
+    while (true) {
+      const idx = i++;
+      if (idx >= items.length) return;
+      results[idx] = await worker(items[idx]);
+    }
+  }
+  const lanes = Array.from({ length: Math.max(1, concurrency) }, () => lane());
+  await Promise.all(lanes);
+  return results;
+}
+
+// --- Main -------------------------------------------------------------------
+
+async function main() {
+  const args = parseArgs(process.argv);
+  if (args.help) {
+    printUsage();
+    process.exit(0);
+  }
+
+  fs.mkdirSync(LOG_DIR, { recursive: true });
+  const log = new Logger(LOG_FILE);
+
+  const ctx = {
+    generatorOutputDir: path.resolve(
+      ROOT,
+      args['generator-output'] || 'generator-output'
+    ),
+    assetsInputDir: path.resolve(ROOT, args['assets-input'] || 'assets-input'),
+    lessonsDir: path.resolve(ROOT, args['lessons-dir'] || 'lessons'),
+    force: Boolean(args.force),
+    dryRun: Boolean(args['dry-run']),
+    concurrency: Math.max(1, parseInt(args.concurrency || '1', 10)),
+    dpi: Math.max(72, parseInt(args.dpi || '150', 10)),
+    pdftoppm: null,
+    log,
+  };
+
+  log.info('DeFi Academy — generate-slides');
+  log.info(`Generator-Out:  ${ctx.generatorOutputDir}`);
+  log.info(`Assets-Input:   ${ctx.assetsInputDir}`);
+  log.info(`Lessons-Dir:    ${ctx.lessonsDir}`);
+  log.info(`Concurrency:    ${ctx.concurrency}`);
+  log.info(`DPI:            ${ctx.dpi}`);
+  log.info(`Force:          ${ctx.force}`);
+  log.info(`Dry-Run:        ${ctx.dryRun}`);
+  log.info(`Gamma-API:      ${process.env.GAMMA_API_KEY ? 'configured' : 'missing (Handoff-Modus)'}`);
+
+  if (!ctx.dryRun) {
+    ctx.pdftoppm = resolvePdftoppm(
+      typeof args.pdftoppm === 'string' ? args.pdftoppm : null
+    );
+    log.info(`pdftoppm:       ${ctx.pdftoppm || 'missing'}`);
+  }
+
+  // --- Lesson-Liste ---------------------------------------------------------
+  let lessons = discoverLessons(
+    ctx.generatorOutputDir,
+    ctx.lessonsDir,
+    log
+  );
+  if (typeof args.only === 'string') {
+    const filter = new Set(args.only.split(',').map((s) => s.trim()).filter(Boolean));
+    lessons = lessons.filter((l) => filter.has(l));
+    // Auch explizit angeforderte IDs durchlassen, die (noch) nicht im Discovery liegen
+    for (const id of filter) if (!lessons.includes(id)) lessons.push(id);
+    lessons.sort();
+  }
+
+  if (lessons.length === 0) {
+    log.warn('Keine Lektionen zu verarbeiten.');
+    await log.close();
+    process.exit(0);
+  }
+
+  log.info(`Lektionen: ${lessons.length} (${lessons.join(', ')})`);
+
+  // --- Verarbeiten ----------------------------------------------------------
+  const results = await runPool(lessons, ctx.concurrency, (id) =>
+    processLesson(id, ctx).catch((err) => ({
+      lessonId: id,
+      status: 'error',
+      error: err.message || String(err),
+    }))
+  );
+
+  // --- Summary --------------------------------------------------------------
+  const counts = {};
+  for (const r of results) counts[r.status] = (counts[r.status] || 0) + 1;
+
+  log.info('');
+  log.info('━'.repeat(60));
+  log.info(
+    `Summary: ${Object.entries(counts)
+      .map(([k, v]) => `${v} ${k}`)
+      .join(', ')}`
+  );
+  log.info('━'.repeat(60));
+
+  const hardFail = results.filter(
+    (r) => r.status === 'error' || r.status === 'slice-failed'
+  );
+  await log.close();
+  process.exit(hardFail.length > 0 ? 1 : 0);
+}
+
+main().catch(async (err) => {
+  console.error('\nUnerwarteter Fehler:', err.stack || err.message);
+  process.exit(1);
+});

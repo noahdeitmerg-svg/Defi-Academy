@@ -90,7 +90,17 @@ render:pilot ist der **numerische** Smoke-Test, render:course die
 Vollproduktion. Dokumentation sauber halten; oder später eine der beiden
 Pilot-Varianten deprecaten.
 
-### 🟡 Gamma-Slides: API-Integration verifizieren
+### 🟡 Gamma-Slides API-Schema final verifizieren
+
+`scripts/generate-slides.js` implementiert die Gamma Generate API gegen
+den Beta-Endpoint `https://public-api.gamma.app/v0.2/generations`. Das
+Response-Schema ist tolerant geprobt (mehrere Feldnamen für `pdfUrl`),
+aber bis ein echter Test mit gültigem `GAMMA_API_KEY` gelaufen ist,
+bleibt die Schema-Robustheit unverifiziert. Dazu kommt: das Polling-
+Interval, Timeouts und die Rate-Limits sollten gegen die offizielle
+Doku abgeglichen werden, sobald Gamma die API aus der Beta nimmt.
+
+### 🟡 Gamma-Slides: Alt-Integration im render-course.js verifizieren
 
 Der Master-Orchestrator spricht `GAMMA_API_URL` (default
 `https://api.gamma.app/v1/generations`) an, wenn `GAMMA_API_KEY` gesetzt
@@ -188,6 +198,17 @@ Rename-Brücke fehlt).
 
 ## Erledigt
 
+- ✅ `scripts/generate-slides.js` — Gamma-Slides-Generator mit
+  Dreistufen-Flow: (1) Gamma Generate API → PDF-Export → lokales
+  Slicing via `pdftoppm` (poppler-utils) → `slide01.png`, `slide02.png`,
+  …; (2) Slicing-Shortcut wenn bereits `slides.pdf` im Lektionsordner
+  liegt; (3) Manual-Handoff-Fallback ohne API-Key/pdftoppm (schreibt
+  `slides_prompt.txt` + `SLIDES_HANDOFF.md` mit Anleitung). Idempotent
+  (Skip wenn `slide01.png` existiert, `--force` zum Neurendern),
+  tolerant gegen Varianten der Gamma-Response (mehrere PDF-URL-Felder
+  geprobt). Eigenes Log in `logs/generate-slides.log`.
+  `npm run generate:slides` + Integration in `render:pilot` /
+  `render:course` (chain vor `generate:voice` und dem Batch-Renderer).
 - ✅ `scripts/render-batch.js` — Top-Level-Batch-Orchestrator mit
   Chunk-Isolation (Default 10 Lektionen/Chunk), Per-Chunk-Spawn des
   bestehenden Remotion-Renderers (`video-renderer/.../render-batch.js`),

@@ -20,8 +20,9 @@
     "render-course": "node scripts/render-course.js",
     "pilot-render": "node scripts/pilot-render.js",
     "generate:voice": "node scripts/generate-voice.js",
-    "render:pilot": "node scripts/render-batch.js --limit 5 --parallel 1",
-    "render:course": "node scripts/render-batch.js --parallel 2",
+    "generate:slides": "node scripts/generate-slides.js",
+    "render:pilot": "npm run generate:slides && npm run generate:voice && node scripts/render-batch.js --limit 5 --parallel 1",
+    "render:course": "npm run generate:slides && npm run generate:voice && node scripts/render-batch.js --parallel 2",
     "verify": "npm run validate:content && npm run lint && npm run typecheck && npm run build",
     "import:modules": "node ./node_modules/tsx/dist/cli.mjs scripts/import-modules.ts",
     "check": "npm run verify"
