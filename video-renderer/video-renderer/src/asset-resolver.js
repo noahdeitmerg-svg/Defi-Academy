@@ -120,7 +120,25 @@ function resolveLessonAssets(opts) {
         audioStatus.provided = true;
         audioStatus.path = audioRelPath;
       }
-      // Visuals
+      // Visuals — zwei parallele Konventionen werden akzeptiert:
+      //
+      //   (A) Legacy per Visual-ID:
+      //       assets-input/<lesson>/visuals/<visual.id>.<ext>
+      //       → wird 1:1 nach public/assets/<lesson>/visuals/ kopiert.
+      //
+      //   (B) Flache numerische Konvention (Gamma-Visual-Asset-Output):
+      //       assets-input/<lesson>/visualNN.<ext>
+      //       → der N-te Visual-Eintrag aus visual_plan.json bekommt
+      //         visualNN.<ext> zugeordnet und wird unter dem Namen
+      //         <visual.id>.<ext> nach public/assets/<lesson>/visuals/
+      //         kopiert, damit VisualRenderer.jsx wie bisher per ID
+      //         laden kann.
+      //
+      // (A) wird zuerst ausgewertet und hat Vorrang: ein Content-Autor
+      // kann einzelne Visuals explizit per ID ausliefern und trotzdem
+      // die numerische Konvention fuer den Rest nutzen.
+
+      // (A) Legacy visuals/ folder
       const srcVisualsDir = path.join(srcLessonAssets, 'visuals');
       if (fs.existsSync(srcVisualsDir)) {
         const entries = fs.readdirSync(srcVisualsDir);
@@ -131,6 +149,40 @@ function resolveLessonAssets(opts) {
             fs.copyFileSync(src, dest);
           }
         }
+      }
+
+      // (B) Flat numeric visualNN.<ext> files directly in the lesson dir
+      const VISUAL_NN_RE = /^visual(\d{2,3})\.(png|jpg|jpeg|webp|svg)$/i;
+      const flatEntries = fs
+        .readdirSync(srcLessonAssets, { withFileTypes: true })
+        .filter((e) => e.isFile() && VISUAL_NN_RE.test(e.name))
+        .map((e) => {
+          const m = e.name.match(VISUAL_NN_RE);
+          return { file: e.name, index: parseInt(m[1], 10), ext: m[2].toLowerCase() };
+        })
+        .sort((a, b) => a.index - b.index);
+
+      for (const flat of flatEntries) {
+        const planIdx = flat.index - 1; // visual01 -> visualPlan.visuals[0]
+        const target = visualPlan.visuals[planIdx];
+        if (!target) {
+          // Numerischer Index uebersteigt den visual_plan — als Bonus-
+          // Asset mit Original-Namen kopieren, damit nichts verloren geht.
+          fs.copyFileSync(
+            path.join(srcLessonAssets, flat.file),
+            path.join(targetVisualsDir, flat.file)
+          );
+          continue;
+        }
+        const destName = `${target.id}.${flat.ext}`;
+        const destPath = path.join(targetVisualsDir, destName);
+        // (A) hat Vorrang: wurde die ID schon per visuals/-Ordner geliefert,
+        // ueberschreiben wir sie nicht stillschweigend.
+        if (fs.existsSync(destPath)) continue;
+        fs.copyFileSync(
+          path.join(srcLessonAssets, flat.file),
+          destPath
+        );
       }
     }
   }

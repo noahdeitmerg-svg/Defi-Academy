@@ -8,13 +8,16 @@
  * `visuals/`-Unterordner und einer `README.md`, die erklaert, welche
  * Dateien hier abgelegt werden muessen.
  *
- * Das ist der erste Schritt im manuellen Slides-Flow:
+ * Das ist der erste Schritt im manuellen Visuals-Flow:
  *
  *   1. npm run prepare:assets
  *      -> assets-input/moduleXX-lessonYY/ werden angelegt
- *   2. In Gamma mit slides_prompt.txt ein Deck bauen
- *   3. 7 Folien als slide01.png ... slide07.png in den Lektions-Ordner
- *      legen
+ *   2. In Gamma (oder einem anderen AI-Bildgenerator) mit
+ *      slides_prompt.txt pro Slide EIN Einzel-Visual generieren.
+ *      Kein Slide-Layout, kein Titel-Text, keine Bullets auf das
+ *      Bild. Regeln: docs/SLIDE_GENERATION_RULES.md
+ *   3. Als visual01.png, visual02.png, ... in den Lektions-Ordner
+ *      legen.
  *   4. npm run generate:voice
  *   5. npm run render:course
  *
@@ -91,39 +94,61 @@ function discoverLessons(generatorOutputDir) {
     .sort();
 }
 
-const LESSON_README = String.raw`# Asset-Ordner fuer <LESSON_ID>
-
-In diesem Ordner erwartet die DeFi-Academy-Pipeline die folgenden
-Artefakte, bevor das Video gerendert werden kann:
-
-## Pflicht (sonst Preflight-Skip)
-
-- voice.mp3         — ElevenLabs-Voice-Over (npm run generate:voice)
-- slide01.png ... slide07.png
-                    — 7 Folien, manuell in Gamma aus slides_prompt.txt
-                      generiert und als PNG exportiert
-  (Im Notfall tolerant: der Renderer rendert auch ohne Slides
-   in einer degradierten Demo-Version.)
-
-## Optional
-
-- slides.pdf        — Wenn pdftoppm installiert ist, schneidet
-                      scripts/generate-slides.js die PDF automatisch
-                      in slide01.png ... slideNN.png.
-- visuals/          — Screenshots/Diagramme gemaess visual_plan.json.
-                      Werden von visuals-manifest.json referenziert.
-
-## Automatisch vom Lesson-Asset-Generator befuellt
-
-- slides.json, visuals-manifest.json
-
-## Gebaut vom Slides-Generator (optional)
-
-- slides_prompt.txt (Kopie aus lesson-asset-generator/output/)
-- SLIDES_HANDOFF.md (nur im Manual-Handoff-Modus)
-
-Workflow-Details: docs/VIDEO_PRODUCTION_WORKFLOW.md
-`;
+const LESSON_README = [
+  '# Asset-Ordner fuer <LESSON_ID>',
+  '',
+  'In diesem Ordner erwartet die DeFi-Academy-Pipeline die folgenden',
+  'Artefakte, bevor das Video gerendert werden kann.',
+  '',
+  '## Architektur-Regel (wichtig vor dem ersten Gamma-Run)',
+  '',
+  'Gamma (oder ein anderer AI-Bildgenerator) liefert ausschliesslich',
+  'Einzel-Visuals — Diagramme, Illustrationen, Charts. Das Slide-',
+  'Layout inkl. Titel, Bullets, Farben, Typografie wird komplett von',
+  'Remotion (video-style-engine/slide-template.jsx) gerendert. Niemals',
+  'komplette Slide-Frames oder Gamma-Deck-PDFs hier ablegen.',
+  '',
+  'Regeln: docs/SLIDE_GENERATION_RULES.md',
+  '',
+  '## Pflicht fuer vollwertigen Render',
+  '',
+  '- voice.mp3',
+  '    ElevenLabs-Voice-Over. Erzeugt per: npm run generate:voice',
+  '',
+  '## Empfohlen (sonst rendert Remotion Placeholder)',
+  '',
+  '- visual01.png, visual02.png, visual03.png, ...',
+  '    Ein Einzel-Visual pro Slide, 1920x1080 oder quadratisch,',
+  '    transparenter oder dunkler Hintergrund. KEIN Slide-Titel,',
+  '    KEINE Bullets, KEINE Branding-Chrome auf dem Bild.',
+  '    Index entspricht der Slide-Reihenfolge in visual_plan.json.',
+  '',
+  '## Optional — explizite Visual-IDs',
+  '',
+  '- visuals/<visual.id>.<ext>',
+  '    Wer einzelne Visuals per ID aus visual_plan.json steuern will,',
+  '    legt sie hier als visuals/<id>.png oder .svg ab. Die Dateien',
+  '    im visuals/-Ordner haben Vorrang vor dem numerischen',
+  '    visualNN.png-Mapping.',
+  '',
+  '## Automatisch vom Lesson-Asset-Generator befuellt',
+  '',
+  '- slides.json — Titel + Bullets pro Slide (Content fuer Remotion)',
+  '- visuals-manifest.json — Referenzen auf die Visual-IDs',
+  '',
+  '## Optional vom Slides-Generator',
+  '',
+  '- slides_prompt.txt (Kopie aus lesson-asset-generator/output/)',
+  '- SLIDES_HANDOFF.md (nur wenn generate:slides ohne API-Key lief)',
+  '',
+  '## Verboten',
+  '',
+  '- slide01.png, slide02.png, ... (komplette Gamma-Deck-Frames)',
+  '- slides.pdf als Deck-Layout-Quelle',
+  '',
+  'Workflow-Details: docs/VIDEO_PRODUCTION_WORKFLOW.md',
+  '',
+].join('\n');
 
 function ensureLessonFolder({ lessonId, assetsInputDir, generatorOutputDir, copyPrompt, dryRun }) {
   const dir = path.join(assetsInputDir, lessonId);
@@ -248,10 +273,13 @@ function main() {
     console.log('Dry-Run — nichts geschrieben.');
   } else {
     console.log('Naechste Schritte:');
-    console.log('  1) In Gamma mit slides_prompt.txt Deck bauen');
-    console.log('  2) 7 Folien als slide01.png ... slide07.png in den Ordner legen');
+    console.log('  1) In Gamma mit slides_prompt.txt pro Slide EIN Einzel-');
+    console.log('     Visual erzeugen (Diagramm/Illustration, KEIN Layout!)');
+    console.log('  2) Als visual01.png, visual02.png, ... in den Ordner legen');
     console.log('  3) npm run generate:voice');
     console.log('  4) npm run render:course');
+    console.log('');
+    console.log('Regeln: docs/SLIDE_GENERATION_RULES.md');
   }
 }
 

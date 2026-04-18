@@ -14,6 +14,21 @@
 
 ## Pipeline-Infrastruktur (Video-Produktion)
 
+### ✅ Gamma auf Visual-Asset-Only-Modus umgestellt
+
+`generate-slides-prompt.js` instruiert Gamma jetzt im Kopf des
+`slides_prompt.txt` explizit: *"Generate diagrams or illustrations
+only. Do not design slides or layouts."* Der Asset-Resolver akzeptiert
+neben der bisherigen `visuals/<visual.id>.<ext>`-Konvention die neue
+flache numerische Konvention `assets-input/<lesson>/visualNN.<ext>`
+(Mapping: N-ter Eintrag aus `visual_plan.json`). `scripts/generate-
+slides.js` schreibt Outputs jetzt als `visualNN.png` statt `slideNN.png`.
+Neue Referenz-Doku: `docs/SLIDE_GENERATION_RULES.md`. Workflow-Doku
+und README wurden auf Visuals-Only umgestellt inkl. Architektur-
+Warnung *"Never use Gamma-generated slides directly in the renderer."*
+Smoke-Test bestaetigt den Resolver-Pfad (visual01.png → `<visual.id>.png`
+im public-assets-Ordner).
+
 ### 🔴 Doppel-Ordnerstruktur der drei Tool-Packages flachdrücken
 
 Die drei neuen Tool-Ordner sind doppelt geschachtelt:

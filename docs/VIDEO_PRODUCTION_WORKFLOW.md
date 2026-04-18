@@ -4,12 +4,19 @@ Dieses Dokument beschreibt den vollstaendigen Weg, wie aus einer Markdown-
 Lektion ein fertiges MP4 wird. Es richtet sich an Content-Autor:innen,
 Produzent:innen und neue Agenten/Entwickler:innen.
 
+> ⚠️ **Architekturprinzip:** Gamma produziert **nur Einzel-Visuals**
+> (Diagramme, Illustrationen, Charts). **Niemals** komplette Slides.
+> Das Slide-Layout rendert **ausschliesslich** das Remotion-Template
+> `video-style-engine/slide-template.jsx`. Details:
+> [SLIDE_GENERATION_RULES.md](./SLIDE_GENERATION_RULES.md).
+
 > **TL;DR** —
 > ```
 > npm run validate-lessons
 > node lesson-asset-generator/src/cli.js --input-dir lessons --out lesson-asset-generator/output
 > npm run prepare:assets
-> # Gamma-Decks manuell erzeugen, slide01..slide07.png ablegen
+> # In Gamma (oder anderem AI-Bildgenerator) pro Slide EIN Visual erzeugen
+> # und als visual01.png, visual02.png, ... in assets-input/<lesson>/ legen
 > npm run generate:voice
 > npm run render:course
 > ```
@@ -21,20 +28,29 @@ Produzent:innen und neue Agenten/Entwickler:innen.
 
 ```
 ┌─────────────┐   ┌──────────────────────┐   ┌─────────────────┐   ┌─────────────────┐   ┌────────────────┐
-│  lessons/   │─▶│ Lesson-Asset-        │─▶│ Gamma (manuell) │─▶│ ElevenLabs      │─▶│ Video-Renderer │
-│  *.md       │   │ Generator            │   │ slides_prompt → │   │ voice_script →  │   │ (Remotion)     │
-│             │   │                      │   │ slideNN.png     │   │ voice.mp3       │   │                │
+│  lessons/   │─▶│ Lesson-Asset-        │─▶│ Gamma (Visuals  │─▶│ ElevenLabs      │─▶│ Video-Renderer │
+│  *.md       │   │ Generator            │   │ only — kein     │   │ voice_script →  │   │ Remotion baut  │
+│             │   │                      │   │ Slide-Layout!)  │   │ voice.mp3       │   │ Slides aus     │
+│             │   │                      │   │ slides_prompt → │   │                 │   │ Template       │
+│             │   │                      │   │ visualNN.png    │   │                 │   │                │
 └─────────────┘   └──────────────────────┘   └─────────────────┘   └─────────────────┘   └────────────────┘
                          │                           │                     │                     │
                          ▼                           ▼                     ▼                     ▼
                lesson-asset-generator/     assets-input/            assets-input/          videos/*.mp4
                output/moduleXX-lessonYY/   moduleXX-lessonYY/       moduleXX-lessonYY/    posters/*.jpg
-                 ├── slides_prompt.txt      ├── slide01.png          └── voice.mp3
-                 ├── voice_script.txt       ├── slide02.png
+                 ├── slides_prompt.txt      ├── visual01.png         └── voice.mp3
+                 ├── voice_script.txt       ├── visual02.png
                  ├── visual_plan.json       ├── ...
-                 ├── video_config.json      └── slide07.png
-                 └── visuals-manifest.json
+                 ├── video_config.json      └── visualNN.png
+                 ├── slides.json            (Einzelbilder,
+                 └── visuals-manifest.json   KEINE Slide-Frames)
 ```
+
+Der Renderer baut die fertige Slide aus **drei** Quellen:
+
+1. `title` + `bullets` aus `slides.json` (Text)
+2. `visualNN.png` als Inhalt der Visual-Area rechts (Bild)
+3. `slide-template.jsx` + `theme.json` fuer Layout, Farben, Animation (Design)
 
 Jede Stufe ist **idempotent** — bereits existierende Artefakte werden
 wiederverwendet, wiederholte Laeufe picken die Arbeit dort auf, wo
@@ -90,20 +106,26 @@ alle Binary-Assets landen, die der Renderer braucht.
 
 ```
 assets-input/moduleXX-lessonYY/
-├── slide01.png             # ← MANUELL aus Gamma
-├── slide02.png             # ← MANUELL aus Gamma
-├── slide03.png             # ← MANUELL aus Gamma
-├── slide04.png             # ← MANUELL aus Gamma
-├── slide05.png             # ← MANUELL aus Gamma
-├── slide06.png             # ← MANUELL aus Gamma
-├── slide07.png             # ← MANUELL aus Gamma (optional 7. Folie)
-├── voice.mp3               # ← generate:voice (ElevenLabs)
-├── visuals/                # Screenshots, Diagramme (manuell ergaenzt)
-│   └── ...
+├── visual01.png            # ← aus Gamma: EIN Einzel-Visual fuer Slide 1
+├── visual02.png            # ← aus Gamma: EIN Einzel-Visual fuer Slide 2
+├── visual03.png            # ← aus Gamma: ...
+├── visual04.png
+├── visual05.png
+├── visual06.png
+├── visual07.png            # (optional; Slides ohne Visual bleiben leer)
+├── voice.mp3               # ← npm run generate:voice (ElevenLabs)
+├── visuals/                # Optional: Per-Visual-ID-Dateien, falls
+│   ├── v01-core.png        #          einzelne Visuals explizit pro
+│   └── v02-flow.svg        #          ID geliefert werden (Konvention 5.2)
 ├── slides.json             # Kopie vom Generator-Output
 ├── visuals-manifest.json   # Kopie vom Generator-Output
 └── README.md               # Per prepare:assets automatisch erzeugt
 ```
+
+> ⚠️ **Verboten:** `slideNN.png`-Dateien (also komplette Slide-
+> Frames aus einem Gamma-Deck-Export) haben hier **nichts** verloren.
+> Der Asset-Resolver ignoriert sie. Siehe
+> [SLIDE_GENERATION_RULES.md](./SLIDE_GENERATION_RULES.md).
 
 Anlegen mit:
 
@@ -130,12 +152,16 @@ entdeckt und in der passenden Lektion angezeigt.
 
 ---
 
-## 3. Slides via Gamma — **manueller Schritt**
+## 3. Visuals via Gamma — **Einzelbilder, keine Decks**
 
-Gamma ist aktuell die beste Quelle fuer markenkonforme Slides. Der
-generierte Prompt in `slides_prompt.txt` ist speziell so formatiert,
-dass Gamma mit minimalem Feinschliff ein passendes 6–7-Folien-Deck
-erzeugt.
+Gamma (oder jeder andere AI-Bildgenerator) liefert pro Slide **genau
+ein** Visual: ein Diagramm, eine Illustration, ein Chart, eine
+Konzept-Grafik. Das Slide-Layout mit Titel, Bullets und Branding wird
+nicht von Gamma gebaut — das macht Remotion zur Render-Zeit aus dem
+`slide-template.jsx`.
+
+> **Pflichtlektuere fuer diesen Schritt:**
+> [SLIDE_GENERATION_RULES.md](./SLIDE_GENERATION_RULES.md).
 
 ### 3.1 Schritt-fuer-Schritt
 
@@ -145,43 +171,58 @@ erzeugt.
    npm run prepare:assets
    ```
 
-   Optional mit `-- --copy-prompt`, damit `slides_prompt.txt` direkt in
-   jeden Lektions-Ordner kopiert wird — praktisch fuer Offline-Arbeit.
+   Optional mit `-- --copy-prompt`, damit `slides_prompt.txt` und
+   `voice_script.txt` direkt in jeden Lektions-Ordner kopiert werden.
 
-2. **Gamma oeffnen**: [gamma.app](https://gamma.app)
+2. **Gamma oeffnen**: [gamma.app](https://gamma.app) — oder ein
+   vergleichbares Text-zu-Bild-Tool (DALL·E, Midjourney, lokal gehostete
+   SDXL-Instanz, Figma). Der Prompt ist tool-neutral.
 
 3. **Fuer jede Lektion**:
    - Inhalt von `assets-input/moduleXX-lessonYY/slides_prompt.txt`
-     (oder direkt aus `lesson-asset-generator/output/moduleXX-lessonYY/`)
-     in Gamma einfuegen ("Generate with AI" oder "Paste text").
-   - Feinschliff: Theme auswaehlen (siehe `video-style-engine/` fuer
-     Farben/Typografie), Bilder ersetzen, Layout kontrollieren.
-   - Export **als Bilder**: `Export → Images → PNG`, Aufloesung 1920x1080.
-   - Dateien sauber umbenennen: `slide01.png`, `slide02.png`, …,
-     `slide07.png`.
+     in Gamma einfuegen. Der Prompt-Kopf enthaelt die Regel
+     "Generate diagrams or illustrations only. Do not design slides
+     or layouts."
+   - Pro Slide **ein einzelnes Bild** generieren. Keine Decks, keine
+     Mehrseiter, kein Corporate-Design.
+   - Export als PNG, 16:9 (1920x1080) oder quadratisch (1080x1080),
+     transparenter oder dunkler Hintergrund.
+   - Dateien sauber umbenennen: `visual01.png`, `visual02.png`, …,
+     `visualNN.png` — Index in der Reihenfolge der Slides im Prompt.
    - In `assets-input/moduleXX-lessonYY/` ablegen.
 
-4. **Alternative (optional)**: Wenn Gamma als PDF exportiert wird
-   (`Export → PDF`), die Datei als `assets-input/moduleXX-lessonYY/slides.pdf`
-   ablegen und anschliessend `npm run generate:slides` laufen lassen —
-   das Skript zerschneidet die PDF automatisch in PNGs (erfordert
-   `pdftoppm` aus poppler-utils).
+4. **Was NICHT auf das Bild gehoert:**
+   - Slide-Titel (kommt aus `slides.json`, rendert Remotion)
+   - Bullets (dito)
+   - Slide-Counter, Module-Label, Footer-Branding (alles Remotion)
+   - Corporate-Farben als Hintergrund (Remotion-Theme nimmt sie auf)
 
-5. **Vollautomatischer Pfad (optional, noch experimentell)**: Mit
-   gesetztem `GAMMA_API_KEY` ruft `npm run generate:slides` die Gamma
-   Generate API direkt auf. Siehe
-   [defi_academy_system.md](./defi_academy_system.md) Abschnitt
-   "Slides-Pipeline-Dreistufigkeit".
+5. **Optional — explizite Visual-IDs:** Wer einzelne Visuals per ID
+   aus `visual_plan.json` steuern will, legt sie unter
+   `assets-input/moduleXX-lessonYY/visuals/<visual.id>.png` ab. Der
+   Asset-Resolver priorisiert diese ID-basierten Dateien vor dem
+   numerischen `visualNN.png`-Mapping.
 
-### 3.2 Warum manuell?
+6. **Optional — `npm run generate:slides`:** Das Skript existiert noch,
+   ist aber fuer den klassischen *Deck-Slicing*-Flow gedacht (Gamma
+   exportiert ein PDF, pdftoppm schneidet es). Das bricht die neue
+   Regel, wenn das Deck komplette Slides enthaelt. Nutze es nur, wenn
+   das Gamma-PDF selbst schon nur Einzelvisuals auf neutralem
+   Hintergrund enthaelt.
 
-- Gamma-API ist in Beta und hat unberechenbare Rate-Limits.
-- Visuelle Qualitaet profitiert deutlich von 30 s Feinschliff pro Deck.
-- Manuelle Kontrolle ueber Theme + Cover-Bild ist fuer Markenkonsistenz
-  wichtig.
+### 3.2 Warum manuell statt API-Call?
 
-Ein Video ohne Slides wird trotzdem gerendert (Renderer nutzt
-Platzhalter) — der Slides-Schritt ist **kein** Hard-Gate.
+- **Regeltreue pruefbar:** Ein Mensch sieht sofort, ob Gamma Titel-
+  Text oder Corporate-Farben aufs Bild gesetzt hat.
+- **Qualitaet:** 30 s Feinschliff pro Visual schlaegt jeden
+  vollautomatischen Run.
+- **API-Limits:** Gamma-API ist in Beta; 100 Visuals rauszupushen
+  ist unzuverlaessiger als ein Produzent:innen-Batch in Gamma-UI.
+
+Ein Video ohne Visuals wird trotzdem gerendert — der
+`VisualRenderer.jsx` zeichnet einen neutralen Placeholder mit der
+Visual-Beschreibung aus `visual_plan.json`. Visuals sind **kein**
+Hard-Gate im Preflight.
 
 ---
 
@@ -280,7 +321,8 @@ Gamma-API-Stub-Fallback und Visual-Download). Details:
 |---|---|---|
 | `voice.mp3 fehlt` im Preflight | `generate:voice` nicht gelaufen / API-Key falsch | `.env.local` pruefen, `npm run generate:voice` manuell |
 | Render OOM, bricht gesamten Batch ab | — tritt nicht auf. `render:course` isoliert Chunks — OOM kostet max. einen Chunk. | — |
-| `slide01.png` fehlt, Video sieht leer aus | Gamma-Export nicht abgelegt | Slides aus Gamma als PNG exportieren, nach `assets-input/moduleXX-lessonYY/` |
+| Slide zeigt nur "Visual Placeholder" | `visualNN.png` nicht abgelegt oder falsch benannt | Einzel-Visual aus Gamma exportieren, als `visual01.png`/`visual02.png`/… in `assets-input/moduleXX-lessonYY/` ablegen |
+| Slide-Titel steht doppelt (einmal rendern, einmal im Bild) | Gamma hat ein Deck-Layout mit Titel-Text geliefert | Bild ablehnen, Gamma auf Einzel-Visual-Modus stellen (siehe `SLIDE_GENERATION_RULES.md` §3) und ohne Text neu generieren |
 | Slides-Handoff-README taucht auf | `generate:slides` ohne API-Key + ohne PDF gelaufen | Entweder Handoff-Flow (manuell in Gamma), oder API-Key + pdftoppm installieren |
 | `validate-lessons` meldet fehlende Sektion | Markdown-Struktur unvollstaendig | Sektionen nach dem 8-Sektionen-Schema ergaenzen |
 
@@ -306,6 +348,7 @@ Gamma-API-Stub-Fallback und Visual-Download). Details:
 | Rolle | Verantwortung |
 |---|---|
 | **Content-Autor:in** | `lessons/*.md` schreiben, 8-Sektionen-Schema einhalten |
-| **Asset-Produzent:in** | Gamma-Slides bauen, optional eigene `visuals/`-Screenshots, `assets-input/` fuellen |
+| **Asset-Produzent:in** | In Gamma **Einzel-Visuals** bauen (keine Decks!), als `visualNN.png` ablegen, optional `visuals/<id>.png`-Pro-ID-Dateien |
 | **Pipeline-Operator:in** | `.env.local` pflegen, `npm run render:course` anstossen, Logs pruefen |
+| **Design-Owner:in** | `video-style-engine/` pflegen (theme.json, slide-template.jsx, …) — Layout-Anpassungen ausschliesslich hier |
 | **Agent / Developer** | Scripts, Systemdoku, Renderer-Code pflegen; offene Punkte in `docs/offeneAufgaben.md` |

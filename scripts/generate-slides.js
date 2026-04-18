@@ -2,30 +2,41 @@
 /**
  * scripts/generate-slides.js
  *
- * Gamma-Slides-Generator für die DeFi-Academy-Video-Pipeline.
+ * Gamma-Visuals-Slicer für die DeFi-Academy-Video-Pipeline.
+ *
+ * ⚠ Achtung — Rollen-Regel:
+ *   Gamma liefert in der neuen Architektur **nur Einzel-Visuals**
+ *   (Diagramme/Illustrationen/Charts), die Remotion danach in die
+ *   Visual-Area seines Slide-Templates einsetzt. Siehe
+ *   docs/SLIDE_GENERATION_RULES.md.
+ *
+ *   Dieses Skript existiert als Fallback für den klassischen
+ *   Deck-Slicing-Flow: Wer trotzdem ein Gamma-PDF hat, kann es hier
+ *   in einzelne PNGs zerschneiden. Enthält das Deck komplette Slides
+ *   (Titel + Bullets auf dem Bild), bricht das die Architektur-Regel.
+ *   Für reguläre Produktion bitte den manuellen Visuals-Only-Pfad aus
+ *   docs/VIDEO_PRODUCTION_WORKFLOW.md §3 nutzen.
  *
  * Flow pro Lektion (moduleXX-lessonYY)
  * ------------------------------------
  *   1. Finde `slides_prompt.txt` (priorisiert generator-output/<id>/,
  *      dann lessons/<id>/, dann assets-input/<id>/).
- *   2. Idempotenz-Gate: Wenn slide01.png bereits in
+ *   2. Idempotenz-Gate: Wenn visual01.png bereits in
  *      assets-input/<id>/ liegt und nicht `--force`, überspringen.
  *   3. Slicing-Shortcut: Liegt assets-input/<id>/slides.pdf bereits vor
  *      (z. B. manuell aus Gamma exportiert), wird direkt in PNGs
  *      zerschnitten — kein API-Call.
  *   4. Gamma-API-Pfad: Mit `GAMMA_API_KEY` ruft das Skript Gamma
  *      `/generations` → polled bis `status=completed` → lädt das PDF →
- *      zerschneidet via `pdftoppm` → schreibt slide01.png, slide02.png, …
+ *      zerschneidet via `pdftoppm` → schreibt visual01.png, visual02.png, …
  *   5. Manual-Handoff-Fallback: Ohne Key oder ohne `pdftoppm` wird der
  *      Prompt nach assets-input/<id>/slides_prompt.txt kopiert und eine
- *      README hinterlegt, wie der User manuell weitermachen kann. Die
- *      Lektion wird als "pending" markiert; der Batch-Renderer
- *      überspringt sie dann per Preflight.
+ *      README hinterlegt, wie der User manuell weitermachen kann.
  *
  * Ausgabestruktur
  *   assets-input/<id>/
- *     slide01.png
- *     slide02.png
+ *     visual01.png
+ *     visual02.png
  *     ...
  *     slides.pdf            (optional, nur wenn API-Flow oder manuell)
  *     slides_prompt.txt     (Kopie, für manuelle Weiterverarbeitung)
@@ -222,12 +233,12 @@ function sliceePdfToPngs({ pdfPath, outputDir, dpi, pdftoppm, log, lessonId }) {
   const renamed = [];
   for (let i = 0; i < produced.length; i++) {
     const pad = String(i + 1).padStart(2, '0');
-    const finalName = path.join(outputDir, `slide${pad}.png`);
+    const finalName = path.join(outputDir, `visual${pad}.png`);
     // Falls alte Version existiert, überschreiben
     if (fs.existsSync(finalName)) fs.rmSync(finalName);
     fs.renameSync(produced[i].full, finalName);
     renamed.push(finalName);
-    log.info(`Saved slide${pad}.png`, lessonId);
+    log.info(`Saved visual${pad}.png`, lessonId);
   }
   return renamed;
 }
@@ -379,21 +390,43 @@ async function downloadToFile(url, destPath, log, lessonId) {
 
 // --- Manual-Handoff ---------------------------------------------------------
 
-const HANDOFF_README = String.raw`# Manual Gamma Handoff
-
-Der automatische Gamma-Pfad war diesmal nicht verfuegbar (kein
-GAMMA_API_KEY oder pdftoppm fehlt). Schritte zum manuellen Abschluss:
-
-1. Oeffne slides_prompt.txt aus diesem Ordner in https://gamma.app/
-2. Lass Gamma das Deck generieren, ggf. Feinschliff.
-3. Exportiere als PDF, speichere als slides.pdf HIER ab.
-4. Fuehre dann erneut aus:
-
-   npm run generate:slides -- --only <moduleXX-lessonYY>
-
-Das Skript erkennt die slides.pdf und zerschneidet sie automatisch in
-slide01.png, slide02.png, ... Danach kann der Batch-Renderer loslaufen.
-`;
+const HANDOFF_README = [
+  '# Manual Gamma Handoff',
+  '',
+  '> Pflichtlektuere vorher: docs/SLIDE_GENERATION_RULES.md',
+  '> Gamma liefert nur Einzel-Visuals, nicht komplette Slides.',
+  '',
+  'Der automatische Gamma-Pfad war diesmal nicht verfuegbar (kein',
+  'GAMMA_API_KEY oder pdftoppm fehlt).',
+  '',
+  '## Empfohlener Weg — Einzel-Visuals',
+  '',
+  '1. Oeffne slides_prompt.txt aus diesem Ordner in https://gamma.app/',
+  '   (oder einem anderen AI-Bildgenerator).',
+  '2. Erzeuge pro Slide EIN Einzel-Visual (Diagramm/Illustration/',
+  '   Chart, 16:9 oder 1:1, transparent oder dunkler Hintergrund).',
+  '3. KEINE Slide-Titel, KEINE Bullets, KEINE Branding-Chrome auf',
+  '   das Bild. Das Slide-Layout rendert Remotion zur Build-Zeit.',
+  '4. Speichere die Bilder als visual01.png, visual02.png, ...',
+  '   direkt HIER (neben dieser README).',
+  '5. Weiter mit:',
+  '',
+  '       npm run render:course',
+  '',
+  '## Notfall-Pfad — Gamma-Deck als PDF',
+  '',
+  'Nur verwenden, wenn das Gamma-Deck selbst ausschliesslich',
+  'Einzel-Visuals auf neutralem Hintergrund enthaelt (KEINE Decks',
+  'mit Titel-Layouts, dann bricht die Architektur-Regel).',
+  '',
+  '1. Export in Gamma als PDF, Datei als slides.pdf HIER ablegen.',
+  '2. Fuehre aus:',
+  '',
+  '       npm run generate:slides -- --only <moduleXX-lessonYY>',
+  '',
+  'Das Skript schneidet slides.pdf in visual01.png, visual02.png, ...',
+  '',
+].join('\n');
 
 function writeHandoff({ lessonId, promptText, assetsDir }) {
   fs.mkdirSync(assetsDir, { recursive: true });
@@ -415,9 +448,16 @@ async function processLesson(lessonId, ctx) {
   const assetsDir = path.join(ctx.assetsInputDir, lessonId);
   fs.mkdirSync(assetsDir, { recursive: true });
 
-  const existingPng = path.join(assetsDir, 'slide01.png');
-  if (fs.existsSync(existingPng) && !ctx.force) {
-    log.info('Slides schon da (slide01.png) — skip.', lessonId);
+  // Idempotenz: visual01.png (neu) ODER slide01.png (alt) als Marker.
+  const hasVisual01 = fs.existsSync(path.join(assetsDir, 'visual01.png'));
+  const hasSlide01 = fs.existsSync(path.join(assetsDir, 'slide01.png'));
+  if ((hasVisual01 || hasSlide01) && !ctx.force) {
+    log.info(
+      hasVisual01
+        ? 'Visuals schon da (visual01.png) — skip.'
+        : 'Slides schon da (slide01.png, alte Konvention) — skip.',
+      lessonId
+    );
     return { lessonId, status: 'skipped' };
   }
 

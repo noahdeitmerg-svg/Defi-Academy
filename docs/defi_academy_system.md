@@ -1,5 +1,14 @@
 # DeFi Academy -- Systemdokument
 
+> **Kernregel Video-Pipeline (gilt fuer alle Agents ab 2026-04-17):**
+> Gamma generiert **nur Einzel-Visuals** (Diagramme, Illustrationen,
+> Charts), gespeichert als `assets-input/<lesson>/visual01.png`,
+> `visual02.png`, …. Das **Slide-Layout** (Titel, Bullets, Farben,
+> Fonts, Animationen, Footer) wird **ausschliesslich** vom Remotion-
+> Template `video-style-engine/slide-template.jsx` gerendert. Kein
+> Gamma-Deck, keine Slide-Frames aus PDF-Export, keine `slideNN.png`
+> als Render-Input. Details: [`docs/SLIDE_GENERATION_RULES.md`](./SLIDE_GENERATION_RULES.md).
+
 ## 1. Projektübersicht
 
 DeFi Academy ist eine strukturierte Lernplattform für dezentrale
@@ -612,7 +621,7 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 -   ✅ Pilot-Renderer `scripts/pilot-render.js` + `npm run pilot-render` (5 Default-Lektionen, Override via `--lessons`, Output in `videos/pilot/` + `posters/pilot/`, `--parallel 1`, Voice-Missing-Skip mit `--allow-missing-voice`-Override)
 -   ✅ Top-Level-Batch `scripts/render-batch.js` + `npm run render:course` / `npm run render:pilot` (Chunk-isolation: Default 10 Lektionen/Chunk werden pro Child-Prozess gerendert, OOM/Crash in Chunk N reißt restliche Chunks nicht mit, Preflight für `voice.mp3`+`visual_plan.json`+`video_config.json`, Idempotenz mit `--force`-Override, live Progress `Rendering <id>` / `Completed X / Y`, Fehler-Persistenz in `logs/render-errors.log`, Report in `logs/render-batch-report.json`)
 -   ✅ ElevenLabs Voice-Generator `scripts/generate-voice.js` + `npm run generate:voice` (Voice-Name-Resolving via `/v1/voices`, Retry/Backoff, Batching via `--concurrency`, Integration in `pilot-render` als Schritt 2b; Env: `ELEVENLABS_API_KEY`, `ELEVENLABS_MODEL=eleven_turbo_v2`, `ELEVENLABS_VOICE=Florian`, optional `ELEVENLABS_VOICE_ID` / `ELEVENLABS_STABILITY` / `ELEVENLABS_SIMILARITY`)
--   ✅ Gamma Slides-Generator `scripts/generate-slides.js` + `npm run generate:slides` (dreistufiger Flow: Gamma Generate API → PDF → lokales Slicing via `pdftoppm` zu `slide01.png`, `slide02.png`, …; Slicing-Shortcut wenn bereits `slides.pdf` im Lektionsordner; Manual-Handoff-Fallback ohne API-Key/pdftoppm mit `SLIDES_HANDOFF.md`-Anleitung; Idempotenz + `--force`; eigenes Log `logs/generate-slides.log`). `render:pilot` und `render:course` chainen jetzt `generate:slides && generate:voice && render-batch.js`.
+-   ✅ Gamma Visual-Asset-Slicer `scripts/generate-slides.js` + `npm run generate:slides` (dreistufiger Flow: Gamma Generate API → PDF → lokales Slicing via `pdftoppm` zu **`visual01.png`, `visual02.png`, …**; Slicing-Shortcut wenn bereits `slides.pdf` im Lektionsordner; Manual-Handoff-Fallback ohne API-Key/pdftoppm mit `SLIDES_HANDOFF.md`-Anleitung; Idempotenz + `--force`; eigenes Log `logs/generate-slides.log`). `render:pilot` und `render:course` chainen jetzt `generate:slides && generate:voice && render-batch.js`. **Policy**: Seit `docs/SLIDE_GENERATION_RULES.md` liefert Gamma nur noch Einzel-Visuals, nicht mehr ganze Decks — der `slides_prompt.txt`-Kopf verbietet Slide-Layouts explizit, und der Asset-Resolver mapped `visualNN.png` auf die IDs aus `visual_plan.json`.
 
 **Slides-Pipeline-Dreistufigkeit**
 
@@ -622,7 +631,7 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 2. **Slicing-Shortcut**: Liegt `assets-input/<id>/slides.pdf` bereits vor (weil z. B. ein Content-Mensch sie manuell aus Gamma runtergezogen hat), wird **kein API-Call** gemacht — das Skript schneidet direkt. Ideal für Fälle, in denen die Beta-API-Quota aufgebraucht ist oder eine Deck-Feinjustierung im Browser nötig war.
 3. **Manual-Handoff**: Fehlt `GAMMA_API_KEY` ODER `pdftoppm`, werden `slides_prompt.txt` und ein `SLIDES_HANDOFF.md` mit Step-by-Step-Anleitung in `assets-input/<id>/` geschrieben. Die Lektion erscheint im Status `handoff`. Sobald der User die PDF manuell dort abgelegt hat, produziert der nächste Aufruf PNGs (siehe Pfad 2).
 
-Der **Preflight im Batch-Renderer** fragt bisher nur `voice.mp3`, `visual_plan.json` und `video_config.json` ab — `slide01.png` wird aktuell **nicht** als Hard-Gate geprüft, weil die Remotion-Composition Platzhalter für fehlende Slides zeichnen kann. Das ist eine bewusste Design-Entscheidung: eine Lektion im Slides-Handoff blockiert den Render nicht, das Ergebnis ist dann nur eine Demo-Version ohne echte Gamma-Slides. Wenn das später härter werden soll, reicht ein einzelner Eintrag in der `required`-Liste in `scripts/render-batch.js#preflightLesson`.
+Der **Preflight im Batch-Renderer** fragt nur `voice.mp3`, `visual_plan.json` und `video_config.json` ab — `visual01.png` (oder der alte Name `slide01.png`) wird **nicht** als Hard-Gate geprüft, weil der `VisualRenderer` in der Remotion-Composition für fehlende Visuals einen neutralen Placeholder zeichnet. Das ist eine bewusste Design-Entscheidung: eine Lektion ohne Gamma-Visuals blockiert den Render nicht, die Ausgabe ist dann nur eine Demo-Version mit Platzhalter-Grafiken in der Visual-Area. Wenn das später härter werden soll, reicht ein einzelner Eintrag in der `required`-Liste in `scripts/render-batch.js#preflightLesson`.
 -   ✅ `.env.example` als Vorlage für API-Keys (`.env` bleibt gitignored)
 -   🚧 Rename-Brücke Renderer-Output → Plattform-Konvention (Phase 5.4)
 -   ⏳ Voice-Produktion für alle Lektionen (ElevenLabs, Phase 5.5)

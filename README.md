@@ -52,7 +52,14 @@ Die Lernplattform erwartet pro Lektion **optional** ein MP4 unter
 `public/videos/<slug>.mp4`. Die Produktion erfolgt aus den gleichen
 Markdown-Quellen wie der Web-Content, ueber eine vollstaendige Pipeline:
 
-**Markdown (`lessons/*.md`)** → **Lesson-Asset-Generator** → **Gamma-Slides (manuell)** → **ElevenLabs-Voice** → **Video-Renderer**
+**Markdown (`lessons/*.md`)** → **Lesson-Asset-Generator** → **Gamma-Visuals (Einzelbilder)** → **Remotion-Slide-Template (Layout)** → **ElevenLabs-Voice** → **Finales Video**
+
+> ⚠️ **Architektur-Regel:** Gamma liefert **nur Einzel-Visuals**
+> (Diagramme, Illustrationen, Charts) — keine kompletten Slides, keine
+> Deck-Layouts, keine Farben/Fonts. Das Slide-Layout rendert
+> ausschliesslich `video-style-engine/slide-template.jsx` in Remotion.
+> **Never use Gamma-generated slides directly in the renderer.**
+> Details: [docs/SLIDE_GENERATION_RULES.md](docs/SLIDE_GENERATION_RULES.md).
 
 ### Vorbereitung (einmalig)
 
@@ -81,9 +88,14 @@ node lesson-asset-generator/src/cli.js --input-dir lessons --out lesson-asset-ge
 npm run prepare:assets
 
 # ---- MANUELLER SCHRITT ----
-# In Gamma (gamma.app) mit slides_prompt.txt jeweils ein Deck bauen
-# und als slide01.png ... slide07.png nach assets-input/moduleXX-lessonYY/
-# exportieren. Details siehe docs/VIDEO_PRODUCTION_WORKFLOW.md
+# In Gamma (gamma.app) mit slides_prompt.txt pro Slide EIN Einzel-
+# Visual (Diagramm/Illustration/Chart) generieren und als
+# visual01.png, visual02.png, ... nach assets-input/moduleXX-lessonYY/
+# exportieren. KEINE Slide-Layouts, KEIN Titel-Text, KEINE Bullets
+# auf die Bilder — das rendert Remotion.
+# Details + Regeln:
+#   docs/VIDEO_PRODUCTION_WORKFLOW.md
+#   docs/SLIDE_GENERATION_RULES.md  ← Pflichtlektuere
 
 # 4) Voice-Overs generieren (ElevenLabs)
 npm run generate:voice
@@ -109,7 +121,8 @@ Rollenverteilung und vollstaendiger CLI-Referenz:
 | [docs/BUILD.md](docs/BUILD.md) | Node, Build, Kurrikulum |
 | [docs/GITHUB.md](docs/GITHUB.md) | Klonen, Push, PAT, optional Sync |
 | [docs/OPS_CHECKLIST.md](docs/OPS_CHECKLIST.md) | Deploy-, Webhook- und Smoke-Test-Checkliste |
-| [docs/VIDEO_PRODUCTION_WORKFLOW.md](docs/VIDEO_PRODUCTION_WORKFLOW.md) | Video-Pipeline Lessons → Slides → Voice → MP4 |
+| [docs/VIDEO_PRODUCTION_WORKFLOW.md](docs/VIDEO_PRODUCTION_WORKFLOW.md) | Video-Pipeline Lessons → Visuals → Voice → MP4 |
+| [docs/SLIDE_GENERATION_RULES.md](docs/SLIDE_GENERATION_RULES.md) | Rollen-Trennung: Gamma = Bilder, Remotion = Layout |
 | [docs/defi_academy_system.md](docs/defi_academy_system.md) | Gesamte Systemarchitektur + Agent-Rollen |
 | [docs/offeneAufgaben.md](docs/offeneAufgaben.md) | Living-Backlog offener Tasks |
 | `scripts/import-modules.ts` | Große `moduleN.md` nach `content/modules/` |
