@@ -165,6 +165,21 @@ Lesson-Page im Browser prüfen.
 
 ## Erledigt
 
+- ✅ Plattform-Brand-Rollout: `app/layout.tsx` nutzt Inter (Google Fonts
+  via `next/font`, Weights 400/500/600/700) statt Geist; CSS-Variablen in
+  `styles/globals.css` leiten sich aus `brand/colors.json` ab (Light =
+  Weiss + Navy-Text + Gold-Akzent mit AA-Kontrast, Dark = exakter
+  Video-Look `#0B1F3B` + `#F5B841`). Neues `components/BrandLogo.tsx`
+  spiegelt den Inline-SVG-Shield aus `video-style-engine/intro-scene.jsx`
+  wieder und wird in Startseite + Modul-Layout-Header eingebunden.
+  Plattform und zukünftige Videos teilen sich damit Logo, Typografie
+  und Farb-Palette. Build + Typecheck + Lint grün.
+- ✅ Mini-Env-Loader (`scripts/lib/env.js`) ohne neue npm-Dependency —
+  liest `.env` (+ optional `.env.local`) und setzt fehlende Variablen
+  in `process.env`. Bestehende Shell-/CI-Variablen behalten Vorrang.
+  Eingebunden in `scripts/generate-voice.js`, `scripts/render-course.js`
+  und `scripts/pilot-render.js`, damit der ElevenLabs-Key (und andere
+  API-Keys) nicht mehr manuell in PowerShell gesetzt werden muss.
 - ✅ Brand-System integriert (`brand/` als Single Source of Truth):
   `brand/colors.json`, `brand/typography.json`, `brand/logo*.svg`,
   `brand/design-guidelines.md` + `brand/sync-to-theme.js`.

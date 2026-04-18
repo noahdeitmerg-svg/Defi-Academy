@@ -48,6 +48,9 @@ const { spawn } = require('child_process');
 const ROOT = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(ROOT, 'logs');
 const LOG_FILE = path.join(LOG_DIR, 'pilot-render.log');
+
+// .env automatisch laden (ElevenLabs u.a.).
+require('./lib/env').loadProjectEnv({ cwd: ROOT });
 const TMP_DIR = path.join(ROOT, '.pilot-render-tmp');
 const PILOT_VIDEOS = path.join(ROOT, 'videos', 'pilot');
 const PILOT_POSTERS = path.join(ROOT, 'posters', 'pilot');

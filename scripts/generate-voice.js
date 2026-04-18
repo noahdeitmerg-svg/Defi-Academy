@@ -49,6 +49,11 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const LOG_FILE = path.join(ROOT, 'logs', 'generate-voice.log');
 
+// .env / .env.local aus Projekt-Root laden, damit ELEVENLABS_API_KEY &
+// Freunde nicht manuell in der Shell gesetzt werden muessen. Bereits
+// gesetzte Env-Vars (CI/Shell) behalten Vorrang.
+require('./lib/env').loadProjectEnv({ cwd: ROOT });
+
 // --- CLI --------------------------------------------------------------------
 
 function parseArgs(argv) {

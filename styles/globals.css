@@ -2,33 +2,64 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/*
+ * Brand-System-Anbindung
+ * ----------------------
+ * Die Werte unten stammen aus `/brand/colors.json` + `/brand/typography.json`.
+ * Sie sind bewusst HEX (statt OKLCH), damit die Plattform-Farben 1:1 mit den
+ * Video-Renderer-Farben übereinstimmen. Wenn sich Brand-Werte ändern:
+ *   1. `brand/colors.json` editieren
+ *   2. diese CSS-Variablen an die neuen Werte anpassen
+ *   3. `npm run sync:brand` für das Video-Theme
+ */
+
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --color-surface: oklch(0.985 0.002 247);
-  --color-surface-muted: oklch(0.96 0.004 247);
-  --color-border: oklch(0.9 0.01 247);
-  --color-text: oklch(0.22 0.02 260);
-  --color-text-muted: oklch(0.45 0.02 260);
-  --color-accent: oklch(0.58 0.18 265);
-  --color-accent-soft: oklch(0.93 0.04 265);
+  /* Fonts — Inter als Plattform- und Video-Primary */
+  --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Brand-Token (Light-Default) */
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F5F7FA;
+  --color-border: #E2E8F0;
+  --color-text: #0B1F3B;
+  --color-text-muted: #4A5568;
+  --color-accent: #C48A1F;         /* Gold, etwas dunkler für AA-Kontrast auf Weiß */
+  --color-accent-hover: #A8761A;
+  --color-accent-soft: #FCF3DC;
+  --color-on-accent: #0B1F3B;
+  --color-risk: #C2413A;           /* Rot, AA-stärker als #D9544E auf Weiß */
+  --color-risk-soft: #FBE8E7;
 }
 
+/*
+ * Dark Mode = exakter Video-/Slide-Look (brand/colors.json → brand.*).
+ * Damit sehen Plattform (Dark) und Videos visuell identisch aus.
+ */
 .dark {
-  --color-surface: oklch(0.17 0.02 260);
-  --color-surface-muted: oklch(0.22 0.02 260);
-  --color-border: oklch(0.32 0.02 260);
-  --color-text: oklch(0.96 0.01 260);
-  --color-text-muted: oklch(0.72 0.02 260);
-  --color-accent: oklch(0.72 0.16 265);
-  --color-accent-soft: oklch(0.28 0.08 265);
+  --color-surface: #0B1F3B;
+  --color-surface-muted: #11284A;
+  --color-border: #1F3A66;
+  --color-text: #FFFFFF;
+  --color-text-muted: #A0AEC0;
+  --color-accent: #F5B841;
+  --color-accent-hover: #F8C866;
+  --color-accent-soft: #3A2F15;
+  --color-on-accent: #0B1F3B;
+  --color-risk: #D9544E;
+  --color-risk-soft: #3B1F1E;
 }
 
 @layer base {
   html {
     @apply scroll-smooth antialiased;
+    font-feature-settings: "cv11", "ss01", "ss03";
   }
   body {
     @apply bg-[var(--color-surface)] text-[var(--color-text)] font-sans;
+    letter-spacing: -0.005em;
+  }
+  h1, h2, h3, h4 {
+    letter-spacing: -0.015em;
   }
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllModules } from "@/lib/content";
 import { lessonHref, quizHref } from "@/lib/routes";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { BrandLogo } from "@/components/BrandLogo";
 
 export default async function HomePage() {
   const modules = await getAllModules();
@@ -10,13 +11,16 @@ export default async function HomePage() {
     <div className="min-h-dvh">
       <header className="border-b border-[var(--color-border)] bg-[var(--color-surface-muted)]">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-5">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-              DeFi Akademie
-            </p>
-            <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text)]">
-              Module &amp; Lektionen
-            </h1>
+          <div className="flex items-center gap-4">
+            <BrandLogo size={44} />
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
+                DeFi Akademie
+              </p>
+              <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text)]">
+                Module &amp; Lektionen
+              </h1>
+            </div>
           </div>
           <ThemeToggle />
         </div>

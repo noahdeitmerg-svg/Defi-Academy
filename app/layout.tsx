@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Brand-System: Inter ist die verbindliche Primaer-Schrift
+// (siehe brand/typography.json). Weights 400/500/600/700 decken
+// alle Hierarchie-Stufen (body, bullet, slide_title, title, caption).
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -26,7 +31,7 @@ const metadataBase =
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "DeFi Academy",
+  title: "DeFi Akademie",
   description: "DeFi Akademie — strukturiertes Lernprogramm mit Modulen, Lektionen, Videos, Quiz und Praxisuebungen",
 };
 
@@ -38,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="de" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-dvh font-sans`}
+        className={`${inter.variable} ${geistMono.variable} min-h-dvh font-sans`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}

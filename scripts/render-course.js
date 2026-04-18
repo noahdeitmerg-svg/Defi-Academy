@@ -62,6 +62,10 @@ const ROOT = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(ROOT, 'logs');
 const LOG_FILE = path.join(LOG_DIR, 'render-course.log');
 
+// .env / .env.local automatisch laden (ElevenLabs & Co). Bestehende
+// Shell-/CI-Variablen behalten Vorrang.
+require('./lib/env').loadProjectEnv({ cwd: ROOT });
+
 // --- Tool-Pfade (tolerant gegen doppelte Ordnerstruktur) ---------------------
 
 function firstExisting(candidates, label) {
