@@ -22,6 +22,8 @@ Den Rest übernimmt die Pipeline.
 | `npm run academy-build` | Ruft `generate-assets` + `collect-prompts` hintereinander auf. |
 | `npm run check-assets` | Prüft, dass in `assets-input/<id>/` die Dateien `voice.mp3` und `visualNN.png` vollständig sind. |
 | `npm run render-videos` | Preflight-Check + Rendering aller Lektionen nach `videos/` (und `posters/`). |
+| `npm run publish-videos` | Verschiebt/kopiert Renderer-Output (`moduleXX-lessonYY.mp4`) unter Plattform-Slugs nach `public/videos/` + `public/posters/`. |
+| `npm run split-modules` | Zerlegt `Module/modul-XX-*-FINAL.md` in `lessons/moduleXX-lessonYY.md`. |
 
 Alle Scripts kennen die Flags:
 
@@ -156,9 +158,50 @@ Führt intern aus:
 
 Ergebnis: `videos/moduleXX-lessonYY.mp4` und `posters/moduleXX-lessonYY.jpg`.
 
+### Schritt 7 — Auf die Plattform publishen
+
+```bash
+npm run publish-videos
+```
+
+Verschiebt/kopiert die Renderer-Artefakte unter den Plattform-Slugs nach
+`public/videos/` + `public/posters/`, sodass die Next.js-Seite die Videos
+via `lib/lessonAssets.ts` automatisch findet.
+
+Default-Mapping: `moduleNN-lessonMM` → `module<N>-lesson<M>` (führende Nullen
+entfernt). Abweichende Zuordnungen in `config/video-slug-map.json` eintragen:
+
+```json
+{
+  "module01-lesson01": "module1-1-1",
+  "module13-lesson04": "module13-lesson-b-2"
+}
+```
+
+Zum reinen Verschieben (statt Kopieren):
+
+```bash
+npm run publish-videos -- --move
+```
+
 ---
 
-## 5. Häufige Teil-Läufe
+## 5. Render-Namenskonvention (2 Welten)
+
+| Kontext | Datei-Name | Auflösung |
+| --- | --- | --- |
+| Renderer-Output | `videos/moduleXX-lessonYY.mp4` | Gepolsterte Lektions-ID (`module01-lesson01`). Einheitlich mit `generated-assets/<id>/` und `assets-input/<id>/`. |
+| Plattform / `public/videos/` | `<moduleSlug>-<lessonSlug>.mp4` | Frontend-Slug (`module1-1-1.mp4`). Wird von `lib/lessonAssets.ts` erwartet. |
+
+Die Brücke schlägt `scripts/publish-videos.js` — Default-Mapping entfernt
+die führenden Nullen, Override via `config/video-slug-map.json`.
+
+`scripts/pilot-render.js` schreibt zusätzlich nach `videos/pilot/` und
+`posters/pilot/` — das bleibt rein lokal und wird nicht publiziert.
+
+---
+
+## 6. Häufige Teil-Läufe
 
 ```bash
 # Nur eine Lektion ganz durchziehen
@@ -177,7 +220,7 @@ npm run pilot-render
 
 ---
 
-## 6. Zusammenspiel mit bestehenden Scripts
+## 7. Zusammenspiel mit bestehenden Scripts
 
 Die Academy-Build-Pipeline ist eine **zusätzliche Schicht** über den
 bestehenden Low-Level-Scripts. Bestehende Scripts wurden nicht entfernt:
@@ -193,7 +236,7 @@ bestehenden Low-Level-Scripts. Bestehende Scripts wurden nicht entfernt:
 
 ---
 
-## 7. Troubleshooting
+## 8. Troubleshooting
 
 | Symptom | Ursache / Fix |
 | --- | --- |
@@ -202,4 +245,4 @@ bestehenden Low-Level-Scripts. Bestehende Scripts wurden nicht entfernt:
 | `check-assets`: „keine visualNN.* oder slideNN.* Dateien" | Gamma-Export fehlt — Prompts aus `gamma-prompts/<id>.txt` bei Gamma ausführen und `visualNN.png` ablegen. |
 | `check-assets`: „Legacy-slideNN" Warnung | Alte Namenskonvention — siehe `docs/SLIDE_GENERATION_RULES.md`, neu als `visualNN.png` ablegen. |
 | `render-videos` crasht sofort | Preflight via `npm run check-assets` laufen lassen und Fehler beheben. |
-| Video erscheint nicht in der Plattform | Konvention in `public/videos/<moduleSlug>-<lessonSlug>.mp4` prüfen — ggf. umbenennen/kopieren (offene Aufgabe 5.4 in `docs/offeneAufgaben.md`). |
+| Video erscheint nicht in der Plattform | `npm run publish-videos` laufen lassen. Wenn der Slug nicht passt, in `config/video-slug-map.json` eintragen. |

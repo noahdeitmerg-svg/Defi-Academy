@@ -1,0 +1,226 @@
+# Was ein Leverage-Loop eigentlich ist
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Den Grundmechanismus eines Leverage-Loops präzise beschreiben
+- Den Unterschied zwischen Leverage und einfachem Borrowing verstehen
+- Die häufigsten Arten von Loops identifizieren
+- Die Loop-Iteration (Deposit → Borrow → Swap → Re-Deposit) mathematisch nachvollziehen
+- Den Leverage Multiple als zentrale Kennzahl definieren und für eine konkrete Position berechnen
+- Konservative Einsatzfelder (Staking-Loops, Stable-Loops) von spekulativen Loops abgrenzen
+
+## Erklärung
+
+Ein Leverage-Loop ist eine Strategie, bei der ein Nutzer ein Asset als Sicherheit hinterlegt, ein anderes Asset borgt, das geborgte Asset in dasselbe Ursprungs-Asset tauscht und erneut einzahlt — und diesen Prozess wiederholt. Das Ergebnis: die effektive Position in dem Basis-Asset ist größer als das ursprüngliche Kapital.
+
+**Der einfachste Loop: wstETH-Staking-Loop**
+
+Um die Mechanik konkret zu verstehen, schauen wir einen typischen Leverage-Loop auf Aave V3:
+
+**Ausgangsposition:** 10 ETH (gestaktet als wstETH, ~10 ETH-Wert)
+
+**Runde 1:**
+1. Hinterlege 10 wstETH als Collateral auf Aave (E-Mode aktiviert, LTV bis 93%)
+2. Borge 8 ETH gegen die wstETH-Sicherheit (80% LTV — konservativer als Max)
+3. Stake die 8 ETH via Lido → bekomme ~8 wstETH
+4. Hinterlege die neuen 8 wstETH als zusätzliches Collateral
+
+**Runde 2:**
+5. Borge 6,4 ETH gegen das jetzt 18 wstETH umfassende Collateral
+6. Stake → 6,4 wstETH
+7. Hinterlege diese als Collateral
+
+**Runde 3:**
+8. Borge 5,1 ETH, stake, hinterlegte als Collateral
+9. Und so weiter...
+
+Nach 3–5 Runden hat der Nutzer:
+- **Ursprüngliches Kapital:** 10 ETH
+- **Total Collateral:** ~35–40 wstETH
+- **Total Borrow:** ~25–30 ETH Schuld
+
+**Effektiver Leverage:** 3,5–4x auf das ursprüngliche ETH
+
+**Warum lohnt sich das? Die Rendite-Mathematik**
+
+Angenommen:
+- wstETH-Staking-Rendite: 3,5% APR
+- ETH-Borrow-Zins auf Aave: 2,5% APR (E-Mode für korrelierte Assets)
+
+**Ohne Loop:**
+- 10 wstETH × 3,5% = 0,35 ETH Rendite pro Jahr
+- Netto-Rendite auf Kapital: 3,5%
+
+**Mit 3,5x Loop:**
+- 35 wstETH × 3,5% Staking = 1,225 ETH Brutto-Rendite
+- 25 ETH × 2,5% Borrow-Zins = 0,625 ETH Kosten
+- Netto-Rendite: 0,6 ETH = **6% auf 10 ETH ursprüngliches Kapital**
+
+**Der Leverage hat die Netto-Rendite von 3,5% auf 6% fast verdoppelt.**
+
+**Warum funktioniert das?** Weil die Staking-Rendite höher ist als die Borrow-Kosten. Der Spread zwischen beiden wird gehebelt. Das ist die **Carry-Trade-Mechanik** — bekannt aus traditionellem Finanzwesen (z.B. in Japanese-Yen-Carry-Trades).
+
+**Der Unterschied zu einfachem Borrowing**
+
+In Modul 7 haben wir Borrowing als "Kapital-Effizienz ohne Verkauf" behandelt — z.B. ETH als Sicherheit und USDC geliehen für andere Zwecke. Das ist kein Leverage-Loop.
+
+Ein Leverage-Loop hat eine zusätzliche Eigenschaft: das geborgte Asset wird in **dasselbe Underlying-Asset** zurückgeführt. Das verstärkt die Exposition zum Basis-Asset und seinen Yield-Mechaniken — aber auch zu seinen Risiken.
+
+**Die verschiedenen Loop-Typen**
+
+**Typ 1: Staking-Loop (wstETH/ETH)**
+- Underlying: ETH / Liquid Staking
+- Wie oben beschrieben
+- Benötigt: korrelierte Assets (Aave E-Mode)
+- Netto-Rendite: 5–8%
+
+**Typ 2: Restaking-Loop (weETH/ETH)**
+- Underlying: ETH / Restaking
+- Ähnlich zu Staking-Loop, aber mit LRT
+- Zusätzlicher Yield aus AVS-Rewards
+- Deutlich mehr Risiko-Schichten
+
+**Typ 3: Stablecoin-Loop (sDAI/DAI oder USDC/USDT)**
+- Underlying: Stablecoins
+- Sehr niedrige Volatilität, entsprechend sehr hoher Leverage möglich
+- Risiko: Depeg eines Stablecoins
+- Netto-Rendite: marginal über Basis-Rate
+
+**Typ 4: BTC-Loop (tBTC/WBTC oder cbBTC/WBTC)**
+- Underlying: Bitcoin-Varianten
+- Weniger etabliert als ETH-Loops
+- Höheres Peg-Risiko zwischen BTC-Wrappings
+
+**Typ 5: RWA-Loop (sDAI/USDS-Loop mit Sky Savings Rate)**
+- Underlying: Real-World-Assets (US-Treasuries)
+- Sehr niedriges Volatilitäts-Risiko
+- Regulatorisches Risiko präsent
+
+Für das 7–8%-Jahresziel ist **Typ 1 (wstETH-Loop)** der relevanteste — wir fokussieren in diesem Modul darauf.
+
+**Was ein Loop strukturell bedeutet**
+
+Ein Loop verändert deine Risiko-Position fundamental:
+
+1. **Aus "Long ETH" wird "Extrem-Long ETH"** — bei 3,5x Leverage ist deine effektive ETH-Exposition 350% deines ursprünglichen Kapitals
+2. **Du hast zusätzlich eine "Short ETH" Borrow-Position** — wenn ETH stark gegenüber dem Borrow-Asset steigt, steigt deine Schuld-Last
+3. **Du bist Peg-Risiko ausgesetzt** — wenn wstETH im Verhältnis zu ETH depeggt (wie Juni 2022), wird dein Collateral-Wert unterbesichert relativ zur Schuld
+4. **Du bist Zins-Risiko ausgesetzt** — wenn Borrow-Zinsen steigen, wird dein Carry-Trade unprofitabel
+
+Das sind **vier zusätzliche Risiko-Ebenen** über einfaches Halten hinaus. Sie müssen alle gleichzeitig günstig sein, damit der Loop Sinn macht.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Was ein Leverage-Loop eigentlich ist
+
+**[Slide 2] — Grundmechanik**
+Collateral → Borrow → Kauf mehr Collateral → wiederholen
+Effektive Position > Ursprungskapital
+
+**[Slide 3] — wstETH-Loop Beispiel**
+10 wstETH Start
+→ nach 3-5 Runden ~35 wstETH Collateral, ~25 ETH Schuld
+Leverage 3,5x
+
+**[Slide 4] — Die Rendite-Mechanik**
+Ohne Loop: 3,5% (Staking-Yield)
+Mit 3,5x Loop: ~6% (Staking minus Borrow-Kosten × Leverage)
+Carry-Trade gehebelt
+
+**[Slide 5] — Unterschied zu Borrowing**
+Borrowing: Kapital für anderen Zweck
+Loop: Kapital zurück ins gleiche Underlying
+Verstärkt Exposure und Risiken
+
+**[Slide 6] — Loop-Typen**
+1. Staking-Loop (wstETH/ETH) — Fokus
+2. Restaking-Loop (weETH/ETH)
+3. Stablecoin-Loop
+4. BTC-Loop
+5. RWA-Loop
+
+**[Slide 7] — Die strukturelle Änderung**
+Extrem-Long Underlying
++ Short Borrow-Asset
++ Peg-Risiko
++ Zins-Risiko
+Vier zusätzliche Risiko-Ebenen
+
+## Sprechertext
+
+**[Slide 1]** Modul 10 behandelt Leverage-Loops — die mächtigste und riskanteste Yield-Strategie in DeFi. Durch wiederholtes Borgen gegen bestehende Sicherheiten verstärkt sich die Basis-Rendite. Aber Verluste werden genauso multipliziert. Diese erste Lektion erklärt, was ein Loop mechanisch wirklich ist.
+
+**[Slide 2]** Die Grundmechanik. Du hinterlegst ein Asset als Sicherheit, borgst ein anderes, tauschst das geborgte Asset zurück in dasselbe Ursprungs-Asset, und hinterlegst es erneut. Das wiederholst du mehrere Runden. Das Ergebnis: deine effektive Position in dem Basis-Asset ist größer als dein ursprüngliches Kapital. Das ist Leverage.
+
+**[Slide 3]** Ein konkretes Beispiel. Du startest mit 10 wstETH. Runde 1: hinterlegst 10 wstETH, borgst 8 ETH, stakest zu 8 wstETH, hinterlegst neu. Runde 2: borgst 6,4 ETH, stakest zu 6,4 wstETH. Runde 3: 5,1 ETH. Nach 3 bis 5 Runden hast du etwa 35 wstETH Collateral und 25 ETH Schuld. Effektiver Leverage: 3,5 fach.
+
+**[Slide 4]** Warum das lohnt. Angenommen wstETH-Staking bringt 3,5 Prozent, ETH-Borrow-Kosten sind 2,5 Prozent. Ohne Loop: 3,5 Prozent auf 10 ETH ist 0,35 ETH pro Jahr. Mit 3,5-fachem Loop: 35 wstETH × 3,5 Prozent Staking gleich 1,225 ETH Brutto minus 25 ETH × 2,5 Prozent Borrow gleich 0,625 ETH Kosten, netto 0,6 ETH Rendite. Das sind 6 Prozent auf die ursprünglichen 10 ETH Kapital. Der Leverage hat die Netto-Rendite fast verdoppelt. Das ist Carry-Trade-Mechanik.
+
+**[Slide 5]** Wichtiger Unterschied zu einfachem Borrowing. In Modul 7 haben wir Borrowing als Kapital-Effizienz ohne Verkauf behandelt — ETH als Sicherheit, USDC geliehen für andere Zwecke. Das ist kein Leverage-Loop. Ein Loop hat eine zusätzliche Eigenschaft: das geborgte Asset wird in dasselbe Underlying zurückgeführt. Das verstärkt die Exposition zum Basis-Asset und seinen Mechaniken — aber auch zu seinen Risiken.
+
+**[Slide 6]** Fünf Loop-Typen existieren. Typ 1: Staking-Loop mit wstETH und ETH — unser Fokus für dieses Modul. Typ 2: Restaking-Loop mit weETH — zusätzliche AVS-Rewards, aber deutlich mehr Risiko. Typ 3: Stablecoin-Loop — niedrigere Volatilität, sehr hoher Leverage möglich, Depeg-Risiko. Typ 4: BTC-Loop mit verschiedenen BTC-Wrappings. Typ 5: RWA-Loop mit Sky Savings Rate. Für das 7 bis 8 Prozent Ziel ist Typ 1 am relevantesten.
+
+**[Slide 7]** Die strukturelle Änderung durch einen Loop. Du bist nicht mehr nur Long im Underlying — du bist Extrem-Long. Bei 3,5-fachem Leverage ist deine effektive Exposure 350 Prozent deines Kapitals. Du hast zusätzlich eine implizite Short-Position auf das Borrow-Asset. Du bist Peg-Risiko ausgesetzt — wenn wstETH gegenüber ETH depeggt, bricht deine Balance. Du bist Zins-Risiko ausgesetzt — wenn Borrow-Zinsen steigen, wird der Carry unprofitabel. Vier zusätzliche Risiko-Ebenen, die alle gleichzeitig günstig sein müssen.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Kreislauf-Diagramm: Collateral → Borrow → Buy → Re-deposit, mit Wachstums-Indikator.
+
+**[Slide 3]** Stufendiagramm der 3-5 Loop-Runden mit wstETH- und ETH-Mengen.
+
+**[Slide 4]** Rendite-Vergleich: Ohne Loop vs. mit 3,5x Loop, visualisiert als Balken.
+
+**[Slide 5]** Zwei Flussdiagramme nebeneinander: einfaches Borrowing vs. Loop.
+
+**[Slide 6]** Fünf-Karten-Layout der Loop-Typen mit Risiko-Einstufung.
+
+**[Slide 7]** Risiko-Pyramide der vier zusätzlichen Risiko-Ebenen.
+
+## Übung
+
+**Aufgabe: Loop-Grundmechanik nachvollziehen**
+
+Nimm an: du startest mit 5 ETH, gestaked als 5 wstETH. Borrow-LTV ist 75% (konservativer als Max). Ignoriere Gas-Kosten für diese Übung.
+
+Berechne:
+1. Runde 1: Wie viel ETH kannst du borgen? Wie viel wstETH bekommst du nach Staking?
+2. Runde 2: Wie viel zusätzlich?
+3. Runde 3: Wie viel zusätzlich?
+4. Nach 3 Runden: Gesamt-Collateral? Gesamt-Schuld? Effektiver Leverage?
+5. Wie würde sich die Rechnung ändern, wenn du 80% LTV nutzt?
+
+**Deliverable:** Tabelle mit Runden-für-Runden-Rechnung. Vergleich 75% vs. 80% LTV.
+
+## Quiz
+
+**Frage 1:** Ein Freund sagt: "Leverage-Loops sind eigentlich risikofrei, weil man sich nur mit sich selbst leverageed — das Collateral ist immer da." Was stimmt daran nicht?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Die Aussage ignoriert mehrere reale Risiken. Erstens: Peg-Risiko zwischen Collateral und Borrow-Asset. Bei einem wstETH/ETH-Loop setzt die Strategie voraus, dass 1 wstETH immer ~1 ETH wert ist (plus Rewards). Im Juni 2022 fiel stETH/ETH auf 0,94 — eine 6%-Abweichung, die bei hohem Leverage sofort zur Liquidation führen kann. Zweitens: Liquidations-Risiko durch Zinsakkumulation. Selbst ohne Preisveränderung wächst die Schuld durch Borrow-Zinsen. Bei 2,5% Borrow-Rate und 3,5% Staking-Rate ist der Netto-Carry positiv, aber klein. Wenn Borrow-Rates auf 5% springen (was bei Utilization-Spikes passiert), wird der Carry negativ, und die Position erodiert täglich. Drittens: Smart-Contract-Risiko kumuliert. Der Loop nutzt Aave (Lending), Lido (Staking) und DEXs (für Swaps). Ein Problem auf einer dieser Ebenen betrifft die ganze Position. Viertens: Netzwerk-Risiken in Krisen. In extremer Volatilität können Liquidatoren nicht schnell genug reagieren, Gas-Preise explodieren, und die Position kann stärker verlieren als bei einer normalen Liquidation. Die Aussage "nur mit sich selbst" ist eine fundamentale Fehlinterpretation — Leverage-Loops sind eine der risikoreichsten DeFi-Strategien.
+</details>
+
+**Frage 2:** Warum ist die Rendite-Mechanik eines Leverage-Loops ein Carry-Trade, und was lernt man daraus?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Ein Carry-Trade ist eine klassische Finanz-Strategie, bei der man ein niedrig-verzinstes Asset leiht und in ein höher-verzinstes Asset investiert. Der Gewinn ist der Spread zwischen beiden Zinsen. Historisch bekanntestes Beispiel: Yen-Carry-Trade (leihen in Japan bei 0,5%, anlegen in USD-Assets bei 5%+). Ein wstETH-Loop ist mathematisch identisch: Borrow ETH bei 2,5%, staken für 3,5% — der Spread von 1% ist der Carry. Gehebelt wird dieser Spread. Die Lehren aus Carry-Trades generell: Erstens, Carry-Trades funktionieren nur, solange der Spread positiv bleibt. Wenn sich Zinsen umkehren (Borrow-Rate > Yield-Rate), verliert die Strategie Geld. Zweitens, Carry-Trades sind anfällig für plötzliche Marktbewegungen. Yen-Carry-Trades wurden historisch bei plötzlichen Yen-Aufwertungen katastrophal abgewickelt. Drittens, Carry-Trades sind selbst-verstärkend in Krisen — wenn viele Nutzer dieselbe Carry-Position halten, lösen sich alle gleichzeitig auf, was den Markt weiter gegen sie bewegt. All das gilt auch für wstETH-Loops. In ruhigen Märkten funktionieren sie, in Krisen können sie kaskadieren. Das ist der Grund, warum konservative Nutzung nur einen Teil des Kapitals in solche Strategien stecken sollte — und immer mit Puffern für negative Carry-Phasen.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Folien: Titel → Loop-Mechanik → Iteration-Beispiel → Leverage Multiple → Loop-Arten → Carry-Trade-Analogie → Einsatzfeld
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `visual_plan.json` — Loop-Iteration-Diagramm, Leverage-Multiple-Berechnung, Loop-Typen-Matrix, Carry-Trade-Analogie-Grafik
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

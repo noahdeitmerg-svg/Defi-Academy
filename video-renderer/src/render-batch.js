@@ -150,6 +150,7 @@ Usage:
     --only      <ids>    Comma-separated lesson IDs (optional)
     --concurrency <n>    Frame-render concurrency per lesson (default 4)
     --log-level <level>  info|warn|error|verbose (default: info)
+    --bundle-cache <path>  Reuse/write Remotion bundle at path (shared across chunks)
 `);
     process.exit(0);
   }
@@ -188,16 +189,38 @@ Usage:
   lessons.forEach((l) => console.log(`  - ${l}`));
   console.log('');
 
-  // 2) Build Remotion bundle ONCE
-  console.log('Building Remotion bundle (one-time)…');
-  const t0 = Date.now();
-  const bundleLocation = await bundle({
-    entryPoint: path.join(rendererRoot, 'remotion', 'index.jsx'),
-    publicDir: path.join(rendererRoot, 'public'),
-    webpackOverride: (config) => config,
-  });
-  console.log(`  ok  (${((Date.now() - t0) / 1000).toFixed(1)}s)  ${bundleLocation}`);
-  console.log('');
+  // 2) Build Remotion bundle ONCE — optional ueber --bundle-cache mehrfach
+  //    (in Chunks) wiederverwendbar.
+  const bundleCacheArg = args['bundle-cache'] || process.env.REMOTION_BUNDLE_CACHE;
+  let bundleLocation;
+  if (bundleCacheArg && fs.existsSync(bundleCacheArg) && fs.existsSync(path.join(bundleCacheArg, 'index.html'))) {
+    bundleLocation = path.resolve(bundleCacheArg);
+    console.log(`Reusing Remotion bundle from cache: ${bundleLocation}`);
+    console.log('');
+  } else {
+    console.log('Building Remotion bundle (one-time)…');
+    const t0 = Date.now();
+    bundleLocation = await bundle({
+      entryPoint: path.join(rendererRoot, 'remotion', 'index.jsx'),
+      publicDir: path.join(rendererRoot, 'public'),
+      webpackOverride: (config) => config,
+    });
+    console.log(`  ok  (${((Date.now() - t0) / 1000).toFixed(1)}s)  ${bundleLocation}`);
+    // Wenn --bundle-cache angegeben, dorthin spiegeln, damit nachfolgende
+    // Chunks den Build ueberspringen koennen.
+    if (bundleCacheArg) {
+      try {
+        fs.mkdirSync(path.dirname(bundleCacheArg), { recursive: true });
+        if (!fs.existsSync(bundleCacheArg)) {
+          fs.cpSync(bundleLocation, bundleCacheArg, { recursive: true });
+          console.log(`  → cached at ${bundleCacheArg}`);
+        }
+      } catch (err) {
+        console.warn(`  warn: bundle-cache copy failed (${err.message})`);
+      }
+    }
+    console.log('');
+  }
 
   // 3) Render lessons
   const videosDir = path.join(outputDir, 'videos');

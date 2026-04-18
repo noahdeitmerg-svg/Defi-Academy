@@ -1,0 +1,327 @@
+# Etherscan und Block-Explorer Mastery
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Adressen auf Etherscan sicher interpretieren und EOAs von Contracts unterscheiden
+- Transaktions-Details vollständig lesen: Method, Gas, Value, Input Data, Logs, Internal Transactions
+- Smart-Contract-Seiten navigieren: Code, Read/Write Contract, Events, Holders
+- Token-Approvals auf Etherscan direkt prüfen und verwalten
+- L2-spezifische Explorer (Arbiscan, Basescan, Optimistic Etherscan) und ihre Besonderheiten nutzen
+- Eine Post-Hack-Analyse durch Lesen der Exploit-Transaktion auf Etherscan rekonstruieren
+
+## Erklärung
+
+**Warum Etherscan-Kompetenz zentral ist**
+
+Etherscan ([etherscan.io](https://etherscan.io)) ist der Block-Explorer für Ethereum. Vergleichbare Explorer existieren für jede relevante Chain: Arbiscan für Arbitrum, Basescan für Base, Optimistic Etherscan für Optimism, Polygonscan für Polygon. Das Interface ist über alle hinweg praktisch identisch — wer Etherscan beherrscht, beherrscht den Rest mit minimalem Lernaufwand.
+
+Block-Explorer sind das fundamentalste On-Chain-Analyse-Tool. DeFiLlama aggregiert und interpretiert, Explorer zeigen die Rohdaten. Jede seriöse Analyse endet früher oder später bei Etherscan — weil es die einzige Quelle ist, die *exakte, verifikatorische* Informationen liefert, nicht aggregierte Näherungen.
+
+Drei typische Use-Cases machen Etherscan unverzichtbar:
+
+**1. Verifikation.** Wenn eine Quelle etwas behauptet ("Protokoll X hat 500 Mio USD Collateral"), ist Etherscan die autoritative Quelle zur Verifikation.
+
+**2. Investigation.** Wenn etwas ungewöhnlich passiert (unerwartete Transaktion in der eigenen Wallet, Hack eines Protokolls, verdächtige Aktivität), ist Etherscan das Tool zur Untersuchung.
+
+**3. Interaktion.** Wenn ein Protokoll kein funktionierendes Frontend hat oder du Funktionen nutzen willst, die das UI nicht zeigt, kannst du direkt über Etherscan mit dem Contract interagieren.
+
+**Adressen verstehen: EOA vs. Contract**
+
+Jede Ethereum-Adresse ist entweder ein EOA (Externally Owned Account) oder ein Contract. Der Unterschied ist fundamental.
+
+**EOA (Externally Owned Account):**
+- Von einem privaten Schlüssel kontrolliert
+- Gehört einer Person, einem Multisig-Setup, einer Hardware-Wallet
+- Keine Code, kann nur Transaktionen initiieren
+- Auf Etherscan sichtbar als normale Adresse ohne "Contract"-Tag
+
+**Contract:**
+- Smart Contract mit Code
+- Kann andere Contracts aufrufen, Tokens halten, komplexe Logik ausführen
+- Wird bei Deployment erzeugt, nicht durch Private Key kontrolliert
+- Auf Etherscan sichtbar mit "Contract"-Tab und Code-Sektion
+
+**Warum das wichtig ist:** Wenn man eine Transaktion zu einer Adresse macht, ist das Verhalten grundsätzlich unterschiedlich. An ein EOA: einfacher Transfer, Tokens landen in der Wallet. An einen Contract: es wird Code ausgeführt — möglicherweise Swap, Deposit, Approval, oder etwas anderes. Ein Nutzer, der versehentlich Tokens an einen falschen Contract schickt, kann sie verlieren, wenn der Contract kein "Rescue"-Funktion hat.
+
+**Adress-Labels auf Etherscan**
+
+Etherscan labelt viele bekannte Adressen. Die Labels haben unterschiedliche Qualität:
+
+- **"Verified" oder Offiziell-markiert:** Solide Zuordnung. Z.B. "Coinbase: Cold Wallet 1" oder "Aave V3: Pool".
+- **Public Name Tags (user-submitted):** Von Community eingereicht, nicht zwingend verifiziert. Vorsicht.
+- **Ohne Label:** Die große Mehrheit der Adressen. Muss man aus Transaktions-Pattern ableiten.
+
+Für ernsthafte Analyse: Etherscan-Labels sind Hinweise, keine Beweise. Wenn ein Transfer an "vermeintlich Coinbase" geht, aber das Label user-submitted ist, ist das kein sicherer Indikator.
+
+**Transaktions-Details vollständig lesen**
+
+Jede Ethereum-Transaktion hat mehrere Felder. Die wichtigsten:
+
+**Transaction Hash:** Einzigartige ID. Verlinkbar, teilbar, durchsuchbar.
+
+**Status:** Success oder Failed. Failed-Transaktionen haben trotzdem Gas gekostet.
+
+**Block:** In welchem Block die Transaktion eingeschlossen wurde. Mit Timestamp.
+
+**From / To:** Sender und Empfänger. Kann EOA oder Contract sein.
+
+**Value:** ETH-Menge, die mit der Transaktion transferiert wird (kann 0 sein, wenn nur Contract-Call).
+
+**Transaction Fee / Gas Price:** Was der Sender bezahlt hat.
+
+**Method:** Welche Funktion des Contracts aufgerufen wurde (falls To = Contract). Z.B. "Swap Exact Tokens For Tokens", "Deposit", "Transfer".
+
+**Input Data:** Die exakten Bytes, die an den Contract gesendet wurden. Enthält Funktions-Aufruf plus Parameter. Für tiefe Analyse wichtig.
+
+**Logs (Events):** Was der Contract während der Ausführung als "Event" emittiert hat. Token Transfers sind ERC-20 Transfer-Events. Lending-Einzahlungen sind Deposit-Events. Die Logs sind oft aussagekräftiger als das Input Data für das Verständnis, was passiert ist.
+
+**Internal Transactions:** Wenn ein Contract andere Contracts aufruft (was in DeFi ständig passiert), sind das interne Transaktionen. Z.B. bei einer DEX-Swap: die Haupt-Transaktion ruft den Router auf, der Router ruft das Pair, das Pair transferiert Tokens — alles interne Transaktionen. Zeigt die vollständige Ausführungs-Kette.
+
+**State Changes:** Was sich im Storage der Contracts durch die Transaktion geändert hat. Sehr technisch, aber manchmal nützlich für Debugging.
+
+**Praktische Lese-Strategie einer unbekannten Transaktion:**
+
+1. **Method prüfen.** Was wurde aufgerufen? "Approve", "Swap", "Deposit" gibt direkten Hinweis auf Intention.
+2. **From/To prüfen.** Sind das bekannte Entitäten? Gelabelt? Verdächtig?
+3. **Value prüfen.** Wird ETH transferiert, oder ist es ein reiner Token-Call?
+4. **Logs analysieren.** Welche Events wurden emittiert? Oft zeigen die Token-Transfer-Events klarer als die Method, was passiert ist.
+5. **Internal Transactions bei Komplexität.** Wenn die Transaktion mehrere Contracts involviert, die Kette durchgehen.
+
+**Smart-Contract-Seiten navigieren**
+
+Wenn man auf die Etherscan-Seite eines Contracts geht, hat man mehrere Tabs.
+
+**Transactions:** Alle Transaktionen, die den Contract involviert haben. Nützlich für Aktivitäts-Einschätzung.
+
+**Internal Txns:** Interne Transaktionen (Contract-to-Contract Calls).
+
+**Token Transfers (ERC-20 / ERC-721):** Wenn der Contract Tokens hält oder bewegt, werden sie hier getrennt angezeigt.
+
+**Contract:** Der Source Code. Nur verfügbar, wenn der Contract "verifiziert" ist (Team hat den Source hochgeladen und Etherscan hat ihn gegen den Bytecode verglichen). Verifizierter Code ist ein positives Signal — man kann ihn lesen und prüfen.
+
+**Read Contract:** View-Funktionen direkt aufrufen. Keine Transaktion nötig, kostet kein Gas. Z.B. "Was ist der aktuelle Total Supply?" oder "Wer ist der Admin?".
+
+**Write Contract:** State-ändernde Funktionen aufrufen. Erfordert Wallet-Verbindung und echte Transaktion. Nützlich, wenn Frontends fehlen oder nicht funktionieren.
+
+**Events:** Alle vom Contract emittierten Events. Besonders nützlich für historische Analyse: "Wann wurden Admin-Funktionen aufgerufen? Wann wurden große Deposits gemacht?"
+
+**Holders:** Für Token-Contracts: die Adressen, die den Token halten, sortiert nach Menge. Zeigt Konzentration: wenn die Top-10-Holder 80% halten, ist der Token strukturell zentralisiert.
+
+**Praktische Nutzungsszenarien**
+
+**Szenario 1: "Ist dieser Contract legitim?"**
+Öffne den Contract-Tab. Ist der Code verifiziert? Wer sind die bekannten Holder / Deployer? Welche Audit-Reports sind verlinkt (oft in den Kontakt-Informationen)? Der Code selbst zu lesen ist Entwickler-Territorium, aber "verifiziert plus bekannter Deployer" ist ein starkes Basis-Signal.
+
+**Szenario 2: "Welche Approvals habe ich gesetzt?"**
+Etherscan hat eine Approvals-Page pro Wallet: `etherscan.io/tokenapprovalchecker?search=0xDEINEADRESSE`. Zeigt alle aktiven Approvals mit Möglichkeit zum Revoke. Eine wichtige Alternative zu revoke.cash, mit leicht anderen Datenquellen.
+
+**Szenario 3: "Wie groß ist die Admin-Macht eines Protokolls?"**
+Read Contract nutzen. Viele Protokolle haben Funktionen wie `owner()`, `admin()`, `governance()`. Die Rückgabe-Adresse zeigt, wer Admin-Rechte hat. Ist es eine Multisig? Eine Governance-Contract? Eine EOA (schlechtes Signal)?
+
+**Szenario 4: "Was macht diese verdächtige Transaktion in meiner Wallet?"**
+Öffne die Transaktion. Method und Logs analysieren. Wenn du die Method nicht erkennst oder der To-Contract verdächtig ist — sofortige Action: alle Approvals zurückziehen, Wallet-Balance prüfen.
+
+**Szenario 5: "Ich möchte direkt mit einem Contract interagieren."**
+Write Contract nutzen. Wallet verbinden (via WalletConnect oder MetaMask). Funktion wählen. Parameter eingeben. Transaktion signieren. Das ist der Weg für Advanced-Nutzer, wenn Frontends fehlen oder Probleme haben.
+
+**Token Approvals: Die wichtigste praktische Nutzung**
+
+Approvals sind die meistgenutzte Funktion, die Retail-Nutzer auf Etherscan direkt sehen sollten. Jede DeFi-Interaktion — Deposit, Swap, Lending — beginnt mit einer Approval: du gibst einem Contract die Erlaubnis, einen bestimmten Betrag deiner Tokens zu bewegen.
+
+**Das Problem mit Approvals:**
+- **Unlimited Approvals:** Viele Frontends setzen standardmäßig "max uint256" — unlimited. Das bedeutet, der Contract kann alle aktuellen und zukünftigen Tokens dieser Art in deiner Wallet abziehen, für immer.
+- **Persistent Approvals:** Approvals bleiben aktiv, bis man sie explizit zurückzieht. Auch wenn du das Protokoll nicht mehr nutzt.
+- **Hack-Risiko:** Wenn der approvierte Contract kompromittiert wird, kann der Angreifer dein Kapital abziehen — selbst wenn du das Protokoll längst nicht mehr aktiv nutzt.
+
+**Etherscan's Approval Checker:**
+Unter [etherscan.io/tokenapprovalchecker](https://etherscan.io/tokenapprovalchecker) kann jede Wallet-Adresse eingegeben werden. Ergebnis: alle aktiven Approvals mit:
+- Token
+- Approved Spender (welcher Contract)
+- Allowance (wie viel darf der Spender abziehen — unlimited zeigt als "Unlimited")
+- Last Updated (wann zuletzt geändert)
+- Revoke-Button
+
+**Die Routine:**
+Monatlich die eigene Wallet durch den Approval Checker schicken. Alle Approvals zu Protokollen, die man nicht mehr aktiv nutzt, zurückziehen. Unlimited-Approvals bei aktiv genutzten Protokollen evaluieren: ist das wirklich nötig? Bei höher-riskanten Protokollen auf Exact Amount reduzieren.
+
+**L2-Explorer: Die Unterschiede**
+
+Jede L2 hat ihren eigenen Explorer, aber alle sind Etherscan-ähnlich gebaut.
+
+**Arbiscan ([arbiscan.io](https://arbiscan.io)):**
+Arbitrum-Explorer. Funktionalität identisch mit Etherscan. Besondere Sektion: Dispute-Status für kritische Transaktionen (Optimistic Rollup-Spezifikum).
+
+**Basescan ([basescan.org](https://basescan.org)):**
+Base-Explorer. Auch Etherscan-artig. Neueste L2 in dieser Liste, daher weniger historische Daten.
+
+**Optimistic Etherscan ([optimistic.etherscan.io](https://optimistic.etherscan.io)):**
+Optimism-Explorer. Integration mit L1-Withdrawals besonders sichtbar.
+
+**Polygonscan ([polygonscan.com](https://polygonscan.com)):**
+Polygon PoS-Explorer. Höheres Transaktionsvolumen, anderes Fee-Modell.
+
+**Besonderheiten bei L2-Explorern:**
+- **Deposit/Withdrawal-Tracking:** L2-Explorer zeigen oft spezifische UI für Bridge-Operationen L1↔L2.
+- **Gas-Modell:** L2-Transaktionen haben zwei Gas-Komponenten: L2-Gas (minimal) und L1-Submission-Cost (dominant). Explorer zeigen beide.
+- **Finalization-Status:** Bei Optimistic Rollups ist eine Transaktion zunächst "soft finalized" (nach Sequencer-Commit), dann "hard finalized" (nach 7-Tage-Challenge). Explorer zeigen beide Stati.
+
+**Praktischer Unterschied im Alltag:**
+Für Nutzer gibt es wenig funktionalen Unterschied. Wer Etherscan beherrscht, navigiert die L2-Explorer intuitiv. Die einzige wichtige Disziplin: für jede Chain den richtigen Explorer nutzen. Eine Arbitrum-Transaktion auf Etherscan suchen liefert keine Ergebnisse. Tools wie [blockscan.com](https://blockscan.com) können chain-übergreifend suchen, sind aber meist weniger detailliert als die chain-spezifischen Explorer.
+
+**Explorer-Power-Usage: Drei Advanced-Techniken**
+
+**Technik 1: Event-Filtering für historische Analysen.**
+Auf einer Contract-Page, Events-Tab, kann man nach bestimmten Event-Typen filtern. "Alle Deposit-Events der letzten 30 Tage" gibt einen chronologischen Blick auf Protokoll-Aktivität, den Dashboards oft nicht so granular zeigen.
+
+**Technik 2: Proxy-Contracts entschlüsseln.**
+Viele DeFi-Protokolle nutzen Proxy-Patterns: der Contract, mit dem User interagieren, ist ein Proxy, der die eigentliche Logik an einen "Implementation"-Contract delegiert. Etherscan zeigt oft nur den Proxy. Der verifizierte Implementation-Code ist wichtig für echtes Code-Verständnis. Etherscan hat einen "Read as Proxy"-Button, der die Implementation-Interface offenlegt.
+
+**Technik 3: Interne Funktionen via Debug.**
+Etherscan's "Debug Transaction"-Feature (nur bei einigen Tx verfügbar) zeigt den kompletten Call-Trace. Wichtig für Hack-Analysen oder komplexe Fehler. Für typische Retail-Nutzung selten, aber gut zu wissen.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Etherscan und Block-Explorer Mastery
+
+**[Slide 2] — Warum Etherscan zentral ist**
+Einzige autoritative Daten-Quelle (nicht aggregiert)
+Identisch auf allen EVM-Chains (Arbiscan, Basescan, etc.)
+Use-Cases: Verifikation, Investigation, Interaktion
+
+**[Slide 3] — Adressen verstehen**
+EOA vs. Contract
+EOA = Private-Key-kontrolliert
+Contract = Code, komplexere Logik
+Labels: Verifiziert > User-submitted > Unlabeled
+
+**[Slide 4] — Transaktions-Details**
+Hash, Status, From/To, Value, Method
+Input Data (Parameter)
+Logs/Events (was wirklich passiert ist)
+Internal Transactions (Contract-to-Contract)
+
+**[Slide 5] — Smart-Contract-Tabs**
+Transactions, Internal Txns, Token Transfers
+Contract (Source Code, verifiziert?)
+Read Contract / Write Contract
+Events, Holders
+
+**[Slide 6] — Token Approvals — die kritische Routine**
+tokenapprovalchecker: alle Approvals anzeigen
+Unlimited vs Exact Amount
+Monatliches Review: revoken, was nicht mehr genutzt
+Alternative zu revoke.cash
+
+**[Slide 7] — L2-Explorer**
+Arbiscan, Basescan, Optimistic Etherscan, Polygonscan
+Funktional identisch zu Etherscan
+Besonderheiten: Bridge-UI, Gas-Modell, Finalization-Status
+
+**[Slide 8] — Advanced-Techniken**
+Event-Filtering für historische Analysen
+Proxy-Contracts entschlüsseln (Read as Proxy)
+Debug Transaction für Hack-Analysen
+
+## Sprechertext
+
+**[Slide 1]** Nach DeFiLlama, das aggregiert und interpretiert, kommen wir zu Etherscan, das die Rohdaten zeigt. Jede seriöse Analyse endet früher oder später bei Etherscan, weil es die einzige Quelle exakter, verifikatorischer Informationen ist. In dieser Lektion lernen wir, diesen Block-Explorer systematisch zu navigieren.
+
+**[Slide 2]** Etherscan ist aus drei Gründen zentral. Erstens: autoritative Daten, keine aggregierten Näherungen. Wenn jemand behauptet, ein Protokoll habe 500 Millionen Dollar Collateral, ist Etherscan die Quelle zur direkten Verifikation. Zweitens: das Interface ist auf allen EVM-Chains identisch. Arbiscan, Basescan, Optimistic Etherscan — wer Etherscan beherrscht, navigiert die anderen intuitiv. Drittens: drei praktische Use-Cases machen es unverzichtbar. Verifikation von Behauptungen. Investigation ungewöhnlicher Aktivität. Direkte Interaktion mit Contracts, wenn Frontends fehlen.
+
+**[Slide 3]** Grundlegende Unterscheidung: jede Ethereum-Adresse ist entweder ein EOA oder ein Contract. EOA — Externally Owned Account — ist von einem privaten Schlüssel kontrolliert, gehört einer Person oder einem Multisig, hat keinen Code. Contract ist ein Smart Contract mit Code, wird bei Deployment erzeugt, führt komplexe Logik aus. Etherscan markiert Contracts mit einem eigenen Tab. Adress-Labels sind wichtige Hinweise: Verifizierte sind solide, User-submitted brauchen Vorsicht, unlabeled sind die Mehrheit.
+
+**[Slide 4]** Transaktions-Details haben mehrere kritische Felder. Hash als einzigartige ID. Status — Success oder Failed. From und To. Value — ETH-Menge, die mitgeschickt wird. Method — welche Funktion des Contracts aufgerufen wurde, zum Beispiel Swap oder Deposit. Input Data enthält die exakten Parameter. Logs, oder Events, zeigen, was wirklich passiert ist — oft klarer als die Method. Internal Transactions zeigen die Kette der Contract-Aufrufe. Eine praktische Lese-Strategie: Method prüfen, From/To prüfen, Value prüfen, Logs analysieren, bei Komplexität die Internal Transactions durchgehen.
+
+**[Slide 5]** Auf einer Contract-Seite hat man mehrere Tabs. Transactions zeigt alle Transaktionen, die den Contract involvieren. Contract zeigt den Source Code, wenn verifiziert — ein positives Signal. Read Contract erlaubt View-Funktionen direkt aufzurufen, ohne Gas zu zahlen. Write Contract erlaubt state-ändernde Funktionen, erfordert Wallet-Verbindung. Events zeigen historische Aktivität granular. Holders, bei Token-Contracts, zeigt die Verteilung der Token-Besitzer — wichtig für Konzentrations-Analyse.
+
+**[Slide 6]** Token Approvals sind die wichtigste praktische Nutzung für Retail. Jede DeFi-Interaktion beginnt mit einer Approval. Viele Frontends setzen standardmäßig Unlimited Approvals — der Contract kann alle aktuellen und zukünftigen Tokens dieser Art abziehen, für immer, es sei denn man revoked. Etherscan hat einen Approval Checker: URL tokenapprovalchecker, Wallet-Adresse eingeben, alle aktiven Approvals werden aufgelistet mit Revoke-Button. Die Routine: monatlich die eigene Wallet durchschicken, Approvals zu nicht mehr genutzten Protokollen zurückziehen. Das ist eine Alternative oder Ergänzung zu revoke.cash.
+
+**[Slide 7]** Jede L2 hat ihren eigenen Explorer. Arbiscan für Arbitrum, Basescan für Base, Optimistic Etherscan für Optimism, Polygonscan für Polygon. Funktional sind sie identisch zu Etherscan. Die Besonderheiten sind meist kosmetisch. Bei Optimistic Rollups zeigen die Explorer die zwei Finalization-Stufen: soft-finalized nach Sequencer-Commit, hard-finalized nach 7-Tage-Challenge-Period. Das Gas-Modell der L2s wird in zwei Komponenten angezeigt: L2-Gas plus L1-Submission-Cost. Im Alltag: wichtig ist nur, den richtigen Explorer für die richtige Chain zu nutzen.
+
+**[Slide 8]** Drei Advanced-Techniken, die über Standard-Nutzung hinausgehen. Event-Filtering: auf der Events-Page eines Contracts kann man nach Event-Typ filtern, für granulare historische Analyse. Proxy-Contracts: viele Protokolle nutzen Upgrade-Patterns, bei denen der User-Contract ein Proxy ist und die Logik an einen Implementation-Contract delegiert. Etherscan hat eine Read-as-Proxy-Funktion, die das Implementation-Interface offenlegt. Debug Transaction: für einige Transaktionen ist ein kompletter Call-Trace verfügbar — wichtig für Hack-Analysen. Diese Techniken sind für Power-User, aber gut zu kennen, wenn komplexere Fragen auftauchen.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Vergleichs-Diagramm: DeFiLlama (aggregiert, interpretiert) vs Etherscan (Raw, Autoritativ). Visuelle Trennung der Rollen.
+
+**[Slide 3]** **SCREENSHOT SUGGESTION:** Etherscan-Adressseite einer bekannten Entität (z.B. Vitaliks öffentliche Adresse) — zeigt die Seiten-Struktur, Labels und Transaktions-Historie.
+
+**[Slide 4]** **SCREENSHOT SUGGESTION:** Etherscan-Transaktionsdetail einer Uniswap-Swap-Transaktion, sichtbar mit Method, Logs (Transfer-Events), Internal Transactions. Zeigt die vollständige Tx-Struktur.
+
+**[Slide 5]** **SCREENSHOT SUGGESTION:** Etherscan-Contract-Page eines bekannten Protokolls (z.B. Aave V3 Pool), sichtbar mit allen Tabs: Transactions, Contract (verified), Read/Write, Events, Holders.
+
+**[Slide 6]** **SCREENSHOT SUGGESTION:** Etherscan Token Approval Checker mit einer Beispiel-Wallet, zeigt mehrere aktive Approvals inkl. Unlimited vs Limited. Demonstriert die monatliche Review-Routine.
+
+**[Slide 7]** Vier-Logo-Grid: Etherscan, Arbiscan, Basescan, Optimistic Etherscan, Polygonscan. Plus Hinweis auf blockscan.com als chain-übergreifende Suche.
+
+**[Slide 8]** Advanced-Techniken-Diagramm: drei Icons (Filter, Proxy-Chain, Debug) mit Kurz-Beschreibungen als Power-User-Referenzen.
+
+## Übung
+
+**Aufgabe: Eine eigene Wallet-Etherscan-Analyse durchführen**
+
+**Teil 1 — Grundlagen-Check (10 Min):**
+Öffne Etherscan. Gib deine eigene Adresse ein (oder eine, die du analysieren möchtest). Beantworte:
+- Wie alt ist die erste Transaktion?
+- Wie viele Gesamt-Transaktionen?
+- Welche Tokens werden aktuell gehalten (ERC-20 Tokens Tab)?
+- Welche Chains nutzt die Wallet aktiv (falls Multi-Chain)?
+
+**Teil 2 — Approval-Audit (15 Min):**
+Öffne `etherscan.io/tokenapprovalchecker`, gib die Wallet ein. Dokumentiere:
+- Wie viele aktive Approvals gibt es?
+- Welche davon sind Unlimited?
+- Zu welchen Contracts? Sind alle diese Contracts noch aktiv von dir genutzt?
+- Wie viele würdest du basierend auf dieser Analyse zurückziehen?
+
+**Teil 3 — Transaktions-Tiefe (10 Min):**
+Wähle eine deiner komplexesten historischen Transaktionen (z.B. eine DEX-Swap mit Multi-Hop-Route). Öffne sie. Analysiere:
+- Was war die Method?
+- Welche Logs wurden emittiert?
+- Welche Internal Transactions wurden ausgeführt?
+- Kannst du die vollständige Ausführungs-Kette rekonstruieren?
+
+**Teil 4 — Contract-Exploration (10 Min):**
+Wähle ein DeFi-Protokoll, das du aktiv nutzt (z.B. Aave V3 Pool). Gehe auf die Contract-Page. Beantworte:
+- Ist der Code verifiziert?
+- Welche Read-Funktionen sind verfügbar? Nenne drei davon und was sie zeigen.
+- Wer ist der Owner/Admin (falls sichtbar)?
+- Wie verteilt sich das TVL auf die Top-Holder?
+
+**Deliverable:** Vollständiger Analyse-Report (600-1000 Wörter) mit den Daten aus jedem Teil plus Reflexion: Welche Erkenntnisse sind dir neu? Welche Approvals wirst du basierend auf dieser Analyse zurückziehen? Welche Contract-Details haben dich überrascht?
+
+## Quiz
+
+**Frage 1:** Du entdeckst in deiner Wallet eine unerwartete Transaktion von vor 3 Wochen: Eine Interaktion mit einem Contract, den du nicht kennst, gefolgt von einem kleinen ETH-Verlust von 0,05 ETH. Wie gehst du diese Investigation systematisch auf Etherscan an?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Eine unerwartete Transaktion mit ETH-Verlust ist ein ernstzunehmendes Signal. Mögliche Erklärungen reichen von harmlos (vergessene Transaktion, Gas-Preis-Verwirrung) bis kritisch (aktive Wallet-Kompromittierung). Eine systematische Investigation ist nötig. **Schritt 1: Transaktion identifizieren und öffnen.** Gehe auf deine Wallet-Seite auf Etherscan. Finde die spezifische Transaktion (kannst nach Datum filtern). Klicke auf die Transaktion-Hash, um in die Detail-View zu kommen. Notiere: exaktes Datum, Zeit, beteiligte Adressen, Method. **Schritt 2: Method analysieren.** Was wurde aufgerufen? Einige häufige unschädliche Methods: "Approve", "Transfer", "Swap". Einige verdächtige Methods: "setApprovalForAll" auf NFT-Contracts (kann gesamte NFT-Kollektion gefährden), "permit" (ermöglicht gasless Approvals — kann in Phishing-Kontext missbraucht werden), komplexe oder kryptische Method-Namen ("0xa9059cbb", "claim" auf unbekannten Contracts). Wenn die Method-Name-Anzeige fehlt oder kryptisch ist, ist das ein Warnsignal — Etherscan zeigt Methods typischerweise klar, wenn der Contract verifiziert ist. **Schritt 3: Den "To"-Contract untersuchen.** Klicke auf den To-Contract. Ist er verifiziert? Ist er gelabelt (z.B. bekannter Protokoll-Contract)? Wenn beides nein: hohes Risiko-Signal. Prüfe: wann wurde der Contract deployt (alte Contracts sind weniger wahrscheinlich Scams als neu deployte)? Wie viele Holder hat er? Wie viele Transaktionen? Ein 2 Wochen alter Contract mit 50 Transaktionen, alle gegen unterschiedliche Wallets mit ähnlichem Pattern — klassisches Scam-Muster. **Schritt 4: Logs analysieren.** Was ist laut Events wirklich passiert? Bei Token-Transfer-Events: welche Tokens sind in welche Richtung geflossen? Das 0,05 ETH Verlust könnte sein: (a) Gas-Kosten für die Transaktion selbst (dann wäre Value = 0, aber Transaction Fee = 0,05 ETH). (b) ETH-Transfer an den Contract (dann wäre Value = 0,05 ETH). (c) ETH-Transfer innerhalb eines Swaps oder Komplex-Calls (dann Internal Transactions prüfen). Die Logs zeigen die exakte Mechanik. **Schritt 5: Internal Transactions prüfen.** Wenn die Transaktion komplex ist, zeigt der Internal-Transactions-Tab, welche Contracts sich untereinander aufgerufen haben. Hier kann der wahre Weg des Kapitals sichtbar werden. Wenn ein Internal Transfer an eine verdächtige Adresse geht, ist das ein Hinweis. **Schritt 6: Die eigene Intention rekonstruieren.** Welche dApps hast du damals genutzt? Hattest du das Protokoll erwartungsgemäß aufgerufen? Prüfe Browser-Historie, Wallet-App-Aktivität, Discord/Telegram-Kommunikation. Manchmal war die Transaktion einfach vergessen. **Schritt 7: Kompromittierung ausschließen.** Wenn du die Transaktion nicht rekonstruieren kannst: ernsthaft prüfen, ob die Wallet kompromittiert sein könnte. Prüfe ALLE Transaktionen der letzten Zeit. Gibt es weitere unerwartete? Sofort-Maßnahmen: Alle Approvals via Etherscan Approval Checker oder revoke.cash zurückziehen. Wenn du verdächtige Approvals findest (z.B. Unlimited zu Contracts, die du nie authorisiert hast), ist das ein klares Kompromittierungs-Signal. **Schritt 8: Escalation falls nötig.** Wenn Kompromittierung wahrscheinlich: alle verbleibenden Assets auf eine neue Wallet transferieren (am besten frisch generiert, mit Hardware-Wallet). Die alte Wallet als kompromittiert behandeln, nie wieder verwenden. Die Private Keys müssen als exposed betrachtet werden. **Schritt 9: Forensische Dokumentation.** Screenshots aller relevanten Etherscan-Seiten. Transaktions-Hashes dokumentieren. Für eventuelle spätere Nachverfolgung oder Versicherungs-Claims (falls existierend). **Die wahrscheinlichsten Szenarien im Vorfeld:** (a) **Vergessene Transaktion:** Du hast vor 3 Wochen ein neues Protokoll getestet und vergessen. 0,05 ETH waren Gas-Kosten. Harmlos. (b) **Phishing-Klick:** Du hast auf eine bösartige Transaktion-Anfrage geklickt, die als legitime Aktion getarnt war. Die 0,05 ETH sind direkt in einer Scam-Wallet. Kompromittierungs-Verdacht. (c) **Approval-Abuse:** Du hattest in der Vergangenheit eine Unlimited-Approval gegeben, der Contract wurde kompromittiert und hat später deine Token abgezogen. Die "kleine ETH-Verlust" könnte nur die Spitze sein. **Die konkreten Handlungs-Prioritäten:** Wenn Szenario A: nichts weiter nötig. Wenn Szenario B oder C: sofortige Mitigations-Maßnahmen wie oben beschrieben. **Die Meta-Lehre:** Wallet-Hygiene ist reaktiv schwer. Proaktive Maßnahmen — Exact Approvals, monatliche Reviews, Hardware Wallet — reduzieren die Wahrscheinlichkeit solcher Situationen drastisch. Etherscan ist das Tool, um im Ernstfall Klarheit zu schaffen. Aber die beste Investigation ist die, die man nie machen muss.
+
+</details>
+
+**Frage 2:** Ein Bekannter schickt dir einen Link zu einem DeFi-Protokoll, das er interessant findet. Du willst die Contract-Seite auf Etherscan prüfen. Welche sechs konkreten Checks führst du durch, und was würde dich zu "nicht nutzen" bewegen?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Ein systematischer Contract-Check auf Etherscan ist eines der wichtigsten Due-Diligence-Tools vor jeder DeFi-Interaktion. Sechs konkrete Checks decken die wesentlichen Risiko-Dimensionen ab. **Check 1: Ist der Code verifiziert?** Gehe auf die Contract-Tab. Wenn oberhalb des Codes "Contract Source Code Verified" steht (oft mit grünem Häkchen), ist der Code öffentlich einsehbar und wurde gegen den on-chain-Bytecode geprüft. Wenn stattdessen nur "Contract Source Code" ohne Verifizierung oder nur der Bytecode steht: Red Flag. Unverifizierte Contracts sind Black Boxes — niemand weiß, was sie wirklich tun. Für konservative Nutzung: unverifizierte Contracts nie verwenden. Selbst wenn der Code später verifiziert wird, ist die Tatsache, dass er initial unverifiziert war, ein Warnsignal für Professionalität. **Ausschluss-Kriterium: Nicht verifiziert = nicht nutzen.** **Check 2: Alter des Contracts.** Auf der Contract-Seite ist das Deployment-Datum sichtbar. Je älter desto besser (alle sonstigen Faktoren gleich). Ein Contract, der 2 Jahre lebt und signifikant genutzt wurde, hat die "Battle-Tested"-Eigenschaft, die ein 2-Wochen-Contract nicht hat. Junge Contracts können trotzdem gut sein (gut auditiert, bekanntes Team), aber die Unsicherheit ist höher. **Ausschluss-Kriterium für konservative Nutzung: Unter 90 Tage alt ohne anerkanntes Team.** **Check 3: Deployer-Adresse.** Auf der Contract-Page steht der Deployer (wer den Contract deployt hat). Ist es eine bekannte Adresse? Ein etabliertes Team? Eine EOA oder eine Multi-Sig? Prüfe die Deployer-Adresse: welche anderen Contracts hat diese Adresse deployt? Wenn es viele sind (dezentes Muster: 2-10 bekannte Protokolle), ist das oft ein legitimes Team. Wenn es nur dieser eine Contract ist und die Adresse anonymous wirkt, ist das Warnung. **Ausschluss-Kriterium: Anonymer Deployer ohne öffentliches Team.** **Check 4: Admin- / Owner-Rechte.** Im Read-Contract-Tab suche nach Funktionen wie `owner()`, `admin()`, `governance()`. Prüfe die Rückgabe-Adresse. Vier Szenarien. (a) Null-Adresse oder geburned: Bestes Szenario, Admin-Rechte wurden aufgegeben. (b) Multi-Sig-Adresse (mehrere Signaturen nötig): Gutes Szenario, verteiltes Vertrauen. (c) Governance-Contract: Akzeptabel, wenn das Governance-System aktiv ist. (d) EOA (Einzelperson): Red Flag. Eine Einzelperson mit Admin-Rechten kann Funds ziehen, Contracts upgraden, die Nutzer schädigen. Prüfe auch: gibt es einen Timelock (ein Contract, der Admin-Aktionen verzögert)? Das ist ein positives Signal. **Ausschluss-Kriterium: EOA-Admin ohne Timelock und ohne klare Team-Transparenz.** **Check 5: Historische Aktivität und Holders-Verteilung.** Im Transactions-Tab: wie viele Transaktionen hat der Contract insgesamt? Ein Lending-Protokoll mit 50.000+ Transaktionen und 5000+ unique Adressen ist etabliert. Ein mit 100 Transaktionen und 20 Adressen ist entweder sehr neu oder wenig genutzt. Bei Token-Contracts: Holders-Tab. Wie verteilt sich das Token? Wenn Top-10 Holder 90% haben, ist es extrem konzentriert — Exit-Risiko. Wenn Top-10 haben 30-40% und dann lange Tail, ist es diversifizierter. **Ausschluss-Kriterium: Extrem niedrige Aktivität bei nicht-neuem Contract (signalisiert fehlende Adoption).** **Check 6: Verlinkte Informationen — Audit-Reports, offizielle Links.** Viele Contracts haben unten auf der Page Kontakt-Informationen: Website, Audit-Reports, Twitter, Source-Code-Repository. Prüfe: gibt es einen Audit-Report von einer anerkannten Firma (Trail of Bits, OpenZeppelin, Consensys Diligence, Certora, etc.)? Führt der Link zu einer echten, seriösen Website oder zu generischem Content? Ist das Twitter aktiv und mit realen Interaktionen, oder ist es eine Bot-Farm? Querverweise: stimmen die Informationen mit dem überein, was der Bekannte behauptet? **Ausschluss-Kriterium: Kein Audit verlinkt oder Audit von unbekannter Firma, und Teams-Informationen nicht verifizierbar.** **Die Synthese-Logik:** Wenn mindestens zwei der sechs Checks ein Red Flag ergeben, ist "nicht nutzen" die konservative Empfehlung. Wenn einer ein Red Flag ist, muss das durch Stärken in anderen Bereichen stark ausgeglichen werden. Wenn alle sechs positiv sind, ist das ein solides Basis-Signal für "weiter prüfen" — aber noch keine Garantie. **Zusätzliche Checks bei Auffälligkeiten:** Wenn bei den sechs Checks etwas ungewöhnlich erscheint, tiefere Analyse: (a) Die verlinkten Audit-Reports tatsächlich lesen (auch wenn sie lang sind — Executive Summary reicht oft). (b) Die Twitter-Diskussion verfolgen: gibt es Warnungen von etablierten Analysten? (c) Auf einschlägigen Forums (CryptoCompare, DeFi-Pulse, Reddit DeFi) nach Diskussionen suchen. (d) Bei großem geplantem Investment: einen zweiten Satz Augen einholen (mit einer Person, die DeFi versteht). **Die zeitliche Einordnung:** Diese 6 Checks dauern 15-30 Minuten. Für eine Investition von 1.000 USD absurd viel Aufwand. Für eine Investition von 50.000 USD absolutes Minimum. Die Skalierung der Due Diligence mit dem Betrag ist eine wichtige Konvention. **Das übergreifende Prinzip:** Die Mehrheit aller DeFi-Verluste gegenüber Retail-Nutzern wäre durch systematische Etherscan-Checks verhindert worden. Rug Pulls, Scam-Tokens, versteckte Admin-Rechte, gefälschte Audit-Behauptungen — all das wird in einer 20-Minuten-Check-Routine sichtbar. Wer diese Disziplin entwickelt, eliminiert die Mehrheit aller DeFi-Risiken systematisch. Das ist billiger Risiko-Schutz mit hohem Return.
+
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → Etherscan-Oberfläche → Transaktionen lesen → Contracts inspizieren → Read-Funktionen → Approval-Management → Token-Holders → 6-Check-Due-Diligence
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `visual_plan.json` — Etherscan-Screenshots, Transaktions-Details-Grafik, Contract-Verifizierungs-Workflow, Approval-Checker-Bild, 6-Check-Flowchart
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

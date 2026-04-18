@@ -72,7 +72,7 @@ Markdown-Quellen wie der Web-Content, ueber eine vollstaendige Pipeline:
    ELEVENLABS_VOICE=Florian
    ```
 
-2. Im `video-renderer/video-renderer/`-Ordner einmal
+2. Im `video-renderer/`-Ordner einmal
    `npm install` laufen lassen (Remotion-Deps).
 
 ### Academy-Build: 2 Commands + 2 Uploads

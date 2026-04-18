@@ -180,6 +180,7 @@ Usage:
 Optional:
   --concurrency <n>      default 4
   --log-level <level>    info|warn|error|verbose  (default: info)
+  --bundle-cache <path>  Reuse an existing Remotion bundle dir (skip rebuild)
 `);
     process.exit(args.help ? 0 : 1);
   }
@@ -197,6 +198,11 @@ Optional:
       args['output-poster'] || path.resolve(`./output/posters/${lessonId}.jpg`),
     concurrency: parseInt(args.concurrency || '4', 10),
     logLevel: args['log-level'] || 'info',
+    bundleCachePath: args['bundle-cache']
+      ? path.resolve(args['bundle-cache'])
+      : process.env.REMOTION_BUNDLE_CACHE
+        ? path.resolve(process.env.REMOTION_BUNDLE_CACHE)
+        : null,
   });
 
   console.log('');

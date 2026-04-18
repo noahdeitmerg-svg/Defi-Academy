@@ -113,6 +113,7 @@ Flags:
   --limit <n>                nur erste N Lektionen
   --only <csv>               explizite Lesson-IDs
   --force                    auch bestehende MP4 neu rendern
+  --skip-validate            validate-lessons.js NICHT als Preflight laufen lassen
   --help                     Hilfe
 `);
 }
@@ -187,6 +188,8 @@ function runRendererChunk({ log, chunkIds, ctx, chunkIndex, chunkTotal }) {
       String(ctx.parallel),
       '--only',
       chunkIds.join(','),
+      '--bundle-cache',
+      ctx.bundleCacheDir,
     ];
 
     log.info(
@@ -331,14 +334,41 @@ async function main() {
     force: Boolean(args.force),
     completed: 0,
     total: 0,
+    // Gemeinsamer Remotion-Bundle-Cache fuer alle Chunks dieses Laufs,
+    // damit der Webpack-Build nicht pro Chunk neu laeuft.
+    bundleCacheDir: path.join(TMP_DIR, 'remotion-bundle-cache'),
   };
 
   fs.mkdirSync(ctx.videosOut, { recursive: true });
   fs.mkdirSync(ctx.postersOut, { recursive: true });
   fs.mkdirSync(LOG_DIR, { recursive: true });
+  fs.mkdirSync(path.dirname(ctx.bundleCacheDir), { recursive: true });
 
   const log = new RunLogger(LOG_FILE, ERROR_LOG);
   ctx.log = log;
+
+  // --- Validator-Hard-Gate --------------------------------------------------
+  // Bricht hart ab, wenn die Sources nicht durch validate-lessons.js
+  // gehen. Mit --skip-validate abschaltbar.
+  if (!args['skip-validate']) {
+    const validateScript = path.join(__dirname, 'validate-lessons.js');
+    if (fs.existsSync(validateScript) && fs.existsSync(ctx.lessonsDir)) {
+      log.info('Preflight: validate-lessons.js');
+      const res = require('child_process').spawnSync(
+        process.execPath,
+        [validateScript, '--lessons-dir', ctx.lessonsDir, '--skip-generated'],
+        { stdio: 'inherit' },
+      );
+      if (res.status !== 0) {
+        log.error(`validate-lessons fehlgeschlagen (exit=${res.status}). Rendering abgebrochen.`);
+        log.error('Ueberspringen mit --skip-validate, falls bewusst gewuenscht.');
+        await log.close();
+        process.exit(res.status || 1);
+      }
+    } else {
+      log.warn(`Validator uebersprungen (fehlt: ${path.relative(ROOT, validateScript)} oder ${path.relative(ROOT, ctx.lessonsDir)}).`);
+    }
+  }
 
   log.info('DeFi Academy — render-batch (Top-Level Orchestrator)');
   log.info(`Generator-Out:  ${ctx.generatorOutputDir}`);

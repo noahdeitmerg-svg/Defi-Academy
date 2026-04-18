@@ -433,45 +433,11 @@ async function stepSlides(ctx, lessonId) {
 
 // --- Schritt 4: Voice (ElevenLabs) ------------------------------------------
 
-async function callElevenLabs(text, voiceId, log, lessonId) {
-  const apiKey = process.env.ELEVENLABS_API_KEY;
-  if (!apiKey) return null;
-  const modelId = process.env.ELEVENLABS_MODEL_ID || 'eleven_multilingual_v2';
-  const url = `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}`;
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'xi-api-key': apiKey,
-        'content-type': 'application/json',
-        accept: 'audio/mpeg',
-      },
-      body: JSON.stringify({
-        text,
-        model_id: modelId,
-        voice_settings: { stability: 0.5, similarity_boost: 0.75 },
-      }),
-    });
-    if (!res.ok) {
-      log.warn(`ElevenLabs HTTP ${res.status} ${res.statusText}`, lessonId);
-      return null;
-    }
-    const buf = Buffer.from(await res.arrayBuffer());
-    return buf;
-  } catch (err) {
-    log.warn(`ElevenLabs Fehler: ${err.message}`, lessonId);
-    return null;
-  }
-}
-
-function resolveRealVoiceId(logicalVoiceId) {
-  // Logische IDs wie "de-male-educational-01" muessen auf echte ElevenLabs-IDs
-  // gemappt werden. Ohne Map greift ELEVENLABS_VOICE_ID.
-  if (/^[A-Za-z0-9]{16,}$/.test(logicalVoiceId || '')) return logicalVoiceId;
-  return process.env.ELEVENLABS_VOICE_ID || null;
-}
-
 async function stepVoice(ctx, lessonId) {
+  // Delegiert an scripts/generate-voice.js pro Lesson-ID.
+  // Damit bleibt die Voice-Erzeugung an einer einzigen Stelle (DRY) und
+  // render-course profitiert automatisch von Retries / Batching /
+  // Voice-ID-Mapping aus generate-voice.js.
   const genDir = path.join(ctx.generatorOutputDir, lessonId);
   const assetsDir = path.join(ctx.assetsInputDir, lessonId);
   const scriptPath = path.join(genDir, 'voice_script.txt');
@@ -480,7 +446,6 @@ async function stepVoice(ctx, lessonId) {
   if (!fs.existsSync(scriptPath)) {
     throw new Error(`voice_script.txt fehlt: ${scriptPath}`);
   }
-
   fs.mkdirSync(assetsDir, { recursive: true });
 
   if (fs.existsSync(voiceOutPath) && fs.statSync(voiceOutPath).size > 1024) {
@@ -488,35 +453,59 @@ async function stepVoice(ctx, lessonId) {
     return { status: 'skipped', path: voiceOutPath };
   }
 
-  if (ctx.args['dry-run'] || !process.env.ELEVENLABS_API_KEY) {
+  if (ctx.args['dry-run']) {
+    ctx.log.info('dry-run — voice.mp3 uebersprungen.', lessonId);
+    return { status: 'skipped' };
+  }
+
+  if (!process.env.ELEVENLABS_API_KEY) {
     ctx.log.info(
-      ctx.args['dry-run']
-        ? 'dry-run — voice.mp3 uebersprungen.'
-        : 'ELEVENLABS_API_KEY nicht gesetzt — voice.mp3 uebersprungen (Renderer nutzt stille Tonspur).',
-      lessonId
+      'ELEVENLABS_API_KEY nicht gesetzt — voice.mp3 uebersprungen (Renderer nutzt stille Tonspur).',
+      lessonId,
     );
     return { status: 'skipped' };
   }
 
-  const videoConfig = readJson(path.join(genDir, 'video_config.json'));
-  const logicalVoice = videoConfig?.audio_track?.voice_id;
-  const voiceId = resolveRealVoiceId(logicalVoice);
-  if (!voiceId) {
-    ctx.log.warn(
-      `Keine Voice-ID aufloesbar (logisch="${logicalVoice}"). Setze ELEVENLABS_VOICE_ID.`,
-      lessonId
-    );
-    return { status: 'skipped' };
-  }
+  const generateVoiceScript = path.join(__dirname, 'generate-voice.js');
+  const args = [
+    generateVoiceScript,
+    '--only', lessonId,
+    '--scripts-dir', ctx.generatorOutputDir,
+    '--output-dir', ctx.assetsInputDir,
+  ];
 
-  const script = fs.readFileSync(scriptPath, 'utf8');
-  const audio = await callElevenLabs(script, voiceId, ctx.log, lessonId);
-  if (!audio) {
-    throw new Error('ElevenLabs hat keine Audiodaten geliefert.');
-  }
-  fs.writeFileSync(voiceOutPath, audio);
-  ctx.log.info(`voice.mp3 erzeugt (${audio.length} Bytes)`, lessonId);
-  return { status: 'generated', path: voiceOutPath, bytes: audio.length };
+  return new Promise((resolve, reject) => {
+    const child = require('child_process').spawn(process.execPath, args, {
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: process.env,
+    });
+    let stderrBuf = '';
+    child.stdout.on('data', (d) => {
+      for (const line of String(d).split(/\r?\n/)) {
+        if (line.trim()) ctx.log.info(`[generate-voice] ${line}`, lessonId);
+      }
+    });
+    child.stderr.on('data', (d) => {
+      stderrBuf += String(d);
+    });
+    child.on('close', (code) => {
+      if (code !== 0) {
+        return reject(
+          new Error(`generate-voice.js exit=${code} ${stderrBuf.trim().slice(0, 400)}`),
+        );
+      }
+      if (fs.existsSync(voiceOutPath) && fs.statSync(voiceOutPath).size > 1024) {
+        const bytes = fs.statSync(voiceOutPath).size;
+        ctx.log.info(`voice.mp3 erzeugt (${bytes} Bytes)`, lessonId);
+        resolve({ status: 'generated', path: voiceOutPath, bytes });
+      } else {
+        // generate-voice.js kann bewusst ueberspringen (z.B. fehlende
+        // Voice-ID-Map). Kein Fehler, nur Info.
+        resolve({ status: 'skipped' });
+      }
+    });
+    child.on('error', reject);
+  });
 }
 
 // --- Schritt 5: Visuals ------------------------------------------------------

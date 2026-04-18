@@ -1,0 +1,290 @@
+# Protokoll-Kategorien und ihre spezifischen Risiko-Profile
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die fünf Haupt-Kategorien von DeFi-Protokollen identifizieren (Lending, DEX, LST, Stablecoin, Yield Aggregator)
+- Für jede Kategorie die kategorie-spezifischen Dimensionen des Protocol Analysis Framework kennen
+- Die strukturellen Unterschiede in den Risiko-Profilen verstehen
+- Das Framework kontextuell an die Protokoll-Kategorie anpassen
+- Typische Fehl-Analysen erkennen, die entstehen, wenn das Framework kategorien-blind angewendet wird
+- Hybride Protokolle (z.B. Pendle als Derivate+LST-Layer, LRT-Protokolle als LST+Restaking) identifizieren und ihre zusätzlichen Composability-Ebenen systematisch einordnen
+
+## Erklärung
+
+**Warum Kategorien wichtig sind**
+
+Das in Lektion 16.2 entwickelte Framework ist generisch — es gilt für jedes DeFi-Protokoll. Aber die relative Gewichtung der sechs Dimensionen variiert stark je nach Protokoll-Typ. Ein Lending-Protokoll hat andere kritische Risiken als eine DEX. Ein Stablecoin-Protokoll wird völlig anders bewertet als ein Yield Aggregator. Wer das Framework kategorien-blind anwendet, prüft in jedem Fall das Gleiche — und übersieht dabei die kategorie-spezifischen Fehlerquellen.
+
+Diese Lektion behandelt fünf Haupt-Kategorien und ihre spezifischen Risiko-Profile. Es gibt mehr DeFi-Kategorien (Derivate, NFT-Finance, Insurance, Perpetuals), aber diese fünf decken 85% der typischen Retail-Interaktionen ab.
+
+**Kategorie 1: Lending-Protokolle**
+
+Beispiele: Aave, Compound, Morpho (Blue und Aave V3), Spark, Venus, Radiant.
+
+**Funktions-Mechanik:** Nutzer können Assets deponieren (Supply) und gegen andere Assets als Sicherheit Borrow nehmen. Zinsen werden algorithmisch basierend auf Utilization gesetzt. Bei Preisbewegung des Collateral kann eine Position unter die Liquidations-Schwelle fallen und teilweise oder vollständig liquidiert werden.
+
+**Kategorie-spezifische Risiko-Dimensionen:**
+
+*Oracle-Abhängigkeit (kritisch).*
+Lending-Protokolle hängen von korrekten Asset-Preisen ab, um Collateral-Werte zu berechnen und Liquidations auszulösen. Ein manipulierbarer Oracle ist katastrophal — Angreifer können Preise verzerren und dadurch entweder zu viel Borrow nehmen (gegen falsch-hoch angezeigtes Collateral) oder Liquidations zu günstigen Preisen auslösen. Historische Beispiele: Mango Markets 2022 (100 Mio USD durch Oracle-Manipulation), Inverse Finance 2022 (mehrfache Oracle-Probleme). Chainlink ist der Standard; alternative Oracle-Provider sollten speziell geprüft werden.
+
+*Collateral-Asset-Qualität (kritisch).*
+Welche Assets werden als Collateral akzeptiert? Bei hochwertigen Assets (ETH, WBTC, USDC, USDT) ist das Risiko gering. Bei volatilen oder illiquiden Assets (kleine Alt-Coins, neue LSTs, obskure Stablecoins) ist das Depeg- und Liquidations-Risiko hoch. Das 2022-stETH-Event zeigte, wie akzeptierte Collateral-Assets zu systemischen Risiken werden können.
+
+*Utilization und Bad Debt (kritisch).*
+Utilization-Rate misst, wie viel des gesupplieden Kapitals geliehen wurde. Hohe Utilization (>95%) bedeutet, dass Supplier möglicherweise nicht mehr withdrawn können. Bad Debt entsteht, wenn Liquidations nicht schnell genug oder zu günstigen Preisen ausgeführt werden — das Protokoll bleibt auf unterbesicherten Positions sitzen. Historische Bad-Debt-Events: Compound im November 2022 hatte ~1,3 Mio USD Bad Debt; Aave V2 im Juli 2022 hatte Debt-Probleme bei bestimmten Assets.
+
+*Isolated vs Pooled Liquidity (Architekturwahl).*
+Klassische Lending-Protokolle (Aave V2, Compound) nutzen gepoolt Liquidität: alle Assets in einem gemeinsamen Pool, Risiken korreliert. Moderne Designs (Morpho Blue, Aave V3 mit Isolated Markets) separieren Märkte: Probleme in einem Markt betreffen andere nicht. Isolated-Design ist strukturell resilienter, aber oft weniger kapital-effizient.
+
+**Besonders kritische Framework-Dimensionen für Lending:** Smart-Contract-Security (Oracle-Integration-Code), Economic Design (Liquidations-Parameter), Liquidität (der spezifische Markt für deine Position).
+
+**Kategorie 2: Dezentrale Exchanges (DEXes)**
+
+Beispiele: Uniswap (V2, V3, V4), Curve, Balancer, SushiSwap, PancakeSwap, Ambient.
+
+**Funktions-Mechanik:** Automatisierte Market Maker (AMMs) ermöglichen Token-Swaps ohne zentralisierten Order Book. Liquidity Provider (LPs) deponieren Token-Pairs und verdienen Fees an jedem Swap. Die meisten modernen DEXes haben Konzepte wie Concentrated Liquidity (Uniswap V3) oder Stable-optimierte Kurven (Curve).
+
+**Kategorie-spezifische Risiko-Dimensionen:**
+
+*Impermanent Loss (kritisch für LPs).*
+Wenn sich die Preise der gepoolten Assets relativ zueinander bewegen, verliert der LP im Vergleich zum Halten der Assets ohne Pool. Das ist das inherente Risiko des AMM-Designs, kein Bug. Für Stable-Pairs (USDC-USDT) minimal. Für ETH-Stablecoin-Pairs signifikant bei hoher Volatilität. Für volatile-volatile-Pairs (ETH-alt-coin) oft massiv.
+
+*Sandwich-Attacks und MEV (operational risk).*
+Wenn du Token auf einer DEX swappen willst, können MEV-Bots deine Transaktion sandwiches: vor dir kaufen, nach dir verkaufen, Slippage als Profit einstecken. Gute DEXes implementieren MEV-Mitigation (Commit-Reveal-Schemas, Private Mempools). Nutzer können auch Aggregatoren mit MEV-Schutz nutzen (CowSwap, 1inch Fusion).
+
+*Pool-Tiefe und Slippage (praktisch).*
+Kleine Pools haben hohe Slippage für größere Swaps. Bei einer 50.000-USD-Swap in einem 500.000-USD-Pool: erwarte 2-5% Slippage. Das ist meist inakzeptabel. Pool-Tiefen-Analyse ist kritisch vor großen Swaps.
+
+*Governance-Token-Dynamik (langfristig).*
+Viele DEXes haben Governance-Token (UNI, CRV, BAL), deren Wert von komplexen Factors abhängt: Fee-Switch-Möglichkeit, veToken-Mechanik, Emissions-Schedule. Diese Dynamiken sind oft wichtiger als die Protocol-Fundamentals für Token-Holder.
+
+**Besonders kritische Framework-Dimensionen für DEXes:** Economic Design (AMM-Design-Wahl), Liquidität (Pool-Tiefe), und — bei governance-token-fokussierten Investments — Governance (veToken-Dynamik).
+
+**Kategorie 3: Liquid Staking Tokens (LSTs)**
+
+Beispiele: Lido (stETH), Rocket Pool (rETH), Coinbase (cbETH), Frax (sfrxETH), Swell (swETH), EtherFi (eETH), Kelp (rsETH für LRTs).
+
+**Funktions-Mechanik:** Nutzer deponieren ETH und erhalten ein LST-Derivat, das den Underlying-Stake plus Rewards repräsentiert. Das Derivat ist liquide (kann in anderen DeFi-Protokollen genutzt werden), während der Underlying-Stake auf Ethereum Consensus Layer stakt. Rewards akkumulieren sich im LST-Wert oder als separate Ausschüttung.
+
+**Kategorie-spezifische Risiko-Dimensionen:**
+
+*Validator-Set-Dezentralisierung (kritisch für Netzwerk-Gesundheit).*
+LSTs sind kontrovers, weil massiver Staking-Konzentration in einem LST-Protokoll potenziell Ethereum-Dezentralisierung gefährdet. Lido alleine kontrolliert ~30% des Ethereum-Stakes — eine strukturell riskante Konzentration. Für Nutzer: Validator-Diversifikation innerhalb des LST-Protokolls prüfen. Gute LSTs haben 30+ unabhängige Node-Operators.
+
+*Slashing-Risiko (relevant, aber klein).*
+Wenn Validators des LST-Protokolls slashed werden (z.B. für Double-Signing oder längere Downtime), trifft der Verlust proportional alle LST-Holder. In der Praxis sind Slashings selten (<0,01% jährlich bei gut-gemanagten Validators), aber nicht null.
+
+*Peg-Stabilität (operational risk).*
+LSTs sollten 1:1 zu ETH peggen, aber in Stress-Phasen können sie depegen (stETH 2022 auf 0,93). Peg-Stabilität hängt von Secondary-Market-Liquidität (Curve, Balancer), arbitrage-fähigen Smart Contracts und Nutzer-Vertrauen ab.
+
+*Governance und Custody (kritisch).*
+Wer kontrolliert die Validator-Keys? Bei Lido ist das ein Node-Operator-Set via DAO-Governance. Bei Rocket Pool sind es dezentral Node-Operators ohne zentrale Kontrolle. Bei zentralisierten Anbietern (Coinbase cbETH) ist es die Exchange selbst. Die Governance-Struktur beeinflusst das langfristige Trust-Modell.
+
+*Liquid Restaking Tokens (LRTs) als neue Dimension.*
+LRTs wie Kelp, Renzo, EtherFi bauen auf LSTs auf — nochmal ein Layer mit spezifischen Risiken: EigenLayer-Integration, AVS-Slashing-Mechanik (noch nicht voll definiert), zusätzliche Smart-Contract-Exposure. LRTs sind experimenteller als basic LSTs und sollten entsprechend bewertet werden.
+
+**Besonders kritische Framework-Dimensionen für LSTs:** Governance (Validator-Key-Kontrolle), Historic Track Record (Peg-Stabilität über Stress-Phasen), Economic Design (Slashing-Insurance-Mechanismen).
+
+**Kategorie 4: Stablecoin-Protokolle**
+
+Beispiele: Maker (DAI), Liquity (LUSD), Frax (FRAX), Curve (crvUSD), Aave (GHO), Ethena (USDe), Reserve-Assets (Circle USDC, Tether USDT — zentralisiert).
+
+**Funktions-Mechanik:** Stablecoins versuchen, ihren Preis relativ zu einem Referenz-Asset (typisch USD) stabil zu halten. Mechaniken: fully backed (1 USD in Reserve pro 1 Stablecoin, wie USDC), overcollateralized (mehr Collateral als ausgegebene Stablecoin, wie DAI), algorithmic (keine direkte Besicherung, nur Mechanismen — historisch katastrophal wie UST), delta-neutral (synthetisch durch Spot+Futures, wie USDe).
+
+**Kategorie-spezifische Risiko-Dimensionen:**
+
+*Backing-Mechanismus (fundamental).*
+Welche Art von Backing hat der Stablecoin? Reserven bei Banken (USDC, USDT)? On-Chain-Collateral (DAI, LUSD)? Synthetische Delta-Neutrale Struktur (USDe)? Jede Art hat unterschiedliche Risiko-Profile. Fully-backed ist meist stabilster, aber abhängig von zentralisiertem Issuer. Overcollateralized ist dezentraler, aber abhängig von Collateral-Qualität.
+
+*Peg-Mechanik (operational).*
+Wie wird der Peg aufrechterhalten? Bei USDC: direkte Mint/Redeem-Möglichkeit mit Circle. Bei DAI: PSM (Peg Stability Module), die direkt USDC zu DAI umwandeln. Bei Liquity LUSD: Hard-Peg-Floor von 1,00 USD durch Redemption-Mechanismus, Hard-Ceiling implicit durch Borrowing-Mechanik. Jede Mechanik hat Failure-Modes — schwache Peg-Mechanik führt zu Depegs in Stress-Phasen.
+
+*Historische Stress-Tests (entscheidend).*
+Hat der Stablecoin eine schwere Krise überstanden? USDC depegte im März 2023 wegen SVB-Kollaps auf 0,87, erholte sich aber innerhalb weniger Tage — Stress-Test bestanden. DAI hatte multiple Krisen (Black Thursday 2020, stETH-Kaskaden 2022), überstand beide. UST kollabierte völlig im Mai 2022 — der Worst-Case-Outcome. Die Historie ist kritisch: neue Stablecoins ohne Stress-Test-Record sind ungeprüft.
+
+*Zentralisierung vs Zensurresistenz (ideologisch, aber praktisch relevant).*
+Zentralisierte Stablecoins (USDC, USDT) können eingefrorene Wallets haben. Die Stablecoin-Issuer können User-Accounts blacklisten auf Regulator-Anfrage. Das ist für die meisten Nutzer kein praktisches Problem, kann aber in spezifischen Kontexten (Sanktionen, politische Kontroversen) relevant werden. Dezentrale Stablecoins (DAI zunehmend, LUSD vollständig) haben das Risiko nicht.
+
+*Revenue und Sustainability (langfristig).*
+Wie verdient der Stablecoin-Emittent Geld? USDC: Zins auf Reserven (dominiert aktuell durch US-Treasury-Yields). DAI: Stability Fee auf Borrows plus DSR-Differential. USDe: Funding Rate von Perpetual-Markten. Die Revenue-Struktur bestimmt die langfristige Resilienz. USDe's Revenue ist explizit Markt-Bedingungs-abhängig; USDC's Revenue ist Zins-Umfeld-abhängig.
+
+**Besonders kritische Framework-Dimensionen für Stablecoins:** Economic Design (Backing und Peg-Mechanik), Historic Track Record (Stress-Test-Bestehen), Team/Governance (bei zentralisierten Issuers Regulatorische Compliance, bei dezentralen Governance-Resilienz).
+
+**Kategorie 5: Yield Aggregators und Strategie-Vaults**
+
+Beispiele: Yearn, Beefy, Convex, Aura, Morpho Vaults (neu), Mellow, Idle.
+
+**Funktions-Mechanik:** Yield Aggregators nehmen User-Kapital und deployen es automatisch in Yield-Strategien. Die Strategien können Single-Protokoll (z.B. Aave-USDC-Lending), Multi-Protokoll (Combining von mehreren Yield-Quellen), oder komplexe Leverage-Loops sein.
+
+**Kategorie-spezifische Risiko-Dimensionen:**
+
+*Composability-Verkettung (inhärent kritisch).*
+Yield Aggregators sind per Definition Composability-heavy. Sie stapeln mehrere Protokolle ohne dass der Nutzer es direkt bemerkt. Das multiplikative Risiko-Modell aus Lektion 16.1 gilt hier in voller Stärke. Ein Yield-Vault, der intern drei Protokolle nutzt, hat das kombinierte Risiko dieser drei plus das eigene Vault-Risiko.
+
+*Strategy-Details (oft verborgen).*
+Viele Yield-Vaults kommunizieren ihre exakten Strategien nicht vollständig. Der Nutzer sieht "Yearn USDC Vault 8% APY", aber nicht, ob die Strategie auf Aave, Compound, Morpho, einem exotischen LP oder einem Leverage-Loop basiert. Good Vaults dokumentieren Strategien öffentlich; fragwürdige verbergen Details als "proprietäre Alpha".
+
+*Management-Fees und Performance-Fees (ökonomisch).*
+Yield Aggregators verdienen durch Fees. Typisch: 20% Performance-Fee auf generierte Yields plus 2% Management-Fee pro Jahr. Nach diesen Fees ist der Nutzer-Yield oft deutlich niedriger als der brutto-angegebene APY. Kritische Frage: rechtfertigen die Fees den Mehraufwand gegenüber Direct-Deposit?
+
+*Auto-Compounding vs manuelles Re-Investment (technisch).*
+Auto-Compounding Vaults re-investieren generierte Rewards automatisch, was Gas spart und komplexe Strategien automatisiert. Die Kehrseite: jeder Compound-Event ist ein zusätzlicher Smart-Contract-Call mit eigenem Failure-Risiko. Gut gemanagte Vaults haben effiziente Compound-Schedules, schlechte haben ineffiziente oder missbrauchbare.
+
+*Migration und Updates (operational).*
+Wie werden neue Strategien getestet und deployed? Wie werden Vaults migriert, wenn ein underlying Protokoll Probleme hat? Gute Teams haben klare Migration-Prozesse, dokumentiert und getestet. Schlechte Teams migrieren ad-hoc, was manchmal zu Verlusten führt.
+
+**Besonders kritische Framework-Dimensionen für Yield Aggregators:** Smart-Contract-Security (Vault-Contract plus zugrunde-liegende Protokolle), Economic Design (Fee-Struktur vs Value-Added), Team/Transparenz (Strategy-Kommunikation).
+
+**Die kategorien-blinde Fehler-Analyse**
+
+Wenn das Framework ohne Kategorien-Anpassung angewendet wird, entstehen vorhersagbare Fehler:
+
+**Fehler 1: Lending-Protokolle ohne Oracle-Tiefe prüfen.**
+Ein Nutzer evaluiert ein neues Lending-Protokoll, prüft Smart-Contract-Security (gut), Governance (gut), Team (gut), entscheidet für Deposit. Er hat aber nicht nach der Oracle-Struktur gefragt. Sechs Monate später wird das Protokoll durch Oracle-Manipulation exploitiert. Der Fehler war nicht Framework-Lücke — er war Nicht-Anpassung an die Lending-Kategorie.
+
+**Fehler 2: DEXes nur auf TVL beurteilen.**
+Ein Nutzer sieht eine DEX mit großem TVL und liquiden Pools, entscheidet LP-Position zu eröffnen. Aber er hat nicht bedacht: der TVL ist durch konzentrierte Liquidität einzelner Whales, die anders als organische Liquidität reagieren. Er hat nicht Impermanent-Loss-Charakteristika des spezifischen Pair-Types analysiert. Sechs Monate später ist die LP-Position deutlich im Minus durch IL.
+
+**Fehler 3: LSTs wie normale Token behandeln.**
+Ein Nutzer kauft ein neues LST, weil es höhere Rewards bietet als Lido stETH. Er prüft nicht Validator-Diversifikation, nicht Slashing-Insurance, nicht Peg-Historie. Drei Monate später gibt es Slashing-Events oder Peg-Stress, die das etablierte stETH besser gehandhabt hätte.
+
+**Fehler 4: Stablecoins ohne Backing-Prüfung vertrauen.**
+Ein Nutzer nutzt einen neuen Stablecoin, weil das DeFi-Protokoll höhere Yields bietet als für USDC/USDT. Er hat nicht tief die Backing-Struktur geprüft. Vier Monate später depegt der Stablecoin signifikant — entweder durch Backing-Problem oder durch Peg-Mechanik-Versagen.
+
+**Fehler 5: Yield-Aggregators als Black Box akzeptieren.**
+Ein Nutzer deponiert in einen Yield-Vault mit attraktiver APY, ohne die zugrunde-liegende Strategie zu verstehen. Wenn die Strategie Leverage-Loops oder exotische Protokolle nutzt, trägt der Nutzer ein Risiko, das er nicht bewusst eingegangen ist. In Krisen-Phasen erlebt er Verluste, die er nicht antizipiert hat.
+
+**Die Lehre:** Das Framework ist ein Gerüst, nicht ein Ersatz für kategorien-spezifisches Wissen. Wer die Kategorien versteht, kann das Framework richtig gewichten und kategorien-spezifische Red Flags erkennen.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Protokoll-Kategorien und ihre spezifischen Risiko-Profile
+
+**[Slide 2] — Warum Kategorien wichtig sind**
+Framework ist generisch, Gewichtung kategorien-spezifisch
+Fünf Haupt-Kategorien decken 85% Retail-Interaktionen
+Kategorien-blind = vorhersagbare Fehler
+
+**[Slide 3] — Lending-Protokolle**
+Beispiele: Aave, Compound, Morpho
+Kritisch: Oracle-Abhängigkeit, Collateral-Qualität, Utilization/Bad Debt
+Architektur-Wahl: Isolated vs Pooled
+
+**[Slide 4] — DEXes**
+Beispiele: Uniswap, Curve, Balancer
+Kritisch: Impermanent Loss (LPs), MEV, Pool-Tiefe, Governance-Token-Dynamik
+
+**[Slide 5] — Liquid Staking Tokens**
+Beispiele: Lido, Rocket Pool, Frax, EtherFi
+Kritisch: Validator-Dezentralisierung, Slashing, Peg-Stabilität, LRT-Extra-Risiken
+
+**[Slide 6] — Stablecoins**
+Beispiele: DAI, LUSD, FRAX, USDC, USDe
+Kritisch: Backing-Mechanismus, Peg-Mechanik, Historische Stress-Tests, Zentralisierung
+
+**[Slide 7] — Yield Aggregators**
+Beispiele: Yearn, Beefy, Morpho Vaults
+Kritisch: Composability-Verkettung, Strategy-Transparenz, Fee-Struktur, Migration-Prozesse
+
+**[Slide 8] — Kategorien-blinde Fehler**
+Lending ohne Oracle-Tiefe
+DEXes nur auf TVL
+LSTs wie normale Token
+Stablecoins ohne Backing-Prüfung
+Yield-Vaults als Black Box
+
+## Sprechertext
+
+**[Slide 1]** Das Framework aus Lektion 16.2 ist generisch — es gilt für jedes Protokoll. Aber die Gewichtung der sechs Dimensionen variiert stark je nach Protokoll-Typ. Diese Lektion behandelt fünf Haupt-Kategorien und ihre spezifischen Risiko-Profile.
+
+**[Slide 2]** Warum Kategorien wichtig sind. Ein Lending-Protokoll hat andere kritische Risiken als eine DEX. Ein Stablecoin wird völlig anders bewertet als ein Yield Aggregator. Wer das Framework kategorien-blind anwendet, prüft in jedem Fall das Gleiche und übersieht die kategorie-spezifischen Fehlerquellen. Fünf Haupt-Kategorien — Lending, DEX, LST, Stablecoin, Yield Aggregator — decken etwa 85 Prozent typischer Retail-Interaktionen ab.
+
+**[Slide 3]** Lending-Protokolle wie Aave, Compound, Morpho. Die kritischsten Dimensionen sind hier spezifisch. Oracle-Abhängigkeit: Lending hängt von korrekten Preisen ab, manipulierte Oracles sind katastrophal. Mango Markets verlor 2022 hundert Millionen durch Oracle-Manipulation. Collateral-Asset-Qualität: welche Assets werden akzeptiert? Volatile oder illiquide Assets erhöhen das Depeg- und Liquidations-Risiko dramatisch. Utilization und Bad Debt: Hohe Utilization bedeutet mögliche Withdrawal-Probleme, Bad Debt entsteht bei ineffizienten Liquidations. Und die Architektur-Wahl zwischen Isolated und Pooled Liquidity ist fundamental: Isolated-Design wie Morpho Blue ist strukturell resilienter.
+
+**[Slide 4]** DEXes wie Uniswap, Curve, Balancer. Die spezifischen Risiken sind anders. Impermanent Loss ist das inherent Risiko für LPs. Für Stable-Pairs minimal, für ETH-Stablecoin signifikant bei Volatilität, für volatile-volatile massiv. MEV und Sandwich-Attacks treffen Nutzer bei jedem Swap — gute DEXes haben Mitigation-Mechanismen. Pool-Tiefe bestimmt Slippage: bei 50.000-USD-Swap in einem 500.000-Pool erwarte zwei bis fünf Prozent Slippage, meist inakzeptabel. Und bei Governance-Token-Investments die Token-Dynamik: Fee-Switch-Potenzial, veToken-Mechaniken, Emissions-Schedule.
+
+**[Slide 5]** Liquid Staking Tokens wie Lido stETH, Rocket Pool rETH. Die kritischen Dimensionen sind wieder anders. Validator-Dezentralisierung: Lido kontrolliert allein 30 Prozent des Ethereum-Stakes, was strukturell problematisch für Ethereum selbst ist. Für Nutzer: Validator-Diversifikation innerhalb des LST-Protokolls prüfen. Slashing-Risiko: selten aber nicht null. Peg-Stabilität: der stETH-Depeg im Juni 2022 war ein Lehrstück. Und bei neueren LRTs — Liquid Restaking Tokens wie Kelp, Renzo, EtherFi — kommen zusätzliche Layer: EigenLayer-Integration, AVS-Slashing-Mechaniken, weitere Smart-Contract-Exposure. LRTs sind experimenteller als basic LSTs.
+
+**[Slide 6]** Stablecoins wie DAI, LUSD, FRAX, USDC, USDe. Die Backing-Mechanik ist fundamental: fully-backed wie USDC, overcollateralized wie DAI, delta-neutral wie USDe. Jeder Typ hat andere Failure-Modes. Peg-Mechanik: wie wird der Peg stabilisiert? Direkte Redemption, PSM, Hard-Floor über Arbitrage? Historische Stress-Tests sind entscheidend: USDC überstand den SVB-Kollaps 2023, DAI überstand 2020 und 2022, UST kollabierte 2022 komplett. Neue Stablecoins ohne Stress-Record sind fundamental ungeprüft. Und Zentralisierung gegen Zensurresistenz: USDC und USDT können Wallets einfrieren, DAI zunehmend nicht, LUSD gar nicht.
+
+**[Slide 7]** Yield Aggregators wie Yearn, Beefy, Morpho Vaults. Die kritischste Dimension ist Composability-Verkettung — Yield Aggregators sind per Definition Composability-heavy, sie stapeln mehrere Protokolle, oft ohne dass der Nutzer es direkt bemerkt. Das multiplikative Risiko-Modell aus Lektion 16.1 gilt hier voll. Strategy-Transparenz: gute Vaults dokumentieren Strategien öffentlich, fragwürdige verbergen Details. Fee-Struktur: typisch 20 Prozent Performance-Fee plus 2 Prozent Management — rechtfertigt der Vault diese Kosten? Auto-Compounding Mechaniken und Migration-Prozesse sind operational relevant.
+
+**[Slide 8]** Die kategorien-blinden Fehler-Muster. Lending-Protokolle ohne Oracle-Tiefe prüfen — die Haupt-Exploit-Quelle. DEXes nur auf TVL beurteilen ohne IL-Charakteristika zu verstehen. LSTs wie normale Tokens behandeln ohne Validator-Dezentralisierung zu prüfen. Stablecoins nutzen ohne Backing-Struktur zu verstehen. Yield-Aggregators als Black Box akzeptieren ohne Strategy zu verstehen. Jeder dieser Fehler ist vermeidbar, wenn man weiß, welche Dimensionen für welche Kategorie besonders kritisch sind. Das Framework ist ein Gerüst, nicht ein Ersatz für kategorien-spezifisches Wissen. In den folgenden Lektionen wenden wir alles zusammen an: vertikale und horizontale Composability-Analyse, plus eine vollständige Fallstudie.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Fünf-Kategorien-Matrix mit Icons: Stapel-Münzen (Lending), Swap-Pfeile (DEX), Staking-Kugel (LST), Stabilitäts-Symbol (Stablecoin), Blüte (Yield Aggregator). Jeweils ein Ein-Satz-Beschreibung.
+
+**[Slide 3]** **SCREENSHOT SUGGESTION:** Aave V3 Ethereum Dashboard auf DeFiLlama oder direkt auf app.aave.com, mit sichtbaren Utilization-Rates, Markt-Diversität und Oracle-Informationen. Ergänzt das Lending-Thema visuell.
+
+**[Slide 4]** **SCREENSHOT SUGGESTION:** Uniswap V3 Pool-Analyse auf info.uniswap.org, mit sichtbarer Pool-Tiefe, Fee-Tier und LP-Konzentration. Demonstriert die DEX-Risiko-Dimensionen.
+
+**[Slide 5]** Vergleichs-Diagramm der Top-LSTs (Lido, Rocket Pool, Frax, EtherFi) mit Dimensionen: Validator-Count, Decentralisations-Metrik, Peg-Historie, Slashing-Insurance. Tabelle.
+
+**[Slide 6]** Stablecoin-Typen-Diagramm: Fully-Backed (USDC), Overcollateralized (DAI), Delta-Neutral (USDe), Algorithmic (historisch UST). Mit Risiko-Profil pro Typ.
+
+**[Slide 7]** Composability-Layer-Visualisierung für einen typischen Yield-Vault: der Vault-Contract oben, darunter 3-4 Sub-Protokoll-Layer. Zeigt die Composability-Verkettung visuell.
+
+**[Slide 8]** Fünf-Fehler-Matrix: Fehler-Beschreibung plus "vermieden durch diese Anpassung". Als praktische Referenz-Tabelle.
+
+## Übung
+
+**Aufgabe: Kategorien-spezifische Analyse deiner aktuellen DeFi-Positionen**
+
+Für jede deiner DeFi-Positionen (oder geplanten Positions): identifiziere die Kategorie und führe eine kategorien-spezifische Kurzanalyse durch.
+
+**Für jede Position:**
+
+1. **Kategorie bestimmen** (Lending, DEX, LST, Stablecoin, Yield Aggregator, andere)
+
+2. **Kategorien-spezifische Kern-Risiken identifizieren** (basierend auf der Lektion)
+
+3. **Für jedes Kern-Risiko: wie wird es mitigiert?**
+ - Was macht das Protokoll konkret, um dieses Risiko zu reduzieren?
+ - Welche Daten hast du, die die Mitigations-Effektivität bestätigen?
+
+4. **Eigenes Exposure bewerten:**
+ - Wie viel des Position-Risikos kommst aus kategorie-spezifischen Faktoren?
+ - Welche kategorien-spezifischen Red Flags würden dich zum Exit bewegen?
+
+**Abschließende Reflexion:**
+Über alle Positionen: hast du Diversifikation über Kategorien oder Konzentration in einer? Ist die Konzentration bewusst oder zufällig? Welche kategorien-spezifischen Risiken sind dir bisher nicht klar aufgefallen?
+
+**Deliverable:** Strukturierte Analyse (800-1500 Wörter) mit Tabelle der Positionen nach Kategorie, spezifischen Risiko-Bewertungen und Reflexion. Der Output sollte zu konkreten Updates deiner Portfolio-Strategie führen — wenn sich zeigt, dass du unbewusste Konzentration in einer Kategorie hast, sollte das zu einer Überprüfung führen.
+
+## Quiz
+
+**Frage 1:** Du evaluierst ein neues Lending-Protokoll, das 8% APY auf USDC bietet — 2% höher als Aave V3. Das Protokoll hat einen neuen Oracle-Provider namens "PriceGuard Network", der in den Marketing-Materialien als "next-generation decentralized oracle" beworben wird. Wie gehst du vor?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Diese Situation ist der Inbegriff des Lending-spezifischen Oracle-Risikos. Der 2%-APY-Premium ist ein klassisches Muster — höhere Rendite als Blue-Chip kommt oft mit unerkanntem strukturellem Risiko. Die systematische Analyse durchläuft mehrere Ebenen. **Ebene 1: Sofortige kritische Fragen zum Oracle.** Bevor irgendwas anderes geprüft wird, muss PriceGuard Network verstanden werden, weil es die kritischste Dimension für Lending ist. Wer ist das Team hinter PriceGuard? Wie alt ist das Oracle-Netzwerk? Wie viele unabhängige Price-Feed-Provider hat es? Wurden die Smart Contracts von etablierten Firmen auditiert? Gibt es andere Protokolle, die PriceGuard nutzen, und seit wann? Gibt es eine öffentliche Price-Feed-Historie, die gegen CoinGecko oder Binance-Preise verglichen werden kann? Wenn auch nur die Hälfte dieser Fragen nicht befriedigend beantwortbar ist, ist das Protokoll disqualifiziert für signifikante Positions. **Ebene 2: Die roten Flaggen der Marketing-Sprache.** "Next-generation decentralized oracle" ist Marketing-Sprache, nicht technische Spezifikation. Chainlink, der etablierte Standard, verwendet nicht diese Sprache — es beschreibt konkret seine Mechanik: Off-Chain-Aggregation, Validator-Set, Fee-Modell. Wenn ein neues Oracle in Marketing-Terms beschrieben wird, statt in technischen, ist das ein frühes Warnsignal. Das bedeutet nicht automatisch, dass das Oracle schlecht ist — aber es bedeutet, dass mehr Skepsis und tiefere Prüfung angemessen ist. **Ebene 3: Der APY-Premium als strukturelles Signal.** 2% höher APY auf USDC klingt wie "bisschen besser". Aber in einem Lending-Markt, wo Aave V3 die etablierte Benchmark ist, sollten Arbitrage-Kräfte Premium-APYs normal abbauen. Wenn ein Protokoll persistent 2% mehr bietet, gibt es einen Grund dafür. Die Gründe sind typisch: (a) Token-Emissionen, die den "wirklichen" Base-APY subventionieren — in 6-12 Monaten fällt der APY auf Aave-Niveau, (b) höheres Risiko, das die Supplier kompensiert bekommen müssen, (c) weniger Liquidität, die das Protokoll durch höheren APY anzieht, aber das bedeutet auch höheres Withdrawal-Risiko in Stress-Phasen. Jeder dieser Gründe ist ein Grund zur Vorsicht. **Ebene 4: Die historischen Parallelen.** Mango Markets 2022: 114 Mio USD Verlust durch Oracle-Manipulation. Der Exploit funktionierte, weil das Oracle-Design manipulierbar war. Der Angreifer pumpe den MNGO-Token-Preis in einem thin-liquid market, das Oracle übernahm den manipulierten Preis, der Angreifer borgte gegen sein "stark aufgewerteter" MNGO-Collateral und verschwand. Inverse Finance 2022: multiple Oracle-Probleme, Millionen verloren. Beide Fälle: Protokolle mit neuen oder nicht-robusten Oracle-Strukturen. Das 2% APY-Premium hat die Oracle-Schwäche nicht kompensiert — es hat Nutzer in die Falle gelockt. **Ebene 5: Die Benchmark-Verfügbarkeit.** Die Alternative ist klar: Aave V3 mit 6% APY und Chainlink als etablierter Oracle-Provider, umfangreichen Audits, historischer Resilienz durch multiple Bear-Märkte. 2% weniger APY, aber strukturell weitaus robuster. Auf einer 30.000-USD-Position über ein Jahr: 600 USD Differenz. Das ist nicht trivial, aber es ist weit weniger als der potenzielle Totalverlust durch Oracle-Manipulation. Der Expected-Value-Vergleich ist klar: Aave ist überlegen. **Die systematische Entscheidungs-Logik.** Selbst wenn alle anderen fünf Dimensionen des Protocol Analysis Framework bei dem neuen Protokoll gut aussehen (Team gut, Contract auditiert, Liquidität gut, etc.), ist die Oracle-Schwäche disqualifizierend unter Veto-Logik für ein Lending-Protokoll. Die Oracle-Dimension ist für Lending so kritisch, dass keine andere Stärke sie kompensiert. **Was wäre akzeptabel?** Wenn das neue Protokoll seine Oracle-Strategie sauber kommuniziert: "Wir nutzen primär Chainlink mit Fallback zu UMA und Pyth, und separate TWAPs für Manipulation-Resistance. Hier sind die Audit-Reports für die Oracle-Integration." Mit dieser Transparenz wäre die Analyse anders — das Protokoll hätte ein robustes Multi-Oracle-Setup, das strukturell okay wäre. Aber "PriceGuard Network — next-generation decentralized oracle" ohne technische Details ist strukturell unsicher. **Die konkrete Handlung.** Nicht nutzen, zumindest nicht für signifikante Positions. Für eine experimentelle Kleinst-Position (unter 1.000 USD) könnte man das Protokoll testen, während man parallel mehr Informationen sammelt. Nach 6-12 Monaten erneut evaluieren: hat PriceGuard Oracle-Stress-Events überstanden? Haben andere reputierte Protokolle es integriert? Haben unabhängige Audit-Firmen das Oracle durchleuchtet? Wenn ja zu allem: möglicherweise für größere Positions öffnen. Wenn nein: permanent als ungeeignet einordnen. **Die Meta-Lehre für Lending-Kategorie.** Die Oracle-Dimension ist nicht optional — sie ist strukturell zentral. Jedes Lending-Protokoll, das du nutzt, sollte eine Oracle-Struktur haben, die du als Nutzer konkret verstehst: welche Quelle, wie viele Quellen, wer auditiert, historische Performance. Wenn das Protokoll das nicht transparent macht, oder es macht es, aber die Struktur ist schwach, dann ist das Protokoll strukturell ungeeignet, egal wie attraktiv die anderen Aspekte sind. Diese Disziplin hätte Nutzer vor Mango Markets geschützt, vor Inverse Finance, und vor vielen kommenden Oracle-Exploits.
+
+</details>
+
+**Frage 2:** Du überlegst, in einen Yield-Vault zu investieren, der 15% APY auf ETH bietet und als "fully automated yield strategy on ETH" beschrieben wird. Beschreibe die konkreten Prüfschritte aus der Yield-Aggregator-Kategorien-Analyse.
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Ein 15% APY auf ETH ist signifikant — zum Vergleich, Lido stETH liefert typisch 3-4%, Staking direkt 3-4%, Leverage-Loops auf Staking-Basis realistisch 5-8%. Um 15% zu erreichen, muss der Vault komplexe Strategien einsetzen, was die Composability-Risiken multipliziert. Die systematische Analyse hat mehrere Ebenen. **Schritt 1: Strategy-Dekonstruktion.** Die erste und wichtigste Frage: wie genau erreicht der Vault 15% APY? Die typischen Strategien auf ETH sind: (a) Liquid Staking (3-4% Base). (b) Leverage Loop: stETH als Collateral, ETH borgen, mehr staken — in guten Bedingungen 5-8% effektiv. (c) LST-Yield-Optimization über verschiedene Provider (Lido, Rocket Pool, etc.). (d) LRT-Integration (EigenLayer-Restaking) für zusätzlichen Yield aus AVS-Rewards. (e) Exotische Strategien mit Options, Futures, oder DEX-LP. Welche dieser Strategien erreicht 15%? Realistisch ist 15% auf ETH entweder Leverage-intensive (3-4x Loops), oder hängt von experimentellen LRT-Rewards ab, die noch nicht vollständig definiert sind. Beides bringt substantielle Risiken. Ein verantwortungsvoller Vault-Team würde genau explizieren: "15% ergeben sich aus 3,5% Lido-Staking + 4% Aave-Borrow-Arbitrage + 5% EigenLayer-AVS-Rewards + 2,5% Auto-Compounding-Optimization." Wenn der Vault die Aufschlüsselung nicht bietet, ist das Red Flag. **Schritt 2: Composability-Layer zählen.** Für die oben genannte Strategie: Lido (Layer 1), Aave (Layer 2), EigenLayer (Layer 3), der Vault selbst (Layer 4). Vier Layer mindestens. Jeder mit eigenem Smart-Contract-Risiko, eigenen Parametern, eigenen Governance-Entscheidungen. Bei optimistischen 95% Überlebens-Wahrscheinlichkeit pro Layer: 0,95⁴ = 81,5%. Bei realistischeren 92% für neue Protokolle wie EigenLayer: 0,92⁴ = 71,6%. Eine 28%-Ausfall-Wahrscheinlichkeit pro Jahr ist nicht akzeptabel für konservative Strategien. **Schritt 3: Vault-Contract-Security prüfen.** Der Vault-Smart-Contract hat eigene Security-Anforderungen: Deposit/Withdraw-Funktionen, Rebalancing-Logik, Emergency-Pauses. Ist der Code verifiziert? Welche Firmen haben auditiert? Wie alt ist der Vault? Gibt es bekannte historische Incidents? Hat der Vault aktives Bug-Bounty? Für experimentelle Yield-Strategien sind diese Fragen besonders wichtig, weil der Code oft komplexer und damit fehleranfälliger ist als bei einfachen Protokollen. **Schritt 4: Fee-Struktur analysieren.** Yield-Vaults haben typisch 20% Performance-Fee plus 2% Management-Fee. Wenn der Vault 15% brutto APY liefert: nach 20% Performance-Fee sind das 12% für den Nutzer. Nach weiteren 2% Management-Fee: 10%. Die Realität ist, dass Vault-Nutzer oft ein Drittel weniger Yield erhalten als die beworbene APY. Ist 10% netto immer noch attraktiv gegenüber der Alternative (direkt Lido stETH 3-4%)? Bei 30.000 USD Position: 3.000 USD vs 1.000 USD — 2.000 USD Differenz. Das ist substanziell, aber es rechtfertigt das deutlich höhere Risiko nicht automatisch. **Schritt 5: Strategy-Transparenz und Rebalancing.** Wie oft rebalanciert der Vault seine Positions? Was sind die Trigger für Rebalancing? Wer entscheidet über Strategy-Updates? Gute Vaults haben klare dokumentierte Rebalancing-Regeln. Schlechte lassen "Strategy Manager" ad-hoc entscheiden, was ihnen gerade gut erscheint. Das ist besonders kritisch in Krisen-Phasen — wenn der Strategy Manager in einem Marktstress panische Entscheidungen trifft, kann das Vault-Verluste dramatisch vergrößern. **Schritt 6: Team und Track Record.** Wer managt den Vault? Bekanntes Team mit Track Record? Beispielsweise Yearn hat über Jahre bewiesen, dass ihre Strategien auch in Bear-Märkten funktionieren. Ein brandneuer Vault ohne historische Performance-Data ist strukturell riskanter. Idealerweise: Team öffentlich, Audit-Historie, 12+ Monate Produktions-Track-Record, Incidents — falls vorhanden — transparent dokumentiert. **Schritt 7: TVL und Liquiditäts-Analyse.** Wie groß ist der Vault? Bei sehr kleinen Vaults (unter 5 Mio USD): deine Position wird einen hohen Prozentsatz des Vault-TVL ausmachen, was Exit-Probleme erzeugen kann. Bei sehr großen Vaults (über 500 Mio USD): Strategy-Implementation muss skalieren, was manche Strategien unmöglich macht. Mittlere Größe (20-200 Mio USD) ist typisch die "Sweet Spot"-Zone für mature Vaults. **Schritt 8: Die Alternative-Analyse.** Was sind die Alternativen für die gleiche Funktion (ETH-Exposure mit Yield)? Option A: Lido stETH direkt, 3-4% APY, 1 Layer, Blue-Chip. Option B: stETH als Aave-Collateral für moderate Leverage, 2-3 Layer, 5-7% APY effektiv. Option C: Professionell gemanagter Vault wie Yearn, 3-4 Layer, potenziell 8-10% APY netto. Option D: Der experimentelle 15%-Vault, 4-5 Layer, netto vielleicht 10%, hohes Ausfall-Risiko. Die Expected-Value-Analyse zeigt oft: Option B oder C sind risk-adjusted besser als Option D, selbst bei niedrigerer nomineller APY. **Die konservative Entscheidungs-Logik.** Wenn der Vault die Strategy transparent kommuniziert, alle Protokolle im Stack Blue-Chip sind, das Team etabliert und der Vault 12+ Monate alt ist — dann ist ein 15%-Vault möglicherweise akzeptabel für eine moderate Position (5-10% des Portfolios). Wenn auch nur eine dieser Bedingungen nicht erfüllt ist — besonders wenn die Strategy nicht transparent ist oder das Team neu — sollte die Position sehr klein sein (1-3% des Portfolios, als Experiment deklariert) oder ganz vermieden werden. **Die praktische Empfehlung.** Ein Großteil der "15% APY auf ETH"-Vaults, die man in der Praxis sieht, sind nicht gut dokumentierte experimentelle Strategien mit unklaren Risiken. Die etablierten Vaults (Yearn, Morpho Vaults mit transparenten Strategy-Managern) liefern typisch 4-8% APY, weil sie konservativere Strategien fahren. Der Unterschied zwischen "etabliert mit niedrigerer APY" und "experimentell mit höherer APY" reflektiert das reale Risiko-Differential. Wer 15% jagt, ohne die Struktur zu verstehen, nimmt oft ein Totalverlust-Risiko für einen 2-5% Premium APY gegenüber einer 10% etablierten Alternative. Das ist schlechtes Risk-Reward. **Die Meta-Lehre für Yield-Aggregator-Kategorie.** Die Composability-Verkettung ist die zentrale Dimension, nicht die APY. Transparency über die unterliegende Strategy ist der wichtigste Vertrauens-Indikator. Ein Vault, der seine Strategy nicht klar kommuniziert, ist kein Vault, in den konservative Nutzer ihr Kapital investieren sollten. Die hohen APYs sind oft nicht "schlechte Yield-Management", sondern "hohes unerkanntes Composability-Risiko in attraktive Marketing verpackt".
+
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → 5 Haupt-Kategorien → Lending → DEX → LST → Stablecoin → Yield Aggregator → Kategorie-spezifische Risiko-Profile
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `visual_plan.json` — Kategorien-Matrix, Lending-Oracle-Diagramm, LST-Dependency-Grafik, Stablecoin-Peg-Mechanismen, Kategorie-Vergleichstabelle
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

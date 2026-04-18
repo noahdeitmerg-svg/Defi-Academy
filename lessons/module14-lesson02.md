@@ -1,0 +1,270 @@
+# Bridge-Typen im Überblick
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die vier Bridge-Haupttypen präzise unterscheiden: Lock-and-Mint, Burn-and-Mint, Liquidity-Network, Canonical
+- Für jeden Typ das Trust-Modell und die Angriffsflächen benennen
+- Canonical Bridges von Third-Party-Bridges abgrenzen und ihre Rolle für Rollups verstehen
+- Für einen gegebenen Use-Case den passenden Bridge-Typ auswählen
+- Den strukturellen Unterschied zwischen Lock-Mint (Supply-Expansion, wrapped Asset) und Burn-Mint (keine Supply-Expansion, native Asset) präzise abgrenzen
+- Die Sicherheitsmodelle (Multisig, Validator Set, Optimistic Security, Zero-Knowledge-Proofs) nach ihrem Trust-Radius einordnen
+
+## Erklärung
+
+Bridges unterscheiden sich technisch in der Art, wie sie Wert über Chains übertragen. Vier Haupttypen dominieren den Markt. Das Verständnis ihrer Unterschiede ist die Grundlage jeder Bridge-Auswahl.
+
+**Typ 1: Lock-and-Mint (Wrapped Assets)**
+
+Das klassische Modell. Der Original-Token wird auf Chain A in einem Smart Contract gesperrt. Eine Wrapped-Version wird auf Chain B geminted und repräsentiert die Forderung auf den gelockten Token.
+
+**Mechanik:**
+```
+Chain A: User hinterlegt 1 ETH im Lock-Contract
+ Lock-Contract sendet Event "locked 1 ETH for user X"
+Bridge: Relayer liest Event, sendet Nachricht zu Chain B
+Chain B: Mint-Contract erzeugt 1 wETH für user X
+```
+
+**Umkehrung (Redemption):**
+```
+Chain B: User burnt 1 wETH
+Bridge: Relayer liest Burn-Event, sendet Nachricht zu Chain A
+Chain A: Lock-Contract gibt 1 ETH frei an User
+```
+
+**Beispiele:** WBTC (Bitcoin → Ethereum, custodian BitGo), Polygon PoS Bridge (Ethereum → Polygon), Ronin Bridge (Ethereum → Ronin), die ursprüngliche Multichain/Anyswap-Architektur.
+
+**Trust-Modell:** Vertrauen in den Lock-Contract (dass er nicht fehlerhaft ist) plus Vertrauen in den Validator-/Relayer-Set (dass sie nur echte Lock-Events signieren). Beide Komponenten müssen intakt sein.
+
+**Angriffsflächen:**
+- **Lock-Contract-Bug:** Ein Fehler im Lock-Contract erlaubt Abzug ohne korrekte Autorisierung.
+- **Validator-Set-Kompromittierung:** Wenn der Validator-Set klein ist, sind sie ein Angriffsziel. Ronin hatte nur neun Validatoren — zu wenig für das TVL von über einer Milliarde.
+- **Wrapped Token Abhängigkeit:** Die Wrapped-Version ist nur so "gut" wie die Redemption-Fähigkeit. Wenn der Lock-Contract kompromittiert wird, kollabiert der Peg des Wrapped-Token augenblicklich.
+
+**Typ 2: Burn-and-Mint (Native Issuance)**
+
+Variante für Assets, deren Issuer beide Chain-Versionen kontrolliert. Der Token wird auf Chain A verbrannt und auf Chain B neu erzeugt. Es gibt kein "Wrapped" — der Token auf beiden Chains ist nativ und fungibel.
+
+**Mechanik:**
+```
+Chain A: User burnt 1 USDC
+Chain A: Burn-Contract erzeugt Attestation (signiert von Circle)
+Bridge: Relayer übermittelt Attestation
+Chain B: Mint-Contract verifiziert Signatur, minted 1 USDC
+```
+
+**Beispiele:** USDC via CCTP (Cross-Chain Transfer Protocol von Circle), native USDT-Bridging auf einigen Chains, Chainlink CCIP für bestimmte Token.
+
+**Trust-Modell:** Vertrauen in den Issuer (Circle für USDC), der die Burn-und-Mint-Operationen kontrolliert. Das ist dasselbe Trust-Modell, das man ohnehin bereits für den Issuer annimmt — kein zusätzliches Bridge-Trust.
+
+**Vorteile:**
+- **Keine Fragmentierung:** Alle USDC sind fungibel, egal auf welcher Chain. Kein Unterschied zwischen "native USDC" und "bridged USDC" mehr.
+- **Kein Lock-Contract-Honeypot:** Da nichts gelockt wird, existiert kein Honeypot für Angreifer.
+- **Issuer-Risiko ist ohnehin vorhanden:** Wer USDC nutzt, vertraut Circle bereits. Die Bridge erweitert dieses Trust nicht.
+
+**Einschränkung:**
+- Nur für kontrollierte Assets möglich. Bitcoin kann nicht "burn-and-mint" gebridgeted werden, weil kein zentraler Issuer existiert. Ethereum auch nicht.
+
+**Typ 3: Liquidity-Network (AMM-Style / Intent-Based Bridges)**
+
+Liquiditäts-Pools existieren auf beiden Chains. Der Nutzer zahlt in Pool A ein, bekommt aus Pool B ausgezahlt. Es wird kein tatsächlicher Token zwischen Chains bewegt — das System balanciert nur die Pools über Relayer.
+
+**Mechanik (Across-Style):**
+```
+Chain A: User zahlt 1000 USDC in Pool A ein (mit Ziel: Chain B)
+Relayer: beobachtet Event, zahlt User 999,50 USDC aus Pool B aus (sofort)
+Relayer: reicht später Claim bei Chain A ein, bekommt 1000 USDC aus Pool A
+ (minus Gebühr)
+System: Pool A hat +1000, Pool B hat -1000; Rebalancing durch weitere
+ Transfers oder LP-Incentives
+```
+
+**Beispiele:** Across Protocol, Hop Protocol, Connext xCall, Stargate (mit LayerZero-Nachrichten).
+
+**Trust-Modell:** Vertrauen in den Relayer-Set und die ökonomischen Sicherheiten (Bonds, Slashing bei Fehlverhalten). Bei Across: UMA-Oracle als Dispute-Mechanismus. Bei Stargate: LayerZero-Oracle + Relayer.
+
+**Vorteile:**
+- **Geschwindigkeit:** Nutzer erhält das Geld auf Ziel-Chain in Minuten (nicht 7 Tage wie bei Canonical).
+- **Günstig für kleinere Beträge:** Gebühren sind prozentual (typisch 0,02-0,1%) plus Basis-Gas.
+- **Native Assets:** Kein Wrapped-Token — der Nutzer bekommt echten USDC auf Chain B.
+
+**Einschränkungen:**
+- **Pool-Tiefen-Abhängigkeit:** Große Transfers (>5% der Pool-Liquidität) verursachen Slippage oder werden nicht ausgeführt.
+- **Relayer-Risiko:** Wenn Relayer ausfallen oder kollaborieren, können Transfers verzögert oder angegriffen werden.
+- **Pool-Imbalance:** Starke einseitige Flows (z.B. alle bridgen nach Arbitrum) erzeugen Pool-Ungleichgewicht und hohe Gebühren auf einer Seite.
+
+**Typ 4: Canonical Bridges (Rollup Native Bridges)**
+
+L2-eigene Bridges, direkt von der Chain selbst betrieben. Der Rollup-Contract auf L1 ist Teil des Rollups selbst. Deposits und Withdrawals laufen über die Rollup-Security.
+
+**Mechanik (L1 → L2, Deposit):**
+```
+L1: User zahlt 1 ETH in Arbitrum-Bridge-Contract ein
+L1: Bridge-Contract sendet Message an Arbitrum-Sequencer
+L2: Nach ca. 10-15 Minuten: 1 ETH wird auf Arbitrum an User ausgeschüttet
+```
+
+**Mechanik (L2 → L1, Withdrawal bei Optimistic Rollups):**
+```
+L2: User initiiert Withdrawal-Transaktion (sendet 1 ETH an Bridge)
+L2: Bridge nimmt ETH, erzeugt Withdrawal-Proof
+L1: Nach 7 Tagen Challenge-Period: User kann auf L1 claimen
+```
+
+**Mechanik (L2 → L1, Withdrawal bei ZK-Rollups):**
+```
+L2: User initiiert Withdrawal
+L2: ZK-Proof wird auf L1 eingereicht und verifiziert
+L1: Nach Proof-Verifizierung (typisch 1-24 Stunden): Withdrawal finalisiert
+```
+
+**Beispiele:** Arbitrum Bridge (bridge.arbitrum.io), Optimism Bridge, Base Bridge, zkSync Era Bridge, Scroll Bridge, Starknet Bridge.
+
+**Trust-Modell:** Nur die Rollup-Security selbst. Keine zusätzliche Bridge-Trust-Ebene. Wenn die Rollup-Chain sicher ist, ist die Canonical Bridge sicher.
+
+**Vorteile:**
+- **Höchste Sicherheits-Garantie:** Identisch mit der zugrundeliegenden Chain-Security. Keine additive Trust-Ebene.
+- **Keine prozentualen Gebühren:** Nur Gas-Kosten (relevant vor allem auf L1).
+- **Keine Limits durch Pool-Tiefe:** Canonical Bridges können beliebig große Beträge verarbeiten.
+
+**Einschränkungen:**
+- **Wartezeit bei Withdrawal:** 7 Tage bei Optimistic Rollups ist der größte UX-Nachteil. Bei ZK-Rollups deutlich kürzer, aber nicht instant.
+- **Gas-Intensität auf L1:** Deposits und Withdrawals kosten L1-Gas (bei Ethereum relevant).
+
+**Bonus: Atomic Swaps (HTLCs)**
+
+Hash Timelock Contracts erlauben einen P2P-Swap zwischen zwei Chains ohne Trust. Mechanik: Alice lockt Asset A mit einem Hash, Bob lockt Asset B mit demselben Hash, beide lösen mit dem Preimage. Vollständig trustless, aber sehr schlechte UX (braucht Gegenparteien, langsam, komplex). In der Praxis heute kaum relevant. Historisch wichtig als Konzept; es zeigt, dass trustless Cross-Chain theoretisch möglich ist — aber nur unter restriktiven Bedingungen, die keinen Massenmarkt ansprechen.
+
+**Die Wahl-Matrix**
+
+Welcher Bridge-Typ passt zu welchem Use-Case?
+
+| Use-Case | Empfohlener Typ |
+|---|---|
+| Große Beträge (> $10.000) nach L2 | Canonical |
+| Schneller Alltags-Transfer | Liquidity-Network (Across, Stargate) |
+| USDC zwischen Chains bewegen | Burn-and-Mint (CCTP) |
+| Bitcoin auf Ethereum nutzen | Lock-and-Mint (WBTC) — unvermeidbar |
+| Generelle Nachrichten / Contracts | LayerZero, CCIP (siehe Lektion 14.4) |
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Bridge-Typen im Überblick
+
+**[Slide 2] — Die vier Haupttypen**
+1. Lock-and-Mint (Wrapped Assets)
+2. Burn-and-Mint (Native Issuance)
+3. Liquidity-Network (AMM/Intent-Based)
+4. Canonical (Rollup Native)
+
+**[Slide 3] — Lock-and-Mint**
+Token auf Chain A gesperrt, Wrapped-Token auf Chain B. Beispiele: WBTC, Polygon PoS, Ronin.
+Honeypot-Risiko am Lock-Contract.
+
+**[Slide 4] — Burn-and-Mint**
+Token verbrannt auf Chain A, neu erzeugt auf Chain B. Nur durch Issuer (Circle, Tether).
+Keine Fragmentierung, kein Lock-Honeypot. USDC CCTP ist das Standard-Beispiel.
+
+**[Slide 5] — Liquidity-Network**
+Pools auf beiden Chains, Relayer balancieren. Beispiele: Across, Hop, Stargate.
+Schnell (Minuten), native Assets, pool-tiefen-abhängig.
+
+**[Slide 6] — Canonical Bridges**
+Rollup-eigene Bridges (Arbitrum, Optimism, Base, zkSync).
+Höchste Sicherheit = Rollup-Security. 7-Tage-Wartezeit bei Optimistic-Withdrawal.
+
+**[Slide 7] — Vergleich**
+Canonical: max. Sicherheit, langsam bei Withdrawal.
+Liquidity-Network: schnell, pool-abhängig.
+Burn-and-Mint: Issuer-abhängig, aber sauber.
+Lock-and-Mint: historisch, höchste Angriffsfläche.
+
+**[Slide 8] — Wahl-Matrix**
+Große Beträge → Canonical
+Alltag → Liquidity-Network
+USDC → CCTP
+Bitcoin → WBTC (unvermeidbar)
+
+## Sprechertext
+
+**[Slide 1]** Nachdem wir in Lektion 14.1 das fundamentale Problem verstanden haben, geht es jetzt um die konkreten Lösungen. Vier Bridge-Typen dominieren den Markt, und ihr Verständnis ist die Grundlage jeder Bridge-Auswahl. Jeder Typ macht einen anderen Trade-off im Trust-Modell.
+
+**[Slide 2]** Die vier Haupttypen. Erstens: Lock-and-Mint. Der klassische Ansatz, bei dem Tokens auf einer Chain gesperrt und Wrapped-Versionen auf einer anderen Chain erzeugt werden. Zweitens: Burn-and-Mint. Tokens werden verbrannt und neu ausgegeben — nur möglich, wenn ein Issuer beide Versionen kontrolliert. Drittens: Liquidity-Network. Liquiditäts-Pools auf beiden Chains, Relayer balancieren. Viertens: Canonical. Rollup-eigene Bridges, die direkt Teil der Rollup-Infrastruktur sind.
+
+**[Slide 3]** Lock-and-Mint ist das älteste Modell. Der User zahlt Tokens in einen Lock-Contract auf Chain A ein, eine Wrapped-Version wird auf Chain B geminted. Beispiele: Bitcoin als WBTC auf Ethereum. Polygon PoS Bridge. Ronin Bridge. Der fundamentale Nachteil: Der Lock-Contract auf Chain A ist ein Honeypot. Er enthält das gesamte gelockte Kapital konzentriert an einem Punkt. Wenn er kompromittiert wird — durch einen Bug oder durch Kompromittierung des Validator-Sets — ist das Kapital weg. Der Ronin-Hack traf genau dieses Pattern: fünf von neun Validatoren wurden gehackt, der Lock-Contract gab Kapital frei, 625 Millionen Dollar verloren.
+
+**[Slide 4]** Burn-and-Mint ist das modernere, saubere Modell für Assets mit zentralem Issuer. USDC via CCTP — Cross-Chain Transfer Protocol — ist das Standard-Beispiel. Der User burnt USDC auf Chain A, Circle erzeugt eine signierte Attestation, auf Chain B wird basierend auf dieser Attestation neuer USDC geminted. Es gibt kein "Wrapped USDC" — alle USDC sind fungibel über alle Chains. Kein Lock-Contract, kein Honeypot. Das Trust-Modell ist exakt dasselbe wie ohnehin bei USDC: Man vertraut Circle. Keine zusätzliche Bridge-Trust-Ebene.
+
+**[Slide 5]** Liquidity-Network-Bridges lösen das Problem über Liquiditäts-Pools. Across, Hop, Stargate funktionieren alle nach diesem Muster. Der User zahlt in Pool A ein, Relayer zahlen sofort aus Pool B aus. Die eigentliche Bewegung zwischen den Chains passiert asynchron durch Rebalancing. Vorteile: schnell, typisch ein bis drei Minuten. Native Assets — kein Wrapped-Problem. Nachteil: abhängig von Pool-Tiefe. Ein Transfer von einer Million Dollar, wenn der Pool nur drei Millionen tief ist, bewegt den Preis spürbar. Plus: Relayer-Risiko — wenn sie ausfallen oder kollaborieren, können Transfers verzögert oder angegriffen werden.
+
+**[Slide 6]** Canonical Bridges sind die Bridges, die direkt zur Rollup-Infrastruktur gehören. Arbitrum Bridge, Optimism Bridge, Base Bridge, zkSync Bridge. Sie sind kein separates Protokoll — sie sind Teil des Rollups selbst. Deshalb übernehmen sie die Sicherheit des Rollups, nicht mehr und nicht weniger. Deposit von L1 nach L2 dauert zehn bis fünfzehn Minuten. Withdrawal zurück nach L1 dauert bei Optimistic Rollups sieben Tage wegen der Challenge-Period. Bei ZK-Rollups deutlich kürzer, oft ein bis 24 Stunden. Der große Nachteil ist die Wartezeit. Der große Vorteil: die höchste verfügbare Sicherheit. Für große Beträge ist das meist der richtige Weg.
+
+**[Slide 7]** Der direkte Vergleich. Canonical Bridges haben die höchste Sicherheit, aber die längste Wartezeit bei Withdrawal. Liquidity-Networks sind schnell, aber pool-tiefen-abhängig. Burn-and-Mint ist sauber, aber nur für Issuer-kontrollierte Assets möglich. Lock-and-Mint ist historisch relevant, hat aber die größte Angriffsfläche. Keine Bridge ist universell "die beste" — jede hat ihren Use-Case.
+
+**[Slide 8]** Die Wahl-Matrix als Handlungs-Heuristik. Große Beträge — über zehntausend Dollar — sollten über Canonical Bridges laufen. Die Wartezeit akzeptieren, dafür die maximale Sicherheit bekommen. Alltags-Transfers, also einige hundert bis einige tausend Dollar, passen gut zu Liquidity-Networks wie Across oder Stargate. USDC-Bewegung sollte standardmäßig über CCTP erfolgen. Bitcoin auf Ethereum bleibt bei WBTC — das ist technisch nicht anders machbar. Alles andere — die neuen Generationen von Cross-Chain-Messaging — schauen wir uns in den folgenden Lektionen an.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Vier-Kasten-Übersicht mit jeweils Icon und Ein-Satz-Beschreibung. Visuell klar getrennt.
+
+**[Slide 3]** Flow-Diagramm: Chain A mit Lock-Contract (Tresor-Icon) → Wrapped Token auf Chain B. Rotes Warnsymbol am Lock-Contract mit "Honeypot-Risiko".
+
+**[Slide 4]** Flow-Diagramm: Chain A mit Burn-Operation (Feuer-Icon) → Attestation (Signatur-Icon) → Mint-Operation auf Chain B. Grünes Häkchen an "Issuer = Single Trust Point, keine additive Bridge-Trust".
+
+**[Slide 5]** Flow-Diagramm: Zwei Pools parallel auf Chain A und Chain B, Relayer-Icon verbindet sie. User-Pfeil zeigt: Einzahlung in Pool A, Auszahlung aus Pool B.
+
+**[Slide 6]** **SCREENSHOT SUGGESTION:** Arbitrum Bridge-Interface (bridge.arbitrum.io) mit typischer Deposit-View, inklusive Anzeige der 7-Tage-Wartezeit bei Withdrawal.
+
+**[Slide 7]** Vergleichstabelle Bridge-Typen mit Spalten: Sicherheit, Geschwindigkeit, Kosten, Wrapped ja/nein, Bester Use-Case.
+
+**[Slide 8]** Entscheidungsbaum: Betrag > $10.000? → Canonical. Betrag < $10.000 und USDC? → CCTP. Betrag < $10.000 und andere Assets? → Liquidity-Network.
+
+## Übung
+
+**Aufgabe: Bridge-Typ-Klassifikation anwenden**
+
+Besuche [defillama.com/bridges](https://defillama.com/bridges) und wähle die Top 10 Bridges nach TVL. Ordne jede einem der vier Typen (Lock-and-Mint, Burn-and-Mint, Liquidity-Network, Canonical) zu. Recherchiere bei Unsicherheit auf der jeweiligen Bridge-Website.
+
+Zusätzlich:
+1. Welche Typen dominieren das TVL? (Welche Kategorie aggregiert den höchsten Gesamt-TVL?)
+2. Welche der Top 10 sind Canonical Bridges?
+3. Welche setzen auf native USDC (Burn-and-Mint via CCTP)?
+4. Welche haben die höchste TVL-Konzentration an einem einzelnen Chain-Pair?
+
+**Deliverable:** Tabelle mit allen 10 Bridges, Typ-Klassifikation und einer kurzen Reflexion (5-8 Sätze): Welche Typen wachsen aktuell, welche stagnieren? Was sagt das über die Markt-Reife der Cross-Chain-Landschaft aus?
+
+## Quiz
+
+**Frage 1:** Ein Bekannter schlägt dir vor, 50.000 USDC von Ethereum nach Base zu transferieren — mit der Begründung: "Stargate ist schneller und die Gebühr ist niedriger als bei Canonical." Er will das Kapital dort für sechs Monate in einer Lending-Position halten. Wie antwortest du?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Die Empfehlung wäre: Canonical Bridge oder CCTP verwenden, nicht Stargate. Die Argumentation basiert auf mehreren Ebenen. **Ebene 1 — Die Betrag-Sicherheit-Relation.** 50.000 USDC ist ein Betrag, bei dem die Sicherheits-Differenz zwischen Bridge-Typen real Geld bedeutet. Der Unterschied zwischen 0,05% Gebühr (Stargate) und 0% Gebühr (Canonical, nur Gas) ist etwa 25 US-Dollar plus Gas. Das ist kein strategisch relevanter Betrag. Der Unterschied im Sicherheits-Modell ist dagegen fundamental: Bei Canonical erbt man die Sicherheit von Base selbst. Bei Stargate addiert man das Trust-Modell von LayerZero (Oracle + Relayer) über die Chain-Sicherheit hinaus. Bei 50.000 USDC hält man also die Sparerträge von sechs Monaten im Umtausch für eine zusätzliche Trust-Ebene — ökonomisch keine gute Wahl. **Ebene 2 — Die 7-Tage-Argument ist im konkreten Fall unwichtig.** Der häufigste Einwand gegen Canonical Bridges ist die Wartezeit beim Withdrawal. Aber im beschriebenen Szenario plant er sowieso sechs Monate zu halten. Die Deposit-Richtung (L1 → L2) bei Canonical Bridges dauert nur 10-15 Minuten, nicht 7 Tage. Die Wartezeit betrifft nur den späteren Rück-Transfer (L2 → L1), der ohnehin erst in sechs Monaten oder später ansteht. Zu diesem Zeitpunkt ist die 7-Tage-Wartezeit eine planbare Logistik, kein Sicherheits-Kompromiss. **Ebene 3 — Die USDC-spezifische Alternative.** Für den spezifischen Fall USDC Ethereum → Base existiert eine dritte Option: CCTP (Cross-Chain Transfer Protocol von Circle). Das ist Burn-and-Mint-basiert, benötigt keine Liquiditäts-Pools, hat minimale Gebühren und keine zusätzliche Bridge-Trust-Ebene über Circle (dem man ohnehin als USDC-Nutzer vertraut). Viele UI-Frontends integrieren CCTP automatisch — prüfen, ob das Ziel-Frontend CCTP unterstützt, kann die beste Option sein. Sowohl die offizielle Circle-Website als auch Integrations in Bridges wie Bridge.Base.org bieten CCTP an. **Ebene 4 — Was gegen Stargate spricht (jenseits der Trust-Ebene).** Bei 50.000 USDC-Transfer kann die Pool-Tiefe des Stargate USDC-Pools auf Base ein praktisches Problem werden. Wenn der Pool zu diesem Zeitpunkt wenig Liquidität hat, kommt Slippage dazu — die Gebühr wird in der Praxis höher als theoretisch beworben. Plus: Stargate nutzt LayerZero-Infrastruktur, die in früheren Jahren auch regulatorische Fragen und Architektur-Debatten hatte. Nicht disqualifizierend, aber zusätzliches Risiko. **Ebene 5 — Der systematische Denkfehler.** Die Empfehlung "Stargate ist schneller und günstiger" ist richtig, aber sie betrachtet nur zwei Dimensionen: Geschwindigkeit und direkte Gebühr. Sie ignoriert: Sicherheits-Modell, Wrapped-vs-Native-Status, Pool-Tiefe-Abhängigkeit, Relayer-Risiko, die Tatsache dass Geschwindigkeit bei 6-monatiger Hold-Dauer irrelevant ist. Das ist ein klassisches Muster bei Bridge-Entscheidungen: Nutzer optimieren auf die offensichtlichen Metriken und übersehen die impliziten Kosten. **Die empfohlene Entscheidung:** Für 50.000 USDC Ethereum → Base, mit 6-Monaten-Hold-Zeit: CCTP als erste Wahl, Canonical Bridge als zweite Wahl, Stargate als Notfall-Option nur wenn beide oberen nicht verfügbar sind. **Ein generelles Prinzip daraus:** Bridge-Wahl sollte nach dem Risiko-Exposure-Verhältnis getroffen werden, nicht nach der direkten Gebühr. Bei großen Beträgen sind absolute Gebühren in Dollar weniger relevant als Sicherheits-Unterschiede. Bei kleinen Beträgen ist das Verhältnis umgekehrt.
+
+</details>
+
+**Frage 2:** Erkläre, warum "Wrapped Bitcoin" (WBTC) auf Ethereum eine fundamental andere Risiko-Struktur hat als "Native USDC" auf Base — obwohl beide wie "BTC auf einer fremden Chain" und "USDC auf einer fremden Chain" wirken.
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Die beiden Fälle sehen oberflächlich ähnlich aus — beide sind Assets, die nicht "nativ" auf der jeweiligen Chain entstehen, sondern von anderer Chain stammen. Aber die Mechanik ist fundamental verschieden, und das hat direkte Risiko-Konsequenzen. **WBTC-Struktur (Lock-and-Mint):** WBTC wird erzeugt, indem echter Bitcoin bei einem Custodian (BitGo) hinterlegt wird. Der Custodian mintet im Gegenzug ein ERC-20-Token auf Ethereum, das den Anspruch auf den hinterlegten BTC repräsentiert. WBTC ist also nicht "echter Bitcoin" — es ist eine Forderung auf Bitcoin, verwaltet durch einen zentralen Custodian. Das Trust-Modell hat mehrere Ebenen: Vertrauen in BitGo als Custodian (dass die BTC-Reserven tatsächlich existieren und nicht veruntreut werden). Vertrauen in den WBTC-Smart-Contract auf Ethereum (dass er korrekt funktioniert und nicht gehackt wird). Vertrauen in die Minting- und Burning-Prozesse (dass neue WBTC nur bei echten BTC-Deposits entstehen). Wenn irgendeine dieser Ebenen bricht — Custodian-Insolvenz, Smart-Contract-Bug, Mint-Prozess-Kompromittierung — kann WBTC vom Peg lösen und im Wert einbrechen, sogar auf Null gehen. **Native USDC auf Base (Burn-and-Mint via CCTP):** USDC auf Base ist nativ. Circle minted USDC direkt auf Base, genauso wie auf Ethereum, Arbitrum, Solana. Alle USDC sind demselben Issuer zuzurechnen — Circle — und sind fungibel über alle Chains. Es gibt keinen "Base-USDC, der durch Ethereum-USDC gedeckt ist". Beide sind direkt von Circle ausgegeben und durch Circle's Reserven gedeckt (USDC-Reserven bei Banken, US-Treasuries). Wenn CCTP zum Transferieren verwendet wird, wird USDC auf Ethereum verbrannt und auf Base neu ausgegeben — beide Operationen passieren durch Circle selbst. **Der kritische Unterschied im Trust-Modell:** WBTC addiert eine Trust-Ebene zu Bitcoin: Man muss Bitcoin selbst UND BitGo als Custodian UND den Ethereum-Smart-Contract vertrauen. Ein Failure auf jeder dieser drei Ebenen kann WBTC entwerten. Native USDC auf Base addiert keine Trust-Ebene zu USDC: Man muss USDC selbst (also Circle) vertrauen, das ist ohnehin der Fall, egal ob man USDC auf Ethereum oder Base hält. Die Chain, auf der man USDC hält, ändert nichts an der Trust-Struktur. **Die konkreten Angriffsszenarien:** Angriff auf WBTC: Custodian BitGo erleidet Reservenverlust oder Insolvenz → WBTC de-pegt auf Ethereum, selbst wenn Bitcoin selbst stabil ist. Angriff auf WBTC-Smart-Contract: Ein Bug im Mint/Burn-Mechanismus könnte illegitimes WBTC erzeugen → Peg-Verlust. Angriff auf Native USDC: Circle selbst erleidet Banken-Krise (passierte März 2023, als SVB kollabierte). USDC depegte auf 0,87 USD weltweit — aber gleichförmig über alle Chains. USDC auf Base, Ethereum, Arbitrum depegte gleichzeitig, nicht disproportional. Keine der Chains erhöhte das Risiko — das Issuer-Risiko war gleich verteilt. **Die konservative Konsequenz für Position-Sizing:** WBTC sollte als "Bitcoin-Exposure plus zusätzlicher Bridge-Trust" behandelt werden. In einem Portfolio, das Bitcoin-Exposure zur Diversifikation hält, ist WBTC eine pragmatische Wahl, aber die Bridge-Risiko-Komponente sollte im Position-Sizing berücksichtigt werden — also nicht das gesamte BTC-Exposure als WBTC halten, wenn Alternativen existieren (echter Bitcoin, Bitcoin-ETFs, etc.). Native USDC auf Base kann dagegen als funktionaler Ersatz für USDC auf Ethereum behandelt werden. Der Unterschied im Trust-Modell ist vernachlässigbar (nur die Chain-Sicherheit von Base ist anders als Ethereum, aber das ist die Position der Chain, nicht der Bridge). **Das übergreifende Prinzip:** Nicht jedes "Token auf einer anderen Chain" ist gleich. Burn-and-Mint (native Issuance) ist strukturell sicherer als Lock-and-Mint (Wrapped). Wo möglich, sollte der native Issuance-Pfad gewählt werden. Für Assets ohne zentralen Issuer (Bitcoin, Ethereum selbst) bleibt Lock-and-Mint die einzige Option — das ist unvermeidbar, aber die Risiko-Komponente muss explizit berücksichtigt werden.
+
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → Bridge-Typen-Übersicht → Lock-and-Mint → Burn-and-Mint (CCTP) → Liquidity Network → Canonical Bridges → Trust-Modelle → Use-Case-Matrix
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `visual_plan.json` — Bridge-Typen-Vergleichsmatrix, Lock-Mint-vs-Burn-Mint-Diagramm, Liquidity-Network-Flow, Canonical-Bridge-Architektur, Trust-Radius-Grafik
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

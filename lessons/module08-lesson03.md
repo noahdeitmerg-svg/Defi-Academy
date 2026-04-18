@@ -1,0 +1,237 @@
+# Krypto-besicherte Stablecoins: DAI, crvUSD, LUSD
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die grundlegende Mechanik krypto-besicherter Stablecoins erklären
+- DAI, crvUSD und LUSD in ihren Design-Unterschieden einordnen
+- Die Risikoprofile der jeweiligen Stablecoins aus konservativer Sicht bewerten
+- Die MakerDAO/Sky-Governance, die LLAMMA-Mechanik von crvUSD und den Redemption-Mechanismus von LUSD präzise unterscheiden
+- Die Rolle von Over-Collateralization, Stabilitätsgebühren und Liquidations-Auktionen im Peg-Erhalt nachvollziehen
+- Den strukturellen Unterschied zwischen "pure crypto-backed" (LUSD) und "hybrid-backed" (DAI mit PSM) beurteilen
+
+## Erklärung
+
+Krypto-besicherte Stablecoins entstehen nicht durch ein zentrales Unternehmen mit Dollar-Reserven, sondern durch dezentrale Smart Contracts, in denen Nutzer Krypto-Assets als Sicherheit hinterlegen. Gegen diese Sicherheit wird der Stablecoin gemintet — strukturell ähnlich wie ein Lending-Protokoll, mit dem zentralen Unterschied, dass das "geliehene" Asset neu erzeugt wird, nicht aus einem vorhandenen Pool entnommen.
+
+**Das Grundprinzip: Überbesicherung**
+
+Alle krypto-besicherten Stablecoins arbeiten mit **Überbesicherung**: für jeden gemintierten Dollar muss mehr als ein Dollar an Sicherheit hinterlegt sein. Typisch 130–200% Besicherungsquote. Diese Puffer ist nötig, weil das Collateral volatil ist — und bei Preis-Verfall müssen Liquidationen rechtzeitig erfolgen, bevor die Position unterbesichert wird.
+
+**DAI — Der Pionier (Sky Protocol, früher MakerDAO)**
+
+DAI ist der älteste große krypto-besicherte Stablecoin (Launch 2017). Das Ökosystem wurde 2024 zu "Sky" umbenannt, und ein paralleles Produkt — USDS — wurde eingeführt.
+
+**Design-Evolution:**
+- **2017–2019:** DAI (ursprünglich SAI) nur mit ETH als Collateral
+- **2019+:** Multi-Collateral DAI — viele Asset-Typen akzeptiert
+- **2022+:** Signifikante USDC-Anteile im Collateral (Stabilitäts-Puffer durch fiat-Stable)
+- **2023+:** Real World Assets (RWA) als Collateral — hauptsächlich US-Treasuries via externe Partner
+- **2024+:** Sky-Rebranding, USDS als Parallel-Token mit Migrations-Option
+
+**Aktuelles Collateral-Portfolio (Sky/MakerDAO):**
+- Real World Assets (T-Bills): ~45–55%
+- USDC (Peg Stability Module): ~15–25%
+- ETH, wstETH, rETH: ~10–20%
+- Andere Assets: kleinere Anteile
+
+**Peg-Mechanismen:**
+1. **Vault-Liquidationen:** Wenn Sicherheit unter den Required Ratio fällt, wird die Position liquidiert.
+2. **Peg Stability Module (PSM):** USDC kann 1:1 gegen DAI getauscht werden (und umgekehrt) — das arbitrierungsfähigste Peg-Feature.
+3. **DAI Savings Rate (DSR) / sDAI:** DAI kann in einen Savings-Vertrag gelegt werden und verdient Zinsen — das zieht Kapital in DAI und stabilisiert Nachfrage.
+
+**Stärken:**
+- Lange Historie, etabliert
+- Diversifiziertes Collateral
+- Mehrere Peg-Verteidigungs-Mechanismen
+
+**Schwächen:**
+- DAI ist heute **nicht mehr rein dezentral** — signifikante USDC- und RWA-Anteile bedeuten Exposure zu zentralen Akteuren
+- RWA-Risiko (USA-Treasury-System-Exposure)
+- Komplexität der Architektur (viele Vault-Typen, Stability Fees, Governance)
+
+**crvUSD — Curve's eigenes Stablecoin (2023)**
+
+Curve hat 2023 crvUSD eingeführt — ein krypto-besicherter Stablecoin mit einem innovativen Liquidations-Mechanismus namens **LLAMMA** (Lending-Liquidating AMM Algorithm).
+
+**Das LLAMMA-Prinzip:**
+
+Klassische Liquidationen sind diskret: wenn der Preis eine Schwelle unterschreitet, wird die gesamte Position auf einmal liquidiert. LLAMMA macht Liquidationen kontinuierlich: während der Preis fällt, wird die Position graduell von Collateral zu Stablecoin umgeschichtet. Bei einem nachfolgenden Preis-Anstieg wird sie wieder zurückgeschichtet.
+
+**Vorteil:** Weniger harte Liquidationen. Der Borrower verliert weniger bei moderaten Preis-Bewegungen, weil die Liquidation "weich" verläuft.
+
+**Nachteil:** Die kontinuierliche Umschichtung kann effektiv eine Art Impermanent Loss erzeugen — bei volatilen Preisen verliert die Position Wert, auch wenn am Ende der Preis zum Ausgangspunkt zurückkehrt.
+
+**Collateral-Typen für crvUSD:**
+- wstETH, sfrxETH (Liquid Staking Tokens)
+- WBTC, tBTC
+- WETH
+- Weitere
+
+**Stärken:**
+- Innovatives Liquidations-Design (weniger harte Cliffs)
+- Native Integration mit Curve (Liquidität, Gauges, Rewards)
+- Dezentraler als DAI (keine RWA-Anteile im Kern-Design)
+
+**Schwächen:**
+- Jünger, weniger Track-Record als DAI
+- LLAMMA-Mechanismus ist komplex und wird in Extrem-Situationen erst wirklich getestet
+- Abhängig von Curves Gesamt-Ökosystem-Gesundheit
+
+**LUSD — Liquity (2021)**
+
+LUSD von Liquity Protocol ist der puristisch dezentrale Ansatz. Design-Grundsätze:
+- **Nur ETH als Collateral** (in der Grundversion)
+- **110% Minimum-Collateralization-Ratio** (sehr aggressiv)
+- **0% Zins** auf Borrow (einmalige Borrow-Fee und Redemption-Fee statt)
+- **Unveränderbar:** keine Governance, keine Upgrades, keine Admin-Keys
+- **Redemption-Mechanismus:** LUSD kann jederzeit gegen ETH aus der globalen Pool getauscht werden
+
+**Peg-Mechanismen:**
+1. **Bei LUSD > 1,10 USD:** Neue Vaults mintzen profitable LUSD (100% LUSD-Preis × 110% CR = 121% Rendite auf ETH-Einlage), das erhöht das Supply
+2. **Bei LUSD < 1,00 USD:** Redemptions werden profitabel (LUSD unter Peg einlösen gegen vollen ETH-Wert), das verringert das Supply
+
+**Stärken:**
+- Wirklich dezentral — keine Governance, keine Admin-Controls, keine Zensur möglich
+- Einfaches, stabiles Design
+- Gute Performance durch mehrere Markt-Zyklen
+- Kein regulatorisches Risiko (kein zentrales Entity)
+
+**Schwächen:**
+- Nur ETH als Collateral (keine Diversifikation auf Collateral-Ebene)
+- Kleinere TVL als DAI oder crvUSD
+- Redemption-Mechanismus kann bei starkem Sell-Druck unangenehm für Borrower sein (forced redemption triggert, wenn LUSD unter Peg handelt)
+- Weniger in andere DeFi-Protokolle integriert
+
+**Weitere relevante krypto-besicherte Stablecoins**
+
+- **GHO (Aave):** Aaves eigenes Stablecoin, gemintet gegen Aave-Collateral. Jünger (2023), moderater TVL.
+- **USDS (Sky):** Paralleler zu DAI, mit Opt-in-Features wie direkter Sky-Points-Rewards.
+- **FRAX:** Hybrid-Design (teils algorithmisch, teils besichert). Komplex, nicht für konservative Portfolios empfohlen.
+
+**Konservative Bewertung**
+
+Für konservative Portfolios:
+
+- **DAI:** Durch die RWA- und USDC-Exposure nicht mehr rein dezentral, aber sehr etabliert. Akzeptabel für Diversifikation.
+- **crvUSD:** Interessant für DeFi-native Nutzer, mit moderatem Risikobudget. Nicht als Hauptposition.
+- **LUSD:** Am dezentralsten. Sinnvoll für Nutzer, die zensurresistent wollen. Weniger in DeFi integriert.
+- **Vermeiden:** algorithmische oder stark hybride Stablecoins ohne klare Track-Record.
+
+Eine sinnvolle Diversifikation könnte 50% USDC (als Hauptanker), 30% USDT (Liquidität), 10% DAI (krypto-besicherte Diversifikation), 10% LUSD (zensurresistente Reserve) sein.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Krypto-besicherte Stablecoins: DAI, crvUSD, LUSD
+
+**[Slide 2] — Grundprinzip**
+Überbesicherung: Sicherheit > gemintierter Stablecoin
+Typisch 130–200% CR
+Liquidations-Mechanismus bei Unterbesicherung
+
+**[Slide 3] — DAI / Sky**
+Pionier seit 2017
+Collateral heute: ~50% RWA, 20% USDC, 20% ETH-basiert
+Nicht mehr rein dezentral, aber etabliert
+
+**[Slide 4] — crvUSD**
+LLAMMA-Liquidations-Design (kontinuierlich)
+Weniger harte Cliffs als klassische Systeme
+Jünger, Curve-ökosystem-integriert
+
+**[Slide 5] — LUSD**
+Puristisch dezentral
+Nur ETH-Collateral, 110% CR
+Keine Governance, keine Admin-Keys
+Zensurresistent
+
+**[Slide 6] — Weitere**
+GHO (Aave): jünger
+USDS: Sky-Parallel
+FRAX: Hybrid (nicht empfohlen)
+
+**[Slide 7] — Konservative Auswahl**
+DAI: Diversifikation, akzeptabel trotz RWA-Exposure
+crvUSD: moderates Risikobudget
+LUSD: echte Dezentralität
+Meiden: Algo/Hybrid ohne Track-Record
+
+## Sprechertext
+
+**[Slide 1]** Krypto-besicherte Stablecoins entstehen durch dezentrale Smart Contracts, nicht durch zentrale Unternehmen mit Dollar-Reserven. Das gibt andere Risikoprofile — und unterschiedliche Stärken und Schwächen.
+
+**[Slide 2]** Das Grundprinzip ist Überbesicherung. Für jeden gemintierten Stablecoin-Dollar muss mehr als ein Dollar Sicherheit hinterlegt sein. Typisch 130 bis 200 Prozent. Der Puffer ist nötig, weil das Collateral volatil ist. Bei Preis-Verfall muss liquidiert werden, bevor die Position unterbesichert wird — strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7.
+
+**[Slide 3]** DAI, der Pionier seit 2017. Das Ökosystem heißt heute Sky. Das Collateral-Portfolio hat sich stark entwickelt: heute etwa 50 Prozent Real World Assets — US-Treasuries via externe Partner. 20 Prozent USDC als Stabilitätspuffer. 20 Prozent ETH-basierte Assets. DAI ist nicht mehr rein dezentral — es hat Exposure zu USA-Banksystem und Circle. Aber: sehr etabliert, mehrere Peg-Verteidigungs-Mechanismen, diversifiziertes Collateral.
+
+**[Slide 4]** crvUSD von Curve, gestartet 2023. Das Schlüssel-Feature ist LLAMMA — Lending-Liquidating AMM Algorithm. Statt diskreter Liquidationen wird die Position kontinuierlich zwischen Collateral und Stablecoin umgeschichtet, während der Preis schwankt. Weniger harte Cliffs, aber kann effektiv wie Impermanent Loss wirken bei volatilen Preisen. Jünger als DAI, weniger Track-Record, aber innovativer Ansatz.
+
+**[Slide 5]** LUSD von Liquity Protocol, gestartet 2021. Der puristischste Ansatz. Nur ETH als Collateral. 110 Prozent Minimum-Collateralization-Ratio — sehr aggressiv. Null Zins auf Borrow, stattdessen einmalige Gebühren. Keine Governance, keine Admin-Keys, unveränderbar. Das Protokoll kann nicht zensiert oder geändert werden. LUSD ist die Wahl für Nutzer, die maximale Dezentralität wollen.
+
+**[Slide 6]** Weitere relevante krypto-besicherte Stablecoins. GHO von Aave, 2023 gestartet, moderater TVL. USDS von Sky als Parallel zu DAI, mit Opt-in-Features. FRAX als Hybrid-Design — teils algorithmisch, teils besichert, zu komplex für konservative Portfolios.
+
+**[Slide 7]** Die konservative Auswahl. DAI trotz RWA- und USDC-Exposure akzeptabel als Diversifikations-Baustein — sehr etabliert. crvUSD interessant für DeFi-native Nutzer mit moderatem Risikobudget, aber nicht als Hauptposition. LUSD als echte Dezentralität, sinnvoll für Zensur-Resistenz, weniger in DeFi integriert. Was zu meiden ist: algorithmische oder stark hybride Stablecoins ohne klare Track-Record.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Diagramm: Collateral > Stablecoin mit Überbesicherungs-Visualisierung.
+
+**[Slide 3]** **SCREENSHOT SUGGESTION:** makerburn.com Dashboard mit aktueller DAI-Collateral-Breakdown-Grafik. Alternativ: spark.fi mit sDAI-Übersicht.
+
+**[Slide 4]** LLAMMA-Mechanik visualisiert: Preis-Chart mit kontinuierlicher Umschichtung.
+
+**[Slide 5]** **SCREENSHOT SUGGESTION:** liquity.app Interface mit Vault-Übersicht und 110% CR.
+
+**[Slide 6]** Vergleichstabelle der weiteren Stablecoins.
+
+**[Slide 7]** Diversifikations-Allokations-Beispiel für konservatives Portfolio.
+
+## Übung
+
+**Aufgabe: Krypto-besicherte Stablecoins vergleichen**
+
+1. Besuche makerburn.com oder Sky.money für DAI/USDS-Status.
+2. Besuche crvusd.fi für crvUSD-Status.
+3. Besuche liquity.app für LUSD-Status.
+4. Für jeden Stablecoin dokumentiere:
+ - Aktuelle Market Cap
+ - Collateral-Zusammensetzung (Top 3 Typen mit Prozent)
+ - Peg-Status (aktueller Preis)
+ - Savings Rate / Rendite für Halter, falls anwendbar
+ - Dein subjektives Risiko-Urteil (1–10)
+5. Überlege: Welcher wäre für einen zensur-resistenten Portfolio-Anteil geeignet, welcher für reine Rendite-Optimierung?
+
+**Deliverable:** Vergleichstabelle + Portfolio-Vorschlag: Wenn du 15.000 USD über diese drei Stablecoins verteilen würdest, wie wäre die Aufteilung und warum?
+
+## Quiz
+
+**Frage 1:** Warum ist DAI heute nicht mehr der "rein dezentrale Stablecoin" wie er ursprünglich konzipiert wurde?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Das DAI-Design hat sich über die Jahre entwickelt, um Stabilität und Skalierbarkeit zu verbessern — auf Kosten der reinen Dezentralität. Zwei Hauptveränderungen: Erstens wurde das Peg Stability Module (PSM) eingeführt, das USDC direkt 1:1 gegen DAI tauschbar macht. Das bedeutet, ein signifikanter Teil der DAI-"Besicherung" ist effektiv USDC — und damit abhängig von Circle und dem US-Banken-System. Zweitens wurden Real World Assets als Collateral-Typ eingeführt — konkret Investitionen in US-Treasuries via externe Partner. Das bringt Ertrag (~5%+ risk-free rate auf die RWA-Anteile), macht aber DAI von der US-Finanzinfrastruktur abhängig. Heute besteht das DAI-Collateral zu einem großen Teil aus Assets mit zentraler Abhängigkeit. LUSD hat bewusst diesen Weg nicht genommen — es blieb rein ETH-besichert und ohne RWA. Der Trade-off ist klassisch: DAI wurde stabiler und skalierbarer, aber weniger rein dezentral. Für konservative Portfolios ist DAI weiterhin akzeptabel als Diversifikations-Element, aber der Claim "vollständig dezentral" trifft nicht mehr zu.
+</details>
+
+**Frage 2:** Wie funktioniert LUSDs Redemption-Mechanismus, und warum ist er sowohl Stabilitäts-Feature als auch potenzielles Risiko für einzelne Borrower?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+LUSD kann jederzeit 1:1 gegen ETH aus dem globalen Vault-Pool eingelöst werden. Wenn jemand 100 LUSD einlöst, bekommt er ETH im Wert von 100 USD (minus Redemption-Fee) — aus den Positionen der Vault-Betreiber. Die redemption wird auf die Vaults mit der niedrigsten Collateralization-Ratio zuerst angewandt. Das ist Peg-Stabilitäts-Feature: wenn LUSD unter Peg handelt, wird die Redemption profitabel — Arbitrageure kaufen LUSD unter Peg, lösen es für vollen ETH-Wert ein, machen Gewinn. Der Supply wird reduziert, der Peg kehrt zurück. Für einzelne Borrower kann das unangenehm sein: wenn ihr Vault die niedrigste CR hat, wird ihr ETH "zwangs-konvertiert" zu LUSD (die Schuld reduziert sich, aber auch das ETH-Collateral). Bei aggressiven Ratios nahe 110% kann das oft passieren. Das ist der Preis der LUSD-Stabilität: aktive Vault-Manager müssen ihre CR bewusst hoch genug halten, um nicht ständig redeemed zu werden. Für LUSD-Halter ist der Mechanismus ein Sicherheits-Feature. Für Vault-Betreiber eine laufende Management-Anforderung. Für konservative LUSD-Halter: der Mechanismus ist Vorteil, keine Sorge.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → Krypto-besichert-Grundlagen → DAI/MakerDAO → crvUSD & LLAMMA → LUSD & Redemption → Vergleichsmatrix → Hybrid vs. Pure → Risikoprofile
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `visual_plan.json` — CDP-Mechanik-Diagramm, MakerDAO-PSM-Architektur, LLAMMA-Soft-Liquidation-Grafik, LUSD-Redemption-Flow, Stablecoin-Design-Vergleichstabelle
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

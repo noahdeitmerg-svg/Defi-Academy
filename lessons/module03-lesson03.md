@@ -1,0 +1,192 @@
+# EIP-4844-Blobs und die Layer-2-Gebühren-Revolution
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Den Unterschied zwischen Ethereum Mainnet und Layer-2-Rollups erklären
+- EIP-4844 und die Rolle von Blobs für L2-Skalierung verstehen
+- Optimistic- und ZK-Rollups unterscheiden und ihre Trade-offs einordnen
+- Die reale Kostenstruktur auf Arbitrum, Optimism, Base und zkSync nach dem Dencun-Upgrade (März 2024) einordnen
+- Fraud Proofs (Optimistic) vs. Validity Proofs (ZK) als zwei unterschiedliche Sicherheitsmodelle erklären
+- Eine begründete Chain-Wahl für eine konkrete DeFi-Aktivität (nach TVL, Liquidität, Bridge-Sicherheit) treffen
+
+## Erklärung
+
+Bis März 2024 waren Layer-2-Netzwerke schon günstiger als Ethereum Mainnet, aber nicht drastisch. Ein Swap auf Arbitrum kostete typischerweise 0,30–1,00 USD. Seit der Dencun-Upgrade im März 2024 — die EIP-4844 einführte — liegen die Kosten oft unter 3 Cent. Diese Zehntel- bis Hundertel-Reduktion hat das L2-Ökosystem fundamental verändert.
+
+**Was sind Layer-2-Rollups?**
+
+Rollups sind Blockchains, die Transaktionen off-chain ausführen und die Ergebnisse komprimiert zurück zu Ethereum Mainnet posten. Ethereum Mainnet dient als **Data-Availability-Layer** und **Settlement-Layer**. Die L2 hat dadurch:
+
+- Eigene Block-Produktion (schneller, höherer Durchsatz)
+- Eigene Gas-Ökonomie (viel billiger pro Transaktion)
+- Sicherheits-Anbindung an Ethereum (kann nicht einfach Geld stehlen)
+
+**Vor EIP-4844: Das Calldata-Problem**
+
+Rollups mussten ihre Transaktionsdaten als normale **Calldata** an Ethereum posten. Calldata ist teuer — sie wird permanent im Ethereum-State gespeichert. Die Calldata-Kosten machten 80–95% der L2-Transaktionskosten aus. Die L2 selbst war billig, aber die Mainnet-Settlement-Kosten wurden an die Nutzer weitergegeben.
+
+**EIP-4844: Die Einführung von Blobs**
+
+EIP-4844 (auch "Proto-Danksharding" genannt) führt einen neuen Datentyp ein: **Blobs**. Drei Eigenschaften:
+
+1. **Separates Gas-Pricing:** Blobs haben einen eigenen Gas-Markt, entkoppelt von normalem Calldata.
+2. **Temporäre Speicherung:** Blobs werden nur für etwa 18 Tage gespeichert, dann gelöscht. Das reicht, damit L2-Validatoren und Prover die Daten nutzen können — aber die Daten belasten den Ethereum-State nicht dauerhaft.
+3. **KZG-Commitments:** Die Daten sind über kryptographische Commitments verfügbar, aber nicht direkt von EVM-Smart-Contracts lesbar. Das zwingt zu einer strikten Trennung zwischen L1-Execution und L2-Data.
+
+**Quantitative Auswirkung**
+
+| Operation auf Arbitrum | Kosten vor EIP-4844 | Kosten nach EIP-4844 |
+|---|---|---|
+| Einfacher Swap | 0,30 – 1,00 USD | 0,02 – 0,08 USD |
+| Lending-Deposit | 0,50 – 1,50 USD | 0,05 – 0,15 USD |
+| LP-Position öffnen | 1,00 – 3,00 USD | 0,10 – 0,30 USD |
+
+Das ermöglicht praktisch neue Nutzungsmuster: häufiges Rebalancing, kleine Trades, Micro-Payments.
+
+**Optimistic Rollups vs. ZK-Rollups**
+
+Zwei grundsätzlich unterschiedliche Rollup-Architekturen:
+
+**Optimistic Rollups** (Arbitrum, Optimism, Base)
+- Gehen davon aus, dass posted Daten korrekt sind ("optimistisch")
+- Fraud-Proofs erlauben Challenge während eines 7-Tage-Fensters
+- Withdrawals zurück zu Mainnet dauern 7 Tage
+- Technisch einfacher, daher früh produktiv
+- Hohe EVM-Kompatibilität
+
+**ZK-Rollups** (zkSync, Starknet, Linea, Scroll, Polygon zkEVM)
+- Jede Batch wird mit einem Zero-Knowledge-Proof posted, der die Korrektheit kryptographisch beweist
+- Withdrawals können sofort abgeschlossen werden (nach Proof-Verifikation, Minuten statt Tage)
+- Technisch komplex, daher später produktiv
+- EVM-Kompatibilität variiert (manche sind vollständig EVM-equivalent, andere brauchen Spezial-Compiler)
+
+**Welche L2 wählen?**
+
+Für Standard-DeFi ist die Wahl vom Protokoll abhängig:
+- **Arbitrum:** Größtes L2-Ökosystem, meiste DeFi-TVL, viele Protokolle
+- **Base:** Coinbase-Unterstützung, schnell wachsend, konservativ ausgelegt
+- **Optimism:** Etabliert, Superchain-Vision
+- **zkSync Era, Linea, Scroll:** ZK-Vorteile, wachsende Ökosysteme
+
+In der Praxis entscheidet oft einfach: Wo ist das gewünschte Protokoll verfügbar, wo ist die Liquidität ausreichend? DeFiLlama zeigt pro Chain die TVL und pro Protokoll die verfügbaren Chains.
+
+**Bridge-Risiko**
+
+Jeder Asset-Transfer zwischen L1 und L2 (oder zwischen L2s) geht über eine Bridge. Bridges sind historisch ein massives Angriffsziel — einige der größten Hacks überhaupt (Ronin 625M, Wormhole 326M, Nomad 190M) waren Bridge-Hacks. Bei der Wahl einer Bridge:
+
+- **Native Rollup-Bridges** (z.B. Arbitrum-Bridge, Optimism-Bridge) sind am sichersten, weil sie auf der Rollup-Architektur basieren.
+- **Third-Party-Bridges** (Across, Stargate, Synapse) sind oft schneller (minutenbasiert statt 7-Tage-Exit bei Optimistic-Rollups), aber haben eigenes Smart-Contract-Risiko.
+- **CEX als Bridge** ist möglich: Geld zur CEX auf L1, Withdrawal zur Wallet auf L2. Meist günstig, aber erfordert KYC und CEX-Vertrauen.
+
+**Tracking-Tools**
+
+- **l2beat.com** — offizielle L2-Übersicht mit TVL, Activity, Risk-Framework
+- **growthepie.xyz** — Metriken-Dashboard für L2-Aktivität
+- **DeFiLlama Chain-Pages** — pro L2 die TVL-Historie und Top-Protokolle
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel:** EIP-4844-Blobs und die L2-Revolution
+
+**[Slide 2] — Was sind L2-Rollups?** Blockchains, die off-chain ausführen und komprimiert auf Ethereum posten. Ethereum = Settlement-Layer.
+
+**[Slide 3] — Das Calldata-Problem:** Vor EIP-4844 machten Calldata-Kosten 80-95% der L2-Gebühren aus.
+
+**[Slide 4] — EIP-4844 Blobs:** Separates Gas-Pricing, temporäre 18-Tage-Speicherung, KZG-Commitments.
+
+**[Slide 5] — Auswirkung:** L2-Kosten oft um Faktor 10 gefallen. Arbitrum-Swap: 0,30 USD → 0,03 USD.
+
+**[Slide 6] — Optimistic vs. ZK:** Zwei Architekturen. Optimistic = 7-Tage-Exit. ZK = sofortige Verifikation.
+
+**[Slide 7] — Populäre L2s:** Arbitrum, Base, Optimism (Optimistic). zkSync, Starknet, Linea (ZK).
+
+**[Slide 8] — Bridge-Risiko:** Historisch größter Angriffsvektor. Native Bridges, Third-Party, CEX als Optionen.
+
+**[Slide 9] — Tools:** l2beat.com, growthepie.xyz, DeFiLlama.
+
+## Sprechertext
+
+**[Slide 1]** Lektion 3.3: EIP-4844 und die L2-Revolution. Wenn du nur einen Upgrade aus Ethereums Geschichte verstehen willst, dann diesen. Die Dencun-Upgrade vom März 2024 hat die L2-Kosten um einen Faktor 10 reduziert.
+
+**[Slide 2]** Was sind Layer-2-Rollups? Eigene Blockchains, die Transaktionen ausführen und die komprimierten Ergebnisse an Ethereum Mainnet posten. Ethereum dient als Settlement- und Data-Availability-Layer. Die L2 hat eigene Block-Produktion, eigene Gas-Ökonomie und Sicherheits-Anbindung an Ethereum.
+
+**[Slide 3]** Vor EIP-4844 mussten Rollups ihre Daten als normale Calldata an Ethereum posten. Calldata ist teuer, weil sie permanent im Ethereum-State gespeichert wird. Die Calldata-Kosten machten 80 bis 95% der L2-Transaktionskosten aus. Die L2 selbst war billig, aber die Mainnet-Settlement-Kosten wurden an die Nutzer weitergegeben.
+
+**[Slide 4]** EIP-4844 — auch Proto-Danksharding genannt — führt Blobs ein. Drei Eigenschaften. Erstens: separates Gas-Pricing, entkoppelt vom normalen Calldata-Markt. Zweitens: temporäre Speicherung, etwa 18 Tage, dann gelöscht. Das reicht für L2-Validatoren und Prover, belastet den Ethereum-State aber nicht dauerhaft. Drittens: KZG-Commitments — Daten sind kryptographisch verfügbar, aber nicht direkt von EVM-Smart-Contracts lesbar.
+
+**[Slide 5]** Die Auswirkung war sofort spürbar. Ein Arbitrum-Swap kostete vor der Upgrade 0,30 bis 1 USD. Nach der Upgrade: 0,02 bis 0,08 USD. Ein Lending-Deposit: 0,50 bis 1,50 USD davor, 0,05 bis 0,15 USD danach. Das ermöglicht neue Nutzungsmuster — häufiges Rebalancing, kleine Trades, Micro-Payments.
+
+**[Slide 6]** Zwei Rollup-Architekturen. Optimistic Rollups — Arbitrum, Optimism, Base — gehen davon aus, dass die posted Daten korrekt sind. Fraud-Proofs erlauben Challenge während eines 7-Tage-Fensters. Withdrawals dauern entsprechend 7 Tage. Technisch einfacher, daher früh produktiv. ZK-Rollups — zkSync, Starknet, Linea — posten mit jedem Batch einen Zero-Knowledge-Proof, der die Korrektheit kryptographisch beweist. Withdrawals sind sofort möglich. Technisch komplex, daher später produktiv.
+
+**[Slide 7]** Die populärsten L2s heute: Arbitrum mit dem größten DeFi-Ökosystem und meiste TVL. Base, von Coinbase unterstützt, schnell wachsend. Optimism, etabliert, mit Superchain-Vision. Auf ZK-Seite zkSync Era, Starknet, Linea, Scroll. Die Wahl hängt davon ab, wo das gewünschte Protokoll verfügbar und die Liquidität ausreichend ist.
+
+**[Slide 8]** Bridge-Risiko. Jeder Asset-Transfer zwischen L1 und L2 geht über eine Bridge. Bridges sind historisch ein massives Angriffsziel. Ronin: 625 Millionen Dollar. Wormhole: 326 Millionen. Nomad: 190 Millionen. Drei Optionen. Native Rollup-Bridges sind am sichersten. Third-Party-Bridges wie Across oder Stargate sind schneller, haben aber eigenes Smart-Contract-Risiko. CEX-Withdrawal ist günstig, erfordert KYC und CEX-Vertrauen.
+
+**[Slide 9]** Tools. L2Beat ist die offizielle L2-Übersicht mit TVL, Activity und Risk-Framework. Growthepie für detailliertere Aktivitäts-Metriken. DeFiLlama Chain-Pages für pro-L2-TVL-Verläufe und Top-Protokolle. Vor jeder L2-Wahl lohnt sich der Blick.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Stack-Diagramm: L2 oben, führt Transaktionen aus. L1 unten, dient als Settlement. Pfeil nach unten für komprimierten Daten-Post.
+
+**[Slide 3]** Kostendiagramm einer L2-Transaktion vor EIP-4844: großer Balken "Calldata-Kosten", kleiner Balken "L2-Execution".
+
+**[Slide 4]** Technische Illustration der drei Blob-Eigenschaften mit Icons.
+
+**[Slide 5]** Before/After-Vergleichstabelle mit echten Kosten. **SCREENSHOT SUGGESTION:** Arbitrum-Swap mit sichtbaren Gebühren auf app.arbitrum.foundation oder Etherscan für Arbitrum.
+
+**[Slide 6]** Zwei-Spalten-Vergleich Optimistic (links) vs. ZK (rechts) mit den jeweiligen Eigenschaften.
+
+**[Slide 7]** Logo-Galerie der populärsten L2s, aufgeteilt in Optimistic und ZK.
+
+**[Slide 8]** Timeline der größten Bridge-Hacks mit Schadenshöhen.
+
+**[Slide 9]** **SCREENSHOT SUGGESTION:** l2beat.com-Hauptseite mit L2-Ranking nach TVL.
+
+## Übung
+
+**Aufgabe: L2-Vergleich und Bridge-Planung**
+
+1. Öffne l2beat.com und DeFiLlama/chains.
+2. Wähle drei L2s (z.B. Arbitrum, Base, zkSync Era).
+3. Erstelle eine Vergleichstabelle mit:
+ - TVL
+ - Anzahl aktiver DeFi-Protokolle
+ - Bridge-Optionen zu/von Ethereum Mainnet
+ - Native Token für Gas (oft ETH, manchmal anders)
+ - Typische Gas-Kosten für Uniswap-Swap (auf Chain selbst prüfen)
+4. Recherchiere für eine der drei L2s: Welche Bridge-Optionen existieren? Was sind die Trade-offs?
+
+**Deliverable:** Vergleichstabelle + kurze Analyse (halbe Seite).
+
+## Quiz
+
+**Frage 1:** Warum können Smart Contracts auf Ethereum die Daten in Blobs nicht direkt lesen?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Das ist ein bewusstes Design-Feature von EIP-4844. Blobs sind über KZG-Commitments verfügbar, aber die tatsächlichen Daten sind nicht im regulären Ethereum-State gespeichert — sie werden separat gespeichert und nach etwa 18 Tagen gelöscht. Wenn Smart Contracts direkt auf Blob-Daten zugreifen könnten, müsste Ethereum sie dauerhaft speichern (sonst würden Smart-Contract-Aufrufe nach 18 Tagen scheitern). Diese Einschränkung erlaubt die temporäre Speicherung, die Blobs billig macht. Für L2-Rollups reicht es, dass die Daten kryptographisch verfügbar sind, während Verifikation und Fraud-Proofs stattfinden — sie brauchen keinen direkten EVM-Zugriff.
+</details>
+
+**Frage 2:** Ein Nutzer will 10.000 USDC von Ethereum Mainnet nach Arbitrum bridgen. Welche drei Faktoren sollte er abwägen?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+1. **Geschwindigkeit:** Native Arbitrum-Bridge (L1→L2) dauert ca. 10–15 Minuten. Third-Party-Bridges wie Across oder Stargate sind meist schneller (1–5 Minuten). Der Rückweg (L2→L1) dauert bei Native-Bridge 7 Tage wegen des Optimistic-Fraud-Proof-Fensters; Third-Party-Bridges bieten sofortigen Rückweg gegen Gebühr. 2. **Kosten:** Native Bridge hat nur Gas-Kosten (Ethereum-Mainnet-Seite ist teuer). Third-Party-Bridges haben typischerweise 0,05–0,3% Gebühr, was bei 10k USDC 5–30 USD sind. 3. **Sicherheit:** Native Rollup-Bridges haben die niedrigste Angriffsfläche (direkt in Rollup-Architektur verankert). Third-Party-Bridges haben eigene Smart-Contract-Risiken und waren historisch häufige Hack-Ziele. Für 10k USDC ist Native Bridge oft die beste Balance; für Zeitkritikalität oder kleinere Beträge rechtfertigt sich eine Third-Party-Bridge.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Slides: Titel → L1 vs. L2 → EIP-4844 Blobs → Dencun-Effekte → Optimistic Rollups → ZK Rollups → Bridge-Optionen → Chain-Wahl-Entscheidungsmatrix
+- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `visual_plan.json` — L1/L2-Architektur-Diagramm, Blob-Lifecycle (18 Tage), L2-Fee-Chart vor/nach Dencun, Fraud-vs-Validity-Proof-Vergleich, Bridge-Optionen-Tabelle (Native/Across/Stargate), L2Beat-TVL-Screenshot
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

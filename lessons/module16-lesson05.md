@@ -1,0 +1,381 @@
+# Horizontale Composability und Cross-Protocol Dependencies
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Horizontale Composability (Cross-Protocol Dependencies) von vertikaler Composability (Stacking) unterscheiden und erklären, warum horizontale Abhängigkeiten oft gefährlicher sind, weil sie weniger sichtbar sind
+- Oracle-Abhängigkeiten systematisch analysieren — identifizieren, welche Protokolle welche Oracle-Feeds nutzen, Chainlink-Feeds von On-Chain-DEX-Oracles und Custom-Oracle-Implementierungen abgrenzen
+- LST-Collateral-Abhängigkeiten über mehrere Protokolle hinweg kartieren — verstehen, warum ein einzelnes stETH/rETH/cbETH-Peg-Event durch das gesamte DeFi-Ökosystem kaskadieren kann
+- Stablecoin-Abhängigkeiten bewerten — erkennen, dass USDC, USDT und DAI jeweils Single Points of Failure für substantielle DeFi-TVL-Anteile sind (USDC März 2023, USDT Oktober 2022 als Paradebeispiele)
+- Bridge-verknüpfte Positionen einschätzen — verstehen, dass Wrapped Assets die Sicherheitsannahmen ihres Bridging-Mechanismus erben
+- Dependency Graphs für das eigene Portfolio erstellen und korrelierte Ausfall-Wahrscheinlichkeiten berechnen (Fix-Doc-Erweiterung: Protocol Stack Risk)
+
+## Erklärung
+
+In Lektion 16.4 hast du vertikale Composability verstanden — das bewusste Stapeln mehrerer Protokolle übereinander. Horizontale Composability ist die andere Seite derselben Medaille, und sie ist in mancher Hinsicht gefährlicher, weil sie weniger offensichtlich ist. Horizontale Composability beschreibt die Situation, in der zwei oder mehrere scheinbar unabhängige Positionen in Wirklichkeit eine gemeinsame Abhängigkeit teilen — und diese gemeinsame Abhängigkeit unter Stress korreliert ausfällt.
+
+Stell dir vor, du hast dein DeFi-Portfolio bewusst "diversifiziert". Du hältst stETH in Aave. Du hältst USDC in Compound. Du hast eine LP-Position im Curve 3pool. Du hast etwas ETH auf Arbitrum in einem Pendle-Fixed-Yield. Auf den ersten Blick: vier verschiedene Protokolle, vier verschiedene Strategien, verschiedene Blockchains — das sollte diversifiziert sein. Aber wenn du die Dependency-Struktur kartographierst, bemerkst du:
+
+- Alle vier Positionen verwenden Chainlink-Oracle-Preisfeeds (oder in einem Fall möglicherweise einen Uniswap-TWAP-Oracle). Wenn der Chainlink-ETH/USD-Feed falsch aktualisiert wird oder ausfällt, werden Liquidationen in Aave und Compound gleichzeitig fehlerhaft ausgeführt.
+- Deine USDC-Positionen (Compound, Curve 3pool LP, die USDC-Komponente der Pendle-Position) sind alle mit dem USDC-Peg verbunden. Ein USDC-Depeg-Event wie im März 2023 (USDC fiel kurz auf 0,87 USD) trifft alle diese Positionen simultan.
+- Die Arbitrum-Position ist vom Arbitrum-Sequencer und vom Arbitrum-Bridge-Mechanismus abhängig. Ein Arbitrum-Sequencer-Ausfall oder ein Bridge-Exploit würde diese Position einfrieren, unabhängig vom Pendle-Protokoll selbst.
+- stETH in Aave ist abhängig von: (a) Lido-Staking-Protokoll, (b) dem stETH/ETH-Peg, (c) dem Chainlink-stETH/ETH-Oracle, (d) Aave-Smart-Contracts.
+
+Die scheinbare Diversifikation auf Protokoll-Ebene verbirgt eine tatsächliche Konzentration auf Infrastructure-Ebene. Wenn Chainlink kompromittiert wird, wenn USDC depegged, wenn die Arbitrum-Bridge exploitet wird — dann fallen mehrere deiner "diversifizierten" Positionen korreliert aus.
+
+Wir gehen jetzt die vier wichtigsten Dependency-Klassen systematisch durch.
+
+**Dependency-Klasse 1: Oracle-Abhängigkeiten**
+
+Oracles sind die Mechanismen, mit denen Off-Chain-Preisdaten On-Chain verfügbar gemacht werden. Jedes Lending-Protokoll, jedes Derivate-Protokoll, jeder algorithmische Stablecoin braucht einen Oracle-Mechanismus — die Alternative (ohne Oracle zu arbeiten) ist mathematisch unmöglich für diese Anwendungen.
+
+**Chainlink** ist der dominante Oracle-Anbieter in DeFi. Etwa 60–70 % aller Lending-TVL in DeFi ist abhängig von Chainlink-Preisfeeds. Das bedeutet: Wenn Chainlink eine schwerwiegende Schwachstelle hat (sei es durch Kompromittierung der Oracle-Node-Operatoren, durch einen Smart-Contract-Bug, durch eine Angriffs-Strategie, die bisher nicht antizipiert wurde), dann sind gleichzeitig: Aave, Compound, Maker/Sky, Morpho, Synthetix, und dutzende weitere Protokolle betroffen. Die Korrelation zwischen diesen Protokollen in einem Chainlink-Ausfall-Szenario ist nicht 0 oder 0,2 oder 0,5 — sie ist nahe 1. Alle fallen gemeinsam aus.
+
+Chainlink hat bisher einen ausgezeichneten Track Record (über fünf Jahre Betrieb ohne kritischen Exploit der Core-Preisfeed-Infrastruktur). Aber "bisher" ist keine Garantie für die Zukunft, und die potentielle Auswirkung eines Chainlink-Ausfalls ist so groß, dass du diese Abhängigkeit explizit modellieren solltest, statt sie zu ignorieren.
+
+**Alternative Oracle-Mechanismen** sind teils sicherer, teils riskanter. **On-Chain-TWAPs** (Time-Weighted Average Prices) aus Uniswap V3 sind in der Theorie manipulationssicher über kurze Zeitfenster, aber in der Praxis haben mehrere Protokolle, die auf Uniswap-TWAPs vertrauten, Exploits erlitten — insbesondere wenn die TWAP-Fenster zu kurz waren oder die Pool-Liquidität zu gering. Der Mango Markets Exploit im Oktober 2022 (rund 117 Mio USD verloren) war ein klassischer Oracle-Manipulations-Angriff über thin-liquidity Pools. **Custom Oracles** (die von einem Protokoll-Team selbst gebaut und betrieben werden) sind fast immer die riskanteste Kategorie — sie konzentrieren Vertrauen auf ein einzelnes Team, und ihre Sicherheit ist so gut wie die Kompetenz und Integrität dieses Teams.
+
+Die praktische Oracle-Analyse, die du für jede Position durchführen solltest:
+
+1. Welchen Oracle-Mechanismus verwendet dieses Protokoll für die relevanten Assets? (Lies es in der Dokumentation; falls nicht klar dokumentiert — Warnzeichen.)
+2. Falls Chainlink: Welche Chainlink-Feeds genau? (Einzel-Asset-Feeds oder Cross-Rate-Feeds; Letztere sind riskanter.)
+3. Falls DEX-Oracle: Von welchem Pool, und welches TWAP-Fenster? Was ist die Liquidität dieses Pools? (Pool-Liquidität < 10 Mio USD = Manipulations-Risiko.)
+4. Falls Custom-Oracle: Wer kontrolliert den Update-Prozess? Gibt es Multi-Sig-Requirements? Wie lange zwischen Updates?
+
+**Dependency-Klasse 2: LST-Collateral-Strukturen**
+
+Liquid Staking Tokens (stETH, rETH, cbETH) werden massiv als Collateral in Lending-Protokollen verwendet. Allein stETH war zu Spitzenzeiten mit über 2 Mrd USD als Collateral bei Aave gelockt. Das bedeutet: Wenn stETH einen kritischen Peg-Shift erfährt (Lido-Protokoll-Problem, Validator-Slashing-Event, Governance-Angriff auf Lido), dann werden in Aave, Morpho, Spark, Compound und allen weiteren Lending-Märkten, die stETH als Collateral akzeptieren, simultan Liquidationen ausgelöst.
+
+Die Ereignisse im Juni 2022 waren eine Probe für genau dieses Szenario. Als Celsius zusammenbrach und große stETH-Mengen in den Markt drückten, fiel der stETH/ETH-Preis auf 0,94. Leverage-Loops wurden massiv liquidiert. Die Lending-Protokolle mussten große Mengen stETH verkaufen, was den Preis weiter drückte — ein Death-Spiral-Potenzial, das letztlich durch externe Interventionen (kein Withdrawal-Run in Lido selbst, weil Ethereum-Withdrawals damals technisch noch nicht möglich waren) entschärft wurde. In einem zukünftigen Szenario mit aktiven Ethereum-Withdrawals könnte eine ähnliche Peg-Abweichung dynamisch anders ablaufen.
+
+Die praktische LST-Dependency-Analyse:
+
+1. Welche LSTs hältst du direkt, als Collateral, oder als zugrunde liegendes Asset in anderen Strukturen?
+2. Wie hoch ist dein aggregates LST-Exposure als Prozentsatz des Portfolios, wenn du alle Positionen zusammenzählst, die durch einen stETH-Peg-Shift oder ein Lido-Problem betroffen wären?
+3. Falls dieses aggregate Exposure über 30–40 % deines DeFi-Portfolios liegt: Hast du Plan für einen stETH-Peg-Shift auf 0,95 oder 0,90?
+
+**Dependency-Klasse 3: Stablecoin-Dependencies**
+
+Stablecoins sind die meist unterschätzte gemeinsame Abhängigkeit in DeFi. Die Top 3 (USDC, USDT, DAI) haben zusammen einen Stablecoin-TVL-Anteil von über 80 %, und sie sind in unterschiedlichem Ausmaß miteinander verkettet — DAI hat zum Beispiel signifikante USDC-Reserven, was in der März-2023-USDC-Krise dazu führte, dass DAI kurzzeitig von 1,00 auf 0,897 fiel, praktisch parallel zum USDC-Depeg.
+
+Historische Depeg-Events und ihre Auswirkungen:
+
+- **USDC März 2023** (Silicon Valley Bank-Krise, USDC-Reserven dort exponiert): USDC fiel über ein Wochenende bis auf 0,87 USD. Alle Curve-Pools mit USDC waren temporär arbitrierbar; LP-Provider erlitten Impermanent Loss; Lending-Positionen mit USDC-Collateral bei Aave und Compound hatten kurzzeitig temporäre Liquidations-Risiken; DAI wurde durch Reserve-Struktur mitgezogen.
+- **USDT Oktober 2022**: USDT fiel kurz auf 0,95 USD vor der Erholung. Auswirkungen ähnlich wie bei USDC-Szenario, aber weniger gravierend, weil die Dauer kürzer war.
+- **UST Mai 2022**: Kein Ereignis eines "bedeutenden" Stablecoins im Sinne der Top 3, aber UST gehörte vor dem Kollaps zu den Top 5 Stablecoins nach TVL. Der Kollaps war total (UST fiel auf nahe null). Alle Protokolle, die UST als Collateral akzeptierten oder in UST-Pools operierten, waren direkt betroffen; aber auch indirekte Effekte — die allgemeine DeFi-TVL-Kontraktion nach dem UST-Kollaps hatte Liquiditäts-Effekte auf fast jedem Protokoll.
+
+Die praktische Stablecoin-Dependency-Analyse:
+
+1. Welches ist das dominante Stablecoin in deinem Portfolio? (Zähle direkte Stablecoin-Positionen plus Stablecoin-Components in LP-Positionen.)
+2. Falls ein einzelner Stablecoin über 40–50 % deines Stablecoin-Exposures ausmacht: Ist das ein bewusstes Risiko-Bekenntnis oder das Ergebnis von Bequemlichkeit?
+3. Wie würden sich deine Positionen in einem USDC-Depeg-Szenario auf 0,90 für 48 Stunden verhalten? Konkret durchrechnen.
+
+**Dependency-Klasse 4: Bridge-verknüpfte Positionen**
+
+Wie in Modul 14 (Cross-Chain Infrastructure) ausführlich behandelt, sind gebridgte Assets strukturell anders als native Assets. USDC auf Polygon ist nicht "USDC" — es ist "USDC.e" oder "Native USDC via CCTP", und jede Variante hat ein unterschiedliches Bridge-Risiko-Profil. WETH auf Arbitrum ist vom Arbitrum-Bridge-Mechanismus abhängig, nicht nur vom Ethereum-Layer-1-WETH.
+
+Der praktische Implikation: Wenn du Positionen auf mehreren Chains hast, musst du für jede Position verstehen, welches Bridge-Mechanismus das zugrunde liegende Asset verankert. Eine Position in "USDC auf Polygon" ist in Wirklichkeit:
+- Eine Position in USDC-Smart-Contracts auf Polygon, plus
+- Eine Dependency auf den Polygon-Bridge-Mechanismus, plus
+- Eine Dependency auf USDC's eigene Peg-Stabilität.
+
+Wenn der Polygon-Bridge-Mechanismus kompromittiert wird (wie es in der Geschichte bei Polygon PoS einmalig vorkam, wenn auch mit Recovery), verliert USDC auf Polygon unmittelbar seine Verbindung zum Mainnet-USDC.
+
+Die praktische Bridge-Dependency-Analyse:
+
+1. Welche Assets hältst du auf welchen nicht-Mainnet-Chains?
+2. Welches ist der zugrunde liegende Bridge-Mechanismus? (Nativer Canonical Bridge, ein Drittanbieter wie Stargate/LayerZero, eine proprietäre Bridge?)
+3. Wie groß ist das aggregate Bridge-abhängige Exposure als Prozentsatz des Gesamtportfolios?
+
+**Dependency-Graph-Mapping**
+
+Die Synthese aller vier Dependency-Klassen ist das Dependency-Graph-Mapping — eine visuelle Darstellung aller Positionen und ihrer gemeinsamen Abhängigkeiten. Das Ziel ist, versteckte Konzentrationen sichtbar zu machen.
+
+Praktische Vorgehensweise:
+
+1. Liste alle deine aktuellen Positionen auf (z. B. 8–12 Positionen für ein typisches DeFi-Portfolio).
+2. Für jede Position, identifiziere alle zugrunde liegenden Abhängigkeiten: Oracles, Stablecoins, LSTs, Bridges, grundlegende Smart-Contract-Plattformen (Aave, Compound, Curve, Uniswap, etc.).
+3. Zeichne (physisch auf Papier oder digital) einen Graphen: Positionen als Knoten auf einer Seite, Abhängigkeiten als Knoten auf der anderen Seite, Verbindungslinien wo eine Position eine Abhängigkeit hat.
+4. Identifiziere die Abhängigkeits-Knoten mit den meisten Verbindungen — diese sind deine größten konzentrieren Risiken.
+5. Für die drei größten konzentrieren Risiken, formuliere konkrete Stress-Test-Szenarien: "Was passiert, wenn [Abhängigkeit] für 48 Stunden ausfällt?"
+
+Ein typisches Ergebnis dieses Mappings für einen durchschnittlichen DeFi-Investor: Chainlink erscheint in 60–80 % aller Positionen. USDC erscheint in 50–70 %. Ein LST (typischerweise stETH) erscheint in 30–50 %. Das ist die strukturelle Realität von DeFi heute — und sie ist größtenteils unsichtbar, wenn du nur auf Protokoll-Ebene denkst.
+
+Die Schlussfolgerung: Echte Diversifikation in DeFi erfordert Dependency-Diversifikation, nicht nur Protokoll-Diversifikation. Ein Portfolio mit fünf Positionen, die alle Chainlink, USDC und stETH als Abhängigkeiten teilen, ist weniger diversifiziert als ein Portfolio mit drei Positionen, die jeweils unterschiedliche Oracle-Mechanismen, Stablecoin-Basis und Collateral-Arten nutzen.
+
+Die Meta-Lehre dieser Lektion: Die gefährlichsten Risiken in DeFi sind oft die, die du nicht siehst. Vertikale Composability ist offensichtlich — du hast sie aktiv aufgebaut. Horizontale Composability ist oft unsichtbar, weil sie aus der Infrastruktur-Struktur resultiert, nicht aus deinen aktiven Entscheidungen. Das Dependency-Graph-Mapping ist das Werkzeug, das diese unsichtbaren Risiken sichtbar macht — und es ist eine Übung, die jeder ernsthafte DeFi-Investor mindestens einmal im Quartal durchführen sollte.
+
+## Folien-Zusammenfassung
+
+**Slide 1: Horizontale vs. vertikale Composability**
+- Vertikal: Bewusstes Stapeln (ETH → stETH → Aave → Curve) — offensichtlich
+- Horizontal: Gemeinsame Abhängigkeiten über scheinbar unabhängige Positionen — unsichtbar
+- Beispiel scheinbar diversifiziertes Portfolio: 4 Protokolle, aber alle nutzen Chainlink + USDC-Komponente
+- Echte Diversifikation = Dependency-Diversifikation, nicht Protokoll-Diversifikation
+
+**Slide 2: Oracle-Dependencies**
+- Chainlink: 60–70 % der DeFi-Lending-TVL abhängig; ausgezeichneter Track Record, aber Konzentrations-Risiko
+- Uniswap V3 TWAPs: Theoretisch manipulationssicher, in Praxis Exploits bei thin-liquidity Pools (Mango Markets 2022, ~117 Mio USD verloren)
+- Custom Oracles: Fast immer riskantester Mechanismus
+- Pro Position prüfen: Welcher Oracle, welches Update-Fenster, welche Pool-Liquidität
+
+**Slide 3: LST-Collateral-Strukturen**
+- stETH ist zu Spitzenzeiten > 2 Mrd USD als Collateral allein bei Aave gelockt
+- Juni 2022: stETH/ETH fiel auf 0,94 — Leverage-Liquidationen, Peg-Stress, Near-Death-Spiral
+- stETH-Peg-Shift betrifft gleichzeitig: Aave, Morpho, Spark, Compound, plus alle Stacks mit stETH
+- Frage: Wie hoch ist dein aggregates LST-Exposure über alle Positionen summiert?
+
+**Slide 4: Stablecoin-Dependencies**
+- USDC März 2023: Depeg auf 0,87 über ein Wochenende; alle Curve-USDC-Pools arbitrierbar; DAI mitgezogen
+- USDT Oktober 2022: kurzer Depeg auf 0,95
+- UST Mai 2022: totaler Kollaps auf nahe null; 2. Ordnungs-Effekte durchs ganze Ökosystem
+- Konzentrations-Test: > 40–50 % des Stablecoin-Exposures in einem einzelnen Asset?
+
+**Slide 5: Bridge-Dependencies**
+- Asset auf nicht-Mainnet-Chain = native Asset + Bridge-Mechanismus + Peg-Stabilität
+- USDC auf Polygon ist nicht USDC — es ist USDC.e oder Native USDC via CCTP, je nach Bridge
+- Bridge-Kompromiss = Asset-Verlust unabhängig vom Protokoll-Zustand
+- Praktisch: Welcher Bridge-Mechanismus? Wie hoch ist aggregates Bridge-abhängiges Exposure?
+
+**Slide 6: Dependency-Graph-Mapping als Werkzeug**
+- Positionen auf einer Seite, Abhängigkeiten auf anderer; Verbindungslinien zeigen Konzentrationen
+- Typisches Ergebnis: Chainlink 60–80 % Verbindungen, USDC 50–70 %, stETH 30–50 %
+- Quartalsweise wiederholen als Routine
+- Für Top-3-Konzentrationen: konkrete Stress-Test-Szenarien durchdenken
+
+## Sprechertext
+
+In der letzten Lektion hast du die vertikale Composability verstanden — das bewusste Stapeln. Vertikale Risiken sind offensichtlich, weil du sie aktiv aufgebaut hast. Horizontale Composability ist das, was wir heute besprechen, und sie ist in mancher Hinsicht gefährlicher — weil sie meist unsichtbar ist.
+
+Lass mich das mit einem Beispiel konkretisieren. Stell dir vor, du denkst, dein Portfolio ist diversifiziert. Du hältst stETH bei Aave. Du hältst USDC bei Compound. Du hast eine Position im Curve 3pool. Du hast etwas ETH auf Arbitrum in einer Pendle-Fixed-Yield-Strategie. Vier Protokolle, zwei Blockchains, verschiedene Asset-Typen. Klassische Diversifikation, richtig? Nicht wirklich. Wenn du jetzt die Dependency-Struktur kartographierst, bemerkst du etwas Unbequemes. Alle vier Positionen verwenden Chainlink-Oracles für Preisfeeds. Drei der vier haben USDC als zugrunde liegendes oder als Komponenten-Asset. Die Arbitrum-Position ist zusätzlich vom Arbitrum-Bridge-Mechanismus abhängig. Das ist nicht Diversifikation — das ist scheinbare Diversifikation. Die strukturellen Abhängigkeiten sind konzentriert, auch wenn die Protokoll-Oberfläche es nicht so aussehen lässt.
+
+Wir gehen heute die vier wichtigsten Dependency-Klassen durch. Erste Klasse: Oracles. Etwa 60 bis 70 Prozent der gesamten Lending-TVL in DeFi ist abhängig von Chainlink-Preisfeeds. Das ist eine beeindruckende Zahl, und sie bedeutet: Wenn Chainlink einen kritischen Exploit erleidet, fallen Aave, Compound, Morpho, Maker, und dutzende andere Protokolle gleichzeitig aus. Nicht korreliert. Gleichzeitig. Chainlink hat bisher einen ausgezeichneten Track Record — über fünf Jahre ohne kritischen Exploit. Aber die potentielle Auswirkung eines Ausfalls ist so groß, dass du diese Abhängigkeit explizit modellieren solltest. Alternative Oracle-Mechanismen existieren. Uniswap V3 TWAPs sind in der Theorie manipulationssicher, aber mehrere Protokolle, die auf diese TWAPs vertrauten, haben Exploits erlitten — der Mango Markets Exploit im Oktober 2022, mit etwa 117 Millionen USD Verlust, war ein klassisches Beispiel. Custom Oracles sind fast immer das riskanteste Setup.
+
+Zweite Klasse: LST-Collateral-Strukturen. Liquid Staking Tokens — stETH, rETH, cbETH — werden massiv als Collateral in Lending-Protokollen verwendet. Zu Spitzenzeiten waren allein stETH über 2 Milliarden USD als Collateral bei Aave gelockt. Im Juni 2022 erlebten wir eine Probe dieses Szenarios. Als Celsius zusammenbrach, fiel stETH gegen ETH auf 0,94 — ein 6-Prozent-Depeg. Dies triggerte massive Liquidationen aller Leverage-Loops und führte fast zu einem Death-Spiral. Der Grund, warum es nicht schlimmer wurde, ist, dass Ethereum-Withdrawals damals technisch noch nicht möglich waren. In einem zukünftigen ähnlichen Szenario könnte die Dynamik anders sein. Die praktische Frage: Wie hoch ist dein aggregates LST-Exposure über alle deine Positionen summiert? Wenn du alles zusammenzählst, was von einem stETH-Peg-Shift betroffen wäre, und das Ergebnis ist über 30 oder 40 Prozent deines Portfolios, dann hast du eine versteckte Konzentration, die du entweder bewusst akzeptieren oder aktiv reduzieren solltest.
+
+Dritte Klasse: Stablecoin-Dependencies. Die Top 3 Stablecoins — USDC, USDT, DAI — haben zusammen über 80 Prozent der Stablecoin-TVL. Und sie sind in unterschiedlichem Ausmaß verkettet. DAI hat signifikante USDC-Reserven. Als USDC im März 2023 auf 0,87 fiel, wurde DAI praktisch parallel mitgezogen. Das USDC-Depeg-Event war das prägendste Stablecoin-Event der letzten Jahre. Es dauerte ein Wochenende, der Depeg erreichte 13 Prozent auf dem Tief, und alle Curve-Pools mit USDC waren temporär arbitrierbar. Lending-Positionen mit USDC-Collateral hatten kurzzeitig Liquidations-Risiken. Die Frage, die du dir stellen musst: Wie würde mein Portfolio sich in einem USDC-Depeg-Szenario von 0,90 über 48 Stunden verhalten? Wenn du diese Frage nicht konkret beantworten kannst, dann ist das eine Lücke in deiner Analyse.
+
+Vierte Klasse: Bridge-Dependencies. Wenn du Assets auf nicht-Mainnet-Chains hältst, hängt die Sicherheit dieser Assets nicht nur vom Asset und vom Protokoll ab, sondern auch vom Bridge-Mechanismus. USDC auf Polygon ist nicht USDC — es ist USDC.e oder Native USDC via CCTP, je nach Bridge-Route. Ein Bridge-Kompromiss führt zu Asset-Verlust unabhängig vom Protokoll-Zustand. Die Historie der Bridge-Exploits — Ronin mit 625 Millionen USD, Wormhole mit 326 Millionen, Nomad mit 190 Millionen — zeigt, dass Bridge-Ausfälle real und wiederkehrend sind. Die praktische Frage: Welchen Anteil deines Portfolios ist auf nicht-Mainnet-Chains, und welchen Bridge-Mechanismen sind diese Positionen exponiert?
+
+Die Synthese all dieser Dependency-Klassen ist das Dependency-Graph-Mapping. Du nimmst alle deine aktuellen Positionen — typischerweise 8 bis 12 für ein durchschnittliches DeFi-Portfolio — und für jede Position identifizierst du alle zugrunde liegenden Abhängigkeiten. Dann zeichnest du einen Graphen: Positionen auf einer Seite, Abhängigkeiten auf der anderen Seite, Verbindungslinien dort, wo eine Position eine Abhängigkeit hat. Die Abhängigkeits-Knoten mit den meisten Verbindungen sind deine größten konzentrieren Risiken. Ein typisches Ergebnis: Chainlink hat 60 bis 80 Prozent aller Verbindungen, USDC 50 bis 70 Prozent, ein LST 30 bis 50 Prozent. Das ist die strukturelle Realität von DeFi heute. Echte Diversifikation erfordert, diese strukturellen Konzentrationen zu erkennen und bewusst zu managen — nicht nur Protokolle auf einer Oberflächen-Ebene zu diversifizieren.
+
+## Visuelle Vorschläge
+
+**Visual 1: Scheinbare vs. tatsächliche Diversifikation**
+Split-Screen-Vergleich. Links: Vier Protokoll-Logos mit Pfeilen zu "Diversifiziertes Portfolio"-Label. Rechts: Gleiche vier Protokolle, aber jedes ist durch Pfeile mit den gleichen drei Dependency-Knoten (Chainlink, USDC, Arbitrum-Bridge) verbunden. Caption darunter: "Protokoll-Diversifikation ≠ Dependency-Diversifikation."
+
+**Visual 2: Chainlink-Dominanz in DeFi-Lending**
+Tortendiagramm der Oracle-Marktanteile in DeFi-Lending. Chainlink: 65 % (großes Segment). Uniswap V3 TWAPs: 15 %. Custom Oracles: 12 %. Sonstige: 8 %. Darunter eine Zahl: "Bei Chainlink-Kompromiss: ~65 % der Lending-TVL simultan betroffen."
+
+**Visual 3: stETH-Depeg-Event 2022 als Zeitreihe**
+Liniengrafik des stETH/ETH-Kurses von Mai bis Juli 2022. Y-Achse von 0,93 bis 1,00. Deutlich markiert: Der Dip auf 0,94 Anfang Juni. Annotation: "Celsius-Kollaps triggert Sell-Pressure." Zweite Annotation zeigt Liquidations-Volumen auf Aave: "Peak Liquidations ~$500M in 48h."
+
+**Visual 4: USDC-Depeg März 2023**
+Ähnliche Liniengrafik, aber für USDC/USD im März 2023. Y-Achse von 0,85 bis 1,01. Scharfer Dip auf 0,87 am Samstag, Erholung bis Montag. Annotation: "Silicon Valley Bank-Krise; USDC-Reserven dort exponiert." Zweite Linie zeigt DAI/USD mit parallelem, aber abgeschwächtem Dip auf 0,897. Caption: "DAI-Reserven in USDC führen zu korreliertem Depeg."
+
+**Visual 5: Beispiel-Dependency-Graph**
+Networkdiagramm mit acht Positionen auf der linken Seite (je als Kreis) und fünf Abhängigkeiten auf der rechten Seite (je als Kreis). Verbindungslinien zwischen Positionen und ihren Abhängigkeiten. Dickere Linien für Abhängigkeiten mit mehr Verbindungen. Legende rechts: "Abhängigkeit mit 5+ Verbindungen = Konzentrations-Risiko." In diesem Beispiel: Chainlink hat 7 Verbindungen, USDC hat 6, stETH hat 4, Ethereum-L1 hat 8 (ganz rechts, kleiner markiert als "implizite Basis-Abhängigkeit").
+
+## Übung
+
+**Aufgabe: Dependency-Graph-Mapping deines Portfolios**
+
+Diese Übung ist eine strukturierte Durchführung des Dependency-Graph-Mapping-Prozesses auf dein aktuelles oder geplantes Portfolio. Rechne mit einer Investition von 60–90 Minuten.
+
+**Teil 1: Positions-Inventur**
+
+Liste jede deiner aktuellen (oder geplanten) DeFi-Positionen auf. Für jede Position dokumentiere:
+
+- Position-Name und Strategie (z. B. "USDC-Lending auf Compound", "stETH-Aave-Collateral", "Curve 3pool LP")
+- USD-Wert der Position
+- Protokoll(e) involviert
+
+**Teil 2: Abhängigkeits-Mapping**
+
+Für jede Position identifiziere systematisch:
+
+**a) Oracle-Abhängigkeiten:**
+- Welcher Oracle-Mechanismus? (Chainlink / Uniswap TWAP / Custom / Andere)
+- Falls Chainlink: Welche spezifischen Feeds? (ETH/USD, stETH/ETH, etc.)
+- Falls DEX-Oracle: Welcher Pool, welches Zeitfenster, welche Pool-Liquidität?
+
+**b) Stablecoin-Abhängigkeiten:**
+- Welche Stablecoins sind in dieser Position involviert (direkt oder als Komponente)?
+- Welcher Anteil der Position-Größe ist Stablecoin-exponiert?
+
+**c) LST-Abhängigkeiten:**
+- Welche LSTs sind in dieser Position involviert?
+- Welcher Anteil der Position-Größe ist LST-exponiert?
+
+**d) Bridge-Abhängigkeiten:**
+- Auf welcher Chain ist die Position? (Mainnet / Arbitrum / Optimism / Base / Polygon / etc.)
+- Falls nicht-Mainnet: Welcher Bridge-Mechanismus ist für die zugrunde liegenden Assets verantwortlich?
+
+**e) Zugrunde liegende Protokoll-Abhängigkeiten:**
+- Welche anderen Protokolle sind strukturell involviert? (z. B. für eine Convex-Position: sowohl Convex als auch Curve als auch alle im Pool enthaltenen Stablecoins)
+
+**Teil 3: Aggregations-Berechnung**
+
+Erstelle eine Zusammenfassungs-Tabelle. Spalten: Abhängigkeit (Chainlink, USDC, USDT, DAI, stETH, rETH, [Bridge X], etc.). Zeilen: Deine Positionen. Zelle: "Ja/Nein" oder USD-Exposure-Anteil, wenn die Position von dieser Abhängigkeit betroffen wäre.
+
+Am Ende jeder Spalte, berechne:
+- Anzahl Positionen, die diese Abhängigkeit teilen
+- Aggregates USD-Exposure, das betroffen wäre
+- Prozentsatz des Gesamt-DeFi-Portfolios
+
+**Teil 4: Konzentrations-Analyse**
+
+Identifiziere die drei Abhängigkeiten mit dem höchsten aggregaten Exposure. Für jede dieser:
+
+**Frage 1: Ist dieses Konzentrations-Niveau ein bewusstes Risiko-Bekenntnis oder das Ergebnis von Bequemlichkeit/Trägheit?**
+
+**Frage 2: Konstruiere ein konkretes Stress-Szenario** — "Was passiert mit meinem Portfolio, wenn [Abhängigkeit X] für 48 Stunden ausfällt oder um 10 Prozent depegged?" Rechne konkrete Zahlen durch: Welche Positionen werden direkt getroffen, welche indirekt, welcher geschätzte USD-Verlust?
+
+**Frage 3: Welche konkrete Gegenmaßnahme könntest du heute ergreifen?** Beispiele:
+- Reduziere USDC-Anteil im Stablecoin-Bucket von 80 % auf 50 % durch Umschichtung in USDT und DAI.
+- Exitiere eine der stETH-exponierten Positionen, um aggregates LST-Exposure unter 30 % zu bringen.
+- Reduziere nicht-Mainnet-Exposure von 40 % auf 20 % durch Rückführung aggressiver Arbitrum-Positionen.
+
+**Zeitinvestition**: 60–90 Minuten für das erste Mal; bei Wiederholung quartalsweise etwa 30 Minuten.
+
+**Ziel**: Eine konkrete Risiko-Anpassungs-To-Do-Liste für die folgenden 2–4 Wochen, basierend auf den aggregaten Dependency-Konzentrationen, nicht auf Protokoll-Oberfläche.
+
+## Quiz
+
+**Frage 1:** Ein neues DEX-Protokoll wirbt damit, "komplett unabhängig von Chainlink" zu sein, weil es statt Chainlink-Feeds die Preise aus seinen eigenen Liquiditäts-Pools als Oracle-Grundlage verwendet (Uniswap V3-artiger TWAP). Das Marketing präsentiert das als Sicherheitsvorteil. Ist diese Argumentation gerechtfertigt? Unter welchen spezifischen Bedingungen ist ein TWAP-Oracle sicherer als Chainlink, und unter welchen Bedingungen ist er deutlich riskanter?
+
+<details><summary>Antwort anzeigen</summary>
+
+Die Marketing-Argumentation ist stark vereinfacht und kann irreführend sein. TWAP-Oracles aus eigenen Pools haben spezifische Sicherheits-Eigenschaften, die je nach Kontext eine Stärke oder eine schwerwiegende Schwäche sind.
+
+**Wann TWAP-Oracles sicherer sind als Chainlink:**
+
+- Für sehr stabile, hochliquide Asset-Paare (ETH/USDC-Pools mit 500+ Mio USD Liquidität), wo die Manipulations-Kosten für einen mehrstündigen TWAP-Zeitraum prohibitiv hoch sind.
+- Als zusätzliche Sicherheit in einem Dual-Oracle-System, wo sowohl Chainlink als auch TWAP als unabhängige Quellen verwendet werden und nur übereinstimmende Preise akzeptiert werden.
+- Wenn die Manipulation eines TWAP bedeuten würde, den Pool selbst mit großen Kapitalmengen zu bewegen — in diesem Fall ist die Manipulations-Ökonomie ungünstig für den Angreifer.
+
+**Wann TWAP-Oracles deutlich riskanter sind:**
+
+- **Thin Liquidity**: Wenn der zugrunde liegende Pool nur 5–50 Mio USD Liquidität hat, kann ein Angreifer mit mäßigem Kapital den Preis temporär manipulieren und damit den Oracle verzerren. Dies ist genau der Mechanismus des Mango Markets Exploits im Oktober 2022 — etwa 117 Mio USD wurden gestohlen, indem der Angreifer den thinly-traded MNGO-Token-Preis manipulierte, was die TWAP-basierten Collateral-Werte im Protokoll verzerrte und massive Borrows erlaubte.
+- **Kurze TWAP-Fenster**: Ein TWAP über 5 Minuten ist deutlich leichter zu manipulieren als ein TWAP über 30 Minuten oder 1 Stunde. Protokolle, die kurze Zeitfenster verwenden, um "Preis-Aktualität" zu gewährleisten, opfern dabei Manipulations-Resistenz.
+- **Strategische Abhängigkeit vom eigenen Pool**: Wenn der Oracle des Protokolls nur einen Pool als Quelle verwendet und dieser Pool gleichzeitig das wichtigste Handelsvolumen des Protokolls ist, entsteht eine zirkuläre Dependency. Ein Angriff auf den Pool wirkt direkt auf die Sicherheits-Mechanik des Protokolls.
+- **Keine Fallback-Mechanismen**: Chainlink hat mehrere Node-Operatoren, Heartbeat-Updates und Deviation-Triggers. Ein einzelner TWAP ohne Fallback ist ein Single Point of Failure im engsten Sinne.
+
+**Konkrete Kriterien für die Bewertung eines TWAP-Oracle-Protokolls:**
+
+1. **Pool-Liquidität**: Mindestens 100 Mio USD aktiver Liquidität im Oracle-Pool; bei 500+ Mio deutlich sicherer.
+2. **TWAP-Fenster**: Mindestens 30 Minuten; bei kritischen Anwendungen 1+ Stunden.
+3. **Redundanz**: Mehrere unabhängige Pools als Quellen, oder Kombination mit externen Oracles.
+4. **Track Record des Pool-Protokolls**: Der zugrunde liegende Pool (typisch Uniswap V3) muss selbst etabliert sein.
+
+**Praktische Bewertung des hypothetischen Protokolls:**
+
+Wenn das "neue DEX-Protokoll" klein ist (Pool-Liquidität unter 50 Mio USD), ist die Behauptung "unabhängig von Chainlink" tatsächlich ein signifikantes Risiko-Zeichen, nicht ein Sicherheitsvorteil. Die Argumentation würde nur dann überzeugen, wenn das Protokoll die obigen vier Kriterien erfüllt. Die meisten neuen Protokolle, die mit "Chainlink-Unabhängigkeit" werben, tun dies nicht aus strukturellen Sicherheits-Gründen, sondern um Kosten der Chainlink-Integration zu vermeiden — was ökonomisch verständlich, aber aus Sicherheits-Perspektive ein Red Flag ist.
+
+Die Meta-Lehre: "Unabhängigkeit von Chainlink" ist weder automatisch ein Vorteil noch automatisch ein Nachteil. Es ist ein Attribut, das in einem konkreten Kontext bewertet werden muss. Und Marketing, das strukturelle Entscheidungen als einseitig positiv darstellt, ist fast immer ein Hinweis auf fehlende Nuance im Team oder auf absichtliche Irreführung.
+
+</details>
+
+**Frage 2:** Du hast folgendes Portfolio (100.000 USD total, 80.000 USD davon in DeFi):
+- 20.000 USDC bei Compound auf Arbitrum
+- 15.000 in Curve USDC/USDT/DAI 3pool LP
+- 18.000 stETH als Collateral bei Aave V3 Mainnet, mit 8.000 USDC geliehen
+- 12.000 WETH bei Morpho auf Mainnet als Supply
+- 15.000 in einem Pendle-Fixed-Yield auf USDC (Mainnet)
+
+Erstelle das Dependency-Graph-Mapping dieser Positionen. Identifiziere die drei größten konzentrieren Abhängigkeiten mit konkretem USD-Exposure. Was wäre eine konkrete Umstrukturierungs-Empfehlung?
+
+<details><summary>Antwort anzeigen</summary>
+
+**Dependency-Graph-Mapping:**
+
+Für jede Position identifizieren wir systematisch die Abhängigkeiten.
+
+**Position 1: 20.000 USDC bei Compound auf Arbitrum**
+- Oracle: Chainlink USDC/USD
+- Stablecoin: USDC (100 % des Positions-Wertes)
+- Bridge: Arbitrum-Bridge für USDC (Native USDC via CCTP oder USDC.e je nach konkreter Variante; nehmen wir Native USDC an)
+- Protokoll: Compound, Arbitrum-Layer
+
+**Position 2: 15.000 in Curve USDC/USDT/DAI 3pool LP (Mainnet)**
+- Oracle: typischerweise keine externen Oracle für Curve-AMM-Operationen, aber Curve-LP-Pools nutzen interne Preise und sind bei Depeg-Events ungleichgewichtig
+- Stablecoins: USDC (~33 %), USDT (~33 %), DAI (~33 %) — also ~5.000 USD pro Stablecoin
+- Bridge: Mainnet, keine Bridge-Abhängigkeit
+- Protokoll: Curve
+
+**Position 3: 18.000 stETH als Collateral bei Aave V3 Mainnet, -8.000 USDC geliehen**
+- Oracle: Chainlink stETH/ETH und USDC/USD
+- Stablecoin: 8.000 USDC als Debt (Short-Exposure, aber eine USDC-Depeg-Abwärtsbewegung würde die Debt tatsächlich reduzieren)
+- LST: 18.000 stETH (100 %)
+- Bridge: keine (Mainnet)
+- Protokoll: Aave, Lido (für stETH)
+
+**Position 4: 12.000 WETH bei Morpho auf Mainnet (Supply)**
+- Oracle: Chainlink ETH/USD
+- Stablecoin: keine
+- LST: keine (reines WETH)
+- Bridge: keine
+- Protokoll: Morpho, eventuell Underlying Aave/Compound je nach Morpho-Markt
+
+**Position 5: 15.000 in Pendle-Fixed-Yield auf USDC (Mainnet)**
+- Oracle: Chainlink USDC/USD; plus Pendle's eigene internen Yield-Token-Mechanik
+- Stablecoin: USDC (100 %)
+- LST: keine
+- Bridge: keine
+- Protokoll: Pendle
+
+**Aggregations-Tabelle:**
+
+| Abhängigkeit | Betroffene Positionen | Aggregates Exposure | % von 80.000 DeFi |
+|---|---|---|---|
+| Chainlink | Alle 5 Positionen | 80.000 (indirekt alle) | 100 % |
+| USDC | Pos 1, Pos 2 (33 %), Pos 3 (Debt), Pos 5 | 20.000 + 5.000 + 15.000 = 40.000 long USDC + 8.000 short (Debt) | ~50 % long + 10 % short |
+| stETH / Lido | Pos 3 (18.000) | 18.000 | 22,5 % |
+| USDT | Pos 2 (33 %) | 5.000 | 6,25 % |
+| DAI | Pos 2 (33 %) | 5.000 | 6,25 % |
+| Arbitrum-Bridge | Pos 1 (20.000) | 20.000 | 25 % |
+| WETH/ETH-Preis | Pos 3 (Collateral), Pos 4 | 30.000 | 37,5 % |
+
+**Die drei größten konzentrieren Abhängigkeiten:**
+
+**1. Chainlink (100 % des DeFi-Portfolios exponiert)**
+- Jede einzelne Position ist in irgendeiner Form von Chainlink-Preisfeeds abhängig. Ein kritischer Chainlink-Ausfall würde alle fünf Positionen simultan destabilisieren.
+- Risiko-Einschätzung: Chainlink hat exzellenten Track Record, aber 100 % Exposure ist extrem. Sollte als bewusstes Bekenntnis zu Chainlink verstanden werden, nicht als Diversifikation.
+
+**2. USDC (50 % long Exposure)**
+- 40.000 USD direkt in USDC-denominierten Positionen, plus 8.000 USD Short-USDC durch den Aave-Borrow (was das Netto-Exposure auf ~32.000 reduziert).
+- Im März-2023-USDC-Depeg-Szenario von 13 % auf 0,87: direkter Verlust ~5.200 USD auf das Long-Exposure, plus +1.040 USD Gewinn auf die Short-Position. Netto ~-4.160 USD oder ~-5,2 % des DeFi-Portfolios.
+- Plus indirekte Effekte: Curve 3pool würde stark ungleichgewichtig werden, Impermanent Loss für die LP-Position, temporäre Liquidity-Issues.
+
+**3. Arbitrum-Bridge (25 % des DeFi-Portfolios)**
+- 20.000 USD auf Arbitrum ist eine signifikante Konzentration auf eine einzelne Bridge-Infrastruktur.
+- Bei einem Arbitrum-Bridge-Exploit könnten diese 20.000 USD eingefroren oder verloren werden — unabhängig von Compound's eigener Sicherheit.
+- Arbitrum-Bridge hat bisher exzellenten Track Record, aber 25 % Konzentration ist bemerkenswert.
+
+**Umstrukturierungs-Empfehlung:**
+
+1. **USDC-Konzentration reduzieren:** Von 40.000 USDC-Long auf etwa 25.000 reduzieren. Umschichtung: Pendle-Position (15.000) von USDC-basiert auf ETH-basiert oder mixed wechseln, ODER 10.000 von Compound/Arbitrum in DAI bei Compound wandeln.
+
+2. **Arbitrum-Konzentration reduzieren:** Von 25 % auf etwa 10–15 %. Die Compound-Arbitrum-Position von 20.000 auf 10.000 halbieren; die anderen 10.000 auf Mainnet in einer ähnlichen USDC-Lending-Position (Aave, Compound Mainnet) halten.
+
+3. **Oracle-Diversifikation akzeptieren oder explizit adressieren:** 100 % Chainlink-Dependency ist strukturell schwer zu vermeiden, weil Chainlink dominant ist. Ein pragmatischer Ansatz: Ein Teil des Portfolios (10–20 %) in Positionen halten, die TWAP-basiert sind (hochliquide Uniswap V3 LP-Positionen in etablierten Pools). Das reduziert 100 % Chainlink-Dependency auf etwa 80–85 %.
+
+4. **LST-Exposure stabil:** 22,5 % stETH-Exposure ist in der mittleren Range; akzeptabel, wenn als bewusstes Bekenntnis verstanden.
+
+Nach Umstrukturierung: Chainlink-Dependency ~85 %, USDC-Long ~30 %, Arbitrum ~12 %, LST ~22 %. Keine einzelne Abhängigkeit dominiert so stark, und die Korrelations-Struktur des Portfolios ist gesünder.
+
+Die Meta-Lehre: Das Dependency-Graph-Mapping produziert fast immer unbequeme Ergebnisse. Die meisten DeFi-Portfolios sind strukturell konzentrierter als ihre Besitzer glauben. Die quartalsweise Durchführung dieses Mappings und die aktive Reduktion der Top-Konzentrationen ist eine der stärksten Disziplinen, die ein DeFi-Investor entwickeln kann.
+
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → Horizontale vs. Vertikale Composability → Oracle-Dependencies → LST-Collateral-Struktur → Bridge-Dependencies → Dependency-Graph-Mapping → Protocol-Stack-Risk → Portfolio-Korrelations-Analyse
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 12–14 Min.)
+- `visual_plan.json` — Horizontale-Dependencies-Netzwerk-Diagramm, Chainlink-Oracle-Dependency-Map, LST-Composability-Stack, Bridge-Cascading-Risk-Grafik, Portfolio-Dependency-Graph-Beispiel
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---
