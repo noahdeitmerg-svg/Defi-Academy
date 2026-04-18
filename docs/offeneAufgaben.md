@@ -66,6 +66,30 @@ Content-Vorgabe mehrere Stimmen verlangt.
 auf `generate-voice.js` ausdelegiert, damit es nur einen ElevenLabs-Pfad
 im Repo gibt.
 
+### 🟡 Gemeinsamer Remotion-Bundle-Cache über Chunks
+
+`scripts/render-batch.js` spawnt pro Chunk einen isolierten Renderer-Child.
+Jeder Child führt ein eigenes `@remotion/bundler`-Bundle aus (~15–30 s).
+Bei 100 Lektionen / 10er-Chunks kostet das ~5 Min reine Bundle-Zeit. Fix:
+`render-lesson.js` und `render-batch.js` (im `video-renderer/`) um ein
+`--bundle-cache <path>`-CLI-Flag erweitern, Orchestrator bundelt einmal
+in `.render-batch-tmp/bundle/` und reicht den Pfad an alle Children weiter.
+
+### 🟢 Render-Namenskonvention auflösen (3 Pilots + 1 Batch)
+
+Aktuell gibt es drei Wege zu einem Kurz-Render:
+
+| Kommando | Quelle | Default-Lektionen | Output |
+|---|---|---|---|
+| `npm run pilot-render` | `scripts/pilot-render.js` | 5 **feste** IDs (module01-lesson01, …) | `videos/pilot/` |
+| `npm run render:pilot` | `scripts/render-batch.js --limit 5 --parallel 1` | erste 5 **alphabetisch** aus generator-output | `videos/` |
+| `npm run render:course` | `scripts/render-batch.js --parallel 2` | alle aus generator-output | `videos/` |
+
+Semantisch sinnvoll: pilot-render prüft den **repräsentativen** Querschnitt,
+render:pilot ist der **numerische** Smoke-Test, render:course die
+Vollproduktion. Dokumentation sauber halten; oder später eine der beiden
+Pilot-Varianten deprecaten.
+
 ### 🟡 Gamma-Slides: API-Integration verifizieren
 
 Der Master-Orchestrator spricht `GAMMA_API_URL` (default
@@ -164,6 +188,15 @@ Rename-Brücke fehlt).
 
 ## Erledigt
 
+- ✅ `scripts/render-batch.js` — Top-Level-Batch-Orchestrator mit
+  Chunk-Isolation (Default 10 Lektionen/Chunk), Per-Chunk-Spawn des
+  bestehenden Remotion-Renderers (`video-renderer/.../render-batch.js`),
+  Preflight für `voice.mp3`+`visual_plan.json`+`video_config.json`,
+  Idempotenz (`--force` zum Neurendern), live Progress-Log
+  (`Rendering <id>` / `Completed X / Y`), Error-Persistenz in
+  `logs/render-errors.log` (append). `npm run render:pilot`
+  (`--limit 5 --parallel 1`) und `npm run render:course` (`--parallel 2`)
+  als Convenience-Scripts.
 - ✅ `scripts/generate-voice.js` — ElevenLabs-TTS-Runner mit Voice-Name-
   Resolving (`/v1/voices`), Retry/Backoff, `--concurrency`-Batching,
   `--force`, `--dry-run`, `--only <csv>`. Integriert in

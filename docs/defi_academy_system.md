@@ -454,6 +454,46 @@ node scripts/render-course.js --skip-render        # nur Assets vorbereiten
 
 Logs: `logs/render-course.log` + `logs/render-course-report.json`.
 
+**Stabilitäts-Variante — Top-Level-Batch `npm run render:course` / `npm run render:pilot`**
+
+Für die echte Vollproduktion (100+ Lektionen) gibt es `scripts/render-batch.js`. Anders als `render-course.js` (das die komplette Pipeline inkl. externer APIs orchestriert) macht dieses Skript **nur das Rendering** — dafür aber maximal **crash-tolerant** durch Chunk-Isolation. Die Lektionsliste wird in Chunks (Default 10) partitioniert, pro Chunk wird ein eigener Node-Child-Prozess mit dem bestehenden Renderer (`video-renderer/.../src/render-batch.js`) gespawnt. Ein OOM oder unhandled Error in Chunk N kostet maximal diesen Chunk — die restlichen Chunks laufen weiter.
+
+Namenskollision: Es gibt zwei Dateien mit dem Namen `render-batch.js`:
+
+- `scripts/render-batch.js` — **Top-Level-Orchestrator** (neu, diese Sektion).
+- `video-renderer/video-renderer/src/render-batch.js` — **Remotion-Engine** (bestehend), rendert Lektionen in-process. Wird vom Top-Level-Skript pro Chunk als Child gestartet.
+
+Pipeline-Schritte:
+
+1. **Preflight je Lektion**: `voice.mp3` (in `assets-input/<id>/`), `visual_plan.json` + `video_config.json` (in `generator-output/<id>/`). Fehlt etwas → Warnung, Lektion wird übersprungen, Eintrag in `logs/render-errors.log`.
+2. **Idempotenz**: Lektionen mit bestehendem `videos/<id>.mp4` werden übersprungen. `--force` erzwingt Neurender.
+3. **Chunk-Bildung**: Default `--chunk-size 10`.
+4. **Pro Chunk**: Spawn des Renderer-Children mit `--parallel N` (Default 2) intra-Chunk-Parallelität. Output in `.render-batch-tmp/`.
+5. **Output-Umzug**: Nach Chunk-Ende werden `videos/<id>.mp4` und `posters/<id>.jpg` aus dem Scratch-Dir an die finalen Plätze verschoben.
+6. **Crash-Recovery**: Bei Chunk-Exit ≠ 0 werden die nicht erzeugten MP4s als Failure markiert, dann weiter mit dem nächsten Chunk.
+7. **Progress**: Live-Parsing der Child-stdout erzeugt am Parent Zeilen wie `Rendering module01-lesson01` und `Completed 17 / 102`.
+8. **Report**: `logs/render-batch-report.json` (Gesamt-Counts, Chunk-Results, Fehlerliste, Preflight-Missings).
+
+```bash
+npm run render:course              # alle Lektionen, --parallel 2, Chunks à 10
+npm run render:pilot               # erste 5 Lektionen, --parallel 1 (numerischer Smoke-Test)
+node scripts/render-batch.js --only module04-lesson02,module06-lesson03
+node scripts/render-batch.js --chunk-size 5 --force
+```
+
+Exit-Code-Semantik: `0`, sobald **mindestens eine** Lektion erfolgreich gerendert wurde; `1` nur wenn nichts produziert werden konnte (z. B. Generator-Output fehlt komplett oder alle Preflights blockieren). Per-Lektions-Fehler führen **nicht** zu Exit 1 — der Batch ist per Design fehlertolerant.
+
+Abgrenzung zu den drei anderen Render-Einstiegspunkten:
+
+| Kommando | Rolle | Output |
+|---|---|---|
+| `npm run pilot-render` | Semantischer Pilot (5 feste IDs, volle Pipeline inkl. Voice-Gen) | `videos/pilot/` |
+| `npm run render:pilot` | Numerischer Smoke-Test (erste 5 aus generator-output, nur Render) | `videos/` |
+| `npm run render:course` | Vollproduktion, nur Render (externe Assets müssen fertig sein) | `videos/` |
+| `npm run render-course` | Vollproduktion, **orchestriert externe APIs** (Gamma/ElevenLabs/Visuals) und ruft dann intern den Renderer | `videos/` |
+
+Typischer 100+-Lesson-Workflow: einmal `npm run render-course` für Asset-Vorbereitung laufen lassen, dann `npm run render:course` für das stabile, wiederholbare Rendering mit Crash-Isolation.
+
 Externe APIs via Env:
 
 | Variable | Wirkung |
@@ -570,6 +610,7 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 -   ✅ Pre-Render-Validator (`scripts/validate-lessons.js` + `npm run validate-lessons`, 6 Checks, Exit 1 = Render-Stop)
 -   ✅ Master-Orchestrator `scripts/render-course.js` + `npm run render-course` (Validate → Generate → Slides → Voice → Visuals → Render, Logs in `logs/render-course.log`, Report in `logs/render-course-report.json`, Per-Lesson-Fehler-Tolerance)
 -   ✅ Pilot-Renderer `scripts/pilot-render.js` + `npm run pilot-render` (5 Default-Lektionen, Override via `--lessons`, Output in `videos/pilot/` + `posters/pilot/`, `--parallel 1`, Voice-Missing-Skip mit `--allow-missing-voice`-Override)
+-   ✅ Top-Level-Batch `scripts/render-batch.js` + `npm run render:course` / `npm run render:pilot` (Chunk-isolation: Default 10 Lektionen/Chunk werden pro Child-Prozess gerendert, OOM/Crash in Chunk N reißt restliche Chunks nicht mit, Preflight für `voice.mp3`+`visual_plan.json`+`video_config.json`, Idempotenz mit `--force`-Override, live Progress `Rendering <id>` / `Completed X / Y`, Fehler-Persistenz in `logs/render-errors.log`, Report in `logs/render-batch-report.json`)
 -   ✅ ElevenLabs Voice-Generator `scripts/generate-voice.js` + `npm run generate:voice` (Voice-Name-Resolving via `/v1/voices`, Retry/Backoff, Batching via `--concurrency`, Integration in `pilot-render` als Schritt 2b; Env: `ELEVENLABS_API_KEY`, `ELEVENLABS_MODEL=eleven_turbo_v2`, `ELEVENLABS_VOICE=Florian`, optional `ELEVENLABS_VOICE_ID` / `ELEVENLABS_STABILITY` / `ELEVENLABS_SIMILARITY`)
 -   ✅ `.env.example` als Vorlage für API-Keys (`.env` bleibt gitignored)
 -   🚧 Rename-Brücke Renderer-Output → Plattform-Konvention (Phase 5.4)

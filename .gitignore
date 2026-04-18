@@ -41,6 +41,7 @@ yarn-error.log*
 /videos/
 /posters/
 /.pilot-render-tmp/
+/.render-batch-tmp/
 # Renderer-Bundle-Cache + Remotion-Output
 /video-renderer/**/public/assets/
 /video-renderer/**/output/
