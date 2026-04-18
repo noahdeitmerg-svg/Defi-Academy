@@ -24,13 +24,14 @@
  *        }
  *      Hat Vorrang vor allem Anderen.
  *
- *   2. Default-Mapping: `moduleNN-lessonMM` → `module<N>-lesson<M>`,
- *      d.h. fuehrende Nullen werden entfernt. `module01-lesson01`
- *      wird zu `module1-lesson1`.
+ *   2. Default-Mapping: `moduleNN-lessonMM` → `module<M>-<M>-<MM>`
+ *      (z. B. module01-lesson01 → module1-1-1). Das entspricht
+ *      lib/lessonAssets.buildLessonAssetBase(moduleSlug, lessonSlug)
+ *      mit Content-Dateien `content/modules/moduleM/M-MM.md` (lessonSlug
+ *      = "M-MM", z. B. 1-1).
  *
- * Der Default passt, sobald die Plattform-Content-Struktur ebenfalls
- * auf `lessonN`-Slugs wechselt. Bis dahin ueber die Map
- * `config/video-slug-map.json` patchen.
+ *   Abweichende Dateinamen (z. B. lesson1.md → Slug "lesson1") ueber
+ *   `config/video-slug-map.json` explizit mappen.
  *
  * CLI
  *   node scripts/publish-videos.js
@@ -95,11 +96,13 @@ function loadMap(mapPath) {
 }
 
 function defaultSlug(rendererId) {
-  const m = rendererId.match(/^module(\d{1,2})-lesson(\d{1,2})$/i);
+  const m = rendererId.match(/^module(\d+)-lesson(\d+)$/i);
   if (!m) return rendererId;
   const modN = parseInt(m[1], 10);
   const lesN = parseInt(m[2], 10);
-  return `module${modN}-lesson${lesN}`;
+  // Gleiche Basis wie lib/lessonAssets: `${moduleSlug}-${lessonSlug}`
+  // bei Standard-Lektionsdateien moduleN/N-M.md → lessonSlug "N-M".
+  return `module${modN}-${modN}-${lesN}`;
 }
 
 function collectArtifacts(videosDir, postersDir) {
