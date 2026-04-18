@@ -570,6 +570,8 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 -   ✅ Pre-Render-Validator (`scripts/validate-lessons.js` + `npm run validate-lessons`, 6 Checks, Exit 1 = Render-Stop)
 -   ✅ Master-Orchestrator `scripts/render-course.js` + `npm run render-course` (Validate → Generate → Slides → Voice → Visuals → Render, Logs in `logs/render-course.log`, Report in `logs/render-course-report.json`, Per-Lesson-Fehler-Tolerance)
 -   ✅ Pilot-Renderer `scripts/pilot-render.js` + `npm run pilot-render` (5 Default-Lektionen, Override via `--lessons`, Output in `videos/pilot/` + `posters/pilot/`, `--parallel 1`, Voice-Missing-Skip mit `--allow-missing-voice`-Override)
+-   ✅ ElevenLabs Voice-Generator `scripts/generate-voice.js` + `npm run generate:voice` (Voice-Name-Resolving via `/v1/voices`, Retry/Backoff, Batching via `--concurrency`, Integration in `pilot-render` als Schritt 2b; Env: `ELEVENLABS_API_KEY`, `ELEVENLABS_MODEL=eleven_turbo_v2`, `ELEVENLABS_VOICE=Florian`, optional `ELEVENLABS_VOICE_ID` / `ELEVENLABS_STABILITY` / `ELEVENLABS_SIMILARITY`)
+-   ✅ `.env.example` als Vorlage für API-Keys (`.env` bleibt gitignored)
 -   🚧 Rename-Brücke Renderer-Output → Plattform-Konvention (Phase 5.4)
 -   ⏳ Voice-Produktion für alle Lektionen (ElevenLabs, Phase 5.5)
 -   ⏳ Batch-Render aller Lektionen (Phase 5.6)

@@ -47,18 +47,24 @@ Renderer schreibt `videos/module04-lesson02.mp4`, die Plattform erwartet
 2. Symlink/Alias-Layer in `lib/lessonAssets.ts`, der beide Konventionen
    akzeptiert.
 
-### 🟡 Voice-Produktion: ElevenLabs-Voice-IDs mappen
+### 🟡 Voice-Varianten pro Lektionstyp
 
-Der Master-Orchestrator kann ElevenLabs TTS aufrufen, sobald
-`ELEVENLABS_API_KEY` gesetzt ist. Offen: die **logischen Voice-IDs** aus
-`video_config.audio_track.voice_id` (z. B. `de-male-educational-01`) auf
-reale ElevenLabs-IDs mappen. Aktuell fällt der Orchestrator auf
-`ELEVENLABS_VOICE_ID` aus der Env zurück — das reicht für einen
-Solo-Sprecher, aber nicht für Voice-Varianten pro Lektionstyp.
+Der neue `scripts/generate-voice.js` nutzt eine einzige Voice (`ELEVENLABS_VOICE`,
+default `Florian`) für alle Lektionen und löst den Namen via `/v1/voices` auf
+die reale ID auf. Für differenzierte Stimmen (z. B. weibliche/männliche
+Sprecher nach Modultyp, Intro-Voice vs. Risk-Voice) fehlt eine Mapping-Schicht.
 
-**Plan**: JSON-Map `video-renderer/config/voice-map.json` mit
-`{ "de-male-educational-01": "<real-id>" }` einführen und im
-Orchestrator konsumieren.
+**Plan**: optionales `config/voice-map.json` mit
+`{ "<lessonId>": "<voiceName>" }` oder `{ "risk": "<voiceName>" }`
+basierend auf `video_config.audio_track.voice_id`. Erst nötig, wenn die
+Content-Vorgabe mehrere Stimmen verlangt.
+
+### 🟡 Render-Course-Orchestrator auf generate-voice.js umstellen
+
+`scripts/render-course.js` hat aktuell seinen **eigenen** inline-Voice-Step
+(`stepVoice`). Sauberer wäre, dass render-course genauso wie pilot-render
+auf `generate-voice.js` ausdelegiert, damit es nur einen ElevenLabs-Pfad
+im Repo gibt.
 
 ### 🟡 Gamma-Slides: API-Integration verifizieren
 
@@ -158,6 +164,13 @@ Rename-Brücke fehlt).
 
 ## Erledigt
 
+- ✅ `scripts/generate-voice.js` — ElevenLabs-TTS-Runner mit Voice-Name-
+  Resolving (`/v1/voices`), Retry/Backoff, `--concurrency`-Batching,
+  `--force`, `--dry-run`, `--only <csv>`. Integriert in
+  `scripts/pilot-render.js` als Schritt 2b. `npm run generate:voice`
+  verfügbar.
+- ✅ `.env.example` als Vorlage für API-Keys (`ELEVENLABS_*`, `GAMMA_*`);
+  `.env` bleibt per Default gitignored.
 - ✅ `scripts/pilot-render.js` — Pilot-Renderer für 5 Default-Lektionen
   (override via `--lessons`), Output nach `videos/pilot/` +
   `posters/pilot/`, `--parallel 1`, Voice-Missing-Skip,

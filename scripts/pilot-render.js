@@ -33,6 +33,7 @@
  *                              dann stille Tonspur) — default: skip
  *   --skip-validate            Schritt 1 aus
  *   --skip-generate            Schritt 2 aus
+ *   --skip-voice               Schritt 2b (ElevenLabs) aus
  *   --help                     Hilfe
  *
  * Logs: logs/pilot-render.log
@@ -121,6 +122,7 @@ Flags:
   --allow-missing-voice      auch ohne voice.mp3 rendern (default: skip)
   --skip-validate            Schritt 1 aus
   --skip-generate            Schritt 2 aus
+  --skip-voice               Schritt 2b (ElevenLabs) aus
   --help                     Hilfe
 
 Logs: logs/pilot-render.log
@@ -433,6 +435,46 @@ async function main() {
       perLesson[id].generator = await stepGenerateForLesson(ctx, id);
     } else {
       log.warn('Generator uebersprungen (--skip-generate)', id);
+    }
+  }
+
+  // 2b. ElevenLabs Voice-Generation (nur fuer Lektionen mit Generator-Output)
+  log.section('2b. ElevenLabs Voice-Generation');
+  if (args['skip-voice']) {
+    log.warn('Uebersprungen (--skip-voice)');
+  } else {
+    const voiceCandidates = selected.filter((id) =>
+      fs.existsSync(path.join(ctx.generatorOutputDir, id, 'voice_script.txt'))
+    );
+    if (voiceCandidates.length === 0) {
+      log.warn('Keine voice_script.txt-Dateien vorhanden — Schritt uebersprungen.');
+    } else if (!process.env.ELEVENLABS_API_KEY) {
+      log.warn(
+        'ELEVENLABS_API_KEY nicht gesetzt — Voice-Generation uebersprungen. Vorhandene voice.mp3 werden genutzt, fehlende fuehren zu Skip (oder --allow-missing-voice).'
+      );
+    } else {
+      const res = await runChild(
+        process.execPath,
+        [
+          path.join(ROOT, 'scripts', 'generate-voice.js'),
+          '--scripts-dir',
+          ctx.generatorOutputDir,
+          '--output-dir',
+          ctx.assetsInputDir,
+          '--only',
+          voiceCandidates.join(','),
+          '--concurrency',
+          String(ctx.parallel),
+        ],
+        { log }
+      );
+      if (res.code !== 0) {
+        log.warn(
+          `generate-voice.js endete mit Exit ${res.code} — Pilot laeuft mit vorhandenen/fehlenden voice.mp3 weiter.`
+        );
+      } else {
+        log.info('generate-voice.js ok.');
+      }
     }
   }
 
