@@ -12,10 +12,10 @@ export default async function HomePage() {
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-5">
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-              DeFi Academy
+              DeFi Akademie
             </p>
             <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text)]">
-              Kurrikulum-Plattform
+              Module &amp; Lektionen
             </h1>
           </div>
           <ThemeToggle />

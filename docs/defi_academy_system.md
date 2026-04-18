@@ -9,6 +9,23 @@
 > Gamma-Deck, keine Slide-Frames aus PDF-Export, keine `slideNN.png`
 > als Render-Input. Details: [`docs/SLIDE_GENERATION_RULES.md`](./SLIDE_GENERATION_RULES.md).
 
+> **Terminologie-Regel (ab 2026-04-17):**
+> Das Wort *Curriculum* wird in der DeFi Akademie nicht mehr verwendet.
+> Verbindliche Begriffe:
+>
+> - Curriculum → **Lernprogramm**
+> - Course Curriculum → **DeFi Akademie**
+> - Curriculum Structure → **Akademie-Struktur**
+> - Curriculum Modules → **Module**
+> - Curriculum Lessons → **Lektionen**
+>
+> Hierarchie: **DeFi Akademie → Module → Lektionen → Videos / Quiz /
+> Praxisuebungen**. Vollstaendige Definition:
+> [`docs/academy-structure.md`](./academy-structure.md). Code-Symbole
+> (`resolveFlatCurriculumRoot`, `lib/curriculumConfig.ts`) und die
+> Env-Variable `DEFI_CURRICULUM_PATH` bleiben aus Kompatibilitaets-
+> gruenden unveraendert — sie sind nicht Nutzer-sichtbar.
+
 ## 1. Projektübersicht
 
 DeFi Academy ist eine strukturierte Lernplattform für dezentrale
@@ -316,7 +333,7 @@ Growth Agent → Traffic (Phase 7)
 ### Operativer Fluss (vollautomatisch)
 
 1.  Datei `Module/modul-NN-*.md` landet auf `main`
-2.  Workflow `Auto-import curriculum` parst und committet nach `content/modules/` zurück
+2.  Workflow `Auto-Import Akademie-Inhalte` parst und committet nach `content/modules/` zurück
 3.  Workflow feuert `repository_dispatch: pages-deploy`
 4.  Workflow `Deploy Next.js site to Pages` validiert Content, baut Next-Export, veröffentlicht auf GitHub Pages
 5.  Live in ca. 2 Minuten unter `https://noahdeitmerg-svg.github.io/Defi-Academy/`

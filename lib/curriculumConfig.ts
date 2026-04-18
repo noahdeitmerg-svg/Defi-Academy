@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-/** Standard-Pfad zu deinem Cursor-Kurrikulum (Windows). */
+/** Standard-Pfad zu den lokalen Akademie-Modulen (Windows, Cursor-Workspace). */
 export const DEFAULT_CURSOR_MODULE_DIR = path.join(
   "C:",
   "Users",
@@ -30,9 +30,13 @@ function legacyModulesHaveLessonsSync(): boolean {
 }
 
 /**
- * Verzeichnis mit `module1.md`, `module2.md`, … (flaches Kurrikulum).
+ * Verzeichnis mit `module1.md`, `module2.md`, … (flache Akademie-Quellen).
  * Priorität: `DEFI_CURRICULUM_PATH` → wenn **kein** Legacy unter `content/modules` → Standardpfad.
  * Sobald im Repo `content/modules/.../*.md` existiert, wird das flache Verzeichnis ignoriert (Deploy).
+ *
+ * Der Symbol-Name behält historisch das Wort "Curriculum" (stabile Code-API);
+ * Nutzer-sichtbare Texte verwenden die Akademie-Terminologie aus
+ * `docs/academy-structure.md`.
  */
 export function resolveFlatCurriculumRoot(): string | null {
   if (legacyModulesHaveLessonsSync()) return null;

@@ -2,7 +2,7 @@ export type LessonFrontmatter = {
   title: string;
   duration: string;
   moduleNumber: number;
-  /** z. B. 1, 2 oder "2a" bei Cursor-Kurrikulum */
+  /** z. B. 1, 2 oder "2a" in den Cursor-Akademie-Quellen */
   lessonNumber: number | string;
 };
 

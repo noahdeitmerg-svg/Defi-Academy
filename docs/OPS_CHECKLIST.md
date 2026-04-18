@@ -8,7 +8,7 @@ Alle Builds/Deploys laufen in GitHub Actions.
 | Workflow | Trigger | Zweck |
 |----------|---------|-------|
 | `Deploy Next.js site to Pages` (`nextjs.yml`) | push `main`, `workflow_dispatch`, `repository_dispatch: pages-deploy` | Content validieren, bauen, auf GitHub Pages deployen |
-| `Auto-import curriculum` (`auto-import.yml`) | push auf `Module/**/*.md`, `workflow_dispatch`, `repository_dispatch: content-import` | `Module/modul-*.md` -> `content/modules/` importieren und zurueck committen |
+| `Auto-Import Akademie-Inhalte` (`auto-import.yml`) | push auf `Module/**/*.md`, `workflow_dispatch`, `repository_dispatch: content-import` | `Module/modul-*.md` -> `content/modules/` importieren und zurueck committen |
 
 ## Vor jedem lokalen Push
 
@@ -29,7 +29,7 @@ Alle Builds/Deploys laufen in GitHub Actions.
 ## Neues Modul hinzufuegen (empfohlener Flow)
 
 1. Datei `Module/modul-NN-<slug>.md` pushen
-2. Workflow `Auto-import curriculum` laeuft automatisch, commit landet in `main`
+2. Workflow `Auto-Import Akademie-Inhalte` laeuft automatisch, commit landet in `main`
 3. Dieser Commit triggert `Deploy Next.js site to Pages`
 4. Nach ca. 2 Minuten ist das Modul live
 
@@ -40,7 +40,7 @@ Kein manueller Import noetig. Kein VPS.
 Zwei Events sind nutzbar:
 
 - `pages-deploy` -> nur neu bauen/deployen
-- `content-import` -> Kurrikulum neu importieren (und danach Deploy via Auto-Commit)
+- `content-import` -> Akademie-Inhalte neu importieren (und danach Deploy via Auto-Commit)
 
 ### Windows / PowerShell
 

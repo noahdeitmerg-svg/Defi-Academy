@@ -64,7 +64,7 @@ export function splitLessonBody(body: string): LessonBodySections {
   };
 
   for (const line of lines) {
-    /** Kurrikulum: `##` (Legacy) oder `###` (z. B. deutsche Modul-Quelldateien). */
+    /** Akademie-Quellen: `##` (Legacy) oder `###` (z. B. deutsche Modul-Quelldateien). */
     const m = /^#{2,3}\s+(.+)$/.exec(line);
     if (m) {
       const name = m[1].trim();
@@ -83,7 +83,7 @@ export function splitLessonBody(body: string): LessonBodySections {
 
 /**
  * Extrahiert ausschließlich die fünf für die Lektions-UI vorgesehenen Abschnitte
- * (englische Überschriften im Kurrikulum).
+ * (englische Überschriften in den Akademie-Quellen).
  */
 export function extractLessonUiSections(body: string): LessonUiBlockMarkdown {
   const s = splitLessonBody(body);

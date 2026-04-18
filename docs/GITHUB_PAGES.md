@@ -39,7 +39,7 @@ Wenn GitHub den Push der Workflow-Datei mit einem PAT ablehnt, Token um Scope **
 
 Zwei Workflows arbeiten zusammen:
 
-1. **`Auto-import curriculum`** (`.github/workflows/auto-import.yml`) – läuft bei jedem Push auf `Module/**/*.md`, importiert Moduldateien nach `content/modules/` und committet das Ergebnis zurück auf `main`.
+1. **`Auto-Import Akademie-Inhalte`** (`.github/workflows/auto-import.yml`) – läuft bei jedem Push auf `Module/**/*.md`, importiert Moduldateien nach `content/modules/` und committet das Ergebnis zurück auf `main`.
 2. **`Deploy Next.js site to Pages`** (`.github/workflows/nextjs.yml`) – läuft beim nächsten Push auf `main` (also u. a. nach dem Auto-Import-Commit) und deployt.
 
 Daraus ergeben sich drei Wege, einen Rebuild auszulösen:

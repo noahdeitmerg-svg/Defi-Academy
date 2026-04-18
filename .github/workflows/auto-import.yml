@@ -1,8 +1,8 @@
-# Auto-Import: bei Aenderungen an Module/*.md wird das Kurrikulum automatisch
-# nach content/modules/ importiert und zurueck in main committet.
+# Auto-Import: bei Aenderungen an Module/*.md werden die Akademie-Inhalte
+# automatisch nach content/modules/ importiert und zurueck in main committet.
 # Danach triggert der Push den bestehenden Pages-Deploy.
 
-name: Auto-import curriculum
+name: Auto-Import Akademie-Inhalte
 
 on:
   push:

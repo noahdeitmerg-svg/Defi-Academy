@@ -42,10 +42,11 @@ npm run dev
 
 Browser: **http://localhost:3000**
 
-## 5. Kurrikulum
+## 5. Akademie-Inhalte
 
 - **Standard:** `content/modules/<moduleSlug>/*.md` + optional `quiz.json`, `meta.json`
 - **Import** grosser `moduleN.md`: `npm run import:modules` (optional `--from "Pfad"`)
+- **Begriffshierarchie** (Module / Lektionen / Videos / Quiz / Praxisuebungen): [academy-structure.md](academy-structure.md)
 
 ## 6. Oeffentliche URL: GitHub Pages
 

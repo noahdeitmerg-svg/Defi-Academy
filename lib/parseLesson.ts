@@ -10,7 +10,7 @@ import type {
 } from "./types";
 import { parseMcQuizMarkdown } from "./parseMcQuiz";
 
-/** Folien aus `**[Slide n] — Titel**`-Blöcken (deutsches Kurrikulum). */
+/** Folien aus `**[Slide n] — Titel**`-Blöcken (deutsche Akademie-Quellen). */
 function parseSlidesFromBracketBlocks(section: string): Slide[] {
   const slides: Slide[] = [];
   const re = /^\*\*\[Slide\s*\d+\](?:\s*[—-]\s*([^*\n]+))?\*\*\s*$/gm;

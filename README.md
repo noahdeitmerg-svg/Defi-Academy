@@ -118,7 +118,8 @@ Rollenverteilung und vollstaendiger CLI-Referenz:
 
 | Datei | Inhalt |
 |-------|--------|
-| [docs/BUILD.md](docs/BUILD.md) | Node, Build, Kurrikulum |
+| [docs/BUILD.md](docs/BUILD.md) | Node, Build, Akademie-Inhalte |
+| [docs/academy-structure.md](docs/academy-structure.md) | Hierarchie: DeFi Akademie → Module → Lektionen → Videos / Quiz / Praxisuebungen |
 | [docs/GITHUB.md](docs/GITHUB.md) | Klonen, Push, PAT, optional Sync |
 | [docs/OPS_CHECKLIST.md](docs/OPS_CHECKLIST.md) | Deploy-, Webhook- und Smoke-Test-Checkliste |
 | [docs/VIDEO_PRODUCTION_WORKFLOW.md](docs/VIDEO_PRODUCTION_WORKFLOW.md) | Video-Pipeline Lessons → Visuals → Voice → MP4 |
@@ -131,6 +132,9 @@ Rollenverteilung und vollstaendiger CLI-Referenz:
 
 Statischer Export, **GitHub Actions** → Pages: [docs/GITHUB_PAGES.md](docs/GITHUB_PAGES.md) (inkl. **Webhook** / `repository_dispatch`).
 
-## Kurrikulum
+## Akademie-Inhalte
 
-Inhalt unter **`content/modules/`**. Neue `.md`-Lektionen dort reichen; die App liest zur Laufzeit.
+Inhalt unter **`content/modules/`** (Module → Lektionen → Quiz/Praxisuebung).
+Neue `.md`-Lektionen dort reichen; die App liest zur Laufzeit. Die
+vollstaendige Begriffshierarchie steht in
+[docs/academy-structure.md](docs/academy-structure.md).

@@ -1,5 +1,5 @@
 /**
- * Importiert Kurrikulum-Markdown nach `content/modules/moduleN/`.
+ * Importiert Akademie-Inhalte (Markdown) nach `content/modules/moduleN/`.
  *
  * Quellen (optional kombiniert):
  * - `moduleN.md` im Projektroot (oder `--from <dir>`)

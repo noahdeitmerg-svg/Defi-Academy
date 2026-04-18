@@ -27,7 +27,7 @@ const metadataBase =
 export const metadata: Metadata = {
   metadataBase,
   title: "DeFi Academy",
-  description: "Kurrikulum-basierte Lernplattform für DeFi — MVP",
+  description: "DeFi Akademie — strukturiertes Lernprogramm mit Modulen, Lektionen, Videos, Quiz und Praxisuebungen",
 };
 
 export default function RootLayout({

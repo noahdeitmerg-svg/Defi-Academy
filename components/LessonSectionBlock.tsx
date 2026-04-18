@@ -5,7 +5,7 @@ import { useId } from "react";
 type Props = {
   /** Kurzer Titel im UI (z. B. deutsch) */
   title: string;
-  /** Entspricht der Markdown-Überschrift im Kurrikulum */
+  /** Entspricht der Markdown-Überschrift in den Akademie-Quellen */
   sourceHeading: string;
   children: React.ReactNode;
 };
