@@ -31,7 +31,7 @@ Wichtige Protokolle: Aave (größtes Lending-Protokoll), Compound, Morpho, Spark
 Stablecoins sind Tokens, die einen Peg zu einem externen Asset halten — meistens dem US-Dollar. Es gibt drei Haupttypen:
 - **Fiat-besichert** (USDC, USDT): gedeckt durch echte Dollar-Reserven bei einem Emittenten
 - **Krypto-besichert** (DAI, crvUSD): gedeckt durch On-Chain-Sicherheiten in Smart Contracts
-- **Algorithmisch** (historisch UST, FRAX-Varianten): durch Algorithmen stabilisiert, oft fragil
+- **Algorithmisch** (z.B. UST — historisches Beispiel): durch Algorithmen stabilisiert, oft fragil. Hybrid-Modelle wie FRAX kombinieren algorithmische Mechanismen mit Sicherheiten und gelten daher als teilweise besichert.
 
 Stablecoins sind das Rückgrat vieler DeFi-Operationen. Modul 8 behandelt sie vertieft.
 
@@ -184,6 +184,8 @@ Gehe auf defillama.com. Wähle die Top-10-Protokolle nach TVL. Ordne jedes der s
 <summary>Antwort anzeigen</summary>
 
 TVL zeigt, wie viel Kapital in einem Protokoll hinterlegt ist, was ein Indikator für Vertrauen und Nutzung ist. Aber TVL ist unvollständig: Er kann durch wenige Wale dominiert sein, kann durch recycelte Deposits aufgebläht werden (wenn das gleiche Kapital durch mehrere Protokolle gezählt wird), und er sagt nichts über Profitabilität oder Risiko aus. Ein hoher TVL ist kein Garant für Sicherheit — mehrere Hacks trafen hoch-TVL-Protokolle.
+
+TVL kann außerdem durch sogenannte Rehypothecation aufgebläht werden. Dabei wird dasselbe Kapital mehrfach in verschiedenen Protokollen verwendet und gezählt. Dadurch kann der aggregierte TVL höher erscheinen als die tatsächliche ökonomische Nutzung.
 </details>
 
 ## Video-Pipeline-Assets
@@ -191,7 +193,7 @@ TVL zeigt, wie viel Kapital in einem Protokoll hinterlegt ist, was ein Indikator
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → 6 Kategorien-Übersicht → DEXs → Lending → Stablecoins → Kapitalfluss-Diagramm → Navigations-Tools
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — 6 Kategorie-Kacheln, Uniswap-Screenshot, Aave-Markets-Übersicht, Stablecoin-Typen-Vergleich (USDC/DAI/UST), vollständiges Kapitalfluss-Diagramm, DeFiLlama-Homepage
 
 Pipeline: Gamma → ElevenLabs → CapCut.

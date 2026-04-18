@@ -25,6 +25,8 @@ Jeder mit einer Wallet und Internetzugang kann das Protokoll nutzen. Es gibt kei
 **3. Transparent und Prüfbar**
 Alle Transaktionen, Salden und Smart-Contract-Logik sind öffentlich einsehbar. Jeder kann jederzeit überprüfen, wie viel Kapital in einem Protokoll steckt, wer welche Transaktionen ausgeführt hat und wie der Code funktioniert.
 
+Viele DeFi-Protokolle ergänzen diese drei Eigenschaften zusätzlich durch sogenannte **immutable execution**. Das bedeutet, dass der Smart-Contract-Code nach Deployment nicht mehr verändert werden kann — oder nur über transparente Governance-Mechanismen. Immutable execution ist kein striktes Definitionskriterium, sondern ein zusätzlicher Schutz gegen spätere Manipulation: Ein Protokoll, dessen Code beliebig vom Team geändert werden kann, ist technisch näher an CeFi als an DeFi.
+
 **Die CeFi-Abgrenzung**
 
 Plattformen wie Coinbase, Binance oder Kraken sind **CeFi** (Centralized Finance). Sie bieten Zugang zu Krypto-Assets, aber:
@@ -32,7 +34,7 @@ Plattformen wie Coinbase, Binance oder Kraken sind **CeFi** (Centralized Finance
 - Sie verlangen KYC und können Konten sperren
 - Die internen Salden sind nicht auf der Blockchain — nur die Ein- und Auszahlungen sind sichtbar
 
-Der Unterschied wurde 2022 dramatisch sichtbar: FTX (CeFi) konnte Kundengelder missbrauchen und kollabierte. MakerDAO, Aave und Uniswap (DeFi) funktionierten während derselben Marktverwerfungen ohne Unterbrechung weiter, weil sie keine Gelder verwahrten, die missbraucht werden konnten.
+Der Unterschied wurde 2022 deutlich sichtbar: FTX (CeFi) konnte Kundengelder missbrauchen und kollabierte. MakerDAO, Aave und Uniswap (DeFi) funktionierten während derselben Marktverwerfungen ohne Unterbrechung weiter, weil sie keine Gelder verwahrten, die missbraucht werden konnten.
 
 **Die "DeFi-Washing"-Problematik**
 
@@ -91,14 +93,14 @@ Erstens: Non-Custodial. Die Nutzer halten ihre Assets selbst. Das Protokoll kann
 CeFi-Plattformen wie Coinbase oder Binance bieten Zugang zu Krypto, aber sie verwahren die Gelder. Sie verlangen KYC und können Konten sperren. Ihre internen Salden liegen auf privaten Datenbanken. DeFi funktioniert strukturell anders: Custody beim Nutzer, kein KYC, alles auf Smart Contracts, öffentlich prüfbar.
 
 **[Slide 5]**
-Der Unterschied wurde 2022 brutal sichtbar. FTX war CeFi. Sam Bankman-Fried konnte Kundengelder zu Alameda Research transferieren, weil FTX die Custody hatte. Die Firma kollabierte. Im selben Marktumfeld liefen MakerDAO, Aave und Uniswap ohne Unterbrechung. Warum? Weil diese Protokolle keine Gelder verwahren, die missbraucht werden könnten. Die Möglichkeit existiert technisch nicht.
+Der Unterschied wurde 2022 deutlich sichtbar. FTX war CeFi. Sam Bankman-Fried konnte Kundengelder zu Alameda Research transferieren, weil FTX die Custody hatte. Die Firma kollabierte. Im selben Marktumfeld liefen MakerDAO, Aave und Uniswap ohne Unterbrechung. Warum? Weil diese Protokolle keine Gelder verwahren, die missbraucht werden könnten. Die Möglichkeit existiert technisch nicht.
 
 **[Slide 6]**
 Viele Produkte nennen sich DeFi, sind es aber nicht. Vier Prüfsteine: Existiert ein Admin-Schlüssel mit Zugriff auf Nutzergelder? Kann ein Team Nutzer sperren? Liegen Guthaben auf einer Off-Chain-Datenbank? Und der finale Test: Wenn das Team morgen verschwindet — funktioniert das Protokoll weiter? Bei echtem DeFi lautet die Antwort ja.
 
 ## Visuelle Vorschläge
 
-**[Slide 1]** Titelfolie mit "DeFi: Eine präzise Definition". Neutrales, dunkles Hintergrund-Design, keine Krypto-Klischees (keine Bitcoin-Symbole, keine goldenen Münzen).
+**[Slide 1]** Titelfolie mit "DeFi: Eine präzise Definition". Neutrales, dunkles Hintergrunddesign, keine Krypto-Klischees (keine Bitcoin-Symbole, keine goldenen Münzen).
 
 **[Slide 2]** Zentrales Diagramm mit drei konzentrischen Kreisen: "Öffentliche Blockchain" (außen), "Smart Contract" (mitte), "DeFi-Anwendung" (innen). Betont den Stack.
 
@@ -148,10 +150,10 @@ Weil diese Protokolle non-custodial sind. Sie verwahren keine Nutzergelder, sond
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — Slide-Inhalte aus *Slide Summary* (6 Slides, Format: Title → CeFi/DeFi-Tabelle → FTX-Timeline → Prüfsteine)
-- `voice_script.txt` — *Voice Narration Script* (Zielgeschwindigkeit 120–140 WPM, ~8–10 Min. Video)
-- `visual_plan.json` — Visual Suggestions inkl. Screenshot-Targets (Coinbase-Login, app.uniswap.org, DeFiLlama-Chart Aave TVL Nov 2022)
+- `slides_prompt.txt` — 6 Slides: Titel → Was ist DeFi → Drei technische Eigenschaften → CeFi vs. DeFi → Der FTX-Moment → Prüfsteine gegen DeFi-Washing
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Drei-Kreise-Diagramm, Icons-Spalten, CeFi/DeFi-Vergleichstabelle, FTX-Timeline, Entscheidungsbaum. Screenshot-Targets: Coinbase-Login, app.uniswap.org, DeFiLlama-Chart Aave TVL Nov 2022
 
-Pipeline: Gamma (Slides) → ElevenLabs (Voice) → CapCut (Video-Schnitt).
+Pipeline: Gamma → ElevenLabs → CapCut.
 
 ---

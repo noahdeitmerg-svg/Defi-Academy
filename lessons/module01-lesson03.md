@@ -22,7 +22,7 @@ Eine Blockchain ist ein öffentliches, verteiltes Ledger. Stell es dir als eine 
 
 **Baustein 2: Smart Contracts**
 
-Ein Smart Contract ist ein Programm, das auf der Blockchain läuft. Der Code wird einmal bereitgestellt (deployed) und läuft dann deterministisch: gleicher Input → gleicher Output, immer. Niemand kann den Code ändern, sobald er deployed ist (außer er enthält gezielt eingebaute Upgrade-Mechanismen — mehr dazu in Modul 11).
+Ein Smart Contract ist ein Programm, das auf der Blockchain läuft. Der Code wird einmal bereitgestellt (deployed) und läuft dann deterministisch: gleicher Input → gleicher Output, immer. Niemand kann den Code ändern, sobald er deployed ist (außer er enthält gezielt eingebaute Upgrade-Mechanismen — mehr dazu in Modul 3).
 
 Ein einfaches Beispiel: Ein Smart Contract für einen dezentralen Exchange (DEX) enthält eine Funktion `swap(token_in, token_out, amount)`. Ruft eine Wallet diese Funktion mit 1 ETH → USDC auf, prüft der Contract die aktuellen Pool-Bestände, berechnet den Wechselkurs nach Formel, nimmt die 1 ETH entgegen und sendet entsprechendes USDC zurück — alles in derselben Transaktion, atomar, ohne menschliche Zustimmung.
 
@@ -167,7 +167,7 @@ Ein Smart Contract läuft auf einer Blockchain und wird von allen Validatoren gl
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 6 Slides: Titel → Blockchain → Smart Contract → Token → Wallet → Zusammenspiel der vier Bausteine
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Blockchain-Kette (Etherscan-Screenshot), vereinfachter `swap()`-Code, Token-Typ-Liste mit Logos, Private-Key-Signatur-Diagramm (MetaMask-Screenshot)
 
 Pipeline: Gamma → ElevenLabs → CapCut.

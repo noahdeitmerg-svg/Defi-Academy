@@ -197,7 +197,7 @@ Weil Transaktionen auf der Blockchain unwiderruflich sind. Falls die Empfängera
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Wallet-Auswahl → Seed-Phrase-Regeln → Multi-Chain-Konzept → Erste Transaktion → Etherscan-Verfolgung → "Was du jetzt NICHT tun solltest"
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min., Praxis-orientiert)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min., Praxis-orientiert)
 - `visual_plan.json` — Rabby-Homepage-Screenshot, Seed-Phrase-Beispiel (fiktiv/geblurred), Multi-Chain-Diagramm, Coinbase-Withdrawal-Screen, Etherscan-Transaktionsansicht, rote Warn-Icons
 
 Pipeline: Gamma → ElevenLabs → CapCut.
