@@ -82,11 +82,24 @@ Operatoren dort manuell screenshoten.
 rendert. Abwägen: zusätzliche native Dependency vs. manueller Aufwand
 pro Lektion.
 
+### 🟡 Pilot-Render-Lauf gegen die 5 Default-Lektionen
+
+Erster echter Remotion-Render über die Pilot-IDs (`module01-lesson01`,
+`module02-lesson01`, `module04-lesson02`, `module06-lesson03`,
+`module09-lesson01`) vor der Vollproduktion. Voraussetzungen:
+
+- `lessons/moduleXX-lessonYY.md` für alle 5 Pilot-IDs muss existieren
+  (aktuell nur Example `module04-lesson02` im Repo)
+- `npm install` im `video-renderer/video-renderer/`-Package
+- Optional: `voice.mp3` je Pilot-Lektion unter `assets-input/<id>/` —
+  wenn fehlend, greift die Skip-Logik (oder `--allow-missing-voice`,
+  dann rendert Remotion ohne Tonspur)
+
 ### 🟡 Batch-Render aller Lektionen End-to-End
 
 Kompletter Lauf Lektion → Generator → Slides → Voice → Visuals →
-Renderer → Plattform mit `npm run render-course` für alle Module.
-Master-Orchestrator ist fertig, fehlt aber: echte API-Keys +
+Renderer → Plattform mit `npm run render-course` für alle Module —
+nachdem der Pilot oben grün ist. Offen: echte API-Keys +
 Gamma-API-Verifikation + Visual-Screenshots.
 
 ---
@@ -145,12 +158,17 @@ Rename-Brücke fehlt).
 
 ## Erledigt
 
+- ✅ `scripts/pilot-render.js` — Pilot-Renderer für 5 Default-Lektionen
+  (override via `--lessons`), Output nach `videos/pilot/` +
+  `posters/pilot/`, `--parallel 1`, Voice-Missing-Skip,
+  `--allow-missing-voice` als Override
+- ✅ `npm run pilot-render` in `package.json`
 - ✅ `scripts/render-course.js` — Master-Orchestrator mit 6 Schritten,
   Per-Lesson-Try/Catch, `--parallel`, strukturiertem Log
   (`logs/render-course.log`) und JSON-Report
 - ✅ `npm run render-course` in `package.json`
 - ✅ `.gitignore` um Pipeline-Artefakte (`logs/`, `generator-output/`,
-  `assets-input/`, `videos/`, `posters/`) ergänzt
+  `assets-input/`, `videos/`, `posters/`, `.pilot-render-tmp/`) ergänzt
 - ✅ `feat(pipeline): add pre-render lesson validator` — `7f5ee8a`
 - ✅ `scripts/validate-lessons.js` mit 6 Checks + Custom-Schema-Validator
 - ✅ `video_config.schema.json`: `module.title` und

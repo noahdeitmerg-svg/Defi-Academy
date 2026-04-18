@@ -418,6 +418,24 @@ node src/render-batch.js --generator ../lesson-asset-generator/output \
   --lessons ./lessons --assets ./assets-input --output ./output --parallel 2
 ```
 
+**Pilot-Render — `npm run pilot-render`**
+
+Bevor die volle Batch-Produktion angestoßen wird, prüft ein Pilot-Lauf die Pipeline gegen einen kleinen Satz Lektionen. Default-Set: `module01-lesson01`, `module02-lesson01`, `module04-lesson02`, `module06-lesson03`, `module09-lesson01`. Override via `--lessons module01-lesson01,module03-lesson02`.
+
+Unterschiede zum Master-Orchestrator:
+
+- Generator läuft **pro Lektion** (`--input <file>`), nicht als Batch über `lessons/`.
+- Fehlt `voice.mp3` für eine Lektion, wird die Lektion **aus dem Render ausgeschlossen** (Log: `Voice missing – skipping render`). Override: `--allow-missing-voice`.
+- `--parallel 1` per Default (bewusst konservativ für Pilot-Timing-Checks).
+- Ausgabe in dedizierten Unterordnern: `videos/pilot/moduleXX-lessonYY.mp4`, `posters/pilot/moduleXX-lessonYY.jpg`.
+- Logs in `logs/pilot-render.log` + `logs/pilot-render-batch-report.json`.
+
+```bash
+npm run pilot-render
+node scripts/pilot-render.js --lessons module01-lesson01,module04-lesson02
+node scripts/pilot-render.js --allow-missing-voice
+```
+
 **Einfache Variante — Master-Orchestrator `npm run render-course`**
 
 Die Schritte 1–6 oben sind auch in einem einzigen Skript verdrahtet:
@@ -551,6 +569,7 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 -   ✅ Video Rendering Pipeline (Remotion, Batch-Runner, Preflight)
 -   ✅ Pre-Render-Validator (`scripts/validate-lessons.js` + `npm run validate-lessons`, 6 Checks, Exit 1 = Render-Stop)
 -   ✅ Master-Orchestrator `scripts/render-course.js` + `npm run render-course` (Validate → Generate → Slides → Voice → Visuals → Render, Logs in `logs/render-course.log`, Report in `logs/render-course-report.json`, Per-Lesson-Fehler-Tolerance)
+-   ✅ Pilot-Renderer `scripts/pilot-render.js` + `npm run pilot-render` (5 Default-Lektionen, Override via `--lessons`, Output in `videos/pilot/` + `posters/pilot/`, `--parallel 1`, Voice-Missing-Skip mit `--allow-missing-voice`-Override)
 -   🚧 Rename-Brücke Renderer-Output → Plattform-Konvention (Phase 5.4)
 -   ⏳ Voice-Produktion für alle Lektionen (ElevenLabs, Phase 5.5)
 -   ⏳ Batch-Render aller Lektionen (Phase 5.6)
