@@ -418,6 +418,34 @@ node src/render-batch.js --generator ../lesson-asset-generator/output \
   --lessons ./lessons --assets ./assets-input --output ./output --parallel 2
 ```
 
+**Einfache Variante — Master-Orchestrator `npm run render-course`**
+
+Die Schritte 1–6 oben sind auch in einem einzigen Skript verdrahtet:
+`scripts/render-course.js`. Es kettet Validate → Generate → Slides (Gamma) →
+Voice (ElevenLabs) → Visuals → Render-Batch und bricht bei Validate-/Generate-
+Fehlern hart ab. Per-Lektions-Fehler in Schritten 3–5 werden geloggt, nicht
+propagiert — die Lektion wird dann degraded gerendert (Renderer nutzt
+Platzhalter).
+
+```bash
+npm run render-course                              # Defaults: lessons/, generator-output/, assets-input/, parallel=2
+node scripts/render-course.js --dry-run            # keine externen API-Aufrufe, nur Stubs
+node scripts/render-course.js --only module04-lesson02
+node scripts/render-course.js --skip-render        # nur Assets vorbereiten
+```
+
+Logs: `logs/render-course.log` + `logs/render-course-report.json`.
+
+Externe APIs via Env:
+
+| Variable | Wirkung |
+|---|---|
+| `GAMMA_API_KEY` | ohne Key: `slides.json` wird als Stub mit `_stub: true` geschrieben, `slides_prompt.txt` zum manuellen Gamma-Import gespiegelt |
+| `GAMMA_API_URL` | override, default `https://api.gamma.app/v1/generations` |
+| `ELEVENLABS_API_KEY` | ohne Key: `voice.mp3`-Schritt wird übersprungen (Renderer produziert dann Video ohne Tonspur) |
+| `ELEVENLABS_VOICE_ID` | realer Voice-ID-Fallback, wenn logische ID aus `video_config.audio_track.voice_id` nicht aufgelöst werden kann |
+| `ELEVENLABS_MODEL_ID` | default `eleven_multilingual_v2` |
+
 **Pre-Render-Validator (`scripts/validate-lessons.js`)**
 
 Pflicht-Gatekeeper vor jedem Batch-Render. Prüft jede Lektion in `lessons/` gegen die Regeln, die ein erfolgreicher Renderer-Lauf voraussetzt. Wenn hier ein `✖` kommt, bricht der Renderer sicher später ab.
@@ -522,6 +550,7 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 -   ✅ Lesson Asset Generator (MD → 4 Prod-Assets, Tests grün)
 -   ✅ Video Rendering Pipeline (Remotion, Batch-Runner, Preflight)
 -   ✅ Pre-Render-Validator (`scripts/validate-lessons.js` + `npm run validate-lessons`, 6 Checks, Exit 1 = Render-Stop)
+-   ✅ Master-Orchestrator `scripts/render-course.js` + `npm run render-course` (Validate → Generate → Slides → Voice → Visuals → Render, Logs in `logs/render-course.log`, Report in `logs/render-course-report.json`, Per-Lesson-Fehler-Tolerance)
 -   🚧 Rename-Brücke Renderer-Output → Plattform-Konvention (Phase 5.4)
 -   ⏳ Voice-Produktion für alle Lektionen (ElevenLabs, Phase 5.5)
 -   ⏳ Batch-Render aller Lektionen (Phase 5.6)

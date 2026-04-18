@@ -33,3 +33,13 @@ yarn-error.log*
 
 # lokale Roh-Module (optional im Repo-Root; nach Import nach content/modules/)
 /module*.md
+
+# Video-Pipeline-Artefakte (alle derived, nie committen)
+/logs/
+/generator-output/
+/assets-input/
+/videos/
+/posters/
+# Renderer-Bundle-Cache + Remotion-Output
+/video-renderer/**/public/assets/
+/video-renderer/**/output/

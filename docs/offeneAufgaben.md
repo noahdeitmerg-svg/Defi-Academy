@@ -29,12 +29,13 @@ diese Verdopplung mitziehen (siehe `scripts/validate-lessons.js`,
 **Plan**: Inhalte je Tool eine Ebene nach oben ziehen, innere leere Ordner
 entfernen, Pfade in Skripten und Docs angleichen.
 
-### 🔴 Validator als Hard-Gate in `render-batch.js`
+### 🟢 Validator als Hard-Gate in `render-batch.js` (durch Master-Skript gelöst)
 
-Der Pre-Render-Validator (`npm run validate-lessons`) ist aktuell nur per
-Doku als Pflicht-Schritt dokumentiert. Sobald die Doppel-Ordnerstruktur
-flach ist, soll `video-renderer/render-batch.js` den Validator selbst
-aufrufen und bei Exit-Code ≠ 0 abbrechen.
+Direkt im `render-batch.js` ist der Validator weiterhin nicht verdrahtet,
+aber das ist mit dem neuen Master-Orchestrator `scripts/render-course.js`
+nicht mehr blockierend: Dieser ruft zuerst `npm run validate-lessons` auf
+und bricht bei Exit-Code ≠ 0 ab, bevor überhaupt ein Render angestoßen
+wird. Direkter Einbau im Renderer wäre nice-to-have, aber kein Muss mehr.
 
 ### 🟡 Namens-Brücke Renderer-Output → Plattform-Konvention (Phase 5.4)
 
@@ -46,17 +47,47 @@ Renderer schreibt `videos/module04-lesson02.mp4`, die Plattform erwartet
 2. Symlink/Alias-Layer in `lib/lessonAssets.ts`, der beide Konventionen
    akzeptiert.
 
-### 🟡 Voice-Produktion (ElevenLabs) als Pipeline-Schritt
+### 🟡 Voice-Produktion: ElevenLabs-Voice-IDs mappen
 
-`audio_track.file` verweist auf `moduleXX-lessonYY_voice.mp3` — der
-ElevenLabs-Aufruf ist bisher manuell. Pipeline-Skript (oder
-Render-Hook), das aus `voice_script.txt` direkt MP3 erzeugt, fehlt.
+Der Master-Orchestrator kann ElevenLabs TTS aufrufen, sobald
+`ELEVENLABS_API_KEY` gesetzt ist. Offen: die **logischen Voice-IDs** aus
+`video_config.audio_track.voice_id` (z. B. `de-male-educational-01`) auf
+reale ElevenLabs-IDs mappen. Aktuell fällt der Orchestrator auf
+`ELEVENLABS_VOICE_ID` aus der Env zurück — das reicht für einen
+Solo-Sprecher, aber nicht für Voice-Varianten pro Lektionstyp.
+
+**Plan**: JSON-Map `video-renderer/config/voice-map.json` mit
+`{ "de-male-educational-01": "<real-id>" }` einführen und im
+Orchestrator konsumieren.
+
+### 🟡 Gamma-Slides: API-Integration verifizieren
+
+Der Master-Orchestrator spricht `GAMMA_API_URL` (default
+`https://api.gamma.app/v1/generations`) an, wenn `GAMMA_API_KEY` gesetzt
+ist. Das Request-Schema ist geraten (`input_text`, `format`,
+`export_as`). Muss gegen die offizielle Gamma-API geprüft und ggf.
+angepasst werden. Solange das nicht verifiziert ist, läuft der
+Orchestrator im Stub-Modus: `slides_prompt.txt` wird zum manuellen
+Import in Gamma gespiegelt, `slides.json` wird als Stub geschrieben
+(mit `_stub: true`-Marker).
+
+### 🟡 Visuals: Screenshot-Capture für HTML-URLs
+
+Der Orchestrator lädt nur **direkte Bild-URLs** (`.png/.jpg/.webp/.svg`)
+automatisch. Referenzen wie `https://info.uniswap.org/` landen als
+`status: "manual"` im `visuals-manifest.json` — aktuell müssen die
+Operatoren dort manuell screenshoten.
+
+**Plan**: Optionaler Puppeteer/Playwright-Schritt, der aus HTML-URLs
+rendert. Abwägen: zusätzliche native Dependency vs. manueller Aufwand
+pro Lektion.
 
 ### 🟡 Batch-Render aller Lektionen End-to-End
 
-Sobald die Punkte oben erledigt sind: kompletter Lauf
-Lektion → Generator → Voice → Renderer → Plattform für alle Module.
-Aktuell nur Example `module04-lesson02` durchgespielt.
+Kompletter Lauf Lektion → Generator → Slides → Voice → Visuals →
+Renderer → Plattform mit `npm run render-course` für alle Module.
+Master-Orchestrator ist fertig, fehlt aber: echte API-Keys +
+Gamma-API-Verifikation + Visual-Screenshots.
 
 ---
 
@@ -114,6 +145,12 @@ Rename-Brücke fehlt).
 
 ## Erledigt
 
+- ✅ `scripts/render-course.js` — Master-Orchestrator mit 6 Schritten,
+  Per-Lesson-Try/Catch, `--parallel`, strukturiertem Log
+  (`logs/render-course.log`) und JSON-Report
+- ✅ `npm run render-course` in `package.json`
+- ✅ `.gitignore` um Pipeline-Artefakte (`logs/`, `generator-output/`,
+  `assets-input/`, `videos/`, `posters/`) ergänzt
 - ✅ `feat(pipeline): add pre-render lesson validator` — `7f5ee8a`
 - ✅ `scripts/validate-lessons.js` mit 6 Checks + Custom-Schema-Validator
 - ✅ `video_config.schema.json`: `module.title` und
