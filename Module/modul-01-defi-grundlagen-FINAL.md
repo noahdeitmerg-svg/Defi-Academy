@@ -4,7 +4,7 @@
 **Geschätzte Dauer:** 60–75 Minuten
 **Voraussetzungen:** Keine
 
-**Kursstufe:** Foundation (Einstieg in das DeFi Academy Curriculum)
+**Kursstufe:** Foundation (Einstieg in die DeFi Akademie)
 **Lektionsanzahl:** 6
 **Didaktische Ausrichtung:** Konzeptionelles Fundament, Vokabular, Risikobewusstsein, erster Praxis-Schritt
 **Konformität:** Final Fix Document v1 — Struktur, Terminologie und Pipeline-Assets harmonisiert
@@ -15,7 +15,7 @@
 - Oracle Risk
 - Liquidation Risk
 - Composability Risk (deutsch: Komponierbarkeits-Risiko)
-- Operator Risk (deutsch: Betreiber-Risiko)
+- User Risk (Nutzerfehler)
 - Depeg Risk
 - Collateral (Sicherheiten)
 
@@ -64,6 +64,8 @@ Jeder mit einer Wallet und Internetzugang kann das Protokoll nutzen. Es gibt kei
 **3. Transparent und Prüfbar**
 Alle Transaktionen, Salden und Smart-Contract-Logik sind öffentlich einsehbar. Jeder kann jederzeit überprüfen, wie viel Kapital in einem Protokoll steckt, wer welche Transaktionen ausgeführt hat und wie der Code funktioniert.
 
+Viele DeFi-Protokolle ergänzen diese drei Eigenschaften zusätzlich durch sogenannte **immutable execution**. Das bedeutet, dass der Smart-Contract-Code nach Deployment nicht mehr verändert werden kann — oder nur über transparente Governance-Mechanismen. Immutable execution ist kein striktes Definitionskriterium, sondern ein zusätzlicher Schutz gegen spätere Manipulation: Ein Protokoll, dessen Code beliebig vom Team geändert werden kann, ist technisch näher an CeFi als an DeFi.
+
 **Die CeFi-Abgrenzung**
 
 Plattformen wie Coinbase, Binance oder Kraken sind **CeFi** (Centralized Finance). Sie bieten Zugang zu Krypto-Assets, aber:
@@ -71,7 +73,7 @@ Plattformen wie Coinbase, Binance oder Kraken sind **CeFi** (Centralized Finance
 - Sie verlangen KYC und können Konten sperren
 - Die internen Salden sind nicht auf der Blockchain — nur die Ein- und Auszahlungen sind sichtbar
 
-Der Unterschied wurde 2022 dramatisch sichtbar: FTX (CeFi) konnte Kundengelder missbrauchen und kollabierte. MakerDAO, Aave und Uniswap (DeFi) funktionierten während derselben Marktverwerfungen ohne Unterbrechung weiter, weil sie keine Gelder verwahrten, die missbraucht werden konnten.
+Der Unterschied wurde 2022 deutlich sichtbar: FTX (CeFi) konnte Kundengelder missbrauchen und kollabierte. MakerDAO, Aave und Uniswap (DeFi) funktionierten während derselben Marktverwerfungen ohne Unterbrechung weiter, weil sie keine Gelder verwahrten, die missbraucht werden konnten.
 
 **Die "DeFi-Washing"-Problematik**
 
@@ -130,14 +132,14 @@ Erstens: Non-Custodial. Die Nutzer halten ihre Assets selbst. Das Protokoll kann
 CeFi-Plattformen wie Coinbase oder Binance bieten Zugang zu Krypto, aber sie verwahren die Gelder. Sie verlangen KYC und können Konten sperren. Ihre internen Salden liegen auf privaten Datenbanken. DeFi funktioniert strukturell anders: Custody beim Nutzer, kein KYC, alles auf Smart Contracts, öffentlich prüfbar.
 
 **[Slide 5]**
-Der Unterschied wurde 2022 brutal sichtbar. FTX war CeFi. Sam Bankman-Fried konnte Kundengelder zu Alameda Research transferieren, weil FTX die Custody hatte. Die Firma kollabierte. Im selben Marktumfeld liefen MakerDAO, Aave und Uniswap ohne Unterbrechung. Warum? Weil diese Protokolle keine Gelder verwahren, die missbraucht werden könnten. Die Möglichkeit existiert technisch nicht.
+Der Unterschied wurde 2022 deutlich sichtbar. FTX war CeFi. Sam Bankman-Fried konnte Kundengelder zu Alameda Research transferieren, weil FTX die Custody hatte. Die Firma kollabierte. Im selben Marktumfeld liefen MakerDAO, Aave und Uniswap ohne Unterbrechung. Warum? Weil diese Protokolle keine Gelder verwahren, die missbraucht werden könnten. Die Möglichkeit existiert technisch nicht.
 
 **[Slide 6]**
 Viele Produkte nennen sich DeFi, sind es aber nicht. Vier Prüfsteine: Existiert ein Admin-Schlüssel mit Zugriff auf Nutzergelder? Kann ein Team Nutzer sperren? Liegen Guthaben auf einer Off-Chain-Datenbank? Und der finale Test: Wenn das Team morgen verschwindet — funktioniert das Protokoll weiter? Bei echtem DeFi lautet die Antwort ja.
 
 ### Visuelle Vorschläge
 
-**[Slide 1]** Titelfolie mit "DeFi: Eine präzise Definition". Neutrales, dunkles Hintergrund-Design, keine Krypto-Klischees (keine Bitcoin-Symbole, keine goldenen Münzen).
+**[Slide 1]** Titelfolie mit "DeFi: Eine präzise Definition". Neutrales, dunkles Hintergrunddesign, keine Krypto-Klischees (keine Bitcoin-Symbole, keine goldenen Münzen).
 
 **[Slide 2]** Zentrales Diagramm mit drei konzentrischen Kreisen: "Öffentliche Blockchain" (außen), "Smart Contract" (mitte), "DeFi-Anwendung" (innen). Betont den Stack.
 
@@ -187,11 +189,11 @@ Weil diese Protokolle non-custodial sind. Sie verwahren keine Nutzergelder, sond
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — Slide-Inhalte aus *Slide Summary* (6 Slides, Format: Title → CeFi/DeFi-Tabelle → FTX-Timeline → Prüfsteine)
-- `voice_script.txt` — *Voice Narration Script* (Zielgeschwindigkeit 120–140 WPM, ~8–10 Min. Video)
-- `visual_plan.json` — Visual Suggestions inkl. Screenshot-Targets (Coinbase-Login, app.uniswap.org, DeFiLlama-Chart Aave TVL Nov 2022)
+- `slides_prompt.txt` — 6 Slides: Titel → Was ist DeFi → Drei technische Eigenschaften → CeFi vs. DeFi → Der FTX-Moment → Prüfsteine gegen DeFi-Washing
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Drei-Kreise-Diagramm, Icons-Spalten, CeFi/DeFi-Vergleichstabelle, FTX-Timeline, Entscheidungsbaum. Screenshot-Targets: Coinbase-Login, app.uniswap.org, DeFiLlama-Chart Aave TVL Nov 2022
 
-Pipeline: Gamma (Slides) → ElevenLabs (Voice) → CapCut (Video-Schnitt).
+Pipeline: Gamma → ElevenLabs → CapCut.
 
 ---
 
@@ -212,10 +214,10 @@ Nach Abschluss dieser Lektion können die Lernenden:
 DeFi ist keine Technologie, die aus dem Nichts entstand. Es ist eine direkte Reaktion auf strukturelle Einschränkungen des traditionellen Finanzwesens. Um DeFi zu verstehen, musst du verstehen, welche Probleme es löst.
 
 **Problem 1: Gatekeeping**
-Traditionelle Finanzdienstleistungen erfordern institutionellen Zugang. Einen Kredit aufnehmen, einen Markt handeln, Liquidität bereitstellen — alles erfordert Beziehungen zu Banken, Brokerhäusern oder Market Makern. Schätzungsweise 1,4 Milliarden Erwachsene weltweit haben kein Bankkonto. In DeFi reicht eine Wallet.
+Traditionelle Finanzdienstleistungen erfordern institutionellen Zugang. Einen Kredit aufnehmen, auf einem Markt handeln, Liquidität bereitstellen — alles erfordert Beziehungen zu Banken, Brokerhäusern oder Market Makern. Schätzungsweise 1,4 Milliarden Erwachsene weltweit haben kein Bankkonto. In DeFi reicht eine Wallet.
 
 **Problem 2: Settlement-Zeiten**
-Eine Banküberweisung dauert 1–3 Werktage. Ein Aktienkauf settelt T+2. Eine internationale Überweisung kann eine Woche benötigen. In DeFi settelt jede Transaktion in 12 Sekunden (Ethereum-Block) bis wenige Minuten (andere Chains), 24 Stunden am Tag, inklusive Wochenenden und Feiertage.
+Eine Banküberweisung dauert 1–3 Werktage. Ein Aktienkauf settelt T+1 in den USA, T+2 in der EU. Eine internationale Überweisung kann eine Woche benötigen. In DeFi setteln Transaktionen typischerweise innerhalb von Sekunden bis wenigen Minuten. Auf Ethereum liegt die durchschnittliche Blockzeit bei etwa 12–15 Sekunden; Layer-2-Netzwerke können Transaktionen oft noch schneller bestätigen. Der Betrieb läuft 24 Stunden am Tag, inklusive Wochenenden und Feiertage.
 
 **Problem 3: Intransparenz**
 Du weißt nicht, was deine Bank mit deinen Einlagen macht. Du weißt nicht, wie ein Hedgefonds positioniert ist. Du weißt nicht, warum ein Marktmacher einen bestimmten Preis stellt. In DeFi ist jeder Kapitalfluss, jede Position, jede Gebühr öffentlich.
@@ -235,11 +237,13 @@ Jeder kann ein neues Protokoll deployen, ohne regulatorische Zulassung. Das füh
 Alles ist on-chain verifizierbar. Tools wie Etherscan, DeFiLlama und Dune Analytics verwandeln diese Transparenz in nutzbare Information.
 
 **4. Komponierbarkeit ("Money Legos")**
-Protokolle können andere Protokolle als Bausteine verwenden. Ein Beispiel: Du kannst ETH auf Lido staken (Protokoll 1) → das erhaltene stETH als Sicherheit auf Aave nutzen (Protokoll 2) → den Kredit auf Curve swappen (Protokoll 3) → auf Convex einsetzen (Protokoll 4). Diese Verkettung ist in CeFi undenkbar. In DeFi ist sie eine Transaktion.
+Protokolle können andere Protokolle als Bausteine verwenden. Ein Beispiel: Du kannst ETH auf Lido staken (Protokoll 1) → das erhaltene stETH als Sicherheit auf Aave nutzen, um USDC zu leihen (Protokoll 2) → das USDC auf Curve gegen DAI swappen und als LP-Position einbringen (Protokoll 3) → die LP-Position auf Convex einsetzen (Protokoll 4). Diese Verkettung ist in CeFi undenkbar. In DeFi ist sie eine Transaktion.
+
+**Hinweis:** Jeder zusätzliche Protokoll-Schritt erhöht die Anzahl der zugrunde liegenden Risikoquellen.
 
 **Warum Komponierbarkeit der entscheidende Vorteil ist**
 
-Komponierbarkeit ist mehr als Bequemlichkeit. Sie verändert fundamental, wie Innovation entsteht. Ein neues Protokoll muss nicht das gesamte Finanz-Ökosystem neu bauen — es kann auf bestehenden Bausteinen aufbauen. Das führt zu Entwicklungszyklen, die in traditionellem Finanzwesen unmöglich sind. Es führt aber auch zu **Komponierbarkeits-Risiko**: Wenn ein Protokoll tief im Stack bricht, können alle darauf aufbauenden Protokolle betroffen sein. Das behandeln wir in Modul 11.
+Komponierbarkeit ist mehr als Bequemlichkeit. Sie verändert fundamental, wie Innovation entsteht. Ein neues Protokoll muss nicht das gesamte Finanz-Ökosystem neu bauen — es kann auf bestehenden Bausteinen aufbauen. Das führt zu Entwicklungszyklen, die in traditionellem Finanzwesen unmöglich sind. Es führt aber auch zu **Komponierbarkeits-Risiko**: Wenn ein Protokoll tief im Stack bricht, können alle darauf aufbauenden Protokolle betroffen sein. Das behandeln wir in Modul 16.
 
 ### Folien-Zusammenfassung
 
@@ -259,9 +263,9 @@ Warum existiert DeFi? Die Kernprinzipien
 4. Komponierbarkeit
 
 **[Slide 4] — Komponierbarkeit am Beispiel**
-ETH → Lido (stake) → stETH
-stETH → Aave (sichern) → Kredit
-Kredit → Curve (swappen)
+ETH → Lido (staken) → stETH
+stETH → Aave (als Sicherheit) → USDC-Kredit
+USDC → Curve (swappen) → DAI → Curve-LP
 Curve-LP → Convex (boosten)
 Eine Transaktion. Vier Protokolle.
 
@@ -275,19 +279,19 @@ DeFi ist nicht Krypto-Hype — es ist eine technische Antwort auf strukturelle E
 ### Sprechertext
 
 **[Slide 1]**
-In Lektion 1 haben wir definiert, was DeFi ist. Jetzt fragen wir: warum existiert es? Welche Probleme löst es — und was sind die Kernprinzipien, die seine Struktur erklären?
+In Lektion 1.1 haben wir definiert, was DeFi ist. Jetzt fragen wir: warum existiert es? Welche Probleme löst es — und was sind die Kernprinzipien, die seine Struktur erklären?
 
 **[Slide 2]**
-Vier strukturelle Probleme treiben DeFi an. Erstens: Gatekeeping. 1,4 Milliarden Erwachsene haben kein Bankkonto. Traditionelle Finanzdienste erfordern institutionellen Zugang — Beziehungen zu Banken, Brokern, Market Makern. Zweitens: Settlement-Zeiten. Banküberweisungen dauern Tage, Aktien settlen T+2. DeFi settelt in Sekunden, rund um die Uhr. Drittens: Intransparenz. Du weißt nicht, was deine Bank mit deinen Einlagen macht. Viertens: geschlossene Systeme. Protokolle können nicht einfach aufeinander aufbauen.
+Vier strukturelle Probleme treiben DeFi an. Erstens: Gatekeeping. 1,4 Milliarden Erwachsene haben kein Bankkonto. Traditionelle Finanzdienste erfordern institutionellen Zugang — Beziehungen zu Banken, Brokern, Market Makern. Zweitens: Settlement-Zeiten. Banküberweisungen dauern Tage, Aktien settlen T+1 in den USA und T+2 in der EU. In DeFi setteln Transaktionen typischerweise innerhalb von Sekunden bis wenigen Minuten — auf Ethereum liegt die durchschnittliche Blockzeit bei etwa 12–15 Sekunden, Layer-2-Netzwerke bestätigen oft noch schneller. Rund um die Uhr. Drittens: Intransparenz. Du weißt nicht, was deine Bank mit deinen Einlagen macht. Viertens: geschlossene Systeme. Protokolle können nicht einfach aufeinander aufbauen.
 
 **[Slide 3]**
 Daraus ergeben sich vier Kernprinzipien. Self-Custody: du kontrollierst deine Assets über Private Keys. Permissionless Innovation: jeder kann Protokolle bauen, ohne Lizenz. Transparenz: alles ist on-chain prüfbar. Und das vielleicht wichtigste: Komponierbarkeit.
 
 **[Slide 4]**
-Komponierbarkeit bedeutet, dass Protokolle andere Protokolle als Bausteine nutzen können. Ein Beispiel: Ich staked ETH auf Lido und erhalte stETH. Dieses stETH nutze ich als Sicherheit auf Aave und leihe mir USDC. Das USDC swappe ich auf Curve gegen DAI. Das DAI stecke ich als LP-Position zurück in eine Curve-Pool und boosted die Position auf Convex. Vier Protokolle, eine einzige Transaktion. In traditionellem Finanzwesen undenkbar.
+Komponierbarkeit bedeutet, dass Protokolle andere Protokolle als Bausteine nutzen können. Ein Beispiel: Ich stake ETH auf Lido und erhalte stETH. Dieses stETH nutze ich als Sicherheit auf Aave und leihe mir USDC. Das USDC swappe ich auf Curve gegen DAI. Das DAI stecke ich als LP-Position zurück in einen Curve-Pool und booste die Position auf Convex. Vier Protokolle, eine einzige Transaktion. In traditionellem Finanzwesen undenkbar.
 
 **[Slide 5]**
-Aber Komponierbarkeit hat eine Kehrseite. Je tiefer ein Baustein im Stack liegt, desto größer ist die systemische Wirkung, wenn er bricht. Wenn Lido depeggt, betrifft das jede Position, die stETH verwendet. Das ist Komponierbarkeits-Risiko — ein zentrales DeFi-Risiko, das wir systematisch in Modul 11 behandeln.
+Aber Komponierbarkeit hat eine Kehrseite. Je tiefer ein Baustein im Stack liegt, desto größer ist die systemische Wirkung, wenn er bricht. Wenn Lido depeggt, betrifft das jede Position, die stETH verwendet. Das ist Komponierbarkeits-Risiko — ein zentrales DeFi-Risiko, das wir systematisch in Modul 16 behandeln.
 
 **[Slide 6]**
 Zusammengefasst: DeFi ist keine Krypto-Marketingkampagne. Es ist eine technische Antwort auf strukturelle Probleme des bestehenden Finanzsystems. Aber jede Lösung bringt neue Risiken. Diese Risiken zu verstehen — das ist das eigentliche Ziel dieses Kurses.
@@ -339,7 +343,7 @@ Komponierbarkeits-Risiko: Je tiefer ein Baustein im Stack liegt, desto größer 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 6 Slides: Titel → 4 Probleme → 4 Prinzipien → Komponierbarkeits-Beispiel → Kehrseite/Risiko → Zusammenfassung
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Vier-Quadranten-Layout, Flussdiagramm Lido→Aave→Curve→Convex, Jenga-Turm-Metapher mit stETH-Depeg-Referenz Juni 2022
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -370,7 +374,7 @@ Eine Blockchain ist ein öffentliches, verteiltes Ledger. Stell es dir als eine 
 
 **Baustein 2: Smart Contracts**
 
-Ein Smart Contract ist ein Programm, das auf der Blockchain läuft. Der Code wird einmal bereitgestellt (deployed) und läuft dann deterministisch: gleicher Input → gleicher Output, immer. Niemand kann den Code ändern, sobald er deployed ist (außer er enthält gezielt eingebaute Upgrade-Mechanismen — mehr dazu in Modul 11).
+Ein Smart Contract ist ein Programm, das auf der Blockchain läuft. Der Code wird einmal bereitgestellt (deployed) und läuft dann deterministisch: gleicher Input → gleicher Output, immer. Niemand kann den Code ändern, sobald er deployed ist (außer er enthält gezielt eingebaute Upgrade-Mechanismen — mehr dazu in Modul 3).
 
 Ein einfaches Beispiel: Ein Smart Contract für einen dezentralen Exchange (DEX) enthält eine Funktion `swap(token_in, token_out, amount)`. Ruft eine Wallet diese Funktion mit 1 ETH → USDC auf, prüft der Contract die aktuellen Pool-Bestände, berechnet den Wechselkurs nach Formel, nimmt die 1 ETH entgegen und sendet entsprechendes USDC zurück — alles in derselben Transaktion, atomar, ohne menschliche Zustimmung.
 
@@ -515,7 +519,7 @@ Ein Smart Contract läuft auf einer Blockchain und wird von allen Validatoren gl
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 6 Slides: Titel → Blockchain → Smart Contract → Token → Wallet → Zusammenspiel der vier Bausteine
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Blockchain-Kette (Etherscan-Screenshot), vereinfachter `swap()`-Code, Token-Typ-Liste mit Logos, Private-Key-Signatur-Diagramm (MetaMask-Screenshot)
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -555,7 +559,7 @@ Wichtige Protokolle: Aave (größtes Lending-Protokoll), Compound, Morpho, Spark
 Stablecoins sind Tokens, die einen Peg zu einem externen Asset halten — meistens dem US-Dollar. Es gibt drei Haupttypen:
 - **Fiat-besichert** (USDC, USDT): gedeckt durch echte Dollar-Reserven bei einem Emittenten
 - **Krypto-besichert** (DAI, crvUSD): gedeckt durch On-Chain-Sicherheiten in Smart Contracts
-- **Algorithmisch** (historisch UST, FRAX-Varianten): durch Algorithmen stabilisiert, oft fragil
+- **Algorithmisch** (z.B. UST — historisches Beispiel): durch Algorithmen stabilisiert, oft fragil. Hybrid-Modelle wie FRAX kombinieren algorithmische Mechanismen mit Sicherheiten und gelten daher als teilweise besichert.
 
 Stablecoins sind das Rückgrat vieler DeFi-Operationen. Modul 8 behandelt sie vertieft.
 
@@ -708,6 +712,8 @@ Gehe auf defillama.com. Wähle die Top-10-Protokolle nach TVL. Ordne jedes der s
 <summary>Antwort anzeigen</summary>
 
 TVL zeigt, wie viel Kapital in einem Protokoll hinterlegt ist, was ein Indikator für Vertrauen und Nutzung ist. Aber TVL ist unvollständig: Er kann durch wenige Wale dominiert sein, kann durch recycelte Deposits aufgebläht werden (wenn das gleiche Kapital durch mehrere Protokolle gezählt wird), und er sagt nichts über Profitabilität oder Risiko aus. Ein hoher TVL ist kein Garant für Sicherheit — mehrere Hacks trafen hoch-TVL-Protokolle.
+
+TVL kann außerdem durch sogenannte Rehypothecation aufgebläht werden. Dabei wird dasselbe Kapital mehrfach in verschiedenen Protokollen verwendet und gezählt. Dadurch kann der aggregierte TVL höher erscheinen als die tatsächliche ökonomische Nutzung.
 </details>
 
 ### Video-Pipeline-Assets
@@ -715,7 +721,7 @@ TVL zeigt, wie viel Kapital in einem Protokoll hinterlegt ist, was ein Indikator
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → 6 Kategorien-Übersicht → DEXs → Lending → Stablecoins → Kapitalfluss-Diagramm → Navigations-Tools
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — 6 Kategorie-Kacheln, Uniswap-Screenshot, Aave-Markets-Übersicht, Stablecoin-Typen-Vergleich (USDC/DAI/UST), vollständiges Kapitalfluss-Diagramm, DeFiLlama-Homepage
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -730,7 +736,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Die sieben Kernrisiken in DeFi identifizieren und voneinander abgrenzen
 - Verstehen, wie sich diese Risiken in der Praxis manifestieren
 - Eine erste Risikobewertung für eine beliebige DeFi-Position durchführen
-- Smart Contract Risk, Oracle Risk, Liquidation Risk, Depeg Risk, Rug Pull Risk, Composability Risk und Operator Risk anhand realer historischer Beispiele erklären
+- Smart Contract Risk, Oracle Risk, Liquidation Risk, Depeg Risk, Rug Pull Risk, Composability Risk und User Risk anhand realer historischer Beispiele erklären
 - Ein Risikoprofil einer konkreten Position (z.B. USDC-Supply vs. stETH-Loop) als Matrix aufstellen
 - Mitigationsstrategien pro Risikodimension benennen und in eine konkrete Position einbauen
 
@@ -758,7 +764,7 @@ Mitigation: Arbeite mit konservativen Loan-to-Value-Ratios. Behandeln wir tief i
 
 **Risiko 4: Depeg-Risiko (Stablecoins und Pegged Assets)**
 
-Stablecoins sollen einen Peg halten. Wenn sie ihn verlieren, bist du als Halter oder LP direkt betroffen. USDC depeggte kurz im März 2023 (SVB-Krise). UST kollabierte komplett im Mai 2022. stETH depeggte temporär im Juni 2022.
+Stablecoins sollen einen Peg halten. Wenn sie ihn verlieren, bist du als Halter oder LP direkt betroffen. USDC depeggte kurz im März 2023 (SVB-Krise). UST brach vollständig zusammen im Mai 2022. stETH depeggte temporär im Juni 2022.
 
 Mitigation: Diversifikation über verschiedene Stablecoin-Typen. Depegs treten oft schnell auf; frühe Exits sind entscheidend.
 
@@ -766,111 +772,98 @@ Mitigation: Diversifikation über verschiedene Stablecoin-Typen. Depegs treten o
 
 Ein Team startet ein Protokoll, zieht Kapital an und flüchtet mit den Geldern. Das geschieht vorwiegend bei kleineren, nicht-auditierten Protokollen. Varianten: "Soft Rugs" über schleichende Admin-Privilegien, "Hard Rugs" über direkte Funktion zum Abzug.
 
+Eine weitere Variante ist das sogenannte Admin-Upgrade-Risiko. Ein Protokoll kann einen Upgrade-Mechanismus besitzen, der es dem Team erlaubt, den Smart-Contract-Code zu verändern. Wenn dieser Mechanismus missbraucht wird, kann ein zuvor sicheres Protokoll nachträglich manipuliert werden.
+
 Mitigation: Nur etablierte Protokolle mit verifiziertem Team und öffentlicher Governance nutzen.
 
 **Risiko 6: Komponierbarkeits-Risiko**
 
 In Lektion 1.2 eingeführt: Wenn ein tief liegendes Protokoll bricht, können darauf aufbauende Positionen kaskadieren. Ein Liquid-Staking-Token-Depeg kann Lending-Positionen liquidieren, die wiederum LP-Positionen beeinträchtigen.
 
-Mitigation: Stack-Tiefe deiner Positionen bewusst begrenzen. Behandeln wir in Modul 11.
+Mitigation: Stack-Tiefe deiner Positionen bewusst begrenzen. Behandeln wir in Modul 16.
 
-**Risiko 7: Betreiber-Risiko (Nutzer-Fehler)**
+**Risiko 7: User Risk (Nutzerfehler)**
 
-Falsche Adresse, falsche Chain, falsche Signatur, kompromittierter Seed — der Nutzer selbst ist oft die Schwachstelle. Schätzungen besagen, dass mehr Kapital durch Nutzer-Fehler verloren geht als durch Protokoll-Hacks.
+Falsche Adresse, falsche Chain, falsche Signatur, kompromittierter Seed — der Nutzer selbst ist oft die Schwachstelle. Schätzungen besagen, dass mehr Kapital durch Nutzerfehler verloren geht als durch Protokoll-Hacks.
 
 Mitigation: Hardware-Wallets, Multisig-Setups, Test-Transaktionen mit kleinen Beträgen. Modul 2 komplett.
 
 **Die Risiko-Matrix**
 
-Jede DeFi-Position hat ein Profil aus diesen sieben Risiken. Eine einfache Lending-Position auf Aave hat primär Smart-Contract-, Oracle-, Liquidations- und Betreiber-Risiko. Eine gehebelte Liquid-Staking-Loop-Position auf Aave mit stETH hat alle sieben Risiken gleichzeitig — weil sie vier Protokolle verkettet (Lido → Aave → Borrow ETH → Re-Stake → Loop).
+Jede DeFi-Position hat ein Profil aus diesen sieben Risiken. Eine einfache Lending-Position auf Aave hat primär Smart-Contract-, Oracle-, Liquidations- und User Risk. Eine gehebelte Liquid-Staking-Loop-Position auf Aave mit stETH hat alle sieben Risiken gleichzeitig — weil sie zwei Protokolle über mehrere Hops verkettet (Lido für Liquid Staking, Aave für Borrow, Re-Stake, Loop) — jeder Hop multipliziert die Oberflächenfläche für Risiken.
 
-Dein Job als DeFi-Nutzer ist nicht, Risiken zu vermeiden — sondern sie bewusst einzugehen und zu bepreisen.
+Deine Aufgabe als DeFi-Nutzer ist nicht, Risiken zu vermeiden — sondern sie bewusst einzugehen und zu bepreisen.
 
 ### Folien-Zusammenfassung
 
 **[Slide 1] — Titel**
 Die sieben Kernrisiken in DeFi
 
-**[Slide 2] — Risiko 1: Smart Contract**
-Bugs im Code → Kapitalverlust.
-Beispiele: Ronin (625M), Poly Network (611M).
+**[Slide 2] — Protokoll-Ebene (Teil 1): Smart Contract & Oracle**
+Smart Contract Risk: Bugs im Code → Kapitalverlust. Beispiele: Ronin (625M), Poly Network (611M).
+Oracle Risk: Manipulierte oder fehlerhafte Preisdaten → falsche Protokoll-Zustände. Typischer Vektor: Flashloan-Angriffe auf dünne Preisquellen.
 
-**[Slide 3] — Risiko 2: Oracle**
-Manipulierte/fehlerhafte Preisdaten → falsche Protokoll-Zustände.
-Typische Vektor: Flashloan-Angriffe.
+**[Slide 3] — Protokoll-Ebene (Teil 2): Liquidation & Depeg**
+Liquidation Risk: Sicherheitenwert fällt → Zwangsverkauf unter Abschlag. Mitigation: konservative LTV halten.
+Depeg Risk: Stablecoin oder Pegged Asset verliert Peg. Historie: USDC (März 2023), UST (Mai 2022), stETH (Juni 2022).
 
-**[Slide 4] — Risiko 3: Liquidation**
-Sicherheitenwert fällt → Zwangsverkauf unter Abschlag.
-Konservative LTV halten.
+**[Slide 4] — Akteurs-Ebene: Rug Pull & User Risk**
+Rug Pull: Team flüchtet mit Kapital. Primär bei kleinen, nicht-auditierten Protokollen.
+User Risk: Nutzerfehler (falsche Adresse, falsche Chain, kompromittierter Seed). Oft größter Kapitalverlust-Grund.
 
-**[Slide 5] — Risiko 4: Depeg**
-Stablecoin/Pegged Asset verliert Peg.
-Historie: USDC (März 2023), UST (Mai 2022), stETH (Juni 2022).
+**[Slide 5] — System-Ebene: Komponierbarkeits-Risiko**
+Ein Baustein bricht → Kaskade durch den gesamten Stack.
+Je tiefer der Stack, desto mehr Oberflächenfläche für Risiken.
+Mitigation: Stack-Tiefe bewusst begrenzen.
 
-**[Slide 6] — Risiko 5: Rug Pull**
-Team flüchtet mit Kapital.
-Primär bei kleinen, nicht-auditierten Protokollen.
+**[Slide 6] — Historische Beispiele**
+Smart Contract: Ronin (625M, März 2022), Poly Network (611M, August 2021).
+Depeg: UST (Mai 2022, Totalverlust), USDC (März 2023, kurzzeitig −13 %).
+Composability-Kaskade: stETH-Depeg (Juni 2022) → Liquidationen in mehreren Lending-Protokollen.
 
-**[Slide 7] — Risiko 6: Komponierbarkeit**
-Ein Baustein bricht → Kaskade durch den Stack.
-Stack-Tiefe bewusst begrenzen.
-
-**[Slide 8] — Risiko 7: Betreiber-Fehler**
-Falsche Adresse, falsche Chain, kompromittierter Seed.
-Oft größter Kapitalverlust-Grund.
-
-**[Slide 9] — Risiko-Matrix**
-Jede Position hat ein Risikoprofil.
-Ziel: Risiken erkennen, nicht vermeiden.
+**[Slide 7] — Risiko-Matrix: Einfach vs. gehebelt**
+Einfache USDC-Supply auf Aave: primär vier Risiken (Smart Contract, Oracle, Liquidation, User Risk).
+Gehebelte stETH-Loop auf Aave: alle sieben Risiken gleichzeitig.
+Ziel: Risiken erkennen und bepreisen, nicht vermeiden.
 
 ### Sprechertext
 
 **[Slide 1]**
-Die größte Gefahr in DeFi ist nicht, ein Risiko einzugehen — sondern ein Risiko einzugehen, das du nicht kennst. Wir gehen systematisch durch die sieben Kernrisiken.
+Die größte Gefahr in DeFi ist nicht, ein Risiko einzugehen — sondern ein Risiko einzugehen, das du nicht kennst. Wir gehen systematisch durch die sieben Kernrisiken. Sie gliedern sich in drei Ebenen: Protokoll-Ebene, Akteurs-Ebene und System-Ebene.
 
 **[Slide 2]**
-Risiko 1: Smart-Contract-Risiko. Ein Bug im Code kann Kapital zerstören oder einen Exploit ermöglichen. Smart Contracts sind unveränderlich — wenn der Bug entdeckt ist, ist es oft zu spät. Ronin-Bridge 2022, 625 Millionen Dollar. Poly Network 2021, 611 Millionen. Mitigation: Bevorzuge Protokolle mit mehreren unabhängigen Audits und langer Live-History.
+Auf der Protokoll-Ebene beginnen wir mit zwei fundamentalen Risiken. Erstens: Smart-Contract-Risiko. Ein Bug im Code kann Kapital zerstören oder einen Exploit ermöglichen. Smart Contracts sind unveränderlich — wenn der Bug entdeckt ist, ist es oft zu spät. Ronin-Bridge 2022, 625 Millionen Dollar. Poly Network 2021, 611 Millionen. Mitigation: Bevorzuge Protokolle mit mehreren unabhängigen Audits und langer Live-Historie. Zweitens: Oracle-Risiko. Viele Protokolle brauchen externe Preisdaten für Liquidationen und Kursberechnungen. Wenn ein Oracle manipuliert werden kann, gerät das ganze Protokoll in falsche Zustände. Der typische Vektor sind Flashloan-Angriffe auf dünne Preisquellen.
 
 **[Slide 3]**
-Risiko 2: Oracle-Risiko. Viele Protokolle brauchen externe Preisdaten für Liquidationen und Kursberechnungen. Oracles liefern diese Daten on-chain. Wenn ein Oracle manipuliert werden kann, kann das ganze Protokoll in falsche Zustände gebracht werden. Der typische Vektor sind Flashloan-Angriffe auf dünne Preisquellen.
+Weiter auf der Protokoll-Ebene: Risiko drei ist das Liquidationsrisiko. Wenn du einen Kredit mit Sicherheiten aufgenommen hast und der Wert der Sicherheiten fällt, wirst du liquidiert. Deine Sicherheiten werden unter Abschlag verkauft. Bei volatilen Märkten eskaliert das schnell. Die Mitigation sind konservative Loan-to-Value-Ratios. Wir behandeln Liquidationen tief in Modul 7. Risiko vier ist Depeg. Stablecoins und Pegged Assets sollen einen Peg halten. USDC depeggte kurz im März 2023 wegen der Silicon Valley Bank. UST brach im Mai 2022 vollständig zusammen und löschte mehr als 40 Milliarden Dollar aus. stETH depeggte temporär im Juni 2022. Depegs treten oft schnell auf — Sekunden bis Minuten. Diversifikation hilft.
 
 **[Slide 4]**
-Risiko 3: Liquidationsrisiko. Wenn du einen Kredit mit Sicherheiten aufgenommen hast und der Wert der Sicherheiten fällt, wirst du liquidiert. Deine Sicherheiten werden unter Abschlag verkauft. Bei volatilen Märkten eskaliert das schnell. Die Mitigation ist konservative Loan-to-Value-Ratios. Wir behandeln Liquidationen tief in Modul 7.
+Auf der Akteurs-Ebene haben wir zwei weitere Risiken. Risiko fünf: Rug Pull. Ein Team startet ein Protokoll, zieht Kapital an, flüchtet. Vorwiegend bei kleinen, nicht-auditierten Projekten. Soft Rugs gehen schleichend über Admin-Privilegien, Hard Rugs über direkte Abzugsfunktionen. Nur etablierte Protokolle mit öffentlicher Governance nutzen. Risiko sieben — wir nehmen es hier vor — ist das User Risk, also der Nutzerfehler. Du selbst bist oft die Schwachstelle. Falsche Adresse, falsche Chain, kompromittierter Seed. Schätzungen besagen: mehr Kapital geht durch Nutzerfehler verloren als durch Protokoll-Hacks. Hardware-Wallets, Multisig und Test-Transaktionen — Modul 2 behandelt das komplett.
 
 **[Slide 5]**
-Risiko 4: Depeg. Stablecoins und Pegged Assets sollen einen Peg halten. USDC depeggte kurz im März 2023 wegen der Silicon Valley Bank. UST kollabierte im Mai 2022 komplett und löschte mehr als 40 Milliarden Dollar aus. stETH depeggte temporär im Juni 2022. Depegs treten oft schnell auf — Sekunden bis Minuten. Diversifikation hilft.
+Die System-Ebene umfasst Risiko sechs: Komponierbarkeits-Risiko. Wenn ein tief liegendes Protokoll bricht, kaskadiert das durch alle darauf aufbauenden Positionen. Ein Liquid-Staking-Depeg kann Lending-Liquidationen auslösen, die ihrerseits LP-Positionen beeinträchtigen. Je tiefer dein Stack, desto mehr Oberflächenfläche. Dieses Risiko haben wir bereits in Lektion 1.2 eingeführt; es ist das zentrale systemische Risiko in DeFi und wird in Modul 16 vertieft behandelt.
 
 **[Slide 6]**
-Risiko 5: Rug Pull. Ein Team startet ein Protokoll, zieht Kapital an, flüchtet. Vorwiegend bei kleinen, nicht-auditierten Projekten. Soft Rugs gehen schleichend über Admin-Privilegien, Hard Rugs über direkte Abzugsfunktionen. Nur etablierte Protokolle mit öffentlicher Governance nutzen.
+Ein Blick in die Historie macht diese Risiken greifbar. Smart-Contract-Exploits: Ronin im März 2022 mit 625 Millionen Dollar, Poly Network im August 2021 mit 611 Millionen. Depeg-Ereignisse: UST im Mai 2022 als Totalverlust, USDC im März 2023 mit einem kurzzeitigen Abschlag von rund 13 Prozent. Und eine Composability-Kaskade: der stETH-Depeg im Juni 2022, der eine Welle von Liquidationen in mehreren Lending-Protokollen auslöste. Jedes dieser Ereignisse war im Prinzip vorhersehbar — wenn man die Risikostruktur verstanden hatte.
 
 **[Slide 7]**
-Risiko 6: Komponierbarkeit. Wenn ein tief liegendes Protokoll bricht, kaskadiert das durch alle darauf aufbauenden Positionen. Ein Liquid-Staking-Depeg kann Lending-Liquidationen auslösen, die LP-Positionen beeinträchtigen. Je tiefer dein Stack, desto mehr Oberflächenfläche.
-
-**[Slide 8]**
-Risiko 7: Betreiber-Fehler. Du selbst bist oft die Schwachstelle. Falsche Adresse, falsche Chain, kompromittierter Seed. Schätzungen besagen: mehr Kapital geht durch Nutzer-Fehler verloren als durch Protokoll-Hacks. Hardware-Wallets, Multisig, Test-Transaktionen — Modul 2 komplett.
-
-**[Slide 9]**
-Jede DeFi-Position hat ein Risikoprofil aus diesen sieben Dimensionen. Eine einfache Aave-Lending-Position trägt primär vier Risiken. Eine gehebelte Liquid-Staking-Loop trägt alle sieben. Dein Job ist nicht, Risiken zu vermeiden — sondern sie bewusst einzugehen und zu bepreisen. Das ist professionelles DeFi.
+Jede DeFi-Position hat ein Risikoprofil aus diesen sieben Dimensionen. Eine einfache USDC-Supply-Position auf Aave trägt primär vier Risiken: Smart Contract, Oracle, Liquidation auf Protokoll-Ebene, und User Risk beim Nutzer. Eine gehebelte stETH-Loop auf Aave trägt alle sieben Risiken gleichzeitig, weil sie mehrere Protokolle über mehrere Hops verkettet. Deine Aufgabe als DeFi-Nutzer ist nicht, Risiken zu vermeiden — sondern sie bewusst einzugehen und zu bepreisen. Das ist professionelles DeFi.
 
 ### Visuelle Vorschläge
 
-**[Slide 1]** Titelfolie mit "7 Risiken" prominent.
+**[Slide 1]** Titelfolie mit "7 Risiken" prominent, gegliedert in drei Ebenen (Protokoll, Akteur, System).
 
-**[Slide 2]** Chart der größten DeFi-Hacks nach Schadenshöhe. **SCREENSHOT SUGGESTION:** rekt.news Leaderboard oder DeFiLlama Hacks-Dashboard.
+**[Slide 2]** Zweigeteiltes Layout. Links: Chart der größten DeFi-Hacks nach Schadenshöhe (Ronin, Poly Network, Wormhole). Rechts: vereinfachtes Diagramm einer Oracle-Manipulation — Angreifer manipuliert dünne Preisquelle, Oracle gibt falschen Preis an abhängiges Protokoll weiter. **SCREENSHOT SUGGESTION:** rekt.news-Leaderboard oder DeFiLlama-Hacks-Dashboard.
 
-**[Slide 3]** Vereinfachtes Diagramm: Oracle liefert Preis an Protokoll. Angreifer manipuliert Preisquelle, Oracle gibt falschen Preis weiter.
+**[Slide 3]** Zweigeteiltes Layout. Links: Grafik einer Liquidationskaskade — Sicherheitenpreis fällt, Health Factor sinkt, Liquidation triggert, weiterer Preisfall durch Verkauf. Rechts: übereinandergelegtes Chart des UST-Kollapses Mai 2022 und des USDC-Depegs März 2023.
 
-**[Slide 4]** Grafik einer Liquidationskaskade — Sicherheiten-Preis fällt, Health Factor sinkt, Liquidation triggert, weiterer Preisfall durch Verkauf.
+**[Slide 4]** Zweigeteiltes Layout. Links: Liste bekannter Rug Pulls mit Schadenssummen — Betonung, dass alles aus dem kleinen, nicht-auditierten Protokoll-Segment stammt. Rechts: Pie-Chart "Verlustursachen in DeFi" mit Nutzerfehlern als prominentem Segment.
 
-**[Slide 5]** Chart des UST-Kollapses Mai 2022 und USDC-Depeg März 2023 nebeneinander.
+**[Slide 5]** Jenga-Turm-Analogie: Basis-Layer-Protokoll fällt, ganzer Stack kaskadiert. Zusätzlich ein kleines Flussdiagramm "Lido-Depeg → Aave-Liquidationen → LP-Kaskade" zur Veranschaulichung.
 
-**[Slide 6]** Liste bekannter Rug Pulls mit Schadenssummen. Betonung: alles aus dem kleinen-Protokoll-Segment.
+**[Slide 6]** Kombinierte Timeline der Schlüssel-Events: März 2022 Ronin, August 2021 Poly Network, Mai 2022 UST, Juni 2022 stETH, März 2023 USDC. Pro Event: Datum, Schadenshöhe, Risikokategorie. **SCREENSHOT SUGGESTION:** DeFiLlama-Chart des stETH/ETH-Ratios im Juni 2022.
 
-**[Slide 7]** Jenga-Turm-Analogie erneut: Base-Layer-Protokoll fällt, ganzer Stack kaskadiert.
-
-**[Slide 8]** Pie Chart: Verlustursachen in DeFi. Nutzer-Fehler prominent vertreten.
-
-**[Slide 9]** Spider-Diagramm: "Risikoprofil einer gehebelten stETH-Loop" vs. "Risikoprofil einer einfachen USDC-Supply-Position auf Aave".
+**[Slide 7]** Spider-Diagramm im Vergleich: "Risikoprofil einer einfachen USDC-Supply-Position auf Aave" (4 Achsen aktiv) vs. "Risikoprofil einer gehebelten stETH-Loop auf Aave" (alle 7 Achsen aktiv, höhere Ausprägungen).
 
 ### Übung
 
@@ -904,9 +897,9 @@ Fortgeschrittene Nutzer bauen oft tiefe Stacks mit vielen Protokollen (z.B. Liqu
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 9 Slides: Titel → je eine Slide pro Kernrisiko (Smart Contract, Oracle, Liquidation, Depeg, Rug Pull, Composability, Operator) → Risiko-Matrix
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min. wegen erweiterter Struktur)
-- `visual_plan.json` — rekt.news-Hack-Leaderboard, Oracle-Manipulation-Diagramm, Liquidationskaskade, UST/USDC-Depeg-Charts, Jenga-Turm (Composability), Verlust-Pie-Chart, Spider-Diagramm Risikoprofile
+- `slides_prompt.txt` — 7 Slides: Titel → Protokoll-Ebene Teil 1 (Smart Contract + Oracle) → Protokoll-Ebene Teil 2 (Liquidation + Depeg) → Akteurs-Ebene (Rug Pull + User Risk) → System-Ebene (Composability) → Historische Beispiele → Risiko-Matrix
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Hack-Leaderboard, Oracle-Manipulations-Diagramm, Liquidationskaskade, UST/USDC-Depeg-Charts, Jenga-Turm mit Kaskaden-Flussdiagramm, Event-Timeline, Spider-Diagramm Risikoprofile
 
 Pipeline: Gamma → ElevenLabs → CapCut.
 
@@ -1111,7 +1104,7 @@ Weil Transaktionen auf der Blockchain unwiderruflich sind. Falls die Empfängera
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Wallet-Auswahl → Seed-Phrase-Regeln → Multi-Chain-Konzept → Erste Transaktion → Etherscan-Verfolgung → "Was du jetzt NICHT tun solltest"
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min., Praxis-orientiert)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min., Praxis-orientiert)
 - `visual_plan.json` — Rabby-Homepage-Screenshot, Seed-Phrase-Beispiel (fiktiv/geblurred), Multi-Chain-Diagramm, Coinbase-Withdrawal-Screen, Etherscan-Transaktionsansicht, rote Warn-Icons
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1159,7 +1152,7 @@ Tokens sind keine digitalen Objekte, die in einer Wallet lagern — sie sind Ein
 <details>
 <summary>Antwort anzeigen</summary>
 
-Relevant: (1) Smart-Contract-Risiko (Aave-Code könnte einen Bug haben), (2) Oracle-Risiko (wenn auch für reine Supply-Positionen weniger direkt, aber relevant bei Markt-Pausen/Ausfällen), (3) Depeg-Risiko (USDC selbst kann depeggen, wie im März 2023 temporär geschehen), (4) Betreiber-Risiko (falsche Transaktion, kompromittierter Seed). Weniger relevant: (5) Liquidationsrisiko (nur bei Borrow-Positionen), (6) Rug-Pull-Risiko (Aave ist etabliert, öffentliche Governance), (7) Komponierbarkeits-Risiko (die Position baut nicht auf anderen Protokollen auf). Dies ist ein relativ konservatives Risikoprofil innerhalb des DeFi-Spektrums.
+Relevant: (1) Smart-Contract-Risiko (Aave-Code könnte einen Bug haben), (2) Oracle-Risiko (wenn auch für reine Supply-Positionen weniger direkt, aber relevant bei Markt-Pausen/Ausfällen), (3) Depeg-Risiko (USDC selbst kann depeggen, wie im März 2023 temporär geschehen), (4) User Risk (falsche Transaktion, kompromittierter Seed). Weniger relevant: (5) Liquidationsrisiko (nur bei Borrow-Positionen), (6) Rug-Pull-Risiko (Aave ist etabliert, öffentliche Governance), (7) Komponierbarkeits-Risiko (die Position baut nicht auf anderen Protokollen auf). Dies ist ein relativ konservatives Risikoprofil innerhalb des DeFi-Spektrums.
 </details>
 
 ---
@@ -1176,7 +1169,7 @@ Du hast in Modul 1 das konzeptionelle Fundament für alle weiteren Module gelegt
 
 **Landschaft:** Sechs Kategorien — DEX, Lending, Stablecoins, Liquid Staking, Derivate, Yield-Aggregatoren. DeFiLlama als Navigations-Tool.
 
-**Risiken:** Sieben Kernrisiken — Smart Contract, Oracle, Liquidation, Depeg, Rug Pull, Komponierbarkeit, Betreiber. Jede Position hat ein Profil dieser sieben Dimensionen.
+**Risiken:** Sieben Kernrisiken — Smart Contract, Oracle, Liquidation, Depeg, Rug Pull, Komponierbarkeit, User Risk. Jede Position hat ein Profil dieser sieben Dimensionen.
 
 **Praxis:** Wallet installiert, erste Transaktion ausgeführt, auf Etherscan verfolgt. Der Workflow sitzt.
 
