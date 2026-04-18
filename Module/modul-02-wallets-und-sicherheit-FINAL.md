@@ -11,7 +11,7 @@
 
 **Harmonisierte Terminologie (gültig im gesamten Modul):**
 - Private Key, Public Key, Adresse (kryptographische Hierarchie)
-- Seed Phrase (BIP-39), Derivation Path (BIP-44)
+- Seed-Phrase (BIP-39), Derivation Path (BIP-44)
 - Signature Risk (Transaction / Message / Typed Data / EIP-712)
 - Approval Risk (approve / transferFrom / Permit / Permit2)
 - Operator Risk (deutsch: Betreiber-Risiko)
@@ -48,7 +48,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Verstehen, warum Seed-Phrasen-Kompromittierung einem Total-Verlust gleichkommt
 - Die Einwegrichtung der kryptographischen Hierarchie anhand der Größenordnung des Schlüsselraums (2^256) erklären
 - BIP-44-Derivationspfade interpretieren und begründen, warum derselbe Seed in verschiedenen Wallet-Apps unterschiedliche Adressen zeigen kann
-- Einen bewussten Check der eigenen Wallet-Struktur (Private Key, Seed Phrase, mehrfache Accounts) sicher durchführen
+- Einen bewussten Check der eigenen Wallet-Struktur (Private Key, Seed-Phrase, mehrfache Accounts) sicher durchführen
 
 ### Erklärung
 
@@ -72,7 +72,7 @@ Die Hierarchie: `Private Key → Public Key → Adresse` — von links nach rech
 
 **Das Problem: Private Keys skalieren schlecht.** Eine lange Hex-Zeichenkette ist nicht merkbar. Wer mehrere Adressen verwenden will (aus Privacy- und Sicherheitsgründen oft sinnvoll), braucht mehrere Keys. Manuelles Verwalten wird schnell unpraktisch.
 
-**Die Lösung: BIP-39 und hierarchische deterministische Wallets.** BIP-39 ist der Standard, der Seed-Phrasen einführt — 12 oder 24 Wörter aus einer definierten Liste von 2048 Wörtern. Diese Wörter kodieren eine große Zufallszahl.
+**Die Lösung: BIP-39 und hierarchische deterministische Wallets.** BIP-39 ist der Standard, der Seed-Phrasen einführt — 12 oder 24 Wörter aus einer definierten Liste von 2048 Wörtern. Diese Wörter kodieren eine extrem große Zufallszahl.
 
 Beispiel einer 12-Wort-Seed-Phrase (fiktiv):
 ```
@@ -118,13 +118,13 @@ Seed-Phrase → Master-Seed → Master Private Key
 
 **[Slide 2]** Eine Wallet besteht aus drei Elementen. Aus dem Private Key wird der Public Key berechnet. Aus dem Public Key wird die Adresse gehasht. Von links nach rechts einfach berechenbar, rückwärts kryptographisch unmöglich.
 
-**[Slide 3]** Der Private Key ist eine 256-Bit-Zufallszahl. Der Zahlenraum umfasst etwa zehn hoch siebenundsiebzig mögliche Werte — in der Größenordnung der Atome im sichtbaren Universum. Niemand kann einen Private Key erraten. Wer den Key hat, kontrolliert die Adresse vollständig.
+**[Slide 3]** Der Private Key ist eine 256-Bit-Zufallszahl. Der Zahlenraum umfasst etwa zehn hoch siebenundsiebzig mögliche Werte — in der Größenordnung der Atome im sichtbaren Universum. Niemand kann einen Private Key erraten. Wer den Private Key hat, kontrolliert die Adresse vollständig.
 
 **[Slide 4]** Die Adresse ist ein Hash des Public Key, gekürzt auf 20 Bytes. Sie ist öffentlich, jeder sieht sie auf Etherscan. Aus der Adresse lässt sich weder der Public Key noch der Private Key rückrechnen. Deine Adresse zu teilen ist also sicher.
 
 **[Slide 5]** Problem: einzelne Private Keys skalieren schlecht. Lange Hex-Zeichenkette, nicht merkbar, mehrere Adressen erfordern mehrere Keys. Hier kommt BIP-39 ins Spiel.
 
-**[Slide 6]** BIP-39: zwölf oder vierundzwanzig Wörter aus einer definierten Liste von zweitausendachtundvierzig Wörtern. Diese kodieren eine große Zufallszahl. Aus dieser Seed-Phrase wird ein Master-Seed generiert, und aus dem Master-Seed werden deterministisch beliebig viele Private Keys abgeleitet. Eine Seed-Phrase, alle abgeleiteten Adressen.
+**[Slide 6]** BIP-39: zwölf oder vierundzwanzig Wörter aus einer definierten Liste von zweitausendachtundvierzig Wörtern. Diese kodieren eine extrem große Zufallszahl. Aus dieser Seed-Phrase wird ein Master-Seed generiert, und aus dem Master-Seed werden deterministisch beliebig viele Private Keys abgeleitet. Eine Seed-Phrase, alle abgeleiteten Adressen.
 
 **[Slide 7]** Die Kernkonsequenz: die Seed-Phrase ist dein Master-Schlüssel. Ihre Kompromittierung bedeutet Total-Verlust aller abgeleiteten Assets — auch solcher, die du noch gar nicht erstellt hast. Deshalb niemals digital speichern. Keine Screenshots, keine Cloud, keine Notiz-Apps. Wir behandeln Storage-Optionen in der nächsten Lektion.
 
@@ -187,7 +187,7 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 
 Nach Abschluss dieser Lektion können die Lernenden:
 - Die drei Hauptbedrohungsszenarien für Seed-Phrasen benennen
-- Papier-, Metall- und Shamir-Storage anhand realistischer Trade-offs vergleichen
+- Papier-, Metall- und Shamir-Storage anhand realistischer Kompromisse vergleichen
 - Ein Storage-Setup entsprechend dem eigenen Kapital- und Bedrohungsprofil wählen
 - Die Rolle der BIP-39-Passphrase als zusätzliche Schutzschicht gegen physischen Zwang und Seed-Phrase-Diebstahl einordnen
 - Ein Inheritance-Setup konzipieren, das Asset-Verlust bei Tod oder Handlungsunfähigkeit vermeidet
@@ -203,7 +203,7 @@ Eine Seed-Phrase sicher zu speichern ist das kritischste Einzelproblem in DeFi-S
 
 **Bedrohung 3: Zugangsverlust.** Du selbst oder deine Erben finden die Phrase nicht mehr wieder.
 
-Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche Phrase ist stehl-anfällig. Zusätzliche Kopien multiplizieren die Angriffsfläche. Das gute Setup ist ein bewusster Trade-off, kein Patentrezept.
+Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche Phrase ist stehl-anfällig. Zusätzliche Kopien multiplizieren die Angriffsfläche. Das gute Setup ist ein bewusster Kompromiss, kein Patentrezept.
 
 **Option 1: Papier**
 
@@ -308,7 +308,7 @@ Diese Tabelle ist Orientierung, nicht Dogma. Dein tatsächliches Bedrohungsprofi
 
 **[Slide 1]** Seed-Phrase-Storage ist das kritischste Einzelproblem in DeFi-Sicherheit.
 
-**[Slide 2]** Drei Bedrohungen: Diebstahl, Zerstörung, Zugangsverlust. Sie arbeiten oft gegeneinander. Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche ist stehl-anfällig. Kopien vermehren die Angriffsfläche. Gutes Setup ist Trade-off, nicht Patentrezept.
+**[Slide 2]** Drei Bedrohungen: Diebstahl, Zerstörung, Zugangsverlust. Sie arbeiten oft gegeneinander. Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche ist stehl-anfällig. Kopien vermehren die Angriffsfläche. Gutes Setup ist Kompromiss, nicht Patentrezept.
 
 **[Slide 3]** Papier: kostenlos, universell verständlich. Gut für Erben. Aber: Feuer, Wasser, verblassende Tinte. Für kleine Beträge ausreichend — bis vielleicht fünftausend Dollar. Für signifikantes Kapital zu riskant.
 
@@ -736,7 +736,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Die Funktionsweise und Schutzgrenzen von Hardware-Wallets verstehen
 - Ein Safe-Multisig-Setup konfigurieren und seinen Nutzen einordnen
 - Entscheiden, wann Hardware-Wallet vs. Multisig vs. beides angemessen ist
-- Drei typische Multisig-Konfigurationen (2-of-3 Personal, 3-of-5 Team, 2-of-2 Couple) in ihren Anwendungsfällen gegenüberstellen
+- Drei typische Multisig-Konfigurationen (2-of-3 Personal, 3-of-5 Team, 2-of-2 Paar) in ihren Anwendungsfällen gegenüberstellen
 - Die Rolle von Account Abstraction (ERC-4337) und Smart Wallets (Safe, Rhinestone, Ambire, Zerion) in der zukünftigen Wallet-Landschaft einordnen
 - Eine Entscheidungsmatrix anwenden, um das passende Wallet-Setup nach Kapitalstufe (< 1k / 1–10k / 10–100k / > 100k USD) zu wählen
 
@@ -787,7 +787,7 @@ Ein Multisig-Wallet erfordert mehrere Unterschriften für jede Transaktion. Komp
 - Owner 4–5: Externe Vertraute (z.B. Legal, Advisor)
 - Szenario: zwei Team-Mitglieder kompromittiert → Recovery noch möglich
 
-*2-of-2 Couple*
+*2-of-2 Paar*
 - Owner 1: Person A
 - Owner 2: Person B
 - Beide müssen zustimmen (z.B. ehegemeinschaftliche Finanzkontrolle)
@@ -834,7 +834,7 @@ Die Investition in Hardware-Wallet und Safe-Setup zahlt sich ab dem niedrigen 4-
 
 **[Slide 4]** Safe-Konzept: Smart Contract mit Owners-Liste und Threshold k-of-n.
 
-**[Slide 5]** Konfigurationen: 2-of-3 Personal, 3-of-5 Team, 2-of-2 Couple.
+**[Slide 5]** Konfigurationen: 2-of-3 Personal, 3-of-5 Team, 2-of-2 Paar.
 
 **[Slide 6]** Account Abstraction: ERC-4337, Smart Wallets, Recovery ohne Multisig-Komplexität.
 
@@ -850,11 +850,11 @@ Die Investition in Hardware-Wallet und Safe-Setup zahlt sich ab dem niedrigen 4-
 
 **[Slide 4]** Multisig: Safe ist die Standard-Implementierung. Ein Smart Contract mit einer Liste von Ownern und einem Threshold. Zum Beispiel zwei-von-drei: drei Signer definiert, zwei reichen für eine Transaktion. Kompromittierung einer einzelnen Wallet führt nicht zum Verlust.
 
-**[Slide 5]** Typische Konfigurationen. Zwei-von-drei persönlich: Hardware eins, Hardware zwei an anderem Ort, Mobile für Bestätigungen. Drei-von-fünf Team: Kernmitglieder plus externe Vertraute. Zwei-von-zwei Paar: gemeinsame Finanzkontrolle. Jede Konfiguration ist Trade-off zwischen Sicherheit und Bedienbarkeit.
+**[Slide 5]** Typische Konfigurationen. Zwei-von-drei persönlich: Hardware eins, Hardware zwei an anderem Ort, Mobile für Bestätigungen. Drei-von-fünf Team: Kernmitglieder plus externe Vertraute. Zwei-von-zwei Paar: gemeinsame Finanzkontrolle. Jede Konfiguration ist ein Kompromiss zwischen Sicherheit und Bedienbarkeit.
 
 **[Slide 6]** ERC-4337, seit 2023 live, bringt Account Abstraction. Smart Wallets können Social Recovery ohne Multisig-Komplexität, Session Keys für begrenzte Autorisierungen, Gasless Transactions. Safe, Rhinestone, Ambire, Zerion implementieren Teile davon. Das Feld wächst schnell.
 
-**[Slide 7]** Entscheidungsmatrix. Unter tausend Dollar: Software-Wallet reicht. Bis zehntausend: Software plus Hardware. Bis hunderttausend: Hardware als Default, separate DeFi-Wallet für aktive Positionen. Über hunderttausend: Safe mit mehreren Hardware-Wallets als Signer. Ab niedrigen vierstelligen Beträgen amortisiert sich die Investition in ordentliche Wallet-Infrastruktur.
+**[Slide 7]** Entscheidungsmatrix. Unter tausend Dollar: Software-Wallet reicht. Bis zehntausend: Software plus Hardware. Bis hunderttausend: Hardware als Default, separate DeFi-Wallet für aktive Positionen. Über hunderttausend: Safe-Multisig mit mehreren Hardware-Wallets als Signer. Ab niedrigen vierstelligen Beträgen amortisiert sich die Investition in ordentliche Wallet-Infrastruktur.
 
 ### Visuelle Vorschläge
 
@@ -862,7 +862,7 @@ Die Investition in Hardware-Wallet und Safe-Setup zahlt sich ab dem niedrigen 4-
 **[Slide 2]** Diagramm: Computer (kompromittiert?) ↔ Hardware-Wallet (isoliert) — mit Pfeil für Transaktion-Hinschicken und Signatur-Zurückgeben.
 **[Slide 3]** Zweigeteiltes Layout. Links: **SCREENSHOT SUGGESTION** Produktbilder von Ledger Nano S Plus, Trezor Model T, GridPlus Lattice1 nebeneinander. Rechts: drei rote Kreuze neben "Seed-Phrase-Diebstahl", "Böse Signatur bestätigt", "Phishing".
 **[Slide 4]** **SCREENSHOT SUGGESTION:** app.safe.global-Interface mit beispielhafter 2-of-3-Konfiguration und pending Transaction.
-**[Slide 5]** Drei Karten: Personal, Team, Couple — jede mit Icon und Szenario.
+**[Slide 5]** Drei Karten: Personal, Team, Paar — jede mit Icon und Szenario.
 **[Slide 6]** Diagramm: klassische EOA vs. Smart Wallet mit Zusatzfeatures.
 **[Slide 7]** Tabelle Kapital vs. Empfehlung.
 
@@ -918,7 +918,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Eine monatliche Sicherheits-Routine etablieren
 - Einen Notfall-Plan für den Fall einer Wallet-Kompromittierung dokumentieren
 - Die Kapital-Aufteilung zwischen Vault, DeFi- und Transaktions-Wallet begründet festlegen (Default 70/25/5)
-- Die drei mentalen Sicherheitsregeln (Annahme der Kompromittierung, Slow is Security, keine Nachsorge) in der täglichen Praxis anwenden
+- Die drei mentalen Sicherheitsregeln (Annahme der Kompromittierung, Langsamkeit ist Sicherheit, keine Rettung im Nachhinein) in der täglichen Praxis anwenden
 - Die Verzahnung von Storage, Signatur, Approval und Multisig zu einem konsistenten Produktions-Setup integrieren
 
 ### Erklärung
@@ -1010,7 +1010,7 @@ Sicherheit in DeFi ist kein Produkt, sondern eine Praxis. Die besten Setups werd
 Drei mentale Regeln:
 1. **Annahme der Kompromittierung:** Plane für den Fall, dass dein aktives Wallet gehackt ist. Was würde maximal verloren gehen? Ist das akzeptabel?
 2. **Slow ist Sicherheit:** Drainer leben von Hektik. Bei jeder ungewöhnlichen Signatur: zehn Sekunden pausieren, prüfen, dann signieren.
-3. **Kein Fix im Nachhinein:** Transaktionen sind unwiderruflich. Prävention ist alles, Nachsorge ist Verlustbegrenzung.
+3. **Kein Fix im Nachhinein:** Transaktionen sind unwiderruflich. Prävention ist alles, Reaktion nach dem Vorfall ist reine Verlustbegrenzung.
 
 ### Folien-Zusammenfassung
 
@@ -1024,7 +1024,7 @@ Drei mentale Regeln:
 
 **[Slide 5]** Notfall-Plan: neue Wallet, Assets transferieren, Approvals widerrufen.
 
-**[Slide 6]** Das Sicherheits-Mindset: Annahme der Kompromittierung, Slow is Security, keine Nachsorge.
+**[Slide 6]** Das Sicherheits-Mindset: Annahme der Kompromittierung, Langsamkeit ist Sicherheit („Slow is Security"), keine Rettung im Nachhinein.
 
 ### Sprechertext
 
@@ -1034,11 +1034,11 @@ Drei mentale Regeln:
 
 **[Slide 3]** Bei hunderttausend Dollar Gesamtkapital: siebzigtausend im Vault, fünfundzwanzigtausend in DeFi, fünftausend für Experimente. Die Zahlen sind Orientierung. Logik: je aktiver genutzt, desto weniger Kapital.
 
-**[Slide 4]** Monatliche Routine. Approval-Audit auf revoke.cash. Position-Check auf DeBank oder Zapper. Firmware- und Software-Updates. Backup-Zustand quartalsweise. Inheritance-Plan jährlich. Gute Sicherheit ist Disziplin, nicht einmaliges Setup.
+**[Slide 4]** Monatliche Routine. Approval-Audit auf revoke.cash oder Rabby. Position-Check auf DeBank oder Zapper. Firmware- und Software-Updates. Backup-Zustand quartalsweise. Inheritance-Plan jährlich. Gute Sicherheit ist Disziplin, nicht einmaliges Setup.
 
 **[Slide 5]** Notfall-Plan bei Kompromittierungsverdacht. Neue Wallet mit neuer Seed-Phrase auf sauberem Gerät erstellen. Alle wertvollen Assets transferieren. LP- und Lending-Positionen schließen. Dann Approvals der alten Wallet widerrufen. Geschwindigkeit ist entscheidend — oft hast du nur Sekunden bis Minuten.
 
-**[Slide 6]** Das Mindset. Annahme der Kompromittierung: plane für den Fall, dass dein aktives Wallet gehackt ist. Slow is Security: Drainer leben von Hektik, zehn Sekunden Pause bei ungewöhnlichen Signaturen. Keine Nachsorge: Transaktionen sind unwiderruflich, Prävention ist alles. Diese drei Prinzipien ersetzen keine technischen Werkzeuge — aber ohne sie sind die Werkzeuge wertlos.
+**[Slide 6]** Das Sicherheits-Mindset. Annahme der Kompromittierung: plane für den Fall, dass dein aktives Wallet gehackt ist. Langsamkeit ist Sicherheit — auf Englisch „Slow is Security": Drainer leben von Hektik, zehn Sekunden Pause bei ungewöhnlichen Signaturen. Keine Rettung im Nachhinein: Transaktionen sind unwiderruflich, Prävention ist alles. Diese drei Prinzipien ersetzen keine technischen Werkzeuge — aber ohne sie sind die Werkzeuge wertlos.
 
 ### Visuelle Vorschläge
 
@@ -1160,7 +1160,7 @@ In Modul 2 hast du das Sicherheits-Fundament gelegt, das alle weiteren Aktivitä
 
 **Notfall-Plan:** Bei Kompromittierungsverdacht — sofort Assets zu neuer Wallet, Positionen schließen, Approvals widerrufen, dann Ursachenanalyse. Geschwindigkeit entscheidet.
 
-**Das Sicherheits-Mindset:** Annahme der Kompromittierung, Slow is Security, keine Nachsorge möglich. Prävention ist alles.
+**Das Sicherheits-Mindset:** Annahme der Kompromittierung, Langsamkeit ist Sicherheit („Slow is Security"), keine Rettung im Nachhinein möglich. Prävention ist alles.
 
 **Was in Modul 3 kommt:** Blockchain-Mechanik. Wie Gas funktioniert (EIP-1559, Burn-Mechanismus). Was EIP-4844-Blobs für L2-Gebühren bedeuten. Der ERC-20-Token-Standard im Detail. Etherscan als Untersuchungs-Tool. Mit dem Sicherheits-Fundament aus Modul 2 kannst du ab Modul 3 selbst in kritische Protokoll-Details schauen, ohne dich zu gefährden.
 
