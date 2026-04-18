@@ -396,10 +396,15 @@ cd ../video-renderer
 node scripts/setup.js
 npm install
 
-# 3. Preflight (Exit 0 = bereit)
+# 3. Pre-Render-Validierung (pflicht vor Batch-Render, siehe unten)
+cd ..
+npm run validate-lessons
+
+# 4. Preflight auf Asset-Ebene (Voice + Visuals)
+cd video-renderer
 node scripts/preflight-check.js --lessons ../lesson-asset-generator/examples --assets ./assets-input
 
-# 4. Einzel-Render (MP4 + Poster)
+# 5. Einzel-Render (MP4 + Poster)
 node src/render-lesson.js \
   --lesson-id      module04-lesson02 \
   --generator      ../lesson-asset-generator/output \
@@ -408,10 +413,35 @@ node src/render-lesson.js \
   --output-video   ./output/videos/module04-lesson02.mp4 \
   --output-poster  ./output/posters/module04-lesson02.jpg
 
-# 5. Batch-Render aller Lektionen
+# 6. Batch-Render aller Lektionen
 node src/render-batch.js --generator ../lesson-asset-generator/output \
   --lessons ./lessons --assets ./assets-input --output ./output --parallel 2
 ```
+
+**Pre-Render-Validator (`scripts/validate-lessons.js`)**
+
+Pflicht-Gatekeeper vor jedem Batch-Render. Prüft jede Lektion in `lessons/` gegen die Regeln, die ein erfolgreicher Renderer-Lauf voraussetzt. Wenn hier ein `✖` kommt, bricht der Renderer sicher später ab.
+
+Aufruf: `npm run validate-lessons` (Exit 1 = mindestens ein Problem, Exit 0 = alles clear).
+
+Checks pro Lektion:
+
+| # | Check | Erwartung |
+|---|---|---|
+| 1 | Section Presence | 8 Pflicht-Sektionen (DE/EN-Alias): Lesson Title, Learning Objectives, Explanation, Slide Summary, Voice Narration Script, Visual Suggestions, Exercise, Quiz |
+| 2 | Slide Count | `Slide Summary` hat 6–7 Bullets |
+| 3 | Visual Requirements | mind. 1 Diagramm-Keyword, 1 Protocol-Example (Protokoll oder Protokollname wie Uniswap/Aave/Curve/…), 1 Concept-Visual |
+| 4 | Voice Script Breaks | generierte `voice_script.txt` enthält `<break time="..."/>` |
+| 5 | Video Duration Estimate | 300–600 Sekunden (aus `video_config.json::duration_seconds`, fallback: Source-Narration bei 2.5 wps) |
+| 6 | JSON Schema | `visual_plan.json` + `video_config.json` gegen die Schemas unter `lesson-asset-generator/schemas/` |
+
+Flags:
+
+-   `--lessons-dir <pfad>` — abweichendes Quellverzeichnis
+-   `--generator-output <pfad>` — abweichender Generator-Output
+-   `--skip-generated` — Checks 4 + 6 überspringen (nur Source-MD)
+
+Output: `✔ Module X Lesson Y OK` / `✖ Module X Lesson Y <Grund>`, am Ende `All lessons validated successfully.` oder Summary mit Fehlerquote.
 
 **Externe Inputs pro Lektion (manuell geliefert):**
 
@@ -491,6 +521,7 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 -   ✅ Video Style Engine (Theme, 9 Sektionen, Templates, Animation-Regeln)
 -   ✅ Lesson Asset Generator (MD → 4 Prod-Assets, Tests grün)
 -   ✅ Video Rendering Pipeline (Remotion, Batch-Runner, Preflight)
+-   ✅ Pre-Render-Validator (`scripts/validate-lessons.js` + `npm run validate-lessons`, 6 Checks, Exit 1 = Render-Stop)
 -   🚧 Rename-Brücke Renderer-Output → Plattform-Konvention (Phase 5.4)
 -   ⏳ Voice-Produktion für alle Lektionen (ElevenLabs, Phase 5.5)
 -   ⏳ Batch-Render aller Lektionen (Phase 5.6)
