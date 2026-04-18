@@ -165,6 +165,16 @@ Lesson-Page im Browser prüfen.
 
 ## Erledigt
 
+- ✅ Brand-System integriert (`brand/` als Single Source of Truth):
+  `brand/colors.json`, `brand/typography.json`, `brand/logo*.svg`,
+  `brand/design-guidelines.md` + `brand/sync-to-theme.js`.
+  Sync-Script regeneriert `video-style-engine/theme.json` und spiegelt
+  die Brand-Assets nach `video-style-engine/brand/`. Neue Intro-/Outro-/
+  Slide-Szenen mit Logo-Inline-SVG (`BrandShield`) übernommen.
+  `npm run sync:brand` + Integration in `npm run academy-build` (läuft
+  jetzt als erster Schritt). `video-renderer/scripts/setup.js` spiegelt
+  den brand/-Unterordner ebenfalls nach `remotion/style-engine/brand/`.
+  Doku: `docs/brand-system.md`.
 - ✅ Remotion-Bundle-Cache über Chunks: innerer
   `video-renderer/src/render-batch.js` + `render-lesson.js` akzeptieren
   jetzt `--bundle-cache <path>`, Top-Level `scripts/render-batch.js`

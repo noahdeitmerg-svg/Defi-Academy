@@ -19,7 +19,8 @@ Den Rest übernimmt die Pipeline.
 | --- | --- |
 | `npm run generate-assets` | Erzeugt pro Lektion `slides_prompt.txt`, `voice_script.txt`, `visual_plan.json`, `video_config.json` in `generated-assets/<id>/`. |
 | `npm run collect-prompts` | Sammelt Prompts flach in `gamma-prompts/` und `elevenlabs-prompts/` (als `<id>.txt`). |
-| `npm run academy-build` | Ruft `generate-assets` + `collect-prompts` hintereinander auf. |
+| `npm run academy-build` | Ruft `sync:brand` + `generate-assets` + `collect-prompts` hintereinander auf. |
+| `npm run sync:brand` | Generiert `video-style-engine/theme.json` + `video-style-engine/brand/` aus `/brand/colors.json` + `/brand/typography.json`. Pflicht nach Brand-Änderungen. |
 | `npm run check-assets` | Prüft, dass in `assets-input/<id>/` die Dateien `voice.mp3` und `visualNN.png` vollständig sind. |
 | `npm run render-videos` | Preflight-Check + Rendering aller Lektionen nach `videos/` (und `posters/`). |
 | `npm run publish-videos` | Verschiebt/kopiert Renderer-Output (`moduleXX-lessonYY.mp4`) unter Plattform-Slugs nach `public/videos/` + `public/posters/`. |

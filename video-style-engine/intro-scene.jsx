@@ -80,7 +80,7 @@ export const IntroScene = ({
           position: 'absolute',
           inset: 0,
           background:
-            'radial-gradient(circle at 50% 50%, rgba(79, 139, 255, 0.06) 0%, transparent 60%)',
+            'radial-gradient(circle at 50% 50%, rgba(245, 184, 65, 0.08) 0%, transparent 60%)',
           pointerEvents: 'none',
         }}
       />
@@ -103,7 +103,23 @@ export const IntroScene = ({
           }}
         />
 
-        {/* Logo */}
+        {/* Brand Shield (Logo symbol) */}
+        <div
+          style={{
+            opacity: logoOpacity,
+            transform: `translateY(${logoTranslateY}px)`,
+            width: 120,
+            height: 120,
+            marginBottom: theme.spacing.sm,
+          }}
+        >
+          <BrandShield
+            accentColor={theme.colors.accent.primary}
+            nodeColor={theme.colors.text.primary}
+          />
+        </div>
+
+        {/* Logo Wordmark */}
         <div
           style={{
             fontSize: theme.typography.scale.display.size,
@@ -157,3 +173,45 @@ export const IntroScene = ({
 };
 
 export default IntroScene;
+
+/**
+ * BrandShield
+ *
+ * Inline-SVG des DeFi Academy Logo-Symbols (Shield + Blockchain-Knoten).
+ * Inhaltlich identisch mit /brand/logo.svg, aber als React-Komponente,
+ * damit Remotion es ohne staticFile()-Asset-Resolution rendern kann.
+ *
+ * Quelle: /brand/logo.svg (siehe Brand System Dokumentation).
+ */
+export const BrandShield = ({ accentColor, nodeColor }) => (
+  <svg
+    viewBox="0 0 64 64"
+    width="100%"
+    height="100%"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Shield outline */}
+    <path
+      d="M32 4 L54 12 L54 32 C54 44.5 44.5 55 32 60 C19.5 55 10 44.5 10 32 L10 12 Z"
+      stroke={accentColor}
+      strokeWidth={2}
+      strokeLinejoin="round"
+      fill="none"
+    />
+    {/* Connection lines */}
+    <g stroke={nodeColor} strokeWidth={1.5} strokeLinecap="round">
+      <line x1="32" y1="32" x2="24" y2="22" />
+      <line x1="32" y1="32" x2="40" y2="22" />
+      <line x1="32" y1="32" x2="32" y2="44" />
+    </g>
+    {/* Outer nodes */}
+    <g fill={nodeColor}>
+      <circle cx="24" cy="22" r="3.2" />
+      <circle cx="40" cy="22" r="3.2" />
+      <circle cx="32" cy="44" r="3.2" />
+    </g>
+    {/* Center node (accent) */}
+    <circle cx="32" cy="32" r="4.2" fill={accentColor} />
+  </svg>
+);

@@ -97,6 +97,22 @@ function main() {
   // The original files reference ./theme.json relatively — they already do.
   // Nothing to patch; copying preserves that.
 
+  // 1b: Mirror brand assets (logos, colors, typography) if present.
+  //     The scenes embed the logo inline as SVG, so this mirror is only
+  //     a convenience for future staticFile() lookups and documentation.
+  const brandSrc = path.join(stylePath, 'brand');
+  if (fs.existsSync(brandSrc)) {
+    const brandDest = path.join(styleEngineTarget, 'brand');
+    fs.mkdirSync(brandDest, { recursive: true });
+    for (const entry of fs.readdirSync(brandSrc, { withFileTypes: true })) {
+      if (!entry.isFile()) continue;
+      copyFileSafe(
+        path.join(brandSrc, entry.name),
+        path.join(brandDest, entry.name)
+      );
+    }
+  }
+
   console.log('');
 
   // Step 2: Mirror generator's parser + section-mapper into src/external/

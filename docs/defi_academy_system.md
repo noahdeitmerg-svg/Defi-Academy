@@ -395,9 +395,17 @@ Drei voneinander unabhängige Komponenten im Repo-Root. Jede hat eine scharfe Ro
 
 | Komponente | Rolle | Schlüssel-Input | Schlüssel-Output |
 |---|---|---|---|
-| `video-style-engine/` | Design-System + Remotion-Templates | `theme.json`, `visual-timing.json`, `animation-rules.json`, `slide-template.jsx`, `intro-scene.jsx`, `outro-scene.jsx` | wird vom Renderer gespiegelt |
+| `brand/` | **Single Source of Truth** für Farben, Typografie, Logos, Design-Guidelines | `colors.json`, `typography.json`, `logo*.svg`, `design-guidelines.md` | propagiert via `brand/sync-to-theme.js` in `video-style-engine/theme.json` + `video-style-engine/brand/` |
+| `video-style-engine/` | Design-System + Remotion-Templates | `theme.json` (aus `brand/` generiert), `visual-timing.json`, `animation-rules.json`, `slide-template.jsx`, `intro-scene.jsx`, `outro-scene.jsx` | wird vom Renderer gespiegelt |
 | `lesson-asset-generator/` | Markdown → 4 Prod-Assets | `lesson.md` | `slides_prompt.txt`, `voice_script.txt`, `visual_plan.json`, `video_config.json` |
 | `video-renderer/` | Remotion-Bundle + Batch-Runner | Generator-Output + `assets-input/moduleXX-lessonYY/{voice.mp3,visuals/*}` | `videos/moduleXX-lessonYY.mp4`, `posters/moduleXX-lessonYY.jpg` |
+
+> **Brand-Änderungsprozess:** Änderungen immer in `brand/colors.json`,
+> `brand/typography.json` oder `brand/logo*.svg`. Dann `npm run sync:brand`
+> → regeneriert `video-style-engine/theme.json`. Dann im Renderer
+> `node scripts/setup.js`. Niemals `video-style-engine/theme.json`
+> direkt editieren — wird vom Sync überschrieben. Vollständige Regeln
+> in [`docs/brand-system.md`](./brand-system.md).
 
 **Video-Struktur (9 Sektionen, fix, definiert in `visual-timing.json`):**
 

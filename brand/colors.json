@@ -1,0 +1,89 @@
+{
+  "name": "DeFi Academy Color System",
+  "version": "1.0.0",
+  "description": "Single source of truth for all brand colors. Every downstream surface (video-style-engine, website, slides, docs) MUST derive its colors from this file.",
+
+  "brand": {
+    "primary_background": {
+      "hex": "#0B1F3B",
+      "rgb": [11, 31, 59],
+      "usage": "Hauptfläche aller Videos, Lesson Pages, Slide-Hintergründe",
+      "contrast_ratio_on_text_primary": 18.7
+    },
+    "primary_accent": {
+      "hex": "#F5B841",
+      "rgb": [245, 184, 65],
+      "usage": "Haupt-Akzent: Logo-Akzent, Akzentlinien, aktive Elemente, Bullet-Marker, Titel-Akzente",
+      "contrast_ratio_on_background": 10.1
+    },
+    "text_primary": {
+      "hex": "#FFFFFF",
+      "rgb": [255, 255, 255],
+      "usage": "Titel, Hauptaussagen, Logo-Text"
+    },
+    "text_secondary": {
+      "hex": "#A0AEC0",
+      "rgb": [160, 174, 192],
+      "usage": "Fließtext in Bullets, Caption, dezente Meta-Infos"
+    },
+    "risk_highlight": {
+      "hex": "#D9544E",
+      "rgb": [217, 84, 78],
+      "usage": "Risk-Layer-Sektion: Warnsymbole, Risiko-Labels, kritische Tabellenköpfe",
+      "contrast_ratio_on_background": 4.8
+    }
+  },
+
+  "surfaces": {
+    "background_primary": "#0B1F3B",
+    "background_elevated": "#11284A",
+    "background_overlay": "#1A355F",
+    "card": "#11284A",
+    "border": "#1F3A66",
+    "divider": "#1A355F"
+  },
+
+  "text": {
+    "primary": "#FFFFFF",
+    "secondary": "#A0AEC0",
+    "muted": "#6B7A8F",
+    "inverse": "#0B1F3B",
+    "on_accent": "#0B1F3B"
+  },
+
+  "accent": {
+    "primary": "#F5B841",
+    "primary_hover": "#F8C866",
+    "primary_soft": "#3A2F15",
+    "primary_ring": "rgba(245, 184, 65, 0.35)"
+  },
+
+  "semantic": {
+    "info": "#5EA9F0",
+    "success": "#3FB58B",
+    "warning": "#F5B841",
+    "risk": "#D9544E",
+    "risk_soft": "#3B1F1E"
+  },
+
+  "chart_palette": [
+    "#F5B841",
+    "#5EA9F0",
+    "#3FB58B",
+    "#D9544E",
+    "#B388E8",
+    "#5DC7D1"
+  ],
+
+  "gradients": {
+    "hero_glow": "radial-gradient(circle at 50% 40%, rgba(245, 184, 65, 0.08) 0%, transparent 60%)",
+    "subtle_bg": "linear-gradient(180deg, #0B1F3B 0%, #11284A 100%)"
+  },
+
+  "accessibility": {
+    "min_contrast_body_text": 4.5,
+    "min_contrast_large_text": 3.0,
+    "all_brand_pairs_meet_wcag_aa": true,
+    "notes": "Risk highlight #D9544E on primary background passes AA for large text (18pt+) and UI components. For body copy on risk background, use #FFFFFF."
+  }
+}

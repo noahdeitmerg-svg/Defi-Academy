@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DeFi Academy Brand Preview
+  Zeigt drei Slide-Typen im echten Brand-Design nebeneinander:
+    1. Intro-Slide mit Logo-Shield
+    2. Content-Slide (Section: Mechanismus)
+    3. Risk-Slide (Akzent auf Rot #D9544E)
+  Zweck: visuelle Verifikation des Brand-Systems vor dem ersten Video-Render.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1280" font-family="Inter, system-ui, sans-serif">
+  <!-- Page background (neutral grey so we see slide borders) -->
+  <rect width="1920" height="1280" fill="#1a1d20"/>
+
+  <!-- ======================= SLIDE 1: INTRO ======================= -->
+  <g transform="translate(60, 60)">
+    <rect width="580" height="326" fill="#0B1F3B" rx="8"/>
+    <!-- radial glow -->
+    <circle cx="290" cy="150" r="220" fill="#F5B841" opacity="0.04"/>
+
+    <!-- accent line -->
+    <rect x="200" y="58" width="180" height="2" fill="#F5B841" rx="1"/>
+
+    <!-- shield logo -->
+    <g transform="translate(260, 78) scale(0.9)">
+      <path d="M32 4 L54 12 L54 32 C54 44.5 44.5 55 32 60 C19.5 55 10 44.5 10 32 L10 12 Z"
+            stroke="#F5B841" stroke-width="2" fill="none"/>
+      <g stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round">
+        <line x1="32" y1="32" x2="24" y2="22" />
+        <line x1="32" y1="32" x2="40" y2="22" />
+        <line x1="32" y1="32" x2="32" y2="44" />
+      </g>
+      <g fill="#FFFFFF">
+        <circle cx="24" cy="22" r="3.2" />
+        <circle cx="40" cy="22" r="3.2" />
+        <circle cx="32" cy="44" r="3.2" />
+      </g>
+      <circle cx="32" cy="32" r="4.2" fill="#F5B841" />
+    </g>
+
+    <!-- wordmark -->
+    <text x="290" y="215" font-size="34" font-weight="700" letter-spacing="-0.025em" text-anchor="middle">
+      <tspan fill="#FFFFFF">DeFi </tspan><tspan fill="#F5B841">Academy</tspan>
+    </text>
+
+    <!-- module/lesson label -->
+    <text x="290" y="252" font-size="10" font-weight="600" letter-spacing="1.4" fill="#A0AEC0" text-anchor="middle">
+      MODUL 04 · LEKTION 02
+    </text>
+
+    <text x="290" y="296" font-size="12" font-weight="500" fill="#A0AEC0" text-anchor="middle">
+      Automated Market Maker: Das Constant-Product-Modell
+    </text>
+  </g>
+
+  <g transform="translate(60, 410)">
+    <text font-size="14" font-weight="600" fill="#6B7A8F" letter-spacing="0.08em">1 · INTRO SCENE</text>
+  </g>
+
+  <!-- ======================= SLIDE 2: CONTENT ======================= -->
+  <g transform="translate(670, 60)">
+    <rect width="580" height="326" fill="#0B1F3B" rx="8"/>
+
+    <!-- top meta -->
+    <text x="24" y="34" font-size="10" font-weight="600" letter-spacing="1.4" fill="#6B7A8F">
+      MODUL 04 · LEKTION 02
+    </text>
+    <!-- section pill -->
+    <g transform="translate(460, 18)">
+      <rect width="96" height="22" rx="11" fill="none" stroke="#F5B841"/>
+      <text x="48" y="15" font-size="9" font-weight="600" letter-spacing="1.4" fill="#F5B841" text-anchor="middle">MECHANISMUS</text>
+    </g>
+
+    <!-- title with accent bar -->
+    <rect x="24" y="58" width="4" height="30" fill="#F5B841" rx="2"/>
+    <text x="36" y="82" font-size="26" font-weight="700" letter-spacing="-0.015em" fill="#FFFFFF">
+      Mechanismus
+    </text>
+
+    <!-- bullets -->
+    <g transform="translate(24, 120)">
+      <g>
+        <rect x="0" y="8" width="10" height="2" fill="#F5B841" rx="1"/>
+        <text x="18" y="14" font-size="13" fill="#A0AEC0">x · y = k, Produkt bleibt konstant</text>
+      </g>
+      <g transform="translate(0, 28)">
+        <rect x="0" y="8" width="10" height="2" fill="#F5B841" rx="1"/>
+        <text x="18" y="14" font-size="13" fill="#A0AEC0">Preis = Verhältnis der Reserven y/x</text>
+      </g>
+      <g transform="translate(0, 56)">
+        <rect x="0" y="8" width="10" height="2" fill="#F5B841" rx="1"/>
+        <text x="18" y="14" font-size="13" fill="#A0AEC0">Gebühr: 0.3 % pro Swap</text>
+      </g>
+      <g transform="translate(0, 84)">
+        <rect x="0" y="8" width="10" height="2" fill="#F5B841" rx="1"/>
+        <text x="18" y="14" font-size="13" fill="#A0AEC0">Große Swaps erzeugen Slippage</text>
+      </g>
+    </g>
+
+    <!-- visual area placeholder (diagram) -->
+    <g transform="translate(290, 100)">
+      <rect width="260" height="170" fill="#11284A" stroke="#1F3A66" rx="6"/>
+      <!-- pseudo diagram: bonding curve -->
+      <path d="M 30 150 Q 80 60, 160 40 T 240 30" fill="none" stroke="#F5B841" stroke-width="2"/>
+      <circle cx="90" cy="88" r="3" fill="#FFFFFF"/>
+      <circle cx="160" cy="47" r="3" fill="#FFFFFF"/>
+      <text x="130" y="165" font-size="9" fill="#A0AEC0" text-anchor="middle">Bonding Curve x·y=k</text>
+    </g>
+
+    <!-- footer -->
+    <rect x="24" y="290" width="532" height="1" fill="#1A355F"/>
+    <text x="24" y="310" font-size="10" fill="#A0AEC0">
+      <tspan fill="#FFFFFF">DeFi </tspan><tspan fill="#F5B841">Academy</tspan>
+    </text>
+    <text x="556" y="310" font-size="10" fill="#6B7A8F" text-anchor="end">03 / 07</text>
+  </g>
+
+  <g transform="translate(670, 410)">
+    <text font-size="14" font-weight="600" fill="#6B7A8F" letter-spacing="0.08em">2 · CONTENT SLIDE (standard accent)</text>
+  </g>
+
+  <!-- ======================= SLIDE 3: RISK ======================= -->
+  <g transform="translate(1280, 60)">
+    <rect width="580" height="326" fill="#0B1F3B" rx="8"/>
+
+    <!-- top meta -->
+    <text x="24" y="34" font-size="10" font-weight="600" letter-spacing="1.4" fill="#6B7A8F">
+      MODUL 04 · LEKTION 02
+    </text>
+    <!-- risk section pill -->
+    <g transform="translate(492, 18)">
+      <rect width="64" height="22" rx="11" fill="none" stroke="#D9544E"/>
+      <text x="32" y="15" font-size="9" font-weight="600" letter-spacing="1.4" fill="#D9544E" text-anchor="middle">RISIKO</text>
+    </g>
+
+    <!-- title with risk accent bar -->
+    <rect x="24" y="58" width="4" height="30" fill="#D9544E" rx="2"/>
+    <text x="36" y="82" font-size="26" font-weight="700" letter-spacing="-0.015em" fill="#FFFFFF">
+      Risikoebene
+    </text>
+
+    <!-- bullets -->
+    <g transform="translate(24, 120)">
+      <g>
+        <rect x="0" y="8" width="10" height="2" fill="#D9544E" rx="1"/>
+        <text x="18" y="14" font-size="13" fill="#A0AEC0">Slippage bei großen Swaps</text>
+      </g>
+      <g transform="translate(0, 28)">
+        <rect x="0" y="8" width="10" height="2" fill="#D9544E" rx="1"/>
+        <text x="18" y="14" font-size="13" fill="#A0AEC0">Impermanent Loss bei Preisdivergenz</text>
+      </g>
+      <g transform="translate(0, 56)">
+        <rect x="0" y="8" width="10" height="2" fill="#D9544E" rx="1"/>
+        <text x="18" y="14" font-size="13" fill="#A0AEC0">Smart-Contract-Exploits</text>
+      </g>
+      <g transform="translate(0, 84)">
+        <rect x="0" y="8" width="10" height="2" fill="#D9544E" rx="1"/>
+        <text x="18" y="14" font-size="13" fill="#A0AEC0">Oracle-Manipulation</text>
+      </g>
+    </g>
+
+    <!-- visual area: risk table -->
+    <g transform="translate(290, 100)">
+      <rect width="260" height="170" fill="#11284A" stroke="#1F3A66" rx="6"/>
+      <rect x="0" y="0" width="260" height="26" fill="#D9544E" opacity="0.15"/>
+      <rect x="0" y="25" width="260" height="1" fill="#D9544E"/>
+      <text x="16" y="18" font-size="10" font-weight="600" fill="#D9544E">RISIKO</text>
+      <text x="130" y="18" font-size="10" font-weight="600" fill="#D9544E">AUSWIRKUNG</text>
+
+      <text x="16" y="48" font-size="10" fill="#A0AEC0">Slippage</text>
+      <text x="130" y="48" font-size="10" fill="#A0AEC0">Schlechterer Kurs</text>
+
+      <text x="16" y="72" font-size="10" fill="#A0AEC0">Imp. Loss</text>
+      <text x="130" y="72" font-size="10" fill="#A0AEC0">Opport.-Kosten</text>
+
+      <text x="16" y="96" font-size="10" fill="#A0AEC0">Exploit</text>
+      <text x="130" y="96" font-size="10" fill="#A0AEC0">Totalverlust</text>
+    </g>
+
+    <!-- footer -->
+    <rect x="24" y="290" width="532" height="1" fill="#1A355F"/>
+    <text x="24" y="310" font-size="10" fill="#A0AEC0">
+      <tspan fill="#FFFFFF">DeFi </tspan><tspan fill="#F5B841">Academy</tspan>
+    </text>
+    <text x="556" y="310" font-size="10" fill="#6B7A8F" text-anchor="end">05 / 07</text>
+  </g>
+
+  <g transform="translate(1280, 410)">
+    <text font-size="14" font-weight="600" fill="#6B7A8F" letter-spacing="0.08em">3 · RISK SLIDE (#D9544E accent)</text>
+  </g>
+
+  <!-- ======================= BRAND TOKENS OVERVIEW ======================= -->
+  <g transform="translate(60, 460)">
+    <text font-size="24" font-weight="700" fill="#FFFFFF" letter-spacing="-0.015em">Brand Tokens</text>
+    <text x="0" y="28" font-size="12" fill="#A0AEC0">Single source of truth: /brand/colors.json</text>
+  </g>
+
+  <!-- Color swatches -->
+  <g transform="translate(60, 530)">
+    <!-- Background -->
+    <rect width="200" height="120" fill="#0B1F3B" rx="6"/>
+    <rect width="200" height="120" fill="none" stroke="#1F3A66" rx="6"/>
+    <text x="16" y="32" font-size="10" fill="#A0AEC0" letter-spacing="1.2">PRIMARY BG</text>
+    <text x="16" y="62" font-size="16" font-weight="700" fill="#FFFFFF">#0B1F3B</text>
+    <text x="16" y="86" font-size="10" fill="#A0AEC0">Deep navy</text>
+
+    <!-- Accent Gold -->
+    <g transform="translate(220, 0)">
+      <rect width="200" height="120" fill="#F5B841" rx="6"/>
+      <text x="16" y="32" font-size="10" fill="#0B1F3B" letter-spacing="1.2" font-weight="600">PRIMARY ACCENT</text>
+      <text x="16" y="62" font-size="16" font-weight="700" fill="#0B1F3B">#F5B841</text>
+      <text x="16" y="86" font-size="10" fill="#0B1F3B" opacity="0.7">Gold</text>
+    </g>
+
+    <!-- Text -->
+    <g transform="translate(440, 0)">
+      <rect width="200" height="120" fill="#11284A" rx="6"/>
+      <rect width="200" height="120" fill="none" stroke="#1F3A66" rx="6"/>
+      <text x="16" y="32" font-size="10" fill="#A0AEC0" letter-spacing="1.2">TEXT</text>
+      <text x="16" y="62" font-size="16" font-weight="700" fill="#FFFFFF">#FFFFFF</text>
+      <text x="16" y="86" font-size="10" fill="#A0AEC0">Primary</text>
+    </g>
+
+    <!-- Secondary Text -->
+    <g transform="translate(660, 0)">
+      <rect width="200" height="120" fill="#11284A" rx="6"/>
+      <rect width="200" height="120" fill="none" stroke="#1F3A66" rx="6"/>
+      <text x="16" y="32" font-size="10" fill="#A0AEC0" letter-spacing="1.2">SECONDARY TEXT</text>
+      <text x="16" y="62" font-size="16" font-weight="700" fill="#A0AEC0">#A0AEC0</text>
+      <text x="16" y="86" font-size="10" fill="#A0AEC0">Bullets, captions</text>
+    </g>
+
+    <!-- Risk -->
+    <g transform="translate(880, 0)">
+      <rect width="200" height="120" fill="#D9544E" rx="6"/>
+      <text x="16" y="32" font-size="10" fill="#FFFFFF" letter-spacing="1.2" font-weight="600">RISK HIGHLIGHT</text>
+      <text x="16" y="62" font-size="16" font-weight="700" fill="#FFFFFF">#D9544E</text>
+      <text x="16" y="86" font-size="10" fill="#FFFFFF" opacity="0.85">Risk layer only</text>
+    </g>
+  </g>
+
+  <!-- Typography preview -->
+  <g transform="translate(60, 710)">
+    <text font-size="24" font-weight="700" fill="#FFFFFF" letter-spacing="-0.015em">Typography</text>
+    <text x="0" y="28" font-size="12" fill="#A0AEC0">Inter — 400 / 500 / 600 / 700</text>
+
+    <!-- Title 64 -->
+    <text x="0" y="100" font-size="64" font-weight="700" letter-spacing="-0.02em" fill="#FFFFFF">Title 64/700</text>
+    <text x="0" y="130" font-size="10" fill="#6B7A8F" letter-spacing="1.2">INTRO &amp; LESSON TITLE</text>
+
+    <!-- Slide title 48 -->
+    <text x="0" y="205" font-size="48" font-weight="700" letter-spacing="-0.015em" fill="#FFFFFF">Slide Title 48/700</text>
+    <text x="0" y="230" font-size="10" fill="#6B7A8F" letter-spacing="1.2">CONTENT SLIDES</text>
+
+    <!-- Body 28 -->
+    <text x="0" y="285" font-size="28" font-weight="400" fill="#FFFFFF">Body text at 28 px / 400 — runs across multiple lines.</text>
+    <text x="0" y="305" font-size="10" fill="#6B7A8F" letter-spacing="1.2">BODY</text>
+
+    <!-- Bullet 26 -->
+    <text x="0" y="355" font-size="26" font-weight="400" fill="#A0AEC0">— Bullet point at 26 px, in #A0AEC0 secondary text</text>
+    <text x="0" y="375" font-size="10" fill="#6B7A8F" letter-spacing="1.2">BULLETS</text>
+
+    <!-- Section label 18 -->
+    <text x="0" y="420" font-size="18" font-weight="600" fill="#F5B841" letter-spacing="1.4">SECTION LABEL 18/600 UPPERCASE</text>
+    <text x="0" y="440" font-size="10" fill="#6B7A8F" letter-spacing="1.2">PILLS, META, NAV</text>
+  </g>
+
+  <!-- Footer watermark -->
+  <text x="960" y="1240" font-size="10" fill="#6B7A8F" text-anchor="middle" letter-spacing="1.2">
+    DEFI ACADEMY · BRAND PREVIEW · VERSION 1.0.0
+  </text>
+</svg>
