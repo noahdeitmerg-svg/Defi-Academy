@@ -14,7 +14,7 @@
 - Seed-Phrase (BIP-39), Derivation Path (BIP-44)
 - Signature Risk (Transaction / Message / Typed Data / EIP-712)
 - Approval Risk (approve / transferFrom / Permit / Permit2)
-- Operator Risk (deutsch: Betreiber-Risiko)
+- User Risk (Nutzerfehler)
 - Smart Contract Risk
 - Multisig, Threshold, Safe (früher Gnosis Safe)
 
