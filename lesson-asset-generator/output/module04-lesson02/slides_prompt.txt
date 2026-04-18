@@ -1,136 +1,150 @@
-# GAMMA SLIDE DECK PROMPT
+# GAMMA VISUAL ASSET PROMPT
 
-Lesson ID: module04-lesson02
-Module: 04
-Lesson: 02
-Title: Automated Market Maker: Das Constant-Product-Modell
+> This prompt produces **individual visual assets** (diagrams,
+> illustrations, charts, conceptual visuals). It is **NOT** a
+> slide-layout prompt.
 
-## Designvorgaben (zwingend einhalten)
+## Scope — read before generating
 
-- Dunkler Hintergrund (#0B0F14), Text in Weiss/Grau-Toenen
-- Akzentfarbe Blau (#4F8BFF); Risiko-Sektion in Rot (#D9544E)
-- Schriftart: Inter
-- Pro Slide: Titel + 3-4 Bullet Points + 1 visuelles Element rechts
-- Minimale Dekoration, keine Emojis, keine Stockfotos
-- Technische, didaktische Sprache; kein Marketing-Hype
-- Diagramme, Dashboards oder Protokoll-Screenshots in der Visual Area
+**Gamma's job (this prompt):**
 
-## Deck Struktur (7 Slides)
+- Generate **one standalone visual per lesson slide**.
+- Output format: PNG, 16:9 (1920x1080) or square 1:1 (1080x1080).
+- Background: transparent or dark navy (#0B0F14) — **no** opinionated
+  backgrounds, **no** frames, **no** branding, **no** title bars.
+- Style: clean, didactic, technical — diagrams and illustrations,
+  no stock photography, no emojis, no decorative clutter.
+
+**What Gamma must NOT do:**
+
+- **Do NOT design slide layouts.** Slide layout, title bar,
+  bullet list, accent bar, footer and slide counter are rendered by
+  Remotion (video-style-engine/slide-template.jsx).
+- **Do NOT embed slide titles, bullet text or any written copy**
+  onto the visual — typography is applied by Remotion from
+  theme.json at render time.
+- **Do NOT pick brand colors, fonts or spacing.** The final video
+  uses colors and fonts from video-style-engine/theme.json.
+- **Do NOT produce a deck.** Produce **N separate images**, one per
+  lesson slide, delivered as discrete PNG files.
+
+## File naming — required
+
+Name the exports strictly:
+
+    visual01.png
+    visual02.png
+    visual03.png
+    ...
+
+Place them into:
+
+    assets-input/<lesson_id>/
+
+Index order must match the slide order defined below.
+
+## Lesson context (metadata only — do not render as text)
+
+- Lesson ID: module04-lesson02
+- Module: 04
+- Lesson: 02
+- Title: Automated Market Maker: Das Constant-Product-Modell
+
+## Visuals to generate (7 assets)
+
+For each slide below, generate **exactly one** visual. The "Slide X" header is a sequencing hint, not an instruction to design a slide. Only the "Visual to generate" block tells Gamma what to draw.
 
 ---
 
 ### Slide 1 – Automated Market Maker: Das Constant-Product-Modell
-Section: lesson_title
+Save as: visual01.png
+Section (context only): lesson_title
 
-**Title:**
-Automated Market Maker: Das Constant-Product-Modell
+**Visual to generate:**
+- (optional) Abstract hero visual — e.g. a minimal vector mark or conceptual shape evoking the lesson topic. No text. Safe to skip; the Remotion intro-scene renders the title itself.
 
-**Bullet Points:**
-- Das Constant-Product-Modell x*y=k mathematisch erklaeren koennen
-- Den Zusammenhang zwischen Pool-Reserven und Preisbildung verstehen
-- Slippage und Impermanent Loss als Konsequenzen des Modells einordnen
-
-**Visual Description:**
-- Keine eigene Grafik. Nur Titelanimation der Video Style Engine.
+**Do NOT include on the image:** slide title, bullet points, slide counters, logos, or any piece of UI chrome.
 
 ---
 
-### Slide 2 – Konzept
-Section: concept
+### Slide 2 – Ein AMM ist ein Smart Contract, der Trades ohne Or
+Save as: visual02.png
+Section (context only): system_architecture
 
-**Title:**
-Konzept
-
-**Bullet Points:**
-- Der Preis ergibt sich aus dem Verhaeltnis der Reserven y/x.
-- Jeder Swap veraendert die Reserven und damit den Preis.
-
-**Visual Description:**
-- Impermanent-Loss-Chart in Abhaengigkeit von relativer Preisaenderung
-
----
-
-### Slide 3 – Mechanismus
-Section: mechanism
-
-**Title:**
-Mechanismus
-
-**Bullet Points:**
-- Das Constant-Product-Modell folgt der Formel x*y=k mit konstantem k.
-- Die Architektur besteht aus Pool-Contract, LP-Tokens und Fee-Mechanismus.
-- Der Gebuehrensatz betraegt bei Uniswap V2 standardmaessig 0.3% pro Swap.
-- Merke: Der Preis folgt der Formel, nicht dem Markt.
-
-**Visual Description:**
-- Flussdiagramm oder nummerierte Schrittfolge (Input → Prozess → Output).
-
----
-
-### Slide 4 – Systemarchitektur
-Section: system_architecture
-
-**Title:**
-Systemarchitektur
-
-**Bullet Points:**
-- Ein AMM ist ein Smart Contract, der Trades ohne Orderbuch ermoeglicht.
-
-**Visual Description:**
+**Visual to generate:**
 - Diagramm der Bonding-Curve x*y=k mit markierten Punkten vor und nach einem Swap
+
+**Do NOT include on the image:** slide title, bullet points, slide counters, logos, or any piece of UI chrome.
+
+---
+
+### Slide 3 – Das Constant
+Save as: visual03.png
+Section (context only): mechanism
+
+**Visual to generate:**
 - Systemdiagramm eines Uniswap V2 Pools: Nutzer, Pool-Contract, LP-Token, Fee-Flow
 
----
-
-### Slide 5 – Risikoebene
-Section: risk_layer
-Accent Color: #D9544E (Risk)
-
-**Title:**
-Risikoebene
-
-**Bullet Points:**
-- Grosse Swaps verursachen Slippage, weil die Bonding-Curve nicht linear ist.
-- LP-Tokens repraesentieren den Anteil am Pool.
-- Impermanent Loss entsteht, wenn sich die Preise der Tokens auseinander entwickeln.
-- Risiken umfassen Slippage, Impermanent Loss und Smart-Contract-Exploits.
-
-**Visual Description:**
-- Tabelle der Hauptrisiken: Slippage, Impermanent Loss, Smart-Contract-Exploit
+**Do NOT include on the image:** slide title, bullet points, slide counters, logos, or any piece of UI chrome.
 
 ---
 
-### Slide 6 – Protokollbeispiel
-Section: protocol_example
+### Slide 4 – Der Preis ergibt sich aus dem Verhaeltnis der Rese
+Save as: visual04.png
+Section (context only): mechanism
 
-**Title:**
-Protokollbeispiel
-
-**Bullet Points:**
-- Als konkretes Beispiel dient der Uniswap V2 ETH/USDC-Pool.
-
-**Visual Description:**
+**Visual to generate:**
 - Screenshot des Uniswap V2 ETH/USDC Pool-Dashboards mit anonymisierten Adressen
 
----
-
-### Slide 7 – Kernaussagen
-Section: key_takeaways
-
-**Title:**
-Kernaussagen
-
-**Bullet Points:**
-- Merke: Liquiditaet in einem Pool ist nicht risikofrei.
-- Merke: Gebuehreneinnahmen koennen Impermanent Loss teilweise kompensieren.
-
-**Visual Description:**
-- Drei nummerierte Kernaussagen mit blauen Akzentbalken.
+**Do NOT include on the image:** slide title, bullet points, slide counters, logos, or any piece of UI chrome.
 
 ---
 
-## Output-Anforderung
+### Slide 5 – Jeder Swap veraendert die Reserven und damit den P
+Save as: visual05.png
+Section (context only): protocol_example
 
-Liefere exakt 7 Slides im obigen Stil.
-Jede Slide muss im 16:9 Format angelegt sein (1920x1080).
-Die Visual Area belegt ca. 55% der Breite rechts, der Text 40% links.
+**Visual to generate:**
+- Tabelle der Hauptrisiken: Slippage, Impermanent Loss, Smart-Contract-Exploit
+
+**Do NOT include on the image:** slide title, bullet points, slide counters, logos, or any piece of UI chrome.
+
+---
+
+### Slide 6 – Grosse Swaps verursachen Slippage, weil die Bondin
+Save as: visual06.png
+Section (context only): risk_layer
+
+**Visual to generate:**
+- Impermanent-Loss-Chart in Abhaengigkeit von relativer Preisaenderung
+
+**Do NOT include on the image:** slide title, bullet points, slide counters, logos, or any piece of UI chrome.
+
+---
+
+### Slide 7 – Die Architektur besteht aus Pool
+Save as: visual07.png
+Section (context only): mechanism
+
+**Visual to generate:**
+- Flow diagram or numbered step sequence: Input → Process → Output. Arrows only, no descriptive text.
+
+**Do NOT include on the image:** slide title, bullet points, slide counters, logos, or any piece of UI chrome.
+
+
+## Output — required
+
+Deliver **7 individual PNG files** named
+visual01.png ... visual7.png, dropped into
+assets-input/module04-lesson02/.
+
+If a slide does not need a custom visual (e.g. the title slide), skip
+it — the Remotion intro/outro scenes render without an external
+asset. The Remotion slide template will fall back to a neutral
+placeholder for any missing visualNN.png.
+
+**Final reminder:** no titles, no bullet text, no brand layout on
+the images. Those are rendered by Remotion at video-build time. This
+prompt is an asset brief, not a deck brief.
+
+See also: docs/SLIDE_GENERATION_RULES.md.

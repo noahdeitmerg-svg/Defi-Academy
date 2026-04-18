@@ -25,7 +25,7 @@
 'use strict';
 
 const path = require('path');
-const { runPipelineForLesson, runPipelineForFolder } = require('./pipeline');
+const { runPipelineForLesson, runPipelineForModule, runPipelineForFolder } = require('./pipeline');
 
 function parseArgs(argv) {
   const args = {};
@@ -45,11 +45,13 @@ DeFi Academy Lesson Asset Generator
 
 Usage:
   node cli.js --input <file.md>       --out <dir> --style <engine-dir>
+  node cli.js --input <module.md> --all-lessons --out <dir> --style <engine-dir>
   node cli.js --input-dir <lessons/>  --out <dir> --style <engine-dir>
 
 Options:
+  --all-lessons  Process every lesson in a module file (new format)
   --module <n>   Override module number
-  --lesson <n>   Override lesson number
+  --lesson <n>   Pick a specific lesson from a module file (new format)
   --voice  <id>  ElevenLabs voice ID  (default: de-male-educational-01)
   --help         Show this help
   `);
@@ -76,6 +78,18 @@ function main() {
   console.log('');
 
   if (args.input) {
+    // Module mode: process all lessons in a new-format module file
+    if (args['all-lessons']) {
+      const res = runPipelineForModule({
+        input: path.resolve(args.input),
+        outputRoot,
+        stylePath,
+        voiceId,
+      });
+      reportModule(res);
+      return;
+    }
+
     const res = runPipelineForLesson({
       input: path.resolve(args.input),
       outputRoot,
@@ -100,8 +114,27 @@ function reportSingle(r) {
   console.log(`✔ ${r.lesson_id}`);
   console.log(`  slides: ${r.slide_count}`);
   console.log(`  duration: ${r.duration_seconds}s`);
+  console.log(`  source format: ${r.source_format} (${r.mapping_strategy})`);
   console.log(`  files written:`);
   r.files.forEach((f) => console.log(`    - ${f}`));
+}
+
+function reportModule(res) {
+  console.log(`Module ${res.module} (${res.format} format)`);
+  console.log(`${res.ok}/${res.total_lessons} lessons processed successfully`);
+  console.log('');
+  for (const r of res.results) {
+    if (r.status === 'ok') {
+      console.log(`  ✔ ${r.lesson_id}  (${r.slide_count} slides, ${r.duration_seconds}s)`);
+    } else {
+      console.log(`  ✘ ${r.lesson_id || '?'}: ${r.error}`);
+    }
+  }
+  console.log('');
+  console.log('─'.repeat(60));
+  console.log(`Summary: ${res.ok} ok, ${res.failed} failed`);
+  console.log('─'.repeat(60));
+  process.exit(res.failed > 0 ? 1 : 0);
 }
 
 function reportBatch(results) {

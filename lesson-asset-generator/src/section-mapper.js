@@ -287,14 +287,169 @@ function distributeVisuals(visualSuggestions, sectionBullets) {
 /**
  * Build the slide plan (6 or 7 content slides) from a parsed lesson.
  *
- * @param {object} lesson - output of parseLesson()
+ * Supports TWO input formats:
+ *
+ *   1. NEW MODULE FORMAT (post-normalization)
+ *      lesson.slides = [{ number, title, body, narration, visual, is_title_slide }]
+ *      → direct 1:1 mapping, no heuristics. Each slide becomes one slide in
+ *        the plan, with section names inferred from title keywords.
+ *
+ *   2. LEGACY SINGLE-LESSON FORMAT
+ *      lesson.slide_summary = [...bullets]
+ *      lesson.narration = "...fliesstext"
+ *      lesson.visuals = [...bullets]
+ *      → heuristic section distribution (original behavior).
+ *
+ * The function auto-detects the format by checking if lesson.slides exists
+ * as a structured array with per-slide narration.
+ *
+ * @param {object} lesson - output of parseLesson() or normalizeLesson()
  * @returns {object} slide plan
  */
 function mapLessonToSections(lesson) {
-  const sectionBullets = distributeBullets(lesson.slide_summary);
-  const sectionVisuals = distributeVisuals(lesson.visuals, sectionBullets);
+  // ── Format detection ──────────────────────────────────────────
+  const hasDirectSlides =
+    Array.isArray(lesson.slides) &&
+    lesson.slides.length > 0 &&
+    lesson.slides[0].body !== undefined;
+
+  if (hasDirectSlides) {
+    return mapDirectSlides(lesson);
+  }
+
+  // Legacy fallback: heuristic section distribution
+  return mapLegacySections(lesson);
+}
+
+/**
+ * Direct 1:1 mapping for the new module format. Each slide from the
+ * content agent becomes one slide in the plan. Section name inferred
+ * from slide title using the same keyword sets.
+ */
+function mapDirectSlides(lesson) {
+  const inputSlides = lesson.slides;
+  const slides = [];
+
+  // First slide is always lesson_title
+  if (inputSlides[0]) {
+    slides.push({
+      id: 'slide-01-title',
+      section: 'lesson_title',
+      title: lesson.meta.title || inputSlides[0].body || inputSlides[0].title,
+      bullets: (lesson.objectives || []).slice(0, 3),
+      visuals: inputSlides[0].visual ? [inputSlides[0].visual] : [],
+      narration: inputSlides[0].narration || '',
+    });
+  }
+
+  // Remaining slides get section inferred from title keywords.
+  // Risk-related slides get risk_layer accent. Order preserved.
+  for (let i = 1; i < inputSlides.length; i++) {
+    const s = inputSlides[i];
+    const section = inferSectionFromSlide(s, i);
+    const accent = section === 'risk_layer' ? '#D9544E' : undefined;
+
+    slides.push({
+      id: `slide-${String(i + 1).padStart(2, '0')}-${section}`,
+      section,
+      title: s.title,
+      bullets: bulletsFromBody(s.body),
+      visuals: s.visual ? [s.visual] : [],
+      narration: s.narration || '',
+      accent_color_override: accent,
+    });
+  }
+
+  return {
+    slide_count: slides.length,
+    has_architecture_section: slides.some((s) => s.section === 'system_architecture'),
+    source_format: 'module_direct',
+    slides,
+  };
+}
+
+/**
+ * Infer a section name from a slide's title and body. Uses the same
+ * SECTION_KEYWORDS dictionary as the legacy mapper.
+ */
+function inferSectionFromSlide(slide, index) {
+  const text = (slide.title + ' ' + slide.body).toLowerCase();
+  const scores = scoreSectionForText(text);
+
+  let best = null;
+  let bestScore = 0;
+  for (const [sec, sc] of Object.entries(scores)) {
+    if (sc > bestScore) {
+      bestScore = sc;
+      best = sec;
+    }
+  }
+
+  // Default fallback based on positional heuristic:
+  //   slide 2 → concept, slide 3 → mechanism, slide 4 → mechanism/arch,
+  //   last → key_takeaways
+  if (!best) {
+    const positional = ['concept', 'mechanism', 'mechanism', 'protocol_example', 'key_takeaways'];
+    best = positional[index - 1] || 'mechanism';
+  }
+
+  return best;
+}
+
+/**
+ * Extract bullet points from a slide's body text. Handles:
+ *   - Numbered lists "1. ..." → bullets
+ *   - Bullet lists "- ..." → bullets
+ *   - Short paragraphs → single bullet
+ *   - Markdown tables → first non-header row as fallback
+ */
+function bulletsFromBody(body) {
+  if (!body) return [];
+  const lines = body.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+
+  // Table: use first 3 non-header data rows
+  const tableStart = lines.findIndex((l) => /^\|.*\|$/.test(l));
+  if (tableStart >= 0) {
+    const dataRows = lines
+      .slice(tableStart)
+      .filter((l) => /^\|.*\|$/.test(l))
+      .filter((l) => !/^\|[\s\-:|]+\|$/.test(l))
+      .slice(1, 5); // skip header, take up to 4 rows
+    if (dataRows.length >= 2) {
+      return dataRows.map((l) =>
+        l.split('|').slice(1, -1).map((c) => c.trim()).filter(Boolean).join(' — ')
+      );
+    }
+  }
+
+  // Numbered list
+  const numbered = lines.filter((l) => /^\d+\.\s+/.test(l));
+  if (numbered.length >= 2) {
+    return numbered.map((l) => l.replace(/^\d+\.\s+/, '').trim()).slice(0, 4);
+  }
+
+  // Bullet list
+  const bulleted = lines.filter((l) => /^[-*•]\s+/.test(l));
+  if (bulleted.length >= 2) {
+    return bulleted.map((l) => l.replace(/^[-*•]\s+/, '').trim()).slice(0, 4);
+  }
+
+  // Paragraph: split on sentence boundaries, take first 3 sentences
+  const sentences = lines.join(' ').match(/[^.!?]+[.!?]+/g) || [];
+  if (sentences.length >= 2) return sentences.map((s) => s.trim()).slice(0, 3);
+
+  // Fallback: entire body as single bullet
+  return [lines.join(' ')];
+}
+
+/**
+ * Legacy heuristic-based mapping (original behavior).
+ */
+function mapLegacySections(lesson) {
+  const sectionBullets = distributeBullets(lesson.slide_summary || []);
+  const sectionVisuals = distributeVisuals(lesson.visuals || [], sectionBullets);
   const sectionNarration = splitNarrationIntoSections(
-    lesson.narration,
+    lesson.narration || '',
     sectionBullets
   );
 
@@ -389,6 +544,7 @@ function mapLessonToSections(lesson) {
   return {
     slide_count: slides.length,
     has_architecture_section: !archEmpty,
+    source_format: 'legacy_heuristic',
     slides,
   };
 }

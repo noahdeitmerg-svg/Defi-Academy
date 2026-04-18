@@ -3,29 +3,7 @@
   "visuals": [
     {
       "id": "v01",
-      "slide_ref": "slide-02-concept",
-      "type": "chart",
-      "description": "Impermanent-Loss-Chart in Abhaengigkeit von relativer Preisaenderung",
-      "source_protocol": null,
-      "source_url_hint": null,
-      "labels": [],
-      "color_accent": null,
-      "capture_instructions": "Hinweis aus Lektion: Impermanent-Loss-Chart in Abhaengigkeit von relativer Preisaenderung"
-    },
-    {
-      "id": "v02",
-      "slide_ref": "slide-03-mechanism",
-      "type": "diagram",
-      "description": "Flussdiagramm des Mechanismus: Schritt 1, Schritt 2, Schritt 3 als nummerierte Knoten mit Pfeilen.",
-      "source_protocol": null,
-      "source_url_hint": null,
-      "labels": [],
-      "color_accent": null,
-      "capture_instructions": "Hinweis aus Lektion: Flussdiagramm des Mechanismus: Schritt 1, Schritt 2, Schritt 3 als nummerierte Knoten mit Pfeilen."
-    },
-    {
-      "id": "v03",
-      "slide_ref": "slide-04-architecture",
+      "slide_ref": "slide-02-system_architecture",
       "type": "diagram",
       "description": "Diagramm der Bonding-Curve x*y=k mit markierten Punkten vor und nach einem Swap",
       "source_protocol": null,
@@ -35,8 +13,8 @@
       "capture_instructions": "Hinweis aus Lektion: Diagramm der Bonding-Curve x*y=k mit markierten Punkten vor und nach einem Swap"
     },
     {
-      "id": "v04",
-      "slide_ref": "slide-04-architecture",
+      "id": "v02",
+      "slide_ref": "slide-03-mechanism",
       "type": "diagram",
       "description": "Systemdiagramm eines Uniswap V2 Pools: Nutzer, Pool-Contract, LP-Token, Fee-Flow",
       "source_protocol": "uniswap",
@@ -46,105 +24,74 @@
       "capture_instructions": "Hinweis aus Lektion: Systemdiagramm eines Uniswap V2 Pools: Nutzer, Pool-Contract, LP-Token, Fee-Flow"
     },
     {
-      "id": "v05",
-      "slide_ref": "slide-05-risk",
-      "type": "diagram",
-      "description": "Tabelle der Hauptrisiken: Slippage, Impermanent Loss, Smart-Contract-Exploit",
-      "source_protocol": null,
-      "source_url_hint": null,
-      "labels": [],
-      "color_accent": "#D9544E",
-      "capture_instructions": "Roten Akzent (#D9544E) fuer Risikoelemente verwenden. Hinweis aus Lektion: Tabelle der Hauptrisiken: Slippage, Impermanent Loss, Smart-Contract-Exploit"
-    },
-    {
-      "id": "v06",
-      "slide_ref": "slide-06-example",
-      "type": "screenshot",
+      "id": "v03",
+      "slide_ref": "slide-04-mechanism",
+      "type": "dashboard",
       "description": "Screenshot des Uniswap V2 ETH/USDC Pool-Dashboards mit anonymisierten Adressen",
       "source_protocol": "uniswap",
       "source_url_hint": "https://info.uniswap.org/",
       "labels": [],
       "color_accent": null,
-      "capture_instructions": "Screenshot vom uniswap-Dashboard. Nur den relevanten UI-Bereich zeigen. Persoenliche Wallet-Adressen und Balances anonymisieren/schwaerzen. Hinweis aus Lektion: Screenshot des Uniswap V2 ETH/USDC Pool-Dashboards mit anonymisierten Adressen"
+      "capture_instructions": "Hinweis aus Lektion: Screenshot des Uniswap V2 ETH/USDC Pool-Dashboards mit anonymisierten Adressen"
     },
     {
-      "id": "v07",
-      "slide_ref": "slide-07-takeaways",
-      "type": "diagram",
-      "description": "Drei nummerierte Kernaussagen mit blauen Akzentbalken, klare Hierarchie.",
+      "id": "v04",
+      "slide_ref": "slide-05-protocol_example",
+      "type": "screenshot",
+      "description": "Tabelle der Hauptrisiken: Slippage, Impermanent Loss, Smart-Contract-Exploit",
       "source_protocol": null,
       "source_url_hint": null,
       "labels": [],
       "color_accent": null,
-      "capture_instructions": "Hinweis aus Lektion: Drei nummerierte Kernaussagen mit blauen Akzentbalken, klare Hierarchie."
+      "capture_instructions": "Hinweis aus Lektion: Tabelle der Hauptrisiken: Slippage, Impermanent Loss, Smart-Contract-Exploit"
+    },
+    {
+      "id": "v05",
+      "slide_ref": "slide-06-risk_layer",
+      "type": "chart",
+      "description": "Impermanent-Loss-Chart in Abhaengigkeit von relativer Preisaenderung",
+      "source_protocol": null,
+      "source_url_hint": null,
+      "labels": [],
+      "color_accent": "#D9544E",
+      "capture_instructions": "Roten Akzent (#D9544E) fuer Risikoelemente verwenden. Hinweis aus Lektion: Impermanent-Loss-Chart in Abhaengigkeit von relativer Preisaenderung"
+    },
+    {
+      "id": "v06",
+      "slide_ref": "slide-07-mechanism",
+      "type": "diagram",
+      "description": "Flussdiagramm des Mechanismus: Schritt 1, Schritt 2, Schritt 3 als nummerierte Knoten mit Pfeilen.",
+      "source_protocol": null,
+      "source_url_hint": null,
+      "labels": [],
+      "color_accent": null,
+      "capture_instructions": "Hinweis aus Lektion: Flussdiagramm des Mechanismus: Schritt 1, Schritt 2, Schritt 3 als nummerierte Knoten mit Pfeilen."
     }
   ],
   "animation_cues": [
     {
       "visual_id": "v01",
       "cue_type": "fade_in",
-      "trigger_seconds": 28,
+      "trigger_seconds": 193,
       "duration_frames": 20,
       "target_element": null
     },
     {
       "visual_id": "v01",
-      "cue_type": "fade_out",
-      "trigger_seconds": 101,
-      "duration_frames": 12,
-      "target_element": null
-    },
-    {
-      "visual_id": "v02",
-      "cue_type": "fade_in",
-      "trigger_seconds": 103,
-      "duration_frames": 20,
-      "target_element": null
-    },
-    {
-      "visual_id": "v02",
-      "cue_type": "node_reveal",
-      "trigger_seconds": 105,
-      "duration_frames": 10,
-      "target_element": "nodes"
-    },
-    {
-      "visual_id": "v02",
-      "cue_type": "edge_draw",
-      "trigger_seconds": 106.5,
-      "duration_frames": 15,
-      "target_element": "edges"
-    },
-    {
-      "visual_id": "v02",
-      "cue_type": "fade_out",
-      "trigger_seconds": 191,
-      "duration_frames": 12,
-      "target_element": null
-    },
-    {
-      "visual_id": "v03",
-      "cue_type": "fade_in",
-      "trigger_seconds": 193,
-      "duration_frames": 20,
-      "target_element": null
-    },
-    {
-      "visual_id": "v03",
       "cue_type": "node_reveal",
       "trigger_seconds": 195,
       "duration_frames": 10,
       "target_element": "nodes"
     },
     {
-      "visual_id": "v03",
+      "visual_id": "v01",
       "cue_type": "edge_draw",
       "trigger_seconds": 196.5,
       "duration_frames": 15,
       "target_element": "edges"
     },
     {
-      "visual_id": "v03",
+      "visual_id": "v01",
       "cue_type": "fade_out",
       "trigger_seconds": 261,
       "duration_frames": 12,
@@ -153,28 +100,14 @@
     {
       "visual_id": "v04",
       "cue_type": "fade_in",
-      "trigger_seconds": 193,
+      "trigger_seconds": 333,
       "duration_frames": 20,
       "target_element": null
     },
     {
       "visual_id": "v04",
-      "cue_type": "node_reveal",
-      "trigger_seconds": 195,
-      "duration_frames": 10,
-      "target_element": "nodes"
-    },
-    {
-      "visual_id": "v04",
-      "cue_type": "edge_draw",
-      "trigger_seconds": 196.5,
-      "duration_frames": 15,
-      "target_element": "edges"
-    },
-    {
-      "visual_id": "v04",
       "cue_type": "fade_out",
-      "trigger_seconds": 261,
+      "trigger_seconds": 411,
       "duration_frames": 12,
       "target_element": null
     },
@@ -184,20 +117,6 @@
       "trigger_seconds": 263,
       "duration_frames": 20,
       "target_element": null
-    },
-    {
-      "visual_id": "v05",
-      "cue_type": "node_reveal",
-      "trigger_seconds": 265,
-      "duration_frames": 10,
-      "target_element": "nodes"
-    },
-    {
-      "visual_id": "v05",
-      "cue_type": "edge_draw",
-      "trigger_seconds": 266.5,
-      "duration_frames": 15,
-      "target_element": "edges"
     },
     {
       "visual_id": "v05",
@@ -216,42 +135,28 @@
     {
       "visual_id": "v06",
       "cue_type": "fade_in",
-      "trigger_seconds": 333,
+      "trigger_seconds": 103,
       "duration_frames": 20,
       "target_element": null
     },
     {
       "visual_id": "v06",
-      "cue_type": "fade_out",
-      "trigger_seconds": 411,
-      "duration_frames": 12,
-      "target_element": null
-    },
-    {
-      "visual_id": "v07",
-      "cue_type": "fade_in",
-      "trigger_seconds": 413,
-      "duration_frames": 20,
-      "target_element": null
-    },
-    {
-      "visual_id": "v07",
       "cue_type": "node_reveal",
-      "trigger_seconds": 415,
+      "trigger_seconds": 105,
       "duration_frames": 10,
       "target_element": "nodes"
     },
     {
-      "visual_id": "v07",
+      "visual_id": "v06",
       "cue_type": "edge_draw",
-      "trigger_seconds": 416.5,
+      "trigger_seconds": 106.5,
       "duration_frames": 15,
       "target_element": "edges"
     },
     {
-      "visual_id": "v07",
+      "visual_id": "v06",
       "cue_type": "fade_out",
-      "trigger_seconds": 461,
+      "trigger_seconds": 191,
       "duration_frames": 12,
       "target_element": null
     }

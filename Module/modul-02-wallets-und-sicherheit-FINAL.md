@@ -174,7 +174,7 @@ Ein unterschiedlicher Derivationspfad. BIP-44 definiert einen Standard-Pfad (`m/
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Hierarchie Private/Public/Adresse → 2^256-Zahlenraum → Adresse als Hash → Skalierungsproblem Keys → BIP-39-Ableitung → Kernkonsequenz Seed-Phrase
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Einbahnstraßen-Diagramm, Zahlenraum-Visualisierung, Etherscan-Screenshot vitalik.eth, BIP-39-Baum-Diagramm, rotes Warnsymbol
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -298,13 +298,11 @@ Diese Tabelle ist Orientierung, nicht Dogma. Dein tatsächliches Bedrohungsprofi
 
 **[Slide 4]** Metall: feuerfest, wasserfest, permanent. 50–100 USD Investition. Standard für signifikantes Kapital.
 
-**[Slide 5]** Shamir Secret Sharing: k-of-n Shares. Einzel-Share wertlos. Diversifiziert Storage-Risiko.
+**[Slide 5]** Zusätzliche Schutzschichten: Shamir Secret Sharing (k-of-n Shares, Einzel-Share wertlos) und BIP-39-Passphrase (13. Wort, Decoy-Wallet bei Zwang). Beide Methoden kombinierbar.
 
-**[Slide 6]** BIP-39-Passphrase: 13. Wort. Echte Wallet hinter Passphrase versteckt. Passphrase-Verlust = Asset-Verlust.
+**[Slide 6]** Inheritance-Problem: Phrase ohne Nachfolgeplan = permanenter Verlust für Erben.
 
-**[Slide 7]** Inheritance-Problem: Phrase ohne Nachfolgeplan = permanenter Verlust für Erben.
-
-**[Slide 8]** Empfehlung nach Kapitalgröße: von Papier bis Multisig, je nach Betrag.
+**[Slide 7]** Empfehlung nach Kapitalgröße: von Papier bis Multisig, je nach Betrag.
 
 ### Sprechertext
 
@@ -316,13 +314,11 @@ Diese Tabelle ist Orientierung, nicht Dogma. Dein tatsächliches Bedrohungsprofi
 
 **[Slide 4]** Metall: Edelstahl schmilzt bei vierzehnhundert Grad, normale Hausbrände erreichen sechs- bis achthundert. Wasserfest, korrosionsbeständig. Fünfzig bis hundert Dollar Investition. Für signifikante Beträge der Standard.
 
-**[Slide 5]** Shamir Secret Sharing: die Phrase wird in mathematisch getrennte Shares aufgeteilt. Zwei von drei Shares rekonstruieren die Phrase. Ein einzelner Share ist wertlos. Löst Diebstahl und Zerstörung gleichzeitig. Trezor Model T unterstützt das nativ. Komplexer, erfordert gute Dokumentation.
+**[Slide 5]** Zwei ergänzende Schutzschichten, die mit jedem Medium kombiniert werden können. Erstens Shamir Secret Sharing: die Phrase wird in mathematisch getrennte Shares aufgeteilt. Zwei von drei Shares rekonstruieren die Phrase. Ein einzelner Share ist wertlos. Löst Diebstahl und Zerstörung gleichzeitig. Trezor Model T unterstützt das nativ. Zweitens BIP-39-Passphrase: ein beliebiges zusätzliches Wort. Ohne Passphrase führt die Seed-Phrase zu einer Decoy-Wallet, mit Passphrase zur echten Wallet. Schützt auch gegen physischen Zwang. Warnung: Passphrase-Verlust bedeutet Asset-Verlust.
 
-**[Slide 6]** Zusätzlich zu jedem Medium: BIP-39-Passphrase. Ein beliebiges zusätzliches Wort. Ohne Passphrase kommt die Seed-Phrase zu einer Decoy-Wallet. Mit Passphrase zur echten Wallet. Schützt auch gegen physischen Zwang. Warnung: Passphrase-Verlust bedeutet Asset-Verlust.
+**[Slide 6]** Das Inheritance-Problem. Was passiert mit deinen Assets, wenn du stirbst? Eine nicht-findbare oder nicht-verstandene Phrase bedeutet permanenten Verlust für deine Erben. Ansätze: schriftliche Anleitung, Multisig, Shamir-Shares bei Familie. Verzicht auf Planung ist auch Entscheidung — aber bewusst sollte sie sein.
 
-**[Slide 7]** Das Inheritance-Problem. Was passiert mit deinen Assets, wenn du stirbst? Eine nicht-findbare oder nicht-verstandene Phrase bedeutet permanenten Verlust für deine Erben. Ansätze: schriftliche Anleitung, Multisig, Shamir-Shares bei Familie. Verzicht auf Planung ist auch Entscheidung — aber bewusst sollte sie sein.
-
-**[Slide 8]** Empfehlung nach Kapitalgröße: unter tausend Dollar Papier. Bis zehntausend Metall ein Ort. Bis hunderttausend Metall zwei Orte plus Hardware-Wallet. Über hunderttausend Metall plus Shamir oder Multisig plus Inheritance-Planung. Orientierung, nicht Dogma.
+**[Slide 7]** Empfehlung nach Kapitalgröße: unter tausend Dollar Papier. Bis zehntausend Metall ein Ort. Bis hunderttausend Metall zwei Orte plus Hardware-Wallet. Über hunderttausend Metall plus Shamir oder Multisig plus Inheritance-Planung. Orientierung, nicht Dogma.
 
 ### Visuelle Vorschläge
 
@@ -330,10 +326,9 @@ Diese Tabelle ist Orientierung, nicht Dogma. Dein tatsächliches Bedrohungsprofi
 **[Slide 2]** Dreieck mit den drei Bedrohungen an den Ecken. Pfeile, die zeigen wie Lösung für eine Bedrohung andere verschlimmert.
 **[Slide 3]** Foto einer Seed-Phrase auf Papier. Daneben Icons: Feuer, Wasser, verblassende Tinte.
 **[Slide 4]** **SCREENSHOT SUGGESTION:** Cryptosteel-Website oder Produktfoto der Capsule mit sichtbaren Buchstabenplättchen.
-**[Slide 5]** Diagramm: eine Phrase wird in drei Shares gesplittet. Zwei kombiniert rekonstruieren die Phrase; einer allein wird durchgestrichen.
-**[Slide 6]** Diagramm: Seed-Phrase ohne Passphrase → Wallet A (leer). Seed-Phrase + Passphrase → Wallet B (echt).
-**[Slide 7]** Familienbaum-Icon, Wallet im Zentrum, Fragezeichen über Erben. Lösungsansätze rechts.
-**[Slide 8]** Tabelle mit Kapitalstufen und Empfehlungen.
+**[Slide 5]** Zwei nebeneinanderliegende Diagramme. Links: Shamir-Aufteilung — eine Phrase wird in drei Shares gesplittet, zwei kombiniert rekonstruieren die Phrase, einer allein wird durchgestrichen. Rechts: Passphrase-Effekt — Seed-Phrase ohne Passphrase führt zu Wallet A (leer), Seed-Phrase plus Passphrase zu Wallet B (echt).
+**[Slide 6]** Familienbaum-Icon, Wallet im Zentrum, Fragezeichen über Erben. Lösungsansätze rechts.
+**[Slide 7]** Tabelle mit Kapitalstufen und Empfehlungen.
 
 ### Übung
 
@@ -372,9 +367,9 @@ Vor Szenarien, in denen ein Angreifer die Seed-Phrase findet oder erhält — en
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → 3 Bedrohungen → Papier → Metall → Shamir SSS → BIP-39-Passphrase → Inheritance → Kapital-Empfehlungstabelle
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min. wegen 8 Slides)
-- `visual_plan.json` — Bedrohungsdreieck, Papier-Foto mit Schadenseffekten, Cryptosteel-Produktbild, 2-of-3-Shamir-Diagramm, Decoy/Real-Wallet-Diagramm, Inheritance-Baum, Kapital-Empfehlungstabelle
+- `slides_prompt.txt` — 7 Slides: Titel → 3 Bedrohungen → Papier → Metall → Zusätzliche Schutzschichten (Shamir + Passphrase) → Inheritance → Kapital-Empfehlungstabelle
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Bedrohungsdreieck, Papier-Foto mit Schadenseffekten, Cryptosteel-Produktbild, kombiniertes Shamir-und-Passphrase-Diagramm, Inheritance-Baum, Kapital-Empfehlungstabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.
 
@@ -490,7 +485,7 @@ Der Vektor war eine Typed-Data-Signatur (EIP-712), die ein Safe-Upgrade darstell
 
 **[Slide 6]** Die Lehren. Erstens: Wallet-Anzeige ist nicht zwingend Signatur-Inhalt. Zweitens: Blind-Signing ist gefährlich — viele Hardware-Wallets zeigen bei Typed Data nur Hash. Drittens: Clear-Signing — Decodierung in lesbare Form — ist essentiell. Viertens: Transaction-Simulation zeigt die tatsächlichen Effekte vor dem Signieren.
 
-**[Slide 7]** Regeln. Jede Transaktion simulieren, Rabby macht es automatisch. Bei Typed Data einzelne Felder lesen. Unbekannte DApps ohne Verständnis nicht anfassen. Und Hardware-Wallet verwenden — der kompromittierte Browser kann ohne physische Bestätigung nicht signieren.
+**[Slide 7]** Regeln. Jede Transaktion simulieren, Rabby macht es automatisch. Bei Typed Data einzelne Felder lesen. Unbekannte DApps nicht signieren, bevor du ihr Verhalten verstehst. Und Hardware-Wallet verwenden — der kompromittierte Browser kann ohne physische Bestätigung nicht signieren.
 
 ### Visuelle Vorschläge
 
@@ -537,7 +532,7 @@ Weil das Bybit-Team die Hardware-Wallets korrekt nutzte — sie bestätigten bew
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → 3 Signatur-Typen → Gefahr von Typed Data → Permit/Permit2 → Bybit-Hack Case Study → 4 Lehren → Praktische Regeln
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Drei-Spalten-Vergleich Signaturtypen, Permit2-Signatur-Dialog, Bybit-Hack-Zeitleiste (1,5 Mrd. USD), Clear-Signing-Checkliste, Rabby-Simulation-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -565,7 +560,7 @@ Token-Approvals sind absolut notwendig, damit DeFi funktioniert — und gleichze
 Der ERC-20-Standard definiert zwei Funktionen, die zusammen das Approval-System bilden:
 
 1. `approve(spender, amount)` — Der Token-Besitzer sagt dem Token-Contract: "Die Adresse `spender` darf bis zu `amount` meiner Tokens bewegen."
-2. `transferFrom(from, to, amount)` — Der Spender kann dann innerhalb des approved Limits Tokens von `from` zu beliebiger Adresse senden.
+2. `transferFrom(from, to, amount)` — Der Spender kann dann innerhalb des genehmigten Limits Tokens von `from` zu beliebiger Adresse senden.
 
 Warum das notwendig ist: Smart Contracts können nicht auf deine Tokens zugreifen, ohne dass du es explizit zulässt. Ein DEX, der einen Swap durchführen will, braucht erst Approval, dann kann er `transferFrom` aufrufen.
 
@@ -648,19 +643,17 @@ Verwandtes Problem: manchmal tauchen in deiner Wallet unbekannte Tokens auf, die
 
 **[Slide 1]** Titel: Token-Approvals und Drainer-Angriffe
 
-**[Slide 2]** Das approve/transferFrom-Pattern: Besitzer approves, Spender transferFrom. Notwendig für DeFi.
+**[Slide 2]** Das approve/transferFrom-Pattern: Besitzer ruft approve, Spender ruft transferFrom. Notwendig für DeFi.
 
 **[Slide 3]** Unlimited Approval: Standard-Default, komfortabel, aber langfristig riskant. Bleibt bestehen bis Widerruf.
 
-**[Slide 4]** Vier Drainer-Phasen: Köder, Connect+Signatur, Transfer, Obfuskation.
+**[Slide 4]** Drainer-Anatomie: 4 Phasen (Köder → Connect+Signatur → Transfer → Obfuskation) × 4 Varianten (klassische Approval, Permit, setApprovalForAll, direkter Transfer).
 
-**[Slide 5]** Vier Drainer-Varianten: klassische Approval, Permit, setApprovalForAll, direkter Transfer.
+**[Slide 5]** Mark-Cuban-Fall: 870.000 USD verloren durch gefälschte Extension und Ausnutzung bestehender Approvals.
 
-**[Slide 6]** Mark-Cuban-Fall: 870.000 USD verloren durch gefälschte Extension und Ausnutzung bestehender Approvals.
+**[Slide 6]** Approval-Audit-Workflow: revoke.cash → Bewerten → Widerrufen → Monatlich wiederholen.
 
-**[Slide 7]** Approval-Audit-Workflow: revoke.cash → Bewerten → Widerrufen → Monatlich wiederholen.
-
-**[Slide 8]** Gift-Token-Regel: Unbekannte Tokens nicht antasten.
+**[Slide 7]** Gift-Token-Regel: Unbekannte Tokens nicht antasten.
 
 ### Sprechertext
 
@@ -670,26 +663,23 @@ Verwandtes Problem: manchmal tauchen in deiner Wallet unbekannte Tokens auf, die
 
 **[Slide 3]** Standard-Problem: viele DApps fordern Unlimited Approval — der maximale Wert. Begründung: keine Folge-Approvals, weniger Gas. Risiko: bei späterem Hack oder Bösartigkeit kann der Angreifer alle Tokens ziehen. Approval bleibt bis zum expliziten Widerruf bestehen.
 
-**[Slide 4]** Drainer-Angriffe laufen in vier Phasen. Phase eins: Köder — bösartige Website, Phishing, gefälschte Ads. Phase zwei: Connect und Signatur. Phase drei: Transfer via transferFrom, Sekunden nach Approval. Phase vier: Obfuskation durch Mixer und Bridges.
+**[Slide 4]** Drainer-Angriffe folgen einer klaren Anatomie aus vier Phasen und vier Varianten. Die vier Phasen: Phase eins ist der Köder — bösartige Website, Phishing, gefälschte Ads. Phase zwei ist Connect und Signatur. Phase drei ist der Transfer via transferFrom, oft Sekunden nach der Approval. Phase vier ist Obfuskation durch Mixer und Bridges. Die vier Varianten der Signatur: klassisch als On-Chain-Approval; Permit, off-chain und ohne Gas, besonders tückisch; setApprovalForAll für NFTs — eine Signatur öffnet die ganze Collection; direkter Transfer, seltener und oft mit verdächtiger UI. Permit und setApprovalForAll sind die häufigsten.
 
-**[Slide 5]** Vier Varianten. Klassisch: On-Chain-Approval. Permit: off-chain, kein Gas, besonders tückisch. setApprovalForAll für NFTs: eine Signatur öffnet ganze Collection. Direkter Transfer: seltener, UI oft verdächtig. Variante B und C sind die häufigsten.
+**[Slide 5]** Beispiel Mark Cuban, September 2023. 870.000 Dollar verloren durch mutmaßlich gefälschte MetaMask-Extension. Der Angreifer kontrollierte damit die Wallet und nutzte bestehende, legitime Approvals. Lehre: auch ohne neue Signaturen kann kompromittierte Wallet ausgeraubt werden.
 
-**[Slide 6]** Beispiel Mark Cuban, September 2023. 870.000 Dollar verloren durch mutmaßlich gefälschte MetaMask-Extension. Der Angreifer kontrollierte damit die Wallet und nutzte bestehende, legitime Approvals. Lehre: auch ohne neue Signaturen kann kompromittierte Wallet ausgeraubt werden.
+**[Slide 6]** Der Approval-Audit. Schritt eins: revoke.cash, Wallet verbinden, Approvals anzeigen. Schritt zwei: jede Approval bewerten. Schritt drei: widerrufen, was du nicht mehr brauchst. Schritt vier: monatlich wiederholen. Nach Kompromittierungsverdacht sofort.
 
-**[Slide 7]** Der Approval-Audit. Schritt eins: revoke.cash, Wallet verbinden, Approvals anzeigen. Schritt zwei: jede Approval bewerten. Schritt drei: widerrufen, was du nicht mehr brauchst. Schritt vier: monatlich wiederholen. Nach Kompromittierungsverdacht sofort.
-
-**[Slide 8]** Zusatzregel: Gift-Tokens. Unbekannte Tokens in deiner Wallet? Nicht antasten. Keine Swaps, keine Approvals, keine Claims. Jede Interaktion kann eine Falle sein.
+**[Slide 7]** Zusatzregel: Gift-Tokens. Unbekannte Tokens in deiner Wallet? Nicht antasten. Keine Swaps, keine Approvals, keine Claims. Jede Interaktion kann eine Falle sein.
 
 ### Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 **[Slide 2]** Diagramm: Nutzer → approve → Token-Contract. Nutzer → swap-Call → DEX-Contract → transferFrom → Token-Contract.
 **[Slide 3]** Beispiel-Unlimited-Approval-Anzeige in Wallet. Warnsymbol.
-**[Slide 4]** Vier-Phasen-Timeline mit beispielhaften Screens pro Phase.
-**[Slide 5]** Vier Varianten-Karten mit Gefahrenstufen.
-**[Slide 6]** **SCREENSHOT SUGGESTION:** Nachrichtenartikel zum Mark-Cuban-Vorfall oder Etherscan-Transaction des Drains.
-**[Slide 7]** **SCREENSHOT SUGGESTION:** revoke.cash-Interface mit realer Approval-Liste und Revoke-Button.
-**[Slide 8]** Beispiel-Gift-Token in Wallet mit "Do not interact"-Icon.
+**[Slide 4]** Matrix-Visualisierung: 4 Phasen (Köder, Connect+Signatur, Transfer, Obfuskation) als horizontale Timeline, darunter 4 Varianten-Karten (klassische Approval, Permit, setApprovalForAll, direkter Transfer) mit Gefahrenstufen.
+**[Slide 5]** **SCREENSHOT SUGGESTION:** Nachrichtenartikel zum Mark-Cuban-Vorfall oder Etherscan-Transaction des Drains.
+**[Slide 6]** **SCREENSHOT SUGGESTION:** revoke.cash-Interface mit realer Approval-Liste und Revoke-Button.
+**[Slide 7]** Beispiel-Gift-Token in Wallet mit "Do not interact"-Icon.
 
 ### Übung
 
@@ -730,9 +720,9 @@ Drei Gründe. Erstens: die Permit-Signatur ist off-chain und kostet kein Gas —
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → approve/transferFrom → Unlimited Approval → 4 Drainer-Phasen → 4 Drainer-Varianten → Mark-Cuban-Fall → Approval-Audit-Workflow → Gift-Token-Regel
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
-- `visual_plan.json` — approve-Flussdiagramm, Unlimited-Approval-Screenshot, Vier-Phasen-Timeline, Mark-Cuban-Artikel, revoke.cash-Interface, Gift-Token-Beispiel
+- `slides_prompt.txt` — 7 Slides: Titel → approve/transferFrom → Unlimited Approval → Drainer-Anatomie (4 Phasen × 4 Varianten) → Mark-Cuban-Fall → Approval-Audit-Workflow → Gift-Token-Regel
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — approve-Flussdiagramm, Unlimited-Approval-Screenshot, Drainer-Matrix (4 Phasen × 4 Varianten), Mark-Cuban-Artikel, revoke.cash-Interface, Gift-Token-Beispiel
 
 Pipeline: Gamma → ElevenLabs → CapCut.
 
@@ -772,7 +762,7 @@ Ein Hardware-Wallet ist ein spezialisiertes Gerät, das den Private Key isoliert
 
 **Ledger Nano S Plus / Nano X** — Marktführer, breite Chain-Unterstützung, Closed-Source Secure Element (umstritten), 2020er Kundendaten-Leak betraf nicht die Hardware, aber machte Ledger-Besitzer zu Phishing-Zielen. Preiswert ab ca. 80 USD. Clear-Signing wird ausgebaut.
 
-**Trezor Model T / Safe 3 / Safe 5** — Open-Source Firmware, Shamir-SSS-Unterstützung (SLIP-39), Touchscreen (Model T), weniger Chain-Apps als Ledger. Ca. 150–250 USD.
+**Trezor Model T / Trezor Safe 3 / Trezor Safe 5** — Open-Source Firmware, Shamir-SSS-Unterstützung (SLIP-39), Touchscreen (Model T), weniger Chain-Apps als Ledger. Ca. 150–250 USD.
 
 **GridPlus Lattice1** — Größeres Display, bessere Clear-Signing-Fähigkeit, teurer (ca. 400 USD). SafeCards für Backup-Key-Lagerung.
 
@@ -787,8 +777,8 @@ Ein Multisig-Wallet erfordert mehrere Unterschriften für jede Transaktion. Komp
 **Typische Konfigurationen:**
 
 *2-of-3 Personal*
-- Owner 1: Hardware-Wallet Nummer 1 (Hauptgerät)
-- Owner 2: Hardware-Wallet Nummer 2 (Backup, anderer Ort)
+- Owner 1: Hardware-Wallet 1 (Hauptgerät)
+- Owner 2: Hardware-Wallet 2 (Backup, anderer Ort)
 - Owner 3: Mobile/Hot Wallet für tägliche Bestätigungen
 - Szenario: Verlust eines Geräts → zwei andere reichen für Recovery
 
@@ -811,7 +801,7 @@ Ein Multisig-Wallet erfordert mehrere Unterschriften für jede Transaktion. Komp
 **Nachteile:**
 - Höhere Gas-Kosten (mehrere Signaturen)
 - Komplexere Koordination bei Transaktionen
-- Einzelne DeFi-Protokolle haben historisch Probleme mit Contract-Wallets (verbessert sich, Account-Abstraktion hilft)
+- Einzelne DeFi-Protokolle haben historisch Probleme mit Contract-Wallets (verbessert sich, Account Abstraction hilft)
 
 **Account Abstraction und Smart Wallets**
 
@@ -840,17 +830,15 @@ Die Investition in Hardware-Wallet und Safe-Setup zahlt sich ab dem niedrigen 4-
 
 **[Slide 2]** Hardware-Wallet: Private Key bleibt auf isoliertem Gerät. Signatur im Gerät, physische Bestätigung.
 
-**[Slide 3]** Hardware-Wallet-Grenzen: schützt nicht gegen Seed-Phrase-Verlust, böse Signaturen, Phishing.
+**[Slide 3]** Hardware-Wallets: Modelle und Schutzgrenzen. Ledger (Einstieg), Trezor (Open-Source), GridPlus (Premium). Schützt NICHT gegen Seed-Phrase-Verlust, böse Signaturen, Phishing.
 
-**[Slide 4]** Modelle: Ledger (Einstieg), Trezor (Open-Source), GridPlus (Premium).
+**[Slide 4]** Safe-Konzept: Smart Contract mit Owners-Liste und Threshold k-of-n.
 
-**[Slide 5]** Safe-Konzept: Smart Contract mit Owners-Liste und Threshold k-of-n.
+**[Slide 5]** Konfigurationen: 2-of-3 Personal, 3-of-5 Team, 2-of-2 Couple.
 
-**[Slide 6]** Konfigurationen: 2-of-3 Personal, 3-of-5 Team, 2-of-2 Couple.
+**[Slide 6]** Account Abstraction: ERC-4337, Smart Wallets, Recovery ohne Multisig-Komplexität.
 
-**[Slide 7]** Account Abstraction: ERC-4337, Smart Wallets, Recovery ohne Multisig-Komplexität.
-
-**[Slide 8]** Entscheidungsmatrix: von Software-Wallet bis Multisig je nach Kapital.
+**[Slide 7]** Entscheidungsmatrix: von Software-Wallet bis Multisig je nach Kapital.
 
 ### Sprechertext
 
@@ -858,28 +846,25 @@ Die Investition in Hardware-Wallet und Safe-Setup zahlt sich ab dem niedrigen 4-
 
 **[Slide 2]** Ein Hardware-Wallet ist ein spezialisiertes Gerät, das den Private Key isoliert speichert. Der Key verlässt das Gerät nie. Transaktionen werden auf dem Gerät signiert, nur die fertige Signatur geht an den Computer. Jede Signatur braucht physische Bestätigung.
 
-**[Slide 3]** Was Hardware-Wallets nicht können: sie schützen nicht gegen Seed-Phrase-Kompromittierung — wenn die gestohlen wird, ist der Schutz weg. Sie schützen nicht vollständig gegen böse Signaturen, die der Nutzer selbst bestätigt — siehe Bybit-Hack. Sie schützen nicht gegen Phishing, wenn Seed-Phrase oder PIN auf gefälschten Seiten eingegeben werden.
+**[Slide 3]** Drei populäre Modelle und was Hardware-Wallets nicht leisten. Ledger Nano S Plus: Marktführer, achtzig Dollar, breite Unterstützung. Trezor Model T und Trezor Safe 3/5: Open-Source-Firmware, Shamir-Unterstützung, teurer. GridPlus Lattice1: Premium mit großem Display, etwa vierhundert Dollar. Für den Einstieg reicht Ledger; konsistente Nutzung ist wichtiger als das Modell. Wichtig sind aber auch die Grenzen: Hardware-Wallets schützen nicht gegen Seed-Phrase-Kompromittierung — wenn die gestohlen wird, ist der Schutz weg. Sie schützen nicht vollständig gegen böse Signaturen, die der Nutzer selbst bestätigt — siehe Bybit-Hack. Und sie schützen nicht gegen Phishing, wenn Seed-Phrase oder PIN auf gefälschten Seiten eingegeben werden.
 
-**[Slide 4]** Drei populäre Modelle. Ledger Nano S Plus: Marktführer, achtzig Dollar, breite Unterstützung. Trezor: Open-Source-Firmware, Shamir-Unterstützung, teurer. GridPlus Lattice1: Premium mit großem Display, etwa vierhundert Dollar. Für den Einstieg reicht Ledger. Konsistente Nutzung ist wichtiger als das Modell.
+**[Slide 4]** Multisig: Safe ist die Standard-Implementierung. Ein Smart Contract mit einer Liste von Ownern und einem Threshold. Zum Beispiel zwei-von-drei: drei Signer definiert, zwei reichen für eine Transaktion. Kompromittierung einer einzelnen Wallet führt nicht zum Verlust.
 
-**[Slide 5]** Multisig: Safe ist die Standard-Implementierung. Ein Smart Contract mit einer Liste von Ownern und einem Threshold. Zum Beispiel zwei-von-drei: drei Signer definiert, zwei reichen für eine Transaktion. Kompromittierung einer einzelnen Wallet führt nicht zum Verlust.
+**[Slide 5]** Typische Konfigurationen. Zwei-von-drei persönlich: Hardware eins, Hardware zwei an anderem Ort, Mobile für Bestätigungen. Drei-von-fünf Team: Kernmitglieder plus externe Vertraute. Zwei-von-zwei Paar: gemeinsame Finanzkontrolle. Jede Konfiguration ist Trade-off zwischen Sicherheit und Bedienbarkeit.
 
-**[Slide 6]** Typische Konfigurationen. Zwei-von-drei persönlich: Hardware eins, Hardware zwei an anderem Ort, Mobile für Bestätigungen. Drei-von-fünf Team: Kernmitglieder plus externe Vertraute. Zwei-von-zwei Paar: gemeinsame Finanzkontrolle. Jede Konfiguration ist Trade-off zwischen Sicherheit und Bedienbarkeit.
+**[Slide 6]** ERC-4337, seit 2023 live, bringt Account Abstraction. Smart Wallets können Social Recovery ohne Multisig-Komplexität, Session Keys für begrenzte Autorisierungen, Gasless Transactions. Safe, Rhinestone, Ambire, Zerion implementieren Teile davon. Das Feld wächst schnell.
 
-**[Slide 7]** ERC-4337, seit 2023 live, bringt Account Abstraction. Smart Wallets können Social Recovery ohne Multisig-Komplexität, Session Keys für begrenzte Autorisierungen, Gasless Transactions. Safe, Rhinestone, Ambire, Zerion implementieren Teile davon. Das Feld wächst schnell.
-
-**[Slide 8]** Entscheidungsmatrix. Unter tausend Dollar: Software-Wallet reicht. Bis zehntausend: Software plus Hardware. Bis hunderttausend: Hardware als Default, separate DeFi-Wallet für aktive Positionen. Über hunderttausend: Safe mit mehreren Hardware-Wallets als Signer. Ab niedrigen vierstelligen Beträgen amortisiert sich die Investition in ordentliche Wallet-Infrastruktur.
+**[Slide 7]** Entscheidungsmatrix. Unter tausend Dollar: Software-Wallet reicht. Bis zehntausend: Software plus Hardware. Bis hunderttausend: Hardware als Default, separate DeFi-Wallet für aktive Positionen. Über hunderttausend: Safe mit mehreren Hardware-Wallets als Signer. Ab niedrigen vierstelligen Beträgen amortisiert sich die Investition in ordentliche Wallet-Infrastruktur.
 
 ### Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 **[Slide 2]** Diagramm: Computer (kompromittiert?) ↔ Hardware-Wallet (isoliert) — mit Pfeil für Transaktion-Hinschicken und Signatur-Zurückgeben.
-**[Slide 3]** Drei rote Kreuze neben "Seed-Phrase-Diebstahl", "Böse Signatur bestätigt", "Phishing".
-**[Slide 4]** **SCREENSHOT SUGGESTION:** Produktbilder von Ledger Nano S Plus, Trezor Model T, GridPlus Lattice1 nebeneinander.
-**[Slide 5]** **SCREENSHOT SUGGESTION:** app.safe.global-Interface mit beispielhafter 2-of-3-Konfiguration und pending Transaction.
-**[Slide 6]** Drei Karten: Personal, Team, Couple — jede mit Icon und Szenario.
-**[Slide 7]** Diagramm: klassische EOA vs. Smart Wallet mit Zusatzfeatures.
-**[Slide 8]** Tabelle Kapital vs. Empfehlung.
+**[Slide 3]** Zweigeteiltes Layout. Links: **SCREENSHOT SUGGESTION** Produktbilder von Ledger Nano S Plus, Trezor Model T, GridPlus Lattice1 nebeneinander. Rechts: drei rote Kreuze neben "Seed-Phrase-Diebstahl", "Böse Signatur bestätigt", "Phishing".
+**[Slide 4]** **SCREENSHOT SUGGESTION:** app.safe.global-Interface mit beispielhafter 2-of-3-Konfiguration und pending Transaction.
+**[Slide 5]** Drei Karten: Personal, Team, Couple — jede mit Icon und Szenario.
+**[Slide 6]** Diagramm: klassische EOA vs. Smart Wallet mit Zusatzfeatures.
+**[Slide 7]** Tabelle Kapital vs. Empfehlung.
 
 ### Übung
 
@@ -916,9 +901,9 @@ Hardware-Wallet schützt gegen Remote-Signatur und Malware-Diebstahl des Private
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → Hardware-Wallet-Funktion → Grenzen → 3 Modelle (Ledger/Trezor/GridPlus) → Safe-Konzept → 3 Konfigurationen → Account Abstraction ERC-4337 → Entscheidungsmatrix
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
-- `visual_plan.json` — Hardware-Wallet-Isolationsdiagramm, Schutz-Grenzen-Icons, Produktfotos Ledger/Trezor/GridPlus, Safe-Interface-Screenshot, Konfigurations-Karten, Entscheidungsmatrix
+- `slides_prompt.txt` — 7 Slides: Titel → Hardware-Wallet-Funktion → Modelle und Schutzgrenzen (Ledger/Trezor/GridPlus) → Safe-Konzept → 3 Konfigurationen → Account Abstraction ERC-4337 → Entscheidungsmatrix
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Hardware-Wallet-Isolationsdiagramm, Produktfotos mit Schutz-Grenzen-Icons kombiniert, Safe-Interface-Screenshot, Konfigurations-Karten, EOA-vs-Smart-Wallet-Diagramm, Entscheidungsmatrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.
 
@@ -1102,7 +1087,7 @@ Sofort: Transfer aller wertvollen Assets aus der Transaktions-Wallet zur DeFi-Wa
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 6 Slides: Titel → Drei-Wallet-Modell → Aufteilungs-Beispiel 70/25/5 → Monatliche Routine → Notfall-Plan → Sicherheits-Mindset
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Drei-Kreise-Diagramm Vault/DeFi/Transaktion, Kuchendiagramm 70/25/5, Kalender-Checkliste, Notfall-Flussdiagramm, Mindset-Icons
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1113,7 +1098,7 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 
 Die folgenden fünf Fragen testen dein integriertes Verständnis des gesamten Moduls. Plane 15–20 Minuten.
 
-**Frage 1:** Eine Person nutzt MetaMask auf einem Browser, hat ihre Seed-Phrase in einem verschlüsselten Passwort-Manager mit Cloud-Sync gespeichert, und gibt DeFi-Protokollen standardmäßig Unlimited Approvals. Welche drei Schwachstellen bestehen, und wie addressierst du sie?
+**Frage 1:** Eine Person nutzt MetaMask auf einem Browser, hat ihre Seed-Phrase in einem verschlüsselten Passwort-Manager mit Cloud-Sync gespeichert, und gibt DeFi-Protokollen standardmäßig Unlimited Approvals. Welche drei Schwachstellen bestehen, und wie adressierst du sie?
 
 <details>
 <summary>Antwort anzeigen</summary>

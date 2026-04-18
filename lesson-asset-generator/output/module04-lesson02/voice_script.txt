@@ -20,16 +20,19 @@
 ## Slide 1 · Automated Market Maker: Das Constant-Product-Modell
 # section: lesson_title
 
-Willkommen zur Lektion Automated Market Maker. <break time="350ms"/> In dieser Einheit erklaeren
-wir das Constant-Product-Modell, das die Grundlage der meisten DEXes bildet.
+In dieser Lektion behandeln wir das Thema Automated Market Maker: Das Constant-Product-Modell. <break time="350ms"/> Die Lernziele sind: Das Constant-Product-Modell x*y=k mathematisch erklaeren koennen. <break time="350ms"/> Den Zusammenhang zwischen Pool-Reserven und Preisbildung verstehen. <break time="350ms"/> Slippage und Impermanent Loss als Konsequenzen des Modells einordnen.
 
 <break time="700ms"/>
 
 ---
 
-## Slide 2 · Konzept
-# section: concept
+## Slide 2 · Ein AMM ist ein Smart Contract, der Trades ohne Or
+# section: system_architecture
 
+// Titel
+Willkommen zur Lektion Automated Market Maker. <break time="350ms"/> In dieser Einheit erklaeren
+wir das Constant-Product-Modell, das die Grundlage der meisten DEXes bildet.
+// Konzept
 Ein Automated Market Maker, kurz AMM [A-M-M], ist ein Smart Contract, der
 Liquiditaet fuer den Handel zwischen zwei Tokens bereitstellt. <break time="350ms"/> Anders als
 eine klassische Boerse benoetigt ein AMM kein Orderbuch. <break time="350ms"/> Der Preis wird
@@ -40,23 +43,17 @@ durch eine mathematische Kurve.
 
 ---
 
-## Slide 3 · Mechanismus
+## Slide 3 · Das Constant
 # section: mechanism
 
+// Mechanismus
 Das bekannteste Modell ist das Constant-Product-Modell. <break time="350ms"/> Die Formel
 lautet x mal y gleich k. <break time="350ms"/> Dabei sind x und y die Reserven der beiden
 Tokens im Pool, und k ist eine Konstante. <break time="350ms"/> Der Preis eines Tokens
 ergibt sich aus dem Verhaeltnis y zu x. <break time="350ms"/> Fuehrt ein Trader einen Swap
 aus, aendert sich das Verhaeltnis. <break time="350ms"/> Grosse Swaps bewegen den Preis
 stark. <break time="350ms"/> Dieses Phaenomen nennt man Slippage.
-
-<break time="700ms"/>
-
----
-
-## Slide 4 · Systemarchitektur
-# section: system_architecture
-
+// Architektur
 Die Architektur eines Pools besteht aus drei Komponenten: dem
 Pool-Contract, der die Reserven haelt und Swaps ausfuehrt, den
 LP-Tokens, die den Anteil am Pool repraesentieren, und dem
@@ -67,22 +64,16 @@ Provider auszahlt.
 
 ---
 
-## Slide 5 · Risikoebene
-# section: risk_layer
+## Slide 4 · Der Preis ergibt sich aus dem Verhaeltnis der Rese
+# section: mechanism
 
+// Risiko
 Die wichtigsten Risiken sind Slippage bei grossen Trades, Impermanent
 Loss fuer Liquidity Provider und Smart-Contract-Exploits. <break time="350ms"/> Impermanent
 Loss entsteht, wenn sich die Preise der beiden Tokens relativ
 zueinander veraendern. <break time="350ms"/> Ein Liquidity Provider haelt am Ende mehr
 vom faellenden und weniger vom steigenden Token.
-
-<break time="700ms"/>
-
----
-
-## Slide 6 · Protokollbeispiel
-# section: protocol_example
-
+// Beispiel
 Als konkretes Beispiel dient der Uniswap V2 ETH [E-T-H]/USDC [U-S-D-C]-Pool. <break time="350ms"/> Der
 Gebuehrensatz betraegt 0.3% pro Swap. <break time="350ms"/> Liquidity Provider erhalten
 einen Anteil daran proportional zu ihrer Poolbeteiligung.
@@ -91,13 +82,32 @@ einen Anteil daran proportional zu ihrer Poolbeteiligung.
 
 ---
 
-## Slide 7 · Kernaussagen
-# section: key_takeaways
+## Slide 5 · Jeder Swap veraendert die Reserven und damit den P
+# section: protocol_example
 
+// Takeaway
 Drei Kernaussagen zum Schluss: Erstens, der Preis folgt der Formel,
 nicht dem Markt. <break time="350ms"/> Zweitens, Liquiditaet bereitzustellen ist nicht
 risikofrei. <break time="350ms"/> Drittens, Gebuehreneinnahmen koennen Impermanent Loss
 teilweise, aber nicht immer kompensieren.
+
+<break time="700ms"/>
+
+---
+
+## Slide 6 · Grosse Swaps verursachen Slippage, weil die Bondin
+# section: risk_layer
+
+Zur Risikoebene: Grosse Swaps verursachen Slippage, weil die Bonding-Curve nicht linear ist..
+
+<break time="700ms"/>
+
+---
+
+## Slide 7 · Die Architektur besteht aus Pool
+# section: mechanism
+
+Zum Mechanismus: Die Architektur besteht aus Pool-Contract, LP-Tokens und Fee-Mechanismus..
 
 ---
 

@@ -38,7 +38,7 @@
       "start_seconds": 27,
       "end_seconds": 102,
       "scene": "slide-template",
-      "slide_ref": "slide-02-concept",
+      "slide_ref": null,
       "accent_color_override": null
     },
     {
@@ -47,7 +47,7 @@
       "start_seconds": 102,
       "end_seconds": 192,
       "scene": "slide-template",
-      "slide_ref": "slide-03-mechanism",
+      "slide_ref": "slide-07-mechanism",
       "accent_color_override": null
     },
     {
@@ -56,7 +56,7 @@
       "start_seconds": 192,
       "end_seconds": 262,
       "scene": "slide-template",
-      "slide_ref": "slide-04-architecture",
+      "slide_ref": "slide-02-system_architecture",
       "accent_color_override": null
     },
     {
@@ -65,7 +65,7 @@
       "start_seconds": 262,
       "end_seconds": 332,
       "scene": "slide-template",
-      "slide_ref": "slide-05-risk",
+      "slide_ref": "slide-06-risk_layer",
       "accent_color_override": "#D9544E"
     },
     {
@@ -74,7 +74,7 @@
       "start_seconds": 332,
       "end_seconds": 412,
       "scene": "slide-template",
-      "slide_ref": "slide-06-example",
+      "slide_ref": "slide-05-protocol_example",
       "accent_color_override": null
     },
     {
@@ -83,7 +83,7 @@
       "start_seconds": 412,
       "end_seconds": 462,
       "scene": "slide-template",
-      "slide_ref": "slide-07-takeaways",
+      "slide_ref": null,
       "accent_color_override": null
     },
     {
@@ -98,60 +98,53 @@
   ],
   "slide_order": [
     "slide-01-title",
-    "slide-02-concept",
+    "slide-02-system_architecture",
     "slide-03-mechanism",
-    "slide-04-architecture",
-    "slide-05-risk",
-    "slide-06-example",
-    "slide-07-takeaways"
+    "slide-04-mechanism",
+    "slide-05-protocol_example",
+    "slide-06-risk_layer",
+    "slide-07-mechanism"
   ],
   "visual_timing": [
     {
       "visual_id": "v01",
-      "start_seconds": 28,
-      "end_seconds": 101.5,
-      "type": "chart",
+      "start_seconds": 193,
+      "end_seconds": 261.5,
+      "type": "diagram",
       "reference": null
     },
     {
       "visual_id": "v02",
-      "start_seconds": 103,
-      "end_seconds": 191.5,
+      "start_seconds": 0,
+      "end_seconds": 5,
       "type": "diagram",
-      "reference": null
+      "reference": "https://info.uniswap.org/"
     },
     {
       "visual_id": "v03",
-      "start_seconds": 193,
-      "end_seconds": 261.5,
-      "type": "diagram",
-      "reference": null
+      "start_seconds": 0,
+      "end_seconds": 5,
+      "type": "dashboard",
+      "reference": "https://info.uniswap.org/"
     },
     {
       "visual_id": "v04",
-      "start_seconds": 193,
-      "end_seconds": 261.5,
-      "type": "diagram",
-      "reference": "https://info.uniswap.org/"
+      "start_seconds": 333,
+      "end_seconds": 411.5,
+      "type": "screenshot",
+      "reference": null
     },
     {
       "visual_id": "v05",
       "start_seconds": 263,
       "end_seconds": 331.5,
-      "type": "diagram",
+      "type": "chart",
       "reference": null
     },
     {
       "visual_id": "v06",
-      "start_seconds": 333,
-      "end_seconds": 411.5,
-      "type": "screenshot",
-      "reference": "https://info.uniswap.org/"
-    },
-    {
-      "visual_id": "v07",
-      "start_seconds": 413,
-      "end_seconds": 461.5,
+      "start_seconds": 103,
+      "end_seconds": 191.5,
       "type": "diagram",
       "reference": null
     }
@@ -173,5 +166,7 @@
     "slide_template": "slide-template.jsx",
     "intro_scene": "intro-scene.jsx",
     "outro_scene": "outro-scene.jsx"
-  }
+  },
+  "_source_format": "single",
+  "_mapping_strategy": "module_direct"
 }

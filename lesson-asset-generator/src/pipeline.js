@@ -11,6 +11,8 @@ const fs = require('fs');
 const path = require('path');
 
 const { parseLesson } = require('./lesson-parser');
+const { parseAuto } = require('./format-detector');
+const { normalizeLesson } = require('./normalize-lesson');
 const { mapLessonToSections } = require('./section-mapper');
 const { buildSlidesPrompt } = require('./generate-slides-prompt');
 const { buildVoiceScript } = require('./generate-voice-script');
@@ -33,38 +35,84 @@ function ensureDir(dir) {
 }
 
 /**
- * Run the full pipeline for one lesson.
- *
- * @param {object} opts
- * @param {string} opts.input       - Path to lesson markdown file
- * @param {string} opts.outputRoot  - Path to output root directory
- * @param {string} opts.stylePath   - Path to Video Style Engine folder
- * @param {number} [opts.module]    - Override module number
- * @param {number} [opts.lesson]    - Override lesson number
- * @param {string} [opts.voiceId]   - Override ElevenLabs voice ID
- * @returns {object} { lesson_id, files: [...] }
+ * Run the full pipeline for one lesson (handles both old single-file and
+ * new module formats automatically). In module files, runs only the
+ * specified lesson.
  */
 function runPipelineForLesson(opts) {
   const { input, outputRoot, stylePath, module: mod, lesson: les, voiceId } = opts;
 
   const markdown = fs.readFileSync(input, 'utf8');
-  const lesson = parseLesson(markdown, {
+  const parsed = parseAuto(markdown, {
     sourcePath: input,
     module: mod,
     lesson: les,
   });
 
+  // Pick the target lesson.
+  //   - Single format: always the only lesson
+  //   - Module format: filter by les if provided, else first lesson
+  let targetRaw;
+  if (parsed.format === 'single') {
+    targetRaw = parsed.lessons[0];
+  } else {
+    targetRaw = les
+      ? parsed.lessons.find((l) => l.meta.lesson === les)
+      : parsed.lessons[0];
+    if (!targetRaw) {
+      const available = parsed.lessons.map((l) => l.meta.lesson).join(', ');
+      throw new Error(`Lesson ${les} not found in module ${parsed.module}. Available: ${available}`);
+    }
+  }
+
+  const lesson = normalizeLesson(targetRaw, parsed.format);
+
+  return processSingleLesson({ lesson, outputRoot, stylePath, voiceId, format: parsed.format });
+}
+
+/**
+ * Run the full pipeline for ALL lessons in a module file (new format only).
+ * For single-format files, falls back to processing the one lesson.
+ */
+function runPipelineForModule(opts) {
+  const { input, outputRoot, stylePath, voiceId } = opts;
+
+  const markdown = fs.readFileSync(input, 'utf8');
+  const parsed = parseAuto(markdown, { sourcePath: input });
+
+  const results = [];
+  for (const rawLesson of parsed.lessons) {
+    try {
+      const lesson = normalizeLesson(rawLesson, parsed.format);
+      const r = processSingleLesson({ lesson, outputRoot, stylePath, voiceId, format: parsed.format });
+      results.push({ status: 'ok', ...r });
+    } catch (err) {
+      results.push({
+        status: 'error',
+        lesson_id: rawLesson.meta?.lesson_id,
+        error: err.message,
+      });
+    }
+  }
+
+  return {
+    module: parsed.module,
+    format: parsed.format,
+    total_lessons: parsed.lessons.length,
+    ok: results.filter((r) => r.status === 'ok').length,
+    failed: results.filter((r) => r.status === 'error').length,
+    results,
+  };
+}
+
+/**
+ * Internal: process ONE normalized lesson (common to both entry points).
+ */
+function processSingleLesson({ lesson, outputRoot, stylePath, voiceId, format }) {
   const slidePlan = mapLessonToSections(lesson);
 
   const visualTimingSpec = loadVisualTimingSpec(stylePath);
-
-  // Build section timings first (same logic as generate-video-config) so
-  // we can hand them to visual-plan generation.
-  const sectionTimings = computeSectionTimings(
-    slidePlan,
-    visualTimingSpec
-  );
-
+  const sectionTimings = computeSectionTimings(slidePlan, visualTimingSpec);
   const visualPlan = buildVisualPlan(lesson, slidePlan, sectionTimings);
 
   const audio = {
@@ -80,10 +128,13 @@ function runPipelineForLesson(opts) {
     audio
   );
 
+  // Record source format in video_config for downstream debugging
+  videoConfig._source_format = format;
+  videoConfig._mapping_strategy = slidePlan.source_format || 'unknown';
+
   const slidesPrompt = buildSlidesPrompt(lesson, slidePlan);
   const voice = buildVoiceScript(lesson, slidePlan, { voice_id: audio.voice_id });
 
-  // Write output
   const lessonDir = path.join(outputRoot, lesson.meta.lesson_id);
   ensureDir(lessonDir);
 
@@ -107,6 +158,8 @@ function runPipelineForLesson(opts) {
     files: written,
     slide_count: slidePlan.slide_count,
     duration_seconds: videoConfig.duration_seconds,
+    source_format: format,
+    mapping_strategy: slidePlan.source_format,
   };
 }
 
@@ -173,4 +226,4 @@ function runPipelineForFolder(opts) {
   return results;
 }
 
-module.exports = { runPipelineForLesson, runPipelineForFolder };
+module.exports = { runPipelineForLesson, runPipelineForModule, runPipelineForFolder };
