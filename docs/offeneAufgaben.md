@@ -198,6 +198,23 @@ Rename-Brücke fehlt).
 
 ## Erledigt
 
+- ✅ `docs/VIDEO_PRODUCTION_WORKFLOW.md` — End-to-End-Workflow-Doku
+  (Pipeline-Diagramm, Ordnerstruktur lessons/ → generator-output/ →
+  assets-input/ → videos/, Schritt-fuer-Schritt-Anleitung fuer den
+  manuellen Gamma-Export slide01…slide07.png, ElevenLabs-Setup,
+  Render-Einstiegspunkte, Troubleshooting-Tabelle, Rollenverteilung,
+  vollstaendige CLI-Referenz). `README.md` um Abschnitt "Videos
+  produzieren — CLI-Guide fuer neue User" erweitert, der neue
+  Mitarbeiter:innen in 5 Befehlen durch die gesamte Pipeline fuehrt
+  und auf das Workflow-Dokument verweist.
+- ✅ `scripts/create-lesson-asset-folders.js` + `npm run prepare:assets`
+  — Helper-Skript, das fuer jede in `lesson-asset-generator/output/`
+  gefundene Lektion einen passenden `assets-input/moduleXX-lessonYY/`-
+  Ordner inklusive `visuals/`-Unterordner und einer kontextspezifischen
+  README anlegt. Idempotent (vorhandene Ordner werden nicht
+  angetastet), unterstuetzt `--only`, `--copy-prompt` (kopiert
+  `slides_prompt.txt`/`voice_script.txt` direkt in den Asset-Ordner
+  fuer Offline-Arbeit) und `--dry-run`.
 - ✅ `scripts/generate-slides.js` — Gamma-Slides-Generator mit
   Dreistufen-Flow: (1) Gamma Generate API → PDF-Export → lokales
   Slicing via `pdftoppm` (poppler-utils) → `slide01.png`, `slide02.png`,

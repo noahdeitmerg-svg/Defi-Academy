@@ -46,6 +46,62 @@ Nur falls du **historisch** zwei Pfade hast (z.B. alter Ordner ohne `.git` + Git
 
 ---
 
+## Videos produzieren — CLI-Guide fuer neue User
+
+Die Lernplattform erwartet pro Lektion **optional** ein MP4 unter
+`public/videos/<slug>.mp4`. Die Produktion erfolgt aus den gleichen
+Markdown-Quellen wie der Web-Content, ueber eine vollstaendige Pipeline:
+
+**Markdown (`lessons/*.md`)** → **Lesson-Asset-Generator** → **Gamma-Slides (manuell)** → **ElevenLabs-Voice** → **Video-Renderer**
+
+### Vorbereitung (einmalig)
+
+1. `.env.local` anlegen (Kopie von `.env.example`) und ElevenLabs-
+   Zugangsdaten eintragen:
+
+   ```
+   ELEVENLABS_API_KEY=sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   ELEVENLABS_MODEL=eleven_turbo_v2
+   ELEVENLABS_VOICE=Florian
+   ```
+
+2. Im `video-renderer/video-renderer/`-Ordner einmal
+   `npm install` laufen lassen (Remotion-Deps).
+
+### 5-Schritt-Produktion
+
+```powershell
+# 1) Lektions-Markdowns strukturell pruefen
+npm run validate-lessons
+
+# 2) Pro Lektion slides_prompt.txt, voice_script.txt, video_config.json erzeugen
+node lesson-asset-generator/src/cli.js --input-dir lessons --out lesson-asset-generator/output
+
+# 3) assets-input/moduleXX-lessonYY/ mit README anlegen
+npm run prepare:assets
+
+# ---- MANUELLER SCHRITT ----
+# In Gamma (gamma.app) mit slides_prompt.txt jeweils ein Deck bauen
+# und als slide01.png ... slide07.png nach assets-input/moduleXX-lessonYY/
+# exportieren. Details siehe docs/VIDEO_PRODUCTION_WORKFLOW.md
+
+# 4) Voice-Overs generieren (ElevenLabs)
+npm run generate:voice
+
+# 5) Videos rendern
+npm run render:course      # Vollproduktion, alle Lektionen (empfohlen)
+# oder:
+npm run render:pilot       # Nur erste 5 Lektionen, als Smoke-Test
+```
+
+Ergebnis: `videos/moduleXX-lessonYY.mp4` + `posters/moduleXX-lessonYY.jpg`.
+
+Ausfuehrliche Dokumentation inkl. Ordnerstruktur, Troubleshooting,
+Rollenverteilung und vollstaendiger CLI-Referenz:
+**[docs/VIDEO_PRODUCTION_WORKFLOW.md](docs/VIDEO_PRODUCTION_WORKFLOW.md)**.
+
+---
+
 ## Weitere Doku
 
 | Datei | Inhalt |
@@ -53,6 +109,9 @@ Nur falls du **historisch** zwei Pfade hast (z.B. alter Ordner ohne `.git` + Git
 | [docs/BUILD.md](docs/BUILD.md) | Node, Build, Kurrikulum |
 | [docs/GITHUB.md](docs/GITHUB.md) | Klonen, Push, PAT, optional Sync |
 | [docs/OPS_CHECKLIST.md](docs/OPS_CHECKLIST.md) | Deploy-, Webhook- und Smoke-Test-Checkliste |
+| [docs/VIDEO_PRODUCTION_WORKFLOW.md](docs/VIDEO_PRODUCTION_WORKFLOW.md) | Video-Pipeline Lessons → Slides → Voice → MP4 |
+| [docs/defi_academy_system.md](docs/defi_academy_system.md) | Gesamte Systemarchitektur + Agent-Rollen |
+| [docs/offeneAufgaben.md](docs/offeneAufgaben.md) | Living-Backlog offener Tasks |
 | `scripts/import-modules.ts` | Große `moduleN.md` nach `content/modules/` |
 
 ## GitHub Pages (Deploy)

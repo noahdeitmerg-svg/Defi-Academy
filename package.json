@@ -21,6 +21,7 @@
     "pilot-render": "node scripts/pilot-render.js",
     "generate:voice": "node scripts/generate-voice.js",
     "generate:slides": "node scripts/generate-slides.js",
+    "prepare:assets": "node scripts/create-lesson-asset-folders.js",
     "render:pilot": "npm run generate:slides && npm run generate:voice && node scripts/render-batch.js --limit 5 --parallel 1",
     "render:course": "npm run generate:slides && npm run generate:voice && node scripts/render-batch.js --parallel 2",
     "verify": "npm run validate:content && npm run lint && npm run typecheck && npm run build",
