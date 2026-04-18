@@ -165,6 +165,24 @@ Lesson-Page im Browser prüfen.
 
 ## Erledigt
 
+- ✅ **lesson-asset-generator: Multi-Format-Parser integriert.**
+  Video-Agent-Lieferung (`lesson-asset-generator-migrated.zip`) ins Repo
+  gezogen: neue Files `src/format-detector.js`, `src/module-parser.js`,
+  `src/normalize-lesson.js`. `src/cli.js` um `--all-lessons` erweitert,
+  `src/pipeline.js` um `runPipelineForModule`, `src/section-mapper.js`
+  mit Dual-Path (`mapDirectSlides` für neues Format,
+  `mapLegacySections` bleibt als Fallback), `src/lesson-parser.js`
+  leicht refactored. **Bewusst NICHT übernommen**:
+  `src/generate-slides-prompt.js` — die Video-Agent-Version war das
+  alte "Gamma baut ganze Slide-Decks"-Design; wir behalten unsere
+  Visuals-Only-Variante (siehe `docs/SLIDE_GENERATION_RULES.md`).
+  Qualitätscheck mit `Module/modul-01-defi-grundlagen-FINAL.md`:
+  Alter Parser hat Narration komplett falsch zugeordnet (Slide 1
+  bekam Slide-5-Content); neuer Parser liest `[Slide N]`-Marker
+  direkt und matcht Slide/Narration/Visual 1:1. Alle 8 Original-
+  Tests (`node lesson-asset-generator/tests/run-tests.js`) grün,
+  `npm run generate-assets -- --only module01-lesson0{1..6}` für
+  Modul 1 sauber durchgelaufen (6/6 ok).
 - ✅ Plattform-Brand-Rollout: `app/layout.tsx` nutzt Inter (Google Fonts
   via `next/font`, Weights 400/500/600/700) statt Geist; CSS-Variablen in
   `styles/globals.css` leiten sich aus `brand/colors.json` ab (Light =
