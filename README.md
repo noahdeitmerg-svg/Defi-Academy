@@ -75,42 +75,49 @@ Markdown-Quellen wie der Web-Content, ueber eine vollstaendige Pipeline:
 2. Im `video-renderer/video-renderer/`-Ordner einmal
    `npm install` laufen lassen (Remotion-Deps).
 
-### 5-Schritt-Produktion
+### Academy-Build: 2 Commands + 2 Uploads
+
+Der empfohlene Weg. Du fuehrst **zwei Commands** aus und uploadest dazwischen
+die Prompts manuell in Gamma und ElevenLabs.
 
 ```powershell
-# 1) Lektions-Markdowns strukturell pruefen
-npm run validate-lessons
+# 1) Alle Generator-Artefakte erzeugen UND Prompts flach sammeln
+npm run academy-build
+#    → generated-assets/<id>/ (JSON + Prompts)
+#    → gamma-prompts/<id>.txt        ← Upload-fertig
+#    → elevenlabs-prompts/<id>.txt   ← Upload-fertig
 
-# 2) Pro Lektion slides_prompt.txt, voice_script.txt, video_config.json erzeugen
-node lesson-asset-generator/src/cli.js --input-dir lessons --out lesson-asset-generator/output
+# ---- MANUELLE SCHRITTE ----
+# A) gamma-prompts/*.txt → Gamma: Visuals generieren
+#    Export als visual01.png, visual02.png, ... nach
+#    assets-input/<id>/  (KEINE Slide-Layouts — Regel: visual NN.png)
+#
+# B) elevenlabs-prompts/*.txt → ElevenLabs: Voice generieren
+#    Export als voice.mp3 nach  assets-input/<id>/voice.mp3
+#    (Alternative automatisiert: ELEVENLABS_API_KEY setzen
+#     und  npm run generate:voice)
 
-# 3) assets-input/moduleXX-lessonYY/ mit README anlegen
-npm run prepare:assets
-
-# ---- MANUELLER SCHRITT ----
-# In Gamma (gamma.app) mit slides_prompt.txt pro Slide EIN Einzel-
-# Visual (Diagramm/Illustration/Chart) generieren und als
-# visual01.png, visual02.png, ... nach assets-input/moduleXX-lessonYY/
-# exportieren. KEINE Slide-Layouts, KEIN Titel-Text, KEINE Bullets
-# auf die Bilder — das rendert Remotion.
-# Details + Regeln:
-#   docs/VIDEO_PRODUCTION_WORKFLOW.md
-#   docs/SLIDE_GENERATION_RULES.md  ← Pflichtlektuere
-
-# 4) Voice-Overs generieren (ElevenLabs)
-npm run generate:voice
-
-# 5) Videos rendern
-npm run render:course      # Vollproduktion, alle Lektionen (empfohlen)
-# oder:
-npm run render:pilot       # Nur erste 5 Lektionen, als Smoke-Test
+# 2) Vollstaendigkeit pruefen und rendern
+npm run check-assets         # meldet fehlende visualNN.png / voice.mp3
+npm run render-videos        # Preflight + Remotion → videos/*.mp4
 ```
 
 Ergebnis: `videos/moduleXX-lessonYY.mp4` + `posters/moduleXX-lessonYY.jpg`.
 
-Ausfuehrliche Dokumentation inkl. Ordnerstruktur, Troubleshooting,
-Rollenverteilung und vollstaendiger CLI-Referenz:
+Ausfuehrliche Anleitung mit allen Flags, Troubleshooting und Ordner-
+Struktur: **[docs/academy-build.md](docs/academy-build.md)**.
+Tiefe Referenz (API-Varianten, Fehlerpfade):
 **[docs/VIDEO_PRODUCTION_WORKFLOW.md](docs/VIDEO_PRODUCTION_WORKFLOW.md)**.
+
+#### Alternative: voll-automatisierte Pipeline
+
+Falls du Gamma- und ElevenLabs-API-Keys hast, kannst du Upload-Schritte
+ueberspringen:
+
+```powershell
+npm run render:course      # Vollproduktion alle Lektionen (API-Calls)
+npm run render:pilot       # Nur erste 5 Lektionen als Smoke-Test
+```
 
 ---
 
@@ -119,6 +126,7 @@ Rollenverteilung und vollstaendiger CLI-Referenz:
 | Datei | Inhalt |
 |-------|--------|
 | [docs/BUILD.md](docs/BUILD.md) | Node, Build, Akademie-Inhalte |
+| [docs/academy-build.md](docs/academy-build.md) | Academy-Build-Pipeline: 2 Commands + 2 Uploads → Videos |
 | [docs/academy-structure.md](docs/academy-structure.md) | Hierarchie: DeFi Akademie → Module → Lektionen → Videos / Quiz / Praxisuebungen |
 | [docs/GITHUB.md](docs/GITHUB.md) | Klonen, Push, PAT, optional Sync |
 | [docs/OPS_CHECKLIST.md](docs/OPS_CHECKLIST.md) | Deploy-, Webhook- und Smoke-Test-Checkliste |

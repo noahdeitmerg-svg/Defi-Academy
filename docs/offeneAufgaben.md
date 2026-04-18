@@ -14,6 +14,25 @@
 
 ## Pipeline-Infrastruktur (Video-Produktion)
 
+### ✅ Academy-Build-Pipeline-Layer (2 Commands + 2 Uploads)
+
+Neue Automations-Schicht auf bestehenden Scripts:
+`scripts/generate-all-assets.js` scannt `lessons/` und erzeugt
+pro Lektion `generated-assets/<id>/` mit Prompts + JSON.
+`scripts/collect-prompts.js` spiegelt die beiden `.txt`-Prompts
+flach nach `gamma-prompts/<id>.txt` und `elevenlabs-prompts/<id>.txt`
+(ID als Dateiname → keine Namenskollision beim Upload).
+`scripts/check-assets.js` prueft `assets-input/<id>/` auf
+`voice.mp3` + `visualNN.png` (legacy `slideNN.png` mit Warnung).
+`scripts/render-all-videos.js` = Preflight + dünner Wrapper um
+`render-batch.js` mit Academy-Build-Pfaden.
+Neue npm-Scripts: `generate-assets`, `collect-prompts`,
+`check-assets`, `render-videos`, `academy-build`.
+Doku: `docs/academy-build.md` (User-Guide) + README-Quick-Start.
+`.gitignore` um `/generated-assets/`, `/gamma-prompts/`,
+`/elevenlabs-prompts/` erweitert. Smoke-Tests aller `--help`-Ausgaben
+und der leeren-Zustand-Pfade erfolgreich.
+
 ### ✅ Gamma auf Visual-Asset-Only-Modus umgestellt
 
 `generate-slides-prompt.js` instruiert Gamma jetzt im Kopf des

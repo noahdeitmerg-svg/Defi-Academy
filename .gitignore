@@ -37,7 +37,10 @@ yarn-error.log*
 # Video-Pipeline-Artefakte (alle derived, nie committen)
 /logs/
 /generator-output/
+/generated-assets/
 /assets-input/
+/gamma-prompts/
+/elevenlabs-prompts/
 /videos/
 /posters/
 /.pilot-render-tmp/
