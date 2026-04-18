@@ -487,7 +487,7 @@ Für die echte Vollproduktion (100+ Lektionen) gibt es `scripts/render-batch.js`
 Namenskollision: Es gibt zwei Dateien mit dem Namen `render-batch.js`:
 
 - `scripts/render-batch.js` — **Top-Level-Orchestrator** (neu, diese Sektion).
-- `video-renderer/video-renderer/src/render-batch.js` — **Remotion-Engine** (bestehend), rendert Lektionen in-process. Wird vom Top-Level-Skript pro Chunk als Child gestartet.
+- `video-renderer/src/render-batch.js` — **Remotion-Engine** (bestehend), rendert Lektionen in-process. Wird vom Top-Level-Skript pro Chunk als Child gestartet.
 
 Pipeline-Schritte:
 

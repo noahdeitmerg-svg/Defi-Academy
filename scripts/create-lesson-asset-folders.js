@@ -30,7 +30,7 @@
  * Flags
  *   --generator-output <path>  default: ./lesson-asset-generator/output
  *                              (Fallback: ./generator-output,
- *                               ./lesson-asset-generator/lesson-asset-generator/output)
+ *                               ./lesson-asset-generator/output)
  *   --assets-input <path>      default: ./assets-input
  *   --only <csv>               nur diese Lesson-IDs anlegen
  *   --copy-prompt              slides_prompt.txt und voice_script.txt
@@ -69,7 +69,7 @@ Usage:
 Flags:
   --generator-output <path>  default: ./lesson-asset-generator/output
                              (Fallback: ./generator-output,
-                              ./lesson-asset-generator/lesson-asset-generator/output)
+                              ./lesson-asset-generator/output)
   --assets-input <path>      default: ./assets-input
   --only <csv>               explizite Lesson-IDs
   --copy-prompt              Prompt- und Script-Dateien mitkopieren

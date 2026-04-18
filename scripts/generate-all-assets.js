@@ -33,7 +33,7 @@
  * Flags
  *   --lessons-dir <path>   default: ./lessons
  *   --out <path>           default: ./generated-assets
- *   --style <path>         default: ./video-style-engine/video-style-engine
+ *   --style <path>         default: ./video-style-engine
  *                          (mit Fallback auf ./video-style-engine)
  *   --generator <path>     default: lesson-asset-generator/.../src/cli.js
  *   --only <csv>           nur diese Lesson-IDs
@@ -96,7 +96,7 @@ function firstExisting(paths) {
 function resolveGenerator(flag) {
   return firstExisting([
     flag,
-    path.join(ROOT, 'lesson-asset-generator/lesson-asset-generator/src/cli.js'),
+    path.join(ROOT, 'lesson-asset-generator/lesson-asset-generator/src/cli.js'), // legacy
     path.join(ROOT, 'lesson-asset-generator/src/cli.js'),
   ]);
 }

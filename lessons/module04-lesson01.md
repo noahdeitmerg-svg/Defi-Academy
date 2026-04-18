@@ -1,0 +1,161 @@
+# Was eine DEX von einer CEX unterscheidet
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die drei strukturellen Unterschiede zwischen DEX und CEX benennen
+- Erklären, warum DEXs keine Order Books brauchen
+- Einordnen, wann DEX-Nutzung sinnvoll ist und wann nicht
+- AMM-Modell und Orderbook-Modell direkt gegenüberstellen und die jeweiligen Trade-offs (Latenz, Slippage, Preisgüte, Trustlessness) benennen
+- Die Custody-, Settlement- und Zugangs-Unterschiede zwischen CEX und DEX in ein Entscheidungsraster für konkrete Handelsgrößen übersetzen
+- Praktisch entscheiden, wann ein Swap auf einer CEX vs. auf einer DEX wirtschaftlich und sicherheitstechnisch sinnvoll ist
+
+## Erklärung
+
+Eine zentrale Börse (CEX) funktioniert wie ein traditioneller Marktplatz: Käufer stellen Gebote ein, Verkäufer stellen Angebote ein, das System matched sie und führt den Trade aus. Die Börse verwahrt die Assets und führt die Buchhaltung.
+
+Ein dezentraler Exchange (DEX) funktioniert strukturell anders. Es gibt kein Order Book. Stattdessen liegen Token-Paare in Smart Contracts — sogenannten **Liquidity Pools**. Wer tauschen will, interagiert direkt mit diesem Pool: Er gibt Token A hinein, bekommt Token B heraus. Der Preis ergibt sich aus einer mathematischen Formel, nicht aus einem Orderabgleich.
+
+**Die drei strukturellen Unterschiede**
+
+**Unterschied 1: Custody**
+- CEX: Die Börse hält die Assets. Du hast einen Kontostand auf ihrer Datenbank.
+- DEX: Du hältst die Assets selbst bis zur Sekunde des Trades. Der Swap wird in einer einzigen atomaren Transaktion ausgeführt.
+
+**Unterschied 2: Preisbildung**
+- CEX: Order Book. Der Preis ergibt sich aus dem höchsten Gebot, das auf das niedrigste Angebot trifft.
+- DEX (AMM): Formel-basiert. Der Preis wird aus den Pool-Beständen berechnet.
+
+**Unterschied 3: Zugänglichkeit**
+- CEX: KYC erforderlich, Länder-Einschränkungen, Konto kann gesperrt werden.
+- DEX: Jede Wallet kann interagieren, keine Kontoeröffnung.
+
+**Warum DEXs keine Order Books brauchen**
+
+Ein klassisches Order Book on-chain zu betreiben wäre extrem teuer. Jede Limit-Order wäre eine Transaktion. Jede Anpassung wäre eine Transaktion. Die Gas-Kosten würden den Handel sinnlos machen.
+
+AMMs umgehen das Problem elegant. Liquidität wird einmal in einen Pool eingezahlt. Der Pool "quotiert" kontinuierlich einen Preis über eine Formel. Trader können jederzeit handeln, ohne auf einen passenden Gegenpart zu warten. Der Pool ist der Gegenpart.
+
+Der Trade-off: AMMs sind weniger kapitaleffizient als Order Books, und sie haben strukturelle Nachteile (Slippage, Impermanent Loss, MEV-Anfälligkeit). Diese Punkte behandeln wir in den folgenden Lektionen.
+
+**Wann DEX-Nutzung sinnvoll ist**
+
+DEXs eignen sich für:
+- Tauschen von Tokens, die auf CEXs nicht gelistet sind
+- Swaps ohne KYC
+- Teil einer komponierten DeFi-Transaktion (z.B. Borrow → Swap → LP in einer Transaktion)
+- Interaktion mit Protokollen, die Stablecoins oder Liquid-Staking-Tokens handhaben
+
+DEXs sind weniger effizient für:
+- Sehr große Swaps (>1% der Pool-Liquidität) — hier ist OTC oder CEX oft besser
+- Hochfrequenter Handel — Gas-Kosten fressen Gewinne
+- Handel mit Fiat-Paaren (EUR, USD, CHF)
+
+**Die Marktstruktur**
+
+Die dominante DEX-Architektur ist **Uniswap**, gefolgt von **Curve** (spezialisiert auf Stablecoins und gepeggte Assets), **Balancer** (gewichtete Pools, mehr als zwei Assets) und **PancakeSwap** (auf BNB Chain). Auf Ethereum Layer-2s (Arbitrum, Base, Optimism) dominieren dieselben Protokolle plus native Projekte wie Aerodrome auf Base.
+
+DeFiLlama zeigt aktuelle DEX-Volumina und Marktanteile. Diese Verhältnisse verschieben sich, aber Uniswap hält seit Jahren Marktführerschaft auf Ethereum Mainnet.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Was eine DEX von einer CEX unterscheidet
+
+**[Slide 2] — CEX-Architektur**
+Order Book. Käufer und Verkäufer. Matching-Engine. Börse verwahrt Assets.
+
+**[Slide 3] — DEX-Architektur**
+Liquidity Pool. Formel-basierte Preise. Nutzer handeln gegen den Pool.
+
+**[Slide 4] — Drei strukturelle Unterschiede**
+1. Custody: Börse vs. Nutzer
+2. Preisbildung: Order Book vs. Formel
+3. Zugänglichkeit: KYC vs. Permissionless
+
+**[Slide 5] — Warum keine Order Books on-chain**
+Zu teuer. Jede Order = Transaktion.
+AMMs: Liquidität einmal einzahlen, kontinuierlich handelbar.
+
+**[Slide 6] — Wann DEX, wann CEX**
+DEX: Long-tail Tokens, komponierte Transaktionen, No-KYC.
+CEX: Große Swaps, Fiat-Paare, hochfrequenter Handel.
+
+**[Slide 7] — Marktstruktur**
+Uniswap: Marktführer.
+Curve: Stablecoins.
+Balancer: Gewichtete Pools.
+Layer-2s: gleiche Protokolle + native Projekte.
+
+## Sprechertext
+
+**[Slide 1]** Modul 4 behandelt dezentrale Exchanges. Diese erste Lektion legt das Fundament: wie unterscheidet sich eine DEX strukturell von einer zentralen Börse, und warum ist dieser Unterschied wichtig.
+
+**[Slide 2]** Eine zentrale Börse funktioniert wie ein klassischer Marktplatz. Käufer stellen Gebote ein, Verkäufer stellen Angebote ein. Eine Matching-Engine führt die passenden Aufträge zusammen. Die Börse hält die Assets aller Nutzer in ihrem eigenen System. Wenn du auf Coinbase einen Trade ausführst, bewegt Coinbase intern Einträge in ihrer Datenbank — kein Blockchain-Vorgang findet statt, bis du auszahlst.
+
+**[Slide 3]** Ein DEX funktioniert strukturell anders. Es gibt kein Order Book. Stattdessen liegen Token-Paare in Smart Contracts, sogenannten Liquidity Pools. Wer tauschen will, interagiert direkt mit dem Pool: Er gibt Token A hinein, erhält Token B heraus. Der Preis wird aus einer Formel berechnet, die von den Pool-Beständen abhängt.
+
+**[Slide 4]** Drei strukturelle Unterschiede. Erstens: Custody. Eine CEX hält deine Assets, eine DEX nicht — du hältst sie bis zur Sekunde des Trades selbst. Zweitens: Preisbildung. Order Book versus Formel. Drittens: Zugänglichkeit. CEX erfordert KYC und kann Konten sperren. DEX kann von jeder Wallet aus genutzt werden.
+
+**[Slide 5]** Warum können DEXs nicht einfach ein Order Book on-chain haben? Weil es zu teuer wäre. Jede Limit-Order wäre eine Transaktion. Jede Anpassung wäre eine Transaktion. Gas-Kosten würden den Handel sinnlos machen. AMMs umgehen das Problem elegant: Liquidität wird einmal in einen Pool eingezahlt, der Pool quotiert kontinuierlich einen Preis über eine Formel. Trader können jederzeit handeln, ohne auf einen Gegenpart zu warten. Der Pool ist der Gegenpart.
+
+**[Slide 6]** Wann macht DEX-Nutzung Sinn. DEXs sind stark für Tokens, die auf CEXs nicht gelistet sind, für Swaps ohne KYC, und als Teil komponierter DeFi-Transaktionen. Schwächer sind DEXs bei sehr großen Swaps über einem Prozent der Pool-Liquidität, bei hochfrequentem Handel wegen der Gas-Kosten, und für Fiat-Paare, die es on-chain schlicht nicht gibt.
+
+**[Slide 7]** Die Marktstruktur ist übersichtlich. Uniswap ist seit Jahren Marktführer. Curve dominiert bei Stablecoins und gepeggten Assets. Balancer bietet gewichtete Pools mit mehr als zwei Assets. Auf Layer-2s finden sich dieselben Protokolle plus einige native Projekte wie Aerodrome auf Base. DeFiLlama zeigt aktuelle Volumina und Marktanteile.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Schematisches Order-Book-Diagramm: Buys links, Sells rechts, Matching-Engine in der Mitte. **SCREENSHOT SUGGESTION:** Coinbase-Pro-Order-Book eines gängigen Paares (ETH-USD).
+
+**[Slide 3]** Schematisches AMM-Diagramm: Ein Pool mit zwei Token-Stapeln, ein Pfeil hinein mit Token A, ein Pfeil hinaus mit Token B. **SCREENSHOT SUGGESTION:** Uniswap-Interface mit einem Swap-Dialog.
+
+**[Slide 4]** Dreizeilige Vergleichstabelle CEX vs. DEX für die drei Dimensionen.
+
+**[Slide 5]** Illustration: Order Book on-chain mit explodierenden Gas-Kosten-Symbolen. Daneben: AMM mit einem einzigen "einmal einzahlen"-Einzahlungspfeil.
+
+**[Slide 6]** Zweispaltige Entscheidungshilfe: "Nutze DEX wenn..." / "Nutze CEX wenn..."
+
+**[Slide 7]** **SCREENSHOT SUGGESTION:** DeFiLlama-DEX-Volume-Ranking der Top-10 DEXs, sortiert nach 24h-Volumen.
+
+## Übung
+
+**Aufgabe: DEX-Landschaft kartieren**
+
+1. Öffne defillama.com/dexs.
+2. Identifiziere die Top-10 DEXs nach 24-Stunden-Volumen.
+3. Notiere für jede DEX: Name, dominante Chain, 24h-Volumen, TVL.
+4. Gruppiere die DEXs nach Architektur (Uniswap V2-Stil, Uniswap V3-Stil, Curve-Stil, anderes).
+
+**Deliverable:** Tabelle mit 10 Zeilen, sortiert nach Volumen. Am Ende ein kurzer Absatz (3–5 Sätze): Welcher DEX-Typ dominiert wo, und warum vermutest du das?
+
+## Quiz
+
+**Frage 1:** Warum verwenden DEXs keine Order Books on-chain?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Weil jede Order, jede Anpassung und jede Stornierung eine Transaktion wäre, die Gas kostet. Bei aktiven Märkten würden die Gas-Kosten den Handel sinnlos machen. AMMs umgehen das, indem sie Liquidität einmal in einen Pool einzahlen und Preise kontinuierlich aus einer Formel ableiten. Nur der eigentliche Swap kostet Gas, nicht das Bereitstellen oder Anpassen von Geboten. Der Trade-off ist geringere Kapitaleffizienz, aber praktikable Gas-Kosten.
+</details>
+
+**Frage 2:** Nenne zwei Szenarien, in denen eine CEX für einen Nutzer besser geeignet ist als eine DEX.
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Erstens: Fiat-on-ramp und off-ramp. DEXs handeln nur on-chain Tokens, nicht EUR oder USD direkt. Jeder Wechsel zwischen Fiat und Krypto läuft über eine CEX oder einen spezialisierten Fiat-Gateway. Zweitens: sehr große Swaps, die einen signifikanten Prozentsatz der verfügbaren DEX-Pool-Liquidität ausmachen. Solche Swaps erzeugen hohen Slippage. CEXs mit tiefen Order Books oder OTC-Desks können solche Volumen mit geringerem Preis-Impact abwickeln. Zusätzlich gilt: hochfrequenter Handel, bei dem die Gas-Kosten pro Trade die Margen auffressen würden.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 6 Slides: Titel → CEX-Architektur → DEX-Architektur → 3 strukturelle Unterschiede → AMM vs. Orderbook → Entscheidungsmatrix CEX/DEX
+- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — CEX-Stack-Diagramm (Custody/KYC/Orderbook), DEX-Stack-Diagramm (Wallet/Smart Contract/Pool), Vergleichstabelle, Uniswap-Screenshot vs. Binance-Screenshot
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

@@ -1,0 +1,286 @@
+# DeFiLlama als zentrales Tool
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die Struktur von DeFiLlama und seine wichtigsten Sektionen (Protocols, Chains, Yields, Bridges, Hacks) navigieren
+- TVL-Daten in verschiedenen Bereinigungs-Varianten (inkl./exkl. double counting, borrowed, staking) interpretieren
+- Yield-Pages sinnvoll filtern und die typischen Fallen (impermanent loss, Incentive-Expiry, Risk-Score) erkennen
+- Chain-Level-Analysen und Bridge-Flow-Daten für eigene Strategien nutzen
+- Die Revenue- und Fees-Metriken als fundamentale Profitabilitäts-Indikatoren für Protokolle auswerten
+- DeFiLlama-Alerts und Watchlists für kontinuierliches Monitoring aufsetzen
+
+## Erklärung
+
+**Warum DeFiLlama der Standard ist**
+
+DeFiLlama ([defillama.com](https://defillama.com)) ist das am weitesten verbreitete Analyse-Dashboard in DeFi. Es gibt mehrere Gründe dafür. Erstens: Es ist kostenlos und open-source — die Daten-Methodologien sind öffentlich dokumentiert, was in einer Welt voller Marketing-Statistiken selten ist. Zweitens: Die Abdeckung ist breiter als bei kommerziellen Alternativen — über 3.000 Protokolle auf über 200 Chains sind integriert. Drittens: Das Team ist für kritisches Denken bekannt — sie zählen TVL differenziert (mit/ohne double counting, mit/ohne staking), statt marketing-freundliche Maximal-Zahlen zu präsentieren.
+
+Für Retail-Analysten ist DeFiLlama der Einstiegspunkt für fast jede Frage. Viele spezifische Analysen erfordern am Ende andere Tools, aber die Orientierung beginnt meist hier.
+
+**Die Struktur: Die wichtigsten Sektionen**
+
+DeFiLlama gliedert sich in mehrere zentrale Bereiche, die jeweils spezifische Analyse-Zwecke erfüllen.
+
+**Sektion 1: Protocols (defillama.com)**
+Die Hauptseite listet alle DeFi-Protokolle nach TVL sortiert. Jedes Protokoll hat eine eigene Detail-Seite mit TVL-Zeitreihe, Chain-Verteilung, Token-Composition, unterstützten Chains und oft zusätzlichen Metriken (Revenue, Fees, Users). Dies ist die primäre Quelle für Protokoll-Level-Analysen.
+
+**Sektion 2: Chains (defillama.com/chains)**
+Aggregiert TVL pro Chain. Zeigt, wie sich Kapital zwischen Ethereum, L2s und Alt-L1s verteilt. Wichtig für Chain-Allokations-Entscheidungen (vgl. Modul 14).
+
+**Sektion 3: Yields (defillama.com/yields)**
+Aggregiert Yield-Opportunities über viele Protokolle und Chains. Filterbar nach APY, Chain, TVL, Risk-Level. Die zentrale Ressource für Yield-Farmer, aber mit wichtigen Fallen.
+
+**Sektion 4: Bridges (defillama.com/bridges)**
+Cross-Chain-Flow-Analyse. Welche Bridges bewegen wie viel Kapital? Welche Chains haben Netto-Inflows vs. Outflows? Kritisch für Markt-Rotations-Analysen (vgl. Modul 14).
+
+**Sektion 5: Hacks (defillama.com/hacks)**
+Historisches Archiv aller bekannten DeFi-Hacks. Filterbar nach Kategorie, Betrag, Chain, Jahr. Die beste Quelle für historische Risiko-Analyse.
+
+**Sektion 6: Stablecoins (defillama.com/stablecoins)**
+Detaillierter Blick auf Stablecoin-Marktkapitalisierungen, Chain-Verteilung, Peg-Stabilität. Wichtig für Markt-Liquiditäts-Analysen.
+
+**Sektion 7: Derivatives, Options, Perps**
+Spezifische Sub-Sektionen für Derivate-Plattformen. Weniger kritisch für konservative Strategien, aber relevant für Markt-Kontext.
+
+**Zusätzlich: Token Unlocks, Raises, DEX-Aggregator, NFT-Daten** — meist Nischen-Tools, aber bei Bedarf wertvoll.
+
+**TVL richtig lesen**
+
+TVL ist die zentralste DeFiLlama-Metrik, aber auch die am häufigsten missverstandene. DeFiLlama selbst bietet mehrere Bereinigungs-Varianten an — sie zu kennen ist die Grundlage seriöser Analyse.
+
+**Variante 1: "Default TVL"**
+Was DeFiLlama standardmäßig zeigt. Enthält alle Positionen — auch rehypothekierte. Das ist die "Marketing-freundliche" Zahl, die oft in Schlagzeilen zitiert wird. Nützlich als Orientierung, aber nicht als einzige Referenz.
+
+**Variante 2: "TVL (Borrowed)"**
+Bei Lending-Protokollen: enthält die geliehenen Werte im TVL. Relevant für die Marktmacht eines Protokolls, weil geliehenes Kapital tatsächlich genutzt wird. Aber kann wieder doppelt gezählt werden, wenn das geliehene Kapital in anderen Protokollen re-deployed wird.
+
+**Variante 3: "TVL (Staking)"**
+Bei Protokollen wie Lido: zählt das Staking-gelockte ETH zum TVL. Technisch korrekt, aber weil dasselbe ETH oft auch in anderen Protokollen (Aave, Curve) erscheint, führt es zu Doppelzählung im aggregierten DeFi-TVL.
+
+**Variante 4: "Pool2"**
+LP-Token, bei denen der Protokoll-Token selbst im Pool ist (z.B. PROTOCOL/USDC LP). Wird in vielen Dashboards bewusst getrennt gezeigt, weil es zirkulär ist — der Protokoll-Token ist Teil seiner eigenen Bewertung.
+
+**Variante 5: "Doublecounted Adjusted"**
+DeFiLlama bietet in einigen Views explizit die bereinigte Zahl ohne Doppelzählungen. Wenn du Gesamt-DeFi-TVL analysierst, ist das die relevantere Zahl — nicht die Summe aller Protokoll-TVLs.
+
+**Praktische Konsequenz:** Wenn jemand eine TVL-Zahl zitiert, frage: welche Variante? "Ethereum hat 80 Mrd USD TVL" kann bedeuten 80 Mrd doublecounted (inflationiert) oder 50 Mrd bereinigt (realistisch). Der Unterschied ist analyse-relevant.
+
+**Die Yield-Page kritisch nutzen**
+
+Die Yield-Sektion ([defillama.com/yields](https://defillama.com/yields)) listet Tausende von Opportunities mit APYs von 2% bis über 100%. Die natürliche Tendenz ist, nach den höchsten APYs zu filtern. Das ist fast immer ein Fehler.
+
+**Wichtige Filter-Kriterien:**
+
+- **TVL > $10 Mio.** Pools mit wenig TVL können instabil sein — ein einzelner großer Withdraw ändert dramatisch die Liquidität und den APY.
+- **Chain-Filter.** Beschränke dich auf Chains, die deine Allokations-Strategie vorsieht. Die beste Yield auf einer Chain, die du nicht nutzt, ist irrelevant.
+- **Risk-Column-Score.** DeFiLlama zeigt für viele Pools einen "IL Risk"-Score (Impermanent-Loss-Risiko). A-Rated Pools sind stable-stable (z.B. USDC/USDT), B-Rated sind stable-volatile (z.B. ETH/USDC), C-Rated sind volatile-volatile (z.B. ETH/BTC). Für konservative Strategien meist nur A und ausgewählte B.
+- **Base vs. Reward APY.** Der "Base APY" ist, was aus Fees/Interest kommt — strukturell nachhaltig. Der "Reward APY" ist aus Token-Emissionen — kurzfristig, endet wenn Rewards enden. DeFiLlama zeigt oft beide getrennt. Fokussiere auf Base APY für langfristige Einschätzung.
+- **7d / 30d APY-Stabilität.** Ein APY, der am heutigen Tag 40% zeigt, aber 7d-Durchschnitt 12% hat, ist nicht nachhaltig 40%. Prüfe die Durchschnitte über längere Zeiträume.
+
+**Typische Yield-Page-Fallen:**
+
+- **Expiring Incentives:** Ein Pool zeigt 35% APY. Wenn das Rewards-Programm in 2 Wochen ausläuft, ist die realistische zukünftige APY viel niedriger.
+- **Farmed Token Dumping:** Wenn der Reward-Token wenig Liquidität oder starken Verkaufsdruck hat, erhält man zwar APY, aber bei Verkauf entsteht Slippage und Preis-Drop — die realisierte Rendite ist deutlich unter der nominalen.
+- **Pool-Alter:** Neue Pools (< 30 Tage) haben oft hohe APYs wegen wenig Konkurrenz, aber sind auch untestet. Etablierte Pools mit moderaten APYs sind oft risiko-adjustiert besser.
+- **Audit-Status:** DeFiLlama zeigt für viele Protokolle den Audit-Status. Nicht-auditierte oder junge Protokolle mit hohen APYs sind Risiko-Fallen.
+
+**Bridges-Dashboard für Kapitalfluss-Analyse**
+
+Die Bridges-Sektion ([defillama.com/bridges](https://defillama.com/bridges)) aggregiert Cross-Chain-Flows und zeigt, wohin Kapital aktuell migriert. Für strategische Chain-Allokations-Entscheidungen ist das eine zentrale Datenquelle.
+
+**Was die Bridges-Page zeigt:**
+- TVL pro Bridge (wieviel Kapital wird über die Bridge verwahrt)
+- Netto-Inflow / Outflow pro Chain (welche Chains gewinnen/verlieren Kapital)
+- Historische Flow-Daten (Trends über Zeit)
+- Top-Transfer-Routes (welche Chain-Pairs sind am aktivsten)
+
+**Analytische Nutzung:**
+
+**Frage: "Migriert Kapital von Ethereum zu Base?"**
+Die Bridges-Page zeigt Netto-Inflows nach Base und Netto-Outflows aus Ethereum über Zeit. Wenn beide positiv korrelieren und konsistent sind, ist das ein echter Migrations-Trend. Wenn sie nur einzelne Ereignisse zeigen, ist es situatives Verhalten.
+
+**Frage: "Welche L2s gewinnen aktuell Marktanteil?"**
+Vergleiche die 30-Tage-Netto-Inflows zwischen L2s. Base, Arbitrum, Optimism haben unterschiedliche Flow-Profile — das sagt etwas über die relative Markt-Präferenz.
+
+**Frage: "Ist der Kapitalabfluss aus einer Chain besorgniserregend?"**
+Ein Chain mit konsistenten Netto-Outflows über Wochen ist ein Warnsignal — entweder gibt es strukturelle Probleme oder besser performende Alternativen. Bei einer Chain, die du selbst nutzt, ist das ein Trigger für Überprüfung.
+
+**Das Hacks-Archiv**
+
+Die Hacks-Sektion ([defillama.com/hacks](https://defillama.com/hacks)) ist der beste öffentliche Überblick über historische DeFi-Exploits. Filterbar nach Kategorie (Bridge, Lending, DEX, etc.), Betrag, Chain, Jahr.
+
+**Warum das wertvoll ist:**
+
+**1. Basis-Rate für Risiko-Einschätzungen.** Wenn man eine Position in einem bestimmten Protokoll-Typ aufbauen will, zeigt das Hacks-Archiv, wie oft solche Protokolle historisch gehackt werden. Lending-Protokolle haben andere Muster als Bridges, Bridges andere als DEXes.
+
+**2. Historische Lehren.** Ein Blick auf die Hacks der letzten 24 Monate zeigt: Welche Angriffs-Muster dominieren? (Oracle-Manipulation, Bridge-Trust-Modell-Versagen, Admin-Key-Kompromittierung). Das informiert die Prüfung neuer Protokolle.
+
+**3. Post-Mortem-Links.** Für viele Hacks sind Post-Mortem-Analysen verlinkt. Diese zu lesen ist einer der besten Lehrwege.
+
+**4. Aktuelle Events.** Wenn ein Hack passiert, taucht er innerhalb Stunden im Archiv auf. Für Monitoring der eigenen Exposure (vgl. Modul 14 Notfall-Playbook) ist das eine wichtige Quelle.
+
+**Chain-Level-Analyse**
+
+Die Chains-Sektion ([defillama.com/chains](https://defillama.com/chains)) zeigt TVL-Verteilung über Chains. Für Chain-Allokations-Entscheidungen und Markt-Rotations-Analyse zentral.
+
+**Was zu beachten ist:**
+
+- **Relative Marktanteile verfolgen, nicht absolute Zahlen.** Ob Ethereum 50 oder 60 Mrd TVL hat, ist weniger wichtig als "Ethereum hat 55% des DeFi-TVL, Arbitrum 10%, Base 5%." Die Verteilung ist analyse-relevanter als absolute Zahlen.
+- **Kurzfristige Fluktuationen ignorieren.** TVL schwankt mit Token-Preisen täglich. Strategische Analyse nutzt 30-Tage oder 90-Tage Averages.
+- **Token-Launch-Effekte erkennen.** Wenn eine Chain ein Airdrop oder Incentive-Programm startet, steigt TVL temporär. Das Post-Incentive-TVL (3-6 Monate nach Programmende) ist die strukturelle Realität.
+- **Stablecoin-TVL separat prüfen.** Stablecoin-TVL ist robuster als Token-TVL (kein Preisrisiko). Wenn Stablecoin-TVL wächst, ist das ein stärkeres Adoptions-Signal als Gesamt-TVL-Wachstum.
+
+**Workflow-Beispiel: Eine konkrete Analyse-Sitzung**
+
+Frage: "Sollte ich meine Aave-V3-Position auf Ethereum oder Arbitrum halten?"
+
+**Schritt 1 (Protocols-Sektion):**
+Aave-Detail-Seite öffnen. TVL-Verteilung nach Chain prüfen. Ethereum vs. Arbitrum — wie groß ist jede Position, wie stabil ist das TVL?
+
+**Schritt 2 (Yields-Sektion):**
+Filter auf Aave V3 setzen, Chain jeweils Ethereum und Arbitrum. Aktuelle Supply- und Borrow-APYs vergleichen. Prüfe Base APY vs. Reward APY.
+
+**Schritt 3 (Chains-Sektion):**
+Arbitrum-Chain-Seite öffnen. Wie entwickelt sich das TVL? Gibt es Netto-Inflows? Ist die Chain im Aufschwung oder stagniert sie?
+
+**Schritt 4 (Bridges-Sektion):**
+Flows zwischen Ethereum und Arbitrum analysieren. Migriert Kapital aktiv dazwischen, oder ist es stabil?
+
+**Schritt 5 (Hacks-Sektion):**
+Hat Aave (speziell die V3-Version) historisch Vorfälle gehabt? Auf beiden Chains ähnlich?
+
+**Schritt 6: Entscheidung.**
+Synthese: Auf welcher Chain ist die Risiko-adjustierte Rendite besser? Ethereum typisch sicherer aber höhere Gas-Kosten. Arbitrum günstiger aber zusätzliche Chain-Risiken. Der konkrete Betrag entscheidet (vgl. Modul 14 Chain-Allokations-Modell: große Beträge bevorzugt auf Ethereum).
+
+Diese Analyse dauert 15-20 Minuten und liefert eine strukturierte, evidenz-basierte Entscheidung. Das ist DeFiLlama-Analyse in der Praxis.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+DeFiLlama als zentrales Tool
+
+**[Slide 2] — Warum DeFiLlama Standard ist**
+Kostenlos, open-source, breit (3000+ Protokolle, 200+ Chains)
+Transparente Methodik (differenzierte TVL-Zählungen)
+Standard-Einstiegspunkt für fast jede Analyse
+
+**[Slide 3] — Die sieben zentralen Sektionen**
+Protocols, Chains, Yields, Bridges, Hacks, Stablecoins, Derivatives
+Jede Sektion erfüllt spezifischen Analyse-Zweck
+
+**[Slide 4] — TVL richtig lesen**
+Default TVL ≠ bereinigtes TVL
+Varianten: Borrowed, Staking, Pool2, Doublecounted Adjusted
+Für Gesamt-DeFi: Doublecounted Adjusted nutzen
+
+**[Slide 5] — Yield-Page kritisch nutzen**
+Filter: TVL > $10M, Chain-Allokation, Risk-Score
+Base APY vs. Reward APY unterscheiden
+7d/30d-Stabilität prüfen, nicht Tages-Spikes
+
+**[Slide 6] — Typische Yield-Fallen**
+Expiring Incentives (hohe APY, bald vorbei)
+Farmed Token Dumping (nominale ≠ realisierte APY)
+Neue Pools (hohe APY, untestet)
+Nicht-auditierte Protokolle
+
+**[Slide 7] — Bridges- und Hacks-Sektion**
+Bridges: Kapitalflüsse zwischen Chains, Migrations-Trends
+Hacks: historische Risiko-Basis, Post-Mortem-Links
+Zentrale Monitoring-Quellen
+
+**[Slide 8] — Workflow-Beispiel**
+Frage → Protocols → Yields → Chains → Bridges → Hacks → Entscheidung
+Strukturierte 15-20-min-Analyse für konkrete Fragen
+
+## Sprechertext
+
+**[Slide 1]** DeFiLlama ist das wichtigste einzelne Tool in der On-Chain-Analyse-Toolbox. In dieser Lektion gehen wir durch, wie man es systematisch nutzt — nicht nur oberflächlich scrollt, sondern als echtes Analyse-Instrument einsetzt.
+
+**[Slide 2]** Es gibt mehrere Gründe, warum DeFiLlama zum Standard geworden ist. Erstens: kostenlos und open-source, die Methodologien sind öffentlich dokumentiert. Zweitens: breite Abdeckung, über 3000 Protokolle auf über 200 Chains. Drittens: das Team ist bekannt für kritisches Denken — sie zählen TVL differenziert, mit und ohne Doppelzählung, nicht nur die marketing-freundliche Maximal-Zahl. Für Retail-Analysten ist DeFiLlama der Einstiegspunkt für fast jede Frage.
+
+**[Slide 3]** Die Plattform gliedert sich in sieben zentrale Sektionen, die jeweils spezifische Zwecke erfüllen. Protocols für einzelne DeFi-Protokolle. Chains für Kapital-Verteilung zwischen Blockchains. Yields für Rendite-Opportunities. Bridges für Cross-Chain-Flows. Hacks für das historische Exploit-Archiv. Stablecoins für Stablecoin-Marktanalysen. Derivatives für Optionen und Perps. Wer diese sieben Sektionen fließend navigiert, hat ein vollständiges Analyse-Grundgerüst.
+
+**[Slide 4]** TVL ist die zentralste und am häufigsten missverstandene Metrik. DeFiLlama bietet mehrere Varianten an. Das Default-TVL enthält alle Positionen inklusive rehypothekierte. TVL mit Borrowed zählt geliehene Werte mit. TVL mit Staking zählt gestaktes ETH bei Lido und anderen. Pool2 sind LP-Tokens mit dem Protokoll-Token selbst. Doublecounted Adjusted ist die bereinigte Zahl ohne Doppelzählungen. Für die Gesamt-DeFi-Einschätzung ist die bereinigte Zahl die relevantere — nicht die Summe aller Protokoll-TVLs. Wenn jemand eine TVL-Zahl zitiert, frage immer: welche Variante?
+
+**[Slide 5]** Die Yield-Page ist eine der gefährlichsten Sektionen, weil sie Tausende Opportunities mit bis zu dreistelligen APYs zeigt. Die natürliche Tendenz ist, nach höchsten APYs zu filtern — fast immer ein Fehler. Die richtigen Filter: TVL über zehn Millionen Dollar, Chain passend zur eigenen Allokations-Strategie, Risk-Score prüfen. Base APY ist die nachhaltige Rendite aus Fees und Zinsen. Reward APY ist Token-Emission, läuft aus. Immer die 7-Tage- und 30-Tage-Durchschnitte prüfen, nicht Tages-Spikes.
+
+**[Slide 6]** Typische Fallen auf der Yield-Page. Expiring Incentives — ein Pool zeigt 35 Prozent APY, aber das Rewards-Programm läuft in zwei Wochen aus. Die zukünftige APY ist viel niedriger. Farmed Token Dumping — wenn der Reward-Token wenig Liquidität hat, entsteht beim Verkauf Slippage und Preis-Druck. Die realisierte Rendite ist deutlich unter der nominalen. Neue Pools unter 30 Tagen Alter haben oft hohe APYs, sind aber untestet. Nicht-auditierte Protokolle — das Audit-Status-Feld prüfen, bei jungen Protokollen mit hohen APYs besonders.
+
+**[Slide 7]** Zwei weitere kritische Sektionen. Die Bridges-Seite für Kapitalfluss-Analyse. Welche Chains gewinnen Netto-Inflows, welche verlieren? Migriert Kapital von Ethereum zu Base? Die 30-Tage-Flow-Daten zeigen echte Trends, nicht nur Einzelereignisse. Die Hacks-Seite als historisches Archiv. Filterbar nach Kategorie, Chain, Betrag, Jahr. Für jedes Protokoll-Typ — Bridge, Lending, DEX — zeigen sich spezifische Angriffs-Muster. Die Post-Mortem-Links sind der beste Lehrweg über DeFi-Risiken.
+
+**[Slide 8]** Ein konkretes Workflow-Beispiel. Frage: soll ich meine Aave-Position auf Ethereum oder Arbitrum halten? Schritt eins: Protocols-Sektion, Aave-Detail-Seite, TVL-Verteilung nach Chain prüfen. Schritt zwei: Yields-Sektion, aktuelle APYs vergleichen, Base vs Reward trennen. Schritt drei: Chains-Sektion, wie entwickelt sich Arbitrum insgesamt? Schritt vier: Bridges-Sektion, Flows zwischen Ethereum und Arbitrum. Schritt fünf: Hacks-Sektion, historische Vorfälle. Schritt sechs: Synthese und Entscheidung. Diese Analyse dauert 15 bis 20 Minuten und liefert strukturierte, evidenz-basierte Entscheidungen. Das ist DeFiLlama-Analyse in der Praxis — nicht oberflächliches Scrollen, sondern systematisches Navigieren mit klarer Frage.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** **SCREENSHOT SUGGESTION:** DeFiLlama-Hauptseite (defillama.com) mit sichtbarer Gesamt-TVL-Metrik, Chain-Verteilung und Top-Protokolle. Zeigt den "Einstiegspunkt" in die Plattform.
+
+**[Slide 3]** Navigation-Diagramm: DeFiLlama-Startseite in der Mitte, sieben Sektionen als Abzweigungen mit Icons und Ein-Satz-Beschreibungen.
+
+**[Slide 4]** **SCREENSHOT SUGGESTION:** DeFiLlama mit aktivierter "Doublecount"-Toggle — zeigt den Unterschied zwischen Default-TVL und bereinigter Zahl (oft 20-40% Differenz).
+
+**[Slide 5]** **SCREENSHOT SUGGESTION:** DeFiLlama-Yields-Page (defillama.com/yields) mit aktivierten Filtern (TVL > $10M, Chain = Ethereum, IL Risk = A). Zeigt die typische disziplinierte Nutzung.
+
+**[Slide 6]** Vier-Kasten-Diagramm der Yield-Fallen: Expiring Incentives, Farmed Token Dumping, Neue Pools, Nicht-auditierte Protokolle. Jeweils Icon und Ein-Satz-Warnung.
+
+**[Slide 7]** **SCREENSHOT SUGGESTION:** DeFiLlama-Bridges-Page (defillama.com/bridges) mit sichtbarem Netto-Flow-Chart. Zeigt Kapital-Migration visuell.
+
+**[Slide 8]** Workflow-Diagramm als Zeitstrahl: sechs Schritte der Analyse-Sitzung, jeweils mit der Sektion, die konsultiert wird, und dem Zeit-Investment (15-20 Minuten total).
+
+## Übung
+
+**Aufgabe: Eine eigene DeFiLlama-Analyse durchführen**
+
+Wähle eine aktuelle DeFi-Entscheidungssituation aus deiner eigenen Praxis (oder erfinde eine plausible: z.B. "Ich überlege, 10.000 USDC in einem Lending-Protokoll zu deponieren"). Führe eine systematische DeFiLlama-Analyse durch:
+
+**Teil 1 — Protocols-Analyse (15 Min):**
+Wähle 3 Kandidaten-Protokolle. Für jedes: TVL-Entwicklung über 90 Tage, Chain-Verteilung, Token-Composition des TVL. Welches Protokoll ist am stabilsten?
+
+**Teil 2 — Yields-Vergleich (10 Min):**
+Für die 3 Kandidaten: aktueller Base APY, aktueller Reward APY, 30d-Durchschnitt. Welches bietet die beste risiko-adjustierte Rendite?
+
+**Teil 3 — Chain-Kontext (10 Min):**
+Auf welcher Chain würdest du deponieren? Prüfe die Chain-Seite: TVL-Trend, Netto-Flows, Relative Marktanteil-Entwicklung.
+
+**Teil 4 — Risiko-Check (10 Min):**
+Hacks-Sektion: Gab es in den letzten 24 Monaten Exploits bei diesen Protokollen oder ähnlichen? Was war die Ursache? Ist sie mitigiert?
+
+**Teil 5 — Entscheidung und Reflexion (10 Min):**
+Synthese: Welches Protokoll auf welcher Chain mit welchem Betrag? Was ist dein Exit-Trigger (wann würdest du die Position schließen)?
+
+**Deliverable:** Strukturierter Analyse-Report (800-1200 Wörter) mit den Daten aus jedem Teil plus finaler Entscheidung. Der Report sollte so klar sein, dass eine andere Person nachvollziehen könnte, warum du dich wie entschieden hast.
+
+## Quiz
+
+**Frage 1:** Protokoll A zeigt auf DeFiLlama ein TVL von 2 Mrd USD (Default), 1,4 Mrd USD (Borrowed Adjusted) und 800 Mio USD (Doublecounted Adjusted). Was sagen diese drei Zahlen zusammen über das Protokoll, und wie solltest du sie für deine Einschätzung gewichten?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Die drei Zahlen zusammen geben ein deutlich vollständigeres Bild als jede einzelne. Sie erzählen eine Geschichte über die strukturelle Natur des Protokolls und die Qualität seines TVL. **Interpretation der drei Zahlen:** **Default 2 Mrd:** Dies ist das brutto gelockte Kapital, inklusive aller Positionen — rehypothekierte, geliehene, gestakte, Pool2-Positions. Es ist die größte Zahl, weil sie alles zählt, was im Protokoll existiert, ohne Abzüge. **Borrowed Adjusted 1,4 Mrd:** Dies reduziert um die geliehenen Positionen. Der Unterschied zwischen Default und Borrowed Adjusted (hier 600 Mio) ist das Volumen der Lending-Aktivität im Protokoll. Das ist nicht "weniger TVL", sondern eine Bereinigung, die Lending-Circularität korrigiert. Ein 600-Mio-Unterschied zeigt, dass das Protokoll substantielle Lending-Aktivität hat — typisch für Lending-Protokolle wie Aave, Compound, Morpho. **Doublecounted Adjusted 800 Mio:** Dies ist die radikalste Bereinigung — entfernt alle Doppelzählungen, die durch rehypothekierte Positions entstehen. Wenn ein Nutzer 1 ETH in Lido staket und das stETH dann in Aave als Collateral hinterlegt, zählt Default 2 ETH (1 in Lido, 1 in Aave). Doublecounted Adjusted zählt 1 ETH (das Original). **Was der Unterschied bedeutet:** Die Differenz zwischen 2 Mrd Default und 800 Mio Doublecounted Adjusted — also 1,2 Mrd — ist rehypothekiertes Kapital. Das ist eine große Zahl: 60% des sichtbaren TVL ist Rehypothekation. Das sagt mehrere Dinge aus. **Erstens: Das Protokoll ist strukturell abhängig von anderen Protokollen.** Wenn rehypothekierte Assets dominieren, ist der eigene TVL vom Zustand anderer Protokolle abhängig. Wenn ein Lending-Protokoll hauptsächlich stETH als Collateral akzeptiert, ist es strukturell mit Lidos Stabilität verknüpft. **Zweitens: Das Risiko ist höher, nicht niedriger.** Oberflächlich klingt 2 Mrd TVL solide. Aber 60% davon ist "geliehenes" oder "wiederverwendetes" Kapital. Das bedeutet höhere Liquidations-Risiken, mehr Kaskaden-Potenzial in Krisen. **Drittens: Das Protokoll ist mittelgroß, nicht groß.** In der Hierarchie der DeFi-Protokolle ist ein 800-Mio-Doublecounted-Adjusted-TVL kein Blue-Chip-Niveau. Aave V3 hat mehrere Milliarden in dieser bereinigten Zahl. Das einzuordnen ist wichtig für Position-Sizing-Entscheidungen. **Wie man die Zahlen gewichtet:** **Für die Frage "ist dieses Protokoll liquide genug für meine Position?"** — relevante Zahl: Default TVL oder Borrowed Adjusted. Weil der Point ist, ob im Protokoll genug Kapital fließt, dass dein Deposit/Withdraw nicht die Dynamik stört. Bei 2 Mrd Default kann man typisch bis zu 1-5% davon (20-100 Mio) ohne Slippage bewegen. **Für die Frage "wie groß ist das Protokoll in DeFi insgesamt?"** — relevante Zahl: Doublecounted Adjusted. Weil nur das ist echtes netto-gebundenes Kapital. **Für die Frage "wie hoch ist das Lending-Volumen?"** — relevante Zahl: Default minus Borrowed Adjusted. **Für die Frage "wie hoch ist das Rehypothekations-Risiko?"** — relevante Zahl: Default minus Doublecounted Adjusted. Hier 1,2 Mrd oder 60% — das ist ein hoher Wert, der strukturelle Risiken bedeutet. **Die konkrete Entscheidungs-Implikation:** Wenn du überlegst, in diesem Protokoll zu deponieren, solltest du: (a) das bereinigte TVL als Basis-Einordnung nehmen (800 Mio = mittelgroßes Protokoll, nicht Blue Chip), (b) den hohen Rehypothekations-Anteil als Risiko-Signal verstehen (mehr Kaskaden-Exposure), (c) deine Position entsprechend konservativer sizing (maximal 1% deines Portfolios, nicht 5%). **Der Vergleich mit Blue Chips:** Aave V3 hat typisch ein Default-TVL von 20+ Mrd und ein Doublecounted Adjusted von 15+ Mrd. Der Rehypothekations-Anteil ist also relativ geringer (25% statt 60% in unserem Beispiel). Das zeigt: Blue-Chip-Protokolle haben oft "saubereres" TVL, weil viele ihrer Nutzer primäre Einlagen machen, nicht rehypothekierte Positions aufbauen. **Die übergreifende Lehre:** DeFiLlamas multi-variante TVL ist keine Schwäche, sondern Stärke. Die Plattform zwingt uns, TVL differenziert zu betrachten. Wer nur Default-Zahlen kennt, übersieht systematisch die wichtigen Bereinigungen. Eine seriöse Analyse zitiert immer die Variante und begründet, warum sie die relevante ist.
+
+</details>
+
+**Frage 2:** Du siehst in der DeFiLlama-Yields-Sektion einen Pool: "USDC-ETH LP auf einer neuen L2, 85% APY, TVL $3 Mio, Audit: Pending." Analysiere diese Gelegenheit systematisch und erkläre, ob du sie für eine konservative Strategie in Betracht ziehen würdest.
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Die Gelegenheit hat mehrere gleichzeitige Warnzeichen, die zusammen eine klare Antwort nahelegen. Eine systematische Analyse geht jeden Aspekt einzeln durch. **Aspekt 1: Die Asset-Composition (USDC-ETH LP).** Ein LP aus einem Stablecoin und einem volatilen Asset hat Impermanent Loss. Bei ETH-Bewegung von 30% ist der IL etwa 2-3%. Bei 50% Bewegung etwa 5-6%. Bei starken Bewegungen — was bei ETH historisch regelmäßig passiert — kann IL 5-10% betragen. Der APY muss diesen strukturellen Verlust kompensieren, bevor er echte Rendite ist. Bei USDC-ETH typisch ist: man braucht mindestens 10-15% APY, nur um den erwarteten IL auszugleichen. Erst darüber beginnt echte Rendite. **Aspekt 2: Der APY-Level (85%).** 85% APY ist außergewöhnlich hoch. In einem reifen, effizienten Markt sollten solche Renditen durch Arbitrage zu normalen Levels (5-15%) gedrückt werden. Wenn sie nicht gedrückt werden, gibt es typische Erklärungen: (a) Das Risiko ist höher als oberflächlich erkennbar, (b) Das Rewards-Programm wird durch Token-Emissionen finanziert, die bald auslaufen oder verwässern, (c) Die Pool-Tiefe ist zu klein, um signifikantes Kapital aufzunehmen. Alle drei treffen hier wahrscheinlich zu. **Aspekt 3: TVL von 3 Mio USD.** Das ist ein sehr kleiner Pool. Konsequenzen: (1) Liquidität für Entry/Exit ist begrenzt — große Positionen können Slippage erzeugen. (2) Single-Wallet-Dominanz ist wahrscheinlich — möglicherweise kommt der Großteil des TVL von wenigen Nutzern. (3) Instabilität: Ein einzelner Großabzug kann den Pool signifikant verändern. (4) APY-Volatilität: Bei kleiner TVL-Basis schwanken die Rewards-per-Dollar-Metriken stark. **Aspekt 4: Neue L2.** "Neue L2" bedeutet mehrere zusätzliche Risiko-Ebenen. (a) Unproven Rollup-Sicherheit: Die L2-Sicherheit ist im Test, nicht etabliert. (b) Sequencer-Risiko: Bei jungen L2s sind Sequencer oft zentralisiert — Zensur, Ausfall, kompromittierung möglich. (c) Bridge-Risiko: Jedes Kapital dort ist über eine junge Bridge gekommen, oft noch nicht vollständig auditiert. (d) Adoption: Weniger Nutzer, weniger Audits, weniger Test. Wenn es Probleme gibt, sind sie noch nicht aufgefallen. **Aspekt 5: "Audit: Pending".** Das ist ein schwerwiegendes Warnsignal. Pending bedeutet: das Protokoll ist live, aber der Audit noch nicht abgeschlossen. Entweder (a) es wird auditiert und man weiß das Ergebnis nicht, oder (b) die Audit-Versprechen sind vage und keiner prüft nach. In beiden Fällen fehlt eine grundlegende Sicherheits-Validierung. Für konservative Strategien ist "Audit: Pending" oft ein definitives Ausschlusskriterium. **Aspekt 6: Rewards-Struktur analysieren.** Bei 85% APY auf einer neuen L2 ist fast sicher, dass die Rewards hauptsächlich aus Token-Emissionen kommen — vom L2-Projekt selbst oder vom Protokoll. Diese Emissionen haben mehrere Probleme. (1) Sie enden früher oder später. Typisch: 3-12 Monate. Nach Ende bricht die APY auf den Base-Level zusammen (typisch 5-15%). (2) Sie sind verwässernd: je mehr Kapital kommt, desto weniger Rewards pro Dollar. Deine realisierte APY sinkt also unter die nominale, sobald andere mit einströmen. (3) Das Reward-Token hat oft wenig Liquidität. Beim Verkauf entsteht Slippage — die realisierte Rendite ist weit unter der nominalen. **Die integrierte Risiko-Einschätzung:** Zusammenaddiert: IL-Risiko + Smart-Contract-Risiko (Audit pending) + L2-Chain-Risiko + Bridge-Risiko + Reward-Token-Verkaufsrisiko + Pool-Tiefen-Instabilitäts-Risiko. Das ist ein Stacking mehrerer Tail-Risken, jedes allein vielleicht 5-20%, zusammen potenziell 40-70% Worst-Case-Szenario. Bei 85% nominaler APY — minus IL 10% minus Dumping-Slippage 10-20% — bleibt realistisch 50-60% APY. Bei 40-70% Worst-Case-Risiko ist die Erwartungswert-Analyse ambivalent bestenfalls. **Für konservative Strategien: klare Empfehlung.** Diese Gelegenheit ist klar NICHT für konservative Strategien geeignet. Die Gründe: (1) Das Risiko ist nicht quantifizierbar — zu viele Unbekannten. (2) Die verschiedenen Risiken sind korreliert — alle realisieren sich oft gleichzeitig (Crash-Szenarien). (3) Die Pool-Größe ist zu klein für signifikantes Kapital. (4) Das Audit-Pending ist ein struktureller Ausschlussgrund. **Für welche Strategie wäre sie geeignet?** Spekulative Strategien mit explizitem Small-Position-Sizing. Wer bewusst 1-2% des Portfolios auf asymmetrische High-Risk-Opportunities setzt, mit voller Akzeptanz potenzieller Totalverluste, kann solche Pools nutzen. Das ist legitim, aber es ist nicht "Yield Farming" — es ist Venture-Style-Gambling mit hoher Varianz. **Die übergreifende Lehre:** Hohe APYs auf kleinen, neuen Protokollen sind Rote Flaggen, nicht Chancen. Die Yield-Page auf DeFiLlama zeigt diese Gelegenheiten prominent, aber seriöse Filter-Konventionen — TVL > 10 Mio, Audit vorhanden, Protokoll > 6 Monate alt, IL-Risk berücksichtigt — eliminieren die meisten. Wer dagegen filterlos auf APY sortiert, landet systematisch bei den gefährlichsten Pools. Das ist ein häufiges Fehlmuster bei Einsteigern. **Die konkrete Entscheidung:** Diese spezifische Gelegenheit: klares Nein für konservative Strategie. Die Energie wäre besser investiert in etablierte Lending-Pools (Aave, Morpho) mit 3-6% stabilem APY. Weniger aufregend, aber risiko-adjustiert deutlich besser.
+
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → DeFiLlama-Überblick → TVL-Seite → Yield-Explorer → Bridges-Dashboard → Hacks-Datenbank → Chain-Vergleich → Filter-Konventionen
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `visual_plan.json` — DeFiLlama-Dashboard-Screenshots, TVL-Ranking-Grafik, Yield-Filter-Workflow, Hack-Timeline, Konservatives Filter-Setup
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

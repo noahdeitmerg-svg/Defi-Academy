@@ -1,0 +1,205 @@
+# Die wichtigsten MEV-Typen
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die vier Haupttypen von MEV unterscheiden (Arbitrage, Sandwich, Liquidation, JIT)
+- Für jeden Typ einschätzen, ob er den Nutzer schädigt oder neutral/positiv ist
+- Erkennen, welche MEV-Typen bei den eigenen Aktivitäten relevant sind
+- Benign MEV (Arbitrage, Liquidation) von Toxic MEV (Sandwich, Front-Running) nach Auswirkungen auf den Markt trennen
+- Just-in-Time-Liquidity (JIT) als hybrides Phänomen mit Vor- und Nachteilen für LPs einordnen
+- Die ökonomische Rolle von Arbitrage-MEV für effiziente Preisbildung verstehen
+
+## Erklärung
+
+MEV ist ein Sammelbegriff für mehrere unterschiedliche Aktivitäten. Nicht alle sind gleich — einige sind für Nutzer schädlich, andere neutral, einige sogar positiv.
+
+**Typ 1: Arbitrage (DEX-zu-DEX, CEX-zu-DEX)**
+
+**Was passiert:** Preis-Unterschiede zwischen verschiedenen Handelsplätzen werden ausgeglichen. Wenn ETH auf Uniswap V3 bei 3.000 USD handelt und auf Balancer bei 3.010 USD, kauft ein Arbitrage-Bot auf Uniswap und verkauft auf Balancer — 10 USD Gewinn pro ETH.
+
+**Mechanik:** Meist geschieht das in einem **Atomic-Arbitrage**: beide Trades in einer einzigen Transaktion, oft mit einem Flash Loan finanziert (mehr dazu in Modul 12). Wenn der Gewinn nach Gas-Kosten positiv ist, führt der Bot die Transaktion aus. Wenn nicht, wird sie nicht ausgeführt — kein Risiko für den Bot.
+
+**Effekt auf Nutzer:** **Neutral bis positiv**. Arbitrage hält die Preise zwischen DEXs eng zusammen. Ohne Arbitrage würden Pools divergieren, und Nutzer würden ungleiche Preise zahlen. Der Arbitrage-Gewinn entsteht aus dem Ungleichgewicht, das andere Nutzer (meist große Liquidität-Depositor oder Swapper) erzeugt haben — nicht aus einzelnen Retail-Trades.
+
+**Typische Größe:** 40-60% des gesamten MEV ist DEX-Arbitrage.
+
+**Typ 2: Sandwich-Angriffe**
+
+**Was passiert:** Ein Searcher sieht einen großen Nutzer-Swap im Mempool, platziert eine eigene Kauf-Order **vor** der des Nutzers (höhere Gas-Priorität), wartet, dass der Nutzer-Swap den Preis nach oben bewegt, und verkauft dann **nach** dem Nutzer-Swap.
+
+**Mechanik:** Drei Transaktionen im gleichen Block:
+1. **Front-Run:** Searcher kauft ETH (z.B. 1 ETH für 3.000 USDC)
+2. **Nutzer-Swap:** Nutzer kauft große Menge ETH (z.B. 50 ETH, bewegt Preis auf 3.030)
+3. **Back-Run:** Searcher verkauft 1 ETH für 3.028 USDC
+
+**Gewinn:** Searcher verdient ~28 USDC (minus Gas)
+**Verlust für Nutzer:** Der Nutzer zahlt einen schlechteren durchschnittlichen Preis, als er ohne Sandwich bekommen hätte
+
+**Effekt auf Nutzer:** **Direkt schädlich**. Der Sandwich-Angriff stiehlt Wert vom Nutzer. Je größer der Nutzer-Swap relativ zur Pool-Liquidität, desto größer der Gewinn für den Searcher und desto größer der Verlust für den Nutzer.
+
+**Typische Größe:** 30-40% des gesamten MEV ist Sandwich-MEV.
+
+**Typ 3: Liquidations-MEV**
+
+**Was passiert:** Wenn eine gehebelte Position auf Aave, Compound oder Maker unter die Liquidations-Schwelle fällt, können Liquidatoren die Position abwickeln und einen Bonus (typ. 5-10%) einstreichen (siehe Modul 7).
+
+**Mechanik:** Searcher monitoren kontinuierlich alle großen Lending-Positionen. Sobald eine Position liquidierbar wird, rennen die Searcher um die Transaktion — typisch mit hoher Gas-Priorität, um vor anderen Liquidatoren zu sein.
+
+**Effekt auf Nutzer:**
+- Für den liquidierten Nutzer: schmerzhaft, aber unvermeidbar — die Liquidation ist das Protokoll-Design, nicht MEV-spezifisch
+- Für andere Nutzer: neutral — Liquidationen halten das Protokoll solvent
+
+**Typische Größe:** 5-15% des gesamten MEV, stark abhängig von Markt-Volatilität (in Krisen >30% möglich).
+
+**Typ 4: JIT (Just-in-Time) Liquidity**
+
+**Was passiert:** Ein hochentwickelter MEV-Typ, spezifisch für Uniswap V3 (und ähnliche konzentrierte Liquidität). Ein Searcher sieht einen großen Swap im Mempool und fügt **kurz vor dem Swap** konzentrierte Liquidität in einem engen Preis-Band hinzu. Der Swap erfolgt — fast der gesamte Swap wird durch die neu hinzugefügte Liquidität abgewickelt, wodurch der Searcher die Fees kassiert. Direkt nach dem Swap entfernt der Searcher die Liquidität wieder.
+
+**Mechanik:** Drei Schritte:
+1. **Mint:** Searcher fügt konzentrierte Liquidität in engem Band um den erwarteten Ausführungspreis hinzu
+2. **Swap erfolgt:** Der Nutzer-Swap wird durch die Searcher-Liquidität abgewickelt, Searcher kassiert fast alle Fees
+3. **Burn:** Searcher entfernt die Liquidität sofort
+
+**Effekt auf Nutzer:**
+- **Für den Swapper selbst:** meist neutral — der Swap erfolgt zum gleichen Preis, nur die Fees gehen an den Searcher statt an reguläre LPs
+- **Für reguläre LPs:** negativ — ihre Fee-Einnahmen werden durch JIT-Liquidity reduziert
+
+**Typische Größe:** 2-5% des gesamten MEV. Wachsendes Phänomen seit Uniswap V3.
+
+**Weitere MEV-Typen (kurze Erwähnung)**
+
+**Time-Bandit Attacks:** Theoretisch könnte ein Validator einen bereits produzierten Block rückgängig machen, um eine bessere MEV-Gelegenheit einzustreichen. Praktisch auf Ethereum durch PoS-Mechaniken stark eingeschränkt.
+
+**NFT-MEV:** Sniping von unterbewerteten NFT-Listings in Marktplätzen durch Bots.
+
+**Generalized Front-Running:** Bots, die jede Art von profitabler Transaktion im Mempool kopieren und mit höherer Gas-Priorität ausführen.
+
+**Oracle-MEV:** Profit aus der Verzögerung zwischen Chainlink-Oracle-Updates und den zugrundeliegenden CEX-Preisen.
+
+**Zusammenfassung nach Schädlichkeit**
+
+| MEV-Typ | Anteil | Schädlich für Nutzer? |
+|---|---|---|
+| Arbitrage (DEX/CEX) | 40-60% | Nein (neutral/positiv) |
+| Sandwich | 30-40% | **Ja — direkt** |
+| Liquidation | 5-15% | Nein (Protokoll-Mechanik) |
+| JIT Liquidity | 2-5% | Indirekt (für LPs) |
+| Andere | ~5% | Gemischt |
+
+**Die Praxis-Erkenntnis:** Für Retail-Nutzer ist **Sandwich-MEV die einzig wirklich relevante Bedrohung**. Arbitrage und Liquidation betreffen dich nicht direkt. JIT Liquidity nur indirekt, wenn du LP bist. Der Fokus des Schutzes liegt daher auf Sandwich-Vermeidung.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Die wichtigsten MEV-Typen
+
+**[Slide 2] — Typ 1: Arbitrage**
+Preis-Unterschiede DEX-zu-DEX ausgleichen
+Atomic mit Flash Loans
+Für Nutzer: neutral/positiv
+40-60% des MEV
+
+**[Slide 3] — Typ 2: Sandwich**
+Front-Run + Nutzer-Swap + Back-Run
+Searcher verdient, Nutzer zahlt
+Für Nutzer: direkt schädlich
+30-40% des MEV
+
+**[Slide 4] — Typ 3: Liquidationen**
+Gehebelte Positionen abwickeln
+Searcher-Rennen um Bonus
+Für Nutzer: Protokoll-Mechanik
+5-15% des MEV
+
+**[Slide 5] — Typ 4: JIT Liquidity**
+Konzentrierte Liquidität um Swap
+Searcher kassiert LP-Fees
+Für Swapper: neutral
+Für LPs: negativ
+
+**[Slide 6] — Weitere Typen**
+Time-Bandit, NFT-MEV, Oracle-MEV
+Meist Nische-Phänomene
+
+**[Slide 7] — Schädlichkeit nach Typ**
+Arbitrage: neutral
+Sandwich: schädlich
+Liquidation: Protokoll
+JIT: für LPs
+Schutz-Fokus: Sandwich
+
+## Sprechertext
+
+**[Slide 1]** MEV ist kein einzelner Mechanismus, sondern ein Oberbegriff. In dieser Lektion unterscheiden wir vier Haupttypen und verstehen, welche davon dich als Nutzer betreffen und welche nicht.
+
+**[Slide 2]** Typ 1: Arbitrage. Die klassischste Form. Preis-Unterschiede zwischen DEXs werden ausgeglichen. ETH auf Uniswap bei 3.000, auf Balancer bei 3.010 — Bot kauft günstig, verkauft teurer. Meist atomar in einer Transaktion mit Flash Loan. Für Nutzer: neutral bis positiv. Arbitrage hält Preise zwischen Pools eng. Ohne Arbitrage würden alle Nutzer ungleiche Preise zahlen. 40 bis 60 Prozent des gesamten MEV.
+
+**[Slide 3]** Typ 2: Sandwich. Die schädliche Form. Searcher sieht großen Nutzer-Swap im Mempool, platziert Kauf vor ihm, Nutzer-Swap bewegt Preis, Searcher verkauft danach. Drei Transaktionen im gleichen Block. Searcher verdient, Nutzer bekommt schlechteren Ausführungspreis. Für Nutzer direkt schädlich. 30 bis 40 Prozent des MEV.
+
+**[Slide 4]** Typ 3: Liquidationen. Wenn gehebelte Positionen auf Aave oder Compound unter Liquidations-Schwelle fallen, können Liquidatoren sie abwickeln und einen Bonus von 5 bis 10 Prozent einstreichen. Searcher rennen um diese Gelegenheiten. Für liquidierte Nutzer unangenehm, aber das ist Protokoll-Mechanik, nicht MEV-spezifisch. Für andere Nutzer neutral. 5 bis 15 Prozent des MEV, mehr in Krisen.
+
+**[Slide 5]** Typ 4: JIT Liquidity — Just-in-Time. Hochentwickelt, spezifisch für Uniswap V3. Searcher fügt kurz vor einem großen Swap konzentrierte Liquidität hinzu, der Swap erfolgt durch seine Liquidität, Searcher kassiert die Fees, entfernt dann sofort die Liquidität wieder. Für den Swapper selbst neutral — der Preis ist gleich. Für reguläre LPs negativ — ihre Fee-Einnahmen werden reduziert. 2 bis 5 Prozent des MEV.
+
+**[Slide 6]** Weitere Typen existieren: Time-Bandit Attacks, NFT-Sniping, Oracle-MEV. Diese sind meist Nischen-Phänomene, die den durchschnittlichen Nutzer nicht direkt betreffen. Der praktische Fokus bleibt auf den vier Haupttypen.
+
+**[Slide 7]** Die zentrale Erkenntnis: nicht alle MEV-Typen sind für Nutzer relevant. Arbitrage ist neutral. Liquidation ist Protokoll-Mechanik. JIT betrifft nur LPs. Die einzige Form, die dich als Retail-Nutzer direkt schädigt, ist Sandwich-MEV. Das bedeutet: der Schutz-Fokus liegt ganz klar auf Sandwich-Vermeidung. Die Tools dafür behandeln wir in Lektion 11.5.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Arbitrage-Diagramm: Zwei DEXs mit unterschiedlichen Preisen, Pfeile mit Gewinn.
+
+**[Slide 3]** Sandwich-Timeline: Front-Run → User-Swap → Back-Run, mit Preis-Kurve.
+
+**[Slide 4]** Liquidations-Szenario: Health Factor fällt, Searcher-Rennen visualisiert.
+
+**[Slide 5]** JIT-Liquidity-Mechanik: Mint → Swap → Burn in einer Block-Sequenz.
+
+**[Slide 6]** Kleine Karten der weiteren MEV-Typen.
+
+**[Slide 7]** Schädlichkeits-Matrix: 4 Typen × Nutzer-Impact.
+
+## Übung
+
+**Aufgabe: MEV-Typ-Identifikation**
+
+Gehe auf [eigenphi.io/mev](https://eigenphi.io/mev) oder [mev.so](https://mev.so) (falls verfügbar) und schau dir MEV-Transaktionen der letzten 24 Stunden an.
+
+Identifiziere:
+1. **Drei Arbitrage-Transaktionen** — dokumentiere: welche DEXs, Gewinn in USD
+2. **Drei Sandwich-Transaktionen** — dokumentiere: welches Token-Paar, Gewinn für Searcher, geschätzter Verlust für Nutzer
+3. **Eine Liquidations-Transaktion** — welche Plattform, welche Position, Liquidations-Bonus
+
+**Deliverable:** Dokumentation mit TX-Hashes, Größenordnung, und Kommentar (5-8 Sätze): Was hast du über die Größenverteilung gelernt? Welche Typen erscheinen häufiger?
+
+## Quiz
+
+**Frage 1:** Warum ist DEX-Arbitrage-MEV "neutral bis positiv" für den durchschnittlichen Nutzer, während Sandwich-MEV "direkt schädlich" ist? Erkläre den fundamentalen Unterschied.
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Der fundamentale Unterschied liegt in der **Herkunft des Gewinns**. Bei DEX-Arbitrage entsteht der Gewinn aus einem **bereits bestehenden Preis-Ungleichgewicht** zwischen zwei Pools. Dieses Ungleichgewicht wurde durch vorherige Aktivität geschaffen — typisch große Trades, Liquidity-Changes, oder externe Marktbewegungen, die sich noch nicht durch alle DEXs verbreitet haben. Der Arbitrage-Bot gleicht dieses Ungleichgewicht aus und verdient dabei. Der "Verlust" für dieses Ungleichgewicht wurde bereits zuvor realisiert, typisch verteilt auf viele Marktteilnehmer. Der Arbitrage-Bot stiehlt nichts von einer spezifischen Person — er extrahiert den Wert aus der strukturellen Ineffizienz des fragmentierten DEX-Ökosystems. Mehr noch: **ohne Arbitrage wären alle Nutzer schlechter dran**, weil Preise zwischen DEXs divergieren würden und Nutzer je nach gewähltem Pool ungleiche Preise zahlen würden. Bei Sandwich-MEV ist das fundamental anders. Der Gewinn entsteht aus der **spezifischen, identifizierbaren Transaktion eines einzelnen Nutzers**. Der Searcher beobachtet den Nutzer-Swap im Mempool, platziert seine Transaktionen gezielt davor und dahinter, und der Gewinn entsteht aus der Preis-Bewegung, die **genau diese Nutzer-Transaktion** erzeugt. Der Searcher nimmt dem Nutzer einen Teil des Werts, den der Nutzer andernfalls behalten hätte (in Form eines besseren Ausführungspreises). Das ist ein direkter Wert-Transfer von einem spezifischen Nutzer zum Searcher. Ohne den Sandwich-Angriff hätte der Nutzer einen besseren Preis bekommen — der Sandwich produziert keinen neuen Wert, sondern redistribuiert vorhandenen Wert vom Nutzer zum Searcher. Die Analogie: Arbitrage ist wie jemand, der Wechselkurs-Unterschiede zwischen zwei Währungsbörsen ausnutzt — fair, macht den Markt effizienter. Sandwich ist wie jemand, der über deine Schulter deine Bank-Transaktion liest, schnell eine eigene macht, die deine teurer macht, und den Unterschied einstreicht — direkt auf deine Kosten. Beide können legal sein, aber sie sind ethisch völlig unterschiedlich zu bewerten.
+</details>
+
+**Frage 2:** Ein LP auf Uniswap V3 stellt fest, dass seine Fee-Einnahmen niedriger sind als erwartet, obwohl das Handelsvolumen in seinem Pool hoch ist. Wie könnte JIT-Liquidity-MEV die Ursache sein, und was könnte er dagegen tun?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+**Die Ursache:** JIT (Just-in-Time) Liquidity-Bots fügen kurz vor großen Swaps konzentrierte Liquidität in engen Preis-Bändern hinzu, kassieren die Fees dieses Swaps, und entfernen die Liquidität sofort danach. Das bedeutet: die "großen" Swaps, die normalerweise die Haupt-Fee-Einnahmen für LPs generieren würden, werden zu einem erheblichen Teil von JIT-Bots abgegriffen. Der reguläre LP bleibt auf der Standard-Aktivität sitzen — viele kleinere Swaps mit niedrigeren Fees. Mechanismus im Detail: In einem Uniswap V3 Pool teilen sich alle LPs im aktiven Preis-Range die Fees proportional zu ihrer Liquidität. Wenn ein JIT-Bot kurz vor einem 1-Mio-USD-Swap 10 Mio USD Liquidität hinzufügt und dann sofort entfernt, hat er während des Swap-Zeitpunkts einen disproportional großen Anteil am aktiven Bereich — z.B. 50% statt der nominalen 0%. Damit kassiert er 50% der Fees dieses Swaps, anstelle der regulären LPs. Die regulären LPs verlieren diese Fees. Über Zeit summiert sich das. In stark gehandelten Pools (ETH-USDC etwa) können JIT-Bots 10-30% der LP-Fees abgreifen. **Was der LP dagegen tun kann:** **Erstens**, Konzentration wählen. Wenn der LP sehr eng-konzentrierte Liquidität hat, ist der JIT-Vorteil geringer — weil die JIT-Liquidität und die Standard-Liquidität sich stärker konkurrieren. **Zweitens**, weniger "konkurrenzfähige" Pools wählen. ETH-USDC 0,05% Pool ist JIT-Paradies. Nischen-Pools mit weniger Bot-Aktivität sind profitabler für reguläre LPs. **Drittens**, Range-Strategien. Statt ultra-eng zu sein (was wie JIT aussieht), mittlere Ranges nutzen, die mehr Zeit in-range sind. **Viertens**, Pendle-basierte Strategien mit PT-Token. Hier wird die Liquiditäts-Bereitstellung anders strukturiert, JIT ist weniger relevant. **Fünftens**, Intent-basierte Protokolle wie CowSwap unterstützen — sie führen Trades ohne den öffentlichen Mempool aus, JIT wird dadurch strukturell verhindert. **Sechstens**, Managed Vaults wie Arrakis, Gamma oder Steer nutzen — sie haben Strategien, die gegen JIT robuster sind. Die Kernerkenntnis: JIT-MEV ist kein Bug, sondern ein Feature des Uniswap-V3-Designs. Für kleine LPs ist es schwer zu vermeiden — größere, aktiver verwaltete Positionen haben bessere Chancen.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → 4 MEV-Typen-Übersicht → Arbitrage → Sandwich → Liquidation → JIT-Liquidity → Benign vs. Toxic → Eigene Exposition
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `visual_plan.json` — MEV-Typen-Matrix, Arbitrage-Flow-Chart, Sandwich-Mechanik-Grafik, JIT-Liquidity-Diagramm, Nutzer-Impact-Tabelle
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

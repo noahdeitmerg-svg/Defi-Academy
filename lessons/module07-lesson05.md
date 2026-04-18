@@ -1,0 +1,220 @@
+# Liquidations-Kaskaden und systemische Risiken
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Liquidations-Kaskaden als sich selbst verstärkende Prozesse erklären
+- Historische DeFi-Crash-Events als Fallbeispiele analysieren
+- Systemische Risikofaktoren für konservative Strategien einordnen
+- Den Feedback-Loop zwischen Liquidation, Collateral-Verkauf, Preisdruck und neuen Liquidationen quantitativ nachvollziehen
+- Cascade-Liquidation-Events (Mai 2022 Terra/UST, März 2020 Black Thursday, November 2022 FTX-Kollaps) als konkrete Fallstudien einordnen
+- Portfolio-Verhaltensregeln für Marktphasen mit erhöhtem Kaskaden-Risiko (z.B. hohe System-Leverage, niedrige Liquidität) ableiten
+
+## Erklärung
+
+Einzelne Liquidationen sind klar und lokal. Aber Liquidationen können sich selbst verstärken und ganze Märkte destabilisieren. Diese Lektion behandelt den kaskadierenden Mechanismus und zeigt, wie konservative Strategien auch gegen solche Ereignisse widerstandsfähig sein können.
+
+**Die Liquidations-Kaskaden-Mechanik**
+
+Stell dir vor, ein großer Markt-Crash beginnt:
+
+1. **Initial-Bewegung:** Asset A fällt um 10% durch Markt-Ereignis.
+2. **Erste Liquidations-Welle:** Positionen, die hochgehebelt auf Asset A waren, werden liquidiert. Das bedeutet: große Mengen Asset A werden verkauft (Liquidatoren wollen oft sofort zu Stablecoins tauschen).
+3. **Verstärkung:** Diese zusätzlichen Verkäufe drücken den Preis weiter — weitere 5–10%.
+4. **Zweite Liquidations-Welle:** Positionen, die zuvor "sicher" schienen, sind jetzt in Gefahr.
+5. **Eskalation:** Dritte, vierte Welle. Kaskade.
+
+Was beginnt als normale Markt-Bewegung, kann sich zu einem extremen Crash entwickeln — nicht weil die Fundamentaldaten es rechtfertigen, sondern weil die gehebelten Strukturen sich selbst zerstören.
+
+**Historische Fallbeispiele**
+
+**Fallbeispiel 1: Black Thursday (März 2020)**
+
+Am 12. März 2020 crashte der gesamte Krypto-Markt im Zuge der COVID-Panik. ETH fiel von ~180 USD auf ~100 USD in weniger als 24 Stunden — über 40%.
+
+**Was passierte in DeFi:**
+- MakerDAO hatte viele CDPs (heute Vaults genannt) mit ETH-Collateral
+- Der Crash triggerte massenhafte Liquidationen
+- Die Gas-Preise auf Ethereum explodierten auf über 400 Gwei (extrem hoch)
+- Einige Liquidations-Auktionen liefen ins Leere, weil keine Bots schnell genug bieten konnten
+- **0-USD-Bids:** Manche Liquidations-Auktionen wurden mit 0 USD gewonnen, weil kein anderer Bieter teilnahm
+- MakerDAO erlitt ~6 Mio. USD "Bad Debt" — Schulden, die nicht durch Collateral gedeckt waren
+- Die Deckung wurde durch MKR-Token-Ausgabe gerettet (Dilutive Minting)
+
+**Lektion:** In extremen Crashes können selbst die besten Protokoll-Mechaniken überfordert sein. Gas-Preise, Liquidator-Kapazität und Netzwerk-Kongestion sind reale Faktoren.
+
+**Fallbeispiel 2: Luna/UST-Kollaps (Mai 2022)**
+
+Der algorithmische Stablecoin UST verlor seinen Peg, und der verbundene LUNA-Token kollabierte binnen Tagen von ~80 USD auf <0,0001 USD.
+
+**Was passierte in DeFi:**
+- Anchor Protocol — ein Lending-Protokoll auf Terra-Chain — hatte über 14 Mrd. USD UST in Zinskonten
+- Als UST depeggte, wollten alle auszahlen
+- Der Peg-Mechanismus (der LUNA druckte, um UST zu deckeln) erzeugte Hyperinflation von LUNA
+- Curve-Pools mit UST erlebten massive Umschichtungen
+- Liquidationen auf Ethereum bei Positionen mit UST als Collateral
+- ~60 Mrd. USD an Markt-Wert wurde vernichtet
+
+**Lektion:** Depeg-Risiko ist nicht theoretisch. Ein scheinbar stabiler Asset kann innerhalb von Tagen oder Stunden zusammenbrechen.
+
+**Fallbeispiel 3: stETH-Depeg (Juni 2022)**
+
+Nach dem 3AC-Kollaps und Celsius-Problemen entstand Panik um stETH. Der Peg fiel von 1 ETH auf bis zu 0,94 ETH.
+
+**Was passierte in DeFi:**
+- Viele Aave- und Compound-Positionen nutzten stETH als Collateral gegen ETH-Borrow (sogenannte "Leveraged Staking")
+- Als stETH-Preis (in ETH) fiel, wurden diese Positionen unterbesichert
+- Liquidations-Welle von stETH → Verkaufs-Druck auf stETH → weiterer Preis-Drop
+- Curve stETH/ETH-Pool erlebte extreme Umschichtungen
+- Insgesamt wurden Hunderte Millionen USD in gehebelten Staking-Positionen liquidiert
+
+**Lektion:** "Liquid Staking" klingt sicher, aber in Krisensituationen kann die eingebettete Depeg-Wahrscheinlichkeit signifikant werden.
+
+**Fallbeispiel 4: FTX-Kollaps (November 2022)**
+
+Der Zusammenbruch von FTX selbst betraf DeFi nur mittelbar (weil FTX eine CEX war), aber:
+- Massive Markt-Verwerfungen drückten alle Krypto-Preise
+- Aave, Compound und andere erlebten erhöhte Liquidations-Volumina
+- Einige Stablecoins wackelten temporär (FRAX, später USDC im März 2023)
+
+**Lektion:** Systemische Krisen außerhalb von DeFi können DeFi-Positionen treffen. Konservative Positionen überleben das.
+
+**Faktoren, die Kaskaden verstärken**
+
+1. **Hoher systemweiter Leverage:** Wenn viele Nutzer hochgehebelt sind, sind viele Positionen gleichzeitig fragil. Eine Bewegung triggert Massen-Liquidationen.
+
+2. **Konzentrierte Collateral-Typen:** Wenn ein einzelner Asset-Typ (z.B. stETH) in Vielen Positionen das Collateral ist, führt ein Depeg zu sehr vielen gleichzeitigen Liquidationen.
+
+3. **Ähnliche Positions-Struktur:** Wenn viele Nutzer dieselben Strategie fahren (z.B. stETH → ETH-Loop), werden sie alle gleichzeitig betroffen.
+
+4. **Oracle-Lags in Krisen:** Oracle-Updates können während extremer Volatilität verzögert sein, was "verzögerte Crashes" erzeugt, wenn das Update endlich kommt.
+
+5. **Gas-Kongestion:** Bei hohem Stress können Transaktionen Minuten dauern — dabei verlieren Borrower kritische Reaktions-Fenster.
+
+**Konservative Widerstandsfähigkeit**
+
+Wie schützt sich eine konservative Strategie gegen Kaskaden?
+
+**1. Niedriger Leverage:**
+Bei Health Factor 2,0+ überlebt die Position auch 50%-Crashes. Bei HF 1,2 wird sie schon bei 20%-Crash kritisch. Der Multiplikator-Effekt von HF-Höhe ist dramatisch.
+
+**2. Diversifikation der Collateral-Typen:**
+Nicht nur stETH, nicht nur WBTC, nicht nur ETH. Mehrere unkorrelierte (oder nur schwach korrelierte) Collaterals.
+
+**3. Diversifikation der Protokolle:**
+Falls ein Protokoll in einer Kaskade in Stress gerät (Bad Debt, Liquidations-Chaos), sind andere unbetroffen.
+
+**4. Reserve-Kapital:**
+Stablecoin-Reserve, die man zur Verfügung stellen kann, um Schulden schnell zurückzuzahlen oder Collateral aufzustocken.
+
+**5. Klare Trigger und Reaktions-Pläne:**
+Vorab definieren: bei HF unter X werde ich Y tun. In der Krise keine Zeit zum Nachdenken.
+
+Ein konservatives Portfolio mit HF 2,5, diversifiziertem Collateral und Stablecoin-Reserve übersteht praktisch alle historischen DeFi-Krisen ohne Liquidation. Das ist kein Zufall — es ist strukturelle Widerstandsfähigkeit.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Liquidations-Kaskaden und systemische Risiken
+
+**[Slide 2] — Kaskaden-Mechanik**
+1. Initial-Bewegung → Liquidationen
+2. Verkaufsdruck → weiterer Preis-Drop
+3. Zweite Welle → dritte Welle
+4. Eskalation
+
+**[Slide 3] — Fallbeispiel: Black Thursday 2020**
+ETH −45% in 24h
+Gas-Preise explodieren
+MakerDAO-Bad Debt ~6 Mio. USD
+
+**[Slide 4] — Fallbeispiel: Luna/UST Mai 2022**
+Algorithmischer Stablecoin kollabiert
+60 Mrd. USD Marktwert zerstört
+Depeg-Risiko ist real
+
+**[Slide 5] — Fallbeispiel: stETH-Depeg Juni 2022**
+"Leveraged Staking" unter Druck
+Hunderte Mio. USD liquidiert
+
+**[Slide 6] — Kaskaden-Verstärker**
+Hoher Leverage, konzentriertes Collateral, ähnliche Strategien, Oracle-Lags, Gas-Kongestion
+
+**[Slide 7] — Konservative Widerstandsfähigkeit**
+HF 2,0+, diversifiziertes Collateral, Reserven, klare Trigger
+
+## Sprechertext
+
+**[Slide 1]** Einzelne Liquidationen sind lokal und klar. Aber Liquidationen können sich selbst verstärken und ganze Märkte destabilisieren. Diese Lektion zeigt, wie — und wie konservative Strategien diese Risiken systemisch mindern.
+
+**[Slide 2]** Die Kaskaden-Mechanik. Initial-Bewegung: Asset fällt durch ein Markt-Ereignis. Erste Liquidations-Welle: gehebelte Positionen werden liquidiert, liquidierte Assets werden verkauft. Der Verkaufs-Druck drückt den Preis weiter. Zweite Welle: Positionen, die zuvor sicher schienen, werden jetzt kritisch. Eskalation. Was als normale Markt-Bewegung beginnt, kann zu einem extremen Crash werden — nicht wegen der Fundamentaldaten, sondern weil die gehebelten Strukturen sich selbst zerstören.
+
+**[Slide 3]** Erstes Fallbeispiel: Black Thursday, 12. März 2020. ETH fiel um 45 Prozent in weniger als 24 Stunden. Die Gas-Preise auf Ethereum explodierten auf über 400 Gwei. Einige MakerDAO-Liquidations-Auktionen liefen ins Leere — keine Bots konnten schnell genug bieten. Manche wurden mit Null-Dollar-Bids gewonnen. MakerDAO erlitt etwa sechs Millionen Dollar Bad Debt, das durch MKR-Neuemissionen gedeckt wurde. Lektion: in extremen Crashes sind selbst gute Protokolle überfordert.
+
+**[Slide 4]** Zweites Fallbeispiel: Luna/UST, Mai 2022. Der algorithmische Stablecoin UST verlor seinen Peg. Der verbundene LUNA-Token kollabierte von 80 Dollar auf quasi Null. Anchor Protocol mit 14 Milliarden UST. Curve-Pools mit UST erlebten massive Umschichtungen. 60 Milliarden Dollar Markt-Wert wurden vernichtet. Lektion: Depeg-Risiko ist nicht theoretisch. Ein scheinbar stabiler Asset kann innerhalb von Tagen zusammenbrechen.
+
+**[Slide 5]** Drittes Fallbeispiel: stETH-Depeg im Juni 2022. Nach dem 3AC-Kollaps fiel stETH von 1 ETH auf 0,94 ETH. Viele Aave-Positionen nutzten stETH als Collateral gegen ETH-Borrow — Leveraged Staking. Als stETH im Verhältnis zu ETH fiel, wurden Positionen unterbesichert. Die resultierenden Liquidationen verstärkten den Verkaufsdruck auf stETH. Hunderte Millionen Dollar in Leveraged-Staking-Positionen wurden liquidiert. Lektion: Liquid Staking klingt sicher, aber in Krisen wird die eingebettete Depeg-Wahrscheinlichkeit real.
+
+**[Slide 6]** Kaskaden-Verstärker: hoher systemweiter Leverage — viele Nutzer sind gleichzeitig fragil. Konzentrierte Collateral-Typen — wenn stETH in vielen Positionen verwendet wird, betrifft ein Depeg alle. Ähnliche Positions-Strukturen — alle machen die gleiche Strategie, alle werden gleichzeitig getroffen. Oracle-Lags in Krisen. Gas-Kongestion, die Reaktions-Fenster verkürzt.
+
+**[Slide 7]** Konservative Widerstandsfähigkeit basiert auf fünf Prinzipien. Health Factor 2,0 oder höher: bei HF 2,0 überlebt die Position 50-Prozent-Crashes. Bei HF 1,2 wird sie bei 20-Prozent-Crash kritisch. Diversifikation der Collateral-Typen. Diversifikation der Protokolle. Stablecoin-Reserve für schnelle Aktionen. Klare Trigger und Reaktions-Pläne, vorab definiert. Ein Portfolio mit diesen Eigenschaften übersteht praktisch alle historischen DeFi-Krisen ohne Liquidation. Das ist kein Zufall, sondern strukturelle Widerstandsfähigkeit.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Kaskaden-Flussdiagramm: Initial → Liquidationen → Verkaufsdruck → Mehr Liquidationen. Spiral-Visualisierung.
+
+**[Slide 3]** ETH-Preis-Chart vom 12. März 2020 mit markierten Events. **SCREENSHOT SUGGESTION:** historischer Chart (TradingView oder coingecko) von ETH mit Black-Thursday-Markierung.
+
+**[Slide 4]** UST/LUNA-Preischart Mai 2022. **SCREENSHOT SUGGESTION:** Artikel oder Chart vom UST-Kollaps.
+
+**[Slide 5]** stETH/ETH-Ratio-Chart Juni 2022. **SCREENSHOT SUGGESTION:** defillama Chart des stETH-Depegs.
+
+**[Slide 6]** Fünf-Faktoren-Diagramm der Kaskaden-Verstärker.
+
+**[Slide 7]** Fünf-Prinzipien-Checkliste als Schutzschild-Metapher.
+
+## Übung
+
+**Aufgabe: Krisen-Szenario durchspielen**
+
+Stell dir folgende Position vor: 20.000 USD ETH-Collateral, 12.000 USD USDC-Schuld auf Aave V3, LT = 83% für ETH.
+
+1. Berechne den initialen Health Factor.
+2. Szenario A: ETH fällt langsam über 2 Wochen um 30%. Was passiert? Kannst du reagieren?
+3. Szenario B: ETH crasht in 4 Stunden um 30%. Was passiert? Kannst du reagieren?
+4. Szenario C: Simultaner 30%-Crash und Gas-Kongestion (Gas-Preise 5x normal). Was passiert?
+5. Welches Sicherheitspolster (HF-Zielwert) hättest du setzen müssen, um alle drei Szenarien zu überleben?
+
+**Deliverable:** Schriftliche Analyse der drei Szenarien (je 3–5 Sätze) + Antwort auf Frage 5 mit Begründung.
+
+## Quiz
+
+**Frage 1:** Warum war der Black Thursday-Event im März 2020 für DeFi strukturell lehrreich, auch wenn die direkten Verluste (~6 Mio. USD) aus heutiger Sicht klein wirken?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Black Thursday zeigte, dass die DeFi-Infrastruktur unter extremem Stress Grenzen hat. Die Gas-Kongestion auf Ethereum machte zeitnahe Transaktionen praktisch unmöglich — was sowohl Borrower (die nicht reagieren konnten) als auch Liquidatoren (die nicht bieten konnten) betraf. Die Null-Dollar-Bid-Auktionen von MakerDAO zeigten, dass Liquidations-Mechanismen in Stress-Situationen versagen können, selbst wenn sie mathematisch korrekt designt sind. MakerDAO reagierte mit strukturellen Änderungen: Einführung der Liquidations 2.0 Auktionen mit besseren Preis-Mechanismen, Diversifikation der Collateral-Typen (nicht nur ETH, sondern auch USDC, WBTC etc.), Stabilitätspuffer. Diese Lernerfahrungen prägten die Architektur aller nachfolgenden Lending-Protokolle. Aus heutiger Sicht ist Black Thursday ein Muster, das jeder konservative DeFi-Nutzer kennen sollte: die Annahme "das Protokoll ist schon stabil" reicht nicht, wenn Netzwerk-Kongestion und Liquidator-Kapazität unter Volatilität eigene Grenzen haben.
+</details>
+
+**Frage 2:** Warum sind "Leveraged Staking"-Positionen (stETH als Collateral, ETH borgen) trotz scheinbar niedriger Volatilität nicht risikofrei?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Leveraged Staking basiert auf der Annahme, dass stETH strukturell gleich ETH ist. In Normalsituationen ist das nahe an der Wahrheit — der Peg bewegt sich in engen Bändern. Aber in Krisensituationen kann der Peg brechen. Das Juni-2022-Ereignis zeigte: bei Marktstress und Liquiditätsengpässen wollen viele Nutzer stETH verkaufen, aber der Withdraw-Prozess von Lido hatte damals lange Wartezeiten (bis ETH-Merge möglich war). Der Curve stETH/ETH-Pool war die Haupt-Liquiditäts-Quelle für sofortige Auszahlung. Ein Sell-Druck auf Curve drückte den stETH-Preis in ETH-Einheiten — das depeggte temporär. Gehebelte Positionen, die stETH als Collateral bei nahezu 1:1 zu ETH rechneten, wurden plötzlich unterbesichert und liquidiert. Die Lektion: "strukturell gleich" ist nicht identisch mit "immer gleich". In Krisen können Peg-Mechanismen versagen. Gehebelte Positionen auf solchen Annahmen sind deshalb strukturell fragil. Konservativer Ansatz: entweder niedrigere LTV-Nutzung (unter 50% der Max-LTV), oder direktes Halten von stETH/ETH ohne Leverage.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → Kaskaden-Mechanik → Feedback-Loop → Black Thursday März 2020 → Terra/UST Mai 2022 → FTX-Kollaps November 2022 → Stress-Signale → Verhaltensregeln
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min. wegen mehrerer Fallstudien)
+- `visual_plan.json` — Kaskaden-Feedback-Loop-Diagramm, Historische-Crash-Zeitleiste, Black-Thursday-ETH-Chart, UST-Depeg-Chart, System-Leverage-Indikatoren (DeFiLlama), Stress-Signal-Matrix
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

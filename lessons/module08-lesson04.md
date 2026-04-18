@@ -1,0 +1,220 @@
+# Rendite-tragende Stablecoins: sDAI, sUSDS, Savings-Mechanismen
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Das Prinzip yield-bearing Stablecoins erklären
+- sDAI, sUSDS und Ethenas USDe/sUSDe nach Mechanismus und Risiko unterscheiden
+- Einsatzbereiche für konservative Portfolios einordnen
+- Die DSR (DAI Savings Rate) und vergleichbare Mechanismen als Rendite-Quelle analysieren
+- Ethenas Delta-Hedging-Strategie (USDe) als strukturell anderes Modell gegenüber klassischen Stablecoins einordnen
+- Rendite-tragende Stablecoins gegenüber klassischen Supply-Positionen auf Aave/Compound nach Effizienz und Risiko abwägen
+
+## Erklärung
+
+Klassische Stablecoins wie USDC und USDT sind passive Assets — sie halten den Peg, aber verdienen keine Rendite. Yield-bearing Stablecoins kombinieren Peg-Stabilität mit integriertem Ertrag. Das macht sie für viele konservative Strategien attraktiv.
+
+**Das Grundkonzept**
+
+Ein Yield-bearing Stablecoin ist typischerweise ein Token, dessen Wert pro Stück **wächst** durch integrierten Ertrag, während der interne "Wechselkurs" zum unterliegenden Dollar-Äquivalent steigt. Beispiel: 1 sDAI ist heute 1,0 DAI wert. In 12 Monaten ist 1 sDAI dann 1,08 DAI wert — 8% Rendite.
+
+Das ist analog zu Aaves aTokens aus Modul 6 — yield-bearing Tokens, bei denen der Wert pro Token wächst, statt neuer Tokens zu entstehen.
+
+**sDAI — Savings DAI**
+
+**Mechanismus:** 
+Sky (ehemals MakerDAO) bietet die "DAI Savings Rate" (DSR), eine algorithmisch gesetzte Rate, zu der DAI-Halter ihr DAI verzinsen können. Wer DAI in sDAI umwandelt (via Spark, Sky-Interface oder direktem Contract), verdient die DSR.
+
+**Quelle der Rendite:** 
+Die DSR wird aus den Einnahmen von Sky finanziert — hauptsächlich Zinsen von den RWA-Anteilen (US-Treasuries) und Stability Fees aus Vault-Borrow. Diese Rate wird via Sky-Governance gesetzt.
+
+**Aktuelle Rate (variabel):** 
+Historisch zwischen 3% und 8%. Aktuell an risk-free rate orientiert (~5% bei hohen US-Fed-Rates).
+
+**Auszahlung:** 
+Automatisch via wachsendem sDAI-Wert. Kein Claiming nötig.
+
+**Risiken:** 
+- DAI-Depeg-Risiko (wie bei DAI selbst)
+- RWA-Gegenpartei-Risiko (US-Treasuries-Exposure)
+- Governance-Risiko (Rate kann reduziert werden)
+
+**sUSDS — Sky Savings Rate**
+
+**Mechanismus:** 
+Parallel zu DAI hat Sky USDS eingeführt — ein neues Stablecoin mit Sky-Points (Loyalitäts-Programm) und Savings-Mechanismus. sUSDS ist die Savings-Variante.
+
+**Unterschied zu sDAI:**
+USDS und DAI sind im Wesentlichen Zwillinge, die gegeneinander 1:1 konvertierbar sind. sUSDS bietet zusätzliche Sky-Points-Rewards (die potenziell als zukünftige Token-Ausgaben genutzt werden können). Für konservative Nutzer ist der Unterschied gering — die reine Rendite ist ähnlich.
+
+**Ethenas USDe / sUSDe — Der Delta-neutrale Ansatz**
+
+Ethena Labs hat einen innovativen Stablecoin entwickelt, der nicht auf klassischer Besicherung basiert, sondern auf **Delta-neutralem Hedging**.
+
+**Das Prinzip:**
+1. Nutzer deponieren ETH oder Liquid-Staking-Tokens (z.B. stETH)
+2. Ethena öffnet eine gleich große Short-Position auf ETH-Perpetual-Futures auf zentralen Börsen
+3. Die Netto-Exposition ist null (long Spot + short Futures) — "delta-neutral"
+4. Das Protokoll mintet USDe basierend auf dem dollar-Wert der delta-neutralen Position
+
+**Quelle der Rendite (sUSDe):**
+- Staking-Rewards auf dem stETH-Underlying
+- Funding-Rate-Einnahmen aus den Short-Perpetual-Positionen (historisch oft positiv für Shorts)
+
+**Historische sUSDe-Rendite:** 
+10–20% APY (deutlich höher als sDAI wegen funding rates und staking)
+
+**Risiken:**
+- **Funding-Rate-Risiko:** Wenn funding rates negativ werden, verliert das Protokoll Geld statt zu verdienen
+- **Exchange-Risiko:** Die Shorts laufen auf CEXs (Binance, Bybit, OKX). Exchange-Ausfall = Verlust
+- **Liquidations-Risiko:** Bei extremen ETH-Bewegungen könnten die Shorts liquidiert werden, bevor Rebalancing möglich ist
+- **Smart-Contract-Risiko:** Ethena-Code selbst
+- **Custody-Risiko:** Die underlying Assets liegen in OES (Off-Exchange Settlement) Setups — komplexe Custody-Strukturen
+
+**Bewertung für konservative Portfolios:**
+USDe/sUSDe ist ein **innovatives, aber deutlich riskanteres** Stablecoin-Design als sDAI. Die höhere Rendite spiegelt das zusätzliche Risiko wider. Für das 7–8%-Ziel **nicht als Hauptallokation** empfohlen — allenfalls als kleinerer Baustein (max. 10–15% der Stablecoin-Allokation) für erfahrene Nutzer, die das Mechanik-Risiko verstehen.
+
+**Weitere yield-bearing Stablecoins**
+
+- **sFRAX:** Savings-Variante von FRAX. Weniger etabliert, für konservative Portfolios nicht empfohlen.
+- **aUSDC (Aave):** Technisch ein zinsbringender USDC-Receipt aus Aave — keine echter neuer Stablecoin, aber yield-bearing.
+- **mkUSD, yUSD:** Kleinere, experimentelle Yield-Stables. Meist zu klein und zu jung für konservative Allokation.
+
+**Praktische Anwendung**
+
+**Sinnvolle Szenarien:**
+
+**Szenario 1: Parken von Cash mit Rendite**
+Du hast 10.000 USDC in deiner Wallet, willst sie aber nicht ungenutzt lassen. Wandle einen Teil in sDAI um — behältst Dollar-Stabilität, verdienst Zinsen. Jederzeit wieder zu DAI (oder USDC via Curve) konvertierbar.
+
+**Szenario 2: Stablecoin-Reserve mit passivem Ertrag**
+Deine Notreserve von 5.000 USD liegt typisch einfach in Stablecoin. Wandle sie in sDAI um. Die Liquidität ist nahezu identisch — jederzeit aufzulösen. Aber mit 5% statt 0% jährlicher Rendite.
+
+**Szenario 3: Als Collateral**
+sDAI und sUSDS können in vielen Lending-Protokollen als Collateral genutzt werden. Das gibt dir Stablecoin-Rendite **und** Borrow-Fähigkeit. Aber: LTV auf sDAI ist typisch etwas niedriger als auf DAI (wegen zusätzlicher Komplexität).
+
+**Nicht empfohlen:**
+- sUSDe als Hauptposition für konservative Portfolios (zu viele Risiko-Ebenen)
+- Unbekannte Yield-Stables ohne Track-Record
+- Konzentration in einer einzigen Yield-Stablecoin-Familie
+
+**Konservative Allokations-Regel**
+
+Wenn Yield-bearing Stablecoins im Portfolio vorkommen:
+- **sDAI / sUSDS:** Akzeptabel als Kern-Yield-Stable, bis zu 30–40% der Stablecoin-Allokation
+- **sUSDe:** Nur für erfahrene Nutzer mit Risikobudget, max. 10–15% der Stablecoin-Allokation
+- **Unbekannte Yield-Stables:** 0%
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Rendite-tragende Stablecoins: sDAI, sUSDS, Savings-Mechanismen
+
+**[Slide 2] — Grundkonzept**
+Token-Wert wächst durch integrierten Yield
+Analog zu aTokens (Aave)
+Keine separaten Reward-Claims nötig
+
+**[Slide 3] — sDAI**
+Savings DAI via Sky Savings Rate (DSR)
+Rendite aus RWA (T-Bills) + Stability Fees
+Historisch 3–8%, an risk-free rate orientiert
+
+**[Slide 4] — sUSDS**
+Sky-Zwilling zu sDAI mit Sky-Points-Bonus
+Im Kern sehr ähnlich zu sDAI
+
+**[Slide 5] — Ethena's USDe / sUSDe**
+Delta-neutral-Hedging-Design
+Rendite: Staking + Funding Rates
+Historisch 10–20% APY
+Deutlich mehr Risiken als sDAI
+
+**[Slide 6] — Anwendungs-Szenarien**
+1. Passives Cash parken
+2. Reserve mit Ertrag
+3. Als Collateral für Borrow
+
+**[Slide 7] — Konservative Allokation**
+sDAI/sUSDS: 30–40% der Stable-Position OK
+sUSDe: max. 10–15%, nur für Erfahrene
+Unbekannte Yield-Stables: 0%
+
+## Sprechertext
+
+**[Slide 1]** Klassische Stablecoins wie USDC halten den Peg, verdienen aber nichts. Yield-bearing Stablecoins kombinieren Peg-Stabilität mit integriertem Ertrag. Das macht sie für konservative Strategien oft attraktiver als passive Stables.
+
+**[Slide 2]** Das Grundkonzept. Der Wert pro Token wächst durch integrierten Yield. Wenn du heute einen sDAI für 1 DAI kaufst, ist dieser sDAI in 12 Monaten etwa 1,05 oder 1,08 DAI wert — je nach Savings Rate. Das ist analog zu aTokens aus Modul 6. Keine separaten Claims, kein Staking — der Ertrag akkumuliert automatisch im Token-Wert.
+
+**[Slide 3]** sDAI, Savings DAI. Sky bietet die DAI Savings Rate an, zu der DAI-Halter verzinsen können. Wer DAI in sDAI umwandelt, verdient diese Rate. Die Rendite kommt hauptsächlich aus den Sky-RWA-Einnahmen — US-Treasuries — und Stability Fees aus Vaults. Historisch zwischen 3 und 8 Prozent. Aktuell an der risk-free rate der US-Fed orientiert, etwa 5 Prozent. Variable Rate, wird via Governance gesetzt.
+
+**[Slide 4]** sUSDS ist der Zwilling von sDAI im Sky-Ökosystem. Sky hat USDS parallel zu DAI eingeführt, mit zusätzlichen Sky-Points als Loyalitäts-Programm. sUSDS ist die Savings-Variante. Kernmechanik ist sehr ähnlich zu sDAI. Für konservative Nutzer ist der Unterschied gering.
+
+**[Slide 5]** Ethena's USDe und die Savings-Variante sUSDe. Ein innovatives Delta-neutrales Design. Das Protokoll hält ETH spot-long und hedged gleichzeitig via Perpetual-Futures-Shorts auf CEXs. Die Netto-Exposition ist null. Die Rendite kommt aus Staking des unterliegenden stETH und aus Funding-Rate-Einnahmen der Shorts. Historisch 10 bis 20 Prozent APY — deutlich höher als sDAI. Aber: viele zusätzliche Risiken. Funding Rates können negativ werden. Exchange-Ausfall-Risiko. Liquidations-Risiko bei extremen Bewegungen. Komplexe Custody-Strukturen. Für konservative Portfolios nur als kleine Allokation geeignet, wenn überhaupt.
+
+**[Slide 6]** Drei sinnvolle Anwendungs-Szenarien. Erstens: passives Cash parken. Wandle Teile deiner Stablecoin-Bestände in sDAI um, verdiene automatisch Zinsen. Zweitens: Notreserve mit Ertrag. Die fünftausend Dollar Reserve, die einfach so rumliegen, verdienen jetzt 5 Prozent. Drittens: als Collateral. sDAI kann in vielen Lending-Protokollen als Sicherheit genutzt werden — du bekommst Yield und kannst darauf borgen, wenn gewünscht.
+
+**[Slide 7]** Die konservativen Allokations-Regeln. sDAI oder sUSDS: akzeptabel als Kern-Yield-Stable, bis zu 30 oder 40 Prozent der Stablecoin-Allokation. sUSDe: nur für erfahrene Nutzer mit Risikobudget, maximal 10 bis 15 Prozent. Unbekannte Yield-Stables ohne Track-Record: null Prozent. Die Faustregel: höhere Rendite bedeutet fast immer höheres Risiko. Für das 7 bis 8 Prozent Ziel sind 5 Prozent aus sDAI plus diversifizierter Supply-Strategie sinnvoller als 15 Prozent aus Risiko-Stablecoins.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Diagramm: Token-Wert wächst über Zeit. Vergleich mit passivem Stablecoin (flat) und sDAI (wachsende Kurve).
+
+**[Slide 3]** **SCREENSHOT SUGGESTION:** Spark Protocol (spark.fi) mit sDAI-Savings-Interface und aktueller Rate.
+
+**[Slide 4]** Sky-Interface mit USDS/sUSDS.
+
+**[Slide 5]** Ethena-Mechanik-Diagramm: ETH-Long + Futures-Short = delta-neutral. **SCREENSHOT SUGGESTION:** Ethena-Dashboard mit aktueller sUSDe-Rate und Funding-Rate-Historie.
+
+**[Slide 6]** Drei-Anwendungs-Cards mit Szenarien.
+
+**[Slide 7]** Allokations-Kuchen-Diagramm mit Prozent-Limits.
+
+## Übung
+
+**Aufgabe: Yield-Vergleich der Stablecoin-Optionen**
+
+1. Sammle aktuelle Raten für:
+ - Passives USDC (Wallet-Halten, 0% Yield)
+ - USDC-Supply auf Aave V3
+ - sDAI via Spark
+ - sUSDS via Sky
+ - sUSDe via Ethena
+ - Curve 3pool LP
+2. Berechne die 1-Jahres-Rendite für einen hypothetischen 10.000 USD Einsatz in jeder Option.
+3. Liste für jede Option die wichtigsten Risiken auf.
+4. Erstelle ein Risk-Return-Diagramm: y-Achse Rendite, x-Achse subjektives Risiko.
+
+**Deliverable:** Vergleichstabelle + Diagramm + Empfehlung: Welche Kombination wäre für einen Stablecoin-Anteil von 20.000 USD in einem konservativen Portfolio sinnvoll?
+
+## Quiz
+
+**Frage 1:** Warum ist sUSDe's 15% APY strukturell nicht mit sDAI's 5% APY vergleichbar, auch wenn beide "Stablecoin-Renditen" sind?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Die Mechanismen sind fundamental unterschiedlich. sDAI leitet Rendite aus quasi-risikofreien Quellen ab: US-Treasury-Zinsen (RWA) und Stability Fees aus überbesicherten Vaults. Das sind etablierte, gut verstandene Ertragsquellen mit klarem Mechanismus. sUSDe leitet Rendite aus zwei volatilen Quellen ab: Staking-Yields (relativ stabil, etwa 3%) und Funding-Rate-Einnahmen aus Perpetual-Futures-Shorts (sehr volatil, historisch positiv aber nicht garantiert). Die 15% bei sUSDe sind ein Durchschnitt aus guten Zeiten, wenn Funding Rates hoch positiv sind. In Bear-Markets oder bei extremen Ereignissen können Funding Rates negativ werden — dann verliert das Protokoll Geld und die Rendite kann auf null oder negativ fallen. Zusätzlich trägt sUSDe das Exchange-Risiko (Shorts auf CEXs) und das Custody-Risiko (komplexe Off-Exchange-Settlement-Setups). Die 15% sind also keine "risikofreie Rendite", sondern eine Kompensation für mehrere Risikoschichten, die sDAI nicht hat. Für konservative Portfolios heißt das: sDAI ist ein Kern-Yield-Baustein, sUSDe ist bestenfalls eine kleine taktische Allokation.
+</details>
+
+**Frage 2:** Ein Anleger überlegt, 30.000 USD seiner konservativen Stablecoin-Position komplett in sUSDe zu stecken, weil es 15% APY bietet. Was sind die Haupt-Probleme dieser Entscheidung?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Mehrere Probleme. Erstens: Konzentrationsrisiko. 100% eines signifikanten Portfolios in einem einzelnen, relativ jungen Protokoll (Ethena seit 2024) ist extreme Konzentration. Zweitens: Mechanismus-Stress. sUSDe's 15% ist historisch Durchschnitt — in Stressphasen (negative Funding Rates, Exchange-Probleme) kann die Rendite einbrechen, und im schlimmsten Fall kann der USDe-Peg selbst unter Druck geraten. Das ist bei sDAI strukturell weniger wahrscheinlich. Drittens: Liquiditätsrisiko. sUSDe-Cooldown-Periode zum Unstaking kann 7 Tage betragen — in einer Krise nicht schnell genug. Viertens: Exchange-Abhängigkeiten. Ethena nutzt Binance, Bybit und OKX für die Shorts. Ein Ausfall oder Insolvenz einer dieser Exchanges könnte direkten Verlust bedeuten. Fünftens: regulatorisches Risiko. Delta-neutrale Designs werden von Regulatoren weltweit zunehmend beobachtet — ein regulatorischer Eingriff könnte den Mechanismus unterbrechen. Eine deutlich bessere Allokation für 30.000 USD wäre beispielsweise: 40% USDC-Supply auf Aave (konservative Basis), 30% sDAI (Yield mit moderatem Risiko), 15% USDT (CEX-Liquidität), 10% LUSD (dezentrale Reserve), 5% sUSDe (kleine höherverzinsliche Position). Das diversifiziert auf mehrere Mechanismen und Emittenten, statt ein einziges Protokoll als alleinigen Ausfall-Punkt zu haben.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Folien: Titel → Yield-bearing Grundprinzip → sDAI/DSR → sUSDS → Ethena USDe/sUSDe → Delta-Hedging-Mechanik → Risiko-Vergleich
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `visual_plan.json` — DSR-Mechanik-Diagramm, Yield-Source-Breakdown für jeden Stablecoin, Delta-Hedging-Flow (Ethena), Risiko-vs-Rendite-Chart
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

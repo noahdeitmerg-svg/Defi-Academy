@@ -1,0 +1,198 @@
+# Seed-Phrase-Storage: Papier, Metall, Shamir
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die drei Hauptbedrohungsszenarien für Seed-Phrasen benennen
+- Papier-, Metall- und Shamir-Storage anhand realistischer Trade-offs vergleichen
+- Ein Storage-Setup entsprechend dem eigenen Kapital- und Bedrohungsprofil wählen
+- Die Rolle der BIP-39-Passphrase als zusätzliche Schutzschicht gegen physischen Zwang und Seed-Phrase-Diebstahl einordnen
+- Ein Inheritance-Setup konzipieren, das Asset-Verlust bei Tod oder Handlungsunfähigkeit vermeidet
+- Die Vor- und Nachteile von Shamir Secret Sharing (SLIP-39, 2-of-3, 3-of-5) gegenüber redundanten Vollkopien begründen
+
+## Erklärung
+
+Eine Seed-Phrase sicher zu speichern ist das kritischste Einzelproblem in DeFi-Sicherheit. Die Phrase muss gleichzeitig gegen drei sehr unterschiedliche Bedrohungen geschützt sein, die oft gegeneinander arbeiten.
+
+**Bedrohung 1: Diebstahl.** Jemand bekommt Zugriff auf deinen Storage-Ort und liest die Phrase.
+
+**Bedrohung 2: Zerstörung.** Feuer, Wasser, Naturkatastrophe, einfacher Papierverlust — die Phrase ist weg.
+
+**Bedrohung 3: Zugangsverlust.** Du selbst oder deine Erben finden die Phrase nicht mehr wieder.
+
+Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche Phrase ist stehl-anfällig. Zusätzliche Kopien multiplizieren die Angriffsfläche. Das gute Setup ist ein bewusster Trade-off, kein Patentrezept.
+
+**Option 1: Papier**
+
+Seed-Phrase auf Papier schreiben, sicher verwahren.
+
+*Vorteile:* Kostenlos, keine technischen Abhängigkeiten, universell verständlich (auch für Erben).
+
+*Nachteile:* Anfällig für Feuer und Wasser. Tinte verblasst. Papier zerreißt, vergilbt. Wer das Papier findet, hat alles.
+
+*Verbesserungen:* Laminieren (Wasser-, nicht Feuerschutz). Feuerfester Safe. Zwei Kopien an geographisch getrennten Orten.
+
+Papier ist ausreichend für kleinere Beträge bis etwa 1.000–5.000 USD. Für signifikantes Kapital skaliert es schlecht.
+
+**Option 2: Metall**
+
+Seed-Phrase in Edelstahl eingraviert oder gestempelt. Kommerzielle Produkte:
+- **Cryptosteel Capsule** — rostfreies Edelstahl-Rohr mit Buchstabenplättchen
+- **Billfodl** — gestapelte Edelstahl-Plättchen
+- **Keystone Tablet Plus** — Edelstahl-Platte mit eingravierten Wörtern
+
+DIY-Version: Edelstahl-Platte mit Zahlenstempel.
+
+*Vorteile:* Feuerfest (Edelstahl schmilzt bei ca. 1400 °C; normale Hausbrände erreichen 600–800 °C). Wasserfest. Korrosionsbeständig. Keine elektronische Abhängigkeit.
+
+*Nachteile:* 50–100 USD Investition. Physische Einrichtung dauert 10–30 Minuten. Wer das Metall findet, hat alles.
+
+Metall ist der Standard für signifikante Beträge. Die kleine Initial-Investition amortisiert sich ab wenigen tausend USD Kapital.
+
+**Option 3: Shamir Secret Sharing (SSS)**
+
+Die Phrase wird mathematisch in mehrere Teile (Shares) zerlegt. Konfiguration "k-of-n": Aus n Teilen braucht man k zur Rekonstruktion.
+
+Beispiel 2-of-3:
+- Drei Shares an drei verschiedenen Orten
+- Ein einzelner Share offenbart nichts über die Phrase
+- Zwei zusammengebrachte Shares rekonstruieren die Phrase
+
+*Das löst gleichzeitig:*
+- Diebstahl — ein Share allein ist wertlos
+- Zerstörung — ein Share kann verloren gehen, zwei verbleibende reichen
+- Geographische Diversifikation — Shares über Länder verteilbar
+
+*Tools:* **Trezor Model T** unterstützt SLIP-39 (Shamir-Derivat) nativ. Open-Source-Implementierungen existieren für manuelle Anwendung.
+
+*Achtung:* Kein universeller Standard. Rekonstruktion erfordert oft dasselbe Tool/dasselbe Schema. Dokumentation des Setups ist kritisch.
+
+*Vorteile:* Diversifiziert Storage-Risiko. Inheritance-Planung ohne Single Point of Failure.
+
+*Nachteile:* Komplexer in der Einrichtung. Tool-Abhängigkeit. Fehlerrisiko bei schlechter Dokumentation.
+
+**Option 4: BIP-39-Passphrase (zusätzliche Schutzschicht)**
+
+Unabhängig vom Storage-Medium: die BIP-39-Passphrase ist ein zusätzliches "13. Wort" — ein beliebiger String, der zusammen mit der Seed-Phrase einen komplett anderen Satz von Adressen ableitet.
+
+Ohne Passphrase: Seed-Phrase → Adressen A (Decoy, oft leer)
+Mit Passphrase: Seed-Phrase + Passphrase → Adressen B (echte Wallet)
+
+*Vorteil:* Selbst wenn jemand die Seed-Phrase findet, bekommt er nur die Decoy-Wallet. Die echte Wallet ist hinter der Passphrase verborgen. Besonders relevant bei physischem Zwang: Du kannst die Seed-Phrase preisgeben, der Angreifer sieht die Decoy, glaubt er hat alles, die echte Wallet bleibt unberührt.
+
+*Risiko:* Passphrase-Verlust = Asset-Verlust. Die Passphrase muss separat und zuverlässig gesichert sein.
+
+**Das Inheritance-Problem**
+
+Ein meist-ignorierter Aspekt: Was passiert mit deinen Assets bei Tod oder Handlungsunfähigkeit? Eine Seed-Phrase, die deine Familie nicht findet oder nicht versteht, bedeutet permanenten Verlust.
+
+Mögliche Ansätze:
+- **Schriftliche Anleitung** (ohne die Phrase selbst), die erklärt wo sie liegt und wie damit umzugehen ist
+- **Multisig-Setup** mit vertrauenswürdigem Co-Signer (Lektion 2.5)
+- **Shamir-Setup** mit Shares bei Familie plus sicherem Drittort
+- **Spezialisierte Services** wie Casa (kommerziell, für High-Net-Worth)
+
+Verzicht auf Inheritance-Planung ist auch eine Entscheidung — aber sie sollte bewusst getroffen werden.
+
+**Empfehlung nach Kapitalgröße**
+
+| Kapital | Empfehlung |
+|---|---|
+| < 1.000 USD | Papier in verschlossener Schublade, Duplikat an zweitem Ort |
+| 1.000 – 10.000 USD | Metall-Backup, ein Ort, Inheritance-Notiz |
+| 10.000 – 100.000 USD | Metall-Backup, zwei Orte, Hardware-Wallet |
+| > 100.000 USD | Metall + Shamir oder Multisig, ernsthafte Inheritance-Planung |
+
+Diese Tabelle ist Orientierung, nicht Dogma. Dein tatsächliches Bedrohungsprofil entscheidet.
+
+## Folien-Zusammenfassung
+
+**[Slide 1]** Titel: Seed-Phrase-Storage
+
+**[Slide 2]** Drei Bedrohungen: Diebstahl, Zerstörung, Zugangsverlust. Oft gegeneinander arbeitend.
+
+**[Slide 3]** Papier: einfach, kostenlos, universell. Anfällig für Feuer/Wasser. Für kleine Beträge.
+
+**[Slide 4]** Metall: feuerfest, wasserfest, permanent. 50–100 USD Investition. Standard für signifikantes Kapital.
+
+**[Slide 5]** Shamir Secret Sharing: k-of-n Shares. Einzel-Share wertlos. Diversifiziert Storage-Risiko.
+
+**[Slide 6]** BIP-39-Passphrase: 13. Wort. Echte Wallet hinter Passphrase versteckt. Passphrase-Verlust = Asset-Verlust.
+
+**[Slide 7]** Inheritance-Problem: Phrase ohne Nachfolgeplan = permanenter Verlust für Erben.
+
+**[Slide 8]** Empfehlung nach Kapitalgröße: von Papier bis Multisig, je nach Betrag.
+
+## Sprechertext
+
+**[Slide 1]** Seed-Phrase-Storage ist das kritischste Einzelproblem in DeFi-Sicherheit.
+
+**[Slide 2]** Drei Bedrohungen: Diebstahl, Zerstörung, Zugangsverlust. Sie arbeiten oft gegeneinander. Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche ist stehl-anfällig. Kopien vermehren die Angriffsfläche. Gutes Setup ist Trade-off, nicht Patentrezept.
+
+**[Slide 3]** Papier: kostenlos, universell verständlich. Gut für Erben. Aber: Feuer, Wasser, verblassende Tinte. Für kleine Beträge ausreichend — bis vielleicht fünftausend Dollar. Für signifikantes Kapital zu riskant.
+
+**[Slide 4]** Metall: Edelstahl schmilzt bei vierzehnhundert Grad, normale Hausbrände erreichen sechs- bis achthundert. Wasserfest, korrosionsbeständig. Fünfzig bis hundert Dollar Investition. Für signifikante Beträge der Standard.
+
+**[Slide 5]** Shamir Secret Sharing: die Phrase wird in mathematisch getrennte Shares aufgeteilt. Zwei von drei Shares rekonstruieren die Phrase. Ein einzelner Share ist wertlos. Löst Diebstahl und Zerstörung gleichzeitig. Trezor Model T unterstützt das nativ. Komplexer, erfordert gute Dokumentation.
+
+**[Slide 6]** Zusätzlich zu jedem Medium: BIP-39-Passphrase. Ein beliebiges zusätzliches Wort. Ohne Passphrase kommt die Seed-Phrase zu einer Decoy-Wallet. Mit Passphrase zur echten Wallet. Schützt auch gegen physischen Zwang. Warnung: Passphrase-Verlust bedeutet Asset-Verlust.
+
+**[Slide 7]** Das Inheritance-Problem. Was passiert mit deinen Assets, wenn du stirbst? Eine nicht-findbare oder nicht-verstandene Phrase bedeutet permanenten Verlust für deine Erben. Ansätze: schriftliche Anleitung, Multisig, Shamir-Shares bei Familie. Verzicht auf Planung ist auch Entscheidung — aber bewusst sollte sie sein.
+
+**[Slide 8]** Empfehlung nach Kapitalgröße: unter tausend Dollar Papier. Bis zehntausend Metall ein Ort. Bis hunderttausend Metall zwei Orte plus Hardware-Wallet. Über hunderttausend Metall plus Shamir oder Multisig plus Inheritance-Planung. Orientierung, nicht Dogma.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+**[Slide 2]** Dreieck mit den drei Bedrohungen an den Ecken. Pfeile, die zeigen wie Lösung für eine Bedrohung andere verschlimmert.
+**[Slide 3]** Foto einer Seed-Phrase auf Papier. Daneben Icons: Feuer, Wasser, verblassende Tinte.
+**[Slide 4]** **SCREENSHOT SUGGESTION:** Cryptosteel-Website oder Produktfoto der Capsule mit sichtbaren Buchstabenplättchen.
+**[Slide 5]** Diagramm: eine Phrase wird in drei Shares gesplittet. Zwei kombiniert rekonstruieren die Phrase; einer allein wird durchgestrichen.
+**[Slide 6]** Diagramm: Seed-Phrase ohne Passphrase → Wallet A (leer). Seed-Phrase + Passphrase → Wallet B (echt).
+**[Slide 7]** Familienbaum-Icon, Wallet im Zentrum, Fragezeichen über Erben. Lösungsansätze rechts.
+**[Slide 8]** Tabelle mit Kapitalstufen und Empfehlungen.
+
+## Übung
+
+**Aufgabe: Dein persönliches Storage-Setup planen**
+
+Schreibe ein Dokument (1–2 Seiten), das dein Storage-Setup definiert. Beantworte:
+
+1. **Bedrohungsmodell:** Was sind deine wahrscheinlichsten Bedrohungen? (Wohnungseinbruch, Feuer, Familien-Zugriff, persönlicher Verlust)
+2. **Kapitalgröße:** Welcher Gesamtbetrag könnte in DeFi eingesetzt werden (Schätzung)?
+3. **Storage-Medium:** Papier, Metall, Shamir — welches und warum?
+4. **Anzahl und Orte der Kopien:** Wie viele, wo?
+5. **Passphrase:** Ja/Nein? Begründung?
+6. **Inheritance-Plan:** Wie bekommen Erben im Notfall Zugang?
+
+**Deliverable:** Strukturiertes Dokument mit deinem Plan. **Wichtig:** Die Seed-Phrase selbst gehört NICHT in dieses Dokument.
+
+## Quiz
+
+**Frage 1:** Was ist der zentrale Vorteil von Shamir Secret Sharing (2-of-3) gegenüber drei vollständigen Kopien derselben Seed-Phrase?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Bei drei vollständigen Kopien reicht jede einzelne Kopie, um alle Assets zu stehlen — das Diebstahl-Risiko multipliziert sich. Bei 2-of-3 Shamir ist eine einzelne entdeckte Kopie wertlos, sie offenbart nichts über die Phrase. Gleichzeitig tolerierst du den Verlust einer Kopie ohne Asset-Verlust. Shamir reduziert also Diebstahl-Wahrscheinlichkeit bei gleichzeitiger Redundanz gegen Zerstörung.
+</details>
+
+**Frage 2:** Eine BIP-39-Passphrase schützt vor welchem Angriffsszenario?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Vor Szenarien, in denen ein Angreifer die Seed-Phrase findet oder erhält — entweder durch Diebstahl (gefundene Metall-Platte) oder durch Zwang ("5-Dollar-Wrench-Attack", bei der das Opfer zur Herausgabe gezwungen wird). Ohne Passphrase hätte der Angreifer sofort Zugriff auf alle Assets. Mit Passphrase kommt er nur auf eine Decoy-Wallet; die echte Wallet bleibt hinter der separat gesicherten Passphrase unberührt.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Slides: Titel → 3 Bedrohungen → Papier → Metall → Shamir SSS → BIP-39-Passphrase → Inheritance → Kapital-Empfehlungstabelle
+- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min. wegen 8 Slides)
+- `visual_plan.json` — Bedrohungsdreieck, Papier-Foto mit Schadenseffekten, Cryptosteel-Produktbild, 2-of-3-Shamir-Diagramm, Decoy/Real-Wallet-Diagramm, Inheritance-Baum, Kapital-Empfehlungstabelle
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

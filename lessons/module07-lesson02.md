@@ -1,0 +1,230 @@
+# Health Factor: Die zentrale Risiko-Metrik
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Health Factor präzise definieren und berechnen
+- Den Zusammenhang zwischen Health Factor und Liquidations-Preis herstellen
+- Konservative Health-Factor-Zielwerte für verschiedene Strategien benennen
+- Einen Health-Factor-Walkthrough mit mehreren Preisbewegungen eigenständig durchspielen
+- Die Sensitivität des Health Factor gegenüber Collateral-Preisbewegungen quantitativ abschätzen
+- Monitoring-Tools (DeBank, Aave-Dashboard, Hal Alert) einrichten, um den Health Factor in Echtzeit zu verfolgen
+
+## Erklärung
+
+In Lektion 7.1 hast du die statischen LTV-Parameter kennengelernt. In der Praxis beobachtest du aber keine LTV-Zahl, sondern eine dynamische Metrik: den **Health Factor**.
+
+**Die Formel**
+
+```
+Health Factor = (Collateral-Wert × Liquidation Threshold) / Schuld-Wert
+```
+
+Der Health Factor ist die Risiko-Metrik, die Aave und ähnliche Protokolle anzeigen. Er hat drei entscheidende Werte:
+
+- **Health Factor > 1:** Position ist sicher
+- **Health Factor = 1:** Position ist direkt an der Liquidations-Grenze
+- **Health Factor < 1:** Position kann liquidiert werden
+
+**Konkretes Beispiel**
+
+Du hast 10.000 USD ETH als Collateral (LT = 83%), und 5.000 USD USDC Schuld.
+
+```
+Health Factor = (10.000 × 0,83) / 5.000 = 8.300 / 5.000 = 1,66
+```
+
+Ein Health Factor von 1,66 bedeutet: du hast 66% Puffer über der Liquidations-Grenze. Der Collateral-Wert könnte auf 1 / 1,66 = 60% fallen, bevor Liquidation droht.
+
+**Health Factor vs. LTV: die Beziehung**
+
+LTV und Health Factor sind mathematisch gekoppelt:
+
+```
+Aktuelles LTV = Schuld / Collateral
+Health Factor = LT / Aktuelles LTV
+```
+
+Für ETH-Collateral (LT = 83%):
+- Aktuelles LTV = 30% → Health Factor = 0,83 / 0,30 = 2,77
+- Aktuelles LTV = 50% → Health Factor = 0,83 / 0,50 = 1,66
+- Aktuelles LTV = 70% → Health Factor = 0,83 / 0,70 = 1,19
+- Aktuelles LTV = 83% → Health Factor = 1,00 — **Liquidations-Grenze**
+
+**Der Liquidations-Preis**
+
+Viele Protokoll-Interfaces zeigen zusätzlich zum Health Factor einen "Liquidations-Preis". Das ist der Preis des Collateral-Assets, bei dem der Health Factor auf 1 fällt.
+
+**Berechnung für ein einfaches Setup (nur ein volatiler Collateral-Asset):**
+
+```
+Liquidations-Preis = (Schuld × Aktueller Preis) / (Collateral-Menge × LT)
+```
+
+Beispiel: 5 ETH als Collateral bei 3.000 USD/ETH, 9.000 USD USDC Schuld, LT 83%.
+
+```
+Liquidations-Preis = (9.000 × 3.000) / (5 × 3.000 × 0,83)
+ = 9.000 / (5 × 0,83)
+ = 9.000 / 4,15
+ = 2.169 USD/ETH
+```
+
+Wenn ETH auf 2.169 USD fällt, wird die Position liquidiert. Das ist ein Rückgang von 3.000 auf 2.169, also −28%.
+
+**Wie Health Factor sich bewegt**
+
+Health Factor kann sich **ohne dein Zutun** ändern. Drei Mechanismen:
+
+1. **Preisbewegung des Collaterals:** ETH fällt → Collateral-Wert fällt → Health Factor sinkt
+2. **Preisbewegung der Schuld:** Wenn du ETH geborgt hast und ETH steigt → Schuld-Wert steigt → Health Factor sinkt
+3. **Zinsakkumulation:** Deine Schuld wächst durch laufende Zinsen → Health Factor sinkt langsam
+
+Dieser dritte Punkt wird oft übersehen. Bei hohen Borrow-Zinsen kann die Schuld signifikant wachsen, während der Collateral-Preis stabil bleibt — und trotzdem nähert sich der Health Factor 1 an.
+
+**Konservative Health-Factor-Zielwerte**
+
+Für verschiedene Strategien sind unterschiedliche Health-Factor-Zielbereiche sinnvoll:
+
+**Sehr konservativ (Einstieg, Learning-Phase):**
+- Health Factor > 2,5
+- Das entspricht etwa 33% Nutzung des verfügbaren LTV (bei LT 83%)
+- Puffer: ~60% Preis-Drop bis Liquidation
+
+**Konservativ (Normal-Betrieb):**
+- Health Factor 2,0 – 2,5
+- ~40% Nutzung des verfügbaren LTV
+- Puffer: ~50% Preis-Drop bis Liquidation
+
+**Moderat (erfahrene Nutzer):**
+- Health Factor 1,5 – 2,0
+- ~55% Nutzung des verfügbaren LTV
+- Puffer: ~33% Preis-Drop bis Liquidation
+
+**Aggressiv (Experten, kurzfristige Positionen):**
+- Health Factor 1,2 – 1,5
+- ~70% Nutzung des verfügbaren LTV
+- Puffer: ~20% Preis-Drop bis Liquidation
+
+**Gefährlich (abzuraten):**
+- Health Factor < 1,2
+- Minimaler Puffer, hohe Liquidations-Wahrscheinlichkeit bei normaler Marktvolatilität
+
+Für das 7–8%-Jahresziel sind konservative Health-Factor-Werte ab 2,0 empfohlen. Alles darunter erhöht die Liquidations-Wahrscheinlichkeit überproportional zur Rendite-Verbesserung.
+
+**Praktische Monitoring-Regel**
+
+Eine einfache Daumenregel: Wenn dein Health Factor unter 1,5 fällt, solltest du handeln — entweder Schuld zurückzahlen oder Collateral hinzufügen. Nicht warten, bis er bei 1,1 ist. Liquidationen können innerhalb von Minuten passieren, besonders bei volatilen Märkten oder plötzlichen Preis-Bewegungen.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Health Factor: Die zentrale Risiko-Metrik
+
+**[Slide 2] — Die Formel**
+HF = (Collateral × LT) / Schuld
+> 1: sicher
+= 1: Liquidations-Grenze
+< 1: liquidiert
+
+**[Slide 3] — Die Beziehung zum LTV**
+HF = LT / aktuelles LTV
+50% LTV bei LT 83% → HF = 1,66
+
+**[Slide 4] — Der Liquidations-Preis**
+Preis bei dem HF = 1
+Wichtigste absolute Zahl im Monitoring
+
+**[Slide 5] — HF-Bewegung (ohne dein Zutun)**
+1. Collateral-Preis fällt
+2. Schuld-Asset-Preis steigt
+3. Zinsakkumulation
+
+**[Slide 6] — Konservative HF-Zielwerte**
+> 2,5: Sehr konservativ
+2,0–2,5: Konservativ
+1,5–2,0: Moderat
+1,2–1,5: Aggressiv
+< 1,2: Gefährlich
+
+**[Slide 7] — Die Handlungs-Regel**
+HF < 1,5 → handeln
+Nicht warten bis 1,1
+
+## Sprechertext
+
+**[Slide 1]** In Lektion 7.1 hattest du die statischen LTV-Parameter. In der Praxis beobachtest du aber eine dynamische Metrik: den Health Factor. Das ist die zentrale Zahl, an der du deine Position ausrichtest.
+
+**[Slide 2]** Die Formel. Health Factor gleich Collateral-Wert mal Liquidation Threshold, geteilt durch Schuld-Wert. Drei Werte sind entscheidend. Über eins: Position sicher. Genau eins: Liquidations-Grenze. Unter eins: Position kann liquidiert werden. Das ist alles. Wenn du den Health Factor verstehst und beobachtest, verstehst du deine Risiko-Lage.
+
+**[Slide 3]** Die Beziehung zum LTV. Health Factor gleich LT geteilt durch aktuelles LTV. Wenn du bei 50 Prozent LTV stehst und LT 83 Prozent ist, dann Health Factor gleich 0,83 geteilt durch 0,50 — also 1,66. Bei 30 Prozent LTV hättest du 2,77. Bei 70 Prozent LTV nur noch 1,19. Das Verhältnis ist nicht-linear: die letzten Prozent Richtung LT sind die gefährlichsten.
+
+**[Slide 4]** Die meisten Protokoll-Interfaces zeigen zusätzlich den Liquidations-Preis. Das ist der Preis des Collateral-Assets, bei dem der Health Factor auf 1 fällt. Das ist die wichtigste absolute Zahl im Monitoring — sie sagt dir, wie weit die Realität von der Gefahr entfernt ist.
+
+**[Slide 5]** Health Factor kann sich ohne dein Zutun ändern. Drei Mechanismen. Erstens: Collateral-Preis fällt — Health Factor sinkt. Zweitens: Schuld-Asset-Preis steigt. Wenn du ETH geborgt hast und ETH steigt, wächst der USD-Wert deiner Schuld — Health Factor sinkt. Drittens: Zinsakkumulation. Deine Schuld wächst langsam durch laufende Zinsen. Bei hohen Borrow-Raten kann das die Position über Wochen allmählich schwächen, selbst wenn Preise stabil bleiben.
+
+**[Slide 6]** Zielwerte für Health Factor. Sehr konservativ: über 2,5 — etwa 33 Prozent Nutzung des verfügbaren LTV, 60 Prozent Preis-Drop als Puffer. Konservativ: 2,0 bis 2,5 — 40 Prozent Nutzung, 50 Prozent Puffer. Moderat: 1,5 bis 2,0 — 55 Prozent Nutzung, 33 Prozent Puffer. Aggressiv: 1,2 bis 1,5 — für kurzfristige Experten-Positionen. Unter 1,2 ist gefährlich — normale Marktvolatilität kann dich liquidieren.
+
+**[Slide 7]** Die praktische Handlungs-Regel. Wenn dein Health Factor unter 1,5 fällt, handle. Schuld zurückzahlen oder Collateral hinzufügen. Nicht warten, bis er bei 1,1 ist. Liquidationen können in Minuten passieren, besonders bei plötzlichen Markt-Bewegungen. Wer bei 1,1 warten will, verliert oft zu diesem Preis.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Formel-Darstellung mit farbkodierten HF-Wertebereichen (grün/gelb/rot).
+
+**[Slide 3]** Tabelle HF vs. LTV mit den vier Beispielen.
+
+**[Slide 4]** **SCREENSHOT SUGGESTION:** Aave-Dashboard einer laufenden Collateral-Position mit Health Factor und Liquidation Price.
+
+**[Slide 5]** Drei-Icon-Darstellung der HF-Bewegungs-Mechanismen: fallender Chart für Collateral-Preis, steigender Chart für Schuld-Asset, wachsendes Prozent-Symbol für Zinsen.
+
+**[Slide 6]** Farb-Skala mit den HF-Zonen und empfohlenen Strategien.
+
+**[Slide 7]** Warn-Icon mit "HF < 1,5 → Handeln".
+
+## Übung
+
+**Aufgabe: Health Factor für drei Szenarien berechnen**
+
+Szenario 1: 15.000 USD wstETH als Collateral (LT 81%), 7.000 USD USDC Schuld
+Szenario 2: 8.000 USD ETH als Collateral (LT 83%), 6.000 USD USDC Schuld
+Szenario 3: 25.000 USD USDC als Collateral (LT 80%), 15.000 USD USDT Schuld (in Stablecoin E-Mode mit LT 95%)
+
+Für jedes Szenario berechne:
+- Aktuelles LTV in Prozent
+- Health Factor
+- Liquidations-Preis (wenn anwendbar — für Szenario 3 dagegen den Depeg-Puffer)
+- Einstufung (sehr konservativ / konservativ / moderat / aggressiv / gefährlich)
+
+**Deliverable:** Tabelle mit 3 Szenarien. Kurze Einschätzung (4–6 Sätze): Welches Szenario würdest du als konservativer Nutzer akzeptieren, welches würdest du ablehnen, warum?
+
+## Quiz
+
+**Frage 1:** Eine Position hat Health Factor 2,0. Was bedeutet das konkret?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+HF 2,0 bedeutet, dass der Collateral-Wert um die Hälfte fallen könnte — 50% — bevor der Health Factor auf 1 sinkt und Liquidation droht. Genauer: Wenn HF = LT / aktuelles LTV und HF = 2, dann ist das aktuelle LTV halb so hoch wie LT. Bei einem Asset mit LT = 80% heißt das, das aktuelle LTV ist bei 40%. Das ist eine konservative Position mit gutem Puffer. Allerdings: bei starken Markt-Volatilitäten (z.B. Krypto-Crashes von 30–50% in kurzen Zeiträumen) reicht auch ein HF von 2,0 nicht immer aus. Deshalb ist die zusätzliche Daumenregel "bei HF < 1,5 handeln" wichtig — sie gibt Zeit zur Reaktion, bevor die Position kritisch wird.
+</details>
+
+**Frage 2:** Warum ist Zinsakkumulation auf die Schuld oft ein übersehenes Risiko für Borrower?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Zinsakkumulation wirkt schleichend. Über Tage oder Wochen sichtbar als langsame HF-Verschlechterung, ohne dass Preise sich bewegen. Ein Borrower, der nur auf Markt-Events schaut, übersieht diesen Effekt. Bei hohen Borrow-Zinsen — die in Volatilitäts-Phasen schnell von 5% auf 15% oder mehr springen können — kann eine Schuld deutlich wachsen. Beispiel: 10.000 USD Schuld bei 20% Borrow-Rate wächst in einem Monat auf 10.167 USD, in sechs Monaten auf 11.050 USD, in einem Jahr auf 12.200 USD. Ohne Preisänderung des Collaterals sinkt der Health Factor durch dieses Wachstum allein. Für langfristige Borrow-Positionen ist das ein signifikanter Faktor — und ein Grund, warum Positions-Monitoring über mehrere Wochen nötig ist, nicht nur bei Markt-Events.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Folien: Titel → Health-Factor-Formel → HF-Rechenbeispiel → HF bei Preisbewegungen → HF-Zielwerte (konservativ/ausgewogen/aggressiv) → Zinsakkumulations-Effekt → Monitoring-Tools
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `visual_plan.json` — HF-Formel-Visualisierung, HF-Walkthrough-Tabelle (Preisbewegungen), Aave-Dashboard-Screenshot mit HF-Anzeige, Hal-Alert-Setup-Screenshot, HF-Zonen-Grafik (grün/gelb/rot)
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

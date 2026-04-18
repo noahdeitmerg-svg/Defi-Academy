@@ -1,0 +1,199 @@
+# Die DeFi-Landschaft: Kategorien und Kapitalflüsse
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die sechs Hauptkategorien von DeFi-Protokollen benennen und ihre Funktion erklären
+- Verfolgen, wie Kapital durch diese Kategorien fließt
+- Tools wie DeFiLlama nutzen, um die Größe und Relevanz verschiedener Protokolle einzuschätzen
+- Ein beliebiges DeFi-Protokoll einer der sechs Kategorien zuordnen und Cross-Category-Positionen erkennen
+- Den Total Value Locked (TVL) als Metrik einordnen und ihre Grenzen (Wale-Konzentration, Double-Counting) benennen
+- Einen typischen sechsstufigen DeFi-Kapitalfluss (USD → USDC → Aave → Lido → Curve → Convex) nachvollziehen und die akkumulierten Risikoquellen pro Hop identifizieren
+
+## Erklärung
+
+DeFi besteht aus Hunderten von Protokollen. Um nicht in Details zu ertrinken, brauchst du eine Kategorisierung. Diese Lektion gibt dir die mentale Landkarte.
+
+**Kategorie 1: Dezentrale Exchanges (DEXs)**
+
+DEXs ermöglichen Token-Swaps ohne zentrale Order Books oder Market Maker. Die dominanten Modelle sind **Automated Market Makers (AMMs)**, wo Liquiditätsanbieter Kapital in Pools einzahlen und Swapper gegen diese Pools handeln. Der Preis wird algorithmisch durch eine Formel bestimmt, nicht durch Orderabgleich.
+
+Wichtige Protokolle: Uniswap (führend), Curve (für Stablecoins und Pegged Assets), Balancer, SushiSwap. DEXs behandeln wir vertieft in Modul 4.
+
+**Kategorie 2: Lending- und Borrowing-Protokolle**
+
+Kapital kann in diese Protokolle eingezahlt werden, um Zinsen zu verdienen. Andere Nutzer können gegen hinterlegte Sicherheiten Kredite aufnehmen. Die Zinssätze werden algorithmisch basierend auf Angebot und Nachfrage bestimmt.
+
+Wichtige Protokolle: Aave (größtes Lending-Protokoll), Compound, Morpho, Spark. Wir behandeln Lending in Modul 6 und Liquidationen in Modul 7.
+
+**Kategorie 3: Stablecoins**
+
+Stablecoins sind Tokens, die einen Peg zu einem externen Asset halten — meistens dem US-Dollar. Es gibt drei Haupttypen:
+- **Fiat-besichert** (USDC, USDT): gedeckt durch echte Dollar-Reserven bei einem Emittenten
+- **Krypto-besichert** (DAI, crvUSD): gedeckt durch On-Chain-Sicherheiten in Smart Contracts
+- **Algorithmisch** (historisch UST, FRAX-Varianten): durch Algorithmen stabilisiert, oft fragil
+
+Stablecoins sind das Rückgrat vieler DeFi-Operationen. Modul 8 behandelt sie vertieft.
+
+**Kategorie 4: Liquid Staking**
+
+Ethereum-Staking erfordert 32 ETH und Sperre des Kapitals. Liquid-Staking-Protokolle erlauben Staking kleinerer Beträge und geben im Gegenzug einen Token (z.B. stETH von Lido), der weiterhin in DeFi verwendet werden kann. Dadurch entsteht ein zweiter Yield-Stream.
+
+Wichtige Protokolle: Lido (größtes), Rocket Pool, Frax Ether.
+
+**Kategorie 5: Derivate und Perpetuals**
+
+Dezentrale Perpetual-Exchanges erlauben gehebelten Handel auf Tokens ohne Ablauf. Sie funktionieren über Funding-Rate-Mechanismen, die den Preis am Spot-Kurs verankern.
+
+Wichtige Protokolle: GMX, dYdX, Hyperliquid, Synthetix. Derivate liegen außerhalb des Kernfokus dieses Kurses, werden aber bei Bedarf gestreift.
+
+**Kategorie 6: Yield-Aggregatoren und Strukturierte Produkte**
+
+Diese Protokolle kombinieren die anderen Bausteine zu fertigen Strategien. Ein Yield-Aggregator zahlt automatisch in die ertragreichsten Pools ein und rebalanciert. Strukturierte Produkte bauen komplexere Auszahlungsprofile (z.B. Ribbon Finance mit Options-Vaults).
+
+Wichtige Protokolle: Yearn, Pendle (Yield-Trading), Convex (Curve-Boosting).
+
+**Kapitalflüsse: Wie Kapital durch DeFi zirkuliert**
+
+Ein typischer Kapitalfluss könnte sein:
+
+```
+USD bei Bank
+ ↓ (Kauf an CEX)
+USDC in CEX
+ ↓ (Withdrawal zur Wallet)
+USDC in Wallet
+ ↓ (Einzahlung in Aave)
+aUSDC (verzinslich)
+ ↓ (als Sicherheit nutzen)
+Borrow von ETH gegen aUSDC
+ ↓ (ETH staken über Lido)
+stETH
+ ↓ (als LP in Curve)
+LP-Token + stETH-Rewards + Trading-Fees
+ ↓ (LP-Token auf Convex einsetzen)
+CVX-Rewards zusätzlich
+```
+
+Jeder Pfeil ist eine Transaktion. Jede Station ist ein Protokoll. Das Kapital zirkuliert — aber mit jedem Hop akkumulieren sich Risiken.
+
+**Tools zur Navigation**
+
+- **DeFiLlama (defillama.com)**: Zeigt TVL (Total Value Locked) pro Protokoll und Chain. Das wichtigste Tool, um Größenverhältnisse zu verstehen.
+- **DeBank (debank.com)**: Portfolio-Tracker für eigene und fremde Wallets.
+- **Dune Analytics (dune.com)**: Custom-Dashboards für spezifische Metriken.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Die DeFi-Landschaft
+
+**[Slide 2] — Sechs Hauptkategorien**
+1. DEXs (Swaps)
+2. Lending & Borrowing
+3. Stablecoins
+4. Liquid Staking
+5. Derivate/Perpetuals
+6. Yield-Aggregatoren
+
+**[Slide 3] — DEXs**
+Token-Swaps ohne Order Book. AMMs mit Liquiditätspools.
+Marktführer: Uniswap, Curve.
+
+**[Slide 4] — Lending & Borrowing**
+Kapital einzahlen → Zinsen verdienen. Sicherheiten hinterlegen → Kredite aufnehmen.
+Marktführer: Aave, Compound, Morpho.
+
+**[Slide 5] — Stablecoins**
+Tokens mit Peg zu externem Asset (meist USD).
+Drei Typen: Fiat-besichert, Krypto-besichert, algorithmisch.
+
+**[Slide 6] — Beispielhafter Kapitalfluss**
+USD → USDC → Aave → Borrow ETH → Lido stETH → Curve LP → Convex.
+Sechs Stationen. Sechs Risikoquellen.
+
+**[Slide 7] — Navigations-Tools**
+- DeFiLlama: TVL-Landschaft
+- DeBank: Wallet-Portfolios
+- Dune Analytics: Custom-Metriken
+
+## Sprechertext
+
+**[Slide 1]**
+DeFi besteht aus Hunderten Protokollen. Du brauchst eine mentale Landkarte, um nicht in Details zu ertrinken. Diese Lektion teilt die Landschaft in sechs Kategorien.
+
+**[Slide 2]**
+Die sechs Hauptkategorien: DEXs für Swaps. Lending- und Borrowing-Protokolle. Stablecoins. Liquid Staking. Derivate und Perpetuals. Yield-Aggregatoren und strukturierte Produkte. Jede Kategorie bekommt später ein eigenes Modul oder Abschnitt.
+
+**[Slide 3]**
+DEXs — dezentrale Exchanges. Sie ermöglichen Token-Swaps ohne zentrale Order Books. Das dominante Modell sind Automated Market Makers, bei denen Liquiditätsanbieter Kapital in Pools einzahlen und Swapper gegen diese Pools handeln. Der Preis wird durch eine mathematische Formel bestimmt, nicht durch Orderabgleich. Marktführer sind Uniswap für Volatile und Curve für Stablecoin-nahe Assets.
+
+**[Slide 4]**
+Lending- und Borrowing-Protokolle. Einzahler bekommen Zinsen. Kreditnehmer hinterlegen Sicherheiten und nehmen andere Assets auf. Der Zinssatz wird algorithmisch aus Angebot und Nachfrage bestimmt. Aave ist das größte dieser Protokolle. Wir gehen in Modul 6 tief hinein.
+
+**[Slide 5]**
+Stablecoins halten einen Peg zu einem externen Asset, meistens dem US-Dollar. Drei Typen: fiat-besichert wie USDC und USDT, gedeckt durch echte Dollars. Krypto-besichert wie DAI, gedeckt durch On-Chain-Sicherheiten. Algorithmisch — historisch oft fragil, wie der UST-Kollaps 2022 zeigte.
+
+**[Slide 6]**
+Ein beispielhafter Kapitalfluss zeigt, wie komponierbar DeFi ist. Dollar wird bei einer CEX zu USDC. USDC geht in die Wallet. Von dort in Aave als Lending-Position. Gegen diese Position wird ETH geborgt. Das ETH wird über Lido gestaked — stETH. Das stETH geht in eine Curve-Pool als Liquidität. Der LP-Token wird auf Convex eingesetzt für zusätzliche Rewards. Sechs Stationen, sechs Protokolle, sechs Risikoquellen. Deine Position ist nicht mehr "auf Aave" — sie ist im Zusammenspiel aller sechs.
+
+**[Slide 7]**
+Drei Tools zur Navigation. DeFiLlama zeigt dir, wie viel Kapital in jedem Protokoll und jeder Chain liegt — der TVL. DeBank erlaubt dir, eigene oder fremde Wallets als Portfolio zu betrachten. Dune Analytics bietet Custom-Dashboards für alles, was du on-chain messen willst. Diese drei Tools werden dich den ganzen Kurs begleiten.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Sechs Kacheln, jede mit Kategorie-Name und Icon. Visuell übersichtlich.
+
+**[Slide 3]** **SCREENSHOT SUGGESTION:** Uniswap-Interface mit Swap-Ansicht. Daneben vereinfachtes AMM-Diagramm.
+
+**[Slide 4]** **SCREENSHOT SUGGESTION:** Aave-Markets-Übersicht, die Supply-APY und Borrow-APY für verschiedene Assets zeigt.
+
+**[Slide 5]** Drei-Spalten-Vergleich der Stablecoin-Typen mit jeweiligen Logos (USDC, DAI, frühere UST mit "failed"-Kennzeichnung).
+
+**[Slide 6]** Vollständiger Kapitalfluss als Flussdiagramm mit allen sechs Protokoll-Logos und Asset-Icons.
+
+**[Slide 7]** **SCREENSHOT SUGGESTION:** DeFiLlama-Homepage mit TVL-Ranking. Kurzer Überblick über DeBank und Dune.
+
+## Übung
+
+**Aufgabe: DeFi-Landkarte selbst erstellen**
+
+Gehe auf defillama.com. Wähle die Top-10-Protokolle nach TVL. Ordne jedes der sechs Kategorien zu (einige fallen in mehrere Kategorien). Notiere für jedes Protokoll:
+1. Name
+2. Kategorie(n)
+3. Aktueller TVL
+4. Dominante Chain (wo liegt das meiste Kapital)
+
+**Deliverable:** Tabelle mit 10 Zeilen, als Excel oder Notion-Tabelle.
+
+## Quiz
+
+**Frage 1:** Nenne die sechs Hauptkategorien von DeFi-Protokollen und je ein Beispiel.
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+1. DEXs (z.B. Uniswap), 2. Lending & Borrowing (z.B. Aave), 3. Stablecoins (z.B. USDC oder DAI), 4. Liquid Staking (z.B. Lido), 5. Derivate/Perpetuals (z.B. GMX oder dYdX), 6. Yield-Aggregatoren (z.B. Yearn oder Convex).
+</details>
+
+**Frage 2:** Warum ist der TVL (Total Value Locked) eine wichtige, aber unvollständige Metrik?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+TVL zeigt, wie viel Kapital in einem Protokoll hinterlegt ist, was ein Indikator für Vertrauen und Nutzung ist. Aber TVL ist unvollständig: Er kann durch wenige Wale dominiert sein, kann durch recycelte Deposits aufgebläht werden (wenn das gleiche Kapital durch mehrere Protokolle gezählt wird), und er sagt nichts über Profitabilität oder Risiko aus. Ein hoher TVL ist kein Garant für Sicherheit — mehrere Hacks trafen hoch-TVL-Protokolle.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Slides: Titel → 6 Kategorien-Übersicht → DEXs → Lending → Stablecoins → Kapitalfluss-Diagramm → Navigations-Tools
+- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — 6 Kategorie-Kacheln, Uniswap-Screenshot, Aave-Markets-Übersicht, Stablecoin-Typen-Vergleich (USDC/DAI/UST), vollständiges Kapitalfluss-Diagramm, DeFiLlama-Homepage
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

@@ -1,0 +1,263 @@
+# Stablecoin-Auswahl für konservative Portfolios
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Eine Stablecoin-Allokations-Strategie passend zum 7–8%-Ziel konstruieren
+- Diversifikation auf mehreren Dimensionen (Emittent, Mechanismus, Yield-Struktur) umsetzen
+- Sinnvolle Rebalancing- und Monitoring-Praxis definieren
+- Die Relevanz der Diversifikation nach Besicherungs-Typen (fiat-/krypto-/rendite-tragend) quantitativ begründen
+- Typische Stablecoin-Allokationen für drei Portfolio-Größen (< 10k, 10–100k, > 100k USD) vorschlagen
+- Einen Exit- und Rotations-Plan für Stablecoin-Positionen bei Governance- oder Regulierungs-Events implementieren
+
+## Erklärung
+
+Diese letzte Lektion führt alles aus den vorherigen Lektionen zusammen: eine konkrete, umsetzbare Strategie für den Stablecoin-Anteil deines Portfolios.
+
+**Die Drei-Dimensionen-Diversifikation**
+
+Konservative Stablecoin-Diversifikation berücksichtigt drei Dimensionen:
+
+**Dimension 1: Emittent / Protokoll**
+Verschiedene Emittenten (Circle, Tether, Sky, Liquity) diversifizieren gegen emittenten-spezifische Ausfälle.
+
+**Dimension 2: Mechanismus**
+Fiat-besichert vs. krypto-besichert vs. hybrid. Unterschiedliche Mechanismen haben unterschiedliche Ausfallszenarien.
+
+**Dimension 3: Yield-Struktur**
+Passiv (USDC als Wallet-Cash), Supply-basiert (aUSDC auf Aave), natives Yield (sDAI). Unterschiedliche Yield-Quellen bedeuten unterschiedliche Risikostrukturen.
+
+**Konservative Baseline-Allokation (Beispiel 20.000 USD)**
+
+**Option A: Einfach und robust**
+
+- 35% USDC-Supply auf Aave V3: 7.000 USD @ 4% APY = 280 USD
+- 25% USDT-Supply auf Aave V3 oder Compound: 5.000 USD @ 4,5% APY = 225 USD
+- 20% sDAI via Spark: 4.000 USD @ 5% APY = 200 USD
+- 10% USDC-Reserve in Wallet: 2.000 USD @ 0% = 0 USD
+- 10% LUSD gehalten oder in LUSD-Chicken-Bonds: 2.000 USD @ 3–8% = ~100 USD
+
+**Totaler Yield: ~805 USD / 20.000 USD = 4,0% annualisiert**
+
+**Trade-offs:**
+- Einfach zu managen
+- Breit diversifiziert über Emittenten und Mechanismen
+- Rendite deutlich unter 7–8%-Ziel — das muss durch andere Portfolio-Teile (Liquid Staking, ETH-Exposure, LP-Strategien) kompensiert werden
+
+**Option B: Yield-optimiert mit moderat mehr Risiko**
+
+- 25% USDC-Supply auf Aave V3: 5.000 USD @ 4% = 200 USD
+- 15% USDC-Supply auf Morpho Blue USDC Vault: 3.000 USD @ 6% = 180 USD
+- 20% sDAI via Spark: 4.000 USD @ 5% = 200 USD
+- 20% Curve 3pool LP (mit Convex-Boost): 4.000 USD @ 6% = 240 USD
+- 10% LUSD in Stability Pool: 2.000 USD @ 5% = 100 USD
+- 10% sUSDe (kleinere höherverzinsliche Position): 2.000 USD @ 12% = 240 USD
+
+**Totaler Yield: ~1.160 USD / 20.000 USD = 5,8% annualisiert**
+
+**Trade-offs:**
+- Höhere Rendite
+- Mehr Komplexität (6 Positionen vs. 5)
+- Höheres aggregiertes Risiko (sUSDe hat mehrere Risiko-Ebenen)
+- Näher am 7–8%-Ziel, aber immer noch nicht gekrönt
+
+**Option C: Passive Einstieg (Minimale Komplexität)**
+
+- 60% USDC-Supply auf Aave V3: 12.000 USD @ 4% = 480 USD
+- 30% sDAI via Spark: 6.000 USD @ 5% = 300 USD
+- 10% USDT in Wallet oder Supply: 2.000 USD @ 3% = 60 USD
+
+**Totaler Yield: ~840 USD / 20.000 USD = 4,2%**
+
+**Trade-offs:**
+- Minimal-Komplexität
+- Nur 3 Positionen
+- Gut für Einsteiger oder wenig Zeit
+- Renditeniedriger als Option B
+
+**Die Wahl hängt von dir ab**
+
+Es gibt keine "richtige" Allokation — nur die, die zu deinem Risiko-Profil, Zeit-Budget und Rendite-Ziel passt. Orientierungs-Fragen:
+
+**Wie viel Zeit pro Monat investierst du ins Portfolio-Management?**
+- < 1 Stunde: Option C
+- 1–4 Stunden: Option A
+- 4+ Stunden: Option B
+
+**Wie hoch ist deine Risiko-Toleranz?**
+- Niedrig: Option A oder C, meide sUSDe und exotische Stables
+- Moderat: Option B, aber sUSDe-Anteil klein halten
+- Höher: Option B mit anderen Anpassungen
+
+**Welches Rendite-Ziel setzt du für den Stablecoin-Anteil?**
+- 3–4%: Option C
+- 4–5%: Option A
+- 5–6%: Option B
+- Höher als 6% aus Stables allein: unrealistisch ohne signifikantes Zusatzrisiko
+
+**Monatliches Rebalancing-Protokoll**
+
+**1. Positionen-Check (5 Minuten):**
+- Alle Supply-Positionen in DeBank oder direkt im Protokoll prüfen
+- aktuelle APYs notieren
+- Stablecoin-Preise prüfen (alle Positionen bei ~1,00?)
+
+**2. Protokoll-News (5–10 Minuten):**
+- Große Protokoll-Events im vergangenen Monat?
+- Reserve-Report-Änderungen?
+- Regulatorische Entwicklungen?
+
+**3. Rebalancing-Entscheidung (5 Minuten):**
+- Signifikante APY-Verschiebungen? → eventuell umschichten
+- Protokoll-Risiken erhöht? → reduzieren
+- Diversifikations-Balance noch gegeben? → Korrektur wenn signifikant daneben
+
+**4. Gas-Kosten-Check:**
+- Lohnt sich die Umschichtung bei aktuellen Gas-Preisen?
+- Auf Layer-2? Deutlich günstiger.
+
+**Rebalancing-Trigger (konkret)**
+
+Handle, wenn:
+- Eine einzelne Stablecoin-Position über 40% der Gesamt-Stablecoin-Allokation wächst
+- APY-Unterschied zwischen Protokollen >2% für dieselbe Stablecoin und du hast signifikante Positionen
+- Ein Stablecoin depeggt über 2%
+- Protokoll-Exploit oder ernste Governance-Krise
+
+**Was NICHT triggert:**
+- Kleine tägliche Preis-Schwankungen im Normal-Bereich
+- Kurzfristige APY-Verschiebungen (weniger als 1%)
+- Allgemeine Krypto-Markt-Volatilität, die Stablecoins nicht direkt betrifft
+
+**Integrations ins Gesamt-Portfolio**
+
+Der Stablecoin-Anteil ist nur ein Teil des konservativen DeFi-Portfolios. Typische Integration mit 7–8%-Zielrendite:
+
+- 50–60% Stablecoin-Strategien (Supply + yield-bearing Stables + Stablecoin-LP)
+- 20–30% Liquid Staking (wstETH, rETH)
+- 10–15% direktes ETH/BTC-Spot-Exposure
+- 5–10% Reserve auf CEX oder Wallet
+
+Das Portfolio bekommt seine 7–8% Rendite aus:
+- 4–6% vom Stablecoin-Anteil
+- 3–4% Staking-Yield plus ETH-Preis-Beitrag in neutralen bis Bull-Markets
+- Kleinere Beiträge von LP-Positionen
+
+In Bear-Markets fällt die Gesamt-Rendite unter 7–8%, in Bull-Markets steigt sie oft deutlich darüber. Das ist die strukturelle Realität.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Stablecoin-Auswahl für konservative Portfolios
+
+**[Slide 2] — Drei-Dimensionen-Diversifikation**
+1. Emittent
+2. Mechanismus
+3. Yield-Struktur
+
+**[Slide 3] — Option A: Einfach**
+35% USDC-Aave, 25% USDT-Aave, 20% sDAI, 10% Wallet, 10% LUSD
+→ ~4,0% Rendite
+
+**[Slide 4] — Option B: Yield-optimiert**
+Diversifiziert über 6 Positionen inkl. sUSDe
+→ ~5,8% Rendite, mehr Komplexität
+
+**[Slide 5] — Option C: Minimal**
+60% USDC-Aave, 30% sDAI, 10% USDT
+→ ~4,2% Rendite, minimale Komplexität
+
+**[Slide 6] — Wahl nach Profil**
+Zeit, Risiko-Toleranz, Rendite-Ziel
+Keine "richtige" Allokation — nur passende
+
+**[Slide 7] — Rebalancing-Protokoll**
+Monatlich: Check, News, Entscheidung, Gas
+Trigger klar definiert (40% Konzentration, 2% APY-Diff, Depeg >2%)
+
+**[Slide 8] — Portfolio-Integration**
+50–60% Stables + 20–30% Staking + 10–15% Spot + 5–10% Reserve
+Gesamt-Ziel 7–8% aus Mischung
+
+## Sprechertext
+
+**[Slide 1]** Die letzte Lektion des Moduls. Wir bringen alles zusammen zu einer konkreten Strategie für den Stablecoin-Anteil deines Portfolios. Keine abstrakte Theorie — tatsächliche Allokationen mit Zahlen.
+
+**[Slide 2]** Drei-Dimensionen-Diversifikation. Erste Dimension: Emittent. Circle, Tether, Sky, Liquity — verschiedene Akteure. Zweite Dimension: Mechanismus. Fiat-besichert, krypto-besichert, hybrid — verschiedene Ausfall-Szenarien. Dritte Dimension: Yield-Struktur. Passiv im Wallet, Supply auf Aave, nativ yield-bearing wie sDAI. Echt konservative Portfolios streuen über alle drei Dimensionen.
+
+**[Slide 3]** Option A: einfach und robust. 35 Prozent USDC auf Aave, 25 Prozent USDT auf Aave oder Compound, 20 Prozent sDAI, 10 Prozent USDC-Reserve im Wallet, 10 Prozent LUSD. Ergibt etwa 4 Prozent Rendite bei breiter Diversifikation. Einfach zu managen. Liegt unter dem 7 bis 8 Prozent Ziel — das muss durch andere Portfolio-Teile kompensiert werden.
+
+**[Slide 4]** Option B: yield-optimiert. 25 Prozent USDC Aave, 15 Prozent USDC Morpho Blue, 20 Prozent sDAI, 20 Prozent Curve 3pool mit Convex, 10 Prozent LUSD Stability Pool, 10 Prozent sUSDe als kleinere Höher-Rendite-Position. Ergibt etwa 5,8 Prozent. Mehr Komplexität, höheres aggregiertes Risiko wegen sUSDe.
+
+**[Slide 5]** Option C: minimal. 60 Prozent USDC Aave, 30 Prozent sDAI, 10 Prozent USDT. Drei Positionen total. Etwa 4,2 Prozent. Gut für Einsteiger oder Leute mit wenig Zeit.
+
+**[Slide 6]** Die Wahl hängt von dir ab. Keine Option ist objektiv richtig oder falsch. Orientierungs-Fragen: Wie viel Zeit pro Monat? Wie hoch die Risiko-Toleranz? Welches Rendite-Ziel? Für Einsteiger oder Zeit-arme Nutzer ist Option A oder C besser. Für aktivere Nutzer mit Expertise ist Option B attraktiv. In keinem Fall aus Stablecoin-Allokation allein 7 bis 8 Prozent realistisch — das muss aus dem Portfolio-Mix kommen.
+
+**[Slide 7]** Monatliches Rebalancing-Protokoll. Fünf Minuten Positions-Check in DeBank. Fünf bis zehn Minuten Protokoll-News. Fünf Minuten Rebalancing-Entscheidung. Gas-Kosten-Check. Trigger für Aktion: eine Position über 40 Prozent der Stable-Allokation, APY-Differenz über 2 Prozent für dieselbe Stable mit signifikanter Position, Depeg über 2 Prozent, oder Protokoll-Krise. Kleine tägliche Schwankungen triggern nichts.
+
+**[Slide 8]** Integration ins Gesamt-Portfolio. Stablecoin-Anteil ist typisch 50 bis 60 Prozent eines konservativen DeFi-Portfolios. Der Rest ist 20 bis 30 Prozent Liquid Staking, 10 bis 15 Prozent direktes ETH oder BTC, 5 bis 10 Prozent Reserve. Die 7 bis 8 Prozent Gesamt-Rendite kommen aus der Mischung: 4 bis 6 Prozent vom Stables-Anteil, 3 bis 4 Prozent aus Staking plus ETH-Preis-Beiträge, kleinere Anteile aus LP. In Bear-Markets fällt das, in Bull-Markets steigt es. Das ist die strukturelle Realität — keine Garantie, nur realistische Erwartung.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Drei-Kreise-Venn-Diagramm der Diversifikations-Dimensionen.
+
+**[Slide 3]** Kuchen-Diagramm Option A mit Rendite-Berechnung daneben.
+
+**[Slide 4]** Kuchen-Diagramm Option B mit Rendite-Berechnung.
+
+**[Slide 5]** Kuchen-Diagramm Option C mit Rendite-Berechnung.
+
+**[Slide 6]** Entscheidungs-Flowchart nach Nutzer-Profil.
+
+**[Slide 7]** Rebalancing-Kalender-Visualisierung und Trigger-Liste.
+
+**[Slide 8]** Gesamt-Portfolio-Kuchen mit Rendite-Aufschlüsselung.
+
+## Übung
+
+**Aufgabe: Persönliche Stablecoin-Strategie**
+
+Entwickle deine persönliche Stablecoin-Allokations-Strategie:
+
+1. **Kapital-Rahmen:** Mit welchem Gesamt-Betrag arbeitest du (hypothetisch oder real)?
+2. **Risiko-Profil:** Selbst-Einschätzung auf Skala 1–10 (1=extrem konservativ, 10=hoch-risiko-tolerant)
+3. **Zeit-Budget:** Wie viele Stunden pro Monat willst du ins Management investieren?
+4. **Rendite-Ziel:** Was erwartest du aus dem Stablecoin-Anteil?
+5. **Gewählte Option (A/B/C oder eigene Variation):** Welche Allokation passt, und warum?
+6. **Konkrete Verteilung:** Prozent-Aufteilung über Assets und Protokolle
+7. **Rebalancing-Plan:** Welche Trigger definieren Handeln?
+8. **Exit-Strategie:** Was würde dich bewegen, alle Stablecoin-Positionen aufzulösen?
+
+**Deliverable:** Strategie-Dokument (2–3 Seiten) mit den 8 Punkten strukturiert adressiert.
+
+## Quiz
+
+**Frage 1:** Warum ist 100% USDC auf Aave für einen 50.000-USD-Stablecoin-Anteil keine gute Strategie, auch wenn USDC und Aave beide etabliert sind?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Mehrere strukturelle Schwächen. Erstens: Konzentriertes Emittenten-Risiko. 100% an Circle gebunden — ein USDC-Depeg (wie März 2023) betrifft das gesamte Kapital. Circle selbst könnte regulatorisch in Stress geraten, Bank-Partner-Probleme haben, oder andere Emittenten-spezifische Probleme. Zweitens: Konzentriertes Protokoll-Risiko. 100% auf Aave — ein Aave-Smart-Contract-Bug, Governance-Fehlentscheidung oder Hack würde die Position direkt betreffen. Drittens: Konzentriertes Mechanismus-Risiko. Alles fiat-besichert über US-Bank-System — wenn ein systemisches Ereignis US-Banken trifft (wie die regionale Bankenkrise März 2023), trifft es die komplette Stablecoin-Allokation gleichzeitig. Viertens: Kein Yield-Diversifikation. Nur supply-basierter Yield. Wenn Aave-Supply-Raten einbrechen (durch sinkende Utilization), fällt die komplette Rendite. Fünftens: Liquiditäts-Risiko. Eine schnelle Auszahlung von 50.000 USD könnte auf Utilization-Probleme treffen. Bessere Struktur: 30% USDC-Aave, 25% USDT-Compound, 20% sDAI, 15% USDC-Morpho-Vault, 10% LUSD. Diversifiziert über Emittent, Mechanismus, Protokoll und Yield-Typ.
+</details>
+
+**Frage 2:** Ein Anleger stellt fest, dass sUSDe's 15% APY höher ist als der Durchschnitt seines 4,5%-Portfolios. Er überlegt, die komplette Stablecoin-Allokation auf sUSDe umzuschichten. Wie sollte er rational entscheiden?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Rationale Entscheidung erfordert systematische Analyse mehrerer Faktoren. Erstens: Risiko-Adjustierung verstehen. 15% APY vs. 4,5% APY bedeutet ein 10-Prozent-Rendite-Delta. Das muss durch zusätzliche Risiken kompensiert werden. Frage: sind diese 10 Prozent eine faire Kompensation für Funding-Rate-Risiko, Exchange-Risiko, Liquidations-Risiko und Smart-Contract-Risiko zusätzlich zu den bestehenden? Zweitens: Zeit-Horizont prüfen. sUSDe's historische 15% ist ein Durchschnitt — in Bear-Markets oder bei negativen Funding Rates kann die Rendite auf 0% oder negativ fallen. Ist der Anleger bereit, Jahre mit niedriger Rendite zu akzeptieren, wenn der Mechanismus unter Stress kommt? Drittens: Korrelations-Check. Wenn ein extremes Ereignis sUSDe betrifft, sind andere Stablecoin-Positionen wahrscheinlich nicht betroffen — die Diversifikation schützt. Bei 100% sUSDe geht diese Schutz-Wirkung verloren. Viertens: Portfolio-Rollen-Check. Der Stablecoin-Anteil soll typisch der "stabile Anker" des Portfolios sein. sUSDe mit hoher Rendite-Volatilität erfüllt diese Rolle schlechter als sDAI. Rationaler Kompromiss: sUSDe als kleine Position (10–15% der Stable-Allokation, entspricht vielleicht 5–10% des Gesamt-Portfolios) — bringt leicht erhöhte Rendite ohne das Gesamt-Portfolio zu gefährden. Für diese Position liefert sUSDe einen Bonus von etwa 1 Prozentpunkt pro Jahr auf die Gesamtrendite — ein fair bezahlter Risiko-Premium. 100% sUSDe wäre Maximalisierung des erwarteten Werts, aber Konzentration auf ein einziges Mechanismus-Risiko — nicht konservative Strategie.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Folien: Titel → Diversifikations-Prinzip → Allokations-Beispiele nach Portfolio-Größe → Vertikale vs. horizontale Diversifikation → Rebalancing-Ritual → Exit-/Rotations-Plan → Monitoring-Routine
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `visual_plan.json` — Portfolio-Allokations-Pie-Charts für drei Größen, Diversifikations-Matrix, Rebalancing-Flowchart, Exit-Trigger-Tabelle
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

@@ -1,0 +1,209 @@
+# Supply-Strategien für konservative Portfolios
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Eine Supply-Strategie passend zu einem 7–8% Jahresziel konstruieren
+- Protokoll-Diversifikation sinnvoll umsetzen
+- Reward-Token-Rendite vs. Base-Rendite rational bewerten
+- Einen Stablecoin-Supply-Stack (Aave + Compound + Morpho) mit definierten Gewichtungen und Exit-Triggern aufsetzen
+- Sustainable Yield (Zinsen aus echter Borrow-Nachfrage) von Temporary Yield (Token-Incentives, Liquidity Mining) unterscheiden und entsprechend gewichten
+- Eine realistische Netto-Rendite-Kalkulation (inkl. Gas, Reward-Token-Volatilität, Composability-Risiko) für eine konservative Supply-Strategie durchführen
+
+## Erklärung
+
+Supply-Strategien sind die einfachste und häufig die stabilste Form von DeFi-Rendite. Dieses Lektion gibt dir einen systematischen Ansatz, um sie als Kern eines konservativen Portfolios zu nutzen.
+
+**Die Renditestruktur verstehen**
+
+Deine Supply-Rendite besteht aus mehreren Komponenten:
+
+1. **Base Supply-Rate** — was aus Borrow-Zinsen fließt (die nachhaltige Komponente)
+2. **Reward-Token-Rendite** — zusätzliche Rewards in Protokoll-Tokens (z.B. AAVE, COMP, MORPHO)
+3. **Delta zu Buy-and-Hold** — bei volatilen Supply-Assets zu berücksichtigen
+
+**Die wichtigste Unterscheidung für konservative Strategien:**
+
+Eine Supply-Rate, die zu 80% aus Base-Rate und zu 20% aus Rewards besteht, ist **stabil**. Die Rewards sind ein Bonus.
+
+Eine Supply-Rate, die zu 80% aus Rewards und zu 20% aus Base-Rate besteht, ist **fragil**. Die Rewards können eingestellt werden, der Reward-Token-Preis kann fallen, und die Rendite bricht zusammen.
+
+**Für ein 7–8% Jahresziel:**
+- Base-Rate sollte den Hauptanteil der Rendite tragen
+- Rewards sind Bonus, nicht Voraussetzung
+- Protokolle mit nachhaltigen Gebühren-Einnahmen bevorzugen
+
+**Strategie 1: Reines Stablecoin-Supply**
+
+Der konservativste Ansatz. Keine Volatilität in den zugrundeliegenden Assets, keine IL-Äquivalente, nur Zinsertrag.
+
+**Allokation-Beispiel (20.000 USD):**
+- 60% USDC-Supply auf Aave V3 — ca. 4% APY → 12.000 USD × 4% = 480 USD
+- 25% USDC-Supply auf Compound V3 — ca. 4–5% APY → 5.000 USD × 4,5% = 225 USD
+- 15% Morpho Blue USDC Vault — ca. 5–7% APY → 3.000 USD × 6% = 180 USD
+
+**Erwartete Jahres-Rendite:** 885 USD = **4,4% annualisiert**
+
+**Bewertung:** Sehr konservativ, weit unter dem 7–8%-Ziel. Gut für den risikoavers-Teil eines Portfolios, aber allein zu defensiv.
+
+**Strategie 2: Stablecoin + Liquid Staking (Hybrid)**
+
+Fügt ETH-Exposure und Staking-Yield hinzu, ohne aktive Nutzung von Leverage.
+
+**Allokation-Beispiel (20.000 USD):**
+- 40% USDC-Supply auf Aave V3 — ca. 4% APY → 8.000 × 4% = 320 USD
+- 15% USDC-Supply auf Compound V3 — ca. 4,5% APY → 3.000 × 4,5% = 135 USD
+- 30% wstETH (direkt gehalten) — Staking-Yield ca. 3% plus ETH-Preis-Exposure → 6.000 × 3% = 180 USD (nur Yield-Anteil)
+- 15% WBTC (direkt gehalten) — kein Yield, nur Preis-Exposure
+
+**Erwartete Jahres-Yield-Komponente (ohne Preis-Bewegungen):** 635 USD = **3,2% annualisiert aus Yield**
+**Zusätzlich: ETH- und BTC-Preis-Exposure** (Ziel: langfristig positive Beitrag)
+
+**Bewertung:** Die Yield-Komponente ist moderat. Die Gesamt-Rendite hängt stark vom Krypto-Markt ab. In neutralen Märkten ~3–5%, in Bull-Markets deutlich höher (durch Preis-Anstieg von ETH/BTC), in Bear-Markets negativ (wegen Preis-Verfall).
+
+**Strategie 3: Stablecoin-Lending + Curve-LP (Diversifiziert)**
+
+Kombiniert Lending mit Stablecoin-LP für höhere Gesamt-Rendite.
+
+**Allokation-Beispiel (20.000 USD):**
+- 30% USDC-Supply auf Aave V3 — ca. 4% APY → 6.000 × 4% = 240 USD
+- 20% USDC-Supply auf Compound V3 — ca. 4,5% APY → 4.000 × 4,5% = 180 USD
+- 20% Morpho Blue USDC Vault — ca. 6% APY → 4.000 × 6% = 240 USD
+- 20% Curve 3pool LP (mit oder ohne Convex) — ca. 4–6% APY → 4.000 × 5% = 200 USD
+- 10% crvUSD Vault oder Stability Pool — ca. 5–7% APY → 2.000 × 6% = 120 USD
+
+**Erwartete Jahres-Rendite:** 980 USD = **4,9% annualisiert**
+
+**Bewertung:** Weiterhin unter 7–8%. Mehr Diversifikation als Strategie 1, aber die reinen Supply-Renditen reichen nicht alleine.
+
+**Warum 7–8% schwer reinweg aus Supply erreichbar ist**
+
+In aktuellen Marktphasen (2024-2025) liegen Stablecoin-Supply-Raten typisch zwischen 3 und 6%. In Bull-Markets mit hoher Leverage-Nachfrage können sie temporär auf 8-10% steigen, aber diese Spitzen sind nicht nachhaltig. Das 7-8%-Ziel erfordert typisch eine Kombination aus:
+- Basis-Supply (liefert 3–5%)
+- Aktives Management ergänzender Strategien (LP, Staking-Boost)
+- Opportunistisches Nutzen höherer Raten bei Marktspitzen
+- Geringes Risiko bei gelegentlichem Leverage-Einsatz (Modul 10)
+
+**Die ehrliche Aussage:** Ein reines, vollständig passives Supply-Portfolio erreicht eher 4–6% als 7–8%. Das 7–8%-Ziel ist ein gemischtes Portfolio mit aktivem Management.
+
+**Praktische Supply-Checkliste**
+
+Vor jeder neuen Supply-Position:
+
+1. **Protokoll-Reputation:** Etabliert, auditiert, längere Live-History?
+2. **TVL:** Genug Liquidität für deine Position ohne Preis-Impact bei Einzahlung und Auszahlung?
+3. **Rendite-Komponenten:** Wie viel aus Base-Rate, wie viel aus Rewards?
+4. **Utilization:** Aktuell im stabilen Bereich oder am Kink-Point?
+5. **Collateral-Status:** Wenn du nicht borgen willst, deaktiviert?
+6. **Diversifikations-Check:** Gehört die Position zu einem bereits übergewichteten Protokoll?
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Supply-Strategien für konservative Portfolios
+
+**[Slide 2] — Rendite-Struktur**
+1. Base Supply-Rate (nachhaltig)
+2. Reward-Token-Rendite (Bonus, fragil)
+3. Delta zu Buy-and-Hold bei volatilem Asset
+
+**[Slide 3] — Strategie 1: Reines Stablecoin-Supply**
+Konservativ, 4–5% erwartbar
+Gut als defensiver Portfolio-Teil
+
+**[Slide 4] — Strategie 2: Stables + Liquid Staking**
+Yield ca. 3–4%, plus ETH/BTC-Exposure
+Gesamt hängt vom Markt ab
+
+**[Slide 5] — Strategie 3: Supply + Stablecoin-LP**
+Diversifiziert
+4,5–5,5% realistisch
+
+**[Slide 6] — Die ehrliche Einschätzung**
+Pures Supply erreicht 4–6%
+7–8% erfordert Mix aus Supply + LP + Staking + gelegentliches Leverage
+
+**[Slide 7] — Supply-Checkliste**
+Protokoll-Reputation, TVL, Rendite-Quelle, Utilization, Collateral-Status, Diversifikation
+
+## Sprechertext
+
+**[Slide 1]** Jetzt wird es praktisch. Wie baust du eine Supply-Strategie, die zum 7 bis 8 Prozent-Jahresziel dieses Kurses passt. Die Antwort ist ehrlicher als viele DeFi-Anleitungen — und das ist gut so.
+
+**[Slide 2]** Deine Supply-Rendite besteht aus mehreren Komponenten. Base Supply-Rate ist die nachhaltige Komponente, die aus Borrow-Zinsen gespeist wird. Reward-Token-Rendite ist oft ein Bonus, kann aber fragil sein — wenn das Reward-Programm endet oder der Token-Preis fällt, verschwindet die Rendite. Bei volatilen Supply-Assets kommt ein Delta zu Buy-and-Hold dazu. Für konservative Strategien gilt: Base-Rate sollte den Hauptanteil tragen, Rewards sind Bonus, nicht Voraussetzung.
+
+**[Slide 3]** Strategie 1: reines Stablecoin-Supply. Das ist der konservativste Ansatz. 60 Prozent Aave, 25 Prozent Compound, 15 Prozent Morpho. Mit realistischen Supply-Raten ergibt sich etwa 4,4 Prozent annualisiert. Weit unter dem 7 bis 8 Prozent-Ziel — aber sehr stabil. Gut für den defensiven Teil eines Portfolios, nicht als alleinige Strategie.
+
+**[Slide 4]** Strategie 2: Stablecoin plus Liquid Staking. Du kombinierst Supply-Renditen mit ETH-Exposure über wstETH und einem kleinen Anteil WBTC. Die reine Yield-Komponente liegt bei etwa 3 Prozent — die Gesamt-Rendite hängt stark vom Krypto-Markt ab. In neutralen Märkten 3 bis 5 Prozent, in Bull-Markets deutlich höher durch Preisanstieg, in Bear-Markets negativ. Diese Strategie hat eingebettete Marktrichtungs-Wette.
+
+**[Slide 5]** Strategie 3: Supply plus Stablecoin-LP. Kombiniert Lending mit Curve-LP und crvUSD-Vaults. Diversifizierter, etwa 4,9 Prozent annualisiert. Besser als reines Supply, aber immer noch unter 7 bis 8 Prozent.
+
+**[Slide 6]** Die ehrliche Einschätzung. Pures Supply erreicht in aktuellen Marktphasen typisch 4 bis 6 Prozent. Das 7 bis 8 Prozent-Ziel aus einem komplett passiven Supply-Portfolio zu erreichen ist unrealistisch. Du brauchst einen Mix: Supply als Basis, Liquidity Providing, Staking, gelegentliches Leverage bei sauberer Risiko-Kontrolle. Modul 10 behandelt Leverage-Strategien im Detail. Die Kern-Botschaft: 7 bis 8 Prozent sind erreichbar, aber nicht durch Knopfdrücken allein.
+
+**[Slide 7]** Die Supply-Checkliste. Vor jeder neuen Position: prüfe Protokoll-Reputation, TVL, woher die Rendite kommt — Base-Rate oder Rewards, aktuelle Utilization, Collateral-Status, und ob die Position zu einem bereits übergewichteten Protokoll gehört. Diese sechs Punkte durchgehen, bevor du signierst. Das ist die Basis-Hygiene.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Tortendiagramm der Rendite-Komponenten mit grüner/roter Einfärbung nach Nachhaltigkeit.
+
+**[Slide 3]** Allokations-Kuchendiagramm der Strategie 1 mit Rendite-Kalkulation.
+
+**[Slide 4]** Allokations-Kuchendiagramm der Strategie 2.
+
+**[Slide 5]** Allokations-Kuchendiagramm der Strategie 3.
+
+**[Slide 6]** Vergleichs-Balkendiagramm der drei Strategien mit realistischer Rendite. Daneben 7-8% Zielmarker.
+
+**[Slide 7]** Sechs-Punkte-Checkliste.
+
+## Übung
+
+**Aufgabe: Eigene Supply-Strategie entwickeln**
+
+1. Definiere deine Portfolio-Parameter:
+ - Gesamt-Kapital (hypothetisch oder real)
+ - Risiko-Toleranz (skala 1–10, 1=extrem konservativ)
+ - Zeit-Budget für Monitoring (Stunden/Woche)
+ - Rendite-Ziel
+
+2. Entwirf eine Supply-Strategie basierend auf den drei Beispielen aus der Lektion — oder eine eigene Variation.
+
+3. Schätze die erwartete Rendite pro Komponente.
+
+4. Identifiziere die drei größten Risiken deiner Strategie.
+
+5. Definiere Exit-Kriterien: wann würdest du eine Position auflösen?
+
+**Deliverable:** Strategie-Dokument (2–3 Seiten), das die fünf Punkte strukturiert abdeckt. Abschlussfrage: Rechnet sich die Strategie für dich, realistisch?
+
+## Quiz
+
+**Frage 1:** Warum ist ein Reward-Token-dominierter Supply-Ansatz fragil?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Drei Gründe. Erstens: Reward-Programme haben ein Ende — entweder definiert oder durch Governance beendet. Wenn die Rewards stoppen, bricht die scheinbar hohe Rendite auf die Base-Rate zusammen. Zweitens: Reward-Tokens haben eigenes Preisrisiko. Wenn der Token um 50% fällt, halbiert sich der USD-Wert der Rendite. Drittens: Reward-Programme ziehen oft "Mercenary Capital" an — Kapital, das nur wegen der Rewards kommt und sofort abzieht, wenn sie sinken. Das führt zu Utilization-Kollaps und dann zu fallenden Base-Raten als zweite Welle. Ein konservativer Supplier sollte immer fragen: "Wenn die Rewards morgen Null wären, wäre die Base-Rate attraktiv genug?" Wenn die Antwort nein ist, ist die Position fragil.
+</details>
+
+**Frage 2:** Warum ist es realistischer zu erwarten, dass ein vollständig passives Stablecoin-Supply-Portfolio 4–5% jährlich erwirtschaftet als 7–8%?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Weil Stablecoin-Supply-Raten algorithmisch aus Utilization und Borrow-Nachfrage entstehen. Die typische Borrow-Rate für USDC liegt bei 4–8%, die Utilization bei 60–90%, und nach Abzug des Reserve Factors (10–30%) bleibt eine Supply-Rate von etwa 3–6% netto. Das ist das historisch stabile Mittel. Phasen mit 7–10% Supply-Rate existieren (Peak-Leverage-Nachfrage in Bullmarkets), sind aber kurzfristig. Über ein ganzes Jahr mitteln sich diese Spitzen mit niedrigeren Phasen. Um konsistent 7–8% zu erreichen, braucht man entweder aktives Management (Protokoll-Rotation bei Marktverschiebungen), zusätzliche Strategien (LP, Staking), oder moderates Leverage. Ein komplett passives Stablecoin-Supply-Portfolio ist auf 4–5% beschränkt — was immer noch deutlich besser ist als traditionelles Sparen, aber eben nicht 7–8%.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Folien: Titel → Supply-Stack (Aave/Compound/Morpho) → Protokoll-Diversifikation → Sustainable vs. Temporary Yield → Realistische Renditeziele → Netto-Rendite-Kalkulation → Gewichtungs-Matrix
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `visual_plan.json` — Supply-Stack-Pie-Chart, Yield-Source-Breakdown (Base vs. Rewards), Historische-Supply-Rate-Chart, Netto-Rendite-Rechenbeispiel, Exit-Trigger-Tabelle
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

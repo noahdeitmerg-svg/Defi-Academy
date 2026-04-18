@@ -1,0 +1,184 @@
+# EIP-1559 und der Burn-Mechanismus
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die Struktur des Gas-Marktes vor und nach EIP-1559 vergleichen
+- Base Fee und Priority Fee technisch unterscheiden und ihre jeweilige Funktion erklären
+- Verstehen, warum der Burn-Mechanismus Auswirkungen auf die ETH-Tokenomics hat
+- Die Rolle von Validatoren im Block-Production-Flow (Proposer/Attester) und die Validator-Kompensation (Priority Fee + MEV) einordnen
+- MEV (Maximal Extractable Value) als Grundkonzept benennen und die Verbindung zur Fee-Dynamik verstehen (vertieft in Modul 11)
+- ETH-Supply-Effekte (deflationär / inflationär) anhand der Base-Fee-Burn- und Issuance-Dynamik quantitativ nachvollziehen
+
+## Erklärung
+
+EIP-1559 ist einer der wichtigsten Upgrades in Ethereums Geschichte. Aktiviert im August 2021 mit dem London-Hardfork, hat es den Gas-Markt grundlegend verändert. Für DeFi-Nutzer ist das relevant, weil sich Transaktions-Preise und ETH-Tokenomics seither anders verhalten.
+
+**Der Gas-Markt vor EIP-1559**
+
+Vor EIP-1559 funktionierte Ethereum als reine First-Price-Auction: Nutzer boten einen Gas-Preis, Validatoren wählten die höchsten Gebote. Probleme:
+
+1. **Unvorhersagbarkeit:** Nutzer wussten nicht, was ein "angemessener" Preis war. Viele zahlten zu viel aus Vorsicht.
+2. **Gebühren-Volatilität:** Kleine Nachfrage-Änderungen führten zu massiven Preissprüngen.
+3. **Kein Feedback-Mechanismus:** Der Markt hatte keine eingebaute Dämpfung.
+
+**EIP-1559: Die neue Struktur**
+
+EIP-1559 teilt die Gas-Gebühr in zwei Komponenten:
+
+**1. Base Fee**
+- Wird algorithmisch pro Block angepasst (±12,5% pro Block maximal)
+- Steigt, wenn der vorherige Block mehr als 50% voll war
+- Fällt, wenn der vorherige Block weniger als 50% voll war
+- Wird **verbrannt** — die ETH verschwinden aus dem Umlauf
+
+**2. Priority Fee (Tip)**
+- Optional, vom Nutzer gewählt
+- Geht als Tip an den Validator
+- Bei niedriger Netzwerk-Auslastung reicht ein kleiner Tip (1–2 Gwei)
+- Bei hoher Auslastung steigt der Wettbewerb um die ersten Plätze im Block
+
+**Max Fee**
+- Zusätzliche Nutzer-Einstellung
+- Obergrenze für Base Fee + Priority Fee
+- Schützt vor extremen Preisspitzen während der Transaktion wartet
+
+**Die Wallet-Felder**
+
+Beim Senden einer Transaktion zeigen moderne Wallets drei Felder:
+
+- **Max Base Fee:** Maximale Base Fee, die du akzeptierst
+- **Max Priority Fee:** Dein Tip-Beitrag
+- **Max Fee:** Gesamtes maximales Pro-Gas-Budget
+
+**Der Burn-Mechanismus und ETH-Tokenomics**
+
+Die Verbrennung der Base Fee ist eine fundamentale Änderung der ETH-Tokenomics. Vor EIP-1559 gingen alle Gebühren an Validatoren (damals: Miner). Seit EIP-1559 gehen nur die Tips an Validatoren — die Base Fee wird vernichtet.
+
+**Auswirkungen:**
+
+1. **Deflationärer Druck:** Wenn die Base-Fee-Verbrennung pro Tag größer ist als die neue ETH-Emission durch Staking-Rewards, schrumpft das ETH-Umlauf-Angebot. Bei hohem Netzwerk-Volumen ist das der Fall.
+
+2. **"Ultra Sound Money":** In DeFi-Kreisen wurde dieser Zustand als Vergleich zu Bitcoins "Sound Money" (fixes Angebot) bezeichnet. Seit dem Merge (September 2022) ist ETH periodisch deflationär, periodisch leicht inflationär — je nach Netzwerk-Aktivität.
+
+3. **Relevanz für DeFi:** Die ETH-Burn-Rate beeinflusst langfristig den ETH-Preis (zumindest theoretisch). Das macht ETH als Collateral und als Basis-Asset struktureller wertvoll.
+
+**Tracking des Burns**
+
+**ultrasound.money** ist das Standard-Tool zur Verfolgung des ETH-Burns. Es zeigt:
+- Aktuelle Burn-Rate (ETH pro Sekunde)
+- Kumulative Burns seit EIP-1559
+- Vergleich Burn vs. Issuance (ist ETH gerade deflationär?)
+- Burn-Aufschlüsselung nach Protokollen
+
+**Praktische Konsequenzen für DeFi-Nutzer**
+
+1. **Gas-Timing:** Die Base Fee kann innerhalb von Minuten um 50% fallen (nach einem einzigen unterausgelasteten Block nur um 12,5%, aber kumulativ schnell). Für nicht-dringende Transaktionen lohnt sich das Warten auf ruhige Zeiten (typisch: früher Morgen UTC, Wochenenden).
+
+2. **Priority-Fee-Optimierung:** Die meisten Transaktionen brauchen keinen hohen Tip. 1–2 Gwei reichen in ruhigen Zeiten. Bei Zeit-kritischen Operationen (Liquidation vermeiden, Arbitrage) lohnt sich höherer Tip.
+
+3. **Failed Transactions und EIP-1559:** Wenn die Base Fee während der Transaktions-Wartezeit über deine Max Fee steigt, bleibt die Transaktion hängen. Wallets zeigen das und bieten "Speed up" oder "Cancel" — beides kostet zusätzliches Gas.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel:** EIP-1559 und der Burn-Mechanismus
+
+**[Slide 2] — Vor EIP-1559:** Reine First-Price-Auction. Unvorhersagbar, volatil, kein Feedback.
+
+**[Slide 3] — EIP-1559: Zwei Komponenten:** Base Fee (algorithmisch, wird verbrannt) + Priority Fee (Tip an Validator).
+
+**[Slide 4] — Base-Fee-Dynamik:** ±12,5% pro Block. Block >50% voll → steigt. Block <50% voll → fällt.
+
+**[Slide 5] — Wallet-Felder:** Max Base Fee, Max Priority Fee, Max Fee. Drei Hebel zur Kontrolle.
+
+**[Slide 6] — Der Burn-Mechanismus:** Base Fee wird vernichtet. Seit London-Hardfork 2021.
+
+**[Slide 7] — ETH-Tokenomics:** Burn > Issuance → ETH schrumpft. "Ultra Sound Money" bei hoher Netzwerk-Aktivität.
+
+**[Slide 8] — Tracking:** ultrasound.money zeigt Burns in Echtzeit.
+
+**[Slide 9] — Praktische Optimierung:** Gas-Timing nutzen. Priority Fee je nach Dringlichkeit. Stuck-Transaktionen handhaben.
+
+## Sprechertext
+
+**[Slide 1]** Lektion 3.2: EIP-1559. Dieses Upgrade vom August 2021 hat den Gas-Markt und die ETH-Tokenomics fundamental verändert. Für DeFi-Nutzer ist das doppelt relevant — für Gas-Optimierung und für die Bewertung von ETH als Asset.
+
+**[Slide 2]** Vor EIP-1559 funktionierte Ethereum als First-Price-Auction. Nutzer boten einen Gas-Preis, Validatoren wählten die höchsten Gebote. Drei Probleme: Unvorhersagbarkeit — niemand wusste, was "angemessen" war, viele zahlten zu viel. Gebühren-Volatilität — kleine Nachfrage-Änderungen führten zu massiven Preissprüngen. Kein Feedback-Mechanismus — der Markt hatte keine eingebaute Dämpfung.
+
+**[Slide 3]** EIP-1559 teilt die Gas-Gebühr in zwei Komponenten. Base Fee: algorithmisch pro Block angepasst. Priority Fee: optional, als Tip an den Validator. Diese Trennung löst die Hauptprobleme der First-Price-Auction.
+
+**[Slide 4]** Die Base-Fee-Dynamik ist einfach. Maximal 12,5% Änderung pro Block. War der vorherige Block zu mehr als 50% voll — also mehr als 15 Millionen Gas von 30 Millionen — steigt die Base Fee. War er weniger als 50% voll, fällt sie. Dieser Algorithmus zielt auf eine mittlere Block-Auslastung von 50%.
+
+**[Slide 5]** Deine Wallet zeigt drei Felder. Max Base Fee: die maximale Base Fee, die du akzeptierst. Max Priority Fee: dein Tip-Beitrag. Max Fee: das Gesamt-Maximum pro Gas. Das Max-Fee schützt dich vor extremen Preis-Spitzen, während die Transaktion wartet.
+
+**[Slide 6]** Der wichtige Punkt: die Base Fee wird verbrannt. Sie geht nicht an Validatoren. Die ETH verschwinden aus dem Umlauf. Das ist eine fundamentale Änderung der ETH-Tokenomics. Vor EIP-1559 gingen alle Gebühren an Miner. Seit EIP-1559 gehen nur die Tips an Validatoren.
+
+**[Slide 7]** Auswirkung auf ETH: wenn die Base-Fee-Verbrennung pro Tag größer ist als die neue ETH-Emission durch Staking-Rewards, schrumpft das ETH-Umlauf-Angebot. Bei hohem Netzwerk-Volumen ist das der Fall. In DeFi-Kreisen wird das "Ultra Sound Money" genannt — als Vergleich zu Bitcoins fixem Angebot. Seit dem Merge 2022 ist ETH periodisch deflationär, periodisch leicht inflationär.
+
+**[Slide 8]** Tracking-Tool: ultrasound.money. Es zeigt die Burn-Rate in Echtzeit, kumulative Burns seit EIP-1559 und vergleicht Burn mit Issuance. Ein Blick dort zeigt dir, ob ETH gerade deflationär ist oder nicht.
+
+**[Slide 9]** Praktische Optimierung. Erstens: Gas-Timing nutzen. Die Base Fee kann schnell fallen, wenn die Netzwerk-Auslastung sinkt. Für nicht-dringende Transaktionen lohnt sich das Warten auf ruhige Zeiten. Zweitens: Priority Fee je nach Dringlichkeit. 1–2 Gwei reichen meist. Bei kritischen Transaktionen wie Liquidations-Vermeidung lohnt sich höherer Tip. Drittens: stuck Transactions. Wenn die Base Fee deine Max Fee überschreitet, bleibt die Transaktion hängen. Wallets bieten "Speed up" oder "Cancel" — beides kostet.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Grafik der Pre-EIP-1559-Auction: Kurve mit wilden Preis-Spitzen über die Zeit.
+
+**[Slide 3]** Zwei-Komponenten-Visualisierung: Base Fee (mit Flammen-Icon) + Priority Fee (mit Tip-Hand-Icon) = Total Fee.
+
+**[Slide 4]** Treppendiagramm: Block mit 60% Auslastung → Base Fee steigt um X%. Block mit 40% → Base Fee fällt.
+
+**[Slide 5]** **SCREENSHOT SUGGESTION:** Rabby oder MetaMask Transaction-Confirmation-Screen mit den drei sichtbaren Feldern: Max Base Fee, Max Priority Fee, Max Fee.
+
+**[Slide 6]** Animation: Base Fee wird im Block verbrannt (Flammen-Animation).
+
+**[Slide 7]** Chart: ETH Burn vs. Issuance über Zeit. Perioden von Netto-Deflation markiert.
+
+**[Slide 8]** **SCREENSHOT SUGGESTION:** ultrasound.money-Homepage mit aktuellem Burn, kumulativem Total, und Issuance-Vergleich.
+
+**[Slide 9]** Drei Optimierungs-Karten mit konkreten Zahlen und Zeitfenstern.
+
+## Übung
+
+**Aufgabe: Gas-Markt in Echtzeit beobachten**
+
+1. Öffne etherscan.io/gastracker und ultrasound.money.
+2. Beobachte für 30 Minuten (z.B. während anderer Arbeit):
+ - Wie stark schwankt die Base Fee?
+ - Wie unterscheidet sich die Priority Fee bei "Low", "Average", "High"-Empfehlungen?
+ - Was ist die aktuelle ETH-Burn-Rate in ETH pro Minute?
+3. Notiere die tatsächliche ETH-Burn-Rate und rechne sie in ETH pro Jahr hoch.
+4. Vergleiche mit der aktuellen Staking-Issuance (ebenfalls auf ultrasound.money sichtbar) und beantworte: Ist ETH aktuell deflationär oder inflationär?
+
+**Deliverable:** Kurzer Bericht (eine halbe Seite) mit deinen Beobachtungen.
+
+## Quiz
+
+**Frage 1:** Warum ist die Base Fee "inelastisch" im kurzfristigen Sinn, aber responsiv auf längere Sicht?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Die Base Fee kann pro Block maximal um 12,5% steigen oder fallen. Das ist kurzfristig inelastisch — ein plötzlicher Nachfrage-Anstieg führt nicht zu einer sofortigen Preis-Verzehnfachung, sondern zu einer graduellen Steigerung über mehrere Blöcke. Langfristig ist die Base Fee aber sehr responsiv: nach 10–20 Blöcken (etwa 2–4 Minuten) kann sich die Base Fee verdoppeln oder halbieren. Dieser Mechanismus dämpft kurzfristige Spikes, ohne mittelfristiges Markt-Feedback zu verhindern. Er ist fundamentales Designziel von EIP-1559.
+</details>
+
+**Frage 2:** Wie beeinflusst der Burn-Mechanismus theoretisch die Attraktivität von ETH als langfristiges Collateral in DeFi?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Der Burn-Mechanismus reduziert das ETH-Umlauf-Angebot, wenn die Netzwerk-Aktivität hoch ist. Theoretisch bedeutet ein schrumpfendes Angebot (bei konstanter oder steigender Nachfrage) höheren Preis. Als Collateral in Lending-Protokollen oder als Basis-Asset für LP-Positionen ist ETH damit struktureller attraktiv — es gibt einen eingebauten deflationären Druck, der nicht von einzelnen Protokollen oder Token-Emissionen abhängt. Wichtig zu verstehen: das ist eine langfristige, strukturelle Eigenschaft — kurzfristig wird der ETH-Preis hauptsächlich von Makro-Faktoren und Markt-Sentiment getrieben. Als Begründung, ETH langfristig zu halten, ist der Burn relevant; als Timing-Signal für kurzfristige Trades taugt er wenig.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Slides: Titel → Pre/Post EIP-1559 Gas-Markt → Base Fee Mechanik → Priority Fee & Validator → Burn-Mechanismus → ETH-Supply-Dynamik → Tokenomics-Effekte
+- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Gas-Auktion vs. EIP-1559-Vergleich, Base-Fee-Adjustment-Kurve, Validator-Proposer-Diagramm (Bridge zu MEV), ultrasound.money-ETH-Burn-Chart, Supply-Historie-Chart
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

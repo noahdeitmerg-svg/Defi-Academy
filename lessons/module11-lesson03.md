@@ -1,0 +1,221 @@
+# Die MEV-Supply-Chain nach PBS
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die vier Rollen der modernen MEV-Supply-Chain benennen und unterscheiden
+- Die Bedeutung von Proposer-Builder Separation (PBS) verstehen
+- Die Rolle von Flashbots und MEV-Boost in der Ethereum-Landschaft einordnen
+- Die MEV Supply Chain (Searcher → Builder → Proposer/Validator) als Diagramm nachzeichnen und den Fluss von Transaktionen, Bundles und Bidding-Prozessen erklären
+- Die Anreiz-Struktur jedes Supply-Chain-Teilnehmers und die daraus resultierenden Zentralisierungs-Risiken analysieren
+- Die historische Entwicklung von Mining-Pools über MEV-Geth zu MEV-Boost als Infrastruktur-Entwicklung einordnen
+
+## Erklärung
+
+Nach dem Ethereum-Merge (September 2022) hat sich die MEV-Landschaft strukturell verändert. Die ursprüngliche Struktur "Miner sieht Mempool, baut Block selbst" wurde durch eine komplexere, arbeitsteiligere Pipeline ersetzt. Diese neue Struktur heißt **Proposer-Builder Separation (PBS)**, und sie ist zentral für das moderne MEV-Verständnis.
+
+**Die vier Rollen**
+
+**Rolle 1: Searcher**
+
+Searcher sind spezialisierte Firmen (oder Einzelpersonen), die kontinuierlich nach profitablen MEV-Gelegenheiten suchen. Sie führen:
+- **Mempool-Scanning** (tausende Mal pro Sekunde) nach ausstehenden Transaktionen
+- **On-Chain-Monitoring** aller Lending-Positionen, DEX-Preise, Oracle-Updates
+- **Strategie-Entwicklung** — spezifische Bots für Arbitrage, Sandwich, Liquidation, etc.
+
+**Output:** **Bundles** — Gruppen von Transaktionen, die in einer bestimmten Reihenfolge zusammen ausgeführt werden sollen. Ein Bundle könnte aussehen: "Führe TX1 (Front-Run), TX2 (Nutzer-Swap, schon im Mempool), TX3 (Back-Run) in dieser Reihenfolge aus. Ich zahle Gas-Priorität X."
+
+Searcher bieten für die Inklusion ihrer Bundles in einen Block — typisch durch hohe `priorityFee` oder durch direkte Zahlung an den Builder.
+
+**Wirtschaftliche Größenordnung:** Top-Searcher-Firmen machen Millionen USD Gewinn pro Jahr. Der Markt ist stark wettbewerbsintensiv — dutzende bis hunderte professionelle Searcher-Teams existieren.
+
+**Rolle 2: Builder**
+
+Builder sind spezialisierte Akteure, die **Blocks zusammenstellen**. Sie bekommen:
+- Den öffentlichen Mempool
+- Bundles von Searchern
+- Eigene Optimierungs-Strategien
+
+**Ihr Job:** den "wertvollsten" Block konstruieren, der an einen Proposer (Validator) verkauft werden kann. "Wertvoll" bedeutet: maximale Gas-Fees + MEV-Bundle-Zahlungen.
+
+Builder konkurrieren untereinander um Marktanteil. Bekannte Builder: beaverbuild, rsync-builder, Flashbots (der historische Vorreiter), Titan, und andere.
+
+**Markt-Dynamik:** Es gibt aktuell etwa 10-15 aktive Builder, die zusammen den Großteil der Ethereum-Blöcke produzieren. Beaverbuild und rsync-builder bauen oft mehr als 60% aller Blöcke.
+
+**Rolle 3: Relay**
+
+Ein Relay ist eine vertrauenswürdige Vermittlungsinstanz zwischen Buildern und Validatoren. Probleme, die Relays lösen:
+- **Validator-Vertrauen:** Der Validator muss einen vollständigen Block signieren, ohne ihn vorher vollständig zu sehen — sonst könnte er die MEV-Strategie selbst stehlen
+- **Builder-Vertrauen:** Der Builder will bezahlt werden, ohne zu riskieren, dass der Validator den Block einfach nicht verwendet
+
+**Wie Relays das lösen:** Sie sehen den Block-Inhalt, überprüfen, dass alles legitim ist, und präsentieren dem Validator nur den Block-Header (ohne die Transaktions-Details). Der Validator signiert den Header, und erst dann bekommt er die vollständigen Transaktionen.
+
+**Bekannte Relays:** Flashbots Relay (historisch dominant), bloXroute, ultra sound, Aestus, Agnostic, Titan Relay, Eden Network.
+
+**Geopolitische Dimension:** Nach den OFAC-Sanktionen gegen Tornado Cash (August 2022) begannen einige Relays, sanktionierte Adressen zu filtern. Das führte zur Diskussion um **Censorship Resistance** — Nutzer, die maximale Zensur-Resistenz wollen, wählen heute bewusst "ultra sound" oder andere nicht-zensierende Relays.
+
+**Rolle 4: Proposer (Validator)**
+
+Der Proposer ist der Validator, der in diesem Slot den Block proposen darf. Im PBS-Modell macht er **nicht mehr selbst** den Block — er wählt aus den Angeboten der Builder (via Relay) das beste aus.
+
+**Proposer-Perspektive:** mehr Einkommen. Ohne PBS würde der Validator nur die regulären Block-Rewards (Staking-Rewards) und Transaktions-Fees bekommen. Mit PBS bekommt er zusätzlich einen Anteil am MEV. Für Solo-Stakers macht MEV-Boost typisch 5-10% zusätzliche Rewards aus.
+
+**Architektur-Flow:**
+
+```
+[Nutzer/Searcher] → [Public Mempool + Private Bundles]
+ ↓
+ [Builders]
+ (stellen Blöcke zusammen)
+ ↓
+ [Relays]
+ (vermitteln Header)
+ ↓
+ [Proposer/Validator]
+ (signiert besten Block)
+ ↓
+ [Block auf Chain]
+```
+
+**MEV-Boost: das Software-Bindeglied**
+
+MEV-Boost ist eine Open-Source-Software von Flashbots, die das PBS-Modell auf Ethereum möglich macht. Validatoren installieren MEV-Boost als Middleware — es verbindet sich mit mehreren Relays und wählt automatisch das beste Block-Angebot.
+
+**Adoption:** Über 90% aller Ethereum-Validatoren nutzen MEV-Boost. Das heißt: für über 90% aller Blocks gilt das PBS-Modell mit Searcher → Builder → Relay → Proposer.
+
+**Warum das wichtig ist (für Nutzer)**
+
+Die PBS-Struktur hat direkte Implikationen für normale Nutzer:
+
+**Positiv:**
+- **Wettbewerb unter Buildern** führt dazu, dass mehr MEV-Wert zu Validatoren fließt (statt bei einzelnen Minern zu bleiben)
+- **Transparenz:** Flashbots und andere veröffentlichen Daten, wodurch MEV sichtbar wird
+- **Protokoll-Level-Alternativen** können entwickelt werden (siehe Lektion 11.6)
+
+**Negativ:**
+- **Zentralisierungs-Tendenz:** Wenige große Builder dominieren den Markt
+- **Censorship-Risiken:** Wenn Builder oder Relays sanktionierte Adressen filtern, können manche Transaktionen nicht inkludiert werden
+- **Für den Nutzer selbst:** keine direkte Änderung — MEV findet weiterhin statt, nur die Akteure haben sich geändert
+
+**Die zentrale Erkenntnis:** Das PBS-System ist heute der Standard auf Ethereum. Zu verstehen, wie Blocks tatsächlich produziert werden, ist wichtig, um die Schutz-Strategien in der nächsten Lektion (private Mempools, Intent-basierte Systeme) richtig einordnen zu können.
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Die MEV-Supply-Chain nach PBS
+
+**[Slide 2] — Vor und nach dem Merge**
+Früher: Miner → sieht Mempool → baut Block
+Heute: Searcher → Builder → Relay → Proposer
+PBS = Proposer-Builder Separation
+
+**[Slide 3] — Searcher**
+Scannen Mempool + On-Chain
+Spezialisierte Bots
+Erstellen Bundles
+Bieten um Block-Inklusion
+
+**[Slide 4] — Builder**
+Stellen Blöcke zusammen
+Optimieren auf maximalen Wert
+10-15 aktive Builder auf Ethereum
+Top 2 bauen >60% aller Blöcke
+
+**[Slide 5] — Relay**
+Vermittlung Builder ↔ Proposer
+Lösen Vertrauens-Problem
+Flashbots, ultra sound, Aestus
+Zensur-Diskussion: OFAC-Filter
+
+**[Slide 6] — Proposer/Validator**
+Wählt besten Block aus Angeboten
++5-10% Rewards durch MEV-Boost
+Signiert Header ohne vollen Block
+
+**[Slide 7] — MEV-Boost**
+Open-Source Software von Flashbots
+>90% Ethereum-Validatoren nutzen es
+Ermöglicht PBS auf Ethereum heute
+
+**[Slide 8] — Für Nutzer relevant**
+Zentralisierungs-Tendenz bei Buildern
+Censorship-Risiken bei einigen Relays
+Grundlage für Protokoll-Alternativen
+
+## Sprechertext
+
+**[Slide 1]** In dieser Lektion geht es um die moderne Struktur der MEV-Supply-Chain. Nach dem Ethereum-Merge 2022 hat sich diese Struktur grundlegend geändert. Das Verständnis ist wichtig, um die Schutz-Strategien später richtig einordnen zu können.
+
+**[Slide 2]** Vor dem Merge war die Struktur einfach: der Miner sieht den Mempool und baut den Block selbst. Alle MEV-Entscheidungen lagen bei ihm. Nach dem Merge ist das komplexer. Die Rollen sind aufgeteilt: Searcher finden Gelegenheiten, Builder stellen Blöcke zusammen, Relays vermitteln, Proposer signieren. Das heißt Proposer-Builder Separation, kurz PBS.
+
+**[Slide 3]** Rolle 1: Searcher. Das sind spezialisierte Firmen mit Bots, die den Mempool tausende Male pro Sekunde scannen. Sie monitoren alle Lending-Positionen, DEX-Preise, Oracle-Updates. Ihre Output: Bundles — Gruppen von Transaktionen in spezifischer Reihenfolge, die zusammen in einen Block sollen. Sie bieten um Inklusion durch Gas-Priority oder direkte Zahlung an den Builder.
+
+**[Slide 4]** Rolle 2: Builder. Sie bekommen den öffentlichen Mempool plus Bundles von Searchern und konstruieren den wertvollsten Block. Etwa 10 bis 15 aktive Builder existieren auf Ethereum. Die Top 2 — beaverbuild und rsync-builder — bauen regelmäßig über 60 Prozent aller Blöcke. Das ist eine deutliche Zentralisierungs-Tendenz.
+
+**[Slide 5]** Rolle 3: Relay. Vermittlungs-Instanzen zwischen Buildern und Proposern. Sie lösen ein Vertrauens-Problem: der Validator muss einen Block signieren, ohne ihn vorher vollständig zu sehen. Der Relay sieht alles, prüft, und zeigt dem Validator nur den Header. Bekannte Relays: Flashbots, ultra sound, Aestus, Titan. Wichtig: nach den Tornado-Cash-Sanktionen 2022 filtern manche Relays sanktionierte Adressen. Nutzer, die Zensur-Resistenz wollen, wählen ultra sound.
+
+**[Slide 6]** Rolle 4: Proposer. Der Validator, der in diesem Slot den Block proposen darf. Er wählt aus den Angeboten verschiedener Relays das beste. Signiert Header, bekommt dann den vollen Block. Einkommens-Vorteil: 5 bis 10 Prozent zusätzliche Rewards durch MEV-Boost. Das macht Staking profitabler.
+
+**[Slide 7]** MEV-Boost ist die Open-Source-Software von Flashbots, die das Ganze möglich macht. Validatoren installieren es als Middleware. Es verbindet sich mit mehreren Relays und wählt automatisch das beste Angebot. Über 90 Prozent aller Ethereum-Validatoren nutzen MEV-Boost. Das heißt: PBS ist der Standard, nicht die Ausnahme.
+
+**[Slide 8]** Warum das für Nutzer relevant ist. Positiv: mehr Wettbewerb unter Buildern bedeutet, dass MEV-Wert zu Validatoren fließt statt bei einzelnen Minern. Negativ: Zentralisierungs-Tendenz bei wenigen Buildern, Censorship-Risiken bei einigen Relays. Für den Nutzer selbst ändert sich wenig — MEV findet weiter statt. Aber das Verständnis der Struktur ist Voraussetzung, um die Schutz-Tools in der nächsten Lektion richtig einordnen zu können.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Vergleich: Pre-Merge (einfache Miner-Rolle) vs. Post-Merge (4-Rollen-PBS).
+
+**[Slide 3]** Searcher-Workflow: Mempool-Scan → Bundle-Erstellung → Gebot.
+
+**[Slide 4]** Builder-Marktanteile als Tortendiagramm. **SCREENSHOT SUGGESTION:** mevboost.pics oder relayscan.io Dashboard.
+
+**[Slide 5]** Relay-Architektur: Header-Flow mit Trust-Boundaries. Optional: Liste von Relays mit Censorship-Status.
+
+**[Slide 6]** Proposer-Flow mit Reward-Schichten (Base + Priority + MEV).
+
+**[Slide 7]** MEV-Boost-Adoption-Chart über Zeit seit Merge.
+
+**[Slide 8]** Matrix: PBS-Effekte auf Nutzer (positive und negative).
+
+## Übung
+
+**Aufgabe: Builder- und Relay-Landschaft erforschen**
+
+1. Besuche [mevboost.pics](https://www.mevboost.pics) (oder alternative Relay-Scanner)
+2. Identifiziere die Top 5 Builder der letzten 7 Tage mit ihren Marktanteilen
+3. Identifiziere die Top 5 Relays mit ihrem Marktanteil
+4. Prüfe für jeden Relay: ist er zensurfrei oder filtert er OFAC-Adressen?
+5. Identifiziere **einen einzelnen Block** in Etherscan, für den du die volle Supply-Chain nachvollziehen kannst: welcher Builder, welcher Relay, welcher Validator
+
+**Deliverable:** Tabelle mit Markt-Anteilen + ein durchgearbeitetes Block-Beispiel + Reflexion (5-8 Sätze): Welche Trends siehst du? Wie würdest du als Staker mit MEV-Boost deine Relay-Auswahl konfigurieren?
+
+## Quiz
+
+**Frage 1:** Warum ist Proposer-Builder Separation (PBS) wichtiger für die Dezentralisierung Ethereums als es auf den ersten Blick scheint?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+PBS löst ein fundamentales Problem: ohne PBS würden Validatoren, die MEV extrahieren können, deutlich mehr verdienen als "naive" Validatoren. Das würde zu einer Arms-Race führen — nur Validatoren mit komplexen Tech-Stacks (Mempool-Scanning, Strategie-Entwicklung, Bot-Infrastruktur) könnten konkurrieren. Das Ergebnis: Solo-Stakers und kleinere Staking-Pools würden strukturell unterlegen sein. Über Zeit würden sich Validatoren bei wenigen großen Staking-Firmen konzentrieren. Mit PBS wird dieser Effekt abgemildert. Jeder Validator — auch ein Solo-Staker mit einem einfachen Setup — kann über MEV-Boost den gleichen MEV-Anteil bekommen wie große Staking-Pools. Das Level-Playing-Field ermöglicht echte Dezentralisierung auf der Validator-Ebene. Aber: PBS verlagert das Konzentrations-Risiko auf die Builder-Ebene. Aktuell bauen 2-3 Builder (beaverbuild, rsync-builder, Titan) über 60% aller Blöcke. Das ist eine neue Form der Zentralisierung. Und Relays sind ein weiteres Nadelöhr — Flashbots Relay war lange dominant, obwohl das Ökosystem sich inzwischen diversifiziert hat. Die kritische Debatte: ist PBS netto besser für Dezentralisierung? Die meisten Analysen sagen ja — die Validator-Ebene ist wichtiger als die Builder-Ebene, weil Validatoren Vertrauens-Grundlage für das gesamte Protokoll sind. Builder können in Theorie jederzeit ausgetauscht werden (jeder kann ein Builder werden), Validatoren erfordern 32 ETH Stake. Zusätzlich existieren Forschungs-Initiativen für **Encrypted Mempool** und **Enshrined PBS** (ePBS), die das Builder-Konzentrations-Risiko weiter reduzieren sollen. Langfristig: PBS ist ein Bausteinsystem — aktuell imperfekt, aber die Richtung ist strukturell vorteilhaft. Ohne PBS wäre Ethereum heute wahrscheinlich dominant durch 3-4 große Staking-Firmen statt der relativen Diversität, die wir aktuell haben.
+</details>
+
+**Frage 2:** Ein Nutzer sagt: "Ich nutze MetaMask und will meine Transaktionen sofort haben. Was interessiert mich, welcher Builder meinen Block baut?" Warum sollte dieser Nutzer die MEV-Supply-Chain trotzdem verstehen?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Drei Gründe, warum das Verständnis relevant ist. **Erstens: Ausführungs-Qualität.** Wenn der Nutzer einen Swap abschickt, landet er im öffentlichen Mempool. Dort ist er sichtbar für alle Searcher. Wenn der Swap groß genug ist, wird er mit hoher Wahrscheinlichkeit gesandwicht — und der Nutzer zahlt einen schlechteren Preis. Ohne Verständnis der Supply-Chain sieht der Nutzer nur den Endergebnis: "mein Swap hat 0,3% mehr gekostet als die UI sagte." Mit Verständnis weiß er: das ist MEV, und es ist vermeidbar durch Alternativen wie Flashbots Protect oder CowSwap. **Zweitens: Censorship-Awareness.** Wenn der Nutzer seine Transaktion an bestimmte Adressen schickt (z.B. historisch Tornado Cash, aber auch andere sanktionierte Adressen), wird sie möglicherweise von zensierenden Relays gefiltert. Das führt zu "unerklärlich langsamen" Transaktionen — der Nutzer glaubt, sein Gas-Preis war zu niedrig, aber tatsächlich zensiert die Infrastruktur. Verständnis: der Nutzer kann eine Flashbots-Protect-RPC konfigurieren, die nicht-zensierende Relays bevorzugt. **Drittens: Economic-Awareness.** Das MEV-Ökosystem betrifft die Fee-Dynamiken auf Ethereum. In Perioden hoher MEV-Aktivität steigen Gas-Preise strukturell, weil Searcher für Priority bieten. Das betrifft auch nicht-MEV-Transaktionen — jeder zahlt mehr Gas, weil der Markt aufgeheizt ist. Verständnis: der Nutzer kann für zeitunkritische Transaktionen Off-Peak-Zeiten wählen (z.B. Wochenenden, oder europäische Nachtstunden — Asien-Peak-Zeit in Krypto). Ein guter Analogie: "ich nutze das Internet, was interessieren mich Router?" stimmt im Alltag. Aber wenn die Internet-Verbindung schlecht ist, ist Verständnis der Router-Rolle hilfreich für Troubleshooting. Ähnlich bei MEV: im Normalfall egal, aber bei unerklärlichen Swap-Ergebnissen, langsamen Transaktionen, oder hohen Gas-Kosten ist das Verständnis plötzlich sehr praktisch. Zudem: der Nutzer, der MEV versteht, trifft bessere Entscheidungen. Er nutzt geschütze RPCs als Default. Er wählt geeignete DEX-Aggregatoren. Er timt Large Trades richtig. All das spart real Geld über Zeit — oft mehrere Prozent des Transaktions-Volumens. Für aktive DeFi-Nutzer sind das substantielle Einsparungen.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 8 Folien: Titel → PBS-Konzept → Searcher-Rolle → Builder-Rolle → Proposer/Validator-Rolle → Relay-Infrastruktur → MEV-Boost → Zentralisierungs-Risiken
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `visual_plan.json` — MEV-Supply-Chain-Diagramm (Searcher→Builder→Proposer), PBS-Architektur, Flashbots-MEV-Boost-Flow, Builder-Market-Share-Chart, Historische Evolution
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

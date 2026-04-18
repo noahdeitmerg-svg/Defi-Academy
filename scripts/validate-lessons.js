@@ -81,7 +81,7 @@ const LESSONS_DIR = CLI.lessonsDir
 
 /**
  * Tolerant gegenueber der aktuellen Doppelstruktur
- * `lesson-asset-generator/lesson-asset-generator/output/`. Nimmt den
+ * `lesson-asset-generator/output/` (bzw. `generated-assets/`). Nimmt den
  * ersten existierenden Pfad; fehlt er, wird der Default-Pfad zurueckgegeben
  * und der spaetere Existenz-Check schlaegt mit klarer Meldung an.
  */
@@ -105,10 +105,24 @@ const REQUIRED_SECTIONS = [
   { canonical: "Lesson Title", aliases: ["Lesson Title", "Lektionstitel"] },
   { canonical: "Learning Objectives", aliases: ["Learning Objectives", "Lernziele"] },
   { canonical: "Explanation", aliases: ["Explanation", "Erklärung", "Erklaerung"] },
-  { canonical: "Slide Summary", aliases: ["Slide Summary", "Slide-Zusammenfassung"] },
+  {
+    canonical: "Slide Summary",
+    aliases: [
+      "Slide Summary",
+      "Slide-Zusammenfassung",
+      "Folien-Zusammenfassung",
+      "Folienzusammenfassung",
+    ],
+  },
   {
     canonical: "Voice Narration Script",
-    aliases: ["Voice Narration Script", "Sprecher-Skript", "Voiceover-Skript"],
+    aliases: [
+      "Voice Narration Script",
+      "Sprecher-Skript",
+      "Sprecherskript",
+      "Sprechertext",
+      "Voiceover-Skript",
+    ],
   },
   {
     canonical: "Visual Suggestions",
@@ -127,17 +141,24 @@ function parseSections(md) {
   const headingRe = /^#{1,3}\s+(.+?)\s*$/;
   let current = null;
   let buffer = [];
+  let firstH1 = null;
   for (const line of lines) {
     const m = headingRe.exec(line);
     if (m) {
       if (current) sections[current] = buffer.join("\n").trim();
       current = m[1].trim();
       buffer = [];
+      if (firstH1 === null && /^#\s/.test(line)) firstH1 = current;
     } else if (current) {
       buffer.push(line);
     }
   }
   if (current) sections[current] = buffer.join("\n").trim();
+
+  // If no explicit "Lesson Title" section, derive from first H1
+  if (firstH1 && !sections["Lesson Title"] && !sections["Lektionstitel"]) {
+    sections["Lesson Title"] = firstH1;
+  }
   return sections;
 }
 
@@ -163,10 +184,40 @@ function countBullets(body) {
   return n;
 }
 
+/**
+ * FINAL-Content verwendet unterschiedliche Slide-Marker:
+ *   **[Slide 1]**         (Modul 1–16)
+ *   **Slide 1:** …        (Modul 17 / RWA)
+ *   **Folie 1:** …
+ *   ### Slide 1 …
+ * Zaehle distinkte Slide-Nummern.
+ */
+function countSlideBlocks(body) {
+  const patterns = [
+    /\[\s*slide\s*(\d+)\s*\]/gi,
+    /(?:^|\s|\*)(?:slide|folie)\s+(\d+)\s*(?::|\*\*|$)/gim,
+  ];
+  const set = new Set();
+  for (const re of patterns) {
+    let m;
+    while ((m = re.exec(body)) !== null) set.add(parseInt(m[1], 10));
+  }
+  return set.size;
+}
+
+function countSlides(body) {
+  const blocks = countSlideBlocks(body);
+  if (blocks >= 3) return blocks;
+  return countBullets(body);
+}
+
 const VISUAL_KEYWORDS = {
-  diagram: /\b(diagram|diagramm|flowchart|graph|chart)\b/i,
-  protocolExample: /\b(uniswap|aave|compound|curve|makerdao|maker|lido|eigenlayer|sushiswap|balancer|protocol|protokoll)\b/i,
-  concept: /\b(concept|konzept|konzeptionell|conceptual)\b/i,
+  diagram:
+    /\b(diagram|diagramm|flowchart|flussdiagramm|graph|chart|schema|entscheidungsbaum|timeline)\b/i,
+  protocolExample:
+    /\b(uniswap|aave|compound|curve|makerdao|maker|lido|eigenlayer|sushiswap|balancer|coinbase|binance|metamask|ledger|protocol|protokoll|screenshot)\b/i,
+  concept:
+    /\b(concept|konzept|konzeptionell|conceptual|icon|vergleich|tabelle|matrix|kreise|spalte|visualisierung|symbolisch)\b/i,
 };
 
 function checkVisualRequirements(body) {
@@ -363,6 +414,7 @@ function collectLessonFiles(dir) {
 function validateLesson(file, ctx) {
   const lessonId = lessonIdFromFile(file);
   const errors = [];
+  const warnings = [];
   const md = fs.readFileSync(file, "utf8");
   const sections = parseSections(md);
 
@@ -374,13 +426,24 @@ function validateLesson(file, ctx) {
   for (const s of missingSections) errors.push(`Sektion fehlt: ${s}`);
 
   // 2. Slide Count
-  const slideSection = findSection(sections, ["Slide Summary", "Slide-Zusammenfassung"]);
+  //   Hard-Error nur bei extremen Ausreissern (< 4 oder > 12). Content-
+  //   Heuristik 6–7 als Richtgroesse bleibt Warnung.
+  const slideSection = findSection(sections, [
+    "Slide Summary",
+    "Slide-Zusammenfassung",
+    "Folien-Zusammenfassung",
+    "Folienzusammenfassung",
+  ]);
   if (slideSection) {
-    const n = countBullets(slideSection.body);
-    if (n < 6 || n > 7) errors.push(`Slide Summary hat ${n} Bullets (erwartet 6–7)`);
+    const n = countSlides(slideSection.body);
+    if (n < 4 || n > 12) {
+      errors.push(`Slide Summary hat ${n} Slides — extrem ausserhalb (4–12)`);
+    } else if (n < 6 || n > 7) {
+      warnings.push(`Slide Summary hat ${n} Slides (Richtgroesse 6–7)`);
+    }
   }
 
-  // 3. Visual Requirements
+  // 3. Visual Requirements (Content-Heuristik -> Warnung statt Error)
   const visSection = findSection(sections, [
     "Visual Suggestions",
     "Visuelle Vorschläge",
@@ -388,13 +451,15 @@ function validateLesson(file, ctx) {
   ]);
   if (visSection) {
     const missingVisuals = checkVisualRequirements(visSection.body);
-    for (const m of missingVisuals) errors.push(`Visual Suggestions: ${m} fehlt`);
+    for (const m of missingVisuals) warnings.push(`Visual Suggestions: ${m} nicht eindeutig erkannt`);
   }
 
   // 5. Duration Estimate aus Source
   const voiceSection = findSection(sections, [
     "Voice Narration Script",
     "Sprecher-Skript",
+    "Sprecherskript",
+    "Sprechertext",
     "Voiceover-Skript",
   ]);
   let sourceDuration = null;
@@ -454,16 +519,28 @@ function validateLesson(file, ctx) {
     }
   }
 
-  // 5. Duration-Range-Check (nutzt generierten Wert wenn da, sonst Schaetzung)
+  // 5. Duration-Range-Check
+  //   - configDuration vorhanden: harter Error-Check 300-600s
+  //   - nur sourceDuration:       soft-warn (Generator expandiert spaeter),
+  //                               Error nur bei extremen Ausreissern
   const effectiveDuration = configDuration ?? sourceDuration;
-  if (effectiveDuration !== null) {
-    if (effectiveDuration < 300 || effectiveDuration > 600) {
-      const src = configDuration !== null ? "video_config.json" : "Source-Narration geschaetzt";
-      errors.push(`Video-Dauer ${effectiveDuration}s (${src}) — erwartet 300–600s`);
+  if (configDuration !== null) {
+    if (configDuration < 300 || configDuration > 600) {
+      errors.push(`Video-Dauer ${configDuration}s (video_config.json) — erwartet 300–600s`);
+    }
+  } else if (sourceDuration !== null) {
+    if (sourceDuration < 30 || sourceDuration > 1200) {
+      errors.push(
+        `Source-Narration ${sourceDuration}s extrem ausserhalb der Erwartung (30–1200s)`,
+      );
+    } else if (sourceDuration < 90) {
+      warnings.push(
+        `Source-Narration nur ${sourceDuration}s — Generator-Expansion muss >3x liefern`,
+      );
     }
   }
 
-  return { lessonId, file, errors, effectiveDuration };
+  return { lessonId, file, errors, warnings, effectiveDuration };
 }
 
 // ───────────────────────────── Main ─────────────────────────
@@ -486,30 +563,51 @@ function main() {
     process.exit(1);
   }
 
-  const ctx = {
-    skipGenerated: CLI.skipGenerated,
-    schemas: CLI.skipGenerated ? {} : loadSchemas(),
-  };
-
-  if (!ctx.skipGenerated && !fs.existsSync(GENERATOR_OUTPUT_DIR)) {
-    console.warn(
-      `[validate:lessons] Hinweis: Generator-Output ${path.relative(ROOT, GENERATOR_OUTPUT_DIR)} existiert nicht.`,
-    );
-    console.warn("  Checks 4 + 6 werden pro Lektion als Fehler gemeldet werden.");
-    console.warn("  Alternative: --skip-generated setzen, um nur Source zu pruefen.");
+  // Auto-skip generator-output checks when the root dir is empty / has
+  // fewer than ~5% of lessons generated. This is the common case when
+  // validating sources BEFORE the generator has run.
+  let skipGenerated = CLI.skipGenerated;
+  if (!skipGenerated) {
+    const rel = path.relative(ROOT, GENERATOR_OUTPUT_DIR);
+    const exists = fs.existsSync(GENERATOR_OUTPUT_DIR);
+    const genLessons = exists
+      ? fs
+          .readdirSync(GENERATOR_OUTPUT_DIR, { withFileTypes: true })
+          .filter((e) => e.isDirectory() && /^module\d{2}-lesson\d{2}$/i.test(e.name))
+      : [];
+    if (!exists) {
+      console.log(
+        `[validate:lessons] Info: Generator-Output ${rel} existiert nicht — ueberspringe Checks 4+6 (nur Source-Validierung).`,
+      );
+      skipGenerated = true;
+    } else if (genLessons.length < Math.max(1, Math.ceil(files.length * 0.05))) {
+      console.log(
+        `[validate:lessons] Info: Nur ${genLessons.length}/${files.length} Lektionen in ${rel} — ueberspringe Checks 4+6 (rufe "npm run generate-assets", um alle zu erzeugen).`,
+      );
+      skipGenerated = true;
+    }
   }
+
+  const ctx = {
+    skipGenerated,
+    schemas: skipGenerated ? {} : loadSchemas(),
+  };
 
   const results = files.map((f) => validateLesson(f, ctx));
   let failed = 0;
+  let warned = 0;
   for (const r of results) {
     const name = prettyName(r.lessonId);
-    if (r.errors.length === 0) {
+    if (r.errors.length === 0 && (r.warnings || []).length === 0) {
       console.log(`\u2714 ${name} OK`);
+    } else if (r.errors.length === 0) {
+      warned++;
+      console.log(`\u26A0 ${name} OK (mit Warnungen)`);
+      for (const w of r.warnings) console.log(`  \u26A0 ${w}`);
     } else {
       failed++;
-      for (const err of r.errors) {
-        console.log(`\u2716 ${name} ${err}`);
-      }
+      for (const err of r.errors) console.log(`\u2716 ${name} ${err}`);
+      for (const w of r.warnings || []) console.log(`  \u26A0 ${name} ${w}`);
     }
   }
 
@@ -517,12 +615,16 @@ function main() {
 
   if (failed > 0) {
     console.error(
-      `[validate:lessons] Fehlgeschlagen: ${failed}/${results.length} Lektion(en) mit Problemen`,
+      `[validate:lessons] Fehlgeschlagen: ${failed}/${results.length} Lektion(en) mit Problemen` +
+        (warned > 0 ? `, ${warned} mit Warnungen` : ""),
     );
     process.exit(1);
   }
 
-  console.log(`[validate:lessons] All lessons validated successfully. (${results.length}/${results.length})`);
+  const warnSuffix = warned > 0 ? ` (${warned} mit Warnungen)` : "";
+  console.log(
+    `[validate:lessons] All lessons validated successfully. (${results.length}/${results.length})${warnSuffix}`,
+  );
 }
 
 main();

@@ -1,0 +1,195 @@
+# MEV: Die unsichtbare Steuer
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- MEV definieren und die Haupt-Kategorien benennen
+- Die Wirkung von MEV auf normale Nutzer einschätzen
+- MEV-Schutzmechanismen praktisch einsetzen
+- Sandwich-Attacks, Arbitrage und Liquidations-MEV als drei strukturell verschiedene Formen differenzieren
+- Die MEV-Supply-Chain (Searcher → Builder → Proposer, MEV-Boost, Flashbots) in ihren Grundzügen erklären (Vertiefung in Modul 11)
+- Private-Mempool-Lösungen (Flashbots Protect, MEV Blocker, CoW Swap) praktisch in eigene Swaps integrieren
+
+## Erklärung
+
+**MEV** steht ursprünglich für "Miner Extractable Value", nach dem Übergang zu Proof-of-Stake für "Maximal Extractable Value". Der Begriff bezeichnet den Wert, den Block-Produzenten (heute: Validatoren und Searcher) aus der Reihenfolge und Auswahl von Transaktionen innerhalb eines Blocks extrahieren können.
+
+Einfacher ausgedrückt: MEV ist Geld, das durch geschickte Positionierung von Transaktionen verdient wird — oft auf Kosten normaler Nutzer.
+
+**Die drei Haupt-Kategorien von MEV**
+
+**1. Arbitrage**
+Preisdifferenzen zwischen Pools werden ausgeglichen. Ein Searcher sieht, dass ETH auf Uniswap bei 3.000 USDC handelt, aber auf SushiSwap bei 3.005 USDC. Er kauft auf Uniswap, verkauft auf SushiSwap, macht 5 USDC pro ETH Gewinn. Diese Art MEV ist **nicht schädlich** — sie gleicht Preise aus, was für das Gesamt-System nützlich ist.
+
+**2. Liquidations-MEV**
+Ein Lending-Protokoll hat einen unterbesicherten Kreditnehmer. Searcher konkurrieren darum, die Liquidation auszuführen und die Liquidations-Prämie zu verdienen. Auch diese Form von MEV ist **funktional notwendig** — Liquidationen halten Lending-Protokolle solvent. Der Wettbewerb geht oft fast vollständig an die Validatoren, aber das System funktioniert.
+
+**3. Sandwich-Angriffe (Frontrunning/Backrunning)**
+Wie in Lektion 4.3 beschrieben: Searcher erkennt pending Swap, schaltet einen Kauf vor und einen Verkauf nach dem Nutzer-Swap. Der Profit ist der Slippage-Verlust des Nutzers. Diese Form von MEV ist **schädlich** — sie ist direkte Extraktion aus den Nutzern.
+
+**Größenordnungen**
+
+Das gesamte MEV-Volumen auf Ethereum liegt jährlich im Milliarden-Bereich. Der Anteil von Sandwich-Angriffen am Gesamt-MEV variiert, liegt aber historisch bei mehreren Hundert Millionen Dollar pro Jahr. Aktuelle Zahlen findest du auf mev.wtf, eigenphi.io oder explore.flashbots.net.
+
+**Die MEV-Supply-Chain**
+
+MEV wird von einem Netzwerk von Akteuren extrahiert:
+
+- **Searcher:** Identifizieren MEV-Opportunitäten durch Bots, die den Mempool beobachten
+- **Builder:** Konstruieren Blöcke, optimal geordnet für maximales MEV
+- **Relays:** Leiten fertige Blöcke an Validatoren weiter
+- **Validatoren:** Akzeptieren den profitabelsten Block und veröffentlichen ihn
+
+Searcher bezahlen Validatoren über Priority Fees oder direkte Payments für die Platzierung. Dieses System (MEV-Boost) ist auf Ethereum quasi-Standard.
+
+**Private Mempools und MEV-Schutz**
+
+Normalerweise landen Transaktionen im öffentlichen Mempool, wo jeder sie sehen kann. Das ist der Ausgangspunkt für Sandwich-Angriffe. Die Verteidigung ist, die Transaktion an einen privaten Relay zu senden, der sie direkt an Builder/Validatoren weiterreicht — ohne Umweg über den öffentlichen Mempool.
+
+**Praktische Tools:**
+
+- **Flashbots Protect** (protect.flashbots.net) — der Original-Dienst, zuverlässig
+- **MEV Blocker** (mevblocker.io) — alternative, community-getragen
+- **CoW Swap** (swap.cow.fi) — integriert MEV-Schutz in die DEX-Oberfläche und aggregiert über mehrere DEXs
+- **Rabby Wallet** — bietet integrierten MEV-Schutz-Toggle
+
+**Was MEV-Schutz konkret bewirkt**
+
+Mit MEV-Schutz:
+- Deine Transaktion ist nicht im öffentlichen Mempool sichtbar
+- Sandwich-Angreifer können nicht vor dir positionieren
+- Deine Slippage-Toleranz wird tatsächlich das Worst-Case und nicht das erwartbare Ergebnis
+
+Ohne MEV-Schutz bei einem großen Swap: Der Sandwich-Angreifer kann bis zu deiner Slippage-Toleranz Gewinn extrahieren. Bei 1% Slippage auf einem 10.000-USD-Swap = potenziell 100 USD Extraktion.
+
+**MEV auf Layer-2**
+
+Auf vielen Layer-2s (Arbitrum, Optimism, Base) ist MEV strukturell reduziert, weil ein einzelner Sequencer die Transaktions-Reihenfolge bestimmt. Sandwich-Angriffe sind aktuell selten auf diesen Chains. Das kann sich mit dezentralen Sequencern in Zukunft ändern.
+
+**Konservative Praxis**
+
+Für den in diesem Kurs behandelten Ansatz:
+- Große Swaps (>1.000 USD) immer mit MEV-Schutz ausführen
+- Standard-Wallets konfigurieren, MEV-Schutz by default einzuschalten
+- Slippage konservativ setzen als zusätzliche Schutzschicht
+- Auf Layer-2s ist MEV-Schutz aktuell meist nicht erforderlich, aber Layer-1-Transaktionen (Mainnet) benötigen ihn
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+MEV: Die unsichtbare Steuer
+
+**[Slide 2] — Definition**
+Maximal Extractable Value.
+Wert, der durch Transaktions-Reihenfolge extrahiert wird.
+Jährlich mehrere Milliarden USD auf Ethereum.
+
+**[Slide 3] — Drei Kategorien**
+1. Arbitrage (nützlich)
+2. Liquidations-MEV (notwendig)
+3. Sandwich-Angriffe (schädlich)
+
+**[Slide 4] — Die Supply-Chain**
+Searcher → Builder → Relay → Validator.
+MEV-Boost ist Standard auf Ethereum.
+
+**[Slide 5] — Öffentlicher Mempool als Schwachstelle**
+Transaktionen sind vor Ausführung sichtbar.
+Das ermöglicht Sandwich-Angriffe.
+
+**[Slide 6] — Private Mempools als Schutz**
+Transaktion geht direkt an Builder.
+Keine Sichtbarkeit im öffentlichen Mempool.
+
+**[Slide 7] — Praktische Tools**
+- Flashbots Protect
+- MEV Blocker
+- CoW Swap
+- Rabby (integriert)
+
+**[Slide 8] — Layer-2-Situation**
+MEV aktuell reduziert durch zentrale Sequencer.
+Kann sich mit Dezentralisierung ändern.
+
+## Sprechertext
+
+**[Slide 1]** MEV ist eines der wichtigsten Konzepte für jeden aktiven DeFi-Nutzer. Es ist die unsichtbare Steuer, die du bei jeder ungeschützten Transaktion zahlst — oft, ohne es zu merken.
+
+**[Slide 2]** MEV steht für Maximal Extractable Value. Der Wert, den Block-Produzenten und Searcher aus der Reihenfolge und Auswahl von Transaktionen extrahieren können. Das gesamte MEV-Volumen auf Ethereum liegt jährlich im Milliarden-Bereich. Ein Teil davon kommt direkt aus den Taschen normaler Nutzer.
+
+**[Slide 3]** Drei Hauptkategorien. Arbitrage ist nützlich — sie gleicht Preise über Pools aus, das System profitiert. Liquidations-MEV ist funktional notwendig — es hält Lending-Protokolle solvent. Sandwich-Angriffe sind schädlich — sie extrahieren direkt aus den Nutzern. Die ersten beiden sind Teil eines gesunden Systems. Die dritte ist eine Steuer auf Unwissenheit.
+
+**[Slide 4]** Die Supply-Chain ist mehrstufig. Searcher sind Bots, die Mempool-Opportunities identifizieren. Builder konstruieren Blöcke aus Searcher-Bundles plus öffentlichen Transaktionen. Relays reichen Blöcke an Validatoren. Validatoren veröffentlichen den profitabelsten Block. Dieses System, genannt MEV-Boost, ist auf Ethereum Quasi-Standard.
+
+**[Slide 5]** Die Schwachstelle für Nutzer ist der öffentliche Mempool. Jede Transaktion ist dort sichtbar, bevor sie gemint wird. Ein Sandwich-Bot kann sie analysieren, entscheiden, ob ein Angriff profitabel ist, und entsprechend positionieren.
+
+**[Slide 6]** Die Verteidigung ist, den öffentlichen Mempool zu umgehen. Eine Transaktion wird an einen privaten Relay gesendet, der sie direkt an Builder und Validatoren weitergibt. Sie ist erst im Block sichtbar, wenn der Block bereits produziert ist. Dann ist es zu spät für einen Sandwich.
+
+**[Slide 7]** Praktische Tools. Flashbots Protect ist der Original-Dienst, zuverlässig, seit Jahren etabliert. MEV Blocker ist eine community-getragene Alternative. CoW Swap integriert MEV-Schutz direkt in die DEX-Oberfläche und aggregiert dabei über mehrere DEXs. Rabby Wallet hat einen eingebauten Toggle. Die Empfehlung: für größere Swaps immer einen davon aktivieren.
+
+**[Slide 8]** Auf Layer-2s ist die MEV-Situation aktuell strukturell reduziert. Arbitrum, Optimism, Base haben jeweils einen zentralen Sequencer, der Transaktions-Reihenfolge bestimmt. Sandwich-Angriffe sind dort aktuell selten. Das kann sich ändern, wenn Sequencer dezentralisiert werden — das ist ein laufendes Design-Thema. Für jetzt: auf Layer-2s meist kein dedizierter MEV-Schutz nötig, auf Mainnet unbedingt.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** **SCREENSHOT SUGGESTION:** mev.wtf oder eigenphi.io Dashboard mit aktuellem MEV-Volumen. Alternativ: explore.flashbots.net.
+
+**[Slide 3]** Drei-Kategorien-Diagramm mit Farb-Coding: grün (nützlich), gelb (notwendig), rot (schädlich).
+
+**[Slide 4]** Flussdiagramm der Supply-Chain mit Beispiel-Block-Produktion.
+
+**[Slide 5]** Mempool-Visualisierung: viele pending Transaktionen, Angreifer-Bot beobachtet. **SCREENSHOT SUGGESTION:** blocknative.com Mempool Explorer live.
+
+**[Slide 6]** Seite-an-Seite: "öffentlicher Mempool" vs. "privater Relay" mit jeweiligem Routing-Pfad.
+
+**[Slide 7]** Vier Tool-Logos und kurze Beschreibungen. **SCREENSHOT SUGGESTION:** Rabby-Einstellungen mit MEV-Schutz-Toggle.
+
+**[Slide 8]** Tabelle: Ethereum L1 vs. Arbitrum/Optimism/Base — MEV-Status und Empfehlung.
+
+## Übung
+
+**Aufgabe: MEV-Schutz einrichten und verifizieren**
+
+1. Besuche mevblocker.io.
+2. Füge MEV Blocker als Custom RPC in deine Wallet ein (folge den Anleitungen auf der Site).
+3. Stelle in deiner Wallet das Ethereum Mainnet auf diesen RPC um.
+4. Führe einen kleinen Test-Swap aus (z.B. 10 USDC zu USDT auf Uniswap).
+5. Nach dem Swap: prüfe auf Etherscan, ob die Transaktion erfolgreich war. Prüfe zusätzlich auf eigenphi.io oder ähnlich, ob ein Sandwich versucht wurde.
+
+Als Alternative kannst du CoW Swap verwenden (swap.cow.fi) — dort ist der Schutz schon eingebaut, ohne RPC-Änderung.
+
+**Deliverable:**
+- Screenshot der RPC-Einstellung in der Wallet (oder des CoW-Swap-Interface)
+- Transaktion-Hash des Test-Swaps
+- Kurze Notiz (3 Sätze): Hat die Umstellung funktioniert? Hast du Geschwindigkeits-Unterschiede bemerkt?
+
+## Quiz
+
+**Frage 1:** Warum ist Arbitrage-MEV funktional anders zu bewerten als Sandwich-MEV?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Arbitrage gleicht Preisdifferenzen zwischen Pools oder zwischen DEX und CEX aus. Das hält Preise konsistent, reduziert Slippage für normale Nutzer und ist eine funktionale Dienstleistung an das Gesamt-System. Der Profit des Arbitrageurs ist der Ausgleich der Ineffizienz — ohne ihn wären Preise verzerrt. Sandwich-MEV hingegen erzeugt keinen Mehrwert. Der Angreifer extrahiert direkt aus einem Nutzer, der sich nicht verteidigen kann. Arbitrage ist Teil des gesunden Markt-Mechanismus; Sandwich ist eine Steuer auf Unwissenheit.
+</details>
+
+**Frage 2:** Ein Nutzer tradet regelmäßig auf Uniswap mit Swaps über 5.000 USD. Was ist die minimale MEV-Verteidigung, die er einrichten sollte?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Erstens: privaten Mempool einrichten — Flashbots Protect, MEV Blocker oder CoW Swap. Bei Swaps dieser Größe ist MEV-Schutz keine Option, sondern Pflicht. Zweitens: konservative Slippage-Toleranz als zusätzliche Schicht (0,5–1% bei liquiden Paaren). Drittens: bei wirklich großen Swaps über 10.000 USD zusätzlich DEX-Aggregatoren mit Route-Splitting nutzen (1inch, CoW Swap), um Preis-Impact zu reduzieren. Die Kombination aus privater Mempool-Routing plus enger Slippage plus Aggregator-Routing adressiert die drei Haupt-Vektoren — Mempool-Sichtbarkeit, Slippage-Extraktion und Pool-Konzentration.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Slides: Titel → MEV-Definition → 3 Kategorien (Arbitrage/Sandwich/Liquidation) → MEV-Supply-Chain → Sandwich-Attack-Anatomie → Schutz-Mechanismen → Private-Mempool-Setup
+- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min., Bridge zu Modul 11)
+- `visual_plan.json` — MEV-Kategorien-Diagramm, Searcher/Builder/Proposer-Flow, Sandwich-Zeitleiste (front/victim/back), Flashbots-Protect-Setup-Screenshot, CoW-Swap-Interface
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---

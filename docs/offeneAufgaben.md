@@ -48,39 +48,6 @@ Warnung *"Never use Gamma-generated slides directly in the renderer."*
 Smoke-Test bestaetigt den Resolver-Pfad (visual01.png → `<visual.id>.png`
 im public-assets-Ordner).
 
-### 🔴 Doppel-Ordnerstruktur der drei Tool-Packages flachdrücken
-
-Die drei neuen Tool-Ordner sind doppelt geschachtelt:
-
-- `lesson-asset-generator/lesson-asset-generator/...`
-- `video-renderer/video-renderer/...`
-- `video-style-engine/video-style-engine/...`
-
-Wirkt wie ein ZIP-Entpack-Artefakt. Solange das so bleibt, müssen alle Skripte
-diese Verdopplung mitziehen (siehe `scripts/validate-lessons.js`,
-`GENERATOR_OUTPUT_DIR`). Abhängigkeit: vor Phase 5.4 (Platform Integration).
-
-**Plan**: Inhalte je Tool eine Ebene nach oben ziehen, innere leere Ordner
-entfernen, Pfade in Skripten und Docs angleichen.
-
-### 🟢 Validator als Hard-Gate in `render-batch.js` (durch Master-Skript gelöst)
-
-Direkt im `render-batch.js` ist der Validator weiterhin nicht verdrahtet,
-aber das ist mit dem neuen Master-Orchestrator `scripts/render-course.js`
-nicht mehr blockierend: Dieser ruft zuerst `npm run validate-lessons` auf
-und bricht bei Exit-Code ≠ 0 ab, bevor überhaupt ein Render angestoßen
-wird. Direkter Einbau im Renderer wäre nice-to-have, aber kein Muss mehr.
-
-### 🟡 Namens-Brücke Renderer-Output → Plattform-Konvention (Phase 5.4)
-
-Renderer schreibt `videos/module04-lesson02.mp4`, die Plattform erwartet
-`public/videos/<moduleSlug>-<lessonSlug>.mp4` (z. B.
-`smart-contracts-uniswap-amm.mp4`). Entscheidung offen:
-
-1. Post-Render-Rename-Step im Renderer (bevorzugt), oder
-2. Symlink/Alias-Layer in `lib/lessonAssets.ts`, der beide Konventionen
-   akzeptiert.
-
 ### 🟡 Voice-Varianten pro Lektionstyp
 
 Der neue `scripts/generate-voice.js` nutzt eine einzige Voice (`ELEVENLABS_VOICE`,
@@ -92,22 +59,6 @@ Sprecher nach Modultyp, Intro-Voice vs. Risk-Voice) fehlt eine Mapping-Schicht.
 `{ "<lessonId>": "<voiceName>" }` oder `{ "risk": "<voiceName>" }`
 basierend auf `video_config.audio_track.voice_id`. Erst nötig, wenn die
 Content-Vorgabe mehrere Stimmen verlangt.
-
-### 🟡 Render-Course-Orchestrator auf generate-voice.js umstellen
-
-`scripts/render-course.js` hat aktuell seinen **eigenen** inline-Voice-Step
-(`stepVoice`). Sauberer wäre, dass render-course genauso wie pilot-render
-auf `generate-voice.js` ausdelegiert, damit es nur einen ElevenLabs-Pfad
-im Repo gibt.
-
-### 🟡 Gemeinsamer Remotion-Bundle-Cache über Chunks
-
-`scripts/render-batch.js` spawnt pro Chunk einen isolierten Renderer-Child.
-Jeder Child führt ein eigenes `@remotion/bundler`-Bundle aus (~15–30 s).
-Bei 100 Lektionen / 10er-Chunks kostet das ~5 Min reine Bundle-Zeit. Fix:
-`render-lesson.js` und `render-batch.js` (im `video-renderer/`) um ein
-`--bundle-cache <path>`-CLI-Flag erweitern, Orchestrator bundelt einmal
-in `.render-batch-tmp/bundle/` und reicht den Pfad an alle Children weiter.
 
 ### 🟢 Render-Namenskonvention auflösen (3 Pilots + 1 Batch)
 
@@ -192,26 +143,6 @@ Das ist die gelieferte Vorlage des Content-Generators. Entweder:
 1. Content-Agent-Prompt verschärfen, sodass er diese Grenzen einhält, oder
 2. Example neu schreiben, damit er als Referenz dient.
 
-### 🟡 Duration-Schätzung aus Source-Narration zu niedrig
-
-Der Validator schätzt aus der Markdown-`Voice Narration Script`-Sektion
-ca. 100 s, der Generator-Output hat danach 474 s. Differenz kommt aus
-Pausen + narrativer Expansion. Zwei Optionen:
-
-1. Heuristik im Validator schärfen (Wörter × Pausen-Faktor anpassen), oder
-2. Validator ohne `video_config.json` nur als Soft-Warn akzeptieren, solange
-   der Generator als Ground Truth gilt.
-
-### 🟡 Line-Endings Content-Modules
-
-Git meldet ~53 Files als modifiziert, Inhalt identisch (CRLF/LF-Drift).
-Wird bei jedem Checkout wieder aufpoppen. Optionen:
-
-1. `.gitattributes` mit `* text=auto eol=lf` und einmal `git add --renormalize .`,
-2. oder lokal `core.autocrlf=input`.
-
-Aktuell: Drift ignoriert (keine Inhaltsdifferenz). Keine Priorität.
-
 ---
 
 ## Plattform
@@ -222,16 +153,44 @@ Der `validate:content`-Step ist auf `warn` für fehlendes `quiz.json` /
 `meta.json` gestellt. WIP-Module blockieren die CI damit nicht mehr.
 Sollte nach Fertigstellung aller Module auf `error` zurückgestuft werden.
 
-### 🟢 Video-Hero-Komponente getestet
+### 🟢 Video-Hero-Komponente End-to-End testen
 
-`components/LessonVideoHero.tsx` rendert korrekt bei vorhandenem Asset,
-ist aber noch nie gegen ein echtes gerendertes Video gelaufen (weil
-Rename-Brücke fehlt).
+`components/LessonVideoHero.tsx` rendert korrekt bei vorhandenem Asset.
+Mit der jetzt vorhandenen Rename-Brücke (`scripts/publish-videos.js`)
+muss nur noch ein echtes gerendertes Video gegenkontrolliert werden —
+`npm run render-videos && npm run publish-videos` und dann die
+Lesson-Page im Browser prüfen.
 
 ---
 
 ## Erledigt
 
+- ✅ Remotion-Bundle-Cache über Chunks: innerer
+  `video-renderer/src/render-batch.js` + `render-lesson.js` akzeptieren
+  jetzt `--bundle-cache <path>`, Top-Level `scripts/render-batch.js`
+  legt `TMP_DIR/remotion-bundle-cache/` an und reicht den Pfad an
+  alle Chunks durch → Webpack-Bundle läuft nur noch einmal pro Run.
+- ✅ `scripts/publish-videos.js` + `npm run publish-videos` —
+  Rename-Brücke Renderer-Output (`videos/moduleXX-lessonYY.mp4`) →
+  Plattform-Konvention (`public/videos/<moduleSlug>-<lessonSlug>.mp4`)
+  mit Default-Mapping (führende Nullen weg) und Override via
+  `config/video-slug-map.json`. Dokumentiert in
+  `docs/academy-build.md` (Schritt 7 + "Render-Namenskonvention").
+- ✅ Doppel-Ordnerstruktur flachgedrückt: `lesson-asset-generator/`,
+  `video-renderer/`, `video-style-engine/` sind jetzt nicht mehr
+  doppelt geschachtelt. Alle Pfade in Skripten und Docs angeglichen.
+- ✅ Validator-Hard-Gate direkt in `scripts/render-batch.js`
+  (`validate-lessons.js --lessons-dir <dir> --skip-generated`,
+  abschaltbar via `--skip-validate`).
+- ✅ `scripts/render-course.js` delegiert Voice-Step an
+  `scripts/generate-voice.js` → einziger ElevenLabs-Pfad im Repo.
+- ✅ Duration-/Slide-Count-/Visual-Heuristik im Validator
+  realistischer geschärft (inkl. German-Aliases, `**Slide N:**`-Regex,
+  Warnungen statt Errors für 4–12 Slides).
+- ✅ `.gitattributes` mit `* text=auto eol=lf` + binary-Rules für
+  `.png/.mp3/.mp4/.pdf` — CRLF/LF-Drift ist damit blockiert.
+- ✅ `scripts/split-modules.js` + `npm run split-modules` — zerlegt
+  `Module/modul-XX-*-FINAL.md` in `lessons/moduleXX-lessonYY.md`.
 - ✅ `docs/VIDEO_PRODUCTION_WORKFLOW.md` — End-to-End-Workflow-Doku
   (Pipeline-Diagramm, Ordnerstruktur lessons/ → generator-output/ →
   assets-input/ → videos/, Schritt-fuer-Schritt-Anleitung fuer den

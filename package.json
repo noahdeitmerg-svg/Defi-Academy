@@ -28,6 +28,8 @@
     "collect-prompts": "node scripts/collect-prompts.js",
     "check-assets": "node scripts/check-assets.js",
     "render-videos": "node scripts/render-all-videos.js",
+    "publish-videos": "node scripts/publish-videos.js",
+    "split-modules": "node scripts/split-modules.js",
     "academy-build": "npm run generate-assets && npm run collect-prompts",
     "verify": "npm run validate:content && npm run lint && npm run typecheck && npm run build",
     "import:modules": "node ./node_modules/tsx/dist/cli.mjs scripts/import-modules.ts",

@@ -1,0 +1,254 @@
+# Die Leverage-Mathematik und Wachstumsgrenzen
+
+## Lernziele
+
+Nach Abschluss dieser Lektion können die Lernenden:
+- Die exakte Rendite eines Loops für verschiedene Parameter berechnen
+- Die Wirkung von Zins-Veränderungen auf den Netto-Carry verstehen
+- Break-Even-Punkte für unterschiedliche Szenarien identifizieren
+- Safe Leverage Limits quantitativ definieren: maximale Iterations-Anzahl, Mindest-HF-Puffer, maximaler Leverage Multiple
+- Die Geometrische-Reihe-Mathematik eines Loops anwenden, um die Grenze des effektiven Leverages zu berechnen
+- Die Empfindlichkeit des Netto-Carry gegenüber Borrow-Rate-Änderungen (z.B. +2% Borrow-Rate) numerisch bewerten
+
+## Erklärung
+
+Leverage-Loops haben eine präzise mathematische Struktur. Diese Lektion gibt dir die Werkzeuge, um jeden Loop exakt zu analysieren — und zu erkennen, wann er sich lohnt, wann nicht.
+
+**Die Grundformel für Netto-Rendite**
+
+Für einen Loop gilt:
+
+```
+Netto-Rendite auf Ursprungskapital = Yield × Leverage - Borrow-Cost × (Leverage - 1)
+```
+
+**Erklärung:**
+- **Yield** ist der Staking-Yield auf das Collateral (z.B. 3,5% für wstETH)
+- **Leverage** ist der effektive Leverage-Faktor (z.B. 3x)
+- **Borrow-Cost** ist der Borrow-Zinssatz (z.B. 2,5% für WETH in E-Mode)
+- **(Leverage - 1)** ist der Anteil des Kapitals, der geborgt wurde
+
+**Konkretes Beispiel:**
+- Yield = 3,5%
+- Leverage = 3x
+- Borrow-Cost = 2,5%
+
+```
+Netto = 3,5% × 3 - 2,5% × 2 = 10,5% - 5% = 5,5%
+```
+
+**Interpretation:** Ein 3x-wstETH-Loop bringt 5,5% Netto-Rendite statt der 3,5% beim simplen Halten.
+
+**Die Sensitivität auf Zinsänderungen**
+
+Was passiert, wenn Borrow-Zinsen steigen? Angenommen, die ETH-Borrow-Rate steigt von 2,5% auf 3,5%:
+
+```
+Neu Netto = 3,5% × 3 - 3,5% × 2 = 10,5% - 7% = 3,5%
+```
+
+Bei gleichem Staking-Yield und identischen Borrow- und Yield-Raten ist der Leverage-Vorteil komplett verschwunden. Die Netto-Rendite entspricht der unverhebelten Strategie — aber mit deutlich mehr Risiko.
+
+**Weiter gedacht:** Bei Borrow-Rate 4% und Yield 3,5%:
+
+```
+Netto = 3,5% × 3 - 4% × 2 = 10,5% - 8% = 2,5%
+```
+
+Jetzt bringt der Loop **weniger** als einfaches Halten. Der Leverage arbeitet gegen dich — negativ Carry.
+
+**Break-Even-Analyse**
+
+Der Loop ist break-even (gleiche Rendite wie einfaches Halten), wenn:
+
+```
+Yield × Leverage - Borrow-Cost × (Leverage - 1) = Yield
+```
+
+Umgeformt:
+
+```
+Borrow-Cost = Yield
+```
+
+**Das heißt:** Solange Borrow-Rate = Yield-Rate, bringt der Loop identische Rendite zum Halten (aber mit mehr Risiko). Damit der Loop lohnt, muss der Spread **Yield - Borrow-Rate > 0** sein, und je größer der Spread, desto profitabler der Loop.
+
+**Der kritische Spread-Punkt**
+
+Die historische Spread-Entwicklung ETH-Staking vs. ETH-Borrow auf Aave:
+- **Normal-Betrieb:** Spread 0,5-1,5% (Loop profitabel)
+- **Bull-Markt mit hoher Leverage-Nachfrage:** Spread fällt auf 0-0,5% (Loop marginal)
+- **Bull-Markt mit extremer Nachfrage:** Spread kann negativ werden (Loop unprofitabel)
+
+In extremen Bull-Markets steigen ETH-Borrow-Rates stark, weil viele Leveraged-Staking-Strategien gleichzeitig aktiv sind. Das kann den Carry zerstören.
+
+**Beispiel: Der Spread-Kollaps 2023**
+
+In bestimmten Phasen 2023 stieg die ETH-Borrow-Rate auf Aave auf 4-5%, während stETH-Staking-Yield bei 3,5-4% lag. Der Carry war negativ — Leveraged-Staking-Positionen verloren Geld pro Tag.
+
+**Die Lektion:** Der Carry-Spread ist keine feste Größe. Er kann sich schnell ändern, und Loops müssen aktiv überwacht werden.
+
+**Leverage und Ausfall-Wahrscheinlichkeit**
+
+Mit höherem Leverage steigt die Liquidations-Wahrscheinlichkeit überproportional.
+
+**Beispiel:** Angenommen, wstETH/ETH-Ratio hat historisch eine Tages-Standardabweichung von 0,1% (sehr niedrig, weil korreliert).
+
+- Bei LTV 75% (Puffer 20 Prozentpunkte zur LT 95%): Liquidation erfordert 20% Abweichung. Praktisch nie.
+- Bei LTV 85% (Puffer 10 Prozentpunkte): Liquidation erfordert 10% Abweichung. In extremen Krisen möglich (siehe Juni 2022 mit 6%).
+- Bei LTV 93% (Puffer 2 Prozentpunkte): Liquidation erfordert 2% Abweichung. Bei jedem stärkeren Markt-Event wahrscheinlich.
+
+**Die Leverage-Ratio-Kurve**
+
+Die Ausfall-Wahrscheinlichkeit wächst nicht linear mit dem Leverage, sondern exponentiell. Das bedeutet: von 2x auf 3x zu gehen verdoppelt nicht das Risiko, sondern verdreifacht oder verfünffacht es (abhängig von der Asset-Volatilität).
+
+**Tabellarische Übersicht für wstETH-Loops:**
+
+| Leverage | LTV | HF | Liquidations-Puffer | Netto-Rendite* | Ausfallrate** |
+|---|---|---|---|---|---|
+| 1x (ohne Loop) | 0% | ∞ | ∞ | 3,5% | 0% |
+| 1,5x | 50% | 1,9 | ~45% | 4% | sehr niedrig |
+| 2x | 66% | 1,44 | ~30% | 4,5% | niedrig |
+| 2,5x | 73% | 1,3 | ~22% | 5% | moderat |
+| 3x | 79% | 1,2 | ~16% | 5,5% | erhöht |
+| 4x | 84% | 1,13 | ~11% | 6,5% | hoch |
+| 5x | 88% | 1,08 | ~7% | 7% | sehr hoch |
+
+*Annahme: 3,5% Yield, 2,5% Borrow-Cost
+**Subjektive Einschätzung bei normaler Marktvolatilität
+
+**Die zentrale Erkenntnis**
+
+Von 2x auf 4x Leverage steigt die Netto-Rendite von 4,5% auf 6,5% (2 Prozentpunkte). Aber das Liquidations-Risiko wird deutlich höher. Die Frage ist: sind die zusätzlichen 2 Prozentpunkte Rendite die stark erhöhte Liquidations-Wahrscheinlichkeit wert?
+
+Für das 7-8%-Jahresziel dieses Kurses: meist **nein**. Der konservative Sweet Spot liegt bei 2x-2,5x Leverage mit 4,5-5% Netto-Rendite. Das kombiniert mit anderen Portfolio-Teilen (Stablecoin-Supply, LP-Strategien) erreicht das 7-8%-Ziel ohne extrem gehebelte Einzelpositionen.
+
+**Gas-Kosten und Break-Even**
+
+Gas-Kosten spielen besonders bei kleineren Positionen eine Rolle:
+- Mainnet-Zap: 50-150 USD Gas
+- Mainnet manuell: 200-400 USD Gas
+- Layer-2: 5-20 USD Gas
+
+Bei einer 10.000-USD-Position und 5% Netto-Rendite sind das 500 USD jährlich. 200 USD Gas sind 40% der Jahres-Rendite — signifikant. Bei 100.000 USD Position sind 200 USD Gas nur 4% — vernachlässigbar.
+
+**Daumenregel für konservative Loops:**
+- Mindestens 50.000 USD Position auf Mainnet
+- Mindestens 5.000 USD Position auf Layer-2
+- Geplant für mindestens 6-12 Monate Halte-Dauer, sonst Gas-ineffizient
+
+## Folien-Zusammenfassung
+
+**[Slide 1] — Titel**
+Die Leverage-Mathematik und Wachstumsgrenzen
+
+**[Slide 2] — Die Grundformel**
+Netto = Yield × Leverage - Borrow-Cost × (Leverage - 1)
+3,5% × 3 - 2,5% × 2 = 5,5%
+
+**[Slide 3] — Zins-Sensitivität**
+Borrow steigt auf 3,5% → Netto = 3,5% (Leverage-Vorteil weg)
+Borrow 4% → Netto 2,5% (negativer Carry)
+
+**[Slide 4] — Break-Even**
+Loop lohnt nur bei Borrow < Yield
+Historisch: Spread 0,5-1,5% normal, kann negativ werden
+
+**[Slide 5] — Leverage vs. Liquidations-Puffer**
+2x → 30% Puffer
+3x → 16% Puffer
+4x → 11% Puffer
+5x → 7% Puffer
+
+**[Slide 6] — Die zentrale Erkenntnis**
+Rendite wächst linear mit Leverage
+Risiko wächst überproportional
+2x-2,5x ist oft der konservative Sweet Spot
+
+**[Slide 7] — Gas-Effizienz**
+Mainnet: Mindest 50.000 USD Position
+Layer-2: Mindest 5.000 USD
+Min 6-12 Monate Halte-Dauer
+
+## Sprechertext
+
+**[Slide 1]** Diese Lektion gibt dir die Mathematik. Jeder Loop lässt sich exakt analysieren, und die Rechnung zeigt klar, wann sich ein Loop lohnt und wann nicht.
+
+**[Slide 2]** Die Grundformel ist simpel. Netto-Rendite gleich Yield mal Leverage minus Borrow-Cost mal Leverage-minus-1. Konkret: bei 3,5 Prozent Yield, 3-fach Leverage, 2,5 Prozent Borrow-Cost: 3,5 mal 3 ist 10,5 Prozent Brutto. Minus 2,5 mal 2 gleich 5 Prozent Borrow-Kosten. Ergibt 5,5 Prozent Netto. Der Leverage verstärkt den Spread zwischen Yield und Borrow.
+
+**[Slide 3]** Die Sensitivität auf Zinsänderungen ist dramatisch. Wenn ETH-Borrow-Rate auf 3,5 Prozent steigt bei gleichem 3,5 Prozent Yield: die Netto-Rendite fällt auf 3,5 Prozent — identisch zum einfachen Halten, aber mit mehr Risiko. Bei 4 Prozent Borrow: Netto 2,5 Prozent, weniger als einfaches Halten. Negativ Carry — der Loop arbeitet gegen dich.
+
+**[Slide 4]** Break-Even. Der Loop ist identisch zum Halten, wenn Borrow gleich Yield ist. Profitabel nur bei Borrow kleiner als Yield. Historisch ist der Spread 0,5 bis 1,5 Prozent normal. In extremen Bull-Markets kann er auf null oder negativ fallen, weil viele Leveraged-Staking-Strategien gleichzeitig aktiv sind und ETH-Borrow-Rates nach oben treiben.
+
+**[Slide 5]** Leverage versus Liquidations-Puffer. Bei 2-fach Leverage hast du etwa 30 Prozent Puffer bis Liquidation. Bei 3-fach 16 Prozent. Bei 4-fach 11 Prozent. Bei 5-fach nur noch 7 Prozent. Das Liquidations-Risiko wächst exponentiell mit dem Leverage, nicht linear.
+
+**[Slide 6]** Die zentrale Erkenntnis dieser Lektion. Die Rendite wächst linear mit Leverage — plus 0,5 Prozentpunkte pro Leverage-Stufe bei unseren Beispielzahlen. Aber das Risiko wächst überproportional. Von 2 auf 4-fach Leverage sind 2 Prozentpunkte mehr Rendite, aber das Liquidations-Risiko vervielfacht sich. Für das 7 bis 8 Prozent Jahresziel ist 2 bis 2,5-fach Leverage oft der konservative Sweet Spot, kombiniert mit anderen Portfolio-Teilen.
+
+**[Slide 7]** Gas-Kosten beeinflussen die Entscheidung stark. Mainnet-Loop kostet 50 bis 400 Dollar Gas. Bei einer 10.000-Dollar-Position und 500 Dollar Jahres-Rendite frisst das bis zu 40 Prozent der Rendite. Daumenregel: auf Mainnet mindestens 50.000 USD Position. Auf Layer-2 mindestens 5.000 USD. Und geplant für mindestens 6 bis 12 Monate Halte-Dauer, sonst ist der Loop Gas-ineffizient.
+
+## Visuelle Vorschläge
+
+**[Slide 1]** Titelfolie.
+
+**[Slide 2]** Formel-Darstellung mit konkretem Zahlen-Einsatz.
+
+**[Slide 3]** Graph: Borrow-Rate auf x-Achse, Netto-Rendite auf y-Achse. Break-Even-Punkt markiert.
+
+**[Slide 4]** Historische Spread-Entwicklung ETH-Yield vs. Borrow über 12 Monate.
+
+**[Slide 5]** Tabelle der Leverage-Stufen mit Puffer-Visualisierung.
+
+**[Slide 6]** Doppel-Diagramm: Rendite-Kurve linear, Risiko-Kurve exponentiell.
+
+**[Slide 7]** Gas-Kosten-Break-Even-Kalkulation visualisiert.
+
+## Übung
+
+**Aufgabe: Umfassende Loop-Analyse**
+
+Du planst einen wstETH-Loop mit folgenden Parametern:
+- Kapital: 25.000 USD
+- Yield: 3,5% APR
+- Borrow-Cost: 2,5% APR
+- Plan: 2,5x Leverage
+- Chain: Arbitrum (Layer-2, Gas vernachlässigbar)
+- Halte-Dauer: 12 Monate
+
+Berechne:
+1. Netto-Rendite nach Formel
+2. Absoluter Jahres-Gewinn in USD
+3. Wie sieht die Rendite aus, wenn Borrow-Rate nach 6 Monaten auf 4% steigt?
+4. Break-Even-Borrow-Rate, ab der der Loop gegenüber einfachem Halten verliert
+5. Bei welchem wstETH/ETH-Ratio-Abfall würdest du liquidiert (Annahme: LT 95%)?
+
+**Deliverable:** Vollständige Berechnung + Einschätzung (5-7 Sätze): Ist dieser Loop für deine Risiko-Toleranz sinnvoll?
+
+## Quiz
+
+**Frage 1:** Ein Anleger setzt einen 4x wstETH-Loop mit 5,5% Yield und 4% Borrow-Rate auf. Warum könnte diese Position trotz des 1,5-Prozentpunkte-Spreads strukturell problematisch sein?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Die scheinbar attraktive Rendite-Rechnung (Netto = 5,5% × 4 - 4% × 3 = 22% - 12% = 10%) ignoriert mehrere Risiken, die bei 4x Leverage besonders relevant sind. Erstens: minimaler Liquidations-Puffer. Bei 4x Leverage ist der HF typisch bei 1,1-1,15, was nur etwa 10% Preis-Puffer bedeutet. Eine normale Markt-Volatilität (20-30% Preis-Bewegungen sind in Krypto normal über kurze Zeiträume) kann zur Liquidation führen. Zweitens: Zins-Empfindlichkeit. Bei 4x Leverage wird jeder Prozent-Anstieg der Borrow-Rate mit 3 Prozent Leverage verstärkt. Wenn die Borrow-Rate von 4% auf 5% steigt, fällt die Netto-Rendite von 10% auf 7%. Wenn sie auf 6% steigt: 4%. Wenn sie auf 8% steigt (was in Bull-Markets vorkommt): -2%. Drittens: Peg-Risiko. Jede stETH/ETH-Abweichung über 5% triggert wahrscheinlich Liquidation bei 4x. Juni 2022 zeigte 6% Abweichung — solche Ereignisse sind real. Viertens: Gas-Kosten für Rebalancing. In Stress-Situationen, wenn du schnell deleveragen musst, können Gas-Preise explodieren. Bei 4x ist jede Transaktion besonders teuer wegen vieler Sub-Operationen. Fünftens: psychologischer Stress. 4x Leverage heißt, dass dein Portfolio bei einem 10%-ETH-Crash effektiv -40% zeigen kann. Viele Nutzer treffen unter solchem Stress panische Entscheidungen. Konservativer Rat: 4x ist für Profis mit klaren Regeln und großen Portfolios. Für typische Retail-Nutzer ist 2-2,5x deutlich robuster, und die Rendite-Differenz (10% vs 5%) rechtfertigt selten das zusätzliche Risiko.
+</details>
+
+**Frage 2:** Warum ist die Break-Even-Regel "Borrow-Rate = Yield" eine wichtige mentale Markierung für Loop-Halter?
+
+<details>
+<summary>Antwort anzeigen</summary>
+
+Weil sie die klare Schwelle zwischen profitablen und unprofitablen Positionen definiert. Die Regel ist elegant simpel: der Loop bringt nur dann einen Vorteil gegenüber einfachem Halten, wenn die Yield-Rate über der Borrow-Rate liegt. Je größer der Spread, desto mehr wird durch den Leverage verstärkt. Wenn Borrow-Rate gleich Yield: der Leverage bringt identische Rendite wie Halten, aber mit allen zusätzlichen Risiken — schlechter Deal. Wenn Borrow-Rate über Yield: der Leverage bringt weniger Rendite als Halten — negativer Carry, und die Position verliert täglich. Für Loop-Halter bedeutet das: das Verhältnis Yield/Borrow muss kontinuierlich überwacht werden. Wenn der Spread auf nahe null fällt, ist es Zeit für Deleveraging. Zins-Rate in DeFi sind volatil — was heute profitabel ist, kann in Wochen unprofitabel werden. Besonders in Bull-Markets, wenn Leveraged-Staking-Strategien populär werden, steigen ETH-Borrow-Rates, während Staking-Yields stabil bleiben. Das kann den Carry komprimieren oder sogar invertieren. Konservative Regel: wenn Spread unter 0,5% fällt, aktiv über Deleveraging nachdenken. Wenn Spread negativ: sofort deleveragen. Die Break-Even-Regel ist der primäre Gesundheitscheck einer Loop-Position, wichtiger als tägliche Preis-Bewegungen.
+</details>
+
+## Video-Pipeline-Assets
+
+Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
+
+- `slides_prompt.txt` — 7 Folien: Titel → Rendite-Formel → Leverage-Multiple-Mathematik → Break-Even-Punkte → Safe Leverage Limits → Zins-Sensitivität → Wachstumsgrenzen
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `visual_plan.json` — Rendite-Formel-Grafik, Leverage-Multiple-Tabelle pro LTV, Break-Even-Diagramm, Safe-Limits-Empfehlung, Sensitivitäts-Analyse-Chart
+
+Pipeline: Gamma → ElevenLabs → CapCut.
+
+---
