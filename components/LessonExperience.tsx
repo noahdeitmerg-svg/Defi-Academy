@@ -63,8 +63,6 @@ export function LessonExperience({
         <p className="mt-3 text-sm text-[var(--color-text-muted)]">Dauer: {duration}</p>
       </header>
 
-      {videoHero ?? null}
-
       <div
         role="tablist"
         aria-label="Lektionsbereiche"
@@ -104,7 +102,11 @@ export function LessonExperience({
         {tab === "video" ? (
           <div className="space-y-8">
             <LessonSectionBlock title="Voice-over & Video" sourceHeading="Voice Narration Script">
-              <VideoPlayer narration={narration} lessonTitle={title} />
+              <VideoPlayer
+                narration={narration}
+                lessonTitle={title}
+                videoSlot={videoHero ?? undefined}
+              />
             </LessonSectionBlock>
             <LessonSectionBlock title="Visuals" sourceHeading="Visual Suggestions">
               {visuals.length > 0 ? (

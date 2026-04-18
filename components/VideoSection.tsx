@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 type Props = {
   narration: string;
   lessonTitle: string;
+  /** Wenn gesetzt (z. B. LessonVideoHero von der Server-Seite), ersetzt den Platzhalter-Block. */
+  videoSlot?: ReactNode | null;
 };
 
-export function VideoSection({ narration, lessonTitle }: Props) {
+export function VideoSection({ narration, lessonTitle, videoSlot }: Props) {
   const [showTranscript, setShowTranscript] = useState(false);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
@@ -24,18 +26,24 @@ export function VideoSection({ narration, lessonTitle }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)]">
-        <div className="aspect-video flex flex-col items-center justify-center gap-2 p-8 text-center">
-          <div className="rounded-full border border-dashed border-[var(--color-border)] px-4 py-1 text-xs font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-            Platzhalter
-          </div>
-          <p className="max-w-md text-sm text-[var(--color-text-muted)]">
-            Hier erscheint später das KI-generierte Video. Die Grundlage bildet das Skript unter
-            „Transkript“ — exportierbar für TTS- und Videopipelines.
-          </p>
-          <span className="text-xs text-[var(--color-text-muted)]">{lessonTitle}</span>
+      {videoSlot ? (
+        <div className="overflow-hidden rounded-2xl border border-[var(--color-border)] shadow-sm">
+          {videoSlot}
         </div>
-      </div>
+      ) : (
+        <div className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)]">
+          <div className="aspect-video flex flex-col items-center justify-center gap-2 p-8 text-center">
+            <div className="rounded-full border border-dashed border-[var(--color-border)] px-4 py-1 text-xs font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+              Platzhalter
+            </div>
+            <p className="max-w-md text-sm text-[var(--color-text-muted)]">
+              Hier erscheint später das KI-generierte Video. Die Grundlage bildet das Skript unter
+              „Transkript“ — exportierbar für TTS- und Videopipelines.
+            </p>
+            <span className="text-xs text-[var(--color-text-muted)]">{lessonTitle}</span>
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-wrap items-center gap-3">
         <button
