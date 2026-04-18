@@ -4,6 +4,8 @@
 > aktualisiert: neue offene Punkte werden hinzugefügt, erledigte werden
 > mit Commit-Hash abgehakt. Priorität grob absteigend.
 
+**Roadmap (Phasen):** siehe [`docs/ROADMAP.md`](ROADMAP.md) — Reihenfolge: (1) Video + Gamma High Quality, (2) alle Videos automatisch generieren, (3) vor GitHub-Push Vimeo/Hosting statt großer MP4s im Repo.
+
 ## Legende
 
 - 🔴 blockiert: muss vor der nächsten Phase erledigt sein
