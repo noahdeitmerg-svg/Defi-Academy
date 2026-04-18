@@ -31,6 +31,7 @@ const path = require('path');
 
 const { bundle } = require('@remotion/bundler');
 
+const { resolveLessonAssets } = require('./asset-resolver');
 const { renderLesson } = require('./render-lesson');
 
 function parseArgs(argv) {
@@ -221,6 +222,33 @@ Usage:
     }
     console.log('');
   }
+
+  // 2b) Alle Lektionen-Assets VOR dem Rendern ins Bundle-public kopieren.
+  //
+  // Ohne diesen Schritt schlagen parallele oder schnell aufeinanderfolgende
+  // renderLesson-Laeufe fehl: Remotion laedt voice.mp3 per HTTP aus
+  // <bundle>/public/assets/<lesson>/ — wenn resolveLessonAssets erst
+  // spaeter laeuft oder Races bei --parallel > 1 auftreten, fehlt die Datei
+  // (404). Ein vorgelagerter Pass schreibt alle voice.mp3 + visuals fuer
+  // den gesamten Batch in dasselbe effectivePublicDir.
+  const effectivePublicDir = path.join(bundleLocation, 'public');
+  fs.mkdirSync(effectivePublicDir, { recursive: true });
+  console.log(`Pre-staging assets for ${lessons.length} lesson(s) → ${effectivePublicDir}`);
+  for (let idx = 0; idx < lessons.length; idx++) {
+    const lessonId = lessons[idx];
+    const mdPath = findMarkdownFor(lessonId, lessonsDir);
+    const nextLesson = computeNextLesson(lessons, idx);
+    resolveLessonAssets({
+      generatorOutputDir: generatorDir,
+      lessonId,
+      assetsInputDir: assetsDir,
+      lessonMarkdownPath: mdPath,
+      publicDir: effectivePublicDir,
+      nextLesson,
+    });
+  }
+  console.log('  ok (all lesson assets in bundle public/)');
+  console.log('');
 
   // 3) Render lessons
   const videosDir = path.join(outputDir, 'videos');

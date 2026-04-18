@@ -195,6 +195,38 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * Entfernt Markdown-/Kommentar-Artefakte aus voice_script.txt bevor der Text
+ * an ElevenLabs gesendet wird.
+ *
+ * Ohne diesen Schritt liest die TTS Zeichen wie "#", "##", "---", "[Klammern]"
+ * und Section-Marker (z.B. "# section: lesson_title") wörtlich vor.
+ *
+ * Regeln:
+ *   - Zeilen die mit "#" beginnen werden verworfen
+ *     (Header + Section-Kommentare + Hinweise).
+ *   - Horizontale Trenner ("---") werden verworfen.
+ *   - <break> / <emphasis> / SSML-Tags bleiben unveraendert (ElevenLabs
+ *     unterstuetzt diese nativ via v1/text-to-speech).
+ *   - Phonetische Hilfe in eckigen Klammern direkt hinter einem Akronym
+ *     ("DeFi [DeFi]") wird entfernt — ElevenLabs v2.5 kann deutsche
+ *     Akronyme selbst aussprechen, und die Klammern werden sonst mitgelesen.
+ *   - Mehrfache Leerzeilen werden zu einer zusammengefasst.
+ */
+function sanitizeVoiceScript(raw) {
+  const kept = [];
+  for (const line of raw.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('#')) continue;
+    if (/^-{3,}$/.test(trimmed)) continue;
+    kept.push(line);
+  }
+  let text = kept.join('\n');
+  text = text.replace(/(\w[\w-]*)\s*\[\s*\1\s*\]/g, '$1');
+  text = text.replace(/\n{3,}/g, '\n\n');
+  return text.trim();
+}
+
 async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity }) {
   const url = `${ELEVEN_BASE}/text-to-speech/${encodeURIComponent(voiceId)}`;
   const res = await fetch(url, {
@@ -207,7 +239,12 @@ async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity }
     body: JSON.stringify({
       text,
       model_id: modelId,
-      voice_settings: { stability, similarity_boost: similarity },
+      voice_settings: {
+        stability,
+        similarity_boost: similarity,
+        style: 0,
+        use_speaker_boost: true,
+      },
     }),
   });
   if (!res.ok) {
@@ -285,6 +322,9 @@ async function main() {
   log.info('DeFi Academy — generate-voice (ElevenLabs TTS)');
   log.info(`Scripts-Dir:  ${scriptsDir}`);
   log.info(`Output-Dir:   ${outputDir}`);
+  log.info(`Model:        ${process.env.ELEVENLABS_MODEL || 'eleven_turbo_v2 (default)'}`);
+  log.info(`Stability:    ${process.env.ELEVENLABS_STABILITY || '0.5 (default)'}`);
+  log.info(`Similarity:   ${process.env.ELEVENLABS_SIMILARITY || '0.75 (default)'}`);
   log.info(`Concurrency:  ${concurrency}`);
   log.info(`Dry-run:      ${dryRun}`);
   log.info(`Force:        ${force}`);
@@ -350,11 +390,15 @@ async function main() {
       return { status: 'skipped-existing', path: destPath };
     }
 
-    const text = fs.readFileSync(scriptPath, 'utf8').trim();
-    if (!text) {
+    const rawText = fs.readFileSync(scriptPath, 'utf8').trim();
+    if (!rawText) {
       throw new Error(`voice_script.txt ist leer: ${scriptPath}`);
     }
-    log.info(`Generating voice for ${lessonId}  (${text.length} chars)`, lessonId);
+    const text = sanitizeVoiceScript(rawText);
+    if (!text) {
+      throw new Error(`voice_script.txt enthaelt nach Sanitize keinen sprechbaren Text: ${scriptPath}`);
+    }
+    log.info(`Generating voice for ${lessonId}  (${text.length} chars, raw ${rawText.length})`, lessonId);
 
     if (dryRun) {
       return { status: 'dry-run', scriptPath, chars: text.length };

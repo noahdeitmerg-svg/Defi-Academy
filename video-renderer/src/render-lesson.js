@@ -52,29 +52,40 @@ async function renderLesson({
   onProgress = null,
 }) {
   const rendererRoot = path.resolve(__dirname, '..');
-  const publicDir = path.join(rendererRoot, 'public');
-  fs.mkdirSync(publicDir, { recursive: true });
+  const rendererPublicDir = path.join(rendererRoot, 'public');
+  fs.mkdirSync(rendererPublicDir, { recursive: true });
 
-  // 1) Resolve assets
-  const { renderInput, targetAssetsDir } = resolveLessonAssets({
-    generatorOutputDir,
-    lessonId,
-    assetsInputDir,
-    lessonMarkdownPath,
-    publicDir,
-    nextLesson,
-  });
-
-  // 2) Bundle Remotion project (cache if possible)
+  // 1) Bundle Remotion project (cache if possible) — MUST happen BEFORE asset
+  //    resolution, because the bundler snapshots `publicDir` at build time
+  //    into `<bundle>/public/`. If we use a cached bundle, the canonical
+  //    public dir for this render is the bundle's own public dir, not the
+  //    renderer's publicDir. Writing assets into the renderer's publicDir
+  //    AFTER the bundle is already built will not propagate to the bundle.
   const entryPoint = path.join(rendererRoot, 'remotion', 'index.jsx');
   const bundleLocation =
     bundleCachePath && fs.existsSync(bundleCachePath)
       ? bundleCachePath
       : await bundle({
           entryPoint,
-          publicDir,
+          publicDir: rendererPublicDir,
           webpackOverride: (config) => config,
         });
+
+  // Effective publicDir that Remotion will actually serve from.
+  const effectivePublicDir = path.join(bundleLocation, 'public');
+  fs.mkdirSync(effectivePublicDir, { recursive: true });
+
+  // 2) Resolve assets — write them DIRECTLY into the bundle's public dir
+  //    so every lesson in a batch render gets its own copy available under
+  //    the same serve URL.
+  const { renderInput, targetAssetsDir } = resolveLessonAssets({
+    generatorOutputDir,
+    lessonId,
+    assetsInputDir,
+    lessonMarkdownPath,
+    publicDir: effectivePublicDir,
+    nextLesson,
+  });
 
   // 3) Select composition with our lesson's videoConfig injected
   const inputProps = {
