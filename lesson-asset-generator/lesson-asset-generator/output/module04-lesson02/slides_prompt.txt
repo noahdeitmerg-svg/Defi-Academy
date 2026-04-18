@@ -1,0 +1,136 @@
+# GAMMA SLIDE DECK PROMPT
+
+Lesson ID: module04-lesson02
+Module: 04
+Lesson: 02
+Title: Automated Market Maker: Das Constant-Product-Modell
+
+## Designvorgaben (zwingend einhalten)
+
+- Dunkler Hintergrund (#0B0F14), Text in Weiss/Grau-Toenen
+- Akzentfarbe Blau (#4F8BFF); Risiko-Sektion in Rot (#D9544E)
+- Schriftart: Inter
+- Pro Slide: Titel + 3-4 Bullet Points + 1 visuelles Element rechts
+- Minimale Dekoration, keine Emojis, keine Stockfotos
+- Technische, didaktische Sprache; kein Marketing-Hype
+- Diagramme, Dashboards oder Protokoll-Screenshots in der Visual Area
+
+## Deck Struktur (7 Slides)
+
+---
+
+### Slide 1 – Automated Market Maker: Das Constant-Product-Modell
+Section: lesson_title
+
+**Title:**
+Automated Market Maker: Das Constant-Product-Modell
+
+**Bullet Points:**
+- Das Constant-Product-Modell x*y=k mathematisch erklaeren koennen
+- Den Zusammenhang zwischen Pool-Reserven und Preisbildung verstehen
+- Slippage und Impermanent Loss als Konsequenzen des Modells einordnen
+
+**Visual Description:**
+- Keine eigene Grafik. Nur Titelanimation der Video Style Engine.
+
+---
+
+### Slide 2 – Konzept
+Section: concept
+
+**Title:**
+Konzept
+
+**Bullet Points:**
+- Der Preis ergibt sich aus dem Verhaeltnis der Reserven y/x.
+- Jeder Swap veraendert die Reserven und damit den Preis.
+
+**Visual Description:**
+- Impermanent-Loss-Chart in Abhaengigkeit von relativer Preisaenderung
+
+---
+
+### Slide 3 – Mechanismus
+Section: mechanism
+
+**Title:**
+Mechanismus
+
+**Bullet Points:**
+- Das Constant-Product-Modell folgt der Formel x*y=k mit konstantem k.
+- Die Architektur besteht aus Pool-Contract, LP-Tokens und Fee-Mechanismus.
+- Der Gebuehrensatz betraegt bei Uniswap V2 standardmaessig 0.3% pro Swap.
+- Merke: Der Preis folgt der Formel, nicht dem Markt.
+
+**Visual Description:**
+- Flussdiagramm oder nummerierte Schrittfolge (Input → Prozess → Output).
+
+---
+
+### Slide 4 – Systemarchitektur
+Section: system_architecture
+
+**Title:**
+Systemarchitektur
+
+**Bullet Points:**
+- Ein AMM ist ein Smart Contract, der Trades ohne Orderbuch ermoeglicht.
+
+**Visual Description:**
+- Diagramm der Bonding-Curve x*y=k mit markierten Punkten vor und nach einem Swap
+- Systemdiagramm eines Uniswap V2 Pools: Nutzer, Pool-Contract, LP-Token, Fee-Flow
+
+---
+
+### Slide 5 – Risikoebene
+Section: risk_layer
+Accent Color: #D9544E (Risk)
+
+**Title:**
+Risikoebene
+
+**Bullet Points:**
+- Grosse Swaps verursachen Slippage, weil die Bonding-Curve nicht linear ist.
+- LP-Tokens repraesentieren den Anteil am Pool.
+- Impermanent Loss entsteht, wenn sich die Preise der Tokens auseinander entwickeln.
+- Risiken umfassen Slippage, Impermanent Loss und Smart-Contract-Exploits.
+
+**Visual Description:**
+- Tabelle der Hauptrisiken: Slippage, Impermanent Loss, Smart-Contract-Exploit
+
+---
+
+### Slide 6 – Protokollbeispiel
+Section: protocol_example
+
+**Title:**
+Protokollbeispiel
+
+**Bullet Points:**
+- Als konkretes Beispiel dient der Uniswap V2 ETH/USDC-Pool.
+
+**Visual Description:**
+- Screenshot des Uniswap V2 ETH/USDC Pool-Dashboards mit anonymisierten Adressen
+
+---
+
+### Slide 7 – Kernaussagen
+Section: key_takeaways
+
+**Title:**
+Kernaussagen
+
+**Bullet Points:**
+- Merke: Liquiditaet in einem Pool ist nicht risikofrei.
+- Merke: Gebuehreneinnahmen koennen Impermanent Loss teilweise kompensieren.
+
+**Visual Description:**
+- Drei nummerierte Kernaussagen mit blauen Akzentbalken.
+
+---
+
+## Output-Anforderung
+
+Liefere exakt 7 Slides im obigen Stil.
+Jede Slide muss im 16:9 Format angelegt sein (1920x1080).
+Die Visual Area belegt ca. 55% der Breite rechts, der Text 40% links.

@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VideoConfig",
+  "description": "Master configuration for a single DeFi Academy lesson video. Consumed by the Remotion renderer.",
+  "type": "object",
+  "required": [
+    "lesson_id",
+    "module",
+    "lesson",
+    "title",
+    "duration_seconds",
+    "fps",
+    "resolution",
+    "aspect_ratio",
+    "sections",
+    "slide_order",
+    "visual_timing",
+    "audio_track",
+    "assets"
+  ],
+  "properties": {
+    "lesson_id": {
+      "type": "string",
+      "pattern": "^module[0-9]{2}-lesson[0-9]{2}$"
+    },
+    "module": {
+      "type": "object",
+      "required": ["number", "title"],
+      "properties": {
+        "number": { "type": "integer", "minimum": 1 },
+        "title": { "type": ["string", "null"] }
+      }
+    },
+    "lesson": {
+      "type": "object",
+      "required": ["number", "title"],
+      "properties": {
+        "number": { "type": "integer", "minimum": 1 },
+        "title": { "type": "string" }
+      }
+    },
+    "title": { "type": "string" },
+    "duration_seconds": {
+      "type": "integer",
+      "minimum": 300,
+      "maximum": 600
+    },
+    "fps": { "type": "integer", "enum": [30] },
+    "resolution": {
+      "type": "string",
+      "pattern": "^[0-9]+x[0-9]+$"
+    },
+    "aspect_ratio": { "type": "string", "enum": ["16:9"] },
+    "sections": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "required": ["name", "order", "start_seconds", "end_seconds", "scene"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "intro",
+              "lesson_title",
+              "concept",
+              "mechanism",
+              "system_architecture",
+              "risk_layer",
+              "protocol_example",
+              "key_takeaways",
+              "outro"
+            ]
+          },
+          "order": { "type": "integer", "minimum": 1, "maximum": 9 },
+          "start_seconds": { "type": "number", "minimum": 0 },
+          "end_seconds": { "type": "number" },
+          "scene": {
+            "type": "string",
+            "enum": ["intro-scene", "slide-template", "outro-scene"]
+          },
+          "slide_ref": { "type": ["string", "null"] },
+          "accent_color_override": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "slide_order": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 7,
+      "items": { "type": "string" }
+    },
+    "visual_timing": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["visual_id", "start_seconds", "end_seconds", "type"],
+        "properties": {
+          "visual_id": { "type": "string" },
+          "start_seconds": { "type": "number" },
+          "end_seconds": { "type": "number" },
+          "type": {
+            "type": "string",
+            "enum": ["diagram", "dashboard", "screenshot", "chart", "animation"]
+          },
+          "reference": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "audio_track": {
+      "type": "object",
+      "required": ["file", "voice_id", "language"],
+      "properties": {
+        "file": { "type": "string" },
+        "voice_id": { "type": "string" },
+        "language": { "type": "string", "enum": ["de"] },
+        "engine": { "type": "string", "enum": ["elevenlabs"] }
+      }
+    },
+    "assets": {
+      "type": "object",
+      "required": ["video_output", "poster_output"],
+      "properties": {
+        "video_output": { "type": "string" },
+        "poster_output": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "name": "DeFi Academy Animation Rules",
+  "version": "1.0.0",
+  "philosophy": "Minimal motion. Animationen unterstuetzen Verstaendnis, sie lenken nicht ab. Keine dekorativen Effekte.",
+
+  "global": {
+    "fps": 30,
+    "default_easing": "easeOutQuad",
+    "max_simultaneous_animations": 3,
+    "forbidden": [
+      "bouncing",
+      "spinning",
+      "parallax_backgrounds",
+      "confetti",
+      "particle_effects",
+      "3d_flips",
+      "shake",
+      "rainbow_gradients"
+    ]
+  },
+
+  "timing": {
+    "short": 10,
+    "medium": 15,
+    "long": 25,
+    "stagger_delay": 8
+  },
+
+  "entrances": {
+    "title": {
+      "type": "fade_and_rise",
+      "duration_frames": 15,
+      "translate_y_px": 12,
+      "easing": "easeOutQuad"
+    },
+    "bullet": {
+      "type": "fade_and_slide_right",
+      "duration_frames": 13,
+      "translate_x_px": -8,
+      "stagger_frames": 8,
+      "easing": "easeOutQuad"
+    },
+    "visual": {
+      "type": "fade",
+      "duration_frames": 20,
+      "delay_frames": 20,
+      "easing": "easeInOutQuad"
+    },
+    "section_label": {
+      "type": "fade",
+      "duration_frames": 10,
+      "easing": "linear"
+    }
+  },
+
+  "exits": {
+    "default": {
+      "type": "fade",
+      "duration_frames": 12,
+      "easing": "easeInQuad"
+    }
+  },
+
+  "transitions_between_slides": {
+    "type": "cross_fade",
+    "duration_frames": 15,
+    "background_continuity": true,
+    "notes": "Hintergrund bleibt konstant. Nur Inhalt wird ueberblendet."
+  },
+
+  "diagram_build_up": {
+    "allowed": true,
+    "rules": {
+      "reveal_order": "left_to_right_or_top_to_bottom",
+      "node_fade_duration_frames": 10,
+      "edge_draw_duration_frames": 15,
+      "stagger_frames": 6,
+      "easing": "easeOutQuad"
+    },
+    "notes": "Diagramme koennen schrittweise erscheinen, wenn dies das Verstaendnis unterstuetzt (z.B. Kapitalfluss-Pfeile)."
+  },
+
+  "number_counters": {
+    "allowed": true,
+    "duration_frames": 25,
+    "easing": "easeOutQuad",
+    "use_case": "APY-Werte, Liquidationsschwellen, Pool-Groessen"
+  },
+
+  "highlight": {
+    "type": "accent_border_pulse",
+    "duration_frames": 20,
+    "repeat": 1,
+    "use_case": "Hervorhebung eines einzelnen Dashboard-Elements"
+  },
+
+  "intro_outro": {
+    "intro_logo_reveal": {
+      "type": "fade_and_rise",
+      "duration_frames": 25,
+      "translate_y_px": 20
+    },
+    "intro_line_draw": {
+      "type": "width_expand",
+      "duration_frames": 20,
+      "easing": "easeInOutQuad"
+    },
+    "outro_fade": {
+      "type": "fade",
+      "duration_frames": 30,
+      "easing": "easeInOutQuad"
+    }
+  },
+
+  "accessibility": {
+    "respect_prefers_reduced_motion": true,
+    "reduced_motion_fallback": "fade_only",
+    "minimum_contrast_ratio": 4.5
+  }
+}

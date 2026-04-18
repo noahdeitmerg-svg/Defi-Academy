@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VisualPlan",
+  "description": "Structured plan for all visuals (diagrams, dashboards, screenshots, animation cues) used in a lesson video.",
+  "type": "object",
+  "required": ["lesson_id", "visuals", "animation_cues"],
+  "properties": {
+    "lesson_id": {
+      "type": "string",
+      "pattern": "^module[0-9]{2}-lesson[0-9]{2}$"
+    },
+    "visuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "slide_ref", "type", "description"],
+        "properties": {
+          "id": { "type": "string" },
+          "slide_ref": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["diagram", "dashboard", "screenshot", "chart", "animation"]
+          },
+          "description": { "type": "string" },
+          "source_protocol": {
+            "type": ["string", "null"],
+            "description": "e.g. uniswap, aave, compound, curve — or null for generic diagrams"
+          },
+          "source_url_hint": {
+            "type": ["string", "null"],
+            "description": "Suggested URL or dashboard to capture the screenshot from"
+          },
+          "labels": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "color_accent": {
+            "type": ["string", "null"]
+          },
+          "capture_instructions": {
+            "type": ["string", "null"],
+            "description": "Guidance for capturing a real protocol screenshot (UI section, highlighted element, anonymization)"
+          }
+        }
+      }
+    },
+    "animation_cues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["visual_id", "cue_type", "trigger_seconds"],
+        "properties": {
+          "visual_id": { "type": "string" },
+          "cue_type": {
+            "type": "string",
+            "enum": [
+              "fade_in",
+              "fade_out",
+              "node_reveal",
+              "edge_draw",
+              "highlight_pulse",
+              "number_counter",
+              "cross_fade"
+            ]
+          },
+          "trigger_seconds": { "type": "number", "minimum": 0 },
+          "duration_frames": { "type": "integer", "minimum": 1 },
+          "target_element": { "type": ["string", "null"] },
+          "from_value": { "type": ["number", "null"] },
+          "to_value": { "type": ["number", "null"] }
+        }
+      }
+    }
+  }
+}

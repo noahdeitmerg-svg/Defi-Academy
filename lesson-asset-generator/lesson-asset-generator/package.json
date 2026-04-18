@@ -1,0 +1,19 @@
+{
+  "name": "defi-academy-lesson-asset-generator",
+  "version": "1.0.0",
+  "description": "Wandelt Content-Agent-Lektionen in Gamma/ElevenLabs/Remotion-kompatible Video-Assets um.",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "src/pipeline.js",
+  "bin": {
+    "lesson-assets": "src/cli.js"
+  },
+  "scripts": {
+    "build": "echo 'Pure JS, no build step.'",
+    "start": "node src/cli.js",
+    "test": "node tests/run-tests.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

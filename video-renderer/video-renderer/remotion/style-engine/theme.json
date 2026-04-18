@@ -1,0 +1,181 @@
+{
+  "name": "DeFi Academy Video Theme",
+  "version": "1.0.0",
+  "description": "Clean, professional, technical, educational visual standard for all DeFi Academy lesson videos.",
+
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "aspect_ratio": "16:9",
+    "fps": 30,
+    "background": "#0B0F14"
+  },
+
+  "colors": {
+    "background": {
+      "primary": "#0B0F14",
+      "secondary": "#121821",
+      "elevated": "#1A2230"
+    },
+    "surface": {
+      "card": "#151C26",
+      "border": "#232D3D",
+      "divider": "#2A3546"
+    },
+    "text": {
+      "primary": "#F5F7FA",
+      "secondary": "#B7C0CC",
+      "muted": "#7A8494",
+      "inverse": "#0B0F14"
+    },
+    "accent": {
+      "primary": "#4F8BFF",
+      "primary_soft": "#1E3A66",
+      "secondary": "#35C08A",
+      "secondary_soft": "#1B3F32"
+    },
+    "semantic": {
+      "info": "#4F8BFF",
+      "success": "#35C08A",
+      "warning": "#E0A94A",
+      "risk": "#D9544E"
+    },
+    "chart_palette": [
+      "#4F8BFF",
+      "#35C08A",
+      "#E0A94A",
+      "#D9544E",
+      "#9B7BE0",
+      "#5EC5D6"
+    ]
+  },
+
+  "typography": {
+    "font_family": "Inter",
+    "fallback": "system-ui, -apple-system, sans-serif",
+    "weights": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "scale": {
+      "display": {
+        "size": 92,
+        "line_height": 1.1,
+        "weight": 700,
+        "letter_spacing": "-0.02em"
+      },
+      "title": {
+        "size": 64,
+        "line_height": 1.15,
+        "weight": 600,
+        "letter_spacing": "-0.015em"
+      },
+      "heading": {
+        "size": 44,
+        "line_height": 1.25,
+        "weight": 600,
+        "letter_spacing": "-0.01em"
+      },
+      "subheading": {
+        "size": 30,
+        "line_height": 1.35,
+        "weight": 500,
+        "letter_spacing": "0em"
+      },
+      "body": {
+        "size": 26,
+        "line_height": 1.5,
+        "weight": 400,
+        "letter_spacing": "0em"
+      },
+      "caption": {
+        "size": 20,
+        "line_height": 1.4,
+        "weight": 500,
+        "letter_spacing": "0.02em"
+      },
+      "label": {
+        "size": 18,
+        "line_height": 1.3,
+        "weight": 600,
+        "letter_spacing": "0.08em",
+        "text_transform": "uppercase"
+      }
+    }
+  },
+
+  "spacing": {
+    "unit": 8,
+    "xs": 8,
+    "sm": 16,
+    "md": 24,
+    "lg": 40,
+    "xl": 64,
+    "xxl": 96,
+    "safe_area": {
+      "top": 80,
+      "right": 120,
+      "bottom": 80,
+      "left": 120
+    }
+  },
+
+  "layout": {
+    "slide_grid": {
+      "columns": 12,
+      "gap": 32,
+      "content_max_width": 1680
+    },
+    "visual_area": {
+      "width_ratio": 0.55,
+      "height_ratio": 0.7,
+      "alignment": "right",
+      "padding": 32,
+      "background": "#151C26",
+      "border_color": "#232D3D",
+      "border_width": 1,
+      "border_radius": 12
+    },
+    "text_area": {
+      "width_ratio": 0.4,
+      "alignment": "left",
+      "bullet_spacing": 24
+    }
+  },
+
+  "elements": {
+    "border_radius": {
+      "sm": 6,
+      "md": 12,
+      "lg": 20,
+      "pill": 999
+    },
+    "shadow": {
+      "sm": "0 2px 8px rgba(0, 0, 0, 0.25)",
+      "md": "0 8px 24px rgba(0, 0, 0, 0.35)",
+      "lg": "0 16px 48px rgba(0, 0, 0, 0.45)"
+    },
+    "accent_bar": {
+      "width": 6,
+      "color": "#4F8BFF",
+      "border_radius": 3
+    },
+    "bullet": {
+      "type": "dash",
+      "color": "#4F8BFF",
+      "size": 14,
+      "spacing": 16
+    }
+  },
+
+  "branding": {
+    "logo_text": "DeFi Academy",
+    "logo_color": "#F5F7FA",
+    "logo_accent": "#4F8BFF",
+    "lower_third_enabled": true,
+    "module_label_position": "top-left",
+    "module_label_format": "MODUL {module} · LEKTION {lesson}"
+  }
+}

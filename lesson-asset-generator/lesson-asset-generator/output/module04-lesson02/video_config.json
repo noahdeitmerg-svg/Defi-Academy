@@ -1,0 +1,177 @@
+{
+  "lesson_id": "module04-lesson02",
+  "module": {
+    "number": 4,
+    "title": null
+  },
+  "lesson": {
+    "number": 2,
+    "title": "Automated Market Maker: Das Constant-Product-Modell"
+  },
+  "title": "Automated Market Maker: Das Constant-Product-Modell",
+  "duration_seconds": 474,
+  "fps": 30,
+  "resolution": "1920x1080",
+  "aspect_ratio": "16:9",
+  "sections": [
+    {
+      "name": "intro",
+      "order": 1,
+      "start_seconds": 0,
+      "end_seconds": 12,
+      "scene": "intro-scene",
+      "slide_ref": null,
+      "accent_color_override": null
+    },
+    {
+      "name": "lesson_title",
+      "order": 2,
+      "start_seconds": 12,
+      "end_seconds": 27,
+      "scene": "slide-template",
+      "slide_ref": "slide-01-title",
+      "accent_color_override": null
+    },
+    {
+      "name": "concept",
+      "order": 3,
+      "start_seconds": 27,
+      "end_seconds": 102,
+      "scene": "slide-template",
+      "slide_ref": "slide-02-concept",
+      "accent_color_override": null
+    },
+    {
+      "name": "mechanism",
+      "order": 4,
+      "start_seconds": 102,
+      "end_seconds": 192,
+      "scene": "slide-template",
+      "slide_ref": "slide-03-mechanism",
+      "accent_color_override": null
+    },
+    {
+      "name": "system_architecture",
+      "order": 5,
+      "start_seconds": 192,
+      "end_seconds": 262,
+      "scene": "slide-template",
+      "slide_ref": "slide-04-architecture",
+      "accent_color_override": null
+    },
+    {
+      "name": "risk_layer",
+      "order": 6,
+      "start_seconds": 262,
+      "end_seconds": 332,
+      "scene": "slide-template",
+      "slide_ref": "slide-05-risk",
+      "accent_color_override": "#D9544E"
+    },
+    {
+      "name": "protocol_example",
+      "order": 7,
+      "start_seconds": 332,
+      "end_seconds": 412,
+      "scene": "slide-template",
+      "slide_ref": "slide-06-example",
+      "accent_color_override": null
+    },
+    {
+      "name": "key_takeaways",
+      "order": 8,
+      "start_seconds": 412,
+      "end_seconds": 462,
+      "scene": "slide-template",
+      "slide_ref": "slide-07-takeaways",
+      "accent_color_override": null
+    },
+    {
+      "name": "outro",
+      "order": 9,
+      "start_seconds": 462,
+      "end_seconds": 474,
+      "scene": "outro-scene",
+      "slide_ref": null,
+      "accent_color_override": null
+    }
+  ],
+  "slide_order": [
+    "slide-01-title",
+    "slide-02-concept",
+    "slide-03-mechanism",
+    "slide-04-architecture",
+    "slide-05-risk",
+    "slide-06-example",
+    "slide-07-takeaways"
+  ],
+  "visual_timing": [
+    {
+      "visual_id": "v01",
+      "start_seconds": 28,
+      "end_seconds": 101.5,
+      "type": "chart",
+      "reference": null
+    },
+    {
+      "visual_id": "v02",
+      "start_seconds": 103,
+      "end_seconds": 191.5,
+      "type": "diagram",
+      "reference": null
+    },
+    {
+      "visual_id": "v03",
+      "start_seconds": 193,
+      "end_seconds": 261.5,
+      "type": "diagram",
+      "reference": null
+    },
+    {
+      "visual_id": "v04",
+      "start_seconds": 193,
+      "end_seconds": 261.5,
+      "type": "diagram",
+      "reference": "https://info.uniswap.org/"
+    },
+    {
+      "visual_id": "v05",
+      "start_seconds": 263,
+      "end_seconds": 331.5,
+      "type": "diagram",
+      "reference": null
+    },
+    {
+      "visual_id": "v06",
+      "start_seconds": 333,
+      "end_seconds": 411.5,
+      "type": "screenshot",
+      "reference": "https://info.uniswap.org/"
+    },
+    {
+      "visual_id": "v07",
+      "start_seconds": 413,
+      "end_seconds": 461.5,
+      "type": "diagram",
+      "reference": null
+    }
+  ],
+  "audio_track": {
+    "file": "module04-lesson02_voice.mp3",
+    "voice_id": "de-male-educational-01",
+    "language": "de",
+    "engine": "elevenlabs"
+  },
+  "assets": {
+    "video_output": "videos/module04-lesson02.mp4",
+    "poster_output": "posters/module04-lesson02.jpg"
+  },
+  "style_engine": {
+    "theme": "theme.json",
+    "animation_rules": "animation-rules.json",
+    "visual_timing": "visual-timing.json",
+    "slide_template": "slide-template.jsx",
+    "intro_scene": "intro-scene.jsx",
+    "outro_scene": "outro-scene.jsx"
+  }
+}
