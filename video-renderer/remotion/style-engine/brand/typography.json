@@ -1,0 +1,89 @@
+{
+  "name": "DeFi Academy Typography System",
+  "version": "1.0.0",
+  "description": "Verbindliche typografische Hierarchie. Alle Videos, Slides und Plattform-Flächen nutzen Inter in exakt diesen Stufen.",
+
+  "font_family": {
+    "primary": "Inter",
+    "fallback_stack": "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+    "source": "Google Fonts / self-hosted",
+    "url": "https://fonts.google.com/specimen/Inter",
+    "variable_font_supported": true,
+    "weights_used": [400, 500, 600, 700]
+  },
+
+  "principles": [
+    "Inter in allen Größen — keine dekorativen Alternativen",
+    "Großzügige Zeilenhöhen für Lesbarkeit auf 1080p-Displays",
+    "Feines Letter-Spacing (-0.015em) bei großen Titeln, normal im Body",
+    "Keine Italic-Variante — technische Dokumente vermeiden Kursiv",
+    "Uppercase nur bei Section-Labels mit +8% Letter-Spacing"
+  ],
+
+  "hierarchy": {
+    "title": {
+      "size_px": 64,
+      "weight": 700,
+      "line_height": 1.1,
+      "letter_spacing": "-0.02em",
+      "color": "#FFFFFF",
+      "usage": "Intro-Szene, Hauptüberschrift der Lektion (1x pro Video)"
+    },
+    "slide_title": {
+      "size_px": 48,
+      "weight": 700,
+      "line_height": 1.15,
+      "letter_spacing": "-0.015em",
+      "color": "#FFFFFF",
+      "usage": "Titel jeder Content-Slide (Konzept, Mechanismus, Risiko, …)"
+    },
+    "section_label": {
+      "size_px": 18,
+      "weight": 600,
+      "line_height": 1.3,
+      "letter_spacing": "0.08em",
+      "text_transform": "uppercase",
+      "color_default": "#A0AEC0",
+      "color_accent": "#F5B841",
+      "color_risk": "#D9544E",
+      "usage": "Modul/Lektion-Kennzeichnung, Sektions-Pills oben rechts"
+    },
+    "body": {
+      "size_px": 28,
+      "weight": 400,
+      "line_height": 1.5,
+      "letter_spacing": "0em",
+      "color": "#FFFFFF",
+      "usage": "Hauptfließtext in Bullets und Beschreibungen"
+    },
+    "bullet": {
+      "size_px": 26,
+      "weight": 400,
+      "line_height": 1.5,
+      "letter_spacing": "0em",
+      "color": "#A0AEC0",
+      "usage": "Bullet Points auf Content-Slides"
+    },
+    "caption": {
+      "size_px": 20,
+      "weight": 500,
+      "line_height": 1.4,
+      "letter_spacing": "0.01em",
+      "color": "#A0AEC0",
+      "usage": "Slide-Counter, Quellenhinweise, Footer"
+    }
+  },
+
+  "display_variants": {
+    "hero_intro": {
+      "size_px": 92,
+      "weight": 700,
+      "line_height": 1.0,
+      "letter_spacing": "-0.025em",
+      "color": "#FFFFFF",
+      "usage": "Logo-Reveal in der Intro-Szene"
+    }
+  },
+
+  "responsive_scale_notes": "Alle Größen sind für 1920×1080-Video-Canvas spezifiziert. Für die Lernplattform-Website werden die gleichen Verhältnisse skaliert (Faktor 0.5 für Standard-Desktop, 0.75 für kleine Screens)."
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Img, staticFile, useCurrentFrame, interpolate } from 'remotion';
-import theme from '../../video-style-engine/theme.json';
+import theme from '../style-engine/theme.json';
 
 /**
  * VisualRenderer

@@ -131,7 +131,7 @@ export const SlideTemplate = ({
         <div
           style={{
             width: theme.elements.accent_bar.width,
-            height: theme.typography.scale.title.size * 1.1,
+            height: theme.typography.scale.slide_title.size * 1.1,
             backgroundColor: accentColor,
             borderRadius: theme.elements.accent_bar.border_radius,
             flexShrink: 0,
@@ -140,10 +140,10 @@ export const SlideTemplate = ({
         />
         <h1
           style={{
-            fontSize: theme.typography.scale.title.size,
-            fontWeight: theme.typography.scale.title.weight,
-            lineHeight: theme.typography.scale.title.line_height,
-            letterSpacing: theme.typography.scale.title.letter_spacing,
+            fontSize: theme.typography.scale.slide_title.size,
+            fontWeight: theme.typography.scale.slide_title.weight,
+            lineHeight: theme.typography.scale.slide_title.line_height,
+            letterSpacing: theme.typography.scale.slide_title.letter_spacing,
             margin: 0,
             color: theme.colors.text.primary,
           }}
@@ -189,15 +189,15 @@ export const SlideTemplate = ({
                   height: 3,
                   backgroundColor: accentColor,
                   borderRadius: 2,
-                  marginTop: theme.typography.scale.body.size * 0.6,
+                  marginTop: theme.typography.scale.bullet.size * 0.6,
                   flexShrink: 0,
                 }}
               />
               <p
                 style={{
-                  fontSize: theme.typography.scale.body.size,
-                  fontWeight: theme.typography.scale.body.weight,
-                  lineHeight: theme.typography.scale.body.line_height,
+                  fontSize: theme.typography.scale.bullet.size,
+                  fontWeight: theme.typography.scale.bullet.weight,
+                  lineHeight: theme.typography.scale.bullet.line_height,
                   color: theme.colors.text.secondary,
                   margin: 0,
                 }}

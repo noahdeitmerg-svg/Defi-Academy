@@ -1,58 +1,62 @@
 {
   "name": "DeFi Academy Video Theme",
-  "version": "1.0.0",
-  "description": "Clean, professional, technical, educational visual standard for all DeFi Academy lesson videos.",
-
+  "version": "1.1.0",
+  "description": "Derived automatically from /brand/colors.json and /brand/typography.json. Do NOT edit directly — run brand/sync-to-theme.js instead.",
+  "_generated_from": [
+    "brand/colors.json",
+    "brand/typography.json"
+  ],
+  "_generated_at": "2026-04-18T17:04:59.786Z",
   "canvas": {
     "width": 1920,
     "height": 1080,
     "aspect_ratio": "16:9",
     "fps": 30,
-    "background": "#0B0F14"
+    "background": "#0B1F3B"
   },
-
   "colors": {
     "background": {
-      "primary": "#0B0F14",
-      "secondary": "#121821",
-      "elevated": "#1A2230"
+      "primary": "#0B1F3B",
+      "secondary": "#11284A",
+      "elevated": "#1A355F"
     },
     "surface": {
-      "card": "#151C26",
-      "border": "#232D3D",
-      "divider": "#2A3546"
+      "card": "#11284A",
+      "border": "#1F3A66",
+      "divider": "#1A355F"
     },
     "text": {
-      "primary": "#F5F7FA",
-      "secondary": "#B7C0CC",
-      "muted": "#7A8494",
-      "inverse": "#0B0F14"
+      "primary": "#FFFFFF",
+      "secondary": "#A0AEC0",
+      "muted": "#6B7A8F",
+      "inverse": "#0B1F3B",
+      "on_accent": "#0B1F3B"
     },
     "accent": {
-      "primary": "#4F8BFF",
-      "primary_soft": "#1E3A66",
-      "secondary": "#35C08A",
-      "secondary_soft": "#1B3F32"
+      "primary": "#F5B841",
+      "primary_hover": "#F8C866",
+      "primary_soft": "#3A2F15",
+      "primary_ring": "rgba(245, 184, 65, 0.35)"
     },
     "semantic": {
-      "info": "#4F8BFF",
-      "success": "#35C08A",
-      "warning": "#E0A94A",
-      "risk": "#D9544E"
+      "info": "#5EA9F0",
+      "success": "#3FB58B",
+      "warning": "#F5B841",
+      "risk": "#D9544E",
+      "risk_soft": "#3B1F1E"
     },
     "chart_palette": [
-      "#4F8BFF",
-      "#35C08A",
-      "#E0A94A",
+      "#F5B841",
+      "#5EA9F0",
+      "#3FB58B",
       "#D9544E",
-      "#9B7BE0",
-      "#5EC5D6"
+      "#B388E8",
+      "#5DC7D1"
     ]
   },
-
   "typography": {
     "font_family": "Inter",
-    "fallback": "system-ui, -apple-system, sans-serif",
+    "fallback": "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
     "weights": {
       "regular": 400,
       "medium": 500,
@@ -62,14 +66,20 @@
     "scale": {
       "display": {
         "size": 92,
+        "line_height": 1,
+        "weight": 700,
+        "letter_spacing": "-0.025em"
+      },
+      "title": {
+        "size": 64,
         "line_height": 1.1,
         "weight": 700,
         "letter_spacing": "-0.02em"
       },
-      "title": {
-        "size": 64,
+      "slide_title": {
+        "size": 48,
         "line_height": 1.15,
-        "weight": 600,
+        "weight": 700,
         "letter_spacing": "-0.015em"
       },
       "heading": {
@@ -85,6 +95,12 @@
         "letter_spacing": "0em"
       },
       "body": {
+        "size": 28,
+        "line_height": 1.5,
+        "weight": 400,
+        "letter_spacing": "0em"
+      },
+      "bullet": {
         "size": 26,
         "line_height": 1.5,
         "weight": 400,
@@ -94,7 +110,7 @@
         "size": 20,
         "line_height": 1.4,
         "weight": 500,
-        "letter_spacing": "0.02em"
+        "letter_spacing": "0.01em"
       },
       "label": {
         "size": 18,
@@ -105,7 +121,6 @@
       }
     }
   },
-
   "spacing": {
     "unit": 8,
     "xs": 8,
@@ -121,7 +136,6 @@
       "left": 120
     }
   },
-
   "layout": {
     "slide_grid": {
       "columns": 12,
@@ -133,8 +147,8 @@
       "height_ratio": 0.7,
       "alignment": "right",
       "padding": 32,
-      "background": "#151C26",
-      "border_color": "#232D3D",
+      "background": "#11284A",
+      "border_color": "#1F3A66",
       "border_width": 1,
       "border_radius": 12
     },
@@ -144,7 +158,6 @@
       "bullet_spacing": 24
     }
   },
-
   "elements": {
     "border_radius": {
       "sm": 6,
@@ -159,21 +172,22 @@
     },
     "accent_bar": {
       "width": 6,
-      "color": "#4F8BFF",
+      "color": "#F5B841",
       "border_radius": 3
     },
     "bullet": {
       "type": "dash",
-      "color": "#4F8BFF",
+      "color": "#F5B841",
       "size": 14,
       "spacing": 16
     }
   },
-
   "branding": {
     "logo_text": "DeFi Academy",
-    "logo_color": "#F5F7FA",
-    "logo_accent": "#4F8BFF",
+    "logo_color": "#FFFFFF",
+    "logo_accent": "#F5B841",
+    "logo_svg_path": "brand/logo.svg",
+    "logo_lockup_svg_path": "brand/logo-lockup.svg",
     "lower_third_enabled": true,
     "module_label_position": "top-left",
     "module_label_format": "MODUL {module} · LEKTION {lesson}"

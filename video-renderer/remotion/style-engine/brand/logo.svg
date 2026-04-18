@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DeFi Academy Logo
+  ------------------
+  Komposition:
+    - Shield (Wappen-Silhouette) als Umriss: steht für Sicherheit,
+      Custody und das geschützte Lernen
+    - Drei verbundene Knoten im Inneren: Blockchain-Motiv (zentraler
+      Knoten + zwei verbundene Nachbarn) — abstrahiert, keine wörtliche
+      Würfelketten-Darstellung
+    - Goldener Akzent (#F5B841) auf dem zentralen Knoten und der
+      Shield-Außenlinie; Verbindungslinien und Nebenknoten in Weiß
+      für maximalen Kontrast auf Navy-Hintergrund
+
+  Farbmodus: funktioniert sowohl auf Dunkel (#0B1F3B) als auch über
+  `currentColor`-Varianten. Diese Version ist für Dunkel-Hintergrund
+  optimiert.
+
+  Nutzung: 64×64px Minimum, 1024×1024px Master.
+  viewBox: 0 0 64 64 — square.
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  fill="none"
+  role="img"
+  aria-label="DeFi Academy"
+>
+  <title>DeFi Academy</title>
+  <desc>Shield with three connected blockchain nodes — brand mark of DeFi Academy.</desc>
+
+  <!-- SHIELD OUTLINE
+       Klassische Wappenform mit leicht abgeflachten Schultern und
+       spitzem Fuß. 1.8px Strichstärke wirkt bei 1024px-Scale sauber
+       technisch, nicht dekorativ. -->
+  <path
+    d="M32 4
+       L54 12
+       L54 32
+       C54 44.5 44.5 55 32 60
+       C19.5 55 10 44.5 10 32
+       L10 12
+       Z"
+    stroke="#F5B841"
+    stroke-width="2"
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- BLOCKCHAIN CONNECTIONS
+       Drei Verbindungslinien vom zentralen Knoten zu den drei
+       äußeren Knoten. Thin strokes für präzisen technischen Look. -->
+  <g stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round">
+    <line x1="32" y1="32" x2="24" y2="22" />
+    <line x1="32" y1="32" x2="40" y2="22" />
+    <line x1="32" y1="32" x2="32" y2="44" />
+  </g>
+
+  <!-- OUTER NODES
+       Zurückhaltend in Weiß. 3.2px Radius. -->
+  <g fill="#FFFFFF" stroke="#0B1F3B" stroke-width="0.5">
+    <circle cx="24" cy="22" r="3.2" />
+    <circle cx="40" cy="22" r="3.2" />
+    <circle cx="32" cy="44" r="3.2" />
+  </g>
+
+  <!-- CENTER NODE
+       Der zentrale Knoten in Gold — Logo-Fokuspunkt. Etwas größer
+       (4.2px) und mit Ringraum, damit er visuell dominiert. -->
+  <circle cx="32" cy="32" r="4.2" fill="#F5B841" />
+  <circle cx="32" cy="32" r="4.2" fill="none" stroke="#F5B841" stroke-width="0.8" stroke-opacity="0.4" />
+</svg>

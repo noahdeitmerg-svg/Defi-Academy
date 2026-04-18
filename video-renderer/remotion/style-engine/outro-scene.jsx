@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame, interpolate, useVideoConfig } from 'remotion';
 import theme from './theme.json';
+import { BrandShield } from './intro-scene';
 
 /**
  * OutroScene
@@ -91,7 +92,7 @@ export const OutroScene = ({
           position: 'absolute',
           inset: 0,
           background:
-            'radial-gradient(circle at 50% 60%, rgba(79, 139, 255, 0.05) 0%, transparent 65%)',
+            'radial-gradient(circle at 50% 60%, rgba(245, 184, 65, 0.07) 0%, transparent 65%)',
           pointerEvents: 'none',
         }}
       />
@@ -106,7 +107,22 @@ export const OutroScene = ({
           textAlign: 'center',
         }}
       >
-        {/* Logo */}
+        {/* Brand Shield (compact) */}
+        <div
+          style={{
+            width: 56,
+            height: 56,
+            opacity: logoOpacity,
+            marginBottom: theme.spacing.xs,
+          }}
+        >
+          <BrandShield
+            accentColor={theme.colors.accent.primary}
+            nodeColor={theme.colors.text.primary}
+          />
+        </div>
+
+        {/* Logo Wordmark */}
         <div
           style={{
             fontSize: theme.typography.scale.heading.size,
