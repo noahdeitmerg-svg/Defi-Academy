@@ -39,9 +39,14 @@
  *
  * Zusaetzlich akzeptiert der Parser Varianten mit ## statt # und deutschen
  * Ueberschriften (z.B. "Lernziele", "Erklaerung").
+ *
+ * Siehe lesson-asset-generator/src/lesson-parser.js — diese Datei spiegelt
+ * die Parser-Logik fuer resolveLessonAssets (Markdown → slidePlan).
  */
 
 'use strict';
+
+const { parseSlideBlocks } = require('../../../lesson-asset-generator/src/module-parser');
 
 const SECTION_ALIASES = {
   'lesson title': 'title',
@@ -53,12 +58,15 @@ const SECTION_ALIASES = {
   'erklärung': 'explanation',
   'slide summary': 'slide_summary',
   'foliensubersicht': 'slide_summary',
+  'folien-zusammenfassung': 'slides_raw',
+  'foliensammlung': 'slides_raw',
   'voice narration script': 'narration',
   'voiceover': 'narration',
   'narration': 'narration',
+  'sprechertext': 'narration_raw',
   'visual suggestions': 'visuals',
-  'visuelle vorschlaege': 'visuals',
-  'visuelle vorschläge': 'visuals',
+  'visuelle vorschlaege': 'visuals_raw',
+  'visuelle vorschläge': 'visuals_raw',
   'exercise': 'exercise',
   'uebung': 'exercise',
   'übung': 'exercise',
@@ -185,6 +193,55 @@ function parseLesson(markdown, opts = {}) {
       'parseLesson: could not determine module/lesson number. ' +
         'Pass { module, lesson } explicitly or provide a sourcePath like "module03-lesson02.md".'
     );
+  }
+
+  const slideBlocks = parseSlideBlocks(sections.slides_raw || '');
+  const narrationBlocks = parseSlideBlocks(sections.narration_raw || '');
+  const visualBlocks = parseSlideBlocks(sections.visuals_raw || '');
+
+  if (slideBlocks.length > 0) {
+    const maxSlideNum = Math.max(
+      slideBlocks[slideBlocks.length - 1].number,
+      narrationBlocks.length > 0
+        ? narrationBlocks[narrationBlocks.length - 1].number
+        : 0,
+      visualBlocks.length > 0 ? visualBlocks[visualBlocks.length - 1].number : 0
+    );
+    const byNum = (arr, n) => arr.find((x) => x.number === n) || null;
+    const slides = [];
+    for (let n = 1; n <= maxSlideNum; n++) {
+      const slide = byNum(slideBlocks, n);
+      const narr = byNum(narrationBlocks, n);
+      const vis = byNum(visualBlocks, n);
+      slides.push({
+        number: n,
+        title: slide ? slide.title : `Slide ${n}`,
+        body: slide ? slide.body : '',
+        narration: narr ? narr.body : '',
+        visual: vis ? vis.body : '',
+      });
+    }
+
+    const title = (sections.title || '').trim();
+    const lessonId = `module${String(moduleNumber).padStart(2, '0')}-lesson${String(
+      lessonNumber
+    ).padStart(2, '0')}`;
+
+    return {
+      meta: {
+        module: moduleNumber,
+        lesson: lessonNumber,
+        lesson_id: lessonId,
+        title,
+      },
+      title,
+      objectives: parseBulletList(sections.objectives),
+      explanation: (sections.explanation || '').trim(),
+      slides,
+      exercise: (sections.exercise || '').trim(),
+      quiz_raw: sections.quiz || '',
+      raw_sections: sections,
+    };
   }
 
   const objectives = parseBulletList(sections.objectives);

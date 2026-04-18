@@ -17,7 +17,10 @@ const { mapLessonToSections } = require('./section-mapper');
 const { buildSlidesPrompt } = require('./generate-slides-prompt');
 const { buildVoiceScript } = require('./generate-voice-script');
 const { buildVisualPlan } = require('./generate-visual-plan');
-const { buildVideoConfig } = require('./generate-video-config');
+const {
+  buildVideoConfig,
+  computeModuleDirectTimeline,
+} = require('./generate-video-config');
 
 function loadVisualTimingSpec(stylePath) {
   const p = path.resolve(stylePath, 'visual-timing.json');
@@ -164,6 +167,10 @@ function processSingleLesson({ lesson, outputRoot, stylePath, voiceId, format })
 }
 
 function computeSectionTimings(slidePlan, visualTimingSpec) {
+  if (slidePlan.source_format === 'module_direct') {
+    return computeModuleDirectTimeline(slidePlan, visualTimingSpec).sectionTimings;
+  }
+
   const out = [];
   let cursor = 0;
   const structure = visualTimingSpec.structure;

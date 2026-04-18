@@ -72,91 +72,133 @@
     {
       "visual_id": "v01",
       "cue_type": "fade_in",
-      "trigger_seconds": 193,
+      "trigger_seconds": 13.23,
       "duration_frames": 20,
       "target_element": null
     },
     {
       "visual_id": "v01",
       "cue_type": "node_reveal",
-      "trigger_seconds": 195,
+      "trigger_seconds": 15.23,
       "duration_frames": 10,
       "target_element": "nodes"
     },
     {
       "visual_id": "v01",
       "cue_type": "edge_draw",
-      "trigger_seconds": 196.5,
+      "trigger_seconds": 16.73,
       "duration_frames": 15,
       "target_element": "edges"
     },
     {
       "visual_id": "v01",
       "cue_type": "fade_out",
-      "trigger_seconds": 261,
+      "trigger_seconds": 123.79,
+      "duration_frames": 12,
+      "target_element": null
+    },
+    {
+      "visual_id": "v02",
+      "cue_type": "fade_in",
+      "trigger_seconds": 125.79,
+      "duration_frames": 20,
+      "target_element": null
+    },
+    {
+      "visual_id": "v02",
+      "cue_type": "node_reveal",
+      "trigger_seconds": 127.79,
+      "duration_frames": 10,
+      "target_element": "nodes"
+    },
+    {
+      "visual_id": "v02",
+      "cue_type": "edge_draw",
+      "trigger_seconds": 129.29,
+      "duration_frames": 15,
+      "target_element": "edges"
+    },
+    {
+      "visual_id": "v02",
+      "cue_type": "fade_out",
+      "trigger_seconds": 280.95,
+      "duration_frames": 12,
+      "target_element": null
+    },
+    {
+      "visual_id": "v03",
+      "cue_type": "fade_in",
+      "trigger_seconds": 282.95,
+      "duration_frames": 20,
+      "target_element": null
+    },
+    {
+      "visual_id": "v03",
+      "cue_type": "fade_out",
+      "trigger_seconds": 402.29,
       "duration_frames": 12,
       "target_element": null
     },
     {
       "visual_id": "v04",
       "cue_type": "fade_in",
-      "trigger_seconds": 333,
+      "trigger_seconds": 404.29,
       "duration_frames": 20,
       "target_element": null
     },
     {
       "visual_id": "v04",
       "cue_type": "fade_out",
-      "trigger_seconds": 411,
+      "trigger_seconds": 460.54,
       "duration_frames": 12,
       "target_element": null
     },
     {
       "visual_id": "v05",
       "cue_type": "fade_in",
-      "trigger_seconds": 263,
+      "trigger_seconds": 462.54,
       "duration_frames": 20,
       "target_element": null
     },
     {
       "visual_id": "v05",
       "cue_type": "highlight_pulse",
-      "trigger_seconds": 267,
+      "trigger_seconds": 466.54,
       "duration_frames": 20,
       "target_element": "header"
     },
     {
       "visual_id": "v05",
       "cue_type": "fade_out",
-      "trigger_seconds": 331,
+      "trigger_seconds": 460.77,
       "duration_frames": 12,
       "target_element": null
     },
     {
       "visual_id": "v06",
       "cue_type": "fade_in",
-      "trigger_seconds": 103,
+      "trigger_seconds": 462.77,
       "duration_frames": 20,
       "target_element": null
     },
     {
       "visual_id": "v06",
       "cue_type": "node_reveal",
-      "trigger_seconds": 105,
+      "trigger_seconds": 464.77,
       "duration_frames": 10,
       "target_element": "nodes"
     },
     {
       "visual_id": "v06",
       "cue_type": "edge_draw",
-      "trigger_seconds": 106.5,
+      "trigger_seconds": 466.27,
       "duration_frames": 15,
       "target_element": "edges"
     },
     {
       "visual_id": "v06",
       "cue_type": "fade_out",
-      "trigger_seconds": 191,
+      "trigger_seconds": 461,
       "duration_frames": 12,
       "target_element": null
     }

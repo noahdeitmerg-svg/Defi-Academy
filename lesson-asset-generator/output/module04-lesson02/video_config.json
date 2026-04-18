@@ -20,70 +20,69 @@
       "start_seconds": 0,
       "end_seconds": 12,
       "scene": "intro-scene",
-      "slide_ref": null,
-      "accent_color_override": null
+      "slide_ref": null
     },
     {
       "name": "lesson_title",
       "order": 2,
       "start_seconds": 12,
-      "end_seconds": 27,
+      "end_seconds": 12.23,
       "scene": "slide-template",
       "slide_ref": "slide-01-title",
       "accent_color_override": null
     },
     {
-      "name": "concept",
-      "order": 3,
-      "start_seconds": 27,
-      "end_seconds": 102,
-      "scene": "slide-template",
-      "slide_ref": null,
-      "accent_color_override": null
-    },
-    {
-      "name": "mechanism",
-      "order": 4,
-      "start_seconds": 102,
-      "end_seconds": 192,
-      "scene": "slide-template",
-      "slide_ref": "slide-07-mechanism",
-      "accent_color_override": null
-    },
-    {
       "name": "system_architecture",
-      "order": 5,
-      "start_seconds": 192,
-      "end_seconds": 262,
+      "order": 3,
+      "start_seconds": 12.23,
+      "end_seconds": 124.79,
       "scene": "slide-template",
       "slide_ref": "slide-02-system_architecture",
       "accent_color_override": null
     },
     {
-      "name": "risk_layer",
-      "order": 6,
-      "start_seconds": 262,
-      "end_seconds": 332,
+      "name": "mechanism",
+      "order": 4,
+      "start_seconds": 124.79,
+      "end_seconds": 281.95,
       "scene": "slide-template",
-      "slide_ref": "slide-06-risk_layer",
-      "accent_color_override": "#D9544E"
+      "slide_ref": "slide-03-mechanism",
+      "accent_color_override": null
+    },
+    {
+      "name": "mechanism",
+      "order": 5,
+      "start_seconds": 281.95,
+      "end_seconds": 403.29,
+      "scene": "slide-template",
+      "slide_ref": "slide-04-mechanism",
+      "accent_color_override": null
     },
     {
       "name": "protocol_example",
-      "order": 7,
-      "start_seconds": 332,
-      "end_seconds": 412,
+      "order": 6,
+      "start_seconds": 403.29,
+      "end_seconds": 461.54,
       "scene": "slide-template",
       "slide_ref": "slide-05-protocol_example",
       "accent_color_override": null
     },
     {
-      "name": "key_takeaways",
+      "name": "risk_layer",
+      "order": 7,
+      "start_seconds": 461.54,
+      "end_seconds": 461.77,
+      "scene": "slide-template",
+      "slide_ref": "slide-06-risk_layer",
+      "accent_color_override": "#D9544E"
+    },
+    {
+      "name": "mechanism",
       "order": 8,
-      "start_seconds": 412,
+      "start_seconds": 461.77,
       "end_seconds": 462,
       "scene": "slide-template",
-      "slide_ref": null,
+      "slide_ref": "slide-07-mechanism",
       "accent_color_override": null
     },
     {
@@ -92,8 +91,7 @@
       "start_seconds": 462,
       "end_seconds": 474,
       "scene": "outro-scene",
-      "slide_ref": null,
-      "accent_color_override": null
+      "slide_ref": null
     }
   ],
   "slide_order": [
@@ -108,43 +106,43 @@
   "visual_timing": [
     {
       "visual_id": "v01",
-      "start_seconds": 193,
-      "end_seconds": 261.5,
+      "start_seconds": 13.23,
+      "end_seconds": 124.29,
       "type": "diagram",
       "reference": null
     },
     {
       "visual_id": "v02",
-      "start_seconds": 0,
-      "end_seconds": 5,
+      "start_seconds": 125.79,
+      "end_seconds": 281.45,
       "type": "diagram",
       "reference": "https://info.uniswap.org/"
     },
     {
       "visual_id": "v03",
-      "start_seconds": 0,
-      "end_seconds": 5,
+      "start_seconds": 282.95,
+      "end_seconds": 402.79,
       "type": "dashboard",
       "reference": "https://info.uniswap.org/"
     },
     {
       "visual_id": "v04",
-      "start_seconds": 333,
-      "end_seconds": 411.5,
+      "start_seconds": 404.29,
+      "end_seconds": 461.04,
       "type": "screenshot",
       "reference": null
     },
     {
       "visual_id": "v05",
-      "start_seconds": 263,
-      "end_seconds": 331.5,
+      "start_seconds": 462.54,
+      "end_seconds": 461.27,
       "type": "chart",
       "reference": null
     },
     {
       "visual_id": "v06",
-      "start_seconds": 103,
-      "end_seconds": 191.5,
+      "start_seconds": 462.77,
+      "end_seconds": 461.5,
       "type": "diagram",
       "reference": null
     }
