@@ -135,61 +135,49 @@ Auf Layer-2-Netzwerken wie Arbitrum, Optimism und Base ist Gas drastisch günsti
 
 **[Slide 1] — Titel:** Wie Gas auf Ethereum funktioniert
 
-**[Slide 2] — Was ist Gas?** Einheit für EVM-Rechenarbeit. Kein Token. Jede Operation hat fixen Gas-Preis in Einheiten.
+**[Slide 2] — Was ist Gas?** Einheit für EVM-Rechenarbeit. Kein Token. Jede Operation hat fixen Gas-Preis in Einheiten. Zwei Zwecke: Spam-Prävention + Validator-Kompensation.
 
-**[Slide 3] — Warum Gas existiert:** Spam-Prävention + Validator-Kompensation.
+**[Slide 3] — Gas vs. ETH:** Gas in Einheiten gezählt, bezahlt in ETH. Umrechnung via Gas Price (Gwei).
 
-**[Slide 4] — Gas vs. ETH:** Gas in Einheiten gezählt, bezahlt in ETH. Umrechnung via Gas Price (Gwei).
+**[Slide 4] — Die Formel:** Kosten = Gas Used × Gas Price × 10⁻⁹. Beispiel: 21.000 × 30 Gwei = 0,00063 ETH.
 
-**[Slide 5] — Die Formel:** Kosten = Gas Used × Gas Price × 10⁻⁹. Beispiel: 21.000 × 30 Gwei = 0,00063 ETH.
+**[Slide 5] — Drei Gas-Größen:** Gas Limit (max), Gas Used (tatsächlich), Gas Price (Preis/Einheit).
 
-**[Slide 6] — Drei Gas-Größen:** Gas Limit (max), Gas Used (tatsächlich), Gas Price (Preis/Einheit).
+**[Slide 6] — Typische Verbräuche + Failed Transactions:** Tabelle von ETH-Transfer bis Aave-Borrow. Failed Tx kosten trotzdem Gas — häufige Gründe: Slippage, fehlende Approval, Out-of-Gas.
 
-**[Slide 7] — Typische Gas-Verbräuche:** Tabelle mit ETH-Transfer bis Aave-Borrow.
-
-**[Slide 8] — Failed Transactions:** Kosten trotzdem Gas. Häufige Gründe.
-
-**[Slide 9] — Tools:** etherscan.io/gastracker, Wallet-Integration, blocknative.
+**[Slide 7] — Tools:** etherscan.io/gastracker, Wallet-Integration, blocknative.
 
 ### Sprechertext
 
 **[Slide 1]** Willkommen zu Modul 3. Wir öffnen die Motorhaube. Erste Lektion: Gas. Ohne ein klares Gas-Verständnis bist du in DeFi blind für einen wesentlichen Kostenfaktor.
 
-**[Slide 2]** Gas ist eine Einheit für Rechenarbeit auf der Ethereum Virtual Machine. Kein Token — eine Maßeinheit. Jede Operation kostet einen festen Betrag Gas. Eine Addition: 3 Gas. Ein Speicher-Schreibvorgang: 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen.
+**[Slide 2]** Gas ist eine Einheit für Rechenarbeit auf der Ethereum Virtual Machine. Kein Token — eine Maßeinheit. Jede Operation kostet einen festen Betrag Gas. Eine Addition: 3 Gas. Ein Speicher-Schreibvorgang: 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen. Warum existiert Gas überhaupt? Zwei Gründe. Erstens: Spam-Prävention. Ohne Gas-Kosten könnte jeder beliebig viel Rechenarbeit anfordern und das Netzwerk lahmlegen. Zweitens: Validator-Kompensation. Wer Blöcke produziert, wird bezahlt.
 
-**[Slide 3]** Warum existiert Gas? Zwei Gründe. Erstens: Spam-Prävention. Ohne Gas-Kosten könnte jeder beliebig viel Rechenarbeit anfordern und das Netzwerk lahmlegen. Zweitens: Validator-Kompensation. Wer Blöcke produziert, wird bezahlt.
+**[Slide 3]** Gas wird in Einheiten gezählt, bezahlt in ETH. Der Umrechnungsfaktor ist der Gas Price, gemessen in Gwei. Ein Gwei ist ein Milliardstel ETH. Wenn der Gas Price 30 Gwei ist, kostet jede Gas-Einheit 30 Milliardstel ETH.
 
-**[Slide 4]** Gas wird in Einheiten gezählt, bezahlt in ETH. Der Umrechnungsfaktor ist der Gas Price, gemessen in Gwei. Ein Gwei ist ein Milliardstel ETH. Wenn der Gas Price 30 Gwei ist, kostet jede Gas-Einheit 30 Milliardstel ETH.
+**[Slide 4]** Die Formel: Kosten in ETH gleich Gas Used mal Gas Price in Gwei mal 10 hoch minus 9. Ein Beispiel: eine einfache ETH-Überweisung verbraucht 21.000 Gas. Bei einem Gas Price von 30 Gwei kostet das 0,00063 ETH — bei einem ETH-Preis von 3.000 USD ungefähr 1,89 USD.
 
-**[Slide 5]** Die Formel: Kosten in ETH gleich Gas Used mal Gas Price in Gwei mal 10 hoch minus 9. Ein Beispiel: eine einfache ETH-Überweisung verbraucht 21.000 Gas. Bei einem Gas Price von 30 Gwei kostet das 0,00063 ETH — bei einem ETH-Preis von 3.000 USD ungefähr 1,89 USD.
+**[Slide 5]** Drei Größen musst du unterscheiden. Gas Limit: das maximale Gas, das du bereit bist zu verbrauchen. Wird es überschritten, scheitert die Transaktion, das verbrauchte Gas geht trotzdem verloren. Gas Used: das tatsächlich verbrauchte Gas. Nicht-verbrauchtes Gas wird zurückerstattet. Gas Price: der Preis pro Einheit.
 
-**[Slide 6]** Drei Größen musst du unterscheiden. Gas Limit: das maximale Gas, das du bereit bist zu verbrauchen. Wird es überschritten, scheitert die Transaktion, das verbrauchte Gas geht trotzdem verloren. Gas Used: das tatsächlich verbrauchte Gas. Nicht-verbrauchtes Gas wird zurückerstattet. Gas Price: der Preis pro Einheit.
+**[Slide 6]** Typische Gas-Verbräuche geben dir eine Orientierung. ETH-Transfer: 21.000. ERC-20-Transfer: 45.000 bis 65.000. ERC-20-Approval: ähnliche Größenordnung. Uniswap V3 Swap: 120.000 bis 180.000. Aave Supply: 200.000 bis 300.000. Aave Borrow: 300.000 bis 400.000. Uniswap V3 LP-Position: 350.000 bis 500.000. Wichtig: Failed Transactions kosten trotzdem Gas. Häufige Ursachen: Slippage zu niedrig, fehlende Approval, Liquidation schon durch andere durchgeführt, oder Out-of-Gas wenn das Limit zu niedrig war. Gerade bei hohen Gas-Preisen lohnt sich ein Sicherheitspuffer.
 
-**[Slide 7]** Typische Gas-Verbräuche. ETH-Transfer: 21.000. ERC-20-Transfer: 45.000 bis 65.000. ERC-20-Approval: ähnliche Größenordnung. Uniswap V3 Swap: 120.000 bis 180.000. Aave Supply: 200.000 bis 300.000. Aave Borrow: 300.000 bis 400.000. Uniswap V3 LP-Position: 350.000 bis 500.000. Diese Zahlen geben dir eine Orientierung — tatsächliche Werte variieren.
-
-**[Slide 8]** Wichtig: Failed Transactions kosten trotzdem Gas. Häufige Ursachen: Slippage zu niedrig, fehlende Approval, Liquidation schon durch andere durchgeführt, oder Out-of-Gas wenn das Limit zu niedrig war. Gerade bei hohen Gas-Preisen lohnt sich ein Sicherheitspuffer.
-
-**[Slide 9]** Drei Tools, die du kennen solltest: etherscan.io/gastracker zeigt aktuelle und historische Gas-Preise. Deine Wallet zeigt aktuelle Preise direkt im Bestätigungsfenster. Blocknative bietet detailliertere Prognosen mit Wahrscheinlichkeiten. Für größere Transaktionen lohnt sich der Blick vor dem Klick.
+**[Slide 7]** Drei Tools, die du kennen solltest: etherscan.io/gastracker zeigt aktuelle und historische Gas-Preise. Deine Wallet zeigt aktuelle Preise direkt im Bestätigungsfenster. Blocknative bietet detailliertere Prognosen mit Wahrscheinlichkeiten. Für größere Transaktionen lohnt sich der Blick vor dem Klick.
 
 ### Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 
-**[Slide 2]** Vereinfachte EVM-Grafik: Operationen mit jeweiligem Gas-Preis als kleine Zellen.
+**[Slide 2]** Vereinfachte EVM-Grafik: Operationen mit jeweiligem Gas-Preis als kleine Zellen. Zusätzlich zweigeteiltes Layout: Spam-Prävention mit blockiertem Angriffs-Icon, Validator-Kompensation mit Belohnungs-Icon.
 
-**[Slide 3]** Zweispaltiges Layout: Spam-Prävention (links) mit blockiertem Angriffs-Icon, Validator-Kompensation (rechts) mit Belohnungs-Icon.
+**[Slide 3]** Umrechnungsgrafik: Gas-Einheiten → Gwei → ETH → USD.
 
-**[Slide 4]** Umrechnungsgrafik: Gas-Einheiten → Gwei → ETH → USD.
+**[Slide 4]** Formel groß zentriert, darunter Beispielrechnung mit eingesetzten Zahlen.
 
-**[Slide 5]** Formel groß zentriert, darunter Beispielrechnung mit eingesetzten Zahlen.
+**[Slide 5]** Drei nebeneinander dargestellte Balken: Gas Limit (maximal), Gas Used (tatsächlich, kleiner), Gas Price (separat).
 
-**[Slide 6]** Drei nebeneinander dargestellte Balken: Gas Limit (maximal), Gas Used (tatsächlich, kleiner), Gas Price (separat).
+**[Slide 6]** Tabelle mit Gas-Verbräuchen + Beispiel einer Failed Transaction. **SCREENSHOT SUGGESTION:** Etherscan-Transaction-Detail-Seite einer realen Uniswap-Transaktion mit sichtbarem "Gas Used by Transaction"-Feld, daneben Etherscan-Seite mit rotem "Fail"-Status und trotzdem abgerechnetem Gas.
 
-**[Slide 7]** Tabelle mit Gas-Verbräuchen. **SCREENSHOT SUGGESTION:** Etherscan-Transaction-Detail-Seite einer realen Uniswap-Transaktion mit sichtbarem "Gas Used by Transaction"-Feld.
-
-**[Slide 8]** Beispiel einer Failed Transaction. **SCREENSHOT SUGGESTION:** Etherscan-Seite mit rotem "Fail"-Status und trotzdem abgerechnetem Gas.
-
-**[Slide 9]** **SCREENSHOT SUGGESTION:** etherscan.io/gastracker mit aktuellem Gas Price und 24h-Verlaufs-Chart.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** etherscan.io/gastracker mit aktuellem Gas Price und 24h-Verlaufs-Chart.
 
 ### Übung
 
@@ -230,8 +218,8 @@ Eine ERC-20-Transfer-Transaktion verbraucht etwa 55.000 Gas. Berechnung: 55.000 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 9 Slides: Titel → Was ist Gas → Warum Gas → Gas vs. ETH → Formel → 3 Gas-Größen → Typische Verbräuche → Failed Transactions → Tools
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → Was ist Gas + Zwecke → Gas vs. ETH → Formel → 3 Gas-Größen → Typische Verbräuche + Failed Tx → Tools
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — EVM-Operationen-Grafik, Spam-/Validator-Icons, Gas→Gwei→ETH→USD Umrechnung, Formel-Grafik, 3 Gas-Balken, Etherscan-Screenshots (Tx-Detail, Failed-Tx), gastracker-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -325,19 +313,15 @@ Die Verbrennung der Base Fee ist eine fundamentale Änderung der ETH-Tokenomics.
 
 **[Slide 2] — Vor EIP-1559:** Reine First-Price-Auction. Unvorhersagbar, volatil, kein Feedback.
 
-**[Slide 3] — EIP-1559: Zwei Komponenten:** Base Fee (algorithmisch, wird verbrannt) + Priority Fee (Tip an Validator).
+**[Slide 3] — EIP-1559 Struktur:** Base Fee (algorithmisch, ±12,5% pro Block, wird verbrannt) + Priority Fee (Tip an Validator).
 
-**[Slide 4] — Base-Fee-Dynamik:** ±12,5% pro Block. Block >50% voll → steigt. Block <50% voll → fällt.
+**[Slide 4] — Wallet-Felder:** Max Base Fee, Max Priority Fee, Max Fee. Drei Hebel zur Kontrolle.
 
-**[Slide 5] — Wallet-Felder:** Max Base Fee, Max Priority Fee, Max Fee. Drei Hebel zur Kontrolle.
+**[Slide 5] — Der Burn-Mechanismus:** Base Fee wird vernichtet. Seit London-Hardfork 2021.
 
-**[Slide 6] — Der Burn-Mechanismus:** Base Fee wird vernichtet. Seit London-Hardfork 2021.
+**[Slide 6] — ETH-Tokenomics:** Burn > Issuance → ETH schrumpft. "Ultra Sound Money" bei hoher Netzwerk-Aktivität.
 
-**[Slide 7] — ETH-Tokenomics:** Burn > Issuance → ETH schrumpft. "Ultra Sound Money" bei hoher Netzwerk-Aktivität.
-
-**[Slide 8] — Tracking:** ultrasound.money zeigt Burns in Echtzeit.
-
-**[Slide 9] — Praktische Optimierung:** Gas-Timing nutzen. Priority Fee je nach Dringlichkeit. Stuck-Transaktionen handhaben.
+**[Slide 7] — Praktische Optimierung + Tracking:** Gas-Timing nutzen. Priority Fee je nach Dringlichkeit. Stuck-Transaktionen handhaben. ultrasound.money für Burn-Tracking in Echtzeit.
 
 ### Sprechertext
 
@@ -345,19 +329,15 @@ Die Verbrennung der Base Fee ist eine fundamentale Änderung der ETH-Tokenomics.
 
 **[Slide 2]** Vor EIP-1559 funktionierte Ethereum als First-Price-Auction. Nutzer boten einen Gas-Preis, Validatoren wählten die höchsten Gebote. Drei Probleme: Unvorhersagbarkeit — niemand wusste, was "angemessen" war, viele zahlten zu viel. Gebühren-Volatilität — kleine Nachfrage-Änderungen führten zu massiven Preissprüngen. Kein Feedback-Mechanismus — der Markt hatte keine eingebaute Dämpfung.
 
-**[Slide 3]** EIP-1559 teilt die Gas-Gebühr in zwei Komponenten. Base Fee: algorithmisch pro Block angepasst. Priority Fee: optional, als Tip an den Validator. Diese Trennung löst die Hauptprobleme der First-Price-Auction.
+**[Slide 3]** EIP-1559 teilt die Gas-Gebühr in zwei Komponenten. Base Fee: algorithmisch pro Block angepasst, maximal 12,5% Änderung pro Block. War der vorherige Block zu mehr als 50% voll — also mehr als 15 Millionen Gas von 30 Millionen — steigt die Base Fee. War er weniger als 50% voll, fällt sie. Dieser Algorithmus zielt auf eine mittlere Block-Auslastung von 50%. Priority Fee: optional, als Tip an den Validator. Diese Trennung löst die Hauptprobleme der First-Price-Auction.
 
-**[Slide 4]** Die Base-Fee-Dynamik ist einfach. Maximal 12,5% Änderung pro Block. War der vorherige Block zu mehr als 50% voll — also mehr als 15 Millionen Gas von 30 Millionen — steigt die Base Fee. War er weniger als 50% voll, fällt sie. Dieser Algorithmus zielt auf eine mittlere Block-Auslastung von 50%.
+**[Slide 4]** Deine Wallet zeigt drei Felder. Max Base Fee: die maximale Base Fee, die du akzeptierst. Max Priority Fee: dein Tip-Beitrag. Max Fee: das Gesamt-Maximum pro Gas. Das Max-Fee schützt dich vor extremen Preis-Spitzen, während die Transaktion wartet.
 
-**[Slide 5]** Deine Wallet zeigt drei Felder. Max Base Fee: die maximale Base Fee, die du akzeptierst. Max Priority Fee: dein Tip-Beitrag. Max Fee: das Gesamt-Maximum pro Gas. Das Max-Fee schützt dich vor extremen Preis-Spitzen, während die Transaktion wartet.
+**[Slide 5]** Der wichtige Punkt: die Base Fee wird verbrannt. Sie geht nicht an Validatoren. Die ETH verschwinden aus dem Umlauf. Das ist eine fundamentale Änderung der ETH-Tokenomics. Vor EIP-1559 gingen alle Gebühren an Miner. Seit EIP-1559 gehen nur die Tips an Validatoren.
 
-**[Slide 6]** Der wichtige Punkt: die Base Fee wird verbrannt. Sie geht nicht an Validatoren. Die ETH verschwinden aus dem Umlauf. Das ist eine fundamentale Änderung der ETH-Tokenomics. Vor EIP-1559 gingen alle Gebühren an Miner. Seit EIP-1559 gehen nur die Tips an Validatoren.
+**[Slide 6]** Auswirkung auf ETH: wenn die Base-Fee-Verbrennung pro Tag größer ist als die neue ETH-Emission durch Staking-Rewards, schrumpft das ETH-Umlauf-Angebot. Bei hohem Netzwerk-Volumen ist das der Fall. In DeFi-Kreisen wird das "Ultra Sound Money" genannt — als Vergleich zu Bitcoins fixem Angebot. Seit dem Merge 2022 ist ETH periodisch deflationär, periodisch leicht inflationär.
 
-**[Slide 7]** Auswirkung auf ETH: wenn die Base-Fee-Verbrennung pro Tag größer ist als die neue ETH-Emission durch Staking-Rewards, schrumpft das ETH-Umlauf-Angebot. Bei hohem Netzwerk-Volumen ist das der Fall. In DeFi-Kreisen wird das "Ultra Sound Money" genannt — als Vergleich zu Bitcoins fixem Angebot. Seit dem Merge 2022 ist ETH periodisch deflationär, periodisch leicht inflationär.
-
-**[Slide 8]** Tracking-Tool: ultrasound.money. Es zeigt die Burn-Rate in Echtzeit, kumulative Burns seit EIP-1559 und vergleicht Burn mit Issuance. Ein Blick dort zeigt dir, ob ETH gerade deflationär ist oder nicht.
-
-**[Slide 9]** Praktische Optimierung. Erstens: Gas-Timing nutzen. Die Base Fee kann schnell fallen, wenn die Netzwerk-Auslastung sinkt. Für nicht-dringende Transaktionen lohnt sich das Warten auf ruhige Zeiten. Zweitens: Priority Fee je nach Dringlichkeit. 1–2 Gwei reichen meist. Bei kritischen Transaktionen wie Liquidations-Vermeidung lohnt sich höherer Tip. Drittens: stuck Transactions. Wenn die Base Fee deine Max Fee überschreitet, bleibt die Transaktion hängen. Wallets bieten "Speed up" oder "Cancel" — beides kostet.
+**[Slide 7]** Praktische Optimierung. Erstens: Gas-Timing nutzen. Die Base Fee kann schnell fallen, wenn die Netzwerk-Auslastung sinkt. Für nicht-dringende Transaktionen lohnt sich das Warten auf ruhige Zeiten. Zweitens: Priority Fee je nach Dringlichkeit. 1–2 Gwei reichen meist. Bei kritischen Transaktionen wie Liquidations-Vermeidung lohnt sich höherer Tip. Drittens: stuck Transactions. Wenn die Base Fee deine Max Fee überschreitet, bleibt die Transaktion hängen. Wallets bieten "Speed up" oder "Cancel" — beides kostet. Für Echtzeit-Tracking nutze ultrasound.money: es zeigt Burn-Rate, kumulative Burns und vergleicht Burn mit Issuance.
 
 ### Visuelle Vorschläge
 
@@ -365,19 +345,15 @@ Die Verbrennung der Base Fee ist eine fundamentale Änderung der ETH-Tokenomics.
 
 **[Slide 2]** Grafik der Pre-EIP-1559-Auction: Kurve mit wilden Preis-Spitzen über die Zeit.
 
-**[Slide 3]** Zwei-Komponenten-Visualisierung: Base Fee (mit Flammen-Icon) + Priority Fee (mit Tip-Hand-Icon) = Total Fee.
+**[Slide 3]** Zwei-Komponenten-Visualisierung: Base Fee (mit Flammen-Icon) + Priority Fee (mit Tip-Hand-Icon) = Total Fee. Darunter Treppendiagramm: Block mit 60% Auslastung → Base Fee steigt um X%. Block mit 40% → Base Fee fällt.
 
-**[Slide 4]** Treppendiagramm: Block mit 60% Auslastung → Base Fee steigt um X%. Block mit 40% → Base Fee fällt.
+**[Slide 4]** **SCREENSHOT SUGGESTION:** Rabby oder MetaMask Transaction-Confirmation-Screen mit den drei sichtbaren Feldern: Max Base Fee, Max Priority Fee, Max Fee.
 
-**[Slide 5]** **SCREENSHOT SUGGESTION:** Rabby oder MetaMask Transaction-Confirmation-Screen mit den drei sichtbaren Feldern: Max Base Fee, Max Priority Fee, Max Fee.
+**[Slide 5]** Animation: Base Fee wird im Block verbrannt (Flammen-Animation).
 
-**[Slide 6]** Animation: Base Fee wird im Block verbrannt (Flammen-Animation).
+**[Slide 6]** Chart: ETH Burn vs. Issuance über Zeit. Perioden von Netto-Deflation markiert.
 
-**[Slide 7]** Chart: ETH Burn vs. Issuance über Zeit. Perioden von Netto-Deflation markiert.
-
-**[Slide 8]** **SCREENSHOT SUGGESTION:** ultrasound.money-Homepage mit aktuellem Burn, kumulativem Total, und Issuance-Vergleich.
-
-**[Slide 9]** Drei Optimierungs-Karten mit konkreten Zahlen und Zeitfenstern.
+**[Slide 7]** Drei Optimierungs-Karten mit konkreten Zahlen und Zeitfenstern. **SCREENSHOT SUGGESTION:** ultrasound.money-Homepage mit aktuellem Burn, kumulativem Total, und Issuance-Vergleich.
 
 ### Übung
 
@@ -416,7 +392,7 @@ Der Burn-Mechanismus reduziert das ETH-Umlauf-Angebot, wenn die Netzwerk-Aktivit
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Pre/Post EIP-1559 Gas-Markt → Base Fee Mechanik → Priority Fee & Validator → Burn-Mechanismus → ETH-Supply-Dynamik → Tokenomics-Effekte
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Gas-Auktion vs. EIP-1559-Vergleich, Base-Fee-Adjustment-Kurve, Validator-Proposer-Diagramm (Bridge zu MEV), ultrasound.money-ETH-Burn-Chart, Supply-Historie-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -437,7 +413,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 
 ### Erklärung
 
-Bis März 2024 waren Layer-2-Netzwerke schon günstiger als Ethereum Mainnet, aber nicht drastisch. Ein Swap auf Arbitrum kostete typischerweise 0,30–1,00 USD. Seit der Dencun-Upgrade im März 2024 — die EIP-4844 einführte — liegen die Kosten oft unter 3 Cent. Diese Zehntel- bis Hundertel-Reduktion hat das L2-Ökosystem fundamental verändert.
+Bis März 2024 waren Layer-2-Netzwerke schon günstiger als Ethereum Mainnet, aber nicht drastisch. Ein Swap auf Arbitrum kostete typischerweise 0,30–1,00 USD. Seit dem Dencun-Upgrade im März 2024 — das EIP-4844 einführte — liegen die Kosten oft unter 3 Cent. Diese Zehntel- bis Hundertel-Reduktion hat das L2-Ökosystem fundamental verändert.
 
 **Was sind Layer-2-Rollups?**
 
@@ -514,61 +490,49 @@ Jeder Asset-Transfer zwischen L1 und L2 (oder zwischen L2s) geht über eine Brid
 
 **[Slide 1] — Titel:** EIP-4844-Blobs und die L2-Revolution
 
-**[Slide 2] — Was sind L2-Rollups?** Blockchains, die off-chain ausführen und komprimiert auf Ethereum posten. Ethereum = Settlement-Layer.
+**[Slide 2] — L2-Rollups + Calldata-Problem:** Blockchains, die off-chain ausführen und komprimiert auf Ethereum posten. Ethereum = Settlement-Layer. Vor EIP-4844 machten Calldata-Kosten 80-95% der L2-Gebühren aus.
 
-**[Slide 3] — Das Calldata-Problem:** Vor EIP-4844 machten Calldata-Kosten 80-95% der L2-Gebühren aus.
+**[Slide 3] — EIP-4844 Blobs:** Separates Gas-Pricing, temporäre 18-Tage-Speicherung, KZG-Commitments.
 
-**[Slide 4] — EIP-4844 Blobs:** Separates Gas-Pricing, temporäre 18-Tage-Speicherung, KZG-Commitments.
+**[Slide 4] — Auswirkung:** L2-Kosten oft um Faktor 10 gefallen. Arbitrum-Swap: 0,30 USD → 0,03 USD.
 
-**[Slide 5] — Auswirkung:** L2-Kosten oft um Faktor 10 gefallen. Arbitrum-Swap: 0,30 USD → 0,03 USD.
+**[Slide 5] — Optimistic vs. ZK Rollups:** Zwei Architekturen. Optimistic (Arbitrum, Optimism, Base) = 7-Tage-Exit. ZK (zkSync, Starknet, Linea) = sofortige Verifikation.
 
-**[Slide 6] — Optimistic vs. ZK:** Zwei Architekturen. Optimistic = 7-Tage-Exit. ZK = sofortige Verifikation.
+**[Slide 6] — Bridge-Risiko:** Historisch größter Angriffsvektor. Native Bridges, Third-Party, CEX als Optionen.
 
-**[Slide 7] — Populäre L2s:** Arbitrum, Base, Optimism (Optimistic). zkSync, Starknet, Linea (ZK).
-
-**[Slide 8] — Bridge-Risiko:** Historisch größter Angriffsvektor. Native Bridges, Third-Party, CEX als Optionen.
-
-**[Slide 9] — Tools:** l2beat.com, growthepie.xyz, DeFiLlama.
+**[Slide 7] — Tools:** l2beat.com, growthepie.xyz, DeFiLlama.
 
 ### Sprechertext
 
-**[Slide 1]** Lektion 3.3: EIP-4844 und die L2-Revolution. Wenn du nur einen Upgrade aus Ethereums Geschichte verstehen willst, dann diesen. Die Dencun-Upgrade vom März 2024 hat die L2-Kosten um einen Faktor 10 reduziert.
+**[Slide 1]** Lektion 3.3: EIP-4844 und die L2-Revolution. Wenn du nur ein Upgrade aus Ethereums Geschichte verstehen willst, dann dieses. Das Dencun-Upgrade vom März 2024 hat die L2-Kosten um einen Faktor 10 reduziert.
 
-**[Slide 2]** Was sind Layer-2-Rollups? Eigene Blockchains, die Transaktionen ausführen und die komprimierten Ergebnisse an Ethereum Mainnet posten. Ethereum dient als Settlement- und Data-Availability-Layer. Die L2 hat eigene Block-Produktion, eigene Gas-Ökonomie und Sicherheits-Anbindung an Ethereum.
+**[Slide 2]** Was sind Layer-2-Rollups? Eigene Blockchains, die Transaktionen ausführen und die komprimierten Ergebnisse an Ethereum Mainnet posten. Ethereum dient als Settlement- und Data-Availability-Layer. Die L2 hat eigene Block-Produktion, eigene Gas-Ökonomie und Sicherheits-Anbindung an Ethereum. Vor EIP-4844 mussten Rollups ihre Daten als normale Calldata an Ethereum posten. Calldata ist teuer, weil sie permanent im Ethereum-State gespeichert wird. Die Calldata-Kosten machten 80 bis 95% der L2-Transaktionskosten aus. Die L2 selbst war billig, aber die Mainnet-Settlement-Kosten wurden an die Nutzer weitergegeben.
 
-**[Slide 3]** Vor EIP-4844 mussten Rollups ihre Daten als normale Calldata an Ethereum posten. Calldata ist teuer, weil sie permanent im Ethereum-State gespeichert wird. Die Calldata-Kosten machten 80 bis 95% der L2-Transaktionskosten aus. Die L2 selbst war billig, aber die Mainnet-Settlement-Kosten wurden an die Nutzer weitergegeben.
+**[Slide 3]** EIP-4844 — auch Proto-Danksharding genannt — führt Blobs ein. Drei Eigenschaften. Erstens: separates Gas-Pricing, entkoppelt vom normalen Calldata-Markt. Zweitens: temporäre Speicherung, etwa 18 Tage, dann gelöscht. Das reicht für L2-Validatoren und Prover, belastet den Ethereum-State aber nicht dauerhaft. Drittens: KZG-Commitments — Daten sind kryptographisch verfügbar, aber nicht direkt von EVM-Smart-Contracts lesbar.
 
-**[Slide 4]** EIP-4844 — auch Proto-Danksharding genannt — führt Blobs ein. Drei Eigenschaften. Erstens: separates Gas-Pricing, entkoppelt vom normalen Calldata-Markt. Zweitens: temporäre Speicherung, etwa 18 Tage, dann gelöscht. Das reicht für L2-Validatoren und Prover, belastet den Ethereum-State aber nicht dauerhaft. Drittens: KZG-Commitments — Daten sind kryptographisch verfügbar, aber nicht direkt von EVM-Smart-Contracts lesbar.
+**[Slide 4]** Die Auswirkung war sofort spürbar. Ein Arbitrum-Swap kostete vor dem Upgrade 0,30 bis 1 USD. Nach dem Upgrade: 0,02 bis 0,08 USD. Ein Lending-Deposit: 0,50 bis 1,50 USD davor, 0,05 bis 0,15 USD danach. Das ermöglicht neue Nutzungsmuster — häufiges Rebalancing, kleine Trades, Micro-Payments.
 
-**[Slide 5]** Die Auswirkung war sofort spürbar. Ein Arbitrum-Swap kostete vor der Upgrade 0,30 bis 1 USD. Nach der Upgrade: 0,02 bis 0,08 USD. Ein Lending-Deposit: 0,50 bis 1,50 USD davor, 0,05 bis 0,15 USD danach. Das ermöglicht neue Nutzungsmuster — häufiges Rebalancing, kleine Trades, Micro-Payments.
+**[Slide 5]** Zwei Rollup-Architekturen. Optimistic Rollups — Arbitrum, Optimism, Base — gehen davon aus, dass die posted Daten korrekt sind. Fraud-Proofs erlauben Challenge während eines 7-Tage-Fensters. Withdrawals dauern entsprechend 7 Tage. Technisch einfacher, daher früh produktiv. ZK-Rollups — zkSync, Starknet, Linea — posten mit jedem Batch einen Zero-Knowledge-Proof, der die Korrektheit kryptographisch beweist. Withdrawals sind sofort möglich. Technisch komplex, daher später produktiv. Die Wahl hängt davon ab, wo das gewünschte Protokoll verfügbar und die Liquidität ausreichend ist.
 
-**[Slide 6]** Zwei Rollup-Architekturen. Optimistic Rollups — Arbitrum, Optimism, Base — gehen davon aus, dass die posted Daten korrekt sind. Fraud-Proofs erlauben Challenge während eines 7-Tage-Fensters. Withdrawals dauern entsprechend 7 Tage. Technisch einfacher, daher früh produktiv. ZK-Rollups — zkSync, Starknet, Linea — posten mit jedem Batch einen Zero-Knowledge-Proof, der die Korrektheit kryptographisch beweist. Withdrawals sind sofort möglich. Technisch komplex, daher später produktiv.
+**[Slide 6]** Bridge-Risiko. Jeder Asset-Transfer zwischen L1 und L2 geht über eine Bridge. Bridges sind historisch ein massives Angriffsziel. Ronin: 625 Millionen Dollar. Wormhole: 326 Millionen. Nomad: 190 Millionen. Drei Optionen. Native Rollup-Bridges sind am sichersten. Third-Party-Bridges wie Across oder Stargate sind schneller, haben aber eigenes Smart-Contract-Risiko. CEX-Withdrawal ist günstig, erfordert KYC und CEX-Vertrauen.
 
-**[Slide 7]** Die populärsten L2s heute: Arbitrum mit dem größten DeFi-Ökosystem und meiste TVL. Base, von Coinbase unterstützt, schnell wachsend. Optimism, etabliert, mit Superchain-Vision. Auf ZK-Seite zkSync Era, Starknet, Linea, Scroll. Die Wahl hängt davon ab, wo das gewünschte Protokoll verfügbar und die Liquidität ausreichend ist.
-
-**[Slide 8]** Bridge-Risiko. Jeder Asset-Transfer zwischen L1 und L2 geht über eine Bridge. Bridges sind historisch ein massives Angriffsziel. Ronin: 625 Millionen Dollar. Wormhole: 326 Millionen. Nomad: 190 Millionen. Drei Optionen. Native Rollup-Bridges sind am sichersten. Third-Party-Bridges wie Across oder Stargate sind schneller, haben aber eigenes Smart-Contract-Risiko. CEX-Withdrawal ist günstig, erfordert KYC und CEX-Vertrauen.
-
-**[Slide 9]** Tools. L2Beat ist die offizielle L2-Übersicht mit TVL, Activity und Risk-Framework. Growthepie für detailliertere Aktivitäts-Metriken. DeFiLlama Chain-Pages für pro-L2-TVL-Verläufe und Top-Protokolle. Vor jeder L2-Wahl lohnt sich der Blick.
+**[Slide 7]** Tools. L2Beat ist die offizielle L2-Übersicht mit TVL, Activity und Risk-Framework. Growthepie für detailliertere Aktivitäts-Metriken. DeFiLlama Chain-Pages für pro-L2-TVL-Verläufe und Top-Protokolle. Vor jeder L2-Wahl lohnt sich der Blick.
 
 ### Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 
-**[Slide 2]** Stack-Diagramm: L2 oben, führt Transaktionen aus. L1 unten, dient als Settlement. Pfeil nach unten für komprimierten Daten-Post.
+**[Slide 2]** Stack-Diagramm: L2 oben, führt Transaktionen aus. L1 unten, dient als Settlement. Pfeil nach unten für komprimierten Daten-Post. Daneben Kostendiagramm einer L2-Transaktion vor EIP-4844: großer Balken "Calldata-Kosten", kleiner Balken "L2-Execution".
 
-**[Slide 3]** Kostendiagramm einer L2-Transaktion vor EIP-4844: großer Balken "Calldata-Kosten", kleiner Balken "L2-Execution".
+**[Slide 3]** Technische Illustration der drei Blob-Eigenschaften mit Icons.
 
-**[Slide 4]** Technische Illustration der drei Blob-Eigenschaften mit Icons.
+**[Slide 4]** Before/After-Vergleichstabelle mit echten Kosten. **SCREENSHOT SUGGESTION:** Arbitrum-Swap mit sichtbaren Gebühren auf app.arbitrum.foundation oder Etherscan für Arbitrum.
 
-**[Slide 5]** Before/After-Vergleichstabelle mit echten Kosten. **SCREENSHOT SUGGESTION:** Arbitrum-Swap mit sichtbaren Gebühren auf app.arbitrum.foundation oder Etherscan für Arbitrum.
+**[Slide 5]** Zwei-Spalten-Vergleich Optimistic (links) vs. ZK (rechts) mit den jeweiligen Eigenschaften. Darunter Logo-Galerie der populärsten L2s, aufgeteilt in Optimistic und ZK.
 
-**[Slide 6]** Zwei-Spalten-Vergleich Optimistic (links) vs. ZK (rechts) mit den jeweiligen Eigenschaften.
+**[Slide 6]** Timeline der größten Bridge-Hacks mit Schadenshöhen.
 
-**[Slide 7]** Logo-Galerie der populärsten L2s, aufgeteilt in Optimistic und ZK.
-
-**[Slide 8]** Timeline der größten Bridge-Hacks mit Schadenshöhen.
-
-**[Slide 9]** **SCREENSHOT SUGGESTION:** l2beat.com-Hauptseite mit L2-Ranking nach TVL.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** l2beat.com-Hauptseite mit L2-Ranking nach TVL.
 
 ### Übung
 
@@ -608,8 +572,8 @@ Das ist ein bewusstes Design-Feature von EIP-4844. Blobs sind über KZG-Commitme
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → L1 vs. L2 → EIP-4844 Blobs → Dencun-Effekte → Optimistic Rollups → ZK Rollups → Bridge-Optionen → Chain-Wahl-Entscheidungsmatrix
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → L1/L2 + Calldata-Problem → EIP-4844 Blobs → Auswirkung → Optimistic vs. ZK Rollups → Bridge-Risiko → Tools
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — L1/L2-Architektur-Diagramm, Blob-Lifecycle (18 Tage), L2-Fee-Chart vor/nach Dencun, Fraud-vs-Validity-Proof-Vergleich, Bridge-Optionen-Tabelle (Native/Across/Stargate), L2Beat-TVL-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -740,61 +704,49 @@ Das Verhältnis ist immer 1:1 und mathematisch garantiert. Deshalb handeln WETH 
 
 **[Slide 1] — Titel:** Der ERC-20-Token-Standard
 
-**[Slide 2] — Was ist ein Token?** Smart Contract mit balance-Mapping. USDC auf 0xA0b869... speichert pro Adresse einen Wert.
+**[Slide 2] — Token-Grundlage + 6 Pflicht-Funktionen:** Smart Contract mit balance-Mapping (z.B. USDC auf 0xA0b869...). Pflicht-Interface: balanceOf, transfer, approve, transferFrom, allowance, totalSupply.
 
-**[Slide 3] — Die sechs Pflicht-Funktionen:** balanceOf, transfer, approve, transferFrom, allowance, totalSupply.
+**[Slide 3] — Events:** Transfer und Approval. Grundlage für Etherscan-Tracking.
 
-**[Slide 4] — Events:** Transfer und Approval. Grundlage für Etherscan-Tracking.
+**[Slide 4] — Decimals:** Integer-Rechnung. USDC = 6, ETH/DAI = 18, WBTC = 8. Häufige Fehlerquelle.
 
-**[Slide 5] — Decimals:** Integer-Rechnung. USDC = 6, ETH/DAI = 18, WBTC = 8. Häufige Fehlerquelle.
+**[Slide 5] — Mint/Burn:** USDC/USDT zentral, DAI collateralized, LP-Tokens automatisch, Memecoins fixed.
 
-**[Slide 6] — Mint/Burn:** USDC/USDT zentral, DAI collateralized, LP-Tokens automatisch, Memecoins fixed.
+**[Slide 6] — Problematische Varianten:** Fee-on-Transfer, Rebase, Pause-fähig, Blacklist, Upgradeable.
 
-**[Slide 7] — Problematische Varianten:** Fee-on-Transfer, Rebase, Pause-fähig, Blacklist, Upgradeable.
-
-**[Slide 8] — WETH:** ETH selbst ist kein ERC-20. WETH als 1:1-Wrapper für DeFi-Kompatibilität.
-
-**[Slide 9] — Lesen auf Etherscan:** Jeder ERC-20 hat eine Contract-Page mit "Read Contract" und "Write Contract"-Tabs.
+**[Slide 7] — WETH + Etherscan-Inspektion:** ETH ist kein ERC-20, WETH als 1:1-Wrapper. Jeder ERC-20 hat "Read Contract" und "Write Contract"-Tabs auf Etherscan.
 
 ### Sprechertext
 
 **[Slide 1]** Lektion 3.4: Der ERC-20-Token-Standard. Das ist der wichtigste Smart-Contract-Standard in DeFi. USDC, DAI, AAVE, UNI — alle ERC-20. Wer ERC-20 versteht, kann jeden Token einordnen.
 
-**[Slide 2]** Ein Token ist kein digitales Objekt in deiner Wallet. Es ist ein Smart Contract mit einem internen Ledger. Das Contract speichert ein Mapping: Adresse auf Balance. Wenn du "USDC hältst", bedeutet das: der USDC-Contract hat einen Eintrag, der deiner Adresse einen Wert zuordnet. Die offizielle USDC-Adresse auf Ethereum ist 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48. Schreib sie dir auf — sie wird dir oft begegnen.
+**[Slide 2]** Ein Token ist kein digitales Objekt in deiner Wallet. Es ist ein Smart Contract mit einem internen Ledger. Das Contract speichert ein Mapping: Adresse auf Balance. Wenn du "USDC hältst", bedeutet das: der USDC-Contract hat einen Eintrag, der deiner Adresse einen Wert zuordnet. Die offizielle USDC-Adresse auf Ethereum ist 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48. Schreib sie dir auf — sie wird dir oft begegnen. Sechs Pflicht-Funktionen definiert der Standard: balanceOf zeigt, wie viel eine Adresse hält. transfer bewegt Tokens vom Sender. approve erlaubt einem Spender, Tokens zu bewegen. transferFrom ist die Bewegung durch den Spender. allowance zeigt, wie viel der Spender darf. totalSupply zählt alle existierenden Tokens.
 
-**[Slide 3]** Sechs Pflicht-Funktionen. balanceOf: wie viel hält eine Adresse. transfer: Sender bewegt Tokens. approve: Besitzer erlaubt Spender, Tokens zu bewegen. transferFrom: der Spender bewegt die approved Tokens. allowance: wie viel darf Spender bewegen. totalSupply: wie viele Tokens existieren insgesamt.
+**[Slide 3]** Zwei Events. Transfer wird bei jedem Transfer emittiert, Approval bei jeder Approval. Diese Events werden on-chain in Block-Logs geschrieben. Das ist der Grund, warum Etherscan dir die Token-Bewegungen pro Adresse anzeigen kann — es liest diese Events aus.
 
-**[Slide 4]** Zwei Events. Transfer wird bei jedem Transfer emittiert, Approval bei jeder Approval. Diese Events werden on-chain in Block-Logs geschrieben. Das ist der Grund, warum Etherscan dir die Token-Bewegungen pro Adresse anzeigen kann — es liest diese Events aus.
+**[Slide 4]** Decimals — der häufigste Verwechslungspunkt. Smart Contracts rechnen mit Integern. Wenn USDC "100 USDC" anzeigt, speichert der Contract 100 mal 10 hoch 6 — also 100 Millionen. Weil USDC 6 Decimals hat. ETH und DAI haben 18, WBTC hat 8, USDC und USDT haben 6. Wenn du direkt mit dem Contract interagierst, musst du mit Decimals multiplizieren. Apps erledigen das für dich, bei manueller Interaktion nicht.
 
-**[Slide 5]** Decimals — der häufigste Verwechslungspunkt. Smart Contracts rechnen mit Integern. Wenn USDC "100 USDC" anzeigt, speichert der Contract 100 mal 10 hoch 6 — also 100 Millionen. Weil USDC 6 Decimals hat. ETH und DAI haben 18, WBTC hat 8, USDC und USDT haben 6. Wenn du direkt mit dem Contract interagierst, musst du mit Decimals multiplizieren. Apps erledigen das für dich, bei manueller Interaktion nicht.
+**[Slide 5]** Mint und Burn — das Erschaffen und Zerstören von Tokens. USDC und USDT werden zentral vom Emittenten geminted, wenn USD eingeht. DAI wird von Nutzern geminted, die Sicherheiten in MakerDAO sperren. LP-Tokens werden automatisch beim Hinzufügen von Liquidität geminted. Memecoins sind oft fixed supply — alles beim Deployment geminted, danach nicht mehr.
 
-**[Slide 6]** Mint und Burn — das Erschaffen und Zerstören von Tokens. USDC und USDT werden zentral vom Emittenten geminted, wenn USD eingeht. DAI wird von Nutzern geminted, die Sicherheiten in MakerDAO sperren. LP-Tokens werden automatisch beim Hinzufügen von Liquidität geminted. Memecoins sind oft fixed supply — alles beim Deployment geminted, danach nicht mehr.
+**[Slide 6]** Nicht jeder ERC-20 verhält sich standardkonform. Fünf Varianten, die Probleme machen können. Fee-on-Transfer: Token belastet bei jedem Transfer eine Gebühr. Viele Protokolle brechen. Rebase: Balance aller Halter wird automatisch angepasst. Kalkulationen werden falsch. Pause-fähig: Emittent kann Transfers stoppen. USDC und USDT haben das. Blacklist: spezifische Adressen können gesperrt werden. Auch USDC und USDT. Upgradeable: Contract kann nachträglich geändert werden. Flexibilität, aber auch Risiko.
 
-**[Slide 7]** Nicht jeder ERC-20 verhält sich standardkonform. Fünf Varianten, die Probleme machen können. Fee-on-Transfer: Token belastet bei jedem Transfer eine Gebühr. Viele Protokolle brechen. Rebase: Balance aller Halter wird automatisch angepasst. Kalkulationen werden falsch. Pause-fähig: Emittent kann Transfers stoppen. USDC und USDT haben das. Blacklist: spezifische Adressen können gesperrt werden. Auch USDC und USDT. Upgradeable: Contract kann nachträglich geändert werden. Flexibilität, aber auch Risiko.
-
-**[Slide 8]** Wichtig: ETH selbst ist kein ERC-20. Das native Asset folgt einem älteren Standard. Um ETH in Protokollen zu nutzen, die ERC-20 erwarten, wird es in WETH gewickelt. Du sendest ETH an den WETH-Contract und bekommst die gleiche Menge WETH zurück. Umgekehrt: WETH burnen und ETH zurückbekommen. Verhältnis immer 1:1, mathematisch garantiert. Deshalb handeln WETH und ETH zum exakt gleichen Preis.
-
-**[Slide 9]** Jeder ERC-20-Contract auf Etherscan hat zwei Tabs: Read Contract und Write Contract. Read zeigt die Read-Funktionen — balanceOf, totalSupply, decimals — die du aufrufen kannst, ohne zu signieren. Write zeigt die Write-Funktionen — transfer, approve — die eine Signatur und Gas brauchen. Diese direkte Interaktion mit Contracts ist die letzte Instanz, wenn ein Frontend nicht funktioniert oder manipuliert wirkt.
+**[Slide 7]** Wichtig: ETH selbst ist kein ERC-20. Das native Asset folgt einem älteren Standard. Um ETH in Protokollen zu nutzen, die ERC-20 erwarten, wird es in WETH gewickelt. Du sendest ETH an den WETH-Contract und bekommst die gleiche Menge WETH zurück. Umgekehrt: WETH burnen und ETH zurückbekommen. Verhältnis immer 1:1, mathematisch garantiert. Deshalb handeln WETH und ETH zum exakt gleichen Preis. Für die direkte Inspektion hat jeder ERC-20-Contract auf Etherscan zwei Tabs: Read Contract und Write Contract. Read zeigt die Read-Funktionen — balanceOf, totalSupply, decimals — die du aufrufen kannst, ohne zu signieren. Write zeigt die Write-Funktionen — transfer, approve — die eine Signatur und Gas brauchen. Diese direkte Interaktion mit Contracts ist die letzte Instanz, wenn ein Frontend nicht funktioniert oder manipuliert wirkt.
 
 ### Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 
-**[Slide 2]** Mapping-Darstellung: Adressen links, Balances rechts, Pfeile dazwischen.
+**[Slide 2]** Mapping-Darstellung: Adressen links, Balances rechts, Pfeile dazwischen. Darunter Funktionsliste mit kurzen Beschreibungen. **SCREENSHOT SUGGESTION:** USDC-Contract auf Etherscan, Read-Tab mit sichtbaren Standardfunktionen.
 
-**[Slide 3]** Funktionsliste mit kurzen Beschreibungen. **SCREENSHOT SUGGESTION:** USDC-Contract auf Etherscan, Read-Tab mit sichtbaren Standardfunktionen.
+**[Slide 3]** Event-Flow: Transfer-Call → Event emittiert → Etherscan liest Event.
 
-**[Slide 4]** Event-Flow: Transfer-Call → Event emittiert → Etherscan liest Event.
+**[Slide 4]** Decimals-Tabelle mit den häufigsten Tokens. Daneben die Integer-Umrechnung von "100 USDC" zu 100000000.
 
-**[Slide 5]** Decimals-Tabelle mit den häufigsten Tokens. Daneben die Integer-Umrechnung von "100 USDC" zu 100000000.
+**[Slide 5]** Mint/Burn-Flow-Diagramme für die vier Token-Kategorien.
 
-**[Slide 6]** Mint/Burn-Flow-Diagramme für die vier Token-Kategorien.
+**[Slide 6]** Fünf Warn-Karten für die problematischen Varianten mit jeweiligen Beispielen.
 
-**[Slide 7]** Fünf Warn-Karten für die problematischen Varianten mit jeweiligen Beispielen.
-
-**[Slide 8]** Diagramm des WETH-Deposit/Withdraw-Flows.
-
-**[Slide 9]** **SCREENSHOT SUGGESTION:** Etherscan-Contract-Page mit geöffnetem "Read Contract"-Tab bei USDC.
+**[Slide 7]** Diagramm des WETH-Deposit/Withdraw-Flows. **SCREENSHOT SUGGESTION:** Etherscan-Contract-Page mit geöffnetem "Read Contract"-Tab bei USDC.
 
 ### Übung
 
@@ -834,8 +786,8 @@ Drei mögliche Ursachen. 1. **Falsche Chain:** Du hast den Token auf Ethereum Ma
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → ERC-20-Standardfunktionen → Decimals & totalSupply → Mint/Burn → approve/transferFrom → Problematische Varianten (Fee-on-Transfer, Rebase, Pause) → Admin/Governance-Funktionen → Due-Diligence-Checkliste
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → Token-Grundlage + 6 Pflicht-Funktionen → Events → Decimals → Mint/Burn → Problematische Varianten → WETH + Etherscan-Inspektion
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — ERC-20-Interface-Diagramm, Decimals-Beispiel, approve/transferFrom-Flussdiagramm, USDT/USDC-Code-Screenshot (Blacklist/Pause), Etherscan-Token-Seite
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -948,11 +900,9 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 **[Slide 5] — ERC-1155:** Fungible und non-fungible in einem Contract. Gaming, Editions, Batch-Operations.
 
-**[Slide 6] — Metadaten:** HTTP (zentral), IPFS (dezentral aber optional), On-Chain (permanent aber teuer).
+**[Slide 6] — Metadaten + NFTs in DeFi:** HTTP (zentral), IPFS (dezentral aber optional), On-Chain (permanent aber teuer). DeFi-Relevanz: Uniswap V3 LP-Positionen, ve-Tokens, Drainer-Vektoren.
 
-**[Slide 7] — NFTs in DeFi:** Uniswap V3 LP-Positionen, ve-Tokens, Drainer-Vektoren.
-
-**[Slide 8] — Verteidigung:** setApprovalForAll misstrauen, revoke.cash-NFT-Tab nutzen.
+**[Slide 7] — Verteidigung:** setApprovalForAll misstrauen, revoke.cash-NFT-Tab nutzen.
 
 ### Sprechertext
 
@@ -962,15 +912,13 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 **[Slide 3]** ERC-721 ist der klassische NFT-Standard. Der Contract speichert pro Token-ID einen Besitzer. Die Standardfunktionen: ownerOf für den Besitzer einer ID, balanceOf für die Anzahl NFTs dieser Collection, transferFrom für einzelne Transfers, approve für einzelne IDs — und setApprovalForAll für alle IDs einer Collection.
 
-**[Slide 4]** setApprovalForAll ist der gefährlichste NFT-Mechanismus. Wenn du eine Collection auf OpenSea listen willst, fordert der Marktplatz diese Approval. Damit darf der Marktplatz alle deine aktuellen und zukünftigen NFTs dieser Collection bewegen. Eine gefälschte Marktplatz-Site kann das missbrauchen. Einmal signiert, sind alle wertvollen NFTs in Gefahr. Verteidigung: setApprovalForAll nur auf vertrauenswürdigen Sites, revoke.cash-NFT-Tab regelmäßig checken, bei Zweifel lieber einzel-approven als alles.
+**[Slide 4]** setApprovalForAll ist der gefährlichste NFT-Mechanismus. Wenn du eine Collection auf OpenSea listen willst, fordert der Marktplatz diese Approval. Damit darf der Marktplatz alle deine aktuellen und zukünftigen NFTs dieser Collection bewegen. Eine gefälschte Marktplatz-Site kann das missbrauchen. Einmal signiert, sind alle wertvollen NFTs in Gefahr. Verteidigung: setApprovalForAll nur auf vertrauenswürdigen Sites, revoke.cash-NFT-Tab regelmäßig prüfen, bei Zweifel lieber einzel-approven als alles.
 
 **[Slide 5]** ERC-1155 ist der Mehrzweck-Standard. Unterstützt beide — fungible und non-fungible — in einem Contract. Pro Token-ID und pro Adresse eine Balance. Eine Token-ID kann 1.000.000 Exemplare haben oder nur 1. Use Cases: Gaming mit vielen Item-Typen, limitierte Kunst-Editions, Batch-Operations für Effizienz.
 
-**[Slide 6]** NFT-Metadaten werden auf drei Arten gespeichert. Off-chain HTTP: URL zeigt auf normalen Web-Server. Billig, aber wenn der Server ausfällt, ist die Darstellung weg. Off-chain IPFS: dezentral, aber nur verfügbar, solange Nodes die Daten pinnen. On-chain: alle Metadaten im Contract. Permanent und zensur-resistent, aber teuer. Die meisten NFTs sind HTTP oder IPFS — die "Permanenz" einer NFT ist oft nicht so absolut, wie behauptet.
+**[Slide 6]** NFT-Metadaten werden auf drei Arten gespeichert. Off-chain HTTP: URL zeigt auf normalen Web-Server. Billig, aber wenn der Server ausfällt, ist die Darstellung weg. Off-chain IPFS: dezentral, aber nur verfügbar, solange Nodes die Daten pinnen. On-chain: alle Metadaten im Contract. Permanent und zensur-resistent, aber teuer. Die meisten NFTs sind HTTP oder IPFS — die "Permanenz" einer NFT ist oft nicht so absolut, wie behauptet. Warum das alles für DeFi-Nutzer relevant ist: Erstens, Uniswap V3 LP-Positionen sind NFTs. Wer konzentrierte Liquidität bereitstellt, bekommt einen ERC-721-Token. Zweitens, manche Protokolle wie Curve nutzen NFTs für gelockte ve-Tokens. Drittens, Drainer-Vektoren. setApprovalForAll ist einer der gefährlichsten Signatur-Typen, auch wenn du selbst keine teuren NFTs hältst.
 
-**[Slide 7]** Warum das alles für DeFi-Nutzer relevant ist. Erstens: Uniswap V3 LP-Positionen sind NFTs. Wer konzentrierte Liquidität bereitstellt, bekommt einen ERC-721-Token. Zweitens: manche Protokolle wie Curve nutzen NFTs für gelockte ve-Tokens. Drittens: Drainer-Vektoren. setApprovalForAll ist einer der gefährlichsten Signatur-Typen, auch wenn du selbst keine teuren NFTs hältst.
-
-**[Slide 8]** Verteidigung. Prinzipielle Regel: setApprovalForAll ist ein Maximal-Vertrauens-Signal — sparsam verwenden. Nur auf Sites signieren, die du kennst und die gerade legitim einen Bulk-Transfer rechtfertigen. revoke.cash hat einen separaten Tab für NFT-Approvals — monatlich durchgehen. Bei Zweifeln: einzelne Token-IDs approven statt alles.
+**[Slide 7]** Verteidigung. Prinzipielle Regel: setApprovalForAll ist ein Maximal-Vertrauens-Signal — sparsam verwenden. Nur auf Sites signieren, die du kennst und die gerade legitim einen Bulk-Transfer rechtfertigen. revoke.cash hat einen separaten Tab für NFT-Approvals — monatlich durchgehen. Bei Zweifeln: einzelne Token-IDs approven statt alles.
 
 ### Visuelle Vorschläge
 
@@ -984,11 +932,9 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 **[Slide 5]** Vergleichsdiagramm ERC-721 vs. ERC-1155.
 
-**[Slide 6]** Drei-Spalten-Vergleich der Metadaten-Optionen mit jeweiligen Trade-offs.
+**[Slide 6]** Drei-Spalten-Vergleich der Metadaten-Optionen mit jeweiligen Trade-offs. **SCREENSHOT SUGGESTION:** Uniswap-V3-LP-Position-Seite, die die Position als NFT zeigt.
 
-**[Slide 7]** **SCREENSHOT SUGGESTION:** Uniswap-V3-LP-Position-Seite, die die Position als NFT zeigt.
-
-**[Slide 8]** **SCREENSHOT SUGGESTION:** revoke.cash NFT-Approvals-Tab.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** revoke.cash NFT-Approvals-Tab.
 
 ### Übung
 
@@ -1005,7 +951,7 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 ### Quiz
 
-**Frage 1:** Warum ist `setApprovalForAll` ein systematisch gefährlicher als `approve` für einzelne Token-IDs?
+**Frage 1:** Warum ist `setApprovalForAll` systematisch gefährlicher als `approve` für einzelne Token-IDs?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -1013,7 +959,7 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 `setApprovalForAll` gibt unbeschränkten Zugriff auf alle aktuellen und zukünftigen NFTs einer Collection — eine einzige Signatur reicht für potenziell Millionen Dollar. `approve(tokenId)` gibt Zugriff nur auf einen einzelnen NFT — jeder weitere NFT erfordert eine neue, explizite Approval. Bei einem Drainer-Angriff bekommt der Angreifer mit `setApprovalForAll` sofort eine ganze Collection; mit `approve` nur einen einzelnen NFT und muss für weitere jeweils neue Signaturen erwirken, was viel auffälliger ist. Der Komfort-Nachteil von einzelnen Approvals ist deutlich — bei jedem NFT-Transfer eine eigene Signatur — weshalb Marktplätze routinemäßig `setApprovalForAll` anfordern. Für Nutzer ist das akzeptables Risiko nur bei vertrauenswürdigen, etablierten Marktplätzen.
 </details>
 
-**Frage 2:** Du kaufst eine NFT für 500 USD auf einem seriösen Marktplatz. Zwei Jahre später schaut die NFT in deiner Wallet merkwürdig aus — die Bilder sind verschwunden oder zeigen Fehler. Was könnte passiert sein und wie prüfst du es?
+**Frage 2:** Du kaufst eine NFT für 500 USD auf einem seriösen Marktplatz. Zwei Jahre später sieht die NFT in deiner Wallet merkwürdig aus — die Bilder sind verschwunden oder zeigen Fehler. Was könnte passiert sein und wie prüfst du es?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -1025,8 +971,8 @@ Wahrscheinliche Ursache: die Metadaten waren off-chain gespeichert und der zugeh
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Slides: Titel → ERC-721 vs. ERC-1155 → Use Cases → setApprovalForAll-Risiko → Metadaten on-chain/off-chain → Royalties (EIP-2981) → NFT-Approval-Hygiene
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → Fungible vs. Non-fungible → ERC-721 → setApprovalForAll-Risiko → ERC-1155 → Metadaten + NFTs in DeFi → Verteidigung
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — ERC-721 vs. ERC-1155 Vergleichstabelle, setApprovalForAll-Drainer-Flow, IPFS/HTTPS/On-Chain-Storage-Diagramm, revoke.cash NFT-Tab-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1171,17 +1117,13 @@ Das ist besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wen
 
 **[Slide 3] — Address Page:** Balance, Token Balances, Transactions, Internal Tx, Token Transfers, NFT Transfers, Analytics.
 
-**[Slide 4] — Transaction Page:** Status, From/To, Value, Gas, Input Data, Logs, State Changes.
+**[Slide 4] — Transaction Page + Event-Logs:** Status, From/To, Value, Gas, Input Data. Logs-Tab zeigt alle emittierten Events — Grundlage jeder Schritt-für-Schritt-Rekonstruktion.
 
-**[Slide 5] — Event-Logs:** Alle emittierten Events. Schritt-für-Schritt-Rekonstruktion der Transaktion.
+**[Slide 5] — Contract Pages:** Code, Read Contract, Write Contract. Verifiziert = grüner Haken.
 
-**[Slide 6] — Contract Pages:** Code, Read Contract, Write Contract. Verifiziert = grüner Haken.
+**[Slide 6] — Token Approval Checker + Token-Recherche-Workflow:** etherscan.io/tokenapprovalchecker als Alternative zu revoke.cash. Sechs-Schritte-Check: Verifiziert? Holders? Transfers? Alter? Code-Patterns?
 
-**[Slide 7] — Token Approval Checker:** etherscan.io/tokenapprovalchecker. Integrierte Alternative zu revoke.cash.
-
-**[Slide 8] — Token-Recherche-Workflow:** Verifiziert? Holders? Transfers? Alter? Code-Patterns?
-
-**[Slide 9] — Direkte Contract-Interaktion:** Write Contract Tab. Notfall-Withdrawals ohne offizielles Frontend.
+**[Slide 7] — Direkte Contract-Interaktion:** Write Contract Tab. Notfall-Withdrawals ohne offizielles Frontend.
 
 ### Sprechertext
 
@@ -1191,17 +1133,13 @@ Das ist besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wen
 
 **[Slide 3]** Die Address Page. Oben die ETH-Balance. Darunter Token Balances als Dropdown mit allen ERC-20-Tokens. Dann die Transactions-Liste. Wichtig: normale Transactions zeigen nur, was die Adresse signiert oder direkt empfangen hat. Viele Token-Bewegungen passieren über Smart-Contract-Ausführung — die stehen in Internal Transactions und Token Transfers. Wer nur den ersten Tab liest, sieht einen Teil der Wahrheit nicht.
 
-**[Slide 4]** Die Transaction Page. Status: Success oder Fail. From und To. Value: oft 0 bei Contract-Interaktionen. Die drei Gas-Werte. Und besonders wichtig: Input Data. Etherscan hat eine "Decoded Input Data"-Funktion, die dir zeigt, welche Funktion aufgerufen wurde und mit welchen Parametern. Das ist die Basis jeder forensischen Analyse.
+**[Slide 4]** Die Transaction Page. Status: Success oder Fail. From und To. Value: oft 0 bei Contract-Interaktionen. Die drei Gas-Werte. Und besonders wichtig: Input Data. Etherscan hat eine "Decoded Input Data"-Funktion, die dir zeigt, welche Funktion aufgerufen wurde und mit welchen Parametern. Das ist die Basis jeder forensischen Analyse. Der Logs-Tab zeigt alle während der Transaktion emittierten Events. Für einen ERC-20-Transfer siehst du: Transfer von Adresse A zu Adresse B, mit Value X. Eine komplexe DeFi-Transaktion kann 10 bis 30 Events emittieren. Wer Events lesen kann, versteht jeden Schritt.
 
-**[Slide 5]** Event-Logs. Der Logs-Tab zeigt alle während der Transaktion emittierten Events. Für einen ERC-20-Transfer siehst du: Transfer von Adresse A zu Adresse B, mit Value X. Eine komplexe DeFi-Transaktion kann 10 bis 30 Events emittieren. Wer Events lesen kann, versteht jeden Schritt.
+**[Slide 5]** Contract Pages haben zusätzliche Tabs. Code — der Solidity-Quellcode, wenn verifiziert. Read Contract — alle Read-Funktionen, die du ohne Signatur aufrufen kannst. Write Contract — alle Write-Funktionen, die du mit Wallet-Signatur aufrufen kannst. Der grüne Haken bei "Contract" zeigt, ob verifiziert wurde. Unverifizierte Contracts zeigen nur Bytecode — unlesbar für Menschen. Ernsthafte DeFi-Regel: niemals mit unverifizierten Contracts interagieren.
 
-**[Slide 6]** Contract Pages haben zusätzliche Tabs. Code — der Solidity-Quellcode, wenn verifiziert. Read Contract — alle Read-Funktionen, die du ohne Signatur aufrufen kannst. Write Contract — alle Write-Funktionen, die du mit Wallet-Signatur aufrufen kannst. Der grüne Haken bei "Contract" zeigt, ob verifiziert wurde. Unverifizierte Contracts zeigen nur Bytecode — unlesbar für Menschen. Ernsthafte DeFi-Regel: niemals mit unverifizierten Contracts interagieren.
+**[Slide 6]** Etherscan hat einen eigenen Token Approval Checker auf etherscan.io/tokenapprovalchecker. Funktional ähnlich wie revoke.cash, aber direkt integriert. Zeigt aktive ERC-20- und NFT-Approvals und erlaubt direkten Widerruf. Beide Tools sind nützlich; beide sollten in deiner Monatsroutine sein. Für die Token-Recherche selbst gibt es einen klaren Workflow. Contract-Adresse auf Etherscan eingeben. Prüfen: verifiziert? Wenn nicht — Warnung. Token-Übersicht: Name, Symbol, totalSupply, Decimals. Holders-Tab: wie ist die Verteilung? Ein einzelner Holder mit mehr als 50% ist Zentralisierungsrisiko. Transfers-Tab: wie aktiv ist der Handel? Contract Code: gibt es Fee-on-Transfer, Blacklist, bösartige Patterns? Contract-Alter: sehr junge Tokens sind hochrisiko. Mit diesem Workflow kannst du jeden Token in fünf Minuten einordnen.
 
-**[Slide 7]** Etherscan hat einen eigenen Token Approval Checker auf etherscan.io/tokenapprovalchecker. Funktional ähnlich wie revoke.cash, aber direkt integriert. Zeigt aktive ERC-20- und NFT-Approvals und erlaubt direkten Widerruf. Beide Tools sind nützlich; beide sollten in deiner Monatsroutine sein.
-
-**[Slide 8]** Token-Recherche-Workflow. Contract-Adresse auf Etherscan eingeben. Prüfen: verifiziert? Wenn nicht — Warnung. Token-Übersicht: Name, Symbol, totalSupply, Decimals. Holders-Tab: wie ist die Verteilung? Ein einzelner Holder mit mehr als 50% ist Zentralisierungsrisiko. Transfers-Tab: wie aktiv ist der Handel? Contract Code: gibt es Fee-on-Transfer, Blacklist, bösartige Patterns? Contract-Alter: sehr junge Tokens sind hochrisiko. Mit diesem Workflow kannst du jeden Token in fünf Minuten einordnen.
-
-**[Slide 9]** Im Notfall kannst du direkt mit einem Contract interagieren — Write Contract Tab, Connect to Web3, Funktion wählen, Parameter eingeben, signieren. Besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wenn die offizielle Website nicht funktioniert. Erfordert Verständnis der Funktionssignaturen und korrekte Parameter — vergiss Decimals nicht. Für Fortgeschrittene ist das eine essentielle Rückfallebene.
+**[Slide 7]** Im Notfall kannst du direkt mit einem Contract interagieren — Write Contract Tab, Connect to Web3, Funktion wählen, Parameter eingeben, signieren. Besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wenn die offizielle Website nicht funktioniert. Erfordert Verständnis der Funktionssignaturen und korrekte Parameter — vergiss Decimals nicht. Für Fortgeschrittene ist das eine essentielle Rückfallebene.
 
 ### Visuelle Vorschläge
 
@@ -1211,17 +1149,13 @@ Das ist besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wen
 
 **[Slide 3]** **SCREENSHOT SUGGESTION:** Etherscan Address Page mit sichtbaren Tabs (Transactions, Internal Txns, Token Transfers, etc.).
 
-**[Slide 4]** **SCREENSHOT SUGGESTION:** Etherscan Transaction Detail Page mit markierten Bereichen (Status, From/To, Input Data, Logs).
+**[Slide 4]** **SCREENSHOT SUGGESTION:** Etherscan Transaction Detail Page mit markierten Bereichen (Status, From/To, Input Data, Logs). Darunter Auszug aus einer Logs-Ansicht mit mehreren dekodierten Events.
 
-**[Slide 5]** Auszug aus einer Logs-Ansicht mit mehreren dekodierten Events.
+**[Slide 5]** **SCREENSHOT SUGGESTION:** USDC-Contract-Page auf Etherscan mit sichtbaren Tabs (Code, Read Contract, Write Contract) und grünem Verified-Haken.
 
-**[Slide 6]** **SCREENSHOT SUGGESTION:** USDC-Contract-Page auf Etherscan mit sichtbaren Tabs (Code, Read Contract, Write Contract) und grünem Verified-Haken.
+**[Slide 6]** **SCREENSHOT SUGGESTION:** etherscan.io/tokenapprovalchecker mit aktiven Approvals einer Beispiel-Wallet. Daneben Checkliste mit sechs Schritten für Token-Recherche.
 
-**[Slide 7]** **SCREENSHOT SUGGESTION:** etherscan.io/tokenapprovalchecker mit aktiven Approvals einer Beispiel-Wallet.
-
-**[Slide 8]** Checkliste mit sechs Schritten für Token-Recherche.
-
-**[Slide 9]** **SCREENSHOT SUGGESTION:** Etherscan Write Contract Tab mit geöffnetem Funktions-Feld.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** Etherscan Write Contract Tab mit geöffnetem Funktions-Feld.
 
 ### Übung
 
@@ -1263,8 +1197,8 @@ Ein unverifizierter Contract zeigt auf Etherscan nur den kompilierten Bytecode, 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → Etherscan-Haupt-Sektionen → Transaktionsdetails → Event Logs → Internal Transactions → Contract-Inspektion → Read/Write-Interaktion → Forensik-Workflow
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → Drei Seiten-Typen → Address Page → Transaction Page + Event-Logs → Contract Pages → Token Approval Checker + Token-Recherche-Workflow → Direkte Contract-Interaktion
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Etherscan-Adress-Seite, Tx-Detail-Annotationen, Event-Log-Decoding, Read/Write-Contract-Screenshot, verifiziert/unverifiziert-Vergleich, Forensik-Workflow-Flowchart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1333,7 +1267,7 @@ Modul 3 hat die technische Schicht unter DeFi geöffnet:
 
 **Etherscan-Forensik:** Address, Transaction und Block Pages. Wichtigkeit von Internal Transactions und Token Transfers neben normalen Transactions. Decoded Input Data und Event-Logs für forensische Analyse. Read/Write Contract für direkte Interaktion. Verifiziert vs. unverifiziert als binäres Sicherheits-Signal.
 
-**Was in Modul 4 kommt:** DEX-Mechanik. Wie Automated Market Makers funktionieren (Constant-Product-Formel). Uniswap V2 vs. V3. Slippage, Price Impact und MEV. Was du als Swapper verstehen musst, um systematisch nicht verlierst.
+**Was in Modul 4 kommt:** DEX-Mechanik. Wie Automated Market Makers funktionieren (Constant-Product-Formel). Uniswap V2 vs. V3. Slippage, Price Impact und MEV. Was du als Swapper verstehen musst, um systematisch nicht zu verlieren.
 
 ---
 
