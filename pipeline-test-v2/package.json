@@ -1,0 +1,18 @@
+{
+  "name": "defi-academy-pipeline-test-v2",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Video-Pipeline v2 (Brand 2.0 SVG → MP4). Parser/TTS/Timing wie v1.",
+  "scripts": {
+    "pipeline": "node src/run-full-pipeline-v2.js",
+    "pipeline:batch": "node src/run-full-pipeline-batch.js"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "ffmpeg-static": "^5.2.0",
+    "ffprobe-static": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

@@ -1,0 +1,11 @@
+Willkommen zu Modul 1. Bevor wir über Yield, Strategien oder Tools sprechen, müssen wir genau definieren, worüber wir reden. Der Begriff "DeFi" wird inflationär verwendet — wir brauchen eine saubere technische Definition.
+
+DeFi — Decentralized Finance — bezeichnet Finanzanwendungen, die auf öffentlichen Blockchains laufen und über Smart Contracts ausgeführt werden, ohne zentrale Intermediäre. Jedes Wort dieser Definition trägt Gewicht. Wir zerlegen sie in drei technische Eigenschaften.
+
+Erstens: Non-Custodial. Die Nutzer halten ihre Assets selbst. Das Protokoll kann Nutzergelder nicht bewegen, einfrieren oder beschlagnahmen — weil der Code diese Funktion nicht enthält. Zweitens: Permissionless. Jeder mit Wallet und Internet kann teilnehmen, kein KYC, keine Kontoeröffnung. Drittens: Transparent. Alle Transaktionen, Salden und Smart-Contract-Logik sind öffentlich einsehbar.
+
+CeFi-Plattformen wie Coinbase oder Binance bieten Zugang zu Krypto, aber sie verwahren die Gelder. Sie verlangen KYC und können Konten sperren. Ihre internen Salden liegen auf privaten Datenbanken. DeFi funktioniert strukturell anders: Custody beim Nutzer, kein KYC, alles auf Smart Contracts, öffentlich prüfbar.
+
+Der Unterschied wurde 2022 deutlich sichtbar. FTX war CeFi. Sam Bankman-Fried konnte Kundengelder zu Alameda Research transferieren, weil FTX die Custody hatte. Die Firma kollabierte. Im selben Marktumfeld liefen MakerDAO, Aave und Uniswap ohne Unterbrechung. Warum? Weil diese Protokolle keine Gelder verwahren, die missbraucht werden könnten. Die Möglichkeit existiert technisch nicht.
+
+Viele Produkte nennen sich DeFi, sind es aber nicht. Vier Prüfsteine: Existiert ein Admin-Schlüssel mit Zugriff auf Nutzergelder? Kann ein Team Nutzer sperren? Liegen Guthaben auf einer Off-Chain-Datenbank? Und der finale Test: Wenn das Team morgen verschwindet — funktioniert das Protokoll weiter? Bei echtem DeFi lautet die Antwort ja.

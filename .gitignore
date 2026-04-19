@@ -52,3 +52,12 @@ yarn-error.log*
 # Renderer-Bundle-Cache + Remotion-Output
 /video-renderer/**/public/assets/
 /video-renderer/**/output/
+
+# pipeline-test lokale Outputs
+/pipeline-test/test-output/
+
+# pipeline-test-v2 (Brand 2.0) lokale Outputs
+/pipeline-test-v2/test-output-v2/
+/pipeline-test-v2/test-output-v2-complete/
+/pipeline-test-v2/output/
+/pipeline-test-v2/output-v2/

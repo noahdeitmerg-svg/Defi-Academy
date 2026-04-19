@@ -28,6 +28,7 @@ const { resolveLessonAssets } = require('./asset-resolver');
 const {
   getTimelineEndSeconds,
   scaleVideoConfigToDuration,
+  shouldApplyAudioDurationSync,
 } = require('./sync-video-config-to-audio');
 
 function parseArgs(argv) {
@@ -102,18 +103,26 @@ async function renderLesson({
       const audioSec = meta.format.duration;
       if (Number.isFinite(audioSec) && audioSec > 0) {
         const before = getTimelineEndSeconds(renderInput.videoConfig);
-        const synced = scaleVideoConfigToDuration(renderInput.videoConfig, audioSec);
-        if (
-          synced.duration_seconds !== renderInput.videoConfig.duration_seconds ||
-          Math.abs(before - audioSec) > 0.15
-        ) {
-          console.log(
-            `[${lessonId}] timeline sync: config ${before.toFixed(2)}s → audio ${audioSec.toFixed(2)}s`
+        const stat = fs.statSync(stagedAudioPath);
+        if (!shouldApplyAudioDurationSync(before, audioSec, stat.size)) {
+          console.warn(
+            `[${lessonId}] skip timeline sync: audio ${audioSec.toFixed(1)}s, file ${stat.size}B ` +
+              '(Stub/kaputt?). Nutze video_config.'
           );
+        } else {
+          const synced = scaleVideoConfigToDuration(renderInput.videoConfig, audioSec);
+          if (
+            synced.duration_seconds !== renderInput.videoConfig.duration_seconds ||
+            Math.abs(before - audioSec) > 0.15
+          ) {
+            console.log(
+              `[${lessonId}] timeline sync: config ${before.toFixed(2)}s → audio ${audioSec.toFixed(2)}s`
+            );
+          }
+          renderInput.videoConfig = synced;
+          const renderInputPath = path.join(targetAssetsDir, 'render-input.json');
+          fs.writeFileSync(renderInputPath, JSON.stringify(renderInput, null, 2), 'utf8');
         }
-        renderInput.videoConfig = synced;
-        const renderInputPath = path.join(targetAssetsDir, 'render-input.json');
-        fs.writeFileSync(renderInputPath, JSON.stringify(renderInput, null, 2), 'utf8');
       }
     } catch (err) {
       console.warn(`[${lessonId}] audio duration read failed (${err.message}) — using video_config as-is`);

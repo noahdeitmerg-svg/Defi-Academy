@@ -28,7 +28,7 @@
 
 ## Modul-Überblick
 
-Ein dezentraler Exchange (DEX) ist der Ort, an dem in DeFi Tokens getauscht werden. Im Gegensatz zu zentralen Börsen (Binance, Coinbase) gibt es kein Order Book mit Gebote und Nachfrage, keinen Market Maker im klassischen Sinn und keine Verwahrung. Stattdessen handelst du gegen einen Smart Contract, der einen Pool von Tokens hält und Preise algorithmisch berechnet.
+Ein dezentraler Exchange (DEX) ist der Ort, an dem in DeFi Tokens getauscht werden. Im Gegensatz zu zentralen Börsen (Binance, Coinbase) gibt es kein Order Book mit Geboten, keinen Market Maker im klassischen Sinn und keine Verwahrung. Stattdessen handelst du gegen einen Smart Contract, der einen Pool von Tokens hält und Preise algorithmisch berechnet.
 
 Dieses Modul erklärt, wie **Automated Market Makers (AMMs)** funktionieren — die dominante DEX-Architektur. Du verstehst nach diesem Modul, wie Preise entstehen, warum Slippage auftritt, wie sich Uniswap V2 von V3 unterscheidet, und welche Rolle MEV im Handel spielt.
 
@@ -198,8 +198,8 @@ Erstens: Fiat-on-ramp und off-ramp. DEXs handeln nur on-chain Tokens, nicht EUR 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 6 Slides: Titel → CEX-Architektur → DEX-Architektur → 3 strukturelle Unterschiede → AMM vs. Orderbook → Entscheidungsmatrix CEX/DEX
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → CEX-Architektur → DEX-Architektur → 3 strukturelle Unterschiede → Warum keine Order Books on-chain → Wann DEX, wann CEX → Marktstruktur
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — CEX-Stack-Diagramm (Custody/KYC/Orderbook), DEX-Stack-Diagramm (Wallet/Smart Contract/Pool), Vergleichstabelle, Uniswap-Screenshot vs. Binance-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -216,7 +216,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Verstehen, warum der Preis bei großen Swaps stark vom "fairen" Preis abweicht
 - Die Rolle der 0,3%-Gebühr in Uniswap V2 und deren Verteilung an LPs einordnen
 - Den Begriff "Spot Price" aus den aktuellen Pool-Beständen ableiten und den tatsächlichen Ausführungspreis davon abgrenzen
-- Die Bedeutung der Pool-Tiefe (Liquidity Depth) für Price Impact quantitativ einschätzen
+- Die Bedeutung der Pool-Tiefe (Liquidity Depth) für Preis-Impact quantitativ einschätzen
 
 ### Erklärung
 
@@ -248,6 +248,8 @@ Beispiel: Ein ETH/USDC-Pool hält 1.000 ETH und 3.000.000 USDC. Der Spot-Preis v
 
 Wenn mehr USDC nachgefragt wird als ETH im Verhältnis, verändert sich das Ratio — und damit der Preis.
 
+**Kernprinzip:** Der Preis in einem AMM ergibt sich aus dem Verhältnis der Poolreserven (Preis ≈ y / x). Trades verschieben die Reserven entlang der x·y=k-Kurve — und damit auch den Preis.
+
 **Ein Swap in Zahlen**
 
 Angenommen, du willst 10 ETH in USDC tauschen. Vor dem Swap:
@@ -277,6 +279,8 @@ Gleichzeitig hat die Formel eine unangenehme Eigenschaft: **Die meiste Liquidit�
 Der Pool-Preis kann vom externen Marktpreis abweichen. Wenn der externe Markt ETH bei 3.000 USDC handelt, aber der Pool bei 2.990 USDC quotiert, entsteht ein Arbitrage-Anreiz: Jemand kauft ETH aus dem Pool (billig) und verkauft es auf dem externen Markt (teurer). Dieser Arbitrage-Trade verschiebt das Verhältnis im Pool, bis der Pool-Preis wieder dem externen Preis entspricht.
 
 Arbitrage ist ein wesentlicher Teil des AMM-Mechanismus. Sie hält den Pool-Preis am "wahren" Markt ausgerichtet — auf Kosten der Liquiditätsanbieter, die durch die Arbitrage **Impermanent Loss** erleiden (Modul 5).
+
+**Wichtig zum Verständnis:** Impermanent Loss entsteht nur, wenn sich der Marktpreis relativ zum Pool verändert. Bei konstantem Preis entsteht kein Impermanent Loss.
 
 ### Folien-Zusammenfassung
 
@@ -322,7 +326,7 @@ Mechanisch notwendig — erzeugt Impermanent Loss für LPs.
 
 **[Slide 6]** Die Kurve. Die Constant-Product-Formel hat eine schöne Eigenschaft: der Pool kann nie vollständig leergehandelt werden. Um alle ETH herauszuziehen, müsste man unendlich viele USDC einzahlen. Das ist ein Schutz gegen Pool-Ausräumung. Die unangenehme Eigenschaft: die Liquidität verteilt sich über den gesamten Preisbereich, aber die meiste liegt in Bereichen, die praktisch nie erreicht werden. Das ist kapital-ineffizient. Uniswap V3 löst dieses Problem teilweise — kommt in Lektion 4.4.
 
-**[Slide 7]** Arbitrage. Der Pool-Preis kann vom externen Marktpreis abweichen. Wenn das passiert, entsteht ein Anreiz: Arbitrageure kaufen, wo der Preis niedriger ist, und verkaufen, wo er höher ist. Diese Arbitrage verschiebt das Pool-Verhältnis zurück zum Marktpreis. Arbitrage ist mechanisch notwendig für funktionierende AMMs — und sie erzeugt Impermanent Loss für Liquiditätsanbieter. Das ist das Haupt-Risiko des LP-Seins, und wir gehen in Modul 5 tief hinein.
+**[Slide 7]** Arbitrage. Der Pool-Preis kann vom externen Marktpreis abweichen. Wenn das passiert, entsteht ein Anreiz: Arbitrageure kaufen, wo der Preis niedriger ist, und verkaufen, wo er höher ist. Diese Arbitrage verschiebt das Pool-Verhältnis zurück zum Marktpreis. Arbitrage ist mechanisch notwendig für funktionierende AMMs — und sie erzeugt Impermanent Loss für Liquiditätsanbieter. Das ist das Haupt-Risiko für Liquiditätsanbieter, und wir gehen in Modul 5 tief hinein.
 
 ### Visuelle Vorschläge
 
@@ -376,7 +380,7 @@ Weil die Liquidität sich über den gesamten theoretischen Preisbereich von null
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → x·y=k Visualisierung → Pool-Beispiel → Swap-Preisberechnung → Price-Impact-Effekt bei großen Swaps → 0,3%-Fee-Struktur → V2-Grenzen
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — x·y=k Hyperbel-Kurve, Pool-Zustand-Diagramm vor/nach Swap, Price-Impact-Kurve über Trade-Größe, Uniswap-V2-Interface-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -413,6 +417,8 @@ Slippage ist die zusätzliche, nicht-deterministische Abweichung, die zwischen S
 
 **Slippage-Toleranz** ist die maximale Preisverschlechterung, die du akzeptierst. Wird sie überschritten, revertiert die Transaktion.
 
+**Wichtig zur Abgrenzung:** Slippage entsteht durch Preis-Impact innerhalb des Pools — verursacht durch die eigene Swap-Größe und durch andere Trades zwischen Signatur und Ausführung. Sie ist nicht identisch mit Netzwerkgebühren: Gas-Kosten sind eine separate, feste Größe pro Transaktion (siehe Modul 3) und unabhängig vom Pool-Zustand.
+
 **Typische Slippage-Einstellungen:**
 
 - **Stablecoin-Swaps (USDC ↔ USDT):** 0,1–0,5%
@@ -425,9 +431,11 @@ Wer 50% Slippage akzeptiert, akzeptiert effektiv, zu jedem Preis zu kaufen. Das 
 
 **Der Sandwich-Angriff**
 
+Bevor wir den Angriff zerlegen, ein kurzer Begriff: Der **Mempool** ist der Warteraum für noch nicht bestätigte Transaktionen. Jede signierte Transaktion landet zuerst dort und ist für Block-Builder und Bots öffentlich einsehbar, bevor sie in einen Block aufgenommen wird.
+
 Der häufigste Slippage-bezogene Angriff ist der **Sandwich-Angriff**. Er läuft in drei Schritten:
 
-1. Angreifer sieht deine pending Transaktion im Mempool
+1. Angreifer sieht deine ausstehende Transaktion im Mempool
 2. Angreifer schaltet **vor** deiner Transaktion einen Kauf (pusht den Preis nach oben) — Front-Running
 3. Deine Transaktion läuft zum schlechteren Preis
 4. Angreifer verkauft **direkt nach** deiner Transaktion zu einem höheren Preis — Back-Running
@@ -486,7 +494,7 @@ Slippage-Toleranz = max. akzeptierte Abweichung.
 - Sehr illiquide: >10% (extrem riskant)
 
 **[Slide 5] — Sandwich-Angriff**
-1. Angreifer sieht pending Tx
+1. Angreifer sieht ausstehende Transaktion
 2. Kauft vor dir → Preis steigt
 3. Dein Trade läuft schlechter
 4. Angreifer verkauft nach dir → Gewinn
@@ -512,7 +520,7 @@ Revert ist der Schutzmechanismus.
 
 **[Slide 4]** Typische Slippage-Werte hängen stark vom gehandelten Asset ab. Stablecoin-Swaps: 0,1 bis 0,5 Prozent. Liquide Majors wie ETH oder BTC: 0,5 bis 1 Prozent. Mid-Caps: 1 bis 3 Prozent. Illiquide Tokens brauchen 3 bis 10 Prozent — aber hier beginnt die Gefahrenzone. Wer mehr als 10 Prozent akzeptiert, kauft praktisch zu jedem Preis. Das ist fast nie sinnvoll.
 
-**[Slide 5]** Der häufigste Slippage-bezogene Angriff: der Sandwich-Angriff. Der Angreifer sieht deine pending Transaktion im Mempool. Er schaltet vor deiner Transaktion einen Kauf — das pusht den Preis nach oben. Deine Transaktion läuft jetzt zum schlechteren Preis. Direkt nach deiner Transaktion verkauft der Angreifer — zu einem höheren Preis als er gekauft hat. Der Gewinn des Angreifers ist ungefähr gleich deinem Slippage-Verlust.
+**[Slide 5]** Der häufigste Slippage-bezogene Angriff: der Sandwich-Angriff. Der Angreifer sieht deine ausstehende Transaktion im Mempool. Er schaltet vor deiner Transaktion einen Kauf — das pusht den Preis nach oben. Deine Transaktion läuft jetzt zum schlechteren Preis. Direkt nach deiner Transaktion verkauft der Angreifer — zu einem höheren Preis als er gekauft hat. Der Gewinn des Angreifers ist ungefähr gleich deinem Slippage-Verlust.
 
 **[Slide 6]** Schutz. Erstens: niedrige Slippage-Toleranz. Bei 0,5 Prozent hat der Angreifer wenig Spielraum. Bei 10 Prozent nimmt er die volle Marge. Zweitens: private Mempools. MEV Blocker, Flashbots Protect oder CoW Swap senden deine Transaktion nicht in den öffentlichen Mempool. Der Angreifer sieht die Transaktion erst, wenn sie bereits gemint ist. Drittens: DEX-Aggregatoren mit integriertem Sandwich-Schutz. Viertens: kleinere Swaps bei illiquiden Tokens.
 
@@ -528,7 +536,7 @@ Revert ist der Schutzmechanismus.
 
 **[Slide 4]** Tabelle mit Asset-Typen und empfohlenen Slippage-Werten.
 
-**[Slide 5]** Sandwich-Diagramm: drei Blöcke auf einer Timeline — Angreifer-Kauf, dein Swap, Angreifer-Verkauf. Gewinn-Markierung beim Angreifer. **SCREENSHOT SUGGESTION:** Eigentcher (eigenphi.io) oder MEV-Boost-Explorer, der einen realen Sandwich-Angriff zeigt.
+**[Slide 5]** Sandwich-Diagramm: drei Blöcke auf einer Timeline — Angreifer-Kauf, dein Swap, Angreifer-Verkauf. Gewinn-Markierung beim Angreifer. **SCREENSHOT SUGGESTION:** EigenPhi (eigenphi.io) oder MEV-Boost-Explorer, der einen realen Sandwich-Angriff zeigt.
 
 **[Slide 6]** Vier-Punkte-Checkliste mit Icons. **SCREENSHOT SUGGESTION:** MEV-Blocker-Website (mevblocker.io) oder Flashbots-Protect-Interface.
 
@@ -564,7 +572,7 @@ Preis-Impact ist die deterministische, vorhersehbare Abweichung vom Spot-Preis, 
 <details>
 <summary>Antwort anzeigen</summary>
 
-Die Slippage-Toleranz definiert den maximalen Verlust, den der Nutzer akzeptiert. Ein Sandwich-Angreifer kann maximal bis zu diesem Limit Gewinn extrahieren — alles darüber würde die Transaktion reverten lassen und seinen Angriff unrentabel machen. Bei 0,5% Slippage hat der Angreifer maximal 0,5% Marge. Bei 10% Slippage kann der Angreifer 10% Marge extrahieren, was einen großen Swap extrem lukrativ für MEV-Bots macht. Konservative Slippage-Einstellungen begrenzen also strukturell das profit-potenzial von Angreifern.
+Die Slippage-Toleranz definiert den maximalen Verlust, den der Nutzer akzeptiert. Ein Sandwich-Angreifer kann maximal bis zu diesem Limit Gewinn extrahieren — alles darüber würde die Transaktion reverten lassen und seinen Angriff unrentabel machen. Bei 0,5% Slippage hat der Angreifer maximal 0,5% Marge. Bei 10% Slippage kann der Angreifer 10% Marge extrahieren, was einen großen Swap extrem lukrativ für MEV-Bots macht. Konservative Slippage-Einstellungen begrenzen also strukturell das Profit-Potenzial von Angreifern.
 </details>
 
 ### Video-Pipeline-Assets
@@ -572,7 +580,7 @@ Die Slippage-Toleranz definiert den maximalen Verlust, den der Nutzer akzeptiert
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Preis-Impact vs. Slippage → Slippage-Toleranz → Sandwich-Attack-Mechanik → Profile pro Asset-Typ → Uniswap-Interface-Walkthrough → Schutz-Strategien
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Preis-Impact-vs-Slippage-Vergleichsdiagramm, Sandwich-Attack-Zeitleiste, Slippage-Profile-Tabelle (Stable/Blue-Chip/Long-Tail), Uniswap-Settings-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -638,7 +646,7 @@ Als Swapper merkst du von V2 vs. V3 wenig direkt. Die Uniswap-Oberfläche routet
 - Engere Spreads bei liquiden Paaren (höhere konzentrierte Liquidität → geringerer Preis-Impact)
 - Mehrere Fee-Tiers (optimiert für das gewählte Paar)
 
-Aggregatoren (1inch, Matcha) splittet Swaps automatisch über V2-, V3- und andere DEX-Pools, um den besten Gesamtpreis zu erreichen.
+Aggregatoren (1inch, Matcha) splitten Swaps automatisch über V2-, V3- und andere DEX-Pools, um den besten Gesamtpreis zu erreichen.
 
 ### Folien-Zusammenfassung
 
@@ -744,7 +752,7 @@ V3 erfordert aktive Entscheidungen: Preisbereich wählen, überwachen, gegebenen
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Problem von V2 → Konzentrierte Liquidität → Ticks & Ranges → Fee Tiers (0,01/0,05/0,3/1%) → In-Range vs. Out-of-Range → V3-Pool-Auswahl-Matrix
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — V2-Liquiditätsverteilung vs. V3-konzentrierte Liquidität, Tick-Diagramm, Fee-Tier-Tabelle, Range-Position-Visualisierung, Uniswap-V3-Interface-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -778,7 +786,7 @@ Preisdifferenzen zwischen Pools werden ausgeglichen. Ein Searcher sieht, dass ET
 Ein Lending-Protokoll hat einen unterbesicherten Kreditnehmer. Searcher konkurrieren darum, die Liquidation auszuführen und die Liquidations-Prämie zu verdienen. Auch diese Form von MEV ist **funktional notwendig** — Liquidationen halten Lending-Protokolle solvent. Der Wettbewerb geht oft fast vollständig an die Validatoren, aber das System funktioniert.
 
 **3. Sandwich-Angriffe (Frontrunning/Backrunning)**
-Wie in Lektion 4.3 beschrieben: Searcher erkennt pending Swap, schaltet einen Kauf vor und einen Verkauf nach dem Nutzer-Swap. Der Profit ist der Slippage-Verlust des Nutzers. Diese Form von MEV ist **schädlich** — sie ist direkte Extraktion aus den Nutzern.
+Wie in Lektion 4.3 beschrieben: Searcher erkennt ausstehenden Swap, schaltet einen Kauf vor und einen Verkauf nach dem Nutzer-Swap. Der Profit ist der Slippage-Verlust des Nutzers. Diese Form von MEV ist **schädlich** — sie ist direkte Extraktion aus den Nutzern.
 
 **Größenordnungen**
 
@@ -846,21 +854,17 @@ Jährlich mehrere Milliarden USD auf Ethereum.
 Searcher → Builder → Relay → Validator.
 MEV-Boost ist Standard auf Ethereum.
 
-**[Slide 5] — Öffentlicher Mempool als Schwachstelle**
-Transaktionen sind vor Ausführung sichtbar.
-Das ermöglicht Sandwich-Angriffe.
+**[Slide 5] — Mempool-Mechanik**
+Öffentlicher Mempool macht Transaktionen vor Ausführung sichtbar und ermöglicht Sandwich-Angriffe.
+Privater Relay geht direkt an Builder — umgeht den öffentlichen Mempool.
 
-**[Slide 6] — Private Mempools als Schutz**
-Transaktion geht direkt an Builder.
-Keine Sichtbarkeit im öffentlichen Mempool.
-
-**[Slide 7] — Praktische Tools**
+**[Slide 6] — Praktische Tools**
 - Flashbots Protect
 - MEV Blocker
 - CoW Swap
 - Rabby (integriert)
 
-**[Slide 8] — Layer-2-Situation**
+**[Slide 7] — Layer-2-Situation**
 MEV aktuell reduziert durch zentrale Sequencer.
 Kann sich mit Dezentralisierung ändern.
 
@@ -874,13 +878,11 @@ Kann sich mit Dezentralisierung ändern.
 
 **[Slide 4]** Die Supply-Chain ist mehrstufig. Searcher sind Bots, die Mempool-Opportunities identifizieren. Builder konstruieren Blöcke aus Searcher-Bundles plus öffentlichen Transaktionen. Relays reichen Blöcke an Validatoren. Validatoren veröffentlichen den profitabelsten Block. Dieses System, genannt MEV-Boost, ist auf Ethereum Quasi-Standard.
 
-**[Slide 5]** Die Schwachstelle für Nutzer ist der öffentliche Mempool. Jede Transaktion ist dort sichtbar, bevor sie gemint wird. Ein Sandwich-Bot kann sie analysieren, entscheiden, ob ein Angriff profitabel ist, und entsprechend positionieren.
+**[Slide 5]** Die Schwachstelle für Nutzer ist der öffentliche Mempool. Jede Transaktion ist dort sichtbar, bevor sie gemint wird. Ein Sandwich-Bot kann sie analysieren, entscheiden, ob ein Angriff profitabel ist, und entsprechend positionieren. Die Verteidigung ist, den öffentlichen Mempool zu umgehen. Eine Transaktion wird an einen privaten Relay gesendet, der sie direkt an Builder und Validatoren weitergibt. Sie ist erst im Block sichtbar, wenn der Block bereits produziert ist. Dann ist es zu spät für einen Sandwich.
 
-**[Slide 6]** Die Verteidigung ist, den öffentlichen Mempool zu umgehen. Eine Transaktion wird an einen privaten Relay gesendet, der sie direkt an Builder und Validatoren weitergibt. Sie ist erst im Block sichtbar, wenn der Block bereits produziert ist. Dann ist es zu spät für einen Sandwich.
+**[Slide 6]** Praktische Tools. Flashbots Protect ist der Original-Dienst, zuverlässig, seit Jahren etabliert. MEV Blocker ist eine community-getragene Alternative. CoW Swap integriert MEV-Schutz direkt in die DEX-Oberfläche und aggregiert dabei über mehrere DEXs. Rabby Wallet hat einen eingebauten Toggle. Die Empfehlung: für größere Swaps immer einen davon aktivieren.
 
-**[Slide 7]** Praktische Tools. Flashbots Protect ist der Original-Dienst, zuverlässig, seit Jahren etabliert. MEV Blocker ist eine community-getragene Alternative. CoW Swap integriert MEV-Schutz direkt in die DEX-Oberfläche und aggregiert dabei über mehrere DEXs. Rabby Wallet hat einen eingebauten Toggle. Die Empfehlung: für größere Swaps immer einen davon aktivieren.
-
-**[Slide 8]** Auf Layer-2s ist die MEV-Situation aktuell strukturell reduziert. Arbitrum, Optimism, Base haben jeweils einen zentralen Sequencer, der Transaktions-Reihenfolge bestimmt. Sandwich-Angriffe sind dort aktuell selten. Das kann sich ändern, wenn Sequencer dezentralisiert werden — das ist ein laufendes Design-Thema. Für jetzt: auf Layer-2s meist kein dedizierter MEV-Schutz nötig, auf Mainnet unbedingt.
+**[Slide 7]** Auf Layer-2s ist die MEV-Situation aktuell strukturell reduziert. Arbitrum, Optimism, Base haben jeweils einen zentralen Sequencer, der Transaktions-Reihenfolge bestimmt. Sandwich-Angriffe sind dort aktuell selten. Das kann sich ändern, wenn Sequencer dezentralisiert werden — das ist ein laufendes Design-Thema. Für jetzt: auf Layer-2s meist kein dedizierter MEV-Schutz nötig, auf Mainnet unbedingt.
 
 ### Visuelle Vorschläge
 
@@ -892,13 +894,11 @@ Kann sich mit Dezentralisierung ändern.
 
 **[Slide 4]** Flussdiagramm der Supply-Chain mit Beispiel-Block-Produktion.
 
-**[Slide 5]** Mempool-Visualisierung: viele pending Transaktionen, Angreifer-Bot beobachtet. **SCREENSHOT SUGGESTION:** blocknative.com Mempool Explorer live.
+**[Slide 5]** Mempool-Visualisierung: viele ausstehende Transaktionen, Angreifer-Bot beobachtet. Daneben Seite-an-Seite-Vergleich „öffentlicher Mempool" vs. „privater Relay" mit jeweiligem Routing-Pfad. **SCREENSHOT SUGGESTION:** blocknative.com Mempool Explorer live.
 
-**[Slide 6]** Seite-an-Seite: "öffentlicher Mempool" vs. "privater Relay" mit jeweiligem Routing-Pfad.
+**[Slide 6]** Vier Tool-Logos und kurze Beschreibungen. **SCREENSHOT SUGGESTION:** Rabby-Einstellungen mit MEV-Schutz-Toggle.
 
-**[Slide 7]** Vier Tool-Logos und kurze Beschreibungen. **SCREENSHOT SUGGESTION:** Rabby-Einstellungen mit MEV-Schutz-Toggle.
-
-**[Slide 8]** Tabelle: Ethereum L1 vs. Arbitrum/Optimism/Base — MEV-Status und Empfehlung.
+**[Slide 7]** Tabelle: Ethereum L1 vs. Arbitrum/Optimism/Base — MEV-Status und Empfehlung.
 
 ### Übung
 
@@ -939,8 +939,8 @@ Erstens: privaten Mempool einrichten — Flashbots Protect, MEV Blocker oder CoW
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Slides: Titel → MEV-Definition → 3 Kategorien (Arbitrage/Sandwich/Liquidation) → MEV-Supply-Chain → Sandwich-Attack-Anatomie → Schutz-Mechanismen → Private-Mempool-Setup
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min., Bridge zu Modul 11)
+- `slides_prompt.txt` — 7 Slides: Titel → MEV-Definition → 3 Kategorien → MEV-Supply-Chain → Mempool-Mechanik (öffentlich vs. privat) → Schutz-Tools → Layer-2-Situation
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — MEV-Kategorien-Diagramm, Searcher/Builder/Proposer-Flow, Sandwich-Zeitleiste (front/victim/back), Flashbots-Protect-Setup-Screenshot, CoW-Swap-Interface
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1172,7 +1172,7 @@ Weil ein Swap von 10.000 USD in einem einzelnen Pool signifikanten Preis-Impact 
 <details>
 <summary>Antwort anzeigen</summary>
 
-Bei 3% Slippage kann ein Sandwich-Angreifer bis zu 3% des Swap-Wertes extrahieren — das sind bis zu 30 USD pro Swap. Bei 52 Swaps pro Jahr sind das potenziell 1.560 USD. Bei einem typischen DeFi-Portfolio im Bereich 10.000–50.000 USD entspricht das 3–15% Rendite-Verlust nur durch schlechte Swap-Hygiene — mehr als die gesamte Ziel-Rendite eines konservativen Portfolios. Die Lösung ist trivial: MEV-Schutz (kostet nichts zusätzlich) plus engere Slippage (0,5%). Damit reduziert sich der erwartbare Angreifer-Gewinn dramatisch. Das Beispiel zeigt, warum saubere Ausführung keine "Optimierung" ist, sondern Basis-Hygiene.
+Bei 3% Slippage kann ein Sandwich-Angreifer bis zu 3% des Swap-Wertes extrahieren — das sind bis zu 30 USD pro Swap. Bei 52 Swaps pro Jahr sind das potenziell 1.560 USD. Bei einem typischen DeFi-Portfolio im Bereich 10.000–50.000 USD entspricht das 3–15% Rendite-Verlust nur durch schlechte Swap-Hygiene — mehr als die gesamte Ziel-Rendite eines konservativen Portfolios. Die Lösung ist trivial: MEV-Schutz (kostet nichts zusätzlich) plus engere Slippage (0,5%). Damit reduziert sich der erwartbare Angreifer-Gewinn deutlich. Das Beispiel zeigt, warum saubere Ausführung keine "Optimierung" ist, sondern Basis-Hygiene.
 </details>
 
 ### Video-Pipeline-Assets
@@ -1180,7 +1180,7 @@ Bei 3% Slippage kann ein Sandwich-Angreifer bis zu 3% des Swap-Wertes extrahiere
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Aggregator-Funktion → 1inch/CoW/Paraswap/Odos → Route-Splitting-Mechanik → Intent-basierte Systeme → Professionelle Swap-Checkliste → Plattform-Wahl-Matrix
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Route-Splitting-Diagramm über mehrere Pools, Aggregator-Interface-Screenshot (CoW Swap, 1inch), Pre-Trade-Checkliste als Infografik, Plattform-Wahl-Matrix nach Swap-Größe
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1212,7 +1212,7 @@ Aus Swapper-Sicht ist V3 meist besser — engere Spreads, weil konzentrierte Liq
 <details>
 <summary>Antwort anzeigen</summary>
 
-Ein Sandwich-Bot sieht deine pending Swap-Transaktion im öffentlichen Mempool, schaltet vor dir einen Kauf, der den Preis nach oben treibt, lässt deinen Swap zum schlechteren Preis ausführen und verkauft direkt nach dir zu einem höheren Preis — der Gewinn ist ungefähr dein Slippage-Verlust. Schutz: Nutze einen privaten Mempool (Flashbots Protect, MEV Blocker, CoW Swap), damit die Transaktion nicht im öffentlichen Mempool sichtbar ist. Zusätzlich konservative Slippage-Toleranz setzen — 0,5% bei liquiden Paaren begrenzt den maximalen Angreifer-Gewinn strukturell.
+Ein Sandwich-Bot sieht deine ausstehende Swap-Transaktion im öffentlichen Mempool, schaltet vor dir einen Kauf, der den Preis nach oben treibt, lässt deinen Swap zum schlechteren Preis ausführen und verkauft direkt nach dir zu einem höheren Preis — der Gewinn ist ungefähr dein Slippage-Verlust. Schutz: Nutze einen privaten Mempool (Flashbots Protect, MEV Blocker, CoW Swap), damit die Transaktion nicht im öffentlichen Mempool sichtbar ist. Zusätzlich konservative Slippage-Toleranz setzen — 0,5% bei liquiden Paaren begrenzt den maximalen Angreifer-Gewinn strukturell.
 </details>
 
 **Frage 4:** Du willst 50.000 USD von USDC in ETH tauschen. Welche Swap-Strategie ist vernünftig?

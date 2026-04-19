@@ -10,6 +10,7 @@
 **Konformität:** Final Fix Document v1 — Struktur, Terminologie und Pipeline-Assets harmonisiert
 
 **Harmonisierte Terminologie (gültig im gesamten Modul):**
+
 - Total Value Locked (TVL)
 - Smart Contract Risk
 - Oracle Risk
@@ -28,6 +29,7 @@
 Dieses Modul legt das konzeptionelle Fundament für den gesamten Kurs. Am Ende verstehst du, was DeFi tatsächlich ist (und was es nicht ist), warum es existiert, wie die zentralen Bausteine zusammenwirken und welche Risiken systematisch auftreten. Wir vermeiden Marketing-Sprache komplett und konzentrieren uns auf Mechanik und Kapitalflüsse.
 
 **Lektionen:**
+
 1. Was ist DeFi? Eine präzise Definition
 2. Warum existiert DeFi? Die Kernprinzipien
 3. Die Bausteine: Blockchains, Smart Contracts, Tokens, Wallets
@@ -42,6 +44,7 @@ Dieses Modul legt das konzeptionelle Fundament für den gesamten Kurs. Am Ende v
 ### Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - DeFi präzise definieren und von CeFi sowie traditionellem Finanzwesen abgrenzen
 - Die drei technischen Eigenschaften identifizieren, die ein System "DeFi" machen
 - Erkennen, warum viele Produkte, die sich "DeFi" nennen, es technisch nicht sind
@@ -69,6 +72,7 @@ Viele DeFi-Protokolle ergänzen diese drei Eigenschaften zusätzlich durch sogen
 **Die CeFi-Abgrenzung**
 
 Plattformen wie Coinbase, Binance oder Kraken sind **CeFi** (Centralized Finance). Sie bieten Zugang zu Krypto-Assets, aber:
+
 - Sie verwahren die Gelder der Kunden (Custody)
 - Sie verlangen KYC und können Konten sperren
 - Die internen Salden sind nicht auf der Blockchain — nur die Ein- und Auszahlungen sind sichtbar
@@ -78,6 +82,7 @@ Der Unterschied wurde 2022 deutlich sichtbar: FTX (CeFi) konnte Kundengelder mis
 **Die "DeFi-Washing"-Problematik**
 
 Viele Produkte vermarkten sich als DeFi, sind es aber technisch nicht. Prüfsteine:
+
 - Gibt es einen Admin-Schlüssel, der Nutzer-Gelder bewegen kann? → Kein echtes DeFi
 - Kann ein zentrales Team Nutzer sperren? → Kein echtes DeFi
 - Sind die Gelder auf einer Off-Chain-Datenbank statt in einem Smart Contract? → Kein DeFi
@@ -93,17 +98,21 @@ DeFi: Eine präzise Definition
 Finanzanwendungen auf öffentlichen Blockchains, ausgeführt durch Smart Contracts, ohne zentrale Intermediäre
 
 **[Slide 3] — Drei technische Eigenschaften**
+
 1. Non-Custodial — Nutzer halten eigene Assets
 2. Permissionless — kein KYC, kein Gatekeeping
 3. Transparent — alles on-chain prüfbar
 
 **[Slide 4] — CeFi vs. DeFi**
-| Eigenschaft | CeFi | DeFi |
-|---|---|---|
-| Custody | Plattform | Nutzer |
-| KYC | Pflicht | Nein |
-| Ausführung | Datenbank | Smart Contract |
-| Transparenz | Intern | Öffentlich |
+
+
+| Eigenschaft | CeFi      | DeFi           |
+| ----------- | --------- | -------------- |
+| Custody     | Plattform | Nutzer         |
+| KYC         | Pflicht   | Nein           |
+| Ausführung  | Datenbank | Smart Contract |
+| Transparenz | Intern    | Öffentlich     |
+
 
 **[Slide 5] — Der FTX-Moment**
 FTX (CeFi) kollabierte durch Missbrauch von Kundengeldern.
@@ -112,6 +121,7 @@ Warum? Bei DeFi existiert die Möglichkeit des Missbrauchs technisch nicht.
 
 **[Slide 6] — Prüfsteine gegen "DeFi-Washing"**
 Fragen zur Echtheitsprüfung:
+
 - Admin-Schlüssel mit Zugriff auf Nutzergelder?
 - Möglichkeit zur Nutzersperrung?
 - Off-Chain-Datenbank statt Smart Contract?
@@ -171,19 +181,19 @@ Erstelle eine kurze schriftliche Analyse (3–5 Sätze pro Plattform). Recherchi
 
 **Frage 1:** Welche drei technischen Eigenschaften muss ein System erfüllen, um als DeFi zu gelten?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Non-Custodial (Nutzer halten eigene Assets), Permissionless (kein KYC/Gatekeeping), Transparent und prüfbar (alle Transaktionen und Code sind öffentlich einsehbar).
-</details>
+
+
 
 **Frage 2:** Warum funktionierten Aave und Uniswap während des FTX-Kollapses weiter, obwohl der gesamte Kryptomarkt unter Druck stand?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Weil diese Protokolle non-custodial sind. Sie verwahren keine Nutzergelder, sondern die Gelder liegen in Smart Contracts, auf die kein zentrales Team Zugriff hat. Die Möglichkeit des Missbrauchs, die FTX nutzte, existiert technisch nicht. Nutzer können jederzeit mit dem Protokoll interagieren, auch wenn das ursprüngliche Entwicklerteam verschwinden würde.
-</details>
+
+
 
 ### Video-Pipeline-Assets
 
@@ -202,6 +212,7 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ### Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Die fundamentalen Probleme erklären, die DeFi zu lösen versucht
 - Die vier Kernprinzipien identifizieren, die DeFi-Protokolle antreiben
 - Verstehen, warum Komponierbarkeit der wichtigste Vorteil von DeFi ist
@@ -251,12 +262,14 @@ Komponierbarkeit ist mehr als Bequemlichkeit. Sie verändert fundamental, wie In
 Warum existiert DeFi? Die Kernprinzipien
 
 **[Slide 2] — Die vier strukturellen Probleme**
+
 1. Gatekeeping — institutioneller Zugang erforderlich
 2. Settlement-Zeiten — Tage statt Sekunden
 3. Intransparenz — private Datenbanken
 4. Geschlossene Systeme — keine Komposition
 
 **[Slide 3] — Die vier Kernprinzipien**
+
 1. Self-Custody
 2. Permissionless Innovation
 3. Transparenz
@@ -324,19 +337,19 @@ Beispiel: Eine stETH-Position auf Aave kombiniert zwei Protokolle (Lido + Aave).
 
 **Frage 1:** Was bedeutet "Komponierbarkeit" in DeFi, und warum ist sie strukturell so mächtig?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Komponierbarkeit bedeutet, dass DeFi-Protokolle andere Protokolle als Bausteine verwenden können, weil alle auf denselben öffentlichen Smart-Contract-Standards laufen. Sie ist strukturell mächtig, weil neue Protokolle nicht das gesamte Finanz-Ökosystem neu bauen müssen — sie nutzen bestehende Bausteine. Das führt zu Innovationszyklen, die in traditionellem Finanzwesen unmöglich sind, weil dort APIs beschränkt und Systeme proprietär sind.
-</details>
+
+
 
 **Frage 2:** Was ist die Kehrseite der Komponierbarkeit, und welches Risiko entsteht dadurch?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Komponierbarkeits-Risiko: Je tiefer ein Baustein im Stack liegt, desto größer ist die systemische Wirkung, wenn er bricht. Wenn ein basales Protokoll (z.B. ein Stablecoin oder ein Liquid-Staking-Token) depeggt oder gehackt wird, können alle darauf aufbauenden Protokolle betroffen sein. Ein Beispiel wäre der stETH-Depeg im Juni 2022, der Liquidationen in mehreren darauf aufbauenden Protokollen auslöste.
-</details>
+
+
 
 ### Video-Pipeline-Assets
 
@@ -355,6 +368,7 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ### Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Die vier grundlegenden Bausteine von DeFi benennen und ihre Funktion erklären
 - Verstehen, wie Smart Contracts Geld ohne Intermediäre bewegen
 - Die Rolle von Tokens als Abstraktion für unterschiedliche Vermögenswerte einordnen
@@ -385,6 +399,7 @@ Smart Contracts sind das Herz von DeFi. Sie ersetzen den Intermediär.
 Ein Token ist eine Einheit innerhalb eines Smart Contracts. Der Contract führt ein internes Ledger ("address X hält Y tokens") und bietet Standardfunktionen für Übertragung. Der wichtigste Token-Standard ist **ERC-20** — er definiert, welche Funktionen ein Token-Contract bereitstellen muss (`balanceOf`, `transfer`, `approve`, `transferFrom`). Weil alle ERC-20-Tokens diese Schnittstelle teilen, kann jedes DeFi-Protokoll mit jedem ERC-20-Token umgehen, ohne Sonderlogik.
 
 Tokens repräsentieren alles mögliche:
+
 - **Native Assets** wie ETH (ETH selbst ist technisch kein ERC-20, aber gewickelt als WETH wird es eins)
 - **Stablecoins** wie USDC, USDT, DAI
 - **Governance-Tokens** wie UNI, AAVE, MKR
@@ -397,6 +412,7 @@ Ein Token ist also nicht "Geld". Ein Token ist eine kryptographisch abgesicherte
 **Baustein 4: Wallets**
 
 Eine Wallet ist das Interface des Nutzers zur Blockchain. Technisch besteht eine Wallet aus:
+
 - Einem **Private Key** (ein großes zufälliges Zahlenwerk)
 - Einer daraus abgeleiteten **Public Key / Adresse**
 - Software, die Transaktionen mit dem Private Key signiert
@@ -410,6 +426,7 @@ Wir behandeln Wallet-Architektur und Sicherheit ausführlich in Modul 2.
 **Wie die vier Bausteine zusammenspielen**
 
 Ein typischer DeFi-Vorgang sieht so aus:
+
 1. Dein Wallet signiert eine Transaktion, die eine Funktion in einem Smart Contract aufruft.
 2. Die Transaktion wird an die Blockchain gesendet.
 3. Validatoren führen den Smart-Contract-Code aus und aktualisieren das globale Ledger.
@@ -424,24 +441,28 @@ Kein Mensch hat entschieden, keine Bank hat autorisiert. Der Code hat ausgeführ
 Die vier Bausteine von DeFi
 
 **[Slide 2] — Baustein 1: Blockchain**
+
 - Öffentliches, verteiltes Ledger
 - Läuft auf tausenden Computern synchron
 - Einträge sind praktisch unveränderlich
 - Ethereum = dominante DeFi-Blockchain
 
 **[Slide 3] — Baustein 2: Smart Contract**
+
 - Programm auf der Blockchain
 - Deterministisch, unveränderlich
 - Ersetzt den Intermediär
 - Beispiel: `swap(ETH, USDC, 1)` → automatisch
 
 **[Slide 4] — Baustein 3: Token**
+
 - Einheit in einem Smart Contract
 - ERC-20 = Standard-Interface
 - Repräsentiert Assets: Stables, Governance, LP, Staking
 - Nicht "Geld", sondern kryptographische Eintragung
 
 **[Slide 5] — Baustein 4: Wallet**
+
 - Interface zur Blockchain
 - Verwaltet Private Key — nicht Tokens
 - Signiert Transaktionen
@@ -489,6 +510,7 @@ Zusammenspiel: deine Wallet signiert eine Transaktion. Sie geht an die Blockchai
 **Aufgabe: Zerlege einen realen DeFi-Vorgang**
 
 Öffne app.uniswap.org und simuliere (nicht ausführen!) einen Swap von 0,1 ETH zu USDC. Identifiziere vor dem Klicken auf "Swap":
+
 1. Welcher Smart Contract wird aufgerufen? (Findest du im Transaktionsdetail, bevor du bestätigst, oder via etherscan.io unter "Uniswap Router")
 2. Welche Tokens sind beteiligt (mit Contract-Adressen)?
 3. Welche Wallet signiert die Transaktion?
@@ -500,19 +522,19 @@ Zusammenspiel: deine Wallet signiert eine Transaktion. Sie geht an die Blockchai
 
 **Frage 1:** Warum sagt man, dass eine Wallet "keine Tokens hält"?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Tokens sind keine physischen Objekte, die in der Wallet lagern. Sie sind Einträge in Smart Contracts — der Token-Contract führt ein Ledger mit "Adresse X hält Y Tokens". Die Wallet verwaltet nur den Private Key, der die Autorität über eine bestimmte Adresse gewährt. Wenn du eine neue Wallet-Software installierst und denselben Private Key importierst, siehst du dieselben Token-Balancen, weil diese in den jeweiligen Token-Contracts liegen, nicht in der Wallet-App.
-</details>
+
+
 
 **Frage 2:** Was ist der Unterschied zwischen einem Smart Contract und einem traditionellen Server-Programm?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Ein Smart Contract läuft auf einer Blockchain und wird von allen Validatoren gleichzeitig ausgeführt — der Output ist deterministisch und prüfbar. Ein Server-Programm läuft auf einem zentralen Server, und nur der Betreiber sieht die interne Logik und die Daten. Smart Contracts sind nach Deployment unveränderlich (außer explizit eingebaute Upgrade-Mechanismen), Server-Programme können jederzeit vom Betreiber geändert werden. Smart Contracts benötigen keinen Intermediär zur Ausführung, Server-Programme werden vom Betreiber kontrolliert.
-</details>
+
+
 
 ### Video-Pipeline-Assets
 
@@ -531,6 +553,7 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ### Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Die sechs Hauptkategorien von DeFi-Protokollen benennen und ihre Funktion erklären
 - Verfolgen, wie Kapital durch diese Kategorien fließt
 - Tools wie DeFiLlama nutzen, um die Größe und Relevanz verschiedener Protokolle einzuschätzen
@@ -557,6 +580,7 @@ Wichtige Protokolle: Aave (größtes Lending-Protokoll), Compound, Morpho, Spark
 **Kategorie 3: Stablecoins**
 
 Stablecoins sind Tokens, die einen Peg zu einem externen Asset halten — meistens dem US-Dollar. Es gibt drei Haupttypen:
+
 - **Fiat-besichert** (USDC, USDT): gedeckt durch echte Dollar-Reserven bei einem Emittenten
 - **Krypto-besichert** (DAI, crvUSD): gedeckt durch On-Chain-Sicherheiten in Smart Contracts
 - **Algorithmisch** (z.B. UST — historisches Beispiel): durch Algorithmen stabilisiert, oft fragil. Hybrid-Modelle wie FRAX kombinieren algorithmische Mechanismen mit Sicherheiten und gelten daher als teilweise besichert.
@@ -617,6 +641,7 @@ Jeder Pfeil ist eine Transaktion. Jede Station ist ein Protokoll. Das Kapital zi
 Die DeFi-Landschaft
 
 **[Slide 2] — Sechs Hauptkategorien**
+
 1. DEXs (Swaps)
 2. Lending & Borrowing
 3. Stablecoins
@@ -641,6 +666,7 @@ USD → USDC → Aave → Borrow ETH → Lido stETH → Curve LP → Convex.
 Sechs Stationen. Sechs Risikoquellen.
 
 **[Slide 7] — Navigations-Tools**
+
 - DeFiLlama: TVL-Landschaft
 - DeBank: Wallet-Portfolios
 - Dune Analytics: Custom-Metriken
@@ -689,6 +715,7 @@ Drei Tools zur Navigation. DeFiLlama zeigt dir, wie viel Kapital in jedem Protok
 **Aufgabe: DeFi-Landkarte selbst erstellen**
 
 Gehe auf defillama.com. Wähle die Top-10-Protokolle nach TVL. Ordne jedes der sechs Kategorien zu (einige fallen in mehrere Kategorien). Notiere für jedes Protokoll:
+
 1. Name
 2. Kategorie(n)
 3. Aktueller TVL
@@ -700,21 +727,21 @@ Gehe auf defillama.com. Wähle die Top-10-Protokolle nach TVL. Ordne jedes der s
 
 **Frage 1:** Nenne die sechs Hauptkategorien von DeFi-Protokollen und je ein Beispiel.
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 1. DEXs (z.B. Uniswap), 2. Lending & Borrowing (z.B. Aave), 3. Stablecoins (z.B. USDC oder DAI), 4. Liquid Staking (z.B. Lido), 5. Derivate/Perpetuals (z.B. GMX oder dYdX), 6. Yield-Aggregatoren (z.B. Yearn oder Convex).
-</details>
+
+
 
 **Frage 2:** Warum ist der TVL (Total Value Locked) eine wichtige, aber unvollständige Metrik?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 TVL zeigt, wie viel Kapital in einem Protokoll hinterlegt ist, was ein Indikator für Vertrauen und Nutzung ist. Aber TVL ist unvollständig: Er kann durch wenige Wale dominiert sein, kann durch recycelte Deposits aufgebläht werden (wenn das gleiche Kapital durch mehrere Protokolle gezählt wird), und er sagt nichts über Profitabilität oder Risiko aus. Ein hoher TVL ist kein Garant für Sicherheit — mehrere Hacks trafen hoch-TVL-Protokolle.
 
 TVL kann außerdem durch sogenannte Rehypothecation aufgebläht werden. Dabei wird dasselbe Kapital mehrfach in verschiedenen Protokollen verwendet und gezählt. Dadurch kann der aggregierte TVL höher erscheinen als die tatsächliche ökonomische Nutzung.
-</details>
+
+
 
 ### Video-Pipeline-Assets
 
@@ -733,6 +760,7 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ### Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Die sieben Kernrisiken in DeFi identifizieren und voneinander abgrenzen
 - Verstehen, wie sich diese Risiken in der Praxis manifestieren
 - Eine erste Risikobewertung für eine beliebige DeFi-Position durchführen
@@ -870,6 +898,7 @@ Jede DeFi-Position hat ein Risikoprofil aus diesen sieben Dimensionen. Eine einf
 **Aufgabe: Risikoanalyse einer realen Position**
 
 Wähle eine bekannte DeFi-Position, die du online recherchieren kannst — z.B. "stETH-Looping auf Aave" oder "USDC-Supply auf Morpho". Erstelle eine Risikomatrix mit den sieben Risiken. Bewerte für jede Risikodimension:
+
 - Hoch / Mittel / Niedrig
 - Begründung (eine Zeile)
 
@@ -879,19 +908,19 @@ Wähle eine bekannte DeFi-Position, die du online recherchieren kannst — z.B. 
 
 **Frage 1:** Ein Freund erzählt dir, er legt seine USDC in ein unbekanntes Protokoll mit "Audit" und 150% APY. Welche drei Risiken sollten deine Alarmglocken auslösen?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 1. Rug-Pull-Risiko: unbekanntes Protokoll mit extrem hohem APY ist klassisches Warnsignal. 2. Smart-Contract-Risiko: ein einzelnes Audit ist keine Garantie, besonders wenn der Auditor nicht bekannt ist oder der Code komplex ist. 3. Unklare Kapitalquelle: 150% APY muss von irgendwoher kommen — oft sind es Token-Emissionen, die den Token-Preis drücken, oder recycelte Deposits, die bei Abflüssen kollabieren (Ponzi-Dynamik).
-</details>
+
+
 
 **Frage 2:** Warum ist Komponierbarkeits-Risiko besonders gefährlich für fortgeschrittene Nutzer?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Fortgeschrittene Nutzer bauen oft tiefe Stacks mit vielen Protokollen (z.B. Liquid Staking + Lending + Derivate + Yield Aggregator). Jede zusätzliche Protokoll-Ebene fügt eine neue Risikoquelle hinzu, und ein Bruch auf einer tieferen Ebene kann alle darauf aufbauenden Positionen betreffen. Die Risikokorrelation ist nicht additiv, sondern multiplikativ — kleine Einzelrisiken können gemeinsam ein großes Gesamtrisiko bilden. Fortgeschrittene Nutzer halten oft höhere absolute Beträge, sodass die absoluten Verluste signifikant sind.
-</details>
+
+
 
 ### Video-Pipeline-Assets
 
@@ -910,6 +939,7 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ### Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Eine nicht-verwahrende Wallet sicher einrichten
 - Eine erste Test-Transaktion ausführen und auf einem Block-Explorer verfolgen
 - Grundlegende Sicherheitsprinzipien im Umgang mit der ersten Wallet anwenden
@@ -932,6 +962,7 @@ Für Einsteiger empfehle ich **Rabby Wallet** (rabby.io) oder **MetaMask** (meta
 Bei der Ersteinrichtung generiert die Wallet eine **Seed-Phrase** — 12 oder 24 zufällige Wörter. Diese Phrase ist der Master-Schlüssel zu deiner Wallet. Jeder, der sie hat, kann alle Assets bewegen.
 
 Sicherheits-Regeln für die Seed-Phrase (nur die wichtigsten; Modul 2 geht tief):
+
 1. **Niemals digital speichern** (keine Screenshots, keine Cloud, keine Notiz-Apps, kein Passwort-Manager mit Cloud-Sync).
 2. **Schreibe sie auf Papier** — und bewahre sie an einem sicheren Ort auf.
 3. **Teile sie niemandem mit** — kein legitimer Dienst wird jemals deine Seed-Phrase fragen.
@@ -950,6 +981,7 @@ Rabby zeigt automatisch alle Chains, auf denen du Assets hast. MetaMask erforder
 Für diese erste Übung kaufst du eine **sehr kleine Menge ETH** (z.B. 20–50 USD Gegenwert) auf einer seriösen CEX (Coinbase, Kraken). Dann transferierst du sie zu deiner neuen Wallet.
 
 **Wichtig beim Senden von einer CEX zu deiner Wallet:**
+
 1. **Kopiere die Empfangsadresse korrekt** — Tippfehler führen zum Verlust.
 2. **Prüfe die ersten und letzten 4 Zeichen** nach dem Einfügen.
 3. **Sende zuerst eine Test-Menge** (z.B. 5 USD), warte auf die Ankunft, dann sende den Rest. Bei großen Beträgen lohnt sich das immer.
@@ -958,6 +990,7 @@ Für diese erste Übung kaufst du eine **sehr kleine Menge ETH** (z.B. 20–50 U
 **Schritt 5: Die Transaktion auf Etherscan verfolgen**
 
 Nach dem Senden bekommst du von der CEX eine Transaktions-Hash (lange hexadezimale Zeichenkette). Öffne etherscan.io und füge den Hash in die Suchleiste ein. Du siehst:
+
 - Absender-Adresse (die CEX-Hot-Wallet)
 - Empfänger-Adresse (deine Wallet)
 - Betrag
@@ -969,6 +1002,7 @@ Das ist der entscheidende konzeptionelle Schritt: Deine Transaktion ist öffentl
 **Schritt 6: Deine erste Wallet-Interaktion — Token-Import**
 
 Sobald ETH in deiner Wallet ist, kannst du die Wallet erkunden. Einige Tokens werden automatisch erkannt, andere musst du manuell hinzufügen. Der Prozess ist:
+
 1. "Import Token" oder "Add Token" klicken.
 2. Contract-Adresse des Tokens einfügen (findest du auf coingecko.com oder der Protokoll-Website).
 3. Name, Symbol und Decimals sollten automatisch gefüllt werden.
@@ -987,33 +1021,39 @@ Für diese erste Übung reicht es, ETH zu haben. In der nächsten Lektion gehen 
 Dein erster praktischer Schritt
 
 **[Slide 2] — Wallet auswählen und installieren**
+
 - Rabby (rabby.io) oder MetaMask (metamask.io)
 - Nur von offizieller Website herunterladen
 - Browser-Extension
 
 **[Slide 3] — Seed-Phrase: Die absolute Regel**
+
 - 12 oder 24 Wörter = Master-Schlüssel
 - Niemals digital speichern
 - Auf Papier notieren, sicher verwahren
 - Niemals teilen
 
 **[Slide 4] — Chains verstehen**
+
 - Gleiche Adresse auf allen EVM-Chains
 - Aber: Assets sind pro Chain unterschiedlich
 - USDC auf Ethereum ≠ USDC auf Arbitrum
 
 **[Slide 5] — Erste Transaktion**
+
 - Kleine ETH-Menge von CEX zur Wallet
 - Adresse doppelt prüfen
 - Test-Transaktion mit Kleinbetrag zuerst
 - Richtige Chain wählen
 
 **[Slide 6] — Verfolgung auf Etherscan**
+
 - Transaktions-Hash auf etherscan.io
 - Absender, Empfänger, Betrag, Gas sichtbar
 - Das ist DeFi-Transparenz in Aktion
 
 **[Slide 7] — Was du jetzt NICHT tun solltest**
+
 - Keine DeFi-Transaktionen ohne Modul 2
 - Keine Approvals ohne Verständnis
 - Airdrop-Tokens nicht antasten
@@ -1062,12 +1102,14 @@ Was du jetzt nicht tun solltest: keine DeFi-Transaktionen mit signifikantem Kapi
 **Aufgabe: Wallet einrichten und erste Transaktion ausführen**
 
 **Teil 1 (Setup):**
+
 1. Installiere Rabby oder MetaMask von der offiziellen Website.
 2. Generiere eine neue Wallet.
 3. Notiere die Seed-Phrase auf Papier. Verstaue sie sicher.
 4. Bestätige die Seed-Phrase in der Wallet-App.
 
 **Teil 2 (Test-Transaktion):**
+
 1. Kaufe auf einer seriösen CEX 20–50 USD in ETH.
 2. Sende 5 USD als Test zu deiner Wallet.
 3. Warte auf die Ankunft.
@@ -1075,6 +1117,7 @@ Was du jetzt nicht tun solltest: keine DeFi-Transaktionen mit signifikantem Kapi
 5. Kopiere den Transaktions-Hash der zweiten Transaktion.
 
 **Teil 3 (Verfolgung):**
+
 1. Öffne etherscan.io (für Ethereum) oder arbiscan.io (für Arbitrum).
 2. Suche die Transaktion.
 3. Identifiziere die fünf Kernfelder: From, To, Value, Transaction Fee, Block Confirmations.
@@ -1085,19 +1128,19 @@ Was du jetzt nicht tun solltest: keine DeFi-Transaktionen mit signifikantem Kapi
 
 **Frage 1:** Deine Seed-Phrase ist kompromittiert (z.B. jemand hat sie fotografiert). Was ist die einzige korrekte Reaktion?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Sofort eine neue Wallet erstellen (neue Seed-Phrase) und alle Assets von der kompromittierten Wallet zur neuen Wallet transferieren, bevor der Angreifer dies tun kann. Es gibt keine Möglichkeit, eine Seed-Phrase "zu ändern" oder zu "widerrufen" — sobald sie kompromittiert ist, ist die Wallet kompromittiert. Die einzige Verteidigung ist, die Assets zu einer anderen Wallet mit unkompromittierter Seed-Phrase zu bewegen, bevor der Angreifer es tut. Deshalb ist die Sicherung der Seed-Phrase absolut kritisch.
-</details>
+
+
 
 **Frage 2:** Warum ist eine Test-Transaktion mit kleinem Betrag vor einer großen Transaktion eine gute Praxis?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Weil Transaktionen auf der Blockchain unwiderruflich sind. Falls die Empfängeradresse falsch kopiert wurde, die falsche Chain gewählt wurde, oder sonst ein Fehler gemacht wurde, ist das Kapital verloren. Eine Test-Transaktion mit 5 USD kostet nur den Gas-Betrag und zeigt, ob alles funktioniert. Wenn die Test-Transaktion ankommt, weiß man sicher, dass auch der große Betrag ankommen wird — vorausgesetzt, die gleiche Adresse und Chain werden verwendet.
-</details>
+
+
 
 ### Video-Pipeline-Assets
 
@@ -1117,43 +1160,43 @@ Die folgenden fünf Fragen testen dein integriertes Verständnis des gesamten Mo
 
 **Frage 1:** Ein Krypto-Projekt nennt sich "DeFi-Protokoll", hat aber einen Admin-Schlüssel, mit dem das Team jederzeit Nutzer-Funds einfrieren oder bewegen kann. Ist das DeFi? Begründe mit mindestens zwei der drei DeFi-Kriterien.
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Nein. Es verletzt das Non-Custodial-Kriterium (das Team hat Zugriff auf Nutzer-Funds) und kann optional das Permissionless-Kriterium verletzen (wenn das Team Nutzer gezielt sperren kann). Selbst wenn das Protokoll transparent ist (drittes Kriterium erfüllt), macht der Admin-Zugriff es zu einem CeFi-artigen System, nur mit Smart-Contract-Frontend. Das ist "DeFi-Washing" — technisch nicht DeFi.
-</details>
+
+
 
 **Frage 2:** Eine komponierte Position nutzt vier Protokolle: Lido für Liquid Staking, Aave als Collateral-Plattform, Curve als LP-Venue und Convex als Yield-Booster. Erkläre, wie sich Komponierbarkeits-Risiko in dieser Position manifestiert.
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Jedes der vier Protokolle trägt eigenes Smart-Contract-Risiko. Zusätzlich: wenn stETH (Lido) depeggt, fällt der Collateral-Wert auf Aave, was Liquidation auslösen kann. Wenn Aave ein Problem hat, betrifft das die darauf aufgebaute Borrow-Position. Wenn Curve eine fehlerhafte Pool-Implementierung hat, verliert der LP-Anteil Wert. Wenn Convex-Rewards gehackt werden, verliert der Booster-Layer Wert. Das Risiko ist nicht additiv, sondern kaskadisch — ein Bruch auf Ebene 1 kann alle höheren Ebenen betreffen. Die Gesamt-Ausfallwahrscheinlichkeit ist signifikant höher als die einzelner Protokolle.
-</details>
+
+
 
 **Frage 3:** Du siehst auf DeFiLlama ein neues Protokoll mit 150M USD TVL, das vor zwei Wochen gestartet ist und 180% APY verspricht. Welche drei Fragen stellst du zur Risikobewertung?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 1. Woher kommt der Yield? 180% APY muss eine Kapitalquelle haben — Token-Emissionen (mit Verwässerung), echte Gebühren (dann müsste das Protokoll extremen Volumen generieren), oder Ponzi-Dynamik (neue Deposits zahlen alte Returns). 2. Welche Audits wurden gemacht, von welchen Firmen, wann, und welche Findings wurden wie adressiert? 3. Wie ist die Governance strukturiert — hat das Team Admin-Privilegien zum Einfrieren/Migrieren/Upgraden? Wie schnell können diese Änderungen ausgeführt werden (Time-Lock)? Zusätzliche Fragen: Wie hoch ist die Wale-Konzentration? Gab es ähnliche Protokolle, die gescheitert sind?
-</details>
+
+
 
 **Frage 4:** Erkläre, warum eine Wallet technisch "keine Tokens hält" und was sie stattdessen tut.
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Tokens sind keine digitalen Objekte, die in einer Wallet lagern — sie sind Einträge in Smart Contracts. Der Token-Contract (z.B. der USDC-Contract) führt ein internes Ledger, das für jede Adresse einen Balance-Wert speichert. Die Wallet-Software verwaltet ausschließlich den Private Key, der die kryptographische Autorität über eine bestimmte Blockchain-Adresse gewährt. Wenn du die Wallet-Software wechselst und denselben Private Key oder dieselbe Seed-Phrase importierst, siehst du dieselben Token-Balancen — weil die Balancen in den Token-Contracts liegen, nicht in der Wallet-App. Die Wallet ist ein Schlüsselbund, kein Tresor.
-</details>
+
+
 
 **Frage 5:** Eine einfache USDC-Supply-Position auf Aave: welche der sieben DeFi-Risiken sind relevant, und welche sind weniger relevant? Begründe.
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Relevant: (1) Smart-Contract-Risiko (Aave-Code könnte einen Bug haben), (2) Oracle-Risiko (wenn auch für reine Supply-Positionen weniger direkt, aber relevant bei Markt-Pausen/Ausfällen), (3) Depeg-Risiko (USDC selbst kann depeggen, wie im März 2023 temporär geschehen), (4) User Risk (falsche Transaktion, kompromittierter Seed). Weniger relevant: (5) Liquidationsrisiko (nur bei Borrow-Positionen), (6) Rug-Pull-Risiko (Aave ist etabliert, öffentliche Governance), (7) Komponierbarkeits-Risiko (die Position baut nicht auf anderen Protokollen auf). Dies ist ein relativ konservatives Risikoprofil innerhalb des DeFi-Spektrums.
-</details>
+
+
 
 ---
 

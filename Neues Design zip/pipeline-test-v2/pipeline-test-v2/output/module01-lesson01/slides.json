@@ -1,0 +1,114 @@
+{
+  "module": 1,
+  "lesson": 1,
+  "lesson_id": "module01-lesson01",
+  "title": "Was ist DeFi? Eine präzise Definition",
+  "objectives": [
+    "DeFi präzise definieren und von CeFi sowie traditionellem Finanzwesen abgrenzen",
+    "Die drei technischen Eigenschaften identifizieren, die ein System \"DeFi\" machen",
+    "Erkennen, warum viele Produkte, die sich \"DeFi\" nennen, es technisch nicht sind",
+    "Eine Plattform anhand von Custody-, Permissioning- und Transparenz-Kriterien klassifizieren",
+    "Die strukturellen Unterschiede zwischen DeFi und CeFi anhand eines realen Marktereignisses (FTX-Kollaps 2022) erklären",
+    "\"DeFi-Washing\" erkennen und mit vier Prüfsteinen ein Protokoll auf Echtheit bewerten"
+  ],
+  "slides": [
+    {
+      "number": 1,
+      "title": "Titel",
+      "body": "DeFi: Eine präzise Definition",
+      "narration": "Willkommen zu Modul 1. Bevor wir über Yield, Strategien oder Tools sprechen, müssen wir genau definieren, worüber wir reden. Der Begriff \"DeFi\" wird inflationär verwendet — wir brauchen eine saubere technische Definition.",
+      "visual": "Titelfolie mit \"DeFi: Eine präzise Definition\". Neutrales, dunkles Hintergrunddesign, keine Krypto-Klischees (keine Bitcoin-Symbole, keine goldenen Münzen).",
+      "is_title_slide": true,
+      "word_count_narration": 32,
+      "estimated_seconds_at_wpm": 14,
+      "timing": {
+        "start_seconds": 0,
+        "end_seconds": 17.284,
+        "duration_seconds": 17.284
+      }
+    },
+    {
+      "number": 2,
+      "title": "Was ist DeFi?",
+      "body": "Finanzanwendungen auf öffentlichen Blockchains, ausgeführt durch Smart Contracts, ohne zentrale Intermediäre",
+      "narration": "DeFi — Decentralized Finance — bezeichnet Finanzanwendungen, die auf öffentlichen Blockchains laufen und über Smart Contracts ausgeführt werden, ohne zentrale Intermediäre. Jedes Wort dieser Definition trägt Gewicht. Wir zerlegen sie in drei technische Eigenschaften.",
+      "visual": "Zentrales Diagramm mit drei konzentrischen Kreisen: \"Öffentliche Blockchain\" (außen), \"Smart Contract\" (mitte), \"DeFi-Anwendung\" (innen). Betont den Stack.",
+      "is_title_slide": false,
+      "word_count_narration": 34,
+      "estimated_seconds_at_wpm": 15,
+      "timing": {
+        "start_seconds": 17.284,
+        "end_seconds": 35.649,
+        "duration_seconds": 18.365
+      }
+    },
+    {
+      "number": 3,
+      "title": "Drei technische Eigenschaften",
+      "body": "1. Non-Custodial — Nutzer halten eigene Assets\n2. Permissionless — kein KYC, kein Gatekeeping\n3. Transparent — alles on-chain prüfbar",
+      "narration": "Erstens: Non-Custodial. Die Nutzer halten ihre Assets selbst. Das Protokoll kann Nutzergelder nicht bewegen, einfrieren oder beschlagnahmen — weil der Code diese Funktion nicht enthält. Zweitens: Permissionless. Jeder mit Wallet und Internet kann teilnehmen, kein KYC, keine Kontoeröffnung. Drittens: Transparent. Alle Transaktionen, Salden und Smart-Contract-Logik sind öffentlich einsehbar.",
+      "visual": "Drei vertikale Spalten mit je einem Icon und kurzem Text: ein Schlüssel-Icon für Non-Custodial, ein offenes Tor für Permissionless, eine Lupe für Transparent.",
+      "is_title_slide": false,
+      "word_count_narration": 48,
+      "estimated_seconds_at_wpm": 21,
+      "timing": {
+        "start_seconds": 35.649,
+        "end_seconds": 61.575,
+        "duration_seconds": 25.926
+      }
+    },
+    {
+      "number": 4,
+      "title": "CeFi vs. DeFi",
+      "body": "| Eigenschaft | CeFi      | DeFi           |\n| ----------- | --------- | -------------- |\n| Custody     | Plattform | Nutzer         |\n| KYC         | Pflicht   | Nein           |\n| Ausführung  | Datenbank | Smart Contract |\n| Transparenz | Intern    | Öffentlich     |",
+      "narration": "CeFi-Plattformen wie Coinbase oder Binance bieten Zugang zu Krypto, aber sie verwahren die Gelder. Sie verlangen KYC und können Konten sperren. Ihre internen Salden liegen auf privaten Datenbanken. DeFi funktioniert strukturell anders: Custody beim Nutzer, kein KYC, alles auf Smart Contracts, öffentlich prüfbar.",
+      "visual": "Zweispaltige Vergleichstabelle CeFi ↔ DeFi. **SCREENSHOT SUGGESTION:** Screenshot der Coinbase-Login-Seite neben einem Screenshot von app.uniswap.org ohne Login-Pflicht, zur visuellen Veranschaulichung.",
+      "is_title_slide": false,
+      "word_count_narration": 43,
+      "estimated_seconds_at_wpm": 19,
+      "timing": {
+        "start_seconds": 61.575,
+        "end_seconds": 84.801,
+        "duration_seconds": 23.226
+      }
+    },
+    {
+      "number": 5,
+      "title": "Der FTX-Moment",
+      "body": "FTX (CeFi) kollabierte durch Missbrauch von Kundengeldern.\nMakerDAO, Aave, Uniswap (DeFi) liefen störungsfrei weiter.\nWarum? Bei DeFi existiert die Möglichkeit des Missbrauchs technisch nicht.",
+      "narration": "Der Unterschied wurde 2022 deutlich sichtbar. FTX war CeFi. Sam Bankman-Fried konnte Kundengelder zu Alameda Research transferieren, weil FTX die Custody hatte. Die Firma kollabierte. Im selben Marktumfeld liefen MakerDAO, Aave und Uniswap ohne Unterbrechung. Warum? Weil diese Protokolle keine Gelder verwahren, die missbraucht werden könnten. Die Möglichkeit existiert technisch nicht.",
+      "visual": "Timeline November 2022: FTX-Kollaps markiert, parallel Aave-TVL-Chart der zeigt, dass Aave weiter funktionierte. **SCREENSHOT SUGGESTION:** DeFiLlama-Chart von Aave TVL über November 2022 zeigt Stabilität trotz Marktchaos.",
+      "is_title_slide": false,
+      "word_count_narration": 51,
+      "estimated_seconds_at_wpm": 23,
+      "timing": {
+        "start_seconds": 84.801,
+        "end_seconds": 112.348,
+        "duration_seconds": 27.547
+      }
+    },
+    {
+      "number": 6,
+      "title": "Prüfsteine gegen \"DeFi-Washing\"",
+      "body": "Fragen zur Echtheitsprüfung:\n\n- Admin-Schlüssel mit Zugriff auf Nutzergelder?\n- Möglichkeit zur Nutzersperrung?\n- Off-Chain-Datenbank statt Smart Contract?\n- Funktioniert das Protokoll ohne das Team?",
+      "narration": "Viele Produkte nennen sich DeFi, sind es aber nicht. Vier Prüfsteine: Existiert ein Admin-Schlüssel mit Zugriff auf Nutzergelder? Kann ein Team Nutzer sperren? Liegen Guthaben auf einer Off-Chain-Datenbank? Und der finale Test: Wenn das Team morgen verschwindet — funktioniert das Protokoll weiter? Bei echtem DeFi lautet die Antwort ja.",
+      "visual": "Flussdiagramm \"Ist das echtes DeFi?\" mit Entscheidungsbaum und den vier Prüffragen.",
+      "is_title_slide": false,
+      "word_count_narration": 49,
+      "estimated_seconds_at_wpm": 22,
+      "timing": {
+        "start_seconds": 112.348,
+        "end_seconds": 138.815,
+        "duration_seconds": 26.467
+      }
+    }
+  ],
+  "meta": {
+    "total_slides": 6,
+    "total_narration_words": 257,
+    "target_wpm": 135,
+    "estimated_duration_seconds_at_wpm": 114,
+    "total_audio_seconds": 138.815,
+    "timing_mode": "proportional"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "audio_duration_seconds": 157.649,
+  "slides": [
+    {
+      "number": 1,
+      "title": "Titel",
+      "start_seconds": 0,
+      "end_seconds": 19.6294,
+      "duration_seconds": 19.6294,
+      "word_weight": 32
+    },
+    {
+      "number": 2,
+      "title": "Was ist DeFi?",
+      "start_seconds": 19.6294,
+      "end_seconds": 40.4857,
+      "duration_seconds": 20.8563,
+      "word_weight": 34
+    },
+    {
+      "number": 3,
+      "title": "Drei technische Eigenschaften",
+      "start_seconds": 40.4857,
+      "end_seconds": 69.9299,
+      "duration_seconds": 29.4442,
+      "word_weight": 48
+    },
+    {
+      "number": 4,
+      "title": "CeFi vs. DeFi",
+      "start_seconds": 69.9299,
+      "end_seconds": 96.307,
+      "duration_seconds": 26.3771,
+      "word_weight": 43
+    },
+    {
+      "number": 5,
+      "title": "Der FTX-Moment",
+      "start_seconds": 96.307,
+      "end_seconds": 127.5914,
+      "duration_seconds": 31.2844,
+      "word_weight": 51
+    },
+    {
+      "number": 6,
+      "title": "Prüfsteine gegen \"DeFi-Washing\"",
+      "start_seconds": 127.5914,
+      "end_seconds": 157.649,
+      "duration_seconds": 30.0576,
+      "word_weight": 49
+    }
+  ]
+}

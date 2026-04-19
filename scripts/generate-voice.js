@@ -6,8 +6,8 @@
  *
  * Input je Lektion:
  *   <scripts-dir>/moduleXX-lessonYY/voice_script.txt
- *   (default scripts-dir: ./generator-output — hier landet der Output
- *    des Lesson Asset Generators. Alternative Quelle: lessons/)
+ *   (default scripts-dir: ./generated-assets — Pipeline-Output von
+ *    npm run generate-assets. Alternativ: ./generator-output, ./lessons/)
  *
  * Output je Lektion:
  *   <output-dir>/moduleXX-lessonYY/voice.mp3
@@ -29,7 +29,7 @@
  *   node scripts/generate-voice.js --dry-run
  *
  * Flags:
- *   --scripts-dir <path>   default: ./generator-output (tolerant gegen
+ *   --scripts-dir <path>   default: ./generated-assets (tolerant gegen
  *                          Layout "./lessons/<id>/voice_script.txt")
  *   --output-dir  <path>   default: ./assets-input
  *   --only <csv>           Lesson-IDs filtern (z. B. module01-lesson01,...)
@@ -77,7 +77,7 @@ Usage:
   node scripts/generate-voice.js [flags]
 
 Flags:
-  --scripts-dir <path>   default: ./generator-output
+  --scripts-dir <path>   default: ./generated-assets
   --output-dir  <path>   default: ./assets-input
   --only <csv>           Lesson-IDs filtern
   --concurrency <n>      default: 2
@@ -311,7 +311,7 @@ async function main() {
     process.exit(0);
   }
 
-  const scriptsDir = path.resolve(ROOT, args['scripts-dir'] || 'generator-output');
+  const scriptsDir = path.resolve(ROOT, args['scripts-dir'] || 'generated-assets');
   const outputDir = path.resolve(ROOT, args['output-dir'] || 'assets-input');
   const concurrency = parseInt(args.concurrency || '2', 10);
   const dryRun = Boolean(args['dry-run']);

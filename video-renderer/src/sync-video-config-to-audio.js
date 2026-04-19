@@ -60,8 +60,30 @@ function scaleVideoConfigToDuration(videoConfig, targetDurationSeconds) {
   return out;
 }
 
+/**
+ * Ob die Timeline an die gemessene MP3-Dauer angepasst werden soll.
+ *
+ * - Echte ElevenLabs-Dateien sind oft **kuerzer** als die Template-Timeline
+ *   (474s) — dann soll skaliert werden, damit Folien zur Sprecherlaenge passen.
+ * - Nur bei **kaputten Stubs** (winzige Datei + extrem kurze Metadata) nicht
+ *   skalieren, damit nicht alles auf Sekunden zusammenfaellt.
+ */
+function shouldApplyAudioDurationSync(
+  timelineEndSeconds,
+  audioSeconds,
+  fileSizeBytes = Number.POSITIVE_INFINITY
+) {
+  if (!timelineEndSeconds || timelineEndSeconds <= 0) return false;
+  if (!audioSeconds || audioSeconds <= 0) return false;
+  const stubBytes = 4096;
+  const stubMaxSeconds = 25;
+  if (fileSizeBytes < stubBytes && audioSeconds < stubMaxSeconds) return false;
+  return true;
+}
+
 module.exports = {
   getTimelineEndSeconds,
   scaleVideoConfigToDuration,
   roundTime,
+  shouldApplyAudioDurationSync,
 };
