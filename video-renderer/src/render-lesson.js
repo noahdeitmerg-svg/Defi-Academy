@@ -22,7 +22,13 @@ const fs = require('fs');
 const { bundle } = require('@remotion/bundler');
 const { selectComposition, renderMedia, renderStill } = require('@remotion/renderer');
 
+const { parseFile } = require('music-metadata');
+
 const { resolveLessonAssets } = require('./asset-resolver');
+const {
+  getTimelineEndSeconds,
+  scaleVideoConfigToDuration,
+} = require('./sync-video-config-to-audio');
 
 function parseArgs(argv) {
   const args = {};
@@ -86,6 +92,33 @@ async function renderLesson({
     publicDir: effectivePublicDir,
     nextLesson,
   });
+
+  // 2b) Timeline an reale Voice-Laenge koppeln (video_config kann von der
+  //     MP3 abweichen → stummer Rest oder abgeschnittener Ton).
+  const stagedAudioPath = path.join(targetAssetsDir, 'voice.mp3');
+  if (renderInput.audioPath && fs.existsSync(stagedAudioPath)) {
+    try {
+      const meta = await parseFile(stagedAudioPath);
+      const audioSec = meta.format.duration;
+      if (Number.isFinite(audioSec) && audioSec > 0) {
+        const before = getTimelineEndSeconds(renderInput.videoConfig);
+        const synced = scaleVideoConfigToDuration(renderInput.videoConfig, audioSec);
+        if (
+          synced.duration_seconds !== renderInput.videoConfig.duration_seconds ||
+          Math.abs(before - audioSec) > 0.15
+        ) {
+          console.log(
+            `[${lessonId}] timeline sync: config ${before.toFixed(2)}s → audio ${audioSec.toFixed(2)}s`
+          );
+        }
+        renderInput.videoConfig = synced;
+        const renderInputPath = path.join(targetAssetsDir, 'render-input.json');
+        fs.writeFileSync(renderInputPath, JSON.stringify(renderInput, null, 2), 'utf8');
+      }
+    } catch (err) {
+      console.warn(`[${lessonId}] audio duration read failed (${err.message}) — using video_config as-is`);
+    }
+  }
 
   // 3) Select composition with our lesson's videoConfig injected
   const inputProps = {

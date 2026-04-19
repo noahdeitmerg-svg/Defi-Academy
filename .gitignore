@@ -35,6 +35,9 @@ yarn-error.log*
 # lokale Roh-Module (optional im Repo-Root; nach Import nach content/modules/)
 /module*.md
 
+# temp: Video-Agent-ZIP entpackt (lokal)
+/.video-agent-extract/
+
 # Video-Pipeline-Artefakte (alle derived, nie committen)
 /logs/
 /generator-output/
