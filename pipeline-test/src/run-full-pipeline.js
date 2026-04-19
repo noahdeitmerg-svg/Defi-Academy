@@ -143,8 +143,10 @@ async function main() {
   log('voice_text.txt');
 
   const voiceMp3 = path.join(outDir, 'voice.mp3');
+  // Keine **Slide-N**-Marker an ElevenLabs: würden als gesprochener Text erscheinen.
+  // Timing kommt aus buildVoiceTiming (Wortgewichte), nicht aus Marker im Audio.
   await synthesizeToMp3({
-    fullText: voiceParts.map((t, i) => `**[Slide ${i + 1}]**\n${t}`).join('\n\n'),
+    fullText: voiceText,
     outPath: voiceMp3,
     log,
   });

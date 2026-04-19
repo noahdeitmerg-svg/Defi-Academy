@@ -10,14 +10,22 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-/** Wie generate-voice.js — kein #, keine ---, Phonetik-Klammern entfernen. */
+/** Markdown- und Pipeline-Artefakte entfernen, die TTS nicht sprechen soll. */
 function sanitizeVoiceScript(raw) {
+  /** Zeile nur aus `**[Slide n]**` bzw. `**[Slide n] — Titel**` (Folien-Markdown). */
+  const slideLineOnly = /^\*\*\[Slide\s*\d+\](?:\s*[—–\-]\s*[^*\n]+)?\*\*\s*$/;
+  /** Gleiches Muster am Zeilenanfang, gefolgt von echtem Sprechertext. */
+  const slidePrefix = /^\*\*\[Slide\s*\d+\](?:\s*[—–\-]\s*[^*]+)?\*\*\s*/;
+
   const kept = [];
   for (const line of raw.split(/\r?\n/)) {
     const trimmed = line.trim();
     if (trimmed.startsWith('#')) continue;
     if (/^-{3,}$/.test(trimmed)) continue;
-    kept.push(line);
+    if (slideLineOnly.test(trimmed)) continue;
+    const cleaned = line.replace(slidePrefix, '');
+    if (cleaned.trim().length === 0) continue;
+    kept.push(cleaned);
   }
   let text = kept.join('\n');
   text = text.replace(/(\w[\w-]*)\s*\[\s*\1\s*\]/g, '$1');
