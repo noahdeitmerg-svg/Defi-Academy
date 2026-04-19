@@ -24,15 +24,28 @@ function parseBulletsFromBody(body) {
 
   const tableStart = lines.findIndex((l) => /^\|.*\|$/.test(l));
   if (tableStart >= 0) {
-    const dataRows = lines
+    const allRows = lines
       .slice(tableStart)
       .filter((l) => /^\|.*\|$/.test(l))
       .filter((l) => !/^\|[\s\-:|]+\|$/.test(l));
-    if (dataRows.length >= 2) {
-      const rows = dataRows.slice(1, 6);
-      return rows.map((l) => {
-        const cells = l.split('|').slice(1, -1).map((c) => c.trim());
-        return cells.filter(Boolean).slice(0, 2).join(' — ');
+
+    if (allRows.length >= 2) {
+      const dataRows = allRows.slice(1, 6);
+
+      return dataRows.map((row) => {
+        const cells = row
+          .split('|')
+          .slice(1, -1)
+          .map((c) => c.trim())
+          .filter(Boolean);
+
+        if (cells.length >= 3) {
+          const label = cells[0];
+          const values = cells.slice(1).join(' vs. ');
+          return `${label}: ${values}`;
+        }
+
+        return cells.join(' — ');
       });
     }
   }
