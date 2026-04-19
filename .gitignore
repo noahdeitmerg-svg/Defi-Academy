@@ -49,12 +49,14 @@ yarn-error.log*
 /posters/
 /.pilot-render-tmp/
 /.render-batch-tmp/
+/.tmp-voice-test/
 # Renderer-Bundle-Cache + Remotion-Output
 /video-renderer/**/public/assets/
 /video-renderer/**/output/
 
 # pipeline-test lokale Outputs
 /pipeline-test/test-output/
+/pipeline-test/test-output-*/
 /pipeline-test/batch-m1-full/
 
 # pipeline-test-v2 (Brand 2.0) lokale Outputs
