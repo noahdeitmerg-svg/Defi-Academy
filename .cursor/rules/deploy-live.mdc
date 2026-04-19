@@ -1,0 +1,21 @@
+---
+description: GitHub Pages — nach fertigen Änderungen pushen oder merge-live triggern; keine Secrets committen.
+alwaysApply: true
+---
+
+# Live gehen (GitHub Pages)
+
+Wenn der Nutzer ausdrücklich will, dass Änderungen **ohne manuelles Nacharbeiten** auf der Website landen:
+
+1. **Bevorzugt (direkt):** Auf `main` committen und `git push origin main` ausführen (setzt Schreibzugriff auf `main` voraus; löst den Workflow **Deploy Next.js site to Pages** aus).
+
+2. **Ohne Push auf `main`:** Auf einem Branch unter `cursor/` arbeiten, z. B. **`cursor/publish-live`** (oder fertigen Feature-Branch), dann:
+   - `git push -u origin HEAD` auf diesen Branch, **oder**
+   - Webhook/Skript: `scripts/trigger-merge-live.ps1` bzw. `scripts/trigger-merge-live.sh` mit Umgebungsvariable **`GITHUB_TOKEN`** (PAT) und optional `-Branch` / `BRANCH=…` (muss mit `cursor/` beginnen).  
+   Das löst **`merge-live`** aus → Actions merged nach `main` und stößt **`pages-deploy`** an (siehe `docs/GITHUB_PAGES.md`).
+
+3. **Nur neu bauen** (Code auf `main` unverändert): `scripts/trigger-pages-deploy.ps1` / `.sh` mit Event `pages-deploy`.
+
+**Niemals** Tokens, Passwörter oder PATs in Commits, Chats oder Repo-Dateien ablegen — nur als lokale/CI-Umgebungsvariable `GITHUB_TOKEN`.
+
+Nach Push oder erfolgreichem Merge: kurz den Actions-Lauf auf GitHub erwähnen (`Actions` → Workflows).

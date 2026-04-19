@@ -1,0 +1,74 @@
+# Fuehrt einen `cursor/*`-Zweig in `main` zusammen und loest danach den Pages-Build aus.
+# Pushes mit GITHUB_TOKEN triggern Folge-Workflows nicht zuverlaessig — deshalb explizit
+# `repository_dispatch` → pages-deploy (wie in auto-import.yml).
+
+name: Merge Live Branch → main
+
+on:
+  push:
+    branches:
+      - "cursor/publish-live"
+  repository_dispatch:
+    types: [merge-live]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: merge-live-to-main
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Quell-Branch ermitteln
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            B="${{ github.event.client_payload.branch }}"
+            if [ -z "$B" ] || [ "$B" = "null" ]; then
+              B="cursor/publish-live"
+            fi
+          else
+            B="${GITHUB_REF#refs/heads/}"
+          fi
+          case "$B" in
+            cursor/*) ;;
+            *) echo "Nur Branches unter cursor/* sind erlaubt, erhalten: $B" >&2; exit 1 ;;
+          esac
+          echo "source_branch=$B" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge in main und pushen
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC="${{ steps.meta.outputs.source_branch }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$SRC"
+          git merge "origin/$SRC" -m "auto: merge $SRC into main" --no-edit
+          git push origin main
+
+      - name: Pages-Deploy anstossen
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sS -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/dispatches" \
+            -d '{"event_type":"pages-deploy","client_payload":{}}'
