@@ -219,7 +219,11 @@ function normalizeFrontmatter(data: Record<string, unknown>): LessonFrontmatter 
 function buildExplanationMdx(sections: LessonBodySections): string {
   const parts: string[] = [];
   if (sections.learningObjectives.trim()) {
-    parts.push("## Learning Objectives\n\n" + sections.learningObjectives.trim());
+    const lo = sections.learningObjectives
+      .trim()
+      .replace(/^After completing this lesson the learner will be able to:\s*\n*/i, "")
+      .replace(/^Nach dieser Lektion (?:kannst du|solltest du):\s*\n*/i, "");
+    parts.push(`## Lernziele\n\nNach dieser Lektion kannst du:\n\n${lo}`);
   }
   if (sections.explanation.trim()) {
     parts.push(sections.explanation.trim());

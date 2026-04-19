@@ -90,7 +90,7 @@ Du zahlst 10.000 USDC in einen Aave-USDC-Pool ein. Folgende Dinge passieren:
 Ein Borrower will 5.000 USDC aufnehmen. Bevor das geht, muss er Sicherheiten hinterlegen — zum Beispiel ETH. Der Vorgang:
 
 1. Supply von 10.000 USD in ETH als Sicherheit.
-2. Der Protokoll bewertet die Sicherheit mit einem Loan-to-Value-Ratio (z.B. 75% für ETH). Das bedeutet: Mit 10.000 USD ETH-Sicherheit kann bis zu 7.500 USDC geborgt werden.
+2. Das Protokoll bewertet die Sicherheit mit einem Loan-to-Value-Ratio (z.B. 75% für ETH). Das bedeutet: Mit 10.000 USD ETH-Sicherheit kann bis zu 7.500 USDC geborgt werden.
 3. Der Borrower nimmt 5.000 USDC auf — wohlgemerkt unterhalb der Maximalgrenze.
 4. Er zahlt laufend Zinsen auf die 5.000 USDC.
 
@@ -255,7 +255,7 @@ Die Borrow-Rate ist eine stückweise lineare Funktion der Utilization:
 ```
 Utilization 0% → Borrow-Rate ≈ 0%
 Utilization steigt → Borrow-Rate steigt linear (flach)
-Am "Kink-Point" (typisch 80–90%) → Steilheit erhöht sich dramatisch
+Am "Kink-Point" (typisch 80–90%) → Steilheit erhöht sich stark
 Utilization 100% → Borrow-Rate kann 50%+ erreichen
 ```
 
@@ -351,11 +351,11 @@ Supply-Rate = Borrow-Rate × Utilization × (1 − Reserve Factor)
 
 **[Slide 2]** Die Grundformel. Utilization gleich geborgte Assets geteilt durch gesamte Supply. Wenn 80 Prozent der USDC im Pool geborgt sind, ist die Utilization 80 Prozent. Der Zins-Mechanismus: hohe Utilization bedeutet hohe Nachfrage, bedeutet hohe Zinsen. Niedrige Utilization bedeutet umgekehrt niedrige Zinsen.
 
-**[Slide 3]** Die Standard-Zinskurve ist stückweise linear. Von null bis zum Kink-Point wächst die Borrow-Rate langsam — das ist der Normalbetrieb. Der Kink-Point liegt typisch bei 80 bis 90 Prozent Utilization. Oberhalb des Kinks wird die Kurve dramatisch steiler. Bei 95 Prozent Utilization können Borrow-Raten bereits bei 15 bis 20 Prozent liegen. Bei 100 Prozent sind 50 Prozent plus möglich. Diese Steilheit ist Absicht — sie soll Utilization zurück unter den Kink treiben.
+**[Slide 3]** Die Standard-Zinskurve ist stückweise linear. Von null bis zum Kink-Point wächst die Borrow-Rate langsam — das ist der Normalbetrieb. Der Kink-Point liegt typisch bei 80 bis 90 Prozent Utilization. Oberhalb des Kinks wird die Kurve deutlich steiler. Bei 95 Prozent Utilization können Borrow-Raten bereits bei 15 bis 20 Prozent liegen. Bei 100 Prozent sind 50 Prozent plus möglich. Diese Steilheit ist Absicht — sie soll Utilization zurück unter den Kink treiben.
 
 **[Slide 4]** Die Supply-Rate-Formel. Supply-Rate gleich Borrow-Rate mal Utilization mal, eins minus Reserve Factor. Der Reserve Factor ist der Anteil, den das Protokoll einbehält — typisch 10 bis 30 Prozent. Bei 90 Prozent Utilization und 4 Prozent Borrow-Rate und 15 Prozent Reserve Factor liegt die Supply-Rate bei etwa 3 Prozent.
 
-**[Slide 5]** Der Spread zwischen Borrow- und Supply-Rate hat zwei Quellen. Erstens: Utilization unter hundert Prozent — der ungenutzte Teil des Pools verdient keine Zinsen, aber er wird auf alle Supplier verteilt. Zweitens: Reserve Factor — das Protokoll-Anteil geht nicht an Supplier. Für dich als Supplier: dein effektiver Zins hängt von beiden Faktoren ab. Bei niedriger Utilization ist dein effektiver Zins niedrig, selbst wenn die Borrow-Rate hoch scheint.
+**[Slide 5]** Der Spread zwischen Borrow- und Supply-Rate hat zwei Quellen. Erstens: Utilization unter hundert Prozent — der ungenutzte Teil des Pools verdient keine Zinsen, aber er wird auf alle Supplier verteilt. Zweitens: Reserve Factor — der Protokoll-Anteil geht nicht an Supplier. Für dich als Supplier: dein effektiver Zins hängt von beiden Faktoren ab. Bei niedriger Utilization ist dein effektiver Zins niedrig, selbst wenn die Borrow-Rate hoch scheint.
 
 **[Slide 6]** Zwei strukturelle Schwachstellen, die du kennen musst. Liquidity Crunch: wenn alle Supplier gleichzeitig auszahlen wollen, aber die Pool-Liquidität geborgt ist, können Auszahlungen temporär blockiert sein. Das ist keine Insolvenz — das Geld kommt zurück, wenn Borrower zurückzahlen oder neue Supplier einzahlen. Aber kurzfristig kannst du nicht auf deine Position zugreifen. Zinsspirale: plötzliche Utilization-Spikes treiben Borrow-Raten hoch, was bestehende Borrower zwingen kann, Positionen aufzulösen — was wiederum Märkte destabilisiert. Beide Szenarien treten selten auf, sind aber reale Risiken bei extremen Marktbewegungen.
 
@@ -405,7 +405,7 @@ Utilization = 85 / 100 = 85%. Supply-Rate = 5% × 85% × (1 − 0,10) = 3,825%. 
 <details>
 <summary>Antwort anzeigen</summary>
 
-Für Supplier: über den Kink-Point steigen die Zinsen stark, der effektive Supply-Yield kann sich verdrei- oder vervierfachen. Kurzfristig attraktiv — solange die Lage so bleibt, verdient man mehr. Für bestehende Borrower: sie zahlen plötzlich deutlich mehr Zinsen auf ihre laufenden Kredite. Eine Position, die bei 80% Utilization 3% Zinsen zahlte, kann bei 95% auf 15%+ springen. Das kann dazu zwingen, Positionen teilweise oder ganz aufzulösen, was wiederum Kollateral verkauft und möglicherweise Liquidationen auslöst. In extremen Fällen kann das eine Kaskade auslösen. Für den Borrower ist Zinsrisiko also ein echter Belastungsfaktor, das bei Positionsgrößen-Entscheidungen berücksichtigt werden muss.
+Für Supplier: über den Kink-Point steigen die Zinsen stark, der effektive Supply-Yield kann sich verdrei- oder vervierfachen. Kurzfristig attraktiv — solange die Lage so bleibt, verdient man mehr. Für bestehende Borrower: sie zahlen plötzlich deutlich mehr Zinsen auf ihre laufenden Kredite. Eine Position, die bei 80% Utilization 3% Zinsen zahlte, kann bei 95% auf 15%+ springen. Das kann Borrower dazu zwingen, Positionen teilweise oder ganz aufzulösen, was wiederum den Verkauf von Collateral erzwingt und möglicherweise Liquidationen auslöst. In extremen Fällen kann das eine Kaskade auslösen. Für den Borrower ist Zinsrisiko also ein echter Belastungsfaktor, der bei Positionsgrößen-Entscheidungen berücksichtigt werden muss.
 </details>
 
 ### Video-Pipeline-Assets
@@ -413,7 +413,7 @@ Für Supplier: über den Kink-Point steigen die Zinsen stark, der effektive Supp
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Utilization Rate → Zinskurven-Grafik → Kink-Point → Supply-APY aus Borrow-APY → Utilization-Profile verschiedener Märkte → Monitoring-Praxis
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Utilization-Rate-Formel, Zinskurven-Diagramm (pre/post Kink), Supply-vs-Borrow-APY-Chart, Aave-V3-Markt-Parameter-Screenshot, Utilization-Historie-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -469,9 +469,33 @@ Neue oder risikoreichere Assets können in Isolation Mode gelistet werden. Ein N
 
 Du kannst jederzeit entscheiden, ob ein Asset in deinem Aave-Portfolio als Sicherheit genutzt wird oder nur als reine Supply-Position. Das ist wichtig für konservative Supplier, die **nicht** borgen wollen — sie können Collateral-Status deaktivieren, um das Liquidationsrisiko auszuschließen.
 
+**Health Factor — der zentrale Sicherheitsindikator**
+
+Wenn du als Borrower auf Aave eine Position hältst, ist der Health Factor (HF) die wichtigste Kennzahl zur Einschätzung deiner Liquidationsgefahr. Die Formel:
+
+```
+HF = (Collateral-Wert × Liquidation Threshold) / Schulden-Wert
+```
+
+Ein HF > 1 bedeutet: die Position ist sicher. Ein HF = 1 bedeutet: die Position ist genau an der Liquidationsschwelle. Ein HF < 1 bedeutet: die Position wird liquidiert, sobald ein Liquidator es profitabel für sich entscheidet.
+
+Beispiel: 10.000 USD ETH-Collateral, Liquidation Threshold 80%, 5.000 USDC Schuld:
+
+```
+HF = (10.000 × 0,80) / 5.000 = 1,6
+```
+
+Fällt der ETH-Preis um 30%, sinkt der Collateral-Wert auf 7.000 USD:
+
+```
+HF = (7.000 × 0,80) / 5.000 = 1,12
+```
+
+Der HF ist live im Aave-Dashboard sichtbar. Modul 7 vertieft Health-Factor-Management, Liquidations-Mechanik und Cascade-Szenarien.
+
 **GHO — Aaves natives Stablecoin**
 
-Aave hat mit GHO ein eigenes überbesichertes Stablecoin herausgegeben. Nutzer können GHO gegen Aave-Collateral borgen. Die Mechanik ähnelt MakerDAOs DAI-Modell, mit Aave-spezifischen Features (Stakers bekommen Rabatte). Für reine Supplier nicht direkt relevant, aber gut zu wissen.
+Aave hat mit GHO einen eigenen überbesicherten Stablecoin herausgegeben. Nutzer können GHO gegen Aave-Collateral borgen. Die Mechanik ähnelt MakerDAOs DAI-Modell, mit Aave-spezifischen Features (Stakers bekommen Rabatte). Für reine Supplier nicht direkt relevant, aber gut zu wissen.
 
 **Aave-Governance-Token (AAVE)**
 
@@ -515,13 +539,15 @@ Höhere LTV für korrelierte Assets.
 Stablecoin E-Mode: bis 93% LTV.
 ETH-Correlated: bis 93% LTV.
 
-**[Slide 4] — Isolation Mode**
-Neue/riskantere Assets mit festem Schuld-Limit.
-Schützt Protokoll vor Risiko-Ausbreitung.
+**[Slide 4] — Isolation Mode + Collateral-Switch**
+Isolation Mode: neue/riskantere Assets mit festem Schuld-Limit, schützt Protokoll vor Risiko-Ausbreitung.
+Collateral-Switch: Asset kann als Sicherheit aktiviert/deaktiviert werden — wichtig für reine Supplier ohne Borrow-Absicht.
 
-**[Slide 5] — Collateral-Switch**
-Asset kann als Sicherheit aktiviert/deaktiviert werden.
-Wichtig für reine Supplier ohne Borrow-Absicht.
+**[Slide 5] — Health Factor**
+HF = (Collateral × Liquidation Threshold) / Schulden.
+HF > 1: sicher. HF = 1: an der Schwelle. HF < 1: liquidierbar.
+Beispiel: 10.000 USD ETH, LT 80%, 5.000 USDC Schuld → HF = 1,6.
+Bei −30% ETH-Preis: HF = 1,12. Live im Aave-Dashboard.
 
 **[Slide 6] — Safety Module**
 AAVE-Staker tragen Restrisiko.
@@ -541,9 +567,9 @@ Track-record: kein Protokoll-Hack seit Launch.
 
 **[Slide 3]** Aave V3 führte Efficient Mode ein — kurz E-Mode. Damit können hoch korrelierte Assets als Collateral mit sehr hoher LTV genutzt werden. Stablecoin-E-Mode: USDC, USDT, DAI, bis 93 Prozent Belehnung. ETH-Correlated-E-Mode: ETH, wstETH, weETH, rETH, ebenfalls bis 93 Prozent. Für Borrow-Strategien ist das zentral, für reine Supplier weniger direkt relevant, aber gut zu wissen.
 
-**[Slide 4]** Isolation Mode ist für neue oder riskantere Assets. Ein Isolation-Asset kann nur bis zu einem festen Schuld-Limit belehnt werden, und nur gegen bestimmte Stablecoins. Das schützt das Protokoll davor, dass ein problematisches neues Asset Kaskaden auslöst.
+**[Slide 4]** Isolation Mode und Collateral-Switch. Isolation Mode ist für neue oder riskantere Assets: ein Isolation-Asset kann nur bis zu einem festen Schuld-Limit belehnt werden, und nur gegen bestimmte Stablecoins. Das schützt das Protokoll vor Kaskaden durch problematische Assets. Der Collateral-Switch erlaubt dir, pro Asset zu entscheiden, ob es als Sicherheit genutzt wird oder nur als reine Supply-Position. Wenn du nicht borgen willst, deaktivierst du Collateral-Status — das schließt jede Liquidationsgefahr aus.
 
-**[Slide 5]** Eine wichtige Funktion für konservative Supplier: der Collateral-Switch. Du kannst entscheiden, ob dein Asset als Collateral genutzt wird oder nur als reine Supply-Position. Wenn du nicht borgen willst, solltest du Collateral-Status deaktivieren. Das schließt jede Liquidationsgefahr aus.
+**[Slide 5]** Der Health Factor ist die zentrale Sicherheitskennzahl für jede Borrow-Position. Die Formel: Collateral-Wert mal Liquidation Threshold geteilt durch Schulden-Wert. HF größer eins bedeutet, die Position ist sicher. HF gleich eins: sie steht an der Liquidationsschwelle. HF kleiner eins: sie wird liquidiert, sobald ein Liquidator es profitabel macht. Ein konkretes Beispiel: zehntausend Dollar ETH-Collateral bei einem Liquidation Threshold von achtzig Prozent und fünftausend USDC Schuld ergibt einen Health Factor von eins Komma sechs. Fällt der ETH-Preis um dreißig Prozent, sinkt der Collateral-Wert auf siebentausend Dollar und der Health Factor auf eins Komma eins zwei — die Position ist immer noch sicher, aber der Puffer schrumpft deutlich. Der Health Factor ist live im Aave-Dashboard sichtbar. Modul sieben vertieft Health-Factor-Management, Liquidations-Mechanik und Cascade-Szenarien.
 
 **[Slide 6]** Das Safety Module. AAVE-Token-Halter können ihre AAVE im Safety Module staken und erhalten Zinsen dafür. Im Gegenzug tragen sie Restrisiko: bei Protokoll-Shortfall können bis zu 30 Prozent der gestakten AAVE verwendet werden, um Deckungslücken zu schließen. Das ist eine Puffer-Schicht, die normale Supplier schützt. Kam noch nie zum Einsatz, aber als Mechanismus vorhanden.
 
@@ -557,9 +583,9 @@ Track-record: kein Protokoll-Hack seit Launch.
 
 **[Slide 3]** E-Mode-Darstellung: Assets gruppiert mit erhöhter LTV im Vergleich zum Normal-Mode.
 
-**[Slide 4]** Diagramm: Normal-Asset-Pool vs. Isolated-Asset-Pool, letzterer abgetrennt mit Limit.
+**[Slide 4]** Zwei-Spalten-Vergleich: links Normal-Asset-Pool vs. Isolated-Asset-Pool mit Schuld-Limit, rechts **SCREENSHOT SUGGESTION:** Aave-Supply-Detail mit "Use as collateral"-Toggle.
 
-**[Slide 5]** **SCREENSHOT SUGGESTION:** Aave-Supply-Detail mit "Use as collateral"-Toggle.
+**[Slide 5]** Health-Factor-Formel prominent dargestellt, darunter Rechenbeispiel-Tabelle: 10.000 USD ETH-Collateral + 5.000 USDC Schuld bei LT 80% → HF 1,6; nach −30% ETH → HF 1,12. **SCREENSHOT SUGGESTION:** Aave-Dashboard mit live angezeigtem Health Factor einer Demo-Position.
 
 **[Slide 6]** Safety-Module-Flussdiagramm: AAVE-Staking → Rewards + Restrisiko.
 
@@ -604,8 +630,8 @@ AAVE-Stakers tragen ein Haircut-Risiko: bei einem Protokoll-Shortfall (z.B. durc
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Aave-V3-Architektur → Efficient Mode → Isolation Mode → Health Factor live am Dashboard → HF-Walkthrough bei Preisbewegungen → Markt-Parameter (LTV, LT, LP) → Safety Module
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → 4 Kernkomponenten → Efficient Mode → Isolation Mode + Collateral-Switch → Health Factor (Formel + Beispiel) → Safety Module → Realistische Renditen
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Aave-V3-Interface-Screenshot, Health-Factor-Rechenbeispiel-Tabelle, Efficient/Isolation-Mode-Diagramme, Liquidations-Nähe-Visualisierung, Markt-Parameter-Vergleich verschiedener Assets
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -828,7 +854,7 @@ Mindestens drei zusätzliche Risikoquellen. Erstens: Vault-Kurator-Risiko. Der K
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Compound V3 Base-Asset-Architektur → Compound vs. Aave → Morpho-P2P-Matching → Morpho Blue Primitive → Vault-Ökosystem → Protokoll-Auswahl-Matrix
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Compound-V3-Interface-Screenshot, Morpho-P2P-Matching-Diagramm, Morpho-Blue-Modular-Architecture, Vault-Kurator-Struktur, Protokoll-Vergleichstabelle (TVL/Audit/Governance)
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1038,7 +1064,7 @@ Weil Stablecoin-Supply-Raten algorithmisch aus Utilization und Borrow-Nachfrage 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Supply-Stack (Aave/Compound/Morpho) → Protokoll-Diversifikation → Sustainable vs. Temporary Yield → Realistische Renditeziele → Netto-Rendite-Kalkulation → Gewichtungs-Matrix
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Supply-Stack-Pie-Chart, Yield-Source-Breakdown (Base vs. Rewards), Historische-Supply-Rate-Chart, Netto-Rendite-Rechenbeispiel, Exit-Trigger-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1113,7 +1139,7 @@ Wenn Liquidationen nicht schnell genug ausgeführt werden oder der Collateral sc
 
 **Historische Beispiele:**
 - Mehrere kleinere Bad-Debt-Events auf Aave, meist durch Governance-Entscheidungen abgefangen
-- Kleinere Lending-Protokolle haben größere Bad-Debt-Events erlebt (z.B. Sonne Finance, Euler nach Hack)
+- Kleinere Lending-Protokolle haben größere Bad-Debt-Events erlebt (z.B. Sonne Finance, Euler Finance nach Hack)
 
 **Mitigation:**
 - Nur Protokolle mit etablierten Safety-Modulen oder Insurance-Mechanismen (Aave Safety Module)
@@ -1240,7 +1266,7 @@ Vorab definieren, in Stress konsistent anwenden
 **Aufgabe: Persönliches Monitoring- und Exit-Protokoll entwerfen**
 
 1. Definiere dein persönliches Monitoring-Protokoll:
- - Täglich: was wirst du checken, wie lange?
+ - Täglich: was wirst du prüfen, wie lange?
  - Wöchentlich: welche Metriken?
  - Monatlich: welche Entscheidungen?
 
@@ -1278,7 +1304,7 @@ Weil in Krisen das Gehirn nicht rational arbeitet. Unter Stress fallen Menschen 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Fünf Hauptrisiken → Smart Contract Risk → Oracle Risk → Liquidity Risk → Monitoring-Ritual → Exit-Trigger
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Risiko-Matrix-Übersicht, Hack-Historie-Chart (DeFiLlama), Monitoring-Dashboard-Screenshots (DeBank/Zapper), Exit-Trigger-Entscheidungsbaum, Notfall-Prozedur-Flussdiagramm
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1337,7 +1363,7 @@ Du hast in Modul 6 die Lending-Infrastruktur systematisch verstanden:
 
 **Architektur:** Pool-based Modell dominiert. Supplier zahlen ein, erhalten aTokens. Borrower hinterlegen Collateral, zahlen variable Zinsen. Überbesicherung ist Kern-Prinzip.
 
-**Zinsmodell:** Utilization-basiert. Stückweise lineare Kurve mit Kink-Point bei 80–90%. Oberhalb des Kinks dramatischer Zinsanstieg. Supply-Rate = Borrow-Rate × Utilization × (1 − Reserve Factor).
+**Zinsmodell:** Utilization-basiert. Stückweise lineare Kurve mit Kink-Point bei 80–90%. Oberhalb des Kinks starker Zinsanstieg. Supply-Rate = Borrow-Rate × Utilization × (1 − Reserve Factor).
 
 **Aave V3:** Marktführer, etabliert, featurenreich (E-Mode, Isolation Mode, Safety Module). Typische Stablecoin-Supply-Raten 3–6%. Längster Track-Record ohne direkten Hack.
 

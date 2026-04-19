@@ -10,6 +10,7 @@ import {
   parseModuleTitleFromSource,
   splitCursorModuleFile,
 } from "./splitCursorModule";
+import { readModuleOverviewFromFinalMd } from "./moduleOverviewFromFinal";
 import type { LessonMeta, ModuleMeta, ModuleQuizPayload, QuizFile } from "./types";
 
 export { lessonHref, quizHref } from "./routes";
@@ -86,13 +87,25 @@ export async function getModule(slug: string): Promise<ModuleMeta | null> {
       moduleNumber,
       lessonNumber: c.lessonId.includes(".") ? c.lessonId.split(".").slice(1).join(".") : c.lessonId,
     }));
-    return { slug, title, description: undefined, lessons };
+    const description = readModuleOverviewFromFinalMd(moduleNumber) ?? undefined;
+    return { slug, title, description, lessons };
   }
 
   const base = path.join(LEGACY_CONTENT_ROOT, slug);
   try {
     const files = await fs.readdir(base);
-    const mdFiles = files.filter((f) => f.endsWith(".md")).sort();
+    const mdFiles = files
+      .filter((f) => f.endsWith(".md") && /^\d+-\d+\.md$/i.test(f))
+      .sort((a, b) => {
+        const pa = a.replace(/\.md$/i, "").split("-").map(Number);
+        const pb = b.replace(/\.md$/i, "").split("-").map(Number);
+        for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+          const da = pa[i] ?? 0;
+          const db = pb[i] ?? 0;
+          if (da !== db) return da - db;
+        }
+        return 0;
+      });
     const lessons: LessonMeta[] = [];
 
     for (const file of mdFiles) {
@@ -113,6 +126,7 @@ export async function getModule(slug: string): Promise<ModuleMeta | null> {
 
     let title = slug;
     let description: string | undefined;
+    const moduleNumber = Number(/^module(\d+)$/.exec(slug)?.[1] ?? 1);
     const metaPath = path.join(base, "meta.json");
     try {
       const metaRaw = await fs.readFile(metaPath, "utf8");
@@ -121,6 +135,11 @@ export async function getModule(slug: string): Promise<ModuleMeta | null> {
       if (meta.description) description = meta.description;
     } catch {
       /* optional */
+    }
+
+    if (!description || /^Importiert aus\b/i.test(description)) {
+      const fromFinal = readModuleOverviewFromFinalMd(moduleNumber);
+      if (fromFinal) description = fromFinal;
     }
 
     return { slug, title, description, lessons };

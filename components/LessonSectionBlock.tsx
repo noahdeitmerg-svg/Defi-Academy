@@ -5,8 +5,8 @@ import { useId } from "react";
 type Props = {
   /** Kurzer Titel im UI (z. B. deutsch) */
   title: string;
-  /** Entspricht der Markdown-Überschrift in den Akademie-Quellen */
-  sourceHeading: string;
+  /** Entspricht der Markdown-Überschrift in den Akademie-Quellen (nur für Dev sichtbar) */
+  sourceHeading?: string;
   children: React.ReactNode;
 };
 
@@ -23,7 +23,9 @@ export function LessonSectionBlock({ title, sourceHeading, children }: Props) {
         <h2 id={headingId} className="text-lg font-semibold tracking-tight text-[var(--color-text)]">
           {title}
         </h2>
-        <p className="mt-1 font-mono text-xs text-[var(--color-text-muted)]">{sourceHeading}</p>
+        {sourceHeading ? (
+          <p className="mt-1 font-mono text-xs text-[var(--color-text-muted)]">{sourceHeading}</p>
+        ) : null}
       </div>
       <div className="mt-5">{children}</div>
     </section>
