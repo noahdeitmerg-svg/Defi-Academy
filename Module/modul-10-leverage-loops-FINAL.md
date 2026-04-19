@@ -159,7 +159,7 @@ Ein Loop verändert deine Risiko-Position fundamental:
 3. **Du bist Peg-Risiko ausgesetzt** — wenn wstETH im Verhältnis zu ETH depeggt (wie Juni 2022), wird dein Collateral-Wert unterbesichert relativ zur Schuld
 4. **Du bist Zins-Risiko ausgesetzt** — wenn Borrow-Zinsen steigen, wird dein Carry-Trade unprofitabel
 
-Das sind **vier zusätzliche Risiko-Ebenen** über einfaches Halten hinaus. Sie müssen alle gleichzeitig günstig sein, damit der Loop Sinn macht.
+Das sind **zusätzliche Risiko-Ebenen** über einfaches Halten hinaus. In Lektion 10.4 werden die **5 Haupt-Risiken** (Peg-Depeg, Zins-Sprünge, Liquidations-Kaskade, Smart-Contract-Komposition, Withdraw-Lock) vollständig seziert. Sie müssen alle gleichzeitig günstig sein, damit der Loop Sinn macht.
 
 ### Folien-Zusammenfassung
 
@@ -205,7 +205,7 @@ Vier zusätzliche Risiko-Ebenen
 
 **[Slide 2]** Die Grundmechanik. Du hinterlegst ein Asset als Sicherheit, borgst ein anderes, tauschst das geborgte Asset zurück in dasselbe Ursprungs-Asset, und hinterlegst es erneut. Das wiederholst du mehrere Runden. Das Ergebnis: deine effektive Position in dem Basis-Asset ist größer als dein ursprüngliches Kapital. Das ist Leverage.
 
-**[Slide 3]** Ein konkretes Beispiel. Du startest mit 10 wstETH. Runde 1: hinterlegst 10 wstETH, borgst 8 ETH, stakest zu 8 wstETH, hinterlegst neu. Runde 2: borgst 6,4 ETH, stakest zu 6,4 wstETH. Runde 3: 5,1 ETH. Nach 3 bis 5 Runden hast du etwa 35 wstETH Collateral und 25 ETH Schuld. Effektiver Leverage: 3,5 fach.
+**[Slide 3]** Ein konkretes Beispiel. Du startest mit 10 wstETH. Runde 1: hinterlegst 10 wstETH, borgst 8 ETH, stakst zu 8 wstETH, hinterlegst neu. Runde 2: borgst 6,4 ETH, stakst zu 6,4 wstETH. Runde 3: 5,1 ETH. Nach 3 bis 5 Runden hast du etwa 35 wstETH Collateral und 25 ETH Schuld. Effektiver Leverage: 3,5 fach.
 
 **[Slide 4]** Warum das lohnt. Angenommen wstETH-Staking bringt 3,5 Prozent, ETH-Borrow-Kosten sind 2,5 Prozent. Ohne Loop: 3,5 Prozent auf 10 ETH ist 0,35 ETH pro Jahr. Mit 3,5-fachem Loop: 35 wstETH × 3,5 Prozent Staking gleich 1,225 ETH Brutto minus 25 ETH × 2,5 Prozent Borrow gleich 0,625 ETH Kosten, netto 0,6 ETH Rendite. Das sind 6 Prozent auf die ursprünglichen 10 ETH Kapital. Der Leverage hat die Netto-Rendite fast verdoppelt. Das ist Carry-Trade-Mechanik.
 
@@ -235,7 +235,7 @@ Vier zusätzliche Risiko-Ebenen
 
 **Aufgabe: Loop-Grundmechanik nachvollziehen**
 
-Nimm an: du startest mit 5 ETH, gestaked als 5 wstETH. Borrow-LTV ist 75% (konservativer als Max). Ignoriere Gas-Kosten für diese Übung.
+Nimm an: du startest mit 5 ETH, gestakt als 5 wstETH. Borrow-LTV ist 75% (konservativer als Max). Ignoriere Gas-Kosten für diese Übung.
 
 Berechne:
 1. Runde 1: Wie viel ETH kannst du borgen? Wie viel wstETH bekommst du nach Staking?
@@ -248,7 +248,7 @@ Berechne:
 
 ### Quiz
 
-**Frage 1:** Ein Freund sagt: "Leverage-Loops sind eigentlich risikofrei, weil man sich nur mit sich selbst leverageed — das Collateral ist immer da." Was stimmt daran nicht?
+**Frage 1:** Ein Freund sagt: "Leverage-Loops sind eigentlich risikofrei, weil man sich nur mit sich selbst hebelt — das Collateral ist immer da." Was stimmt daran nicht?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -269,7 +269,7 @@ Ein Carry-Trade ist eine klassische Finanz-Strategie, bei der man ein niedrig-ve
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Loop-Mechanik → Iteration-Beispiel → Leverage Multiple → Loop-Arten → Carry-Trade-Analogie → Einsatzfeld
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Loop-Iteration-Diagramm, Leverage-Multiple-Berechnung, Loop-Typen-Matrix, Carry-Trade-Analogie-Grafik
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -517,7 +517,7 @@ Reine Kosten-Nutzen-Abwägung. Manueller Loop auf Mainnet erfordert 5-10 separat
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → wstETH-Loop-Konzept → Aave-E-Mode → Loop-Schritte → Parameter-Wahl → Zap-Services → Manueller vs. Zap
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — wstETH-Loop-Flussdiagramm, Aave-E-Mode-Interface-Screenshot, Parameter-Setting-Tabelle, DeFi-Saver-UI, Gas-Kosten-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -633,12 +633,12 @@ Die Ausfall-Wahrscheinlichkeit wächst nicht linear mit dem Leverage, sondern ex
 | Leverage | LTV | HF | Liquidations-Puffer | Netto-Rendite* | Ausfallrate** |
 |---|---|---|---|---|---|
 | 1x (ohne Loop) | 0% | ∞ | ∞ | 3,5% | 0% |
-| 1,5x | 50% | 1,9 | ~45% | 4% | sehr niedrig |
-| 2x | 66% | 1,44 | ~30% | 4,5% | niedrig |
-| 2,5x | 73% | 1,3 | ~22% | 5% | moderat |
-| 3x | 79% | 1,2 | ~16% | 5,5% | erhöht |
-| 4x | 84% | 1,13 | ~11% | 6,5% | hoch |
-| 5x | 88% | 1,08 | ~7% | 7% | sehr hoch |
+| 1,5x | 33% | 2,85 | ~65% | 4% | sehr niedrig |
+| 2x | 50% | 1,90 | ~47% | 4,5% | niedrig |
+| 2,5x | 60% | 1,58 | ~37% | 5% | moderat |
+| 3x | 67% | 1,43 | ~30% | 5,5% | erhöht |
+| 4x | 75% | 1,27 | ~21% | 6,5% | hoch |
+| 5x | 80% | 1,19 | ~16% | 7% | sehr hoch |
 
 *Annahme: 3,5% Yield, 2,5% Borrow-Cost
 **Subjektive Einschätzung bei normaler Marktvolatilität
@@ -681,10 +681,10 @@ Loop lohnt nur bei Borrow < Yield
 Historisch: Spread 0,5-1,5% normal, kann negativ werden
 
 **[Slide 5] — Leverage vs. Liquidations-Puffer**
-2x → 30% Puffer
-3x → 16% Puffer
-4x → 11% Puffer
-5x → 7% Puffer
+2x → 47% Puffer (LTV 50%, HF 1,90)
+3x → 30% Puffer (LTV 67%, HF 1,43)
+4x → 21% Puffer (LTV 75%, HF 1,27)
+5x → 16% Puffer (LTV 80%, HF 1,19)
 
 **[Slide 6] — Die zentrale Erkenntnis**
 Rendite wächst linear mit Leverage
@@ -702,11 +702,11 @@ Min 6-12 Monate Halte-Dauer
 
 **[Slide 2]** Die Grundformel ist simpel. Netto-Rendite gleich Yield mal Leverage minus Borrow-Cost mal Leverage-minus-1. Konkret: bei 3,5 Prozent Yield, 3-fach Leverage, 2,5 Prozent Borrow-Cost: 3,5 mal 3 ist 10,5 Prozent Brutto. Minus 2,5 mal 2 gleich 5 Prozent Borrow-Kosten. Ergibt 5,5 Prozent Netto. Der Leverage verstärkt den Spread zwischen Yield und Borrow.
 
-**[Slide 3]** Die Sensitivität auf Zinsänderungen ist dramatisch. Wenn ETH-Borrow-Rate auf 3,5 Prozent steigt bei gleichem 3,5 Prozent Yield: die Netto-Rendite fällt auf 3,5 Prozent — identisch zum einfachen Halten, aber mit mehr Risiko. Bei 4 Prozent Borrow: Netto 2,5 Prozent, weniger als einfaches Halten. Negativ Carry — der Loop arbeitet gegen dich.
+**[Slide 3]** Die Sensitivität auf Zinsänderungen ist erheblich. Wenn ETH-Borrow-Rate auf 3,5 Prozent steigt bei gleichem 3,5 Prozent Yield: die Netto-Rendite fällt auf 3,5 Prozent — identisch zum einfachen Halten, aber mit mehr Risiko. Bei 4 Prozent Borrow: Netto 2,5 Prozent, weniger als einfaches Halten. Negativ Carry — der Loop arbeitet gegen dich.
 
 **[Slide 4]** Break-Even. Der Loop ist identisch zum Halten, wenn Borrow gleich Yield ist. Profitabel nur bei Borrow kleiner als Yield. Historisch ist der Spread 0,5 bis 1,5 Prozent normal. In extremen Bull-Markets kann er auf null oder negativ fallen, weil viele Leveraged-Staking-Strategien gleichzeitig aktiv sind und ETH-Borrow-Rates nach oben treiben.
 
-**[Slide 5]** Leverage versus Liquidations-Puffer. Bei 2-fach Leverage hast du etwa 30 Prozent Puffer bis Liquidation. Bei 3-fach 16 Prozent. Bei 4-fach 11 Prozent. Bei 5-fach nur noch 7 Prozent. Das Liquidations-Risiko wächst exponentiell mit dem Leverage, nicht linear.
+**[Slide 5]** Leverage versus Liquidations-Puffer. Bei 2-fach Leverage hast du etwa 47 Prozent Puffer bis Liquidation. Bei 3-fach 30 Prozent. Bei 4-fach 21 Prozent. Bei 5-fach 16 Prozent. Das Liquidations-Risiko wächst exponentiell mit dem Leverage, nicht linear.
 
 **[Slide 6]** Die zentrale Erkenntnis dieser Lektion. Die Rendite wächst linear mit Leverage — plus 0,5 Prozentpunkte pro Leverage-Stufe bei unseren Beispielzahlen. Aber das Risiko wächst überproportional. Von 2 auf 4-fach Leverage sind 2 Prozentpunkte mehr Rendite, aber das Liquidations-Risiko vervielfacht sich. Für das 7 bis 8 Prozent Jahresziel ist 2 bis 2,5-fach Leverage oft der konservative Sweet Spot, kombiniert mit anderen Portfolio-Teilen.
 
@@ -772,7 +772,7 @@ Weil sie die klare Schwelle zwischen profitablen und unprofitablen Positionen de
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Rendite-Formel → Leverage-Multiple-Mathematik → Break-Even-Punkte → Safe Leverage Limits → Zins-Sensitivität → Wachstumsgrenzen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Rendite-Formel-Grafik, Leverage-Multiple-Tabelle pro LTV, Break-Even-Diagramm, Safe-Limits-Empfehlung, Sensitivitäts-Analyse-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -799,14 +799,20 @@ Leverage-Loops tragen nicht nur die üblichen DeFi-Risiken in verstärkter Form 
 
 Das ist das größte Risiko bei Liquid-Staking-Loops. Der Loop setzt voraus, dass das Collateral (wstETH) im Wesentlichen 1:1 zum Borrow-Asset (ETH) handelt. Wenn das Verhältnis bricht — wie Juni 2022 bei -6% Depeg — wird die Position unterbesichert.
 
-**Mechanik:** Bei 3x Leverage und 80% Collateral-Nutzung reicht eine 6% Depeg, um die Position in Liquidations-Zone zu bringen. Der Schaden: Liquidations-Penalty (2-5% auf das liquidierte Collateral) plus der Depeg-Verlust selbst, multipliziert mit dem Leverage.
+**Mechanik:** Der Leverage verstärkt jede Preisbewegung im Collateral-Asset linear. Bei 3x Leverage entspricht eine 6% Depeg einem 18% Drawdown auf das Eigenkapital. Bei hohem LTV (über 85%) kann dieselbe Depeg zusätzlich die Liquidations-Schwelle überschreiten.
 
-**Konkretes Beispiel:** 30.000 USD wstETH-Collateral, 3x-Leverage. stETH/ETH fällt um 6%. Effektiver Portfolio-Verlust:
-- Direkt: 3x × 6% = 18% auf Ursprungs-Kapital = 5.400 USD
-- Plus Liquidations-Penalty (wenn triggert): ~3% = 900 USD
-- **Gesamt: ~6.300 USD auf 10.000 USD Einsatz = 63% Verlust**
+**Konkretes Beispiel:** Eigenkapital 10.000 USD, 3x-Leverage → Collateral 30.000 USD wstETH, Schuld 20.000 USD WETH. stETH/ETH fällt um 6%:
+- Collateral fällt auf 30.000 × 0,94 = 28.200 USD
+- Eigenkapital fällt auf 28.200 − 20.000 = 8.200 USD
+- **Drawdown: 1.800 USD = 18% vom Eigenkapital**
+- Health Factor fällt von ~1,43 auf ~1,34 — noch keine Liquidation bei 3x
 
-Das ist nur der worst-case einer moderaten Depeg. Bei extremerem Depeg (wie hypothetisch 10%) wäre der Verlust noch höher.
+**Bei höherem Leverage oder größerem Depeg wird es gefährlich:**
+- 3x-Loop + 10% Depeg → HF 1,18, Drawdown 30%
+- 5x-Loop + 6% Depeg → HF 1,02, Liquidation wahrscheinlich + Penalty
+- Bei Liquidation: zusätzliche 2-5% Penalty auf liquidiertes Collateral
+
+Für 2x-Loop (Sweet Spot): 6% Depeg = 12% Drawdown, HF 1,78 → sicher. Das ist der Grund, warum konservative Leverage-Begrenzung essenziell ist.
 
 **Mitigation:**
 - Leverage begrenzen auf 2-2,5x, wo 6% Depeg nicht zur Liquidation führt
@@ -905,8 +911,9 @@ Die spezifischen Risiken von Loops
 
 **[Slide 2] — Risiko 1: Peg-Depeg**
 wstETH/ETH depeggt
-Bei 3x Loop: 6% Depeg = 18% Portfolio-Verlust
-Juni 2022 als historisches Beispiel
+Bei 3x Loop: 6% Depeg = 18% Drawdown (1.800 USD bei 10k Einsatz)
+Bei 5x Loop + 6% Depeg: Liquidations-Risiko + Penalty
+Juni 2022 als historisches Beispiel (0,94 ETH)
 
 **[Slide 3] — Risiko 2: Zinssatz-Sprünge**
 Borrow-Rate kann von 2,5% auf 5-10% springen
@@ -933,9 +940,9 @@ Rechnet sich das individuell?
 
 ### Sprechertext
 
-**[Slide 1]** Diese Lektion sezeniert die spezifischen Risiken von Leverage-Loops. Sie sind nicht nur die üblichen DeFi-Risiken verstärkt — sie haben eigene, strategie-spezifische Schwachstellen.
+**[Slide 1]** Diese Lektion seziert die spezifischen Risiken von Leverage-Loops. Sie sind nicht nur die üblichen DeFi-Risiken verstärkt — sie haben eigene, strategie-spezifische Schwachstellen.
 
-**[Slide 2]** Risiko 1: Peg-Depeg. Der Loop setzt voraus, dass wstETH etwa 1:1 zu ETH handelt. Wenn das Ratio bricht — Juni 2022 war minus 6 Prozent — wird die Position unterbesichert. Bei 3-fachem Leverage und 80 Prozent LTV-Nutzung reicht eine 6-Prozent-Depeg für die Liquidation. Der Schaden: 3x mal 6 Prozent ist 18 Prozent direkter Portfolio-Verlust, plus Liquidations-Penalty. Bei 10.000 USD Einsatz können das 6.300 USD Verlust sein — 63 Prozent.
+**[Slide 2]** Risiko 1: Peg-Depeg. Der Loop setzt voraus, dass wstETH etwa 1:1 zu ETH handelt. Wenn das Ratio bricht — Juni 2022 war minus 6 Prozent — verstärkt der Leverage jede Bewegung. Bei 3-fachem Leverage bedeutet eine 6-Prozent-Depeg einen 18-Prozent-Drawdown auf das Eigenkapital. Bei 10.000 US-Dollar Einsatz sind das 1.800 US-Dollar Verlust. Bei höherem Leverage oder größerem Depeg kommt die Liquidation hinzu, mit zusätzlicher Penalty von 2 bis 5 Prozent. Für 5-fachen Leverage bei 6-Prozent-Depeg kann der Gesamt-Verlust bereits 40 Prozent oder mehr betragen.
 
 **[Slide 3]** Risiko 2: Zinssatz-Sprünge. ETH-Borrow-Rate auf Aave ist normal 2 bis 3 Prozent. In Stress-Szenarien kann sie auf 5 bis 10 Prozent springen. Trigger: Utilization-Spikes, massive Leveraged-Staking-Nachfrage, oder Protokoll-Events. Wenn die Borrow-Rate über den Yield springt, wird der Loop negativ Carry — er verliert täglich Geld. Der Halter muss entscheiden: deleveragen oder aussitzen. Beide Optionen sind unangenehm.
 
@@ -1001,7 +1008,7 @@ Mehrere Gründe. Erstens: Risiko-adjustierte Rendite. Bei 0,5% Spread und 3x Lev
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → 5 Haupt-Risiken → Loop-Risk-Diagramm → Depeg-Szenarien → Liquidations-Kaskaden → Historische Katastrophen → Mitigations-Matrix
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Loop-Risk-Dependency-Diagramm, stETH-Depeg-Cascade-Simulation, Liquidations-Kaskaden-Grafik, Historische Events-Timeline, Mitigations-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1070,7 +1077,7 @@ Nach vollständigem Aufbau:
 **Tägliches Monitoring (1-2 Minuten):**
 - DeBank oder Aave-App öffnen
 - Health Factor prüfen — im grünen Bereich (>1,8)?
-- Aktueller wstETH/ETH-Ratio checken (z.B. auf Curve) — stabil?
+- Aktuelles wstETH/ETH-Ratio checken (z.B. auf Curve) — stabil?
 
 **Wöchentliches Monitoring (10-15 Minuten):**
 - Yield/Borrow-Spread überprüfen
@@ -1171,9 +1178,9 @@ Ohne alle acht Punkte ist die Position nicht konservativ — egal wie niedrig de
 **[Slide 1] — Titel**
 Praktische Umsetzung und Monitoring
 
-**[Slide 2] — Vorab-Entscheidung**
-Schriftlich dokumentieren:
-Kapital-Anteil, Leverage, HF-Ziel, Exit-Trigger, Zeit-Horizont, Monitoring
+**[Slide 2] — Disziplin vor Transaktion**
+Schriftlich dokumentieren: Kapital-Anteil, Leverage, HF-Ziel, Exit-Trigger, Zeit-Horizont, Monitoring
+Psychologische Fallen meiden: Hoffnung, Sunk-Cost, Überkonfidenz, Regelbruch
 
 **[Slide 3] — Aufbau-Prozess**
 1. Dry Run (Test-Position)
@@ -1195,13 +1202,7 @@ HF < 2,0: prüfen
 HF < 1,7: 30-50% deleveragen
 HF < 1,5: 70-100% deleveragen
 
-**[Slide 7] — Psychologische Fallen**
-"Es wird wieder steigen" (Hoffnung)
-"Sunk-Cost-Fallacy"
-"Ich bin erfahren" (Überkonfidenz)
-"Regel einmal umgehen"
-
-**[Slide 8] — Die 8-Punkt-Checkliste**
+**[Slide 7] — Die 8-Punkt-Checkliste**
 Alle 8 Punkte = konservative Position
 Weniger = nicht konservativ
 
@@ -1209,7 +1210,7 @@ Weniger = nicht konservativ
 
 **[Slide 1]** Eine Loop-Position aufzubauen ist eine Sache. Sie professionell zu managen eine andere. Diese Lektion gibt dir die praktischen Werkzeuge und Routinen für verantwortliches Loop-Management.
 
-**[Slide 2]** Der wichtigste Schritt: die Vorab-Entscheidung. Bevor irgendeine Transaktion passiert, dokumentiere schriftlich: Kapital-Anteil, Ziel-Leverage, Ziel-Health-Factor, Exit-Trigger, Zeit-Horizont, Monitoring-Plan. Das nicht im Voraus zu dokumentieren ist der häufigste Fehler — in Stress-Situationen werden Entscheidungen dann panisch getroffen.
+**[Slide 2]** Der wichtigste Schritt: die Vorab-Entscheidung und Disziplin. Bevor irgendeine Transaktion passiert, dokumentiere schriftlich: Kapital-Anteil, Ziel-Leverage, Ziel-Health-Factor, Exit-Trigger, Zeit-Horizont, Monitoring-Plan. Das nicht im Voraus zu dokumentieren ist der häufigste Fehler — in Stress-Situationen werden Entscheidungen dann panisch getroffen. Genauso wichtig ist der Schutz vor psychologischen Fallen. Erstens: "Es wird schon wieder steigen" — in Bär-Märkten hoffen Loop-Halter auf Erholung, während es tiefer geht. Zweitens: Sunk-Cost-Fallacy. Vergangene Verluste sind irrelevant für zukünftige Entscheidungen. Drittens: Überkonfidenz durch Erfahrung. Jeder neue Crash kann neue Mechaniken zeigen. Viertens: einmalige Regelbrüche führen zu weiteren. Konsistenz wichtiger als Optimierung.
 
 **[Slide 3]** Der Aufbau-Prozess. Erstens: Dry Run für Anfänger. Eine kleine Test-Position aufbauen, alle Schritte durchgehen. Zweitens: schrittweiser Aufbau — 40 Prozent Tag 1, 30 Prozent Tag 3-5, 30 Prozent Tag 10 plus. Drittens: Setup-Verifikation — Health Factor prüfen, Liquidations-Preis notieren, Alerts einrichten.
 
@@ -1219,15 +1220,13 @@ Weniger = nicht konservativ
 
 **[Slide 6]** Die Rebalancing-Matrix für klare Regeln. HF fällt unter 2,0 durch Preis-Bewegung: prüfen, abhängig von Trend reagieren. HF unter 1,7: 30 bis 50 Prozent deleveragen sofort. HF unter 1,5: 70 bis 100 Prozent deleveragen. Yield-Borrow-Spread unter 0,5 Prozent: schrittweises Deleveraging. stETH-ETH-Ratio unter 0,98: Alert-Modus. Unter 0,97: signifikantes Deleveraging. Unter 0,95: komplettes Deleveraging.
 
-**[Slide 7]** Psychologische Fallen, vor denen man sich schützen muss. Erstens: "Es wird schon wieder steigen" — in Bär-Märkten hoffen Loop-Halter auf Erholung, während es tiefer geht. Zweitens: Sunk-Cost-Fallacy. Vergangene Verluste sind irrelevant für zukünftige Entscheidungen. Drittens: Überkonfidenz durch Erfahrung. Jeder neue Crash kann neue Mechaniken zeigen. Viertens: einmalige Regelbrüche führen zu weiteren. Konsistenz wichtiger als Optimierung.
-
-**[Slide 8]** Die 8-Punkte-Checkliste für jede Loop-Position. Schriftliche Vorab-Dokumentation. Max Kapital-Anteil definiert. HF-Ziel klar. Exit-Trigger schriftlich. Monitoring-Plan. Alerts konfiguriert. Rebalancing-Matrix dokumentiert. Regelbasierte Disziplin. Ohne alle acht Punkte ist die Position nicht konservativ — egal wie niedrig der Leverage ist.
+**[Slide 7]** Die 8-Punkte-Checkliste für jede Loop-Position. Schriftliche Vorab-Dokumentation. Max Kapital-Anteil definiert. HF-Ziel klar. Exit-Trigger schriftlich. Monitoring-Plan. Alerts konfiguriert. Rebalancing-Matrix dokumentiert. Regelbasierte Disziplin. Ohne alle acht Punkte ist die Position nicht konservativ — egal wie niedrig der Leverage ist.
 
 ### Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 
-**[Slide 2]** Vorab-Checkliste-Template als visuelles Dokument.
+**[Slide 2]** Zwei-Spalten-Layout: links Vorab-Checkliste-Template als visuelles Dokument, rechts Vier-Fallen-Karten mit Warnung (Hoffnung, Sunk-Cost, Überkonfidenz, Regelbruch).
 
 **[Slide 3]** Stufen-Diagramm des Aufbau-Prozesses mit Zeitachse.
 
@@ -1237,9 +1236,7 @@ Weniger = nicht konservativ
 
 **[Slide 6]** Rebalancing-Matrix als Entscheidungstabelle.
 
-**[Slide 7]** Vier-Fallen-Karten mit Warnung.
-
-**[Slide 8]** 8-Punkt-Checkliste als prominentes Abschluss-Visual.
+**[Slide 7]** 8-Punkt-Checkliste als prominentes Abschluss-Visual.
 
 ### Übung
 
@@ -1278,8 +1275,8 @@ Survival Bias auf einem einzelnen Datenpunkt. Dass eine Position 6 Monate ohne A
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Schrittweiser Aufbau → Alert-System → Monitoring-Dashboard → Rebalancing-Regeln → Notfall-Prozedur → Positions-Disziplin
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Disziplin vor Transaktion → Aufbau-Prozess → Monitoring-System → Alert-Services → Rebalancing-Matrix → 8-Punkt-Checkliste
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Schrittweise-Aufbau-Zeitleiste, Alert-System-Screenshots (Hal, DeFi Saver), Dashboard-Beispiel, Rebalance-Regel-Entscheidungsbaum, Notfall-Flowchart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1337,7 +1334,7 @@ Kann das 7-8%-Ziel ohne Leverage-Loops erreicht werden? Ja, mit einigen Vorausse
 - Neutrales ETH: 0
 - +10% ETH: 1.500 USD = 3%
 - +20% ETH: 3.000 USD = 6%
---10% ETH: -1.500 USD = -3%
+- Bei ETH −10%: −1.500 USD = −3%
 
 **Gesamt-Rendite-Szenarien:**
 - Bear-Markt (ETH -20%): 4,48% - 6% = **-1,52%**
@@ -1444,26 +1441,18 @@ Bull-Markt: Loop bringt +8% vs. ohne Loop
 Bear-Markt: Loop bringt -15% mehr Verlust
 Strukturell asymmetrisch
 
-**[Slide 5] — Wann Loops rational sind**
-Spezifische Bull-Convictions
-Sehr große Positionen
-Kurzfristig-taktisch mit Exit-Kriterium
-Professionelle Full-Time-Manager
+**[Slide 5] — Rationale vs. irrationale Gründe**
+Rational: spezifische Bull-Convictions, sehr große Positionen, taktisch mit Exit, Full-Time-Management
+Irrational: Rendite-Gier, Social Pressure (FOMO), "funktioniert im Bull-Markt"-Pauschal, Langeweile
 
-**[Slide 6] — Schlechte Gründe für Loops**
-Höhere Rendite-Gier
-Social Pressure (FOMO)
-"In Bull-Märkten"-Pauschal
-Langeweile
-
-**[Slide 7] — Die 5 Test-Fragen**
+**[Slide 6] — Die 5 Test-Fragen**
 Verstehe ich alle Risiken?
 Klare Regeln vorhanden?
 Kann ich Verluste aushalten?
 Ziel ohne Loop erreichbar?
 3+ Monate Erfahrung?
 
-**[Slide 8] — Die konservative Kernaussage**
+**[Slide 7] — Die konservative Kernaussage**
 Für die meisten Nutzer: nicht nutzen
 Stattdessen diversifiziertes Portfolio
 Risiko-Management über Rendite
@@ -1476,15 +1465,13 @@ Risiko-Management über Rendite
 
 **[Slide 3]** Das 7 bis 8 Prozent Ziel ist ohne Leverage erreichbar. Ein diversifiziertes Portfolio mit 55 Prozent Stablecoin-Mix, 30 Prozent Liquid Staking, 5 Prozent LP und Reserve bringt etwa 4,5 Prozent Yield plus ETH-Exposition. In neutralen Märkten sind das 4,5 Prozent Gesamt-Rendite. In moderaten Bull-Markets 7 bis 8 Prozent. Ohne Liquidations-Risiko, mit deutlich geringerer psychologischer Belastung.
 
-**[Slide 4]** Die zentrale Erkenntnis: das Leverage-Risiko ist asymmetrisch. In Bull-Markten bringt der Loop plus 8 Prozentpunkte gegenüber ohne. In Bear-Markten bringt er minus 15 Prozentpunkte. Das klingt fair in der Theorie, ist aber asymmetrisch: 8 Prozent weniger Gewinn ist okay. 15 Prozent mehr Verlust ist emotional und finanziell dramatisch. Das ist nicht Bias — es ist die tatsächliche Verteilung in historischen Märkten.
+**[Slide 4]** Die zentrale Erkenntnis: das Leverage-Risiko ist asymmetrisch. In Bull-Markten bringt der Loop plus 8 Prozentpunkte gegenüber ohne. In Bear-Markten bringt er minus 15 Prozentpunkte. Das klingt fair in der Theorie, ist aber asymmetrisch: 8 Prozent weniger Gewinn ist okay. 15 Prozent mehr Verlust ist emotional und finanziell gravierend. Das ist nicht Bias — es ist die tatsächliche Verteilung in historischen Märkten.
 
-**[Slide 5]** Es gibt Szenarien, in denen Loops rational sind. Spezifische Markt-Sicht mit hohen Bull-Convictions — du bist überzeugt von Bull-Markt und willst überproportional profitieren. Sehr große Positionen, wo die 1 bis 2 Prozent zusätzliche Rendite absolut signifikant sind. Kurzfristig-taktisch mit klarem Exit-Kriterium. Professionelle Trader mit aktivem Full-Time-Management. Diese Szenarien existieren, aber sie decken nicht die Mehrheit der Nutzer ab.
+**[Slide 5]** Rationale gegenüber irrationalen Gründen. Rational sind Loops in spezifischen Szenarien: bei hohen Bull-Convictions, wo du überproportional profitieren willst; bei sehr großen Positionen, wo die 1 bis 2 Prozent zusätzliche Rendite absolut signifikant sind; kurzfristig-taktisch mit klarem Exit-Kriterium; oder für professionelle Trader mit aktivem Full-Time-Management. Diese Szenarien existieren, decken aber nicht die Mehrheit der Nutzer ab. Irrational sind dagegen die typischen schlechten Gründe: "Ich will 10 Prozent statt 5" — Rendite-Gier ohne Risiko-Bewusstsein. "Andere machen das auch" — Social Pressure und FOMO. "In Bull-Markten funktioniert es immer" — zu pauschal. "Ich habe Zeit" — Langeweile ist keine Investment-Strategie. Diese Motivationen führen typischerweise zu Verlusten.
 
-**[Slide 6]** Schlechte Gründe für Loops. "Ich will 10 Prozent statt 5" — Rendite-Gier ohne Risiko-Bewusstsein. "Andere machen das auch" — Social Pressure und FOMO. "In Bull-Markten funktioniert es immer" — zu pauschal. "Ich habe Zeit" — Langeweile ist kein Investment-Strategie. Diese Motivationen führen typischerweise zu Verlusten.
+**[Slide 6]** Fünf Test-Fragen vor jedem Loop. Verstehe ich alle fünf Risiken wirklich? Habe ich klare, schriftliche Regeln für alle sechs Rebalancing-Szenarien? Kann ich einen 30 Prozent Temporär-Verlust emotional aushalten? Erreicht mein Portfolio ohne Loop nicht bereits mein Ziel? Habe ich mindestens drei Monate diszipliniert mit einfachen Strategien praktiziert? Wenn auch nur eine Antwort nein ist: Leverage-Loops sind nicht die richtige Strategie für dich aktuell.
 
-**[Slide 7]** Fünf Test-Fragen vor jedem Loop. Verstehe ich alle fünf Risiken wirklich? Habe ich klare, schriftliche Regeln für alle sechs Rebalancing-Szenarien? Kann ich einen 30 Prozent Temporär-Verlust emotional aushalten? Erreicht mein Portfolio ohne Loop nicht bereits mein Ziel? Habe ich mindestens drei Monate diszipliniert mit einfachen Strategien praktiziert? Wenn auch nur eine Antwort nein ist: Leverage-Loops sind nicht die richtige Strategie für dich aktuell.
-
-**[Slide 8]** Die konservative Kernaussage dieses Moduls. Das 7 bis 8 Prozent Jahresziel ist durch diversifizierte Portfolios ohne Leverage-Loops erreichbar. Leverage-Loops können die Rendite verstärken, aber mit asymmetrisch erhöhtem Downside-Risiko. Für die meisten konservativen Nutzer ist die beste Anwendung dieses Moduls: verstehen, was Loops sind, um informiert zu entscheiden — aber sie selbst nicht zu nutzen. Zumindest nicht, bis substantielle Erfahrung und klare Disziplin vorhanden sind.
+**[Slide 7]** Die konservative Kernaussage dieses Moduls. Das 7 bis 8 Prozent Jahresziel ist durch diversifizierte Portfolios ohne Leverage-Loops erreichbar. Leverage-Loops können die Rendite verstärken, aber mit asymmetrisch erhöhtem Downside-Risiko. Für die meisten konservativen Nutzer ist die beste Anwendung dieses Moduls: verstehen, was Loops sind, um informiert zu entscheiden — aber sie selbst nicht zu nutzen. Zumindest nicht, bis substantielle Erfahrung und klare Disziplin vorhanden sind.
 
 ### Visuelle Vorschläge
 
@@ -1496,13 +1483,11 @@ Risiko-Management über Rendite
 
 **[Slide 4]** Asymmetrisches Risiko-Diagramm: Upside vs. Downside in verschiedenen Szenarien.
 
-**[Slide 5]** Vier-Szenarien-Matrix, in denen Loops rational sind.
+**[Slide 5]** Zwei-Spalten-Layout: links Vier-Szenarien-Matrix „Loops rational", rechts „Rote-Flaggen"-Liste irrationaler Gründe.
 
-**[Slide 6]** "Rote Flaggen"-Liste für schlechte Gründe.
+**[Slide 6]** Die 5 Fragen als Entscheidungs-Flowchart.
 
-**[Slide 7]** Die 5 Fragen als Entscheidungs-Flowchart.
-
-**[Slide 8]** Konservative Kernaussage prominent dargestellt.
+**[Slide 7]** Konservative Kernaussage prominent dargestellt.
 
 ### Übung
 
@@ -1545,8 +1530,8 @@ Das häufigste Gegenargument: "Mit klaren Regeln und Disziplin kann man Loops si
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Stop-Signale → Alternative Strategien → Markt-Phasen → Rationale Entscheidung → Persönliche Kriterien → Praktische Anwendung
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Nicht für (Nicht-Nutzer) → 7-8% ohne Leverage → Asymmetrisches Risiko → Rationale vs. irrationale Gründe → Die 5 Test-Fragen → Konservative Kernaussage
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Stop-Signal-Matrix, Alternativ-Strategien-Übersicht, Markt-Phasen-Indikatoren, Entscheidungsmatrix (Leverage vs. Passiv), persönliche Kriterien-Checkliste
 
 Pipeline: Gamma → ElevenLabs → CapCut.
