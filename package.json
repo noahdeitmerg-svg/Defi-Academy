@@ -29,6 +29,7 @@
     "check-assets": "node scripts/check-assets.js",
     "render-videos": "node scripts/render-all-videos.js",
     "publish-videos": "node scripts/publish-videos.js",
+    "videos:module": "node scripts/batch-module-videos.js",
     "split-modules": "node scripts/split-modules.js",
     "sync:brand": "node brand/sync-to-theme.js",
     "academy-build": "npm run sync:brand && npm run generate-assets && npm run collect-prompts",

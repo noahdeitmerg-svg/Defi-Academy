@@ -16,6 +16,8 @@ Wenn der Nutzer ausdrücklich will, dass Änderungen **ohne manuelles Nacharbeit
 
 3. **Nur neu bauen** (Code auf `main` unverändert): `scripts/trigger-pages-deploy.ps1` / `.sh` mit Event `pages-deploy`.
 
+4. **Ganzes Modul als Videos neu rendern und veröffentlichen:** Im Repo-Root `npm run videos:module -- --module <N>`; mit **`--live`** auch `lesson-audio-durations.json` + `git commit` + `git push` auf dem aktuellen Branch (siehe `docs/GITHUB_PAGES.md`).
+
 **Niemals** Tokens, Passwörter oder PATs in Commits, Chats oder Repo-Dateien ablegen — nur als lokale/CI-Umgebungsvariable `GITHUB_TOKEN`.
 
 Nach Push oder erfolgreichem Merge: kurz den Actions-Lauf auf GitHub erwähnen (`Actions` → Workflows).

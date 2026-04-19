@@ -73,6 +73,18 @@ BRANCH=cursor/meine-branch bash scripts/trigger-merge-live.sh
 
 **Hinweis:** Wenn du weiterhin **direkt auf `main` pushen** darfst, reicht ein normaler Push — der Pages-Workflow startet ohne Merge-Job. Die `merge-live`-Route ist die Alternative ohne Schreibzugriff auf `main` vom lokalen Rechner.
 
+### Modul-Videos: ein Befehl (Pipeline + `public/` + optional Push)
+
+Im **Repo-Root** `Defi-Academy` (nicht in `pipeline-test` allein):
+
+```powershell
+cd C:\Users\noahd\Documents\GitHub\Defi-Academy
+npm run videos:module -- --module 2
+npm run videos:module -- --module 2 --live
+```
+
+`--live` aktualisiert `config/lesson-audio-durations.json`, committet `public/videos` (+ Poster, falls vorhanden) und **pusht** den aktuellen Branch. Skript: `scripts/batch-module-videos.js` (`--help`). Voraussetzung: `ELEVENLABS_*` in `.env`, ffmpeg/ffprobe wie in `pipeline-test` üblich.
+
 ## Deploy per Webhook (ohne Push)
 
 **Voraussetzungen:** GitHub-PAT mit Scope **`repo`** (klassisch) bzw. für Fine-grained: **Contents** read + **Metadata** read, und für Dispatches passende Repo-Berechtigung.
