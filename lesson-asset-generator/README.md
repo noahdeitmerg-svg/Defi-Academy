@@ -12,14 +12,21 @@ Lektion (Markdown)  →  Lesson Asset Generator  →  4 Asset-Dateien
                                                     └─ video_config.json    (Remotion-Master)
 ```
 
+**Zwei Markdown-Formate:** Legacy (eine Lektion, englische Überschriften) und
+**Modul-Format** (mehrere Lektionen, deutsch, `**[Slide N]**`). Siehe
+[docs/MIGRATION-NOTES.md](../docs/MIGRATION-NOTES.md).
+
 ## Verzeichnisstruktur
 
 ```
 lesson-asset-generator/
 ├── src/
-│   ├── cli.js                       # Kommandozeilen-Interface
+│   ├── cli.js                       # Kommandozeilen-Interface (--all-lessons)
 │   ├── pipeline.js                  # Orchestrierung
-│   ├── lesson-parser.js             # Markdown-Parser (Content-Agent-Format)
+│   ├── format-detector.js           # Legacy vs. Modul-Format
+│   ├── module-parser.js             # Parser Modul-Markdown
+│   ├── normalize-lesson.js          # Einheitliches Lesson-Schema
+│   ├── lesson-parser.js             # Markdown-Parser (Legacy)
 │   ├── section-mapper.js            # Mapping auf 9 Sektionen + 6-7 Slides
 │   ├── generate-slides-prompt.js    # Gamma-Prompt
 │   ├── generate-voice-script.js     # ElevenLabs-Skript

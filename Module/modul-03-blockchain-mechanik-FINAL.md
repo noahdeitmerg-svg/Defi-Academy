@@ -16,7 +16,7 @@
 - MEV (Maximal Extractable Value) — vertieft in Modul 11
 - Layer-2 Rollup (Optimistic / ZK), Blob (EIP-4844)
 - ERC-20, ERC-721, ERC-1155
-- Smart Contract Risk, Operator Risk
+- Smart Contract Risk, User Risk (Nutzerfehler)
 
 **Querverweise:**
 - Validator Economics & Block Production werden in Lektion 3.2 im Kontext der Fee-Dynamik eingeführt; MEV-Grundlagen werden hier nur touchiert und in Modul 11 vertieft.
@@ -56,7 +56,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 
 ### Erklärung
 
-Jede Transaktion auf Ethereum kostet Gas. Gas ist kein Token — es ist eine Maßeinheit für Rechenarbeit. Jede Operation auf der Ethereum Virtual Machine (EVM) hat einen festen Gas-Preis in Rechen-Einheiten. Eine einfache Addition kostet 3 Gas, eine Speicherung in den permanenten State kostet 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen.
+Jede Transaktion auf Ethereum kostet Gas. Gas misst den Rechenaufwand einer Operation — der Gas Price bestimmt die tatsächlichen Kosten der Transaktion. Gas ist kein Token, sondern eine Maßeinheit. Jede Operation auf der Ethereum Virtual Machine (EVM) hat einen festen Gas-Preis in Rechen-Einheiten. Eine einfache Addition kostet 3 Gas, eine Speicherung in den permanenten State kostet 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen.
 
 **Warum Gas existiert**
 
@@ -151,7 +151,7 @@ Auf Layer-2-Netzwerken wie Arbitrum, Optimism und Base ist Gas drastisch günsti
 
 **[Slide 1]** Willkommen zu Modul 3. Wir öffnen die Motorhaube. Erste Lektion: Gas. Ohne ein klares Gas-Verständnis bist du in DeFi blind für einen wesentlichen Kostenfaktor.
 
-**[Slide 2]** Gas ist eine Einheit für Rechenarbeit auf der Ethereum Virtual Machine. Kein Token — eine Maßeinheit. Jede Operation kostet einen festen Betrag Gas. Eine Addition: 3 Gas. Ein Speicher-Schreibvorgang: 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen. Warum existiert Gas überhaupt? Zwei Gründe. Erstens: Spam-Prävention. Ohne Gas-Kosten könnte jeder beliebig viel Rechenarbeit anfordern und das Netzwerk lahmlegen. Zweitens: Validator-Kompensation. Wer Blöcke produziert, wird bezahlt.
+**[Slide 2]** Gas misst den Rechenaufwand einer Operation auf der Ethereum Virtual Machine — der Gas Price bestimmt die tatsächlichen Kosten der Transaktion. Gas ist kein Token, sondern eine Maßeinheit. Jede Operation kostet einen festen Betrag Gas. Eine Addition: 3 Gas. Ein Speicher-Schreibvorgang: 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen. Warum existiert Gas überhaupt? Zwei Gründe. Erstens: Spam-Prävention. Ohne Gas-Kosten könnte jeder beliebig viel Rechenarbeit anfordern und das Netzwerk lahmlegen. Zweitens: Validator-Kompensation. Wer Blöcke produziert, wird bezahlt.
 
 **[Slide 3]** Gas wird in Einheiten gezählt, bezahlt in ETH. Der Umrechnungsfaktor ist der Gas Price, gemessen in Gwei. Ein Gwei ist ein Milliardstel ETH. Wenn der Gas Price 30 Gwei ist, kostet jede Gas-Einheit 30 Milliardstel ETH.
 
@@ -260,6 +260,8 @@ EIP-1559 teilt die Gas-Gebühr in zwei Komponenten:
 - Fällt, wenn der vorherige Block weniger als 50% voll war
 - Wird **verbrannt** — die ETH verschwinden aus dem Umlauf
 
+Ethereum nutzt seit EIP-1559 ein Ziel-Blocklimit von etwa 15 Millionen Gas. Blöcke können kurzfristig bis etwa 30 Millionen Gas wachsen. Dadurch passt sich die Base Fee automatisch an die Netzwerkauslastung an.
+
 **2. Priority Fee (Tip)**
 - Optional, vom Nutzer gewählt
 - Geht als Tip an den Validator
@@ -307,6 +309,10 @@ Die Verbrennung der Base Fee ist eine fundamentale Änderung der ETH-Tokenomics.
 
 3. **Failed Transactions und EIP-1559:** Wenn die Base Fee während der Transaktions-Wartezeit über deine Max Fee steigt, bleibt die Transaktion hängen. Wallets zeigen das und bieten "Speed up" oder "Cancel" — beides kostet zusätzliches Gas.
 
+**Zur Einordnung: Block-Bestätigung und Finalität**
+
+Ethereum erreicht wirtschaftliche Finalität, nicht absolute mathematische Finalität. Nach mehreren bestätigten Blöcken wird eine Reorganisation extrem unwahrscheinlich. Für die meisten DeFi-Interaktionen reicht das vollständig aus — CEXs warten typischerweise zwischen 12 und 64 Blöcke, je nach Betrag und Risikobereitschaft.
+
 ### Folien-Zusammenfassung
 
 **[Slide 1] — Titel:** EIP-1559 und der Burn-Mechanismus
@@ -337,7 +343,7 @@ Die Verbrennung der Base Fee ist eine fundamentale Änderung der ETH-Tokenomics.
 
 **[Slide 6]** Auswirkung auf ETH: wenn die Base-Fee-Verbrennung pro Tag größer ist als die neue ETH-Emission durch Staking-Rewards, schrumpft das ETH-Umlauf-Angebot. Bei hohem Netzwerk-Volumen ist das der Fall. In DeFi-Kreisen wird das "Ultra Sound Money" genannt — als Vergleich zu Bitcoins fixem Angebot. Seit dem Merge 2022 ist ETH periodisch deflationär, periodisch leicht inflationär.
 
-**[Slide 7]** Praktische Optimierung. Erstens: Gas-Timing nutzen. Die Base Fee kann schnell fallen, wenn die Netzwerk-Auslastung sinkt. Für nicht-dringende Transaktionen lohnt sich das Warten auf ruhige Zeiten. Zweitens: Priority Fee je nach Dringlichkeit. 1–2 Gwei reichen meist. Bei kritischen Transaktionen wie Liquidations-Vermeidung lohnt sich höherer Tip. Drittens: stuck Transactions. Wenn die Base Fee deine Max Fee überschreitet, bleibt die Transaktion hängen. Wallets bieten "Speed up" oder "Cancel" — beides kostet. Für Echtzeit-Tracking nutze ultrasound.money: es zeigt Burn-Rate, kumulative Burns und vergleicht Burn mit Issuance.
+**[Slide 7]** Praktische Optimierung. Erstens: Gas-Timing nutzen. Die Base Fee kann schnell fallen, wenn die Netzwerk-Auslastung sinkt. Für nicht-dringende Transaktionen lohnt sich das Warten auf ruhige Zeiten. Zweitens: Priority Fee je nach Dringlichkeit. 1–2 Gwei reichen meist. Bei kritischen Transaktionen wie Liquidations-Vermeidung lohnt sich höherer Tip. Drittens: festhängende Transaktionen. Wenn die Base Fee deine Max Fee überschreitet, bleibt die Transaktion hängen. Wallets bieten "Speed up" oder "Cancel" — beides kostet. Für Echtzeit-Tracking nutze ultrasound.money: es zeigt Burn-Rate, kumulative Burns und vergleicht Burn mit Issuance.
 
 ### Visuelle Vorschläge
 
@@ -450,14 +456,14 @@ Das ermöglicht praktisch neue Nutzungsmuster: häufiges Rebalancing, kleine Tra
 Zwei grundsätzlich unterschiedliche Rollup-Architekturen:
 
 **Optimistic Rollups** (Arbitrum, Optimism, Base)
-- Gehen davon aus, dass posted Daten korrekt sind ("optimistisch")
+- Gehen davon aus, dass die veröffentlichten Daten korrekt sind ("optimistisch")
 - Fraud-Proofs erlauben Challenge während eines 7-Tage-Fensters
 - Withdrawals zurück zu Mainnet dauern 7 Tage
 - Technisch einfacher, daher früh produktiv
 - Hohe EVM-Kompatibilität
 
 **ZK-Rollups** (zkSync, Starknet, Linea, Scroll, Polygon zkEVM)
-- Jede Batch wird mit einem Zero-Knowledge-Proof posted, der die Korrektheit kryptographisch beweist
+- Jeder Batch wird zusammen mit einem Zero-Knowledge-Proof veröffentlicht, der die Korrektheit kryptographisch beweist
 - Withdrawals können sofort abgeschlossen werden (nach Proof-Verifikation, Minuten statt Tage)
 - Technisch komplex, daher später produktiv
 - EVM-Kompatibilität variiert (manche sind vollständig EVM-equivalent, andere brauchen Spezial-Compiler)
@@ -512,7 +518,7 @@ Jeder Asset-Transfer zwischen L1 und L2 (oder zwischen L2s) geht über eine Brid
 
 **[Slide 4]** Die Auswirkung war sofort spürbar. Ein Arbitrum-Swap kostete vor dem Upgrade 0,30 bis 1 USD. Nach dem Upgrade: 0,02 bis 0,08 USD. Ein Lending-Deposit: 0,50 bis 1,50 USD davor, 0,05 bis 0,15 USD danach. Das ermöglicht neue Nutzungsmuster — häufiges Rebalancing, kleine Trades, Micro-Payments.
 
-**[Slide 5]** Zwei Rollup-Architekturen. Optimistic Rollups — Arbitrum, Optimism, Base — gehen davon aus, dass die posted Daten korrekt sind. Fraud-Proofs erlauben Challenge während eines 7-Tage-Fensters. Withdrawals dauern entsprechend 7 Tage. Technisch einfacher, daher früh produktiv. ZK-Rollups — zkSync, Starknet, Linea — posten mit jedem Batch einen Zero-Knowledge-Proof, der die Korrektheit kryptographisch beweist. Withdrawals sind sofort möglich. Technisch komplex, daher später produktiv. Die Wahl hängt davon ab, wo das gewünschte Protokoll verfügbar und die Liquidität ausreichend ist.
+**[Slide 5]** Zwei Rollup-Architekturen. Optimistic Rollups — Arbitrum, Optimism, Base — gehen davon aus, dass die veröffentlichten Daten korrekt sind. Fraud-Proofs erlauben Challenge während eines 7-Tage-Fensters. Withdrawals dauern entsprechend 7 Tage. Technisch einfacher, daher früh produktiv. ZK-Rollups — zkSync, Starknet, Linea — veröffentlichen mit jedem Batch einen Zero-Knowledge-Proof, der die Korrektheit kryptographisch beweist. Withdrawals sind sofort möglich. Technisch komplex, daher später produktiv. Die Wahl hängt davon ab, wo das gewünschte Protokoll verfügbar und die Liquidität ausreichend ist.
 
 **[Slide 6]** Bridge-Risiko. Jeder Asset-Transfer zwischen L1 und L2 geht über eine Bridge. Bridges sind historisch ein massives Angriffsziel. Ronin: 625 Millionen Dollar. Wormhole: 326 Millionen. Nomad: 190 Millionen. Drei Optionen. Native Rollup-Bridges sind am sichersten. Third-Party-Bridges wie Across oder Stargate sind schneller, haben aber eigenes Smart-Contract-Risiko. CEX-Withdrawal ist günstig, erfordert KYC und CEX-Vertrauen.
 
@@ -590,7 +596,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Problematische ERC-20-Varianten (Fee-on-Transfer, Rebase, Pause-fähig) erkennen
 - Den `approve/transferFrom`-Mechanismus im Kontext von DeFi-Composability einordnen (Verbindung zu Modul 2)
 - Einen Token-Contract auf Etherscan anhand der ABI und der verifizierten Source Code analysieren
-- Governance- und Admin-Funktionen (Pause, Blacklist, Mint) als zentrale Smart-Contract-Risk- und Operator-Risk-Indikatoren identifizieren
+- Governance- und Admin-Funktionen (Pause, Blacklist, Mint) als zentrale Smart-Contract-Risk- und Rug-Pull-Indikatoren (Admin-Missbrauch) identifizieren
 
 ### Erklärung
 
@@ -619,7 +625,7 @@ Write-Funktion. Sender überträgt `amount` von eigener Adresse zu `to`. Nur der
 Write-Funktion. Besitzer erlaubt einer anderen Adresse (`spender`), bis zu `amount` seiner Tokens zu bewegen. Kernstück des DeFi-Ökosystems.
 
 **4. `transferFrom(from, to, amount)`**
-Write-Funktion. Der approved Spender bewegt `amount` vom Besitzer `from` zu `to`.
+Write-Funktion. Der autorisierte Spender bewegt `amount` vom Besitzer `from` zu `to`.
 
 **5. `allowance(owner, spender)`**
 Read-Funktion. Zeigt, wie viel `spender` vom `owner` bewegen darf.
@@ -912,13 +918,13 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 **[Slide 3]** ERC-721 ist der klassische NFT-Standard. Der Contract speichert pro Token-ID einen Besitzer. Die Standardfunktionen: ownerOf für den Besitzer einer ID, balanceOf für die Anzahl NFTs dieser Collection, transferFrom für einzelne Transfers, approve für einzelne IDs — und setApprovalForAll für alle IDs einer Collection.
 
-**[Slide 4]** setApprovalForAll ist der gefährlichste NFT-Mechanismus. Wenn du eine Collection auf OpenSea listen willst, fordert der Marktplatz diese Approval. Damit darf der Marktplatz alle deine aktuellen und zukünftigen NFTs dieser Collection bewegen. Eine gefälschte Marktplatz-Site kann das missbrauchen. Einmal signiert, sind alle wertvollen NFTs in Gefahr. Verteidigung: setApprovalForAll nur auf vertrauenswürdigen Sites, revoke.cash-NFT-Tab regelmäßig prüfen, bei Zweifel lieber einzel-approven als alles.
+**[Slide 4]** setApprovalForAll ist der gefährlichste NFT-Mechanismus. Wenn du eine Collection auf OpenSea listen willst, fordert der Marktplatz diese Approval. Damit darf der Marktplatz alle deine aktuellen und zukünftigen NFTs dieser Collection bewegen. Eine gefälschte Marktplatz-Site kann das missbrauchen. Einmal signiert, sind alle wertvollen NFTs in Gefahr. Verteidigung: setApprovalForAll nur auf vertrauenswürdigen Sites, revoke.cash-NFT-Tab regelmäßig prüfen, bei Zweifel lieber einzelne Token-IDs genehmigen als alles.
 
 **[Slide 5]** ERC-1155 ist der Mehrzweck-Standard. Unterstützt beide — fungible und non-fungible — in einem Contract. Pro Token-ID und pro Adresse eine Balance. Eine Token-ID kann 1.000.000 Exemplare haben oder nur 1. Use Cases: Gaming mit vielen Item-Typen, limitierte Kunst-Editions, Batch-Operations für Effizienz.
 
 **[Slide 6]** NFT-Metadaten werden auf drei Arten gespeichert. Off-chain HTTP: URL zeigt auf normalen Web-Server. Billig, aber wenn der Server ausfällt, ist die Darstellung weg. Off-chain IPFS: dezentral, aber nur verfügbar, solange Nodes die Daten pinnen. On-chain: alle Metadaten im Contract. Permanent und zensur-resistent, aber teuer. Die meisten NFTs sind HTTP oder IPFS — die "Permanenz" einer NFT ist oft nicht so absolut, wie behauptet. Warum das alles für DeFi-Nutzer relevant ist: Erstens, Uniswap V3 LP-Positionen sind NFTs. Wer konzentrierte Liquidität bereitstellt, bekommt einen ERC-721-Token. Zweitens, manche Protokolle wie Curve nutzen NFTs für gelockte ve-Tokens. Drittens, Drainer-Vektoren. setApprovalForAll ist einer der gefährlichsten Signatur-Typen, auch wenn du selbst keine teuren NFTs hältst.
 
-**[Slide 7]** Verteidigung. Prinzipielle Regel: setApprovalForAll ist ein Maximal-Vertrauens-Signal — sparsam verwenden. Nur auf Sites signieren, die du kennst und die gerade legitim einen Bulk-Transfer rechtfertigen. revoke.cash hat einen separaten Tab für NFT-Approvals — monatlich durchgehen. Bei Zweifeln: einzelne Token-IDs approven statt alles.
+**[Slide 7]** Verteidigung. Prinzipielle Regel: setApprovalForAll ist ein Maximal-Vertrauens-Signal — sparsam verwenden. Nur auf Sites signieren, die du kennst und die gerade legitim einen Bulk-Transfer rechtfertigen. revoke.cash hat einen separaten Tab für NFT-Approvals — monatlich durchgehen. Bei Zweifeln: einzelne Token-IDs genehmigen statt alles.
 
 ### Visuelle Vorschläge
 
@@ -1222,7 +1228,7 @@ Ein Uniswap V3 Swap verbraucht typischerweise 150.000 Gas. Die effektive Gas Pri
 <details>
 <summary>Antwort anzeigen</summary>
 
-Vor EIP-4844 posteten Rollups ihre Daten als normale Calldata auf Ethereum Mainnet, was 80–95% der L2-Transaktionskosten ausmachte. EIP-4844 führte Blobs ein — einen neuen Datentyp mit drei Eigenschaften: (1) eigener, niedriger Gas-Markt entkoppelt von Calldata, (2) nur 18 Tage temporäre Speicherung, (3) KZG-Commitments statt direktem EVM-Zugriff. Technisch möglich, weil Rollups die Daten nur kurzfristig brauchen — für Verifikation, Fraud-Proofs oder ZK-Proof-Generation. Dauerhaftes Speichern in Ethereum-State ist unnötig. Diese Einsicht hat L2-Gebühren um den Faktor 10 reduziert. Ein Arbitrum-Swap ging von 0,30 USD auf 0,03 USD, was ganz neue Nutzungsmuster ermöglicht (häufiges Rebalancing, Micro-Trades).
+Vor EIP-4844 posteten Rollups ihre Daten als normale Calldata auf Ethereum Mainnet, was 80–95% der L2-Transaktionskosten ausmachte. EIP-4844 führte Blobs ein — einen neuen Datentyp mit drei Eigenschaften: (1) eigener, niedriger Gas-Markt entkoppelt von Calldata, (2) nur 18 Tage temporäre Speicherung, (3) KZG-Commitments statt direktem EVM-Zugriff. Technisch möglich, weil Rollups die Daten nur kurzfristig brauchen — für Verifikation, Fraud-Proofs oder ZK-Proof-Generation. Dauerhaftes Speichern in Ethereum-State ist unnötig. Diese Einsicht hat L2-Gebühren um den Faktor 10 reduziert. Ein Arbitrum-Swap ging von 0,30 USD auf 0,03 USD, was neue Nutzungsmuster ermöglicht (häufiges Rebalancing, Micro-Trades).
 </details>
 
 **Frage 3:** Ein Token-Contract zeigt auf Etherscan: Name = "USDC", Symbol = "USDC", aber die Contract-Adresse ist nicht `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`. Ist das der echte USDC?

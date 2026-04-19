@@ -77,6 +77,12 @@ Jede Lektion ist eine einzelne Markdown-Datei nach dem Schema
 `npm run validate-lessons` prueft diese Struktur streng. Faellt eine
 Lektion durch, wird sie spaeter nicht gerendert.
 
+**Modul-Markdown (Content-Agent):** Zusaetzlich koennen **mehrere Lektionen**
+in einer Datei liegen (deutsche Ueberschriften, `**[Slide N]**`-Marker).
+Der Lesson-Asset-Generator erkennt das Format automatisch (`format-detector.js`).
+CLI: `--all-lessons` oder `--lesson <n>`. Details und Beispiele:
+[MIGRATION-NOTES.md](./MIGRATION-NOTES.md).
+
 ### 2.2 `lesson-asset-generator/output/` — **Generator-Output**
 
 Der Lesson-Asset-Generator konsumiert `lessons/*.md` und produziert
@@ -95,7 +101,11 @@ lesson-asset-generator/output/moduleXX-lessonYY/
 Lauf mit:
 
 ```powershell
-node lesson-asset-generator/src/cli.js --input-dir lessons --out lesson-asset-generator/output
+# Legacy: alle Einzeldateien aus lessons/
+node lesson-asset-generator/src/cli.js --input-dir lessons --out lesson-asset-generator/output --style video-style-engine
+
+# Modul-Datei: alle Lektionen auf einmal
+node lesson-asset-generator/src/cli.js --input Module/modul-01-defi-grundlagen-FINAL.md --all-lessons --out lesson-asset-generator/output --style video-style-engine
 ```
 
 ### 2.3 `assets-input/` — **Produzenten-Arbeitsbereich**
