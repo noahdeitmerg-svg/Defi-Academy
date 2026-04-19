@@ -48,6 +48,31 @@ Daraus ergeben sich drei Wege, einen Rebuild auszulösen:
 - **Webhook** (`repository_dispatch`) mit Event `pages-deploy` → nur Deploy
 - **Webhook** (`repository_dispatch`) mit Event `content-import` → Auto-Import (+ automatischer Folge-Deploy)
 
+## Agent / Cursor: ohne manuellen Merge auf `main` live gehen
+
+Wenn `main` geschützt ist oder du **nur einen festen Zweig** pushen willst:
+
+1. **Arbeitszweig:** `cursor/publish-live` (einmal von `main` abzweigen, danach immer wieder nutzen).
+2. **Push:** Änderungen auf `cursor/publish-live` pushen → Workflow **„Merge Live Branch → main“** (`.github/workflows/merge-live-to-main.yml`) merged nach `main` und stößt danach **`pages-deploy`** an (wie beim Auto-Import, weil Token-Pushes keinen Folge-Workflow garantieren).
+3. **Webhook / Remote:** Ohne lokalen Git-Push kann ein PAT dasselbe auslösen:
+
+```powershell
+$env:GITHUB_TOKEN = "<PAT>"
+powershell -ExecutionPolicy Bypass -File .\scripts\trigger-merge-live.ps1
+# anderer Quell-Zweig:
+powershell -ExecutionPolicy Bypass -File .\scripts\trigger-merge-live.ps1 -Branch "cursor/cleanup-pipeline-tmp-artifacts"
+```
+
+```bash
+export GITHUB_TOKEN=<PAT>
+bash scripts/trigger-merge-live.sh
+BRANCH=cursor/meine-branch bash scripts/trigger-merge-live.sh
+```
+
+`client_payload.branch` muss mit **`cursor/`** beginnen (Sicherheitsregel im Workflow).
+
+**Hinweis:** Wenn du weiterhin **direkt auf `main` pushen** darfst, reicht ein normaler Push — der Pages-Workflow startet ohne Merge-Job. Die `merge-live`-Route ist die Alternative ohne Schreibzugriff auf `main` vom lokalen Rechner.
+
 ## Deploy per Webhook (ohne Push)
 
 **Voraussetzungen:** GitHub-PAT mit Scope **`repo`** (klassisch) bzw. für Fine-grained: **Contents** read + **Metadata** read, und für Dispatches passende Repo-Berechtigung.
@@ -76,6 +101,17 @@ curl -sS -X POST \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   https://api.github.com/repos/noahdeitmerg-svg/Defi-Academy/dispatches \
   -d '{"event_type":"pages-deploy","client_payload":{}}'
+```
+
+**Merge-Live (Webhook):** einen `cursor/*`-Zweig nach `main` mergen und anschließend den Pages-Build anstoßen:
+
+```bash
+curl -sS -X POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer GITHUB_TOKEN" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/repos/noahdeitmerg-svg/Defi-Academy/dispatches \
+  -d '{"event_type":"merge-live","client_payload":{"branch":"cursor/publish-live"}}'
 ```
 
 `GITHUB_TOKEN` durch ein PAT oder ein **GitHub App**-Installationstoken ersetzen. Nach erfolgreichem Lauf erscheint der Lauf unter **Actions** wie bei einem Push auf `main`.
