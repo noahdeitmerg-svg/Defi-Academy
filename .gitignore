@@ -55,6 +55,7 @@ yarn-error.log*
 
 # pipeline-test lokale Outputs
 /pipeline-test/test-output/
+/pipeline-test/batch-m1-full/
 
 # pipeline-test-v2 (Brand 2.0) lokale Outputs
 /pipeline-test-v2/test-output-v2/
