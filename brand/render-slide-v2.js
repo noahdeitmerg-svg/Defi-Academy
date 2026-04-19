@@ -35,6 +35,17 @@ const CATEGORIES = {
   advanced: 'FORTGESCHRITTEN',
 };
 
+/** Ungültige Legacy-Kategorien → Brand-2.0-Keys (P3). */
+function normalizeCategoryKey(category) {
+  const raw = String(category || 'foundation').trim().toLowerCase();
+  const ascii = raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (raw === 'einführung' || ascii === 'einfuhrung' || raw === 'introduction' || raw === 'einleitung') {
+    return 'foundation';
+  }
+  if (['foundation', 'practice', 'strategy', 'risk', 'advanced'].includes(raw)) return raw;
+  return 'foundation';
+}
+
 function escXml(s) {
   if (s == null) return '';
   return String(s)
@@ -67,7 +78,8 @@ function wrapLines(text, maxChars) {
  * Category pill (top-left).
  */
 function renderPill(category, x = 120, y = 80) {
-  const label = CATEGORIES[category] || category.toUpperCase();
+  const key = normalizeCategoryKey(category);
+  const label = CATEGORIES[key];
   const pillW = label.length * 10 + 32;
   return `
   <!-- Category pill -->

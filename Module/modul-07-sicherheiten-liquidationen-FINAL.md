@@ -30,7 +30,7 @@
 
 ## Modul-Überblick
 
-In Modul 6 standst du auf der Supply-Seite — du hast Kapital hinterlegt und Zinsen verdient. Dieses Modul behandelt die andere Seite: das Aufnehmen von Krediten gegen Sicherheiten. Das ist der mächtigste Hebel in DeFi, und gleichzeitig der häufigste Weg, Kapital permanent zu verlieren.
+In Modul 6 standest du auf der Supply-Seite — du hast Kapital hinterlegt und Zinsen verdient. Dieses Modul behandelt die andere Seite: das Aufnehmen von Krediten gegen Sicherheiten. Das ist der mächtigste Hebel in DeFi, und gleichzeitig der häufigste Weg, Kapital permanent zu verlieren.
 
 Die Mechanik ist erbarmungslos einfach: Wenn deine Sicherheit zu stark im Wert verliert, wird deine Position automatisch liquidiert — mit einem Abschlag, der oft 5 bis 15 Prozent des Collaterals beträgt. Keine Gnade, keine Verhandlung. Der Smart Contract führt aus, was im Code steht.
 
@@ -156,7 +156,7 @@ LB: Liquidations-Bonus für Liquidator-Bots
 **[Slide 3] — Beispiel ETH-Collateral auf Aave**
 LTV 80%, LT 83%, LB 5%
 10.000 USD ETH → max. 8.000 USD borgbar
-4% Preis-Drop → Liquidation
+~4% Preis-Drop → Liquidation
 
 **[Slide 4] — Warum der Liquidations-Bonus existiert**
 Motiviert Liquidator-Bots zur Ausführung
@@ -180,7 +180,7 @@ Der Puffer ist dein Überlebensraum.
 
 ### Sprechertext
 
-**[Slide 1]** Modul 7 behandelt die Borrow-Seite. In Modul 6 standst du auf der Supply-Seite. Jetzt bist du derjenige, der Kapital aufnimmt — gegen Sicherheiten. Das ist der mächtigste Hebel in DeFi und gleichzeitig der häufigste Weg, Kapital permanent zu verlieren. Diese erste Lektion legt die Grundmechanik.
+**[Slide 1]** Modul 7 behandelt die Borrow-Seite. In Modul 6 standest du auf der Supply-Seite. Jetzt bist du derjenige, der Kapital aufnimmt — gegen Sicherheiten. Das ist der mächtigste Hebel in DeFi und gleichzeitig der häufigste Weg, Kapital permanent zu verlieren. Diese erste Lektion legt die Grundmechanik.
 
 **[Slide 2]** Drei Parameter definieren jeden Collateral-Asset. LTV, Loan-to-Value, ist die maximale Borrow-Quote. LT, Liquidation Threshold, ist die Quote, ab der deine Position liquidiert wird — etwas höher als LTV. LB, Liquidation Bonus, ist der Abschlag, den ein Liquidator bekommt, wenn er deine Position ausführt. Diese drei Zahlen musst du für jede Position kennen, bevor du borgst.
 
@@ -248,7 +248,7 @@ Startposition: 20.000 USD Collateral, 14.000 USD Schuld, Verhältnis 70%. Liquid
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Collateral-Grundlagen → LTV, LT, LB definiert → Sicherheitspuffer → Collateral-Asset-Vergleich → Rechenbeispiel → Entscheidungsheuristik
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — LTV/LT/LB-Achse-Diagramm, Collateral-Parameter-Tabelle (ETH/wstETH/WBTC/USDC), Sicherheitspuffer-Visualisierung, Aave-Markt-Parameter-Screenshot, Rechenbeispiel-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -274,14 +274,16 @@ In Lektion 7.1 hast du die statischen LTV-Parameter kennengelernt. In der Praxis
 **Die Formel**
 
 ```
-Health Factor = (Collateral-Wert × Liquidation Threshold) / Schuld-Wert
+Health Factor = (Collateral Value × Liquidation Threshold) / Borrowed Value
 ```
 
-Der Health Factor ist die Risiko-Metrik, die Aave und ähnliche Protokolle anzeigen. Er hat drei entscheidende Werte:
+Der Health Factor ist die Risiko-Metrik, die Aave und ähnliche Protokolle anzeigen. Die drei Zustände:
 
-- **Health Factor > 1:** Position ist sicher
-- **Health Factor = 1:** Position ist direkt an der Liquidations-Grenze
-- **Health Factor < 1:** Position kann liquidiert werden
+- **HF > 1** → Position sicher
+- **HF = 1** → Liquidation möglich
+- **HF < 1** → Liquidation wahrscheinlich
+
+Bei HF ≤ 1 wird die Position liquidiert, sobald ein Liquidator es profitabel für sich entscheidet.
 
 **Konkretes Beispiel**
 
@@ -339,6 +341,10 @@ Health Factor kann sich **ohne dein Zutun** ändern. Drei Mechanismen:
 
 Dieser dritte Punkt wird oft übersehen. Bei hohen Borrow-Zinsen kann die Schuld signifikant wachsen, während der Collateral-Preis stabil bleibt — und trotzdem nähert sich der Health Factor 1 an.
 
+**Der Sicherheitsabstand zum Liquidation Threshold**
+
+Viele Nutzer halten bewusst einen Sicherheitsabstand zum Liquidation Threshold — etwa Health Factor 1,5 statt 1,1. Dieser Buffer reduziert das Risiko plötzlicher Liquidationen bei Marktbewegungen. Eine Position mit HF 1,1 kann bei einem einzigen 10%-Preissprung schon im Liquidationsbereich landen; bei HF 1,5 bleiben 30–40% Puffer, bevor es kritisch wird. Der richtige HF-Zielwert hängt von der Strategie, der Asset-Volatilität und der persönlichen Monitoring-Kapazität ab — siehe die folgenden Zielbereiche.
+
 **Konservative Health-Factor-Zielwerte**
 
 Für verschiedene Strategien sind unterschiedliche Health-Factor-Zielbereiche sinnvoll:
@@ -379,10 +385,10 @@ Eine einfache Daumenregel: Wenn dein Health Factor unter 1,5 fällt, solltest du
 Health Factor: Die zentrale Risiko-Metrik
 
 **[Slide 2] — Die Formel**
-HF = (Collateral × LT) / Schuld
-> 1: sicher
-= 1: Liquidations-Grenze
-< 1: liquidiert
+HF = (Collateral Value × Liquidation Threshold) / Borrowed Value
+HF > 1 → sicher
+HF = 1 → Liquidation möglich
+HF < 1 → Liquidation wahrscheinlich
 
 **[Slide 3] — Die Beziehung zum LTV**
 HF = LT / aktuelles LTV
@@ -412,7 +418,7 @@ Nicht warten bis 1,1
 
 **[Slide 1]** In Lektion 7.1 hattest du die statischen LTV-Parameter. In der Praxis beobachtest du aber eine dynamische Metrik: den Health Factor. Das ist die zentrale Zahl, an der du deine Position ausrichtest.
 
-**[Slide 2]** Die Formel. Health Factor gleich Collateral-Wert mal Liquidation Threshold, geteilt durch Schuld-Wert. Drei Werte sind entscheidend. Über eins: Position sicher. Genau eins: Liquidations-Grenze. Unter eins: Position kann liquidiert werden. Das ist alles. Wenn du den Health Factor verstehst und beobachtest, verstehst du deine Risiko-Lage.
+**[Slide 2]** Die Formel. Health Factor gleich Collateral Value mal Liquidation Threshold, geteilt durch Borrowed Value. Die drei Zustände sind klar definiert. HF größer eins bedeutet, Position sicher. HF gleich eins bedeutet, Liquidation möglich. HF kleiner eins bedeutet, Liquidation wahrscheinlich. Das ist alles. Wenn du den Health Factor verstehst und beobachtest, verstehst du deine Risiko-Lage.
 
 **[Slide 3]** Die Beziehung zum LTV. Health Factor gleich LT geteilt durch aktuelles LTV. Wenn du bei 50 Prozent LTV stehst und LT 83 Prozent ist, dann Health Factor gleich 0,83 geteilt durch 0,50 — also 1,66. Bei 30 Prozent LTV hättest du 2,77. Bei 70 Prozent LTV nur noch 1,19. Das Verhältnis ist nicht-linear: die letzten Prozent Richtung LT sind die gefährlichsten.
 
@@ -479,7 +485,7 @@ Zinsakkumulation wirkt schleichend. Über Tage oder Wochen sichtbar als langsame
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Health-Factor-Formel → HF-Rechenbeispiel → HF bei Preisbewegungen → HF-Zielwerte (konservativ/ausgewogen/aggressiv) → Zinsakkumulations-Effekt → Monitoring-Tools
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — HF-Formel-Visualisierung, HF-Walkthrough-Tabelle (Preisbewegungen), Aave-Dashboard-Screenshot mit HF-Anzeige, Hal-Alert-Setup-Screenshot, HF-Zonen-Grafik (grün/gelb/rot)
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -501,6 +507,10 @@ Nach Abschluss dieser Lektion können die Lernenden:
 ### Erklärung
 
 Wenn dein Health Factor unter 1 fällt, beginnt der Liquidations-Prozess. Dieser Prozess ist vollständig automatisiert — kein Mensch entscheidet, kein Gnadenakt. Ein Smart Contract führt aus, was im Code steht. Diese Lektion erklärt den genauen Ablauf.
+
+**Warum Liquidationen existieren**
+
+Liquidationen schützen Lending-Protokolle vor Bad Debt. Wenn eine Position zu wenig Collateral hat, muss sie geschlossen werden, um das System solvent zu halten. Ohne diesen Mechanismus würde jede Position, deren Collateral-Wert unter die Schuld fällt, eine uneinbringliche Forderung — Bad Debt — für das Protokoll erzeugen. Bei ausreichendem Volumen würde das Protokoll insolvent und alle Supplier würden Verluste erleiden. Liquidationen sind also kein Strafmechanismus gegen einzelne Borrower, sondern eine strukturelle Solvenz-Sicherung für das Gesamtsystem.
 
 **Schritt 1: Der Liquidator-Bot erkennt die Gelegenheit**
 
@@ -549,6 +559,8 @@ Nach der Liquidation:
 - Die verbleibende Position (falls nicht voll liquidiert) ist wieder oberhalb Health Factor 1
 
 **Beispiel einer Full Liquidation:**
+
+**Hinweis zum Beispiel:** Dieses Setup zeigt den Worst Case — eine Position genau am LTV-Maximum. Ein konservativer Nutzer (HF 2,0+) wäre bei −10% ETH-Fall nicht liquidierbar. Das Beispiel illustriert die Mechanik, nicht empfohlene Praxis.
 
 Startposition:
 - 10 ETH Collateral bei 3.000 USD/ETH (30.000 USD)
@@ -686,8 +698,8 @@ Wenn eine Position langsam in die Liquidations-Zone rutscht — durch moderate P
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Liquidations-Trigger → Keeper-Bot-Rolle → Full vs. Partial Liquidation → Close Factor → Liquidations-Walkthrough → Etherscan-Analyse
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 6 Folien: Titel → Die vier Schritte einer Liquidation → Bot-Wettbewerb und Gas-Wars → Partial vs. Full Liquidation (Close Factor) → Beispiel-Rechnung → Etherscan-Transparenz
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Liquidations-Flussdiagramm, Keeper-Bot-Anreizstruktur, Close-Factor-Effekt-Grafik, Etherscan-Liquidation-Tx-Screenshot, Full-vs-Partial-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -897,8 +909,8 @@ Szenario hängt von der Oracle-Update-Latenz ab. Wenn Chainlink den neuen Preis 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Oracle-Rolle im Lending → Chainlink-Architektur → Uniswap-TWAP → Oracle-Failure-Szenarien → Flash-Loan-Manipulation → Historische Oracle-Failures → Due-Diligence-Checkliste
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Oracle-Rolle → Chainlink-Architektur → Oracle-Angriffs-Vektoren (inkl. Flash Loan) → Oracle-Preis ≠ Spot-Preis → Robuste Oracle-Setups → Due-Diligence-Checkliste
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Oracle-Datenflussdiagramm, Chainlink-Aggregator-Architektur, TWAP-vs-Spot-Preis-Chart, Flash-Loan-Angriff-Zeitleiste, Oracle-Design-Vergleichstabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -990,9 +1002,9 @@ Der Zusammenbruch von FTX selbst betraf DeFi nur mittelbar (weil FTX eine CEX wa
 
 1. **Hoher systemweiter Leverage:** Wenn viele Nutzer hochgehebelt sind, sind viele Positionen gleichzeitig fragil. Eine Bewegung triggert Massen-Liquidationen.
 
-2. **Konzentrierte Collateral-Typen:** Wenn ein einzelner Asset-Typ (z.B. stETH) in Vielen Positionen das Collateral ist, führt ein Depeg zu sehr vielen gleichzeitigen Liquidationen.
+2. **Konzentrierte Collateral-Typen:** Wenn ein einzelner Asset-Typ (z.B. stETH) in vielen Positionen das Collateral ist, führt ein Depeg zu sehr vielen gleichzeitigen Liquidationen.
 
-3. **Ähnliche Positions-Struktur:** Wenn viele Nutzer dieselben Strategie fahren (z.B. stETH → ETH-Loop), werden sie alle gleichzeitig betroffen.
+3. **Ähnliche Positions-Struktur:** Wenn viele Nutzer dieselbe Strategie fahren (z.B. stETH → ETH-Loop), werden sie alle gleichzeitig betroffen.
 
 4. **Oracle-Lags in Krisen:** Oracle-Updates können während extremer Volatilität verzögert sein, was "verzögerte Crashes" erzeugt, wenn das Update endlich kommt.
 
@@ -1003,7 +1015,7 @@ Der Zusammenbruch von FTX selbst betraf DeFi nur mittelbar (weil FTX eine CEX wa
 Wie schützt sich eine konservative Strategie gegen Kaskaden?
 
 **1. Niedriger Leverage:**
-Bei Health Factor 2,0+ überlebt die Position auch 50%-Crashes. Bei HF 1,2 wird sie schon bei 20%-Crash kritisch. Der Multiplikator-Effekt von HF-Höhe ist dramatisch.
+Bei Health Factor 2,0+ überlebt die Position auch 50%-Crashes. Bei HF 1,2 wird sie schon bei 20%-Crash kritisch. Der Multiplikator-Effekt von HF-Höhe ist erheblich.
 
 **2. Diversifikation der Collateral-Typen:**
 Nicht nur stETH, nicht nur WBTC, nicht nur ETH. Mehrere unkorrelierte (oder nur schwach korrelierte) Collaterals.
@@ -1092,7 +1104,7 @@ Stell dir folgende Position vor: 20.000 USD ETH-Collateral, 12.000 USD USDC-Schu
 2. Szenario A: ETH fällt langsam über 2 Wochen um 30%. Was passiert? Kannst du reagieren?
 3. Szenario B: ETH crasht in 4 Stunden um 30%. Was passiert? Kannst du reagieren?
 4. Szenario C: Simultaner 30%-Crash und Gas-Kongestion (Gas-Preise 5x normal). Was passiert?
-5. Welches Sicherheitspolster (HF-Zielwert) hättest du setzen müssen, um alle drei Szenarien zu überleben?
+5. Welchen Sicherheitspuffer (HF-Zielwert) hättest du setzen müssen, um alle drei Szenarien zu überleben?
 
 **Deliverable:** Schriftliche Analyse der drei Szenarien (je 3–5 Sätze) + Antwort auf Frage 5 mit Begründung.
 
@@ -1118,8 +1130,8 @@ Leveraged Staking basiert auf der Annahme, dass stETH strukturell gleich ETH ist
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Kaskaden-Mechanik → Feedback-Loop → Black Thursday März 2020 → Terra/UST Mai 2022 → FTX-Kollaps November 2022 → Stress-Signale → Verhaltensregeln
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min. wegen mehrerer Fallstudien)
+- `slides_prompt.txt` — 7 Folien: Titel → Kaskaden-Mechanik → Black Thursday März 2020 → Terra/UST Mai 2022 → stETH-Depeg Juni 2022 → Kaskaden-Verstärker → Konservative Widerstandsfähigkeit
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Kaskaden-Feedback-Loop-Diagramm, Historische-Crash-Zeitleiste, Black-Thursday-ETH-Chart, UST-Depeg-Chart, System-Leverage-Indikatoren (DeFiLlama), Stress-Signal-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1155,7 +1167,7 @@ Du hältst ETH langfristig, brauchst aber Liquidität für einen bestimmten Zwec
 **Use-Case 2: Leveraged Staking (moderat)**
 ETH staken über Lido → wstETH erhalten. wstETH als Collateral hinterlegen → ETH borgen → ETH wieder staken → wstETH erhalten → wiederholen.
 
-**Ziel:** Boost des Staking-Yields durch Leverage. Bei 3% Staking-Yield und 1,5x Leverage kommt man auf ~4,5% netto (nach Borrow-Zinsen) — immer noch konservativ, aber besser als 3%.
+**Ziel:** Boost des Staking-Yields durch Leverage. Bei 3% Staking-Yield und 1,5x Leverage ergibt sich ~4,5% brutto. Nach Abzug der ETH-Borrow-Zinsen (typisch 2–3%) verbleibt eine Netto-Rendite von etwa 3,5–4% — immer noch konservativ, aber besser als 3%.
 
 **Konservative Ausführung:**
 - Nur 1,5x oder 2x Leverage, nicht mehr
@@ -1166,7 +1178,7 @@ ETH staken über Lido → wstETH erhalten. wstETH als Collateral hinterlegen →
 Mehr Details zu dieser Strategie in Modul 10 (Leverage-Loops).
 
 **Use-Case 3: Stablecoin-Swap zur Rendite-Optimierung**
-Du hast USDC auf Aave mit 4% APY. Du möchtest aber auch USDT-Exposition haben, weil USDT-Pools gerade bessere Renditen bieten. Statt USDC zu verkaufen und USDT zu kaufen (Slippage, Gas), kannst du USDC als Collateral hinterlegen und USDT borgen — in Stablecoin-E-Mode.
+Du hast USDC auf Aave mit 4% APY. Du möchtest aber auch USDT-Exposure haben, weil USDT-Pools gerade bessere Renditen bieten. Statt USDC zu verkaufen und USDT zu kaufen (Slippage, Gas), kannst du USDC als Collateral hinterlegen und USDT borgen — in Stablecoin-E-Mode.
 
 **Konservative Ausführung:**
 - Bei sehr engen Peg-Asset-Paaren kann LTV-Nutzung moderat höher sein (60–70% des Max)
@@ -1273,7 +1285,7 @@ Aave-App, DeBank, HAL.xyz, Tenderly, Wallet-Warnungen
 **[Slide 7] — Die ehrliche Frage**
 7–8% oft ohne Borrowing erreichbar
 Borrowing = Zusatz, nicht Basis
-Starte ohne, füge später hinzu wenn disziplin vorhanden
+Starte ohne, füge später hinzu, wenn Disziplin vorhanden
 
 ### Sprechertext
 
@@ -1351,7 +1363,7 @@ Ohne Borrowing kann ein diversifiziertes konservatives Portfolio realistisch 4�
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Sinnvolle Borrow-Use-Cases → Borrow-Hygiene-Checkliste → Notfall-Reaktionsplan → Break-Even-Kalkulation → Monitoring-Ritual → Wann kein Borrowing nötig ist
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Borrow-Use-Case-Kategorien, Hygiene-Checkliste als Infografik, Notfall-Entscheidungsbaum, Break-Even-Rechenbeispiel, Portfolio-ohne-Borrow-Szenario
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1367,7 +1379,7 @@ Fünf Fragen zum integrierten Verständnis von Modul 7.
 <details>
 <summary>Antwort anzeigen</summary>
 
-HF ändert sich proportional. Neuer Collateral-Wert: 85% des ursprünglichen. Neue Schuld: 108% des ursprünglichen. HF = (Collateral × LT) / Schuld. Mit ursprünglichem HF = 2,0: neuer HF = 2,0 × (0,85 / 1,08) = 2,0 × 0,787 = 1,57. Der HF ist auf 1,57 gefallen — nach den konservativen Schwellen dieser Lektion ist das in der Warn-Zone zwischen 1,5 und 1,7. Aktion: entweder Schuld teilweise zurückzahlen (z.B. 30% der Schuld, würde HF auf etwa 2,2 anheben) oder Collateral hinzufügen (z.B. 20% mehr Collateral, ähnlicher Effekt). Wenn Zinsen weiter akkumulieren oder Preis weiter fällt, kann HF schnell unter 1,5 fallen. Handeln, nicht warten.
+HF ändert sich proportional. Neuer Collateral-Wert: 85% des ursprünglichen. Neue Schuld: 108% des ursprünglichen. Health Factor = (Collateral Value × Liquidation Threshold) / Borrowed Value. Mit ursprünglichem HF = 2,0: neuer HF = 2,0 × (0,85 / 1,08) = 2,0 × 0,787 = 1,57. Der HF ist auf 1,57 gefallen — nach den konservativen Schwellen dieser Lektion ist das in der Warn-Zone zwischen 1,5 und 1,7. Aktion: entweder Schuld teilweise zurückzahlen (z.B. 30% der Schuld, würde HF auf etwa 2,2 anheben) oder Collateral hinzufügen (z.B. 20% mehr Collateral, ähnlicher Effekt). Wenn Zinsen weiter akkumulieren oder Preis weiter fällt, kann HF schnell unter 1,5 fallen. Handeln, nicht warten.
 </details>
 
 **Frage 2:** Erkläre, warum das Protokoll-Design mit LTV, LT und LB als drei separate Parameter mathematisch und ökonomisch sinnvoll ist.
@@ -1423,7 +1435,7 @@ Du hast in Modul 7 die Borrow-Seite systematisch verstanden:
 
 **Collateral-Parameter:** LTV (max. Borrow-Quote), LT (Liquidations-Grenze), LB (Liquidations-Bonus). Pro Asset unterschiedlich kalibriert nach Volatilität und Liquidität. E-Mode für hoch korrelierte Assets erlaubt bis zu 93% LTV.
 
-**Health Factor:** Die zentrale Risiko-Metrik. HF = (Collateral × LT) / Schuld. Über 1: sicher. Unter 1: liquidierbar. Konservative Zielwerte: 2,0–2,5+ für Normalpositionen. Handlungs-Schwelle bei HF unter 1,5.
+**Health Factor:** Die zentrale Risiko-Metrik. Health Factor = (Collateral Value × Liquidation Threshold) / Borrowed Value. HF > 1: Position sicher. HF = 1: Liquidation möglich. HF < 1: Liquidation wahrscheinlich. Konservative Zielwerte: 2,0–2,5+ für Normalpositionen. Handlungs-Schwelle bei HF unter 1,5.
 
 **Liquidations-Mechanik:** Automatisiert, Bot-getrieben, sekundenschnell. Close Factor 50% bei HF 0,95–1,0, 100% bei HF < 0,95 (Aave V3). Liquidations-Penalty: 5–15% des Collaterals. Transparent auf Etherscan einsehbar.
 

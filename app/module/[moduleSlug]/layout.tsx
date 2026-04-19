@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getModule } from "@/lib/content";
 import { SidebarNav } from "@/components/SidebarNav";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { BrandLogo } from "@/components/BrandLogo";
+import { BrandLockupImage } from "@/components/BrandLockupImage";
 
 type Props = {
   children: React.ReactNode;
@@ -21,9 +21,9 @@ export default async function ModuleLayout({ children, params }: Props) {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
           <Link
             href="/"
-            className="flex items-center gap-3 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)]"
+            className="flex flex-wrap items-center gap-3 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)]"
           >
-            <BrandLogo size={32} />
+            <BrandLockupImage width={180} className="h-8 w-auto max-w-[200px]" />
             <span>← Zur Übersicht</span>
           </Link>
           <ThemeToggle />

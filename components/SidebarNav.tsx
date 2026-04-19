@@ -24,6 +24,12 @@ export function SidebarNav({ module }: Props) {
 
   const isActive = (href: string) => pathname === href;
 
+  const lessonLabel = (slug: string, title: string) => {
+    const m = /^(\d+)-(\d+)$/.exec(slug);
+    if (m) return `${m[1]}.${m[2]} ${title}`;
+    return title;
+  };
+
   return (
     <aside className="sticky top-6 h-fit w-64 shrink-0 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
       <p className="text-xs font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
@@ -38,33 +44,36 @@ export function SidebarNav({ module }: Props) {
             <Link
               key={l.slug}
               href={href}
-              className={`flex items-center gap-2 rounded-lg px-2 py-2 text-sm transition ${
+              className={`lesson-nav-item flex items-center gap-2 rounded-lg py-2 pl-[13px] pr-2 text-sm transition ${
                 isActive(href)
-                  ? "bg-[var(--color-accent-soft)] font-medium text-[var(--color-accent)]"
-                  : "text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text)]"
+                  ? "border-l-[3px] border-[var(--color-accent)] font-semibold text-[var(--color-accent)]"
+                  : "border-l-[3px] border-transparent text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text)]"
               }`}
             >
               <span
-                className={`h-2 w-2 rounded-full ${
+                className={`h-2 w-2 shrink-0 rounded-full ${
                   done ? "bg-emerald-500" : "bg-[var(--color-border)]"
                 }`}
               />
-              <span className="truncate">
-                {l.moduleNumber}.{l.lessonNumber} {l.title}
-              </span>
+              <span className="truncate">{lessonLabel(l.slug, l.title)}</span>
             </Link>
           );
         })}
         <Link
           href={quizHref(module.slug)}
-          className={`flex items-center gap-2 rounded-lg px-2 py-2 text-sm transition ${
+          className={`lesson-nav-item flex items-center gap-2 rounded-lg py-2 pl-[13px] pr-2 text-sm transition ${
             isActive(quizHref(module.slug))
-              ? "bg-[var(--color-accent-soft)] font-medium text-[var(--color-accent)]"
-              : "text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text)]"
+              ? "border-l-[3px] border-[var(--color-accent)] font-semibold text-[var(--color-accent)]"
+              : "border-l-[3px] border-transparent text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text)]"
           }`}
         >
-          <span className="font-mono text-xs">?</span>
-          <span className="flex-1 truncate">Quiz</span>
+          <span
+            className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[var(--color-accent)] text-[10px] font-bold text-[var(--color-accent)]"
+            aria-hidden
+          >
+            ?
+          </span>
+          <span className="flex-1 truncate">Quiz zum Modul</span>
           {moduleQuizPercent !== undefined ? (
             <span className="text-xs text-[var(--color-text-muted)]">{moduleQuizPercent}%</span>
           ) : null}

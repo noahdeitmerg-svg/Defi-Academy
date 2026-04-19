@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getAllModules } from "@/lib/content";
 import { lessonHref, quizHref } from "@/lib/routes";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { BrandLogo } from "@/components/BrandLogo";
+import { BrandLockupImage } from "@/components/BrandLockupImage";
 
 export default async function HomePage() {
   const modules = await getAllModules();
@@ -11,16 +11,9 @@ export default async function HomePage() {
     <div className="min-h-dvh">
       <header className="border-b border-[var(--color-border)] bg-[var(--color-surface-muted)]">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-5">
-          <div className="flex items-center gap-4">
-            <BrandLogo size={44} />
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
-                DeFi Akademie
-              </p>
-              <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text)]">
-                Module &amp; Lektionen
-              </h1>
-            </div>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+            <BrandLockupImage width={220} className="h-10 w-auto max-w-[min(100%,280px)]" />
+            <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text)]">Module &amp; Lektionen</h1>
           </div>
           <ThemeToggle />
         </div>
@@ -43,7 +36,7 @@ export default async function HomePage() {
                 <p className="mt-2 text-sm text-[var(--color-text-muted)]">{m.description}</p>
               ) : null}
               <p className="mt-4 text-xs text-[var(--color-text-muted)]">
-                {m.lessons.length} Lektionen · inkl. Quiz
+                {m.lessons.length} Lektion{m.lessons.length === 1 ? "" : "en"} · inkl. Quiz
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 {m.lessons[0] ? (

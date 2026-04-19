@@ -27,12 +27,21 @@ export type LessonUiBlockMarkdown = {
 
 const HEADER_ALIASES: Record<string, keyof LessonBodySections> = {
   "Learning Objectives": "learningObjectives",
+  Lernziele: "learningObjectives",
   Explanation: "explanation",
+  Erklärung: "explanation",
+  Erklaerung: "explanation",
   "Slide Summary": "slideSummary",
+  "Folien-Zusammenfassung": "slideSummary",
   "Voice Narration Script": "voiceNarration",
+  Sprechertext: "voiceNarration",
   "Visual Suggestions": "visualSuggestions",
+  "Visuelle Vorschläge": "visualSuggestions",
+  "Visuelle Vorschlaege": "visualSuggestions",
   Exercise: "practicalExercise",
   "Practical Exercise": "practicalExercise",
+  Übung: "practicalExercise",
+  Uebung: "practicalExercise",
   Quiz: "quiz",
 };
 
@@ -68,6 +77,11 @@ export function splitLessonBody(body: string): LessonBodySections {
     const m = /^#{2,3}\s+(.+)$/.exec(line);
     if (m) {
       const name = m[1].trim();
+      if (/video-pipeline-assets/i.test(name) || /^pipeline\b/i.test(name)) {
+        flush();
+        current = null;
+        continue;
+      }
       const key = HEADER_ALIASES[name];
       if (key) {
         flush();

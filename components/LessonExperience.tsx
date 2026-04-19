@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import type { ExerciseData, Slide, VisualSuggestion } from "@/lib/types";
+import type { ExerciseData, Slide } from "@/lib/types";
 import { ExerciseBlock } from "./ExerciseBlock";
 import { LessonSectionBlock } from "./LessonSectionBlock";
 import { SlideViewer } from "./SlideViewer";
 import { VideoPlayer } from "./VideoPlayer";
-import { VisualChecklist } from "./VisualChecklist";
 
 type TabId = "explanation" | "slides" | "video" | "exercise" | "quiz";
 
@@ -19,7 +18,6 @@ type Props = {
   lessonNumber: number | string;
   slides: Slide[];
   narration: string;
-  visuals: VisualSuggestion[];
   exercise: ExerciseData | null;
   exerciseStorageKey: string;
   quizPanel?: React.ReactNode | null;
@@ -42,7 +40,6 @@ export function LessonExperience({
   lessonNumber,
   slides,
   narration,
-  visuals,
   exercise,
   exerciseStorageKey,
   quizPanel,
@@ -88,40 +85,25 @@ export function LessonExperience({
 
       <div className="min-h-[12rem]">
         {tab === "explanation" ? (
-          <LessonSectionBlock title="Erklärung" sourceHeading="Explanation">
+          <LessonSectionBlock title="Erklärung">
             {children}
           </LessonSectionBlock>
         ) : null}
 
         {tab === "slides" ? (
-          <LessonSectionBlock title="Folien" sourceHeading="Slide Summary">
+          <LessonSectionBlock title="Folien">
             <SlideViewer slides={slides} />
           </LessonSectionBlock>
         ) : null}
 
         {tab === "video" ? (
-          <div className="space-y-8">
-            <LessonSectionBlock title="Voice-over & Video" sourceHeading="Voice Narration Script">
-              <VideoPlayer
-                narration={narration}
-                lessonTitle={title}
-                videoSlot={videoHero ?? undefined}
-              />
-            </LessonSectionBlock>
-            <LessonSectionBlock title="Visuals" sourceHeading="Visual Suggestions">
-              {visuals.length > 0 ? (
-                <VisualChecklist items={visuals} />
-              ) : (
-                <p className="text-sm text-[var(--color-text-muted)]">
-                  Keine Visual-Vorschläge in dieser Lektion.
-                </p>
-              )}
-            </LessonSectionBlock>
-          </div>
+          <LessonSectionBlock title="Video">
+            <VideoPlayer narration={narration} lessonTitle={title} videoSlot={videoHero ?? undefined} />
+          </LessonSectionBlock>
         ) : null}
 
         {tab === "exercise" ? (
-          <LessonSectionBlock title="Übung" sourceHeading="Exercise">
+          <LessonSectionBlock title="Übung">
             {exercise ? (
               <ExerciseBlock exercise={exercise} storageKey={exerciseStorageKey} />
             ) : (
@@ -133,7 +115,7 @@ export function LessonExperience({
         ) : null}
 
         {tab === "quiz" && quizPanel ? (
-          <LessonSectionBlock title="Quiz" sourceHeading="Quiz">
+          <LessonSectionBlock title="Quiz">
             {quizPanel}
           </LessonSectionBlock>
         ) : null}
