@@ -80,7 +80,7 @@ Beispiele: **USDC** (Circle), **USDT** (Tether), **PYUSD** (PayPal).
 
 **Kategorie 2: Krypto-besichert (dezentral)**
 
-Nutzer hinterlegen Krypto-Assets (typisch ETH, Liquid-Staking-Tokens, andere Stablecoins) als Sicherheit in Smart Contracts und mintzen gegen die Sicherheit Stablecoins. Der Mechanismus ist strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7 — mit einem Zusatz: das "geliehene" Asset ist der Stablecoin selbst, der vom Protokoll neu kreiert wird.
+Nutzer hinterlegen Krypto-Assets (typisch ETH, Liquid-Staking-Tokens, andere Stablecoins) als Sicherheit in Smart Contracts und minten gegen die Sicherheit Stablecoins. Der Mechanismus ist strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7 — mit einem Zusatz: das "geliehene" Asset ist der Stablecoin selbst, der vom Protokoll neu kreiert wird.
 
 Beispiele: **DAI** (MakerDAO, jetzt Sky), **LUSD** (Liquity), **crvUSD** (Curve), **GHO** (Aave).
 
@@ -100,8 +100,10 @@ Diese Kategorie umfasst unterschiedliche Designs, die keine klassische Besicheru
 **3a. Pure algorithmisch (historisch gescheitert)**
 Kein echtes Collateral. Peg wird durch Supply-Anpassungen oder Auktions-Mechanismen gehalten. Beispiele: UST (Terra, kollabiert 2022), Empty Set Dollar, Basis Cash. Alle scheiterten strukturell. Diese Kategorie ist für konservative Portfolios nicht relevant.
 
+**Warum pure algorithmische Designs reflexiv sind:** Algorithmische Stablecoins stabilisieren ihren Preis häufig über einen Governance-Token (bei UST war das LUNA). Der Mechanismus ist reflexiv: Das Vertrauen in den Stablecoin hängt vom Wert des Governance-Tokens ab, und der Wert des Governance-Tokens hängt vom Vertrauen in den Stablecoin. Wenn das Vertrauen sinkt, kann der Governance-Token schnell an Wert verlieren — und damit bricht auch die Peg-Verteidigung zusammen, sodass der Stablecoin depeggt. UST und LUNA im Mai 2022 sind das Lehrbuchbeispiel für diesen Kaskaden-Effekt.
+
 **3b. Delta-neutral synthetisch**
-Das Protokoll hält spot-long in einem volatilen Asset (z.B. ETH), hedged die Volatilität durch short-Positionen auf Perpetual Futures, und mintet Stablecoins basierend auf dem delta-neutralen Wert. Beispiel: **USDe** (Ethena). Strukturell innovativ, aber mit eigenen Risiken (Funding-Rate-Risiko, Exchange-Risiko).
+Das Protokoll hält spot-long in einem volatilen Asset (z.B. ETH), hedget die Volatilität durch short-Positionen auf Perpetual Futures, und mintet Stablecoins basierend auf dem delta-neutralen Wert. Beispiel: **USDe** (Ethena). Strukturell innovativ, aber mit eigenen Risiken (Funding-Rate-Risiko, Exchange-Risiko).
 
 **3c. Hybrid mit Rendite**
 Kombinieren Besicherung mit integrierten Rendite-Mechanismen. Beispiele: **sDAI** (DAI auf Savings Rate), **sUSDS** (USDS auf Sky Savings Rate).
@@ -123,7 +125,7 @@ Ein "robuster" Stablecoin ist einer, dessen Annahmen auch in Extrem-Situationen 
 
 **Die Peg-Arbitrage**
 
-Der Peg entsteht in allen Kategorien durch **Arbitrage-Möglichkeiten**. Wenn ein Stablecoin über dem Peg handelt (z.B. USDC = 1,01 USD), gibt es einen Anreiz, neue USDC zu mintzen (gegen 1 USD Reserven) und am Markt für 1,01 USD zu verkaufen — der Gewinn von 0,01 USD pro Token. Dieser Arbitrage-Druck bringt den Preis zurück zu 1,00.
+Der Peg entsteht in allen Kategorien durch **Arbitrage-Möglichkeiten**. Wenn ein Stablecoin über dem Peg handelt (z.B. USDC = 1,01 USD), gibt es einen Anreiz, neue USDC zu minten (gegen 1 USD Reserven) und am Markt für 1,01 USD zu verkaufen — der Gewinn von 0,01 USD pro Token. Dieser Arbitrage-Druck bringt den Preis zurück zu 1,00.
 
 Umgekehrt, wenn USDC unter dem Peg handelt (z.B. 0,99 USD): Arbitrageur kauft USDC am Markt für 0,99 USD, löst es beim Emittenten für 1 USD ein, Gewinn 0,01 USD.
 
@@ -179,7 +181,7 @@ Voraussetzung: Einlöse-Prozess + Liquidität + geringe Kosten
 
 **[Slide 4]** Fiat-besicherte Stablecoins. USDC von Circle, USDT von Tether, PYUSD von PayPal. Ein Unternehmen hält echte Dollars — oder äquivalente Reserven wie kurzlaufende US-Staatsanleihen — und gibt entsprechend Tokens aus. Peg durch tatsächliche Besicherung. Blacklisting ist möglich: der Emittent kann Token einzelner Adressen einfrieren. Das ist Feature und Risiko zugleich.
 
-**[Slide 5]** Krypto-besicherte Stablecoins. DAI vom Sky-Ökosystem, LUSD von Liquity, crvUSD von Curve, GHO von Aave. Nutzer hinterlegen Krypto-Assets als Sicherheit und mintzen dagegen Stablecoins. Typisch 150 Prozent oder mehr Überbesicherung. Ein Liquidations-Mechanismus schützt vor Unterbesicherung. Bei wirklich dezentralen Designs ist kein Blacklisting möglich.
+**[Slide 5]** Krypto-besicherte Stablecoins. DAI vom Sky-Ökosystem, LUSD von Liquity, crvUSD von Curve, GHO von Aave. Nutzer hinterlegen Krypto-Assets als Sicherheit und minten dagegen Stablecoins. Typisch 150 Prozent oder mehr Überbesicherung. Ein Liquidations-Mechanismus schützt vor Unterbesicherung. Bei wirklich dezentralen Designs ist kein Blacklisting möglich.
 
 **[Slide 6]** Die algorithmische und hybride Kategorie. Pure algorithmische Designs — UST, Empty Set Dollar, Basis Cash — sind historisch alle gescheitert. Delta-neutrale Designs wie USDe von Ethena halten spot-long und hedgen via Perpetual-Shorts — strukturell innovativ, aber mit eigenen Risiken. Hybrid-Rendite-Designs wie sDAI oder sUSDS kombinieren Besicherung mit integrierten Yield-Mechanismen.
 
@@ -301,7 +303,7 @@ Fiat-besicherte Stablecoins dominieren nach Market Cap. Zusammen machen USDC und
 
 **USDT — Tether**
 
-**Emittent:** Tether Limited (Sitz auf den British Virgin Islands, operativ Hongkong)
+**Emittent:** Tether Limited (Sitz auf den British Virgin Islands, operativ in Hongkong)
 
 **Reserve-Struktur (Stand aktueller Attestations):**
 - Kurzlaufende US-Treasuries (etwa 80%)
@@ -491,7 +493,7 @@ Drei Probleme mit dieser Logik. Erstens: historische Stabilität garantiert kein
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → USDC-Architektur → USDT-Architektur → Reserve-Vergleich → USDC-Depeg März 2023 → Regulatorisches Risiko → Fiat-Stablecoin-Landscape (PYUSD/FDUSD)
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Circle/Tether-Reserve-Berichte-Screenshots, SVB-Depeg-Chart März 2023, Regulatorische-Landschaft-Matrix (USA/EU/Asien), Reserve-Vergleichs-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -516,7 +518,17 @@ Krypto-besicherte Stablecoins entstehen nicht durch ein zentrales Unternehmen mi
 
 **Das Grundprinzip: Überbesicherung**
 
-Alle krypto-besicherten Stablecoins arbeiten mit **Überbesicherung**: für jeden gemintierten Dollar muss mehr als ein Dollar an Sicherheit hinterlegt sein. Typisch 130–200% Besicherungsquote. Diese Puffer ist nötig, weil das Collateral volatil ist — und bei Preis-Verfall müssen Liquidationen rechtzeitig erfolgen, bevor die Position unterbesichert wird.
+Alle krypto-besicherten Stablecoins arbeiten mit **Überbesicherung**: für jeden geminteten Dollar muss mehr als ein Dollar an Sicherheit hinterlegt sein. Typisch 130–200% Besicherungsquote. Dieser Puffer ist nötig, weil das Collateral volatil ist — und bei Preis-Verfall müssen Liquidationen rechtzeitig erfolgen, bevor die Position unterbesichert wird.
+
+**Die Collateral-Ratio-Formel**
+
+Die Besicherungsquote wird als **Collateral Ratio** (CR) formalisiert:
+
+```
+Collateral Ratio = Collateral Value / Stablecoin Debt
+```
+
+Ein Beispiel: 150% Collateralization bedeutet, dass für 100 USD Stablecoins etwa 150 USD Collateral hinterlegt sind. Je höher die Collateral Ratio, desto größer der Puffer bis zur Liquidation — desto sicherer die Position, aber auch desto kapital-ineffizienter für den Nutzer, der mintet. Jedes Protokoll definiert eine **Minimum Collateral Ratio**, unterhalb derer die Position liquidierbar wird (z.B. 110% bei LUSD, 150% bei vielen DAI-Vaults).
 
 **DAI — Der Pionier (Sky Protocol, früher MakerDAO)**
 
@@ -585,10 +597,10 @@ LUSD von Liquity Protocol ist der puristisch dezentrale Ansatz. Design-Grundsät
 - **110% Minimum-Collateralization-Ratio** (sehr aggressiv)
 - **0% Zins** auf Borrow (einmalige Borrow-Fee und Redemption-Fee statt)
 - **Unveränderbar:** keine Governance, keine Upgrades, keine Admin-Keys
-- **Redemption-Mechanismus:** LUSD kann jederzeit gegen ETH aus der globalen Pool getauscht werden
+- **Redemption-Mechanismus:** LUSD kann jederzeit gegen ETH aus dem globalen Pool getauscht werden
 
 **Peg-Mechanismen:**
-1. **Bei LUSD > 1,10 USD:** Neue Vaults mintzen profitable LUSD (100% LUSD-Preis × 110% CR = 121% Rendite auf ETH-Einlage), das erhöht das Supply
+1. **Bei LUSD > 1,10 USD:** Neue Vaults minten profitable LUSD (100% LUSD-Preis × 110% CR = 121% Rendite auf ETH-Einlage), das erhöht das Supply
 2. **Bei LUSD < 1,00 USD:** Redemptions werden profitabel (LUSD unter Peg einlösen gegen vollen ETH-Wert), das verringert das Supply
 
 **Stärken:**
@@ -600,7 +612,7 @@ LUSD von Liquity Protocol ist der puristisch dezentrale Ansatz. Design-Grundsät
 **Schwächen:**
 - Nur ETH als Collateral (keine Diversifikation auf Collateral-Ebene)
 - Kleinere TVL als DAI oder crvUSD
-- Redemption-Mechanismus kann bei starkem Sell-Druck unangenehm für Borrower sein (forced redemption triggert, wenn LUSD unter Peg handelt)
+- Redemption-Mechanismus kann bei starkem Sell-Druck unangenehm für Borrower sein (erzwungene Redemption wird ausgelöst, wenn LUSD unter Peg handelt)
 - Weniger in andere DeFi-Protokolle integriert
 
 **Weitere relevante krypto-besicherte Stablecoins**
@@ -626,7 +638,7 @@ Eine sinnvolle Diversifikation könnte 50% USDC (als Hauptanker), 30% USDT (Liqu
 Krypto-besicherte Stablecoins: DAI, crvUSD, LUSD
 
 **[Slide 2] — Grundprinzip**
-Überbesicherung: Sicherheit > gemintierter Stablecoin
+Überbesicherung: Sicherheit > geminteter Stablecoin
 Typisch 130–200% CR
 Liquidations-Mechanismus bei Unterbesicherung
 
@@ -661,7 +673,7 @@ Meiden: Algo/Hybrid ohne Track-Record
 
 **[Slide 1]** Krypto-besicherte Stablecoins entstehen durch dezentrale Smart Contracts, nicht durch zentrale Unternehmen mit Dollar-Reserven. Das gibt andere Risikoprofile — und unterschiedliche Stärken und Schwächen.
 
-**[Slide 2]** Das Grundprinzip ist Überbesicherung. Für jeden gemintierten Stablecoin-Dollar muss mehr als ein Dollar Sicherheit hinterlegt sein. Typisch 130 bis 200 Prozent. Der Puffer ist nötig, weil das Collateral volatil ist. Bei Preis-Verfall muss liquidiert werden, bevor die Position unterbesichert wird — strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7.
+**[Slide 2]** Das Grundprinzip ist Überbesicherung. Für jeden geminteten Stablecoin-Dollar muss mehr als ein Dollar Sicherheit hinterlegt sein. Typisch 130 bis 200 Prozent. Der Puffer ist nötig, weil das Collateral volatil ist. Bei Preis-Verfall muss liquidiert werden, bevor die Position unterbesichert wird — strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7.
 
 **[Slide 3]** DAI, der Pionier seit 2017. Das Ökosystem heißt heute Sky. Das Collateral-Portfolio hat sich stark entwickelt: heute etwa 50 Prozent Real World Assets — US-Treasuries via externe Partner. 20 Prozent USDC als Stabilitätspuffer. 20 Prozent ETH-basierte Assets. DAI ist nicht mehr rein dezentral — es hat Exposure zu USA-Banksystem und Circle. Aber: sehr etabliert, mehrere Peg-Verteidigungs-Mechanismen, diversifiziertes Collateral.
 
@@ -728,8 +740,8 @@ LUSD kann jederzeit 1:1 gegen ETH aus dem globalen Vault-Pool eingelöst werden.
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Krypto-besichert-Grundlagen → DAI/MakerDAO → crvUSD & LLAMMA → LUSD & Redemption → Vergleichsmatrix → Hybrid vs. Pure → Risikoprofile
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Überbesicherung-Grundprinzip → DAI/Sky → crvUSD & LLAMMA → LUSD (puristisch dezentral) → Weitere (GHO, USDS, FRAX) → Konservative Auswahl
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — CDP-Mechanik-Diagramm, MakerDAO-PSM-Architektur, LLAMMA-Soft-Liquidation-Grafik, LUSD-Redemption-Flow, Stablecoin-Design-Vergleichstabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -862,7 +874,7 @@ Historisch 3–8%, an risk-free rate orientiert
 Sky-Zwilling zu sDAI mit Sky-Points-Bonus
 Im Kern sehr ähnlich zu sDAI
 
-**[Slide 5] — Ethena's USDe / sUSDe**
+**[Slide 5] — Ethenas USDe / sUSDe**
 Delta-neutral-Hedging-Design
 Rendite: Staking + Funding Rates
 Historisch 10–20% APY
@@ -888,7 +900,7 @@ Unbekannte Yield-Stables: 0%
 
 **[Slide 4]** sUSDS ist der Zwilling von sDAI im Sky-Ökosystem. Sky hat USDS parallel zu DAI eingeführt, mit zusätzlichen Sky-Points als Loyalitäts-Programm. sUSDS ist die Savings-Variante. Kernmechanik ist sehr ähnlich zu sDAI. Für konservative Nutzer ist der Unterschied gering.
 
-**[Slide 5]** Ethena's USDe und die Savings-Variante sUSDe. Ein innovatives Delta-neutrales Design. Das Protokoll hält ETH spot-long und hedged gleichzeitig via Perpetual-Futures-Shorts auf CEXs. Die Netto-Exposition ist null. Die Rendite kommt aus Staking des unterliegenden stETH und aus Funding-Rate-Einnahmen der Shorts. Historisch 10 bis 20 Prozent APY — deutlich höher als sDAI. Aber: viele zusätzliche Risiken. Funding Rates können negativ werden. Exchange-Ausfall-Risiko. Liquidations-Risiko bei extremen Bewegungen. Komplexe Custody-Strukturen. Für konservative Portfolios nur als kleine Allokation geeignet, wenn überhaupt.
+**[Slide 5]** Ethenas USDe und die Savings-Variante sUSDe. Ein innovatives Delta-neutrales Design. Das Protokoll hält ETH spot-long und hedget gleichzeitig via Perpetual-Futures-Shorts auf CEXs. Die Netto-Exposition ist null. Die Rendite kommt aus Staking des unterliegenden stETH und aus Funding-Rate-Einnahmen der Shorts. Historisch 10 bis 20 Prozent APY — deutlich höher als sDAI. Aber: viele zusätzliche Risiken. Funding Rates können negativ werden. Exchange-Ausfall-Risiko. Liquidations-Risiko bei extremen Bewegungen. Komplexe Custody-Strukturen. Für konservative Portfolios nur als kleine Allokation geeignet, wenn überhaupt.
 
 **[Slide 6]** Drei sinnvolle Anwendungs-Szenarien. Erstens: passives Cash parken. Wandle Teile deiner Stablecoin-Bestände in sDAI um, verdiene automatisch Zinsen. Zweitens: Notreserve mit Ertrag. Die fünftausend Dollar Reserve, die einfach so rumliegen, verdienen jetzt 5 Prozent. Drittens: als Collateral. sDAI kann in vielen Lending-Protokollen als Sicherheit genutzt werden — du bekommst Yield und kannst darauf borgen, wenn gewünscht.
 
@@ -950,7 +962,7 @@ Mehrere Probleme. Erstens: Konzentrationsrisiko. 100% eines signifikanten Portfo
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Yield-bearing Grundprinzip → sDAI/DSR → sUSDS → Ethena USDe/sUSDe → Delta-Hedging-Mechanik → Risiko-Vergleich
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — DSR-Mechanik-Diagramm, Yield-Source-Breakdown für jeden Stablecoin, Delta-Hedging-Flow (Ethena), Risiko-vs-Rendite-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1011,14 +1023,14 @@ Wenn das zugrundeliegende Collateral stark und schnell fällt, können Liquidati
 
 **Auslöser 4: Mechanismus-Versagen (algorithmische Stables)**
 
-Der Peg-Mechanismus selbst versagt unter Stress. Bei algorithmischen Stablecoins kann das katastrophal sein — das ganze System ist darauf ausgelegt, durch Supply-Anpassungen den Peg zu halten, und wenn die Anpassung nicht greift, spirt das System ins Chaos.
+Der Peg-Mechanismus selbst versagt unter Stress. Bei algorithmischen Stablecoins kann das katastrophal sein — das ganze System ist darauf ausgelegt, durch Supply-Anpassungen den Peg zu halten, und wenn die Anpassung nicht greift, stürzt das System ins Chaos.
 
 **Frühwarnsignale:**
 - Treibende Peg-Abweichungen (kleine, aber anhaltende)
 - Sinkende Nachfrage nach dem System-Token (z.B. LUNA-Preis-Verfall)
 - Wachsender Druck auf den Stabilitäts-Mechanismus
 
-**Historisch:** UST-Kollaps Mai 2022 — Anchor-Protocol-Outflows triggerten einen Spiral in dem LUNA-Preis fiel, der UST-Mint-Mechanismus versagte, beide Tokens kollabierten. Etwa 60 Mrd. USD zerstört.
+**Historisch:** UST-Kollaps Mai 2022 — Anchor-Protocol-Outflows lösten eine Spirale aus, in der LUNA-Preis fiel, der UST-Mint-Mechanismus versagte, beide Tokens kollabierten. Etwa 60 Mrd. USD zerstört.
 
 **Auslöser 5: Funding-Rate oder Yield-Kollaps (delta-neutrale Stables)**
 
@@ -1126,7 +1138,7 @@ Signifikant: schnell handeln
 
 **[Slide 3]** Die historischen Fälle als Lehrmaterial. USDC im März 2023 — SVB-Bank-Kollaps, 3,3 Milliarden eingefroren, 72 Stunden Depeg, dann Erholung. UST im Mai 2022 — algorithmisches Versagen, permanenter Kollaps, 60 Milliarden zerstört. DAI im März 2020 — Black Thursday, temporäres Bad-Debt-Problem bei MakerDAO, DAI selbst hielt Peg größtenteils, aber das Protokoll war nahe am Abgrund. Jeder Fall zeigt unterschiedliche Mechanismus-Versagen.
 
-**[Slide 4]** Preis-Frühwarnsignale. Chronische minor deviations um 0,998 bis 0,999 — nicht akut, aber Aufmerksamkeit. Anhaltende Drift unter 0,99 — ernsthaftes Warnzeichen, der Arbitrage-Mechanismus funktioniert nicht effektiv. Unter 0,97 — signifikantes Risiko, meist ein echtes Infrastructure- oder Collateral-Problem. Unter 0,90 — stark gefährdet, ohne schnelle Korrektur weitere Verfall wahrscheinlich.
+**[Slide 4]** Preis-Frühwarnsignale. Chronische minor deviations um 0,998 bis 0,999 — nicht akut, aber Aufmerksamkeit. Anhaltende Drift unter 0,99 — ernsthaftes Warnzeichen, der Arbitrage-Mechanismus funktioniert nicht effektiv. Unter 0,97 — signifikantes Risiko, meist ein echtes Infrastructure- oder Collateral-Problem. Unter 0,90 — stark gefährdet, ohne schnelle Korrektur ist weiterer Verfall wahrscheinlich.
 
 **[Slide 5]** Monitoring-Tools. CoinGecko für Preis-Übersicht. DeFiLlama Stablecoins-Dashboard. Curve-Pool-Charts reflektieren On-Chain-Preise besonders schnell. Reserve-Transparenz-Seiten der Emittenten. HAL.xyz für konfigurierbare Alerts bei Preis-Abweichungen. Nansen für on-chain Flow-Analyse. Diese Tools sind öffentlich und kostenlos.
 
@@ -1192,8 +1204,8 @@ Teilweise, aber nicht optimal. Die Diversifikation auf Protokoll-Ebene ist vorha
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Fünf Depeg-Auslöser → USDC-Depeg 2023 → UST-Kollaps 2022 → DAI-Stress 2020 → Frühwarnsignale → Monitoring-Tools → Notfall-Aktionen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Fünf Depeg-Auslöser → Historische Fälle (USDC/UST/DAI) → Preis-Frühwarnsignale → Monitoring-Tools → Depeg-Reaktion → Diversifikation als Beste Verteidigung
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Depeg-Kategorien-Grafik, Historische-Depeg-Zeitleiste, Curve-Pool-Imbalance-Screenshot, DeFiLlama-Peg-Tracker, Notfall-Entscheidungsbaum
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1331,7 +1343,7 @@ Handle, wenn:
 - Kurzfristige APY-Verschiebungen (weniger als 1%)
 - Allgemeine Krypto-Markt-Volatilität, die Stablecoins nicht direkt betrifft
 
-**Integrations ins Gesamt-Portfolio**
+**Integration ins Gesamt-Portfolio**
 
 Der Stablecoin-Anteil ist nur ein Teil des konservativen DeFi-Portfolios. Typische Integration mit 7–8%-Zielrendite:
 
@@ -1369,15 +1381,12 @@ Diversifiziert über 6 Positionen inkl. sUSDe
 60% USDC-Aave, 30% sDAI, 10% USDT
 → ~4,2% Rendite, minimale Komplexität
 
-**[Slide 6] — Wahl nach Profil**
-Zeit, Risiko-Toleranz, Rendite-Ziel
-Keine "richtige" Allokation — nur passende
-
-**[Slide 7] — Rebalancing-Protokoll**
+**[Slide 6] — Wahl nach Profil + Rebalancing**
+Zeit, Risiko-Toleranz, Rendite-Ziel definieren die Wahl A/B/C
 Monatlich: Check, News, Entscheidung, Gas
-Trigger klar definiert (40% Konzentration, 2% APY-Diff, Depeg >2%)
+Trigger: 40% Konzentration, 2% APY-Diff, Depeg >2%
 
-**[Slide 8] — Portfolio-Integration**
+**[Slide 7] — Portfolio-Integration**
 50–60% Stables + 20–30% Staking + 10–15% Spot + 5–10% Reserve
 Gesamt-Ziel 7–8% aus Mischung
 
@@ -1393,11 +1402,9 @@ Gesamt-Ziel 7–8% aus Mischung
 
 **[Slide 5]** Option C: minimal. 60 Prozent USDC Aave, 30 Prozent sDAI, 10 Prozent USDT. Drei Positionen total. Etwa 4,2 Prozent. Gut für Einsteiger oder Leute mit wenig Zeit.
 
-**[Slide 6]** Die Wahl hängt von dir ab. Keine Option ist objektiv richtig oder falsch. Orientierungs-Fragen: Wie viel Zeit pro Monat? Wie hoch die Risiko-Toleranz? Welches Rendite-Ziel? Für Einsteiger oder Zeit-arme Nutzer ist Option A oder C besser. Für aktivere Nutzer mit Expertise ist Option B attraktiv. In keinem Fall aus Stablecoin-Allokation allein 7 bis 8 Prozent realistisch — das muss aus dem Portfolio-Mix kommen.
+**[Slide 6]** Wahl nach Profil und Rebalancing. Die Wahl hängt von dir ab — keine Option ist objektiv richtig oder falsch. Orientierungs-Fragen: Wie viel Zeit pro Monat? Wie hoch die Risiko-Toleranz? Welches Rendite-Ziel? Für Einsteiger oder Zeit-arme Nutzer ist Option A oder C besser. Für aktivere Nutzer mit Expertise ist Option B attraktiv. Das monatliche Rebalancing-Protokoll dauert etwa fünfzehn bis zwanzig Minuten: fünf Minuten Positions-Check in DeBank, fünf bis zehn Minuten Protokoll-News, fünf Minuten Rebalancing-Entscheidung, dazu ein Gas-Kosten-Check. Trigger für Aktion: eine Position über vierzig Prozent der Stable-Allokation, APY-Differenz über zwei Prozent für dieselbe Stable mit signifikanter Position, Depeg über zwei Prozent, oder Protokoll-Krise. Kleine tägliche Schwankungen triggern nichts.
 
-**[Slide 7]** Monatliches Rebalancing-Protokoll. Fünf Minuten Positions-Check in DeBank. Fünf bis zehn Minuten Protokoll-News. Fünf Minuten Rebalancing-Entscheidung. Gas-Kosten-Check. Trigger für Aktion: eine Position über 40 Prozent der Stable-Allokation, APY-Differenz über 2 Prozent für dieselbe Stable mit signifikanter Position, Depeg über 2 Prozent, oder Protokoll-Krise. Kleine tägliche Schwankungen triggern nichts.
-
-**[Slide 8]** Integration ins Gesamt-Portfolio. Stablecoin-Anteil ist typisch 50 bis 60 Prozent eines konservativen DeFi-Portfolios. Der Rest ist 20 bis 30 Prozent Liquid Staking, 10 bis 15 Prozent direktes ETH oder BTC, 5 bis 10 Prozent Reserve. Die 7 bis 8 Prozent Gesamt-Rendite kommen aus der Mischung: 4 bis 6 Prozent vom Stables-Anteil, 3 bis 4 Prozent aus Staking plus ETH-Preis-Beiträge, kleinere Anteile aus LP. In Bear-Markets fällt das, in Bull-Markets steigt es. Das ist die strukturelle Realität — keine Garantie, nur realistische Erwartung.
+**[Slide 7]** Integration ins Gesamt-Portfolio. Stablecoin-Anteil ist typisch 50 bis 60 Prozent eines konservativen DeFi-Portfolios. Der Rest ist 20 bis 30 Prozent Liquid Staking, 10 bis 15 Prozent direktes ETH oder BTC, 5 bis 10 Prozent Reserve. Die 7 bis 8 Prozent Gesamt-Rendite kommen aus der Mischung: 4 bis 6 Prozent vom Stables-Anteil, 3 bis 4 Prozent aus Staking plus ETH-Preis-Beiträge, kleinere Anteile aus LP. In Bear-Markets fällt das, in Bull-Markets steigt es. Das ist die strukturelle Realität — keine Garantie, nur realistische Erwartung.
 
 ### Visuelle Vorschläge
 
@@ -1411,11 +1418,9 @@ Gesamt-Ziel 7–8% aus Mischung
 
 **[Slide 5]** Kuchen-Diagramm Option C mit Rendite-Berechnung.
 
-**[Slide 6]** Entscheidungs-Flowchart nach Nutzer-Profil.
+**[Slide 6]** Zwei-Spalten-Layout: links Entscheidungs-Flowchart nach Nutzer-Profil, rechts Rebalancing-Kalender-Visualisierung mit Trigger-Liste.
 
-**[Slide 7]** Rebalancing-Kalender-Visualisierung und Trigger-Liste.
-
-**[Slide 8]** Gesamt-Portfolio-Kuchen mit Rendite-Aufschlüsselung.
+**[Slide 7]** Gesamt-Portfolio-Kuchen mit Rendite-Aufschlüsselung.
 
 ### Übung
 
@@ -1456,8 +1461,8 @@ Rationale Entscheidung erfordert systematische Analyse mehrerer Faktoren. Ersten
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Diversifikations-Prinzip → Allokations-Beispiele nach Portfolio-Größe → Vertikale vs. horizontale Diversifikation → Rebalancing-Ritual → Exit-/Rotations-Plan → Monitoring-Routine
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Drei-Dimensionen-Diversifikation → Option A (einfach) → Option B (yield-optimiert) → Option C (minimal) → Wahl + Rebalancing → Portfolio-Integration
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Portfolio-Allokations-Pie-Charts für drei Größen, Diversifikations-Matrix, Rebalancing-Flowchart, Exit-Trigger-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.

@@ -85,18 +85,37 @@ Priority Fees (Tips) von Transaktionen im vorgeschlagenen Block, plus MEV-Einkom
 
 **Gesamt-Staking-Yield:** Typisch 3–5% APR, abhängig von Netzwerk-Bedingungen.
 
+**APR vs. APY: Der Unterschied**
+
+In Yield-Strategien begegnen dir zwei zentrale Rendite-Metriken, und sie sind nicht austauschbar:
+
+- **APR (Annual Percentage Rate):** Die einfache Jahresrendite **ohne Zinseszins**. APR sagt dir, wie viel Ertrag das Kapital pro Jahr erzeugt, wenn die Erträge nicht reinvestiert werden.
+- **APY (Annual Percentage Yield):** Die effektive Jahresrendite **inklusive Compounding**. APY berücksichtigt, dass zwischenzeitliche Erträge reinvestiert werden und selbst wieder Rendite erzeugen.
+
+Bei gleichem nominalen Zinssatz ist APY immer ≥ APR. Der Abstand hängt von der Compounding-Frequenz ab: je häufiger automatisch reinvestiert wird, desto größer die Differenz.
+
+Mathematisch wird Compounding durch die Standardformel beschrieben:
+
+```
+A = P × (1 + r/n)^(n×t)
+```
+
+Dabei sind: `A` der Endbetrag, `P` der Startbetrag, `r` der nominale Jahreszins (APR als Dezimalzahl), `n` die Anzahl der Compounding-Perioden pro Jahr und `t` die Anzahl der Jahre. Bei 5% APR mit täglichem Compounding (`n=365`) über ein Jahr entsteht ein APY von etwa 5,127%; bei monatlichem Compounding (`n=12`) etwa 5,116%. Der absolute Unterschied wirkt in einem Jahr klein, aber **über längere Zeiträume summiert sich der Effekt erheblich**: 5% APR über 10 Jahre ergeben 62,9% Gesamtertrag, 5,127% APY (täglich) dagegen 65,9% — und über 30 Jahre trennen die beiden Zahlen bereits über 100 Prozentpunkte. Compounding hat langfristig einen großen Einfluss auf Renditen.
+
+Für das 7–8%-Jahresziel dieses Moduls gilt: Protokoll-Dashboards zeigen meist APR (bei Staking, Lending, LPs) oder APY (bei yield-bearing Stablecoins wie sDAI oder sUSDe). Immer prüfen, welche Metrik dargestellt wird — sonst vergleicht man Äpfel mit Birnen.
+
 **Slashing-Risiko**
 
-Validatoren, die das Protokoll schwer verletzen, werden **slashed** — ein Teil ihres Stakes wird permanent verloren. Schwere Slashing-Offences:
+Validatoren, die das Protokoll schwer verletzen, werden **geslasht** — ein Teil ihres Stakes wird permanent verloren. Schwere Slashing-Offences:
 
 1. **Double Attestation:** Über zwei verschiedene Blöcke in derselben Epoch attestieren (typisch durch falsche Redundanz-Setups)
 2. **Double Proposal:** Zwei verschiedene Blöcke für dieselbe Slot vorschlagen
 3. **Surround Vote:** Eine ältere Attestation, die eine neuere umschließt
 
-Die Strafe: sofort ~1 ETH verloren plus ein größerer Teil während der verbleibenden Exit-Periode, insgesamt historisch 1–2 ETH. Bei korreliertem Slashing (mehrere Validatoren slashed gleichzeitig) können die Strafen deutlich höher sein — bis zu 16 ETH pro Validator (der Hälfte-Slashing).
+Die Strafe: sofort ~1 ETH verloren plus ein größerer Teil während der verbleibenden Exit-Periode, insgesamt historisch 1–2 ETH. Bei korreliertem Slashing (mehrere Validatoren geslasht gleichzeitig) können die Strafen deutlich höher sein — bis zu 16 ETH pro Validator (der Hälfte-Slashing).
 
 **Häufiger ist: Inactivity Penalty**
-Wenn ein Validator offline ist, verliert er kontinuierlich kleine Beträge. Nicht dramatisch bei kurzen Ausfällen, aber relevant bei längerer Downtime.
+Wenn ein Validator offline ist, verliert er kontinuierlich kleine Beträge. Nicht schwerwiegend bei kurzen Ausfällen, aber relevant bei längerer Downtime.
 
 **Withdrawal und Exit-Queue**
 
@@ -189,7 +208,7 @@ CEX Staking: 2,5–4%
 
 **[Slide 3]** Zwei Reward-Quellen. Consensus-Layer-Rewards: neu geprägte ETH durch das Protokoll, etwa 2,5 bis 3 Prozent APR. Execution-Layer-Rewards: Priority Fees und MEV-Einkommen aus vorgeschlagenen Blöcken, 0,5 bis 1,5 Prozent APR. Zusammen typisch 3 bis 5 Prozent Gesamt-Staking-Yield.
 
-**[Slide 4]** Das Slashing-Risiko. Validatoren, die das Protokoll schwer verletzen, verlieren einen Teil ihres Stakes. Historisch bei Einzelfällen 1 bis 2 ETH. Bei korreliertem Slashing — wenn viele Validatoren gleichzeitig slashed werden — können die Strafen bis zu 16 ETH pro Validator betragen. Häufiger als Slashing ist die Inactivity Penalty bei Offline-Sein, die langsam Stake reduziert.
+**[Slide 4]** Das Slashing-Risiko. Validatoren, die das Protokoll schwer verletzen, verlieren einen Teil ihres Stakes. Historisch bei Einzelfällen 1 bis 2 ETH. Bei korreliertem Slashing — wenn viele Validatoren gleichzeitig geslasht werden — können die Strafen bis zu 16 ETH pro Validator betragen. Häufiger als Slashing ist die Inactivity Penalty bei Offline-Sein, die langsam Stake reduziert.
 
 **[Slide 5]** Die Exit-Queue. Seit dem Shanghai-Upgrade können Validatoren ihren Stake zurückziehen. Aber die Queue ist begrenzt auf etwa 0,25 Prozent der aktiven Validatoren pro Epoch. Das reicht im Normalbetrieb, aber in Krisenzeiten mit vielen Exits können Wartezeiten von Wochen entstehen. Ein reales Liquiditäts-Risiko für Solo-Staker.
 
@@ -226,7 +245,7 @@ CEX Staking: 2,5–4%
 3. Klicke auf einen zufälligen Validator und untersuche:
  - Wie viele Attestations wurden bisher abgegeben
  - Wie viele davon korrekt
- - Wurde er jemals slashed
+ - Wurde er jemals geslasht
 4. Überlege: Welche Informationen helfen dir, die Staking-Gesundheit einzuschätzen?
 
 **Deliverable:** Datensammlung + kurze Analyse (4–6 Sätze): Was sagen die aktuellen Zahlen über den Zustand des Ethereum-Staking-Netzwerks aus?
@@ -246,7 +265,7 @@ Mehrere Gründe. Erstens: Kapital-Hürde. Solo-Staking benötigt 32 ETH Mindest-
 <details>
 <summary>Antwort anzeigen</summary>
 
-Slashing ist eine harte Strafe für absichtliche oder grobe Protokoll-Verletzungen: Double Attestation, Double Proposal, Surround Vote. Die Strafe ist sofort wirksam und bedeutet dauerhaften Verlust von 1 ETH oder mehr, bei korrelierten Events bis zu 16 ETH pro Validator. Slashing führt automatisch zum Exit des Validators. Inactivity Penalty ist eine weiche Strafe für Offline-Sein oder fehlende Attestations. Der Validator verliert kontinuierlich kleine Beträge, solange er offline ist. Nach Wiederherstellung der Verbindung stoppt die Strafe. Die Gefahr: Slashing ist selten, aber katastrophal wenn es passiert (meist durch schlechte Setup-Entscheidungen wie doppelte Validator-Instanzen). Inactivity Penalty ist häufiger, aber meist nur einstellig USD-Verlust pro Tag. Problematisch wird Inactivity erst bei sehr langem Offline-Sein oder wenn die Gesamt-Chain während einer "Inactivity Leak"-Phase ist (wenn mehr als ein Drittel der Validatoren offline sind, verstärken sich die Strafen dramatisch, um Chain-Finalität wiederherzustellen). Für Solo-Staker ist Inactivity Prevention durch redundante Setups (aber NICHT doppelte Validator — das wäre Slashing-trigger) wichtig. Liquid-Staking-Nutzer sind von beiden praktisch unbetroffen, weil die Protokolle professionelle Operatoren mit robusten Setups einsetzen.
+Slashing ist eine harte Strafe für absichtliche oder grobe Protokoll-Verletzungen: Double Attestation, Double Proposal, Surround Vote. Die Strafe ist sofort wirksam und bedeutet dauerhaften Verlust von 1 ETH oder mehr, bei korrelierten Events bis zu 16 ETH pro Validator. Slashing führt automatisch zum Exit des Validators. Inactivity Penalty ist eine weiche Strafe für Offline-Sein oder fehlende Attestations. Der Validator verliert kontinuierlich kleine Beträge, solange er offline ist. Nach Wiederherstellung der Verbindung stoppt die Strafe. Die Gefahr: Slashing ist selten, aber katastrophal wenn es passiert (meist durch schlechte Setup-Entscheidungen wie doppelte Validator-Instanzen). Inactivity Penalty ist häufiger, aber meist nur einstellig USD-Verlust pro Tag. Problematisch wird Inactivity erst bei sehr langem Offline-Sein oder wenn die Gesamt-Chain während einer "Inactivity Leak"-Phase ist (wenn mehr als ein Drittel der Validatoren offline sind, verstärken sich die Strafen deutlich, um Chain-Finalität wiederherzustellen). Für Solo-Staker ist Inactivity Prevention durch redundante Setups (aber NICHT doppelte Validator — das wäre Slashing-trigger) wichtig. Liquid-Staking-Nutzer sind von beiden praktisch unbetroffen, weil die Protokolle professionelle Operatoren mit robusten Setups einsetzen.
 </details>
 
 ### Video-Pipeline-Assets
@@ -285,7 +304,7 @@ Aber: LSTs sind nicht alle gleich. Das Design-Detail entscheidet über Risiko, L
 
 **Design:**
 - Du zahlst ETH ein → bekommst **stETH** im Verhältnis 1:1
-- stETH ist ein **Rebase-Token**: dein Balance wächst automatisch jeden Tag durch Staking-Rewards
+- stETH ist ein **Rebase-Token**: deine Balance wächst automatisch jeden Tag durch Staking-Rewards
 - Alternative: **wstETH** (wrapped stETH) — der Kurs zum ETH wächst statt der Balance, besser für DeFi-Integration
 
 **Node-Operatoren:**
@@ -441,7 +460,7 @@ Diversifikation über Protokolle
 
 **[Slide 2]** Das Prinzip. Du zahlst ETH ein, das Protokoll aggregiert viele solche Einzahlungen zu 32-ETH-Validatoren, operiert über Node-Operatoren. Du erhältst einen Liquid-Staking-Token zurück — deine Position repräsentierend. Keine 32-ETH-Hürde. Das Protokoll trägt das Slashing-Risiko, das du als Einzelnutzer hättest.
 
-**[Slide 3]** Lido, der Marktführer. Etwa 30 Prozent aller gestakten ETH. stETH ist ein Rebase-Token — dein Balance wächst automatisch durch Rewards. wstETH ist die gewrappte Version, bei der der Kurs wächst statt der Balance. Besser für DeFi-Integration. 10 Prozent Gebühr, Netto-APR etwa 3,2 bis 4,5 Prozent. Beste Liquidität aller LSTs, tiefste DeFi-Integration. Kritikpunkt: Marktkonzentration durch Dominanz.
+**[Slide 3]** Lido, der Marktführer. Etwa 30 Prozent aller gestakten ETH. stETH ist ein Rebase-Token — deine Balance wächst automatisch durch Rewards. wstETH ist die gewrappte Version, bei der der Kurs wächst statt der Balance. Besser für DeFi-Integration. 10 Prozent Gebühr, Netto-APR etwa 3,2 bis 4,5 Prozent. Beste Liquidität aller LSTs, tiefste DeFi-Integration. Kritikpunkt: Marktkonzentration durch Dominanz.
 
 **[Slide 4]** Rocket Pool, der dezentralere Konkurrent. Permissionless Operatoren — jeder kann mit 8 oder 16 ETH plus RPL-Collateral Node-Operator werden. Über 3.000 unabhängige Operatoren. rETH ist ein Reward-Token — der Wechselkurs wächst über Zeit. Keine Rebase-Komplexität. Gebühr etwa 14 Prozent im Durchschnitt. Netto-APR 3,0 bis 4,3 Prozent. Strukturell dezentraler, aber geringere Liquidität — etwa ein Zehntel der Lido-TVL.
 
@@ -465,7 +484,7 @@ Diversifikation über Protokolle
 
 **[Slide 6]** Preis-Chart von stETH Juni 2022 mit markiertem Depeg. **SCREENSHOT SUGGESTION:** Historischer stETH/ETH-Chart auf Curve.
 
-**[Slide 7]** Allokations-Kuchen-Diagramm mit 60/25/15-Aufteilung.
+**[Slide 7]** Kreisdiagramm mit 60/25/15-Aufteilung.
 
 ### Übung
 
@@ -488,7 +507,7 @@ Diversifikation über Protokolle
 
 ### Quiz
 
-**Frage 1:** Warum ist Lido's Marktdominanz von ~30% aller gestakten ETH sowohl Stärke als auch strukturelles Risiko?
+**Frage 1:** Warum ist Lidos Marktdominanz von ~30% aller gestakten ETH sowohl Stärke als auch strukturelles Risiko?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -509,7 +528,7 @@ stETH ist vollständig durch gestaktes ETH gedeckt — 1 stETH repräsentiert ge
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Liquid Staking-Prinzip → Lido (stETH) → Rocket Pool (rETH) → Frax (frxETH/sfrxETH) → Vergleichsmatrix → Portfolio-Allokation
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — LST-Mechanik-Diagramm, Protokoll-Vergleichstabelle (Zentralisierung/TVL/Design), stETH-Depeg-Chart Juni 2022, Governance-Struktur-Übersicht
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -541,7 +560,7 @@ Das klingt verlockend — mehr Rendite ohne zusätzliches Kapital. Aber die zus�
 1. Ein ETH-Staker hinterlegt sein gestaktes ETH (oder LSTs wie wstETH, rETH) bei EigenLayer.
 2. Das Protokoll erlaubt diesem ETH, zusätzlich als Sicherheit für andere Protokolle zu dienen — sogenannte **AVS** (Actively Validated Services).
 3. Die AVS zahlen Rewards an die Restaker für diese zusätzliche Sicherung.
-4. Im Gegenzug kann der Restaker für Fehlverhalten der AVS-Infrastruktur slashed werden.
+4. Im Gegenzug kann der Restaker für Fehlverhalten der AVS-Infrastruktur geslasht werden.
 
 **Was ist ein AVS?**
 
@@ -549,7 +568,7 @@ AVS sind Middleware-Protokolle, die eigene Ethereum-ähnliche Sicherheits-Garant
 
 **Beispiele für AVS:**
 - **EigenDA:** Data-Availability-Service für Layer-2s (größter AVS)
-- **AltLayer:** Rollup-as-a-Service mit restaked Security
+- **AltLayer:** Rollup-as-a-Service mit restakter Sicherheit
 - **Lagrange:** Cross-Chain-Proofs
 - **Drosera:** Security-Monitoring
 - Weitere ~20+ AVS im Launch
@@ -633,7 +652,7 @@ Ein typischer LRT könnte folgende Rendite-Quellen haben:
 **Was zu vermeiden ist:**
 - 100% der ETH-Exposure in LRTs
 - Exotische LRTs mit kurzer History
-- Leveraged LRT-Positionen (kumuliert Risiken dramatisch)
+- Leveraged LRT-Positionen (kumuliert Risiken erheblich)
 - Pure Point-Farming ohne Verständnis der zugrunde liegenden Mechanik
 
 **Die praktische Alternative**
@@ -686,7 +705,7 @@ Reines Liquid Staking oft die bessere Wahl
 
 **[Slide 1]** Restaking ist eine der wichtigsten Innovationen im Ethereum-Ökosystem der letzten Jahre. Es klingt verlockend: mehr Rendite ohne zusätzliches Kapital. Aber die zusätzliche Rendite kommt aus zusätzlichem Risiko. Diese Lektion seziert die Mechanik konservativ.
 
-**[Slide 2]** Das Grundkonzept. Gestaktes ETH wird nochmal genutzt, um zusätzliche Protokolle zu sichern. Ein Staker hinterlegt sein gestaktes ETH oder LSTs bei EigenLayer. Das Protokoll erlaubt diesem ETH, zusätzlich als Sicherheit für AVS zu dienen — Actively Validated Services. Die AVS zahlen Rewards. Im Gegenzug kann der Restaker bei AVS-Fehlverhalten zusätzlich slashed werden.
+**[Slide 2]** Das Grundkonzept. Gestaktes ETH wird nochmal genutzt, um zusätzliche Protokolle zu sichern. Ein Staker hinterlegt sein gestaktes ETH oder LSTs bei EigenLayer. Das Protokoll erlaubt diesem ETH, zusätzlich als Sicherheit für AVS zu dienen — Actively Validated Services. Die AVS zahlen Rewards. Im Gegenzug kann der Restaker bei AVS-Fehlverhalten zusätzlich geslasht werden.
 
 **[Slide 3]** Was AVS sind. Middleware-Protokolle, die Ethereum-ähnliche Sicherheit brauchen, aber nicht genug Wert haben, um ein eigenes Validator-Netzwerk aufzubauen. Sie leihen sich Sicherheit von Ethereum über EigenLayer. Beispiele: EigenDA — Data-Availability-Service für Layer-2s. AltLayer — Rollup-as-a-Service. Lagrange für Cross-Chain-Proofs. Etwa 20 AVS im Launch.
 
@@ -730,7 +749,7 @@ Wähle einen LRT (EtherFi weETH oder Renzo ezETH) und analysiere:
 
 ### Quiz
 
-**Frage 1:** Warum erhöht Restaking (und LRTs) die Risiko-Komplexität dramatisch im Vergleich zu einfachem Liquid Staking?
+**Frage 1:** Warum erhöht Restaking (und LRTs) die Risiko-Komplexität deutlich im Vergleich zu einfachem Liquid Staking?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -751,7 +770,7 @@ Weil nur die nachhaltigen Anteile langfristig verlässlich sind. Eine LRT mit an
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Restaking-Konzept → EigenLayer-Architektur → AVS-System → LRTs (ezETH/eETH/rsETH) → Points-Rewards kritisch → Risiko-Layer
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Restaking-Dependency-Diagramm, AVS-Liste-Screenshot, LRT-Vergleichstabelle, Sustainable-vs-Temporary-Yield-Breakdown
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -791,7 +810,7 @@ Bei Fälligkeit kannst du PT 1:1 gegen das zugrundeliegende Asset (z.B. ETH oder
 
 Stell dir stETH vor, mit Fälligkeit in 6 Monaten:
 - 1 stETH = 1 PT-stETH + 1 YT-stETH
-- PT-stETH handelt heute mit Abschlag (sagen wir 0,975 ETH)
+- PT-stETH wird heute mit Abschlag gehandelt (sagen wir 0,975 ETH)
 - YT-stETH repräsentiert den erwarteten Yield für 6 Monate
 
 **Als PT-Käufer:** Du kaufst 1 PT-stETH für 0,975 ETH heute. In 6 Monaten kannst du es 1:1 gegen stETH einlösen — effektiv hast du 0,025 ETH in 6 Monaten verdient, was einer annualisierten Rendite von **~5,1% fixed** entspricht.
@@ -824,7 +843,7 @@ Du willst 10.000 USDC für 6 Monate parken und möchtest sicher wissen, wie viel
 Du willst ETH-Staking-Exposure für ein Jahr mit garantierter Rendite. PT-weETH (1 Jahr) bringt beispielsweise 8% fixed. Du kaufst PT-weETH mit 5 ETH Einsatz, bekommst am Ende 5 × 1,08 = 5,4 weETH. Garantiert.
 
 **Szenario 3: sUSDe mit Fixed Yield statt Variable**
-sUSDes variable APY kann von 5% bis 25% schwanken. Wer berechenbare Rendite will, kann PT-sUSDe kaufen und einen fixed Rate einfrieren. Reduziert das Funding-Rate-Risiko von sUSDe signifikant.
+sUSDes variable APY kann von 5% bis 25% schwanken. Wer berechenbare Rendite will, kann PT-sUSDe kaufen und eine fixed Rate einfrieren. Reduziert das Funding-Rate-Risiko von sUSDe signifikant.
 
 **Die Risiken von Pendle**
 
@@ -893,11 +912,11 @@ Gestaffelte Fälligkeitstermine
 
 **[Slide 2]** Das Grundkonzept. Pendle spaltet yield-tragende Assets in zwei Teile. PT, Principal Token, repräsentiert den Principal-Anspruch zu einem festen Fälligkeitsdatum. YT, Yield Token, repräsentiert den Anspruch auf alle Yield-Einnahmen bis Fälligkeit. Bei Fälligkeit kannst du PT 1:1 gegen das zugrundeliegende Asset einlösen. YT wird wertlos — bis dahin hat er dir den kumulierten Yield gebracht. 1 stETH gleich 1 PT-stETH plus 1 YT-stETH.
 
-**[Slide 3]** Wie PT zum Fixed-Yield-Tool wird. PT handeln heute mit Abschlag, weil der Yield in der Zukunft noch nicht eingetreten ist. Beispiel: PT-stETH mit 6 Monaten Fälligkeit handelt bei 0,975 ETH. Du kaufst das heute. In 6 Monaten löst du 1:1 gegen stETH ein. Effektive Rendite: 2,5 Prozent in 6 Monaten, annualisiert 5,1 Prozent fixed. Garantiert, keine Zins-Schwankungen. Das ist das konservative Kern-Anwendungsfall.
+**[Slide 3]** Wie PT zum Fixed-Yield-Tool wird. PT werden heute mit Abschlag gehandelt, weil der Yield in der Zukunft noch nicht eingetreten ist. Beispiel: PT-stETH mit 6 Monaten Fälligkeit wird bei 0,975 ETH gehandelt. Du kaufst das heute. In 6 Monaten löst du 1:1 gegen stETH ein. Effektive Rendite: 2,5 Prozent in 6 Monaten, annualisiert 5,1 Prozent fixed. Garantiert, keine Zins-Schwankungen. Das ist das konservative Kern-Anwendungsfall.
 
 **[Slide 4]** Typische Fixed-Yield-Raten aktuell. PT-stETH bei 6 Monaten Fälligkeit etwa 5 bis 6 Prozent fixed. PT-USDC je nach Underlying 6 bis 10 Prozent. PT-sUSDe 10 bis 15 Prozent — höher wegen sUSDes höherer Underlying-Rendite. PT-weETH 7 bis 12 Prozent. Diese Zahlen variieren über Zeit — prüfe app.pendle.finance für aktuelle Werte.
 
-**[Slide 5]** Drei Anwendungs-Szenarien. Erstens: fixed Stablecoin-Yield für bekannten Zeithorizont. Du willst 10.000 Dollar für 6 Monate parken und exakt wissen, was am Ende da ist. PT-USDC mit 8 Prozent fixed: 10.400 Dollar nach 6 Monaten. Zweitens: fixed ETH-Staking-Rendite. PT-weETH mit einem Jahr Fälligkeit und 8 Prozent fixed garantiert dir die Rendite. Drittens: sUSDe-Risiko-Reduktion. sUSDes variable APY schwankt stark — PT-sUSDe friert einen fixed Rate ein.
+**[Slide 5]** Drei Anwendungs-Szenarien. Erstens: fixed Stablecoin-Yield für bekannten Zeithorizont. Du willst 10.000 Dollar für 6 Monate parken und exakt wissen, was am Ende da ist. PT-USDC mit 8 Prozent fixed: 10.400 Dollar nach 6 Monaten. Zweitens: fixed ETH-Staking-Rendite. PT-weETH mit einem Jahr Fälligkeit und 8 Prozent fixed garantiert dir die Rendite. Drittens: sUSDe-Risiko-Reduktion. sUSDes variable APY schwankt stark — PT-sUSDe friert eine fixed Rate ein.
 
 **[Slide 6]** Die Risiken von Pendle. Smart-Contract-Risiko ist höher als bei einfachem Staking, weil das Protokoll komplexer ist. Mehrere Audits mindern das. Underlying-Asset-Risiko: ein PT-stETH setzt voraus, dass stETH bei Fälligkeit 1:1 einlösbar ist. Bei einem stETH-Depeg oder Lido-Kollaps wäre die PT-Position beeinträchtigt. Liquiditätsrisiko: wer vor Fälligkeit aussteigen will, verkauft auf DEXs zu dem dann gültigen Marktpreis. Fälligkeits-Bindung: bei regulären PTs kein Früh-Ausstieg ohne Sekundärmarkt.
 
@@ -960,8 +979,8 @@ Mehrere Bedingungen. Erstens: wenn Flexibilität wichtiger ist als Planbarkeit. 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Yield-Trennung Prinzip → PT/YT-Mechanik → Pendle AMM → Fixed Yield Strategie → YT-Spekulation → Implied APY → Pendle-Portfolio-Rolle
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → PT/YT-Aufspaltung → PT als Fixed-Yield-Tool → Typische Fixed-Yield-Raten → Anwendungs-Szenarien → Risiken → Konservative Allokation
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — PT/YT-Split-Diagramm, Pendle-Interface-Screenshot, Fixed-vs-Variable-Yield-Chart, Pendle-Pool-Beispiele, Maturity-Timeline
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1027,7 +1046,7 @@ Curve-LPs können ihre Rendite durch **veCRV** (vote-escrowed CRV) boosten. Um v
 
 **Mechanik:**
 1. Du zahlst deinen Curve-LP-Token bei Convex ein
-2. Convex staked ihn mit der gepoolten veCRV-Position für maximalen Boost
+2. Convex stakt ihn mit der gepoolten veCRV-Position für maximalen Boost
 3. Du erhältst: Trading-Fees + CRV-Rewards (geboostet) + CVX-Rewards
 
 **Stärken:**
@@ -1039,8 +1058,9 @@ Curve-LPs können ihre Rendite durch **veCRV** (vote-escrowed CRV) boosten. Um v
 - Zusätzliche Smart-Contract-Ebene (Convex ist ein weiteres Protokoll zwischen dir und Curve)
 - CVX-Token-Exposure (zusätzliches Preisrisiko)
 - Nur für Curve-LPs relevant
+- **Impermanent Loss als Basis-Risiko der LP-Position:** Convex entfernt IL nicht — es optimiert nur den Yield auf eine bestehende Curve-LP-Position. IL bei Curve-Stablepools ist typischerweise gering (Assets sind korreliert), bei volatilen Pools (z.B. tricrypto) aber weiterhin präsent. Die detaillierte IL-Mechanik ist in Modul 5 erklärt.
 
-**Typische Rendite-Boost durch Convex:** 1,5–2,5x im Vergleich zu ungesockeltem Curve-LP. Bei einer Base-Curve-LP-Rendite von 3% ergibt das 4,5–7,5% mit Convex-Boost.
+**Typische Rendite-Boost durch Convex:** 1,5–2,5x im Vergleich zu Curve-LP ohne Convex-Boost. Bei einer Base-Curve-LP-Rendite von 3% ergibt das 4,5–7,5% mit Convex-Boost.
 
 **Morpho Vaults — Die moderne Lending-Aggregation (2024)**
 
@@ -1141,7 +1161,7 @@ Transparent, diversifiziert
 
 **[Slide 3]** Yearn Finance, der Veteran seit 2020. Breite Palette an Vault-Strategien. Stablecoin-Rotation zwischen Lending-Protokollen, Curve-LP mit Convex-Boost, ETH-Staking-Strategien. Gebühren: 2 Prozent Management und 20 Prozent Performance Fee. Netto-Rendite auf Stablecoin-Vaults typisch 3 bis 5 Prozent. Längster Track-Record aller Aggregatoren.
 
-**[Slide 4]** Convex Finance, der Curve-Spezialist. Curve-LPs können ihre Rendite durch veCRV boosten, aber veCRV erfordert 4 Jahre Lock-up — unflexibel. Convex poolt veCRV zentral und gibt allen Nutzern den Boost. Mechanik: du deponierst deinen Curve-LP-Token, Convex staked mit seinem veCRV-Pool, du bekommst Trading Fees plus geboostete CRV-Rewards plus CVX-Rewards. Typischer Boost: 1,5 bis 2,5 fache Rendite im Vergleich zu ungebondetem Curve-LP.
+**[Slide 4]** Convex Finance, der Curve-Spezialist. Curve-LPs können ihre Rendite durch veCRV boosten, aber veCRV erfordert 4 Jahre Lock-up — unflexibel. Convex poolt veCRV zentral und gibt allen Nutzern den Boost. Mechanik: du deponierst deinen Curve-LP-Token, Convex stakt mit seinem veCRV-Pool, du bekommst Trading Fees plus geboostete CRV-Rewards plus CVX-Rewards. Typischer Boost: 1,5 bis 2,5 fache Rendite im Vergleich zu Curve-LP ohne Convex-Boost.
 
 **[Slide 5]** Morpho Vaults sind die moderne Lending-Aggregation. Morpho Blue ist die Basis, Vaults die aggregierende Schicht. Kuratoren wie Steakhouse Financial, Gauntlet oder Re7 definieren Risiko-Strategien und allokieren Kapital. Stablecoin-Vaults erreichen 5 bis 7 Prozent APY — oft 1 bis 2 Prozentpunkte über einfachem Aave-Supply. Professionelles Risiko-Management mit Modellen.
 
@@ -1170,7 +1190,7 @@ Transparent, diversifiziert
 **Aufgabe: Aggregator-Vergleich**
 
 1. Besuche yearn.fi und finde einen USDC-Vault. Notiere: APY, Strategie, TVL, Gebühren.
-2. Besuche convexfinance.com und finde einen 3pool-Boost. Notiere: APR, Rewards-Quellen, Vergleich zu ungeboostedem Curve.
+2. Besuche convexfinance.com und finde einen 3pool-Boost. Notiere: APR, Rewards-Quellen, Vergleich zu Curve ohne Convex-Boost.
 3. Besuche app.morpho.org und finde einen von Steakhouse kuratierten USDC-Vault. Notiere: APY, Risiko-Parameter, Kurator-Info.
 4. Berechne die 1-Jahres-Rendite auf 10.000 USD in jedem Vault.
 5. Vergleiche mit direktem USDC-Supply auf Aave V3.
@@ -1200,7 +1220,7 @@ Mehrere Gründe. Erstens: Markt-Auswahl-Expertise. Morpho Blue hat viele isolier
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Aggregator-Architektur → Yearn → Convex → Morpho Vaults → Kostenstruktur → Due-Diligence-Checkliste
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Aggregator-Architektur-Diagramm, Yearn-Interface-Screenshot, Convex-Boost-Mechanik, Morpho-Vault-Interface, Kurator-Profile-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1408,15 +1428,11 @@ Yield 4,4%, 7–8% bei moderatem ETH-Anstieg
 Yield 5,3%, 7–8% bereits bei geringer ETH-Bewegung
 Höhere Komplexität
 
-**[Slide 6] — Nutzer-Profile**
-A: Einsteiger, zeit-arm
-B: mittlere Erfahrung
-C: fortgeschritten, höheres Zeit-Budget
+**[Slide 6] — Profil-Wahl und Regeln**
+Nutzer-Profil: A (Einsteiger) / B (mittlere Erfahrung) / C (fortgeschritten)
+6 Regeln: Protokoll-Div., Mechanismus-Div., Reserve, Monitoring, Exit-Trigger, Realismus
 
-**[Slide 7] — Die 6 Regeln**
-Diversifikation Protokolle, Mechanismen, Reserve, Monatlich monitoren, Exit-Trigger, realistisch
-
-**[Slide 8] — Bär-Markt-Test**
+**[Slide 7] — Bär-Markt-Test**
 ETH −50% → Portfolio ca. −10 bis −11%
 Strukturell robust, aber nicht null-Verlust
 
@@ -1432,11 +1448,9 @@ Strukturell robust, aber nicht null-Verlust
 
 **[Slide 5]** Strategie C, die Yield-Maximierte Variante. Sieben Positionen inklusive PT-sUSDe, Curve-Convex-LP und weETH als LRT. Yield-Rendite etwa 5,3 Prozent. 7 bis 8 Prozent werden bereits bei geringer ETH-Bewegung erreicht. Aber: höhere Komplexität mit mehr Monitoring-Aufwand und zusätzlichen Risiko-Ebenen durch sUSDe und LRT-Exposure.
 
-**[Slide 6]** Welche Strategie passt zu welchem Nutzer. A für Einsteiger und zeit-arme Nutzer unter einer Stunde Management pro Monat. B für mittlere Erfahrung und 2 bis 3 Stunden pro Monat. C für fortgeschrittene Nutzer mit 5 oder mehr Stunden pro Monat. Die Wahl ist individuell — es gibt keine objektiv beste Option.
+**[Slide 6]** Profil-Wahl und die sechs Regeln. Welche Strategie passt zu welchem Nutzer. A für Einsteiger und zeit-arme Nutzer unter einer Stunde Management pro Monat. B für mittlere Erfahrung und zwei bis drei Stunden pro Monat. C für fortgeschrittene Nutzer mit fünf oder mehr Stunden pro Monat. Die Wahl ist individuell — es gibt keine objektiv beste Option. Sechs Regeln gelten unabhängig von der Strategie. Erstens: Diversifikation über Protokolle — keine Position über 30 Prozent. Zweitens: Diversifikation über Mechanismen — Mix aus Lending, Staking, LP, Fixed Yield. Drittens: Reserve halten, mindestens 5 bis 10 Prozent. Viertens: monatliches Monitoring. Fünftens: Exit-Trigger klar definiert. Und sechstens: realistische Erwartungen — 7 bis 8 Prozent ist Ziel, nicht Garantie.
 
-**[Slide 7]** Sechs Regeln unabhängig von der Strategie. Diversifikation über Protokolle — keine Position über 30 Prozent. Diversifikation über Mechanismen — Mix aus Lending, Staking, LP, Fixed Yield. Reserve halten, mindestens 5 bis 10 Prozent. Monatliches Monitoring. Exit-Trigger klar definiert. Und realistische Erwartungen — 7 bis 8 Prozent ist Ziel, nicht Garantie.
-
-**[Slide 8]** Der Bär-Markt-Test. Wenn ETH 50 Prozent fällt über 12 Monate, alle drei Strategien zeigen ähnliche Verluste von etwa 10 bis 11 Prozent. Das ist strukturell robust, aber kein Null-Verlust. Portfolios mit ETH-Exposure verlieren in Bär-Markets Wert — das ist unvermeidlich. Der Unterschied zu konzentrierten Portfolios: der konservative Mix begrenzt die Verluste deutlich.
+**[Slide 7]** Der Bär-Markt-Test. Wenn ETH 50 Prozent fällt über 12 Monate, alle drei Strategien zeigen ähnliche Verluste von etwa 10 bis 11 Prozent. Das ist strukturell robust, aber kein Null-Verlust. Portfolios mit ETH-Exposure verlieren in Bär-Markets Wert — das ist unvermeidlich. Der Unterschied zu konzentrierten Portfolios: der konservative Mix begrenzt die Verluste deutlich.
 
 ### Visuelle Vorschläge
 
@@ -1450,11 +1464,9 @@ Strukturell robust, aber nicht null-Verlust
 
 **[Slide 5]** Kuchendiagramm Strategie C mit Rendite-Bereichen.
 
-**[Slide 6]** Drei-Profile-Tabelle mit Empfehlung.
+**[Slide 6]** Zwei-Spalten-Layout: links Drei-Profile-Tabelle (A/B/C) mit Empfehlung, rechts Sechs-Regeln-Checkliste.
 
-**[Slide 7]** Sechs-Regeln-Checkliste.
-
-**[Slide 8]** Bär-Markt-Stress-Test-Tabelle.
+**[Slide 7]** Bär-Markt-Stress-Test-Tabelle.
 
 ### Übung
 
@@ -1516,8 +1528,8 @@ Weil Bär-Markts der Stresstest für jede Strategie sind und die Zeit, in der sc
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Strategie-Aufbau → Portfolio-Beispiele A/B/C → Yield-Source-Breakdown → Realistische Renditeziele → Monitoring-Protokoll → Bär-Markt-Test
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Die ehrliche Einordnung → Strategie A (Minimalist) → Strategie B (Balanced) → Strategie C (Yield-Maximiert) → Profil-Wahl und Regeln → Bär-Markt-Test
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Strategie-Aufbau-Pyramide, Portfolio-Pie-Charts A/B/C, Yield-Breakdown-Chart, Rendite-Erwartungen-Matrix, Bär-Markt-Stress-Test-Simulation
 
 Pipeline: Gamma → ElevenLabs → CapCut.
