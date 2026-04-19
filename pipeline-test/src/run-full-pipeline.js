@@ -123,8 +123,8 @@ async function main() {
     narration: s.narration || '',
   }));
 
-  if (slides.length !== 6) {
-    throw new Error(`Erwartet 6 Slides aus Folien-Zusammenfassung, erhalten: ${slides.length}`);
+  if (slides.length < 1) {
+    throw new Error(`Keine Slides aus Folien-Zusammenfassung — erhalten: ${slides.length}`);
   }
 
   const slidesPayload = {

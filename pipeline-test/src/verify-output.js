@@ -36,7 +36,11 @@ function main() {
 
   if (Math.abs(audio - video) > 0.5) throw new Error('Audio/Video Dauer weicht >0.5s ab.');
   if (Math.abs(lastEnd - audio) > 0.5) throw new Error('last end_seconds weicht >0.5s von Audio ab.');
-  if (slides.slides.length !== 6) throw new Error(`slides.json: erwartet 6, hat ${slides.slides.length}`);
+  if (timing.slides.length !== slides.slides.length) {
+    throw new Error(
+      `voice_timing.json (${timing.slides.length} Einträge) passt nicht zu slides.json (${slides.slides.length}).`,
+    );
+  }
 
   console.log('OK — alle Prüfungen bestanden.');
 }

@@ -36,12 +36,12 @@ Ohne `--input` wird nacheinander versucht: `../content/modul-01-defi-grundlagen-
 
 | Datei | Bedeutung |
 |--------|-----------|
-| `slides.json` | 6 Slides (nur Folien-Zusammenfassung, **keine** Lernziele) |
+| `slides.json` | Alle Folien aus der Zusammenfassung (typisch 6, Lektionen mit 7 Folien möglich) |
 | `voice_text.txt` | Reiner Sprechertext |
 | `voice.mp3` | ElevenLabs |
 | `voice_timing.json` | Start/Ende pro Slide, **letzte `end_seconds` = ffprobe(audio)** |
-| `slide-01.svg` … `slide-06.svg` | Brand-Farben |
-| `slide-01.png` … `slide-06.png` | gerendert (@resvg/resvg-js) |
+| `slide-01.svg` … | Brand-Farben (eine SVG/PNG pro Folie) |
+| `slide-01.png` … | gerendert (@resvg/resvg-js) |
 | `final_test_video.mp4` | muxed mit `-shortest` |
 | `frame-check/at-5s.jpg` … | optional zur visuellen Prüfung |
 
