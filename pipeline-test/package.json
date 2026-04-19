@@ -1,0 +1,20 @@
+{
+  "name": "defi-academy-pipeline-test",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SVG + ffmpeg Test-Pipeline (Modul-Markdown → slides.json → ElevenLabs → MP4). Kein Remotion.",
+  "scripts": {
+    "pipeline": "node src/run-full-pipeline.js",
+    "pipeline:v2": "node src/run-full-pipeline-v2.js",
+    "pipeline:v2:batch": "node src/run-full-pipeline-batch.js",
+    "verify": "node src/verify-output.js"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "ffmpeg-static": "^5.2.0",
+    "ffprobe-static": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

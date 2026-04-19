@@ -1,0 +1,6 @@
+file 'C:/Users/noahd/Documents/GitHub/Defi-Academy/pipeline-test/test-outputcd/module01-lesson01/_segments/seg_01.mp4'
+file 'C:/Users/noahd/Documents/GitHub/Defi-Academy/pipeline-test/test-outputcd/module01-lesson01/_segments/seg_02.mp4'
+file 'C:/Users/noahd/Documents/GitHub/Defi-Academy/pipeline-test/test-outputcd/module01-lesson01/_segments/seg_03.mp4'
+file 'C:/Users/noahd/Documents/GitHub/Defi-Academy/pipeline-test/test-outputcd/module01-lesson01/_segments/seg_04.mp4'
+file 'C:/Users/noahd/Documents/GitHub/Defi-Academy/pipeline-test/test-outputcd/module01-lesson01/_segments/seg_05.mp4'
+file 'C:/Users/noahd/Documents/GitHub/Defi-Academy/pipeline-test/test-outputcd/module01-lesson01/_segments/seg_06.mp4'

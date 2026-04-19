@@ -32,7 +32,7 @@
 
 In Modul 4 hast du gelernt, wie Swaps funktionieren — aus Sicht des Swappers, der gegen einen Pool handelt. In diesem Modul drehen wir die Perspektive. Du wirst der Pool. Du stellst Liquidität bereit und kassierst Gebühren von jedem Swap. Das ist eine der ältesten und meistzitierten DeFi-Einkommensquellen — und gleichzeitig eine der am häufigsten missverstandenen.
 
-Die Realität ist unbequem: Für viele Liquidity-Provider-Positionen (LPs) wäre es profitabler gewesen, die Tokens einfach zu halten. Das Phänomen heißt **Impermanent Loss**, und es ist mathematisch unvermeidbar bei jedem Preisänderung des Asset-Paares. Ob die Gebühren den IL überkompensieren oder nicht, entscheidet über Erfolg oder Verlust.
+Die Realität ist unbequem: Für viele Liquidity-Provider-Positionen (LPs) wäre es profitabler gewesen, die Tokens einfach zu halten. Das Phänomen heißt **Impermanent Loss**, und es ist mathematisch unvermeidbar bei jeder Preisänderung des Asset-Paares. Ob die Gebühren den IL überkompensieren oder nicht, entscheidet über Erfolg oder Verlust.
 
 Dieses Modul behandelt LP-Positionen nüchtern und konservativ. Ziel ist **nicht**, LP-Renditen zu maximieren. Ziel ist, zu verstehen, wann LP-Sein tatsächlich sinnvoll ist und wann nicht — passend zu einem konservativen Portfolio mit 7–8% Renditeerwartung.
 
@@ -70,7 +70,7 @@ Ein Uniswap-V2-ETH/USDC-Pool hat zum Beispiel 1.000 ETH und 3.000.000 USDC. Der 
 
 **Was der LP-Token repräsentiert**
 
-Der LP-Token ist ein ERC-20-Token, der deinen Pool-Anteil verkörpert. Er hat drei wichtige Eigenschaften:
+Der LP-Token ist ein ERC-20-Token, der deinen Pool-Anteil verkörpert. LP-Tokens repräsentieren den prozentualen Anteil eines Nutzers am Liquidity Pool. Sie haben drei wichtige Eigenschaften:
 
 1. **Er wächst im Wert**, wenn der Pool wächst (durch Gebühren-Einnahmen).
 2. **Er ist transferierbar** — du kannst ihn an eine andere Adresse senden, und der Empfänger hält dann den Pool-Anteil.
@@ -81,7 +81,7 @@ Wenn du 1% der LP-Tokens hältst und der Pool nach einem Jahr 1.200 ETH und 3.60
 **Die zwei Einnahmequellen eines LP**
 
 **Quelle 1: Trading-Gebühren**
-Jeder Swap im Pool zahlt eine Gebühr (0,3% Standard bei V2, variabel bei V3). Diese Gebühr fließt zurück in den Pool und erhöht den Wert der LP-Tokens proportional.
+Jeder Swap im Pool zahlt eine Gebühr (0,3% Standard bei V2, variabel bei V3). Trading Fees werden proportional zum Poolanteil an Liquidity Provider verteilt. Konkret: Die Gebühr fließt zurück in den Pool und erhöht den Wert der LP-Tokens proportional zum gehaltenen Anteil.
 
 **Quelle 2: Rewards (Liquidity Mining)**
 Einige Protokolle zahlen zusätzlich Belohnungen in ihrem nativen Token (z.B. UNI, CRV, BAL), um Liquidität anzuziehen. Diese Rewards sind **separat** von den Trading-Gebühren.
@@ -96,11 +96,15 @@ Eine LP-Position, deren Rendite zu 80% aus Rewards besteht, ist fragil. Eine Pos
 
 Ein häufiger Irrglaube: "LPs sind wie Sparbücher mit hohen Zinsen." Das ist falsch.
 
-Ein LP ist ein Marktmacher. Marktmachen ist eine reale Dienstleistung am Markt — du stellst Liquidität bereit, und im Gegenzug bekommst du Gebühren für dein Risiko. Dieses Risiko heißt Impermanent Loss, und es ist keine theoretische Gefahr, sondern bei jedem Preisänderung mathematisch real. Darauf gehen wir in Lektion 5.2 ein.
+Ein LP ist ein Marktmacher. Marktmachen ist eine reale Dienstleistung am Markt — du stellst Liquidität bereit, und im Gegenzug bekommst du Gebühren für dein Risiko. Dieses Risiko heißt Impermanent Loss, und es ist keine theoretische Gefahr, sondern bei jeder Preisänderung mathematisch real. Darauf gehen wir in Lektion 5.2 ein.
 
 **Wer LP-Sein ernst nimmt**
 
 Professionelle Marktmacher (Wintermute, Amber Group, Jump Trading) stellen auf CEXs Liquidität bereit — und verdienen damit Geld. Sie haben hochentwickelte Modelle für Volatilität, Spread und Inventar-Risiko. Retail-LPs in DeFi machen eine vereinfachte Version dieser Dienstleistung. Die gute Nachricht: Du brauchst keine Quant-Modelle, um verantwortlich zu sein. Du brauchst nur zu verstehen, was du tust — und genau das ist Ziel dieses Moduls.
+
+**Warum Pool-Größe zählt**
+
+Große Pools reduzieren den Preisimpact einzelner Trades und verringern dadurch Slippage. Für Trader bedeutet das bessere Ausführungspreise; für LPs bedeutet tiefe Liquidität mehr Handelsvolumen und damit mehr Gebühreneinnahmen pro Dollar Kapital. Die Konsequenz: Pool-Tiefe und Trading-Volumen bedingen sich gegenseitig.
 
 ### Folien-Zusammenfassung
 
@@ -195,7 +199,7 @@ Drei Gründe. Erstens: Reward-Programme haben ein Ende — entweder zeitlich def
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 6 Slides: Titel → LP im AMM → LP-Token als Anteilsnachweis → 2 Einnahmequellen (Fees/Rewards) → Pool-Tiefe & Rendite → LP-Entscheidungsraster
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — LP-Rolle-Diagramm, Pool-Share-Visualisierung, Fees/Rewards-Vergleich, TVL-Einfluss auf Rendite-Chart, Uniswap-Pool-Analytics-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -393,7 +397,7 @@ Weil IL exponentiell mit dem Preisänderungs-Faktor wächst. Stablecoins halten 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → IL-Mechanik → Herleitung der Formel → IL-Tabelle für Preisänderungen → Impermanent vs. Realized Loss → IL-Diagramm → IL in verschiedenen Pool-Typen
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — IL-Formel-Herleitung, Preisabweichung-vs-IL-Kurve, IL-Tabelle (0/25/50/100/500%), Impermanent-vs-Realized-Vergleich, Pool-Typ-Matrix (Stable/Blue-Chip/Volatil)
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -619,7 +623,7 @@ LP schlägt Buy-and-Hold in Seitwärtsmärkten mit hohem Handelsvolumen. In solc
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Netto-Rendite-Formel → LP-Profitability-Beispiel → Sustainable vs. Temporary Yield → LP vs. Buy-and-Hold → Marktbedingungen-Matrix → Entscheidungsheuristik
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Netto-Rendite-Formel-Box, Beispielrechnung (Fees+Rewards−IL−Gas), Yield-Source-Breakdown-Pie, LP-vs-HODL-Chart, Marktregime-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -841,7 +845,7 @@ Die LP-Rendite ist 5% (aus dem LP-Token-Wert-Anstieg, der bereits Gebühren und 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → V2-LP-Einrichtung Schritt für Schritt → Pool-Auswahl-Kriterien → Dashboard-Kennzahlen → Monitoring-Routine → Position schließen → Smart-Contract-Risiko-Checkliste
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Uniswap-V2-Add-Liquidity-Screenshot, Pool-Auswahl-Matrix, DeBank/Zapper-Dashboard, Position-schließen-Flow, Risk-Checkliste
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1056,7 +1060,7 @@ Zwei Hauptgründe. Erstens: Volatilität. USDC/USDT schwankt normal um weniger a
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → V3-Range-Konzept → IL bei engen Ranges → V3-Entscheidungsmatrix → Rebalancing-Last → Heuristiken für konservative V3 → Pool-Typ-Eignung
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Range-Breite-vs-Fee-Yield-Kurve, Out-of-Range-Szenarien, V3-Analytics-Screenshot, Rebalance-Gas-Kosten-Tabelle, Stable-V3-vs-Volatile-V3-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1123,7 +1127,7 @@ Das größte Risiko einer gepeggten LP-Position ist ein Depeg-Ereignis. Historis
 
 **USDC-Depeg, März 2023:** Als die Silicon Valley Bank kollabierte (wo Circle einen Teil der USDC-Reserven hielt), depeggte USDC kurzzeitig auf 0,88 USD. Curve-Pools mit USDC erlebten massive Umschichtungen — LPs saßen plötzlich auf mehr USDC und weniger anderer Stables als erwartet. Peg kehrte innerhalb weniger Tage zurück, aber zwischenzeitliche Exits realisierten den Verlust.
 
-**stETH-Depeg, Juni 2022:** Nach dem Luna/3AC-Kollaps depeggte stETH temporär auf 0,94 ETH. Der Curve stETH/ETH-Pool erlebte starken Umschichtungen.
+**stETH-Depeg, Juni 2022:** Nach dem Luna/3AC-Kollaps depeggte stETH temporär auf 0,94 ETH. Der Curve stETH/ETH-Pool erlebte starke Umschichtungen.
 
 **Lektion:** Gepeggte LP-Positionen sind **nicht risikofrei**. Sie sind "low IL", aber sie tragen ein konzentriertes Depeg-Risiko. Diversifikation über verschiedene Peg-Typen (fiat-besichert, krypto-besichert, liquid-staking-basiert) reduziert dieses Risiko.
 
@@ -1133,14 +1137,14 @@ Viele Curve-Pools zahlen zusätzlich zu Trading-Gebühren CRV-Rewards (Curves ei
 
 **Kurze Erklärung:**
 - CRV-Tokens können für bis zu 4 Jahre gesperrt werden → veCRV
-- veCRV gibt Governance-Macht und boosted die eigenen LP-Rewards
-- Convex Finance poolt veCRV und bietet den Boost ohne selbst locken zu müssen
+- veCRV gibt Governance-Macht und boostet die eigenen LP-Rewards
+- Convex Finance poolt veCRV und bietet den Boost ohne dass LPs selbst CRV locken müssen
 
 **Für konservative LPs:**
 - Einfachste Version: LP auf Curve, keine CRV-Sperre, kein Convex — moderate aber stabile Rendite
 - Komplexere Version: LP auf Curve, staken auf Convex für zusätzliche CRV- und CVX-Rewards — höhere Rendite, aber zusätzliches Smart-Contract-Risiko (zwei Protokolle statt einem) und Exposure zu Reward-Token-Preisen
 
-Für das Kurs-Ziel von 7–8% ist direkte Curve-LP oft ausreichend. Convex-Stacking ist nicht verboten, aber es fügt Komplexität hinzu, ohne die Ziel-Rendite dramatisch zu verändern.
+Für das Kurs-Ziel von 7–8% ist eine direkte Curve-LP-Position oft ausreichend. Convex-Stacking ist nicht verboten, aber es fügt Komplexität hinzu, ohne die Ziel-Rendite deutlich zu verändern.
 
 **Realistische Renditen auf Curve**
 
@@ -1270,7 +1274,7 @@ Konzentriertes Depeg-Risiko. Obwohl die Pools "low IL" sind und diversifiziert a
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → StableSwap-Formel → Curve-Pool-Typen → Depeg-Historie (USDC/UST) → Amp-Parameter-Mechanik → CRV-Rewards-Einordnung → Portfolio-Integration
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — StableSwap-Kurve vs. Constant-Product, Curve-Pool-Screenshot (3pool, stETH/ETH), Depeg-Event-Charts (USDC März 2023, stETH Juni 2022), Amp-Parameter-Effekt-Diagramm, Stablecoin-Diversifikations-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.

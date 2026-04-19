@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 200 80 L 303.92304845413264 140 L 303.92304845413264 260 L 200 320 L 96.07695154586739 260.00000000000006 L 96.07695154586732 140.00000000000006 Z" stroke="#F5B841" fill="none" stroke-width="2"/>
+    <circle cx="200" cy="200" r="40" stroke="rgba(245, 184, 65, 0.35)" fill="none" stroke-width="2"/>
+    <circle cx="200" cy="200" r="4" fill="#F5B841"/>
+    <line x1="200" y1="200" x2="200" y2="80" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1" stroke-dasharray="3 4"/>
+    <line x1="200" y1="200" x2="303.92304845413264" y2="140" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1" stroke-dasharray="3 4"/>
+    <line x1="200" y1="200" x2="303.92304845413264" y2="260" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1" stroke-dasharray="3 4"/>
+    <line x1="200" y1="200" x2="200" y2="320" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1" stroke-dasharray="3 4"/>
+    <line x1="200" y1="200" x2="96.07695154586739" y2="260.00000000000006" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1" stroke-dasharray="3 4"/>
+    <line x1="200" y1="200" x2="96.07695154586732" y2="140.00000000000006" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1" stroke-dasharray="3 4"/>
+    <circle cx="200" cy="80" r="4" fill="#F5B841"/>
+    <circle cx="303.92304845413264" cy="140" r="4" fill="#F5B841"/>
+    <circle cx="303.92304845413264" cy="260" r="4" fill="#F5B841"/>
+    <circle cx="200" cy="320" r="4" fill="#F5B841"/>
+    <circle cx="96.07695154586739" cy="260.00000000000006" r="4" fill="#F5B841"/>
+    <circle cx="96.07695154586732" cy="140.00000000000006" r="4" fill="#F5B841"/>
+  </g>
+</svg>

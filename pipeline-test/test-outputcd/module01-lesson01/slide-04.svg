@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0B1F3B"/>
+      <stop offset="100%" stop-color="#11284A"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <rect x="64" y="64" width="8" height="120" fill="#F5B841" rx="2"/>
+  <text x="96" y="120" fill="#A0AEC0" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="28" font-weight="500">Slide 4 / 6</text>
+  <text x="96" y="200" fill="#FFFFFF" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="52" font-weight="700"><tspan x="96" dy="0">CeFi vs. DeFi</tspan></text>
+  <text x="96" y="340" fill="#A0AEC0" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="34" font-weight="400"><tspan x="96" dy="0">Eigenschaft CeFi DeFi ----------- --------- --------------</tspan><tspan x="96" dy="1.22em">Custody Plattform Nutzer KYC Pflicht Nein Ausführung</tspan><tspan x="96" dy="1.22em">Datenbank Smart Contract Transparenz Intern Öffentlich</tspan></text>
+  <text x="96" y="1008" fill="#A0AEC0" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="24">DeFi Academy · Modul 1</text>
+</svg>

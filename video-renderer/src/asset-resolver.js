@@ -36,8 +36,38 @@
 const fs = require('fs');
 const path = require('path');
 
-const { parseLesson } = require('./external/lesson-parser');
+const { parseAuto } = require('../../lesson-asset-generator/src/format-detector');
+const { normalizeLesson } = require('../../lesson-asset-generator/src/normalize-lesson');
 const { mapLessonToSections } = require('./external/section-mapper');
+
+/**
+ * Wie lesson-asset-generator/pipeline.js: parseAuto + normalizeLesson,
+ * damit slide_ref-IDs exakt zu video_config passen (Modul- vs. Single-Datei).
+ */
+function buildLessonFromMarkdownFile(markdownPath, lessonId) {
+  const md = fs.readFileSync(markdownPath, 'utf8');
+  const parsed = parseAuto(md, { sourcePath: markdownPath });
+  let raw;
+  if (parsed.format === 'single') {
+    raw = parsed.lessons[0];
+  } else {
+    const m = lessonId.match(/^module(\d{2})-lesson(\d{2})$/i);
+    if (!m) {
+      throw new Error(
+        `resolveLessonAssets: lessonId "${lessonId}" passt nicht zu Modul-Markdown (erwartet moduleNN-lessonMM).`
+      );
+    }
+    const mod = parseInt(m[1], 10);
+    const les = parseInt(m[2], 10);
+    raw = parsed.lessons.find((l) => l.meta.module === mod && l.meta.lesson === les);
+    if (!raw) {
+      throw new Error(
+        `resolveLessonAssets: Lektion ${lessonId} nicht in "${markdownPath}" gefunden.`
+      );
+    }
+  }
+  return normalizeLesson(raw, parsed.format);
+}
 
 /**
  * Asset resolution for a single lesson.
@@ -92,8 +122,7 @@ function resolveLessonAssets(opts) {
   // --- 2. Re-derive slide plan (needed for rendering bullets + titles) ---
   let slidePlan;
   if (lessonMarkdownPath && fs.existsSync(lessonMarkdownPath)) {
-    const md = fs.readFileSync(lessonMarkdownPath, 'utf8');
-    const lesson = parseLesson(md, { sourcePath: lessonMarkdownPath });
+    const lesson = buildLessonFromMarkdownFile(lessonMarkdownPath, lessonId);
     slidePlan = mapLessonToSections(lesson);
   } else {
     // Fallback: reconstruct minimal slide plan from video_config + visual_plan
