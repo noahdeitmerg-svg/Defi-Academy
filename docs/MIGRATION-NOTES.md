@@ -68,7 +68,7 @@ Im **Monorepo** heißen manche Pfade anders als im generischen Briefing:
 | `video-style-engine/` | `video-style-engine/` (gleich) |
 | `lesson-asset-generator/` | `lesson-asset-generator/` (gleich) |
 | `video-renderer/` | `video-renderer/` (gleich) |
-| `pipeline-test/` (SVG+ffmpeg) | **nicht** im Repo — optional separat |
+| `pipeline-test/` (SVG+ffmpeg) | `pipeline-test/` (v1) + `pipeline-test-v2/` (Brand 2.0, `run-full-pipeline-v2.js`) |
 
 ## Bekannte Einschränkungen
 
