@@ -91,7 +91,7 @@ Reihenfolge wie historisch beschlossen — weiterhin maßgeblich für **MP4-Prod
 |---|-------------|--------|------------|
 | F1 | UX-Shell + Landing + Kurs/Lektion SSG | **Erledigt** | SVG-Referenz `docs/ux-visuals/` |
 | F2 | Free-Module 1–3 im UX-Pfad inhaltlich | **Erledigt** | `lesson.md` / slides / quiz je Lektion |
-| F3 | Free-Lektionen **sichtbar** in UX-Player | **Offen** | **A:** `public/videos/module1-1-1` … `module3-3-6` committen. **B:** CDN Slug-Pfade + Env (nach A). |
+| F3 | Free-Lektionen **sichtbar** in UX-Player | **A erledigt** (MP4s in `public/videos/`) | **B:** CDN Slug-Pfade + Env — gemeinsam nachziehen, Repo dann schlanker. |
 | F4 | Video-Batch Modul 4–17 | **Offen** | Pipeline + Budget |
 | F5 | Modul 16 Quiz (Legacy) | **Erledigt** | `open-quiz.md` Platzhalter → Validator grün |
 | F6 | Zahlung + Pro-Zugang produktiv | **Offen** | Produkt/Compliance |
