@@ -1,6 +1,6 @@
 # Roadmap — DeFi Akademie (Gesamt)
 
-**Stand:** 2026-04-20 · Master-Kontext: [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) · Kurz-Gedächtnis/Changelog: [`docs/SYSTEMKONTEXT.md`](./SYSTEMKONTEXT.md)
+**Stand:** 2026-04-21 · Master-Kontext: [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) · Kurz-Gedächtnis/Changelog: [`docs/SYSTEMKONTEXT.md`](./SYSTEMKONTEXT.md) · **Neuer Chat:** [`docs/HANDOFF-NEUER-CHAT.md`](./HANDOFF-NEUER-CHAT.md)
 
 Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipeline** und **Distribution**. Detail-Backlogs bleiben in [`docs/offeneAufgaben.md`](./offeneAufgaben.md).
 
@@ -11,7 +11,7 @@ Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipelin
 | Thema | Ziel |
 |--------|------|
 | Lernprogramm | **18 Module**, **ca. 102 Lektionen**, deutsch, technisch korrekt, **ohne Anlageberatung** |
-| Didaktik | Modul 0 **Orientation/Introduction**, Module 1–3 **Free**, 4–17 **Pro** (Zahlungslogik später) |
+| Didaktik | Modul 0 **Orientation/Introduction**, Module 1–3 **Free**, 4–17 **Pro** (Zahlungslogik später). **Dev (2026-04):** In `data/courseStructure.ts` vorübergehend **alle `tier: "free"`**, damit `/kurs/…` ohne Supabase testbar — vor Launch wieder auf Ziel-Stufen setzen. |
 | Autoren-Quelle | `Module/modul-NN-*-FINAL.md` (insb. Modul 17: Portfolio/RWA) |
 
 ---
@@ -21,8 +21,8 @@ Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipelin
 ### B.1 Ist-Stand (umgesetzt)
 
 - **Öffentliche Landing** `/` — Marketing, Stufen, Kursinhalt-Teaser, Free/Pro, FAQ (an SVG-Referenz angelehnt).
-- **Neue Lernshell** unter `app/(app)/` mit Auth-Gate (Demo ohne Supabase): **Dashboard**, **Kurs** `/kurs`, **Fortschritt**, **Profil**, dynamisch **`/kurs/[modulId]/[lektionId]`** (alle 102 Pfade SSG).
-- **Parallel:** Legacy-Kurs **`/module/[moduleSlug]/…`** und **`/klassisch`** bleiben erhalten, bis Inhalte vollständig migriert sind.
+- **Neue Lernshell** unter `app/(app)/` mit Auth-Gate (Demo ohne Supabase): **Dashboard**, **Kurs** `/kurs`, **Fortschritt**, **Profil**, dynamisch **`/kurs/[modulId]/[lektionId]`** (alle 102 Pfade SSG). **Lektionsseite:** kein Folien-Block unter dem Video (Folien nur im Video); `slides.json` unverändert für Video-Pipeline; frühere Folien-Komponenten unter `components/_deprecated/`. **Key Takeaways:** UI `components/lesson/KeyTakeaways.tsx`; Inhalte zentral in `content/takeaways.json` (Loader `lib/content/loadTakeaways.ts`) — Befüllung für alle Lektionen: [`docs/CONTENT-AGENT-TAKEAWAYS.md`](./CONTENT-AGENT-TAKEAWAYS.md).
+- **Parallel:** Legacy-Kurs **`/module/[moduleSlug]/…`** und **`/klassisch`** — Ziel ist **F7** (ein Strang + Redirects); Stand Mapping: [`docs/F7-MAPPING.md`](./F7-MAPPING.md).
 - **Design:** `ux-*`-Tokens in `styles/globals.css`, Komponenten in `components/{layout,navigation,course,lesson,marketing,brand}`.
 - **Visuelle Referenz (versioniert):** `docs/ux-visuals/*.svg`.
 
@@ -75,14 +75,14 @@ Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipelin
 
 | Strang | Ordner | Nutzung |
 |--------|--------|---------|
-| **Legacy (Pages-Kurs)** | `content/modules/module1` … `module17` | `/module/…`, `validate:content`, alter Parser |
-| **UX-Build (Slug-Module)** | `content/modules/01-defi-grundlagen`, `02-wallets-sicherheit`, `03-blockchain-mechanik` | `/kurs/…`, `lib/content/loadLesson.ts` (`lesson.md`, `slides.json`, `quiz.json`) |
+| **Legacy (Pages-Kurs)** | `content/modules/module1` … `module16` (Modul-17-Quelle oft nur in `Module/`) | `/module/…`, `validate:content`, alter Parser |
+| **UX-Build (Slug-Module)** | `content/modules/01-defi-grundlagen`, `02-wallets-sicherheit`, `03-blockchain-mechanik` | `/kurs/…`, `lib/content/loadLesson.ts` (`lesson.md`, `slides.json`, `quiz.json`, plus `content/takeaways.json` für Key Takeaways) |
 
 **Dokumentierter Zielpfad (neu):** `content/modules/module-00` … `content/modules/module-17` (ohne bestehende Ordner umzubenennen).
 
 **Stand Free-Module UX-Pfad:** Modul **1–3** mit je **6** Lektionsordnern und Texten/Folien/Quiz; **Videos:** zuerst **A** `public/videos/`, später **B** CDN.
 
-**Offen:** Modul **4–17** im UX-Pfad anlegen **oder** Import-Tool so erweitern, dass aus `Module/` konsistent Slug-Strukturen werden.
+**Offen:** Modul **4–17** im UX-Pfad anlegen **oder** Import-Tool so erweitern, dass aus `Module/` konsistent Slug-Strukturen werden — **F7** ([`docs/F7-MAPPING.md`](./F7-MAPPING.md): Phase 1 Audit/Mapping **fertig**; Phasen 2–6 Migration/Archiv/Redirects/Tests ausstehend).
 
 ---
 
@@ -92,6 +92,7 @@ Reihenfolge wie historisch beschlossen — weiterhin maßgeblich für **MP4-Prod
 
 ### Phase D.1 — Qualität (Video + Gamma „Visuals only“)
 
+- **TTS (Skript → ElevenLabs):** Script Optimizer + Pronunciation-Wörterbuch — [`docs/VIDEO_PRODUCTION_WORKFLOW.md`](./VIDEO_PRODUCTION_WORKFLOW.md), `npm run test:voice-pipeline`.
 - Remotion-Template, Timing, Voice; Gamma nur **Einzelvisuals** (`visualNN.png`), nie ganze Slides — [`docs/SLIDE_GENERATION_RULES.md`](./SLIDE_GENERATION_RULES.md).
 - Abnahme: mindestens ein Modul visuell/inhaltlich release-tauglich; Naming `publish-videos` ↔ Plattform-Konventionen dokumentiert in [`docs/academy-build.md`](./academy-build.md).
 
@@ -121,12 +122,12 @@ Reihenfolge wie historisch beschlossen — weiterhin maßgeblich für **MP4-Prod
 | # | Meilenstein | Status | Anmerkung |
 |---|-------------|--------|------------|
 | F1 | UX-Shell + Landing + Kurs/Lektion SSG | **Erledigt** | SVG-Referenz `docs/ux-visuals/` |
-| F2 | Free-Module 1–3 im UX-Pfad inhaltlich | **Erledigt** | `lesson.md` / slides / quiz je Lektion |
+| F2 | Free-Module 1–3 im UX-Pfad inhaltlich | **Erledigt** | `lesson.md` / slides / quiz je Lektion · **Key Takeaways:** Struktur + UI **erledigt** (`content/takeaways.json`, Loader, `KeyTakeaways`); **Inhalt** für alle 102 Lektionen offen — `docs/CONTENT-AGENT-TAKEAWAYS.md` |
 | F3 | Free-Lektionen **sichtbar** in UX-Player | **A erledigt** (MP4s in `public/videos/`) | **B:** CDN Slug-Pfade + Env — gemeinsam nachziehen, Repo dann schlanker. |
 | F4 | Video-Batch Modul 4–17 | **Offen** | Pipeline + Budget |
 | F5 | Modul 16 Quiz (Legacy) | **Erledigt** | `open-quiz.md` Platzhalter → Validator grün |
 | F6 | Zahlung + Pro-Zugang produktiv | **Offen** | Produkt/Compliance |
-| F7 | Content-Stränge zusammenführen | **Offen** | Architekturentscheid |
+| F7 | Content-Stränge zusammenführen | **In Arbeit** | Phase 1 **erledigt** (`docs/F7-MAPPING.md`). **Phase 2 Vorbereitung erledigt:** `docs/F7-PHASE2-FRONTMATTER.md`, Redirect-Generator `npm run f7:redirects` → `config/f7-*.`, Doku `docs/F7-REDIRECTS.md`, Modul-17-Split `npm run split:modul-17`. Phasen 3–6 (Migration, `_archive/`, Live-Redirects auf Host) offen — Freigabe F7-MAPPING §C. |
 
 ---
 
@@ -134,11 +135,15 @@ Reihenfolge wie historisch beschlossen — weiterhin maßgeblich für **MP4-Prod
 
 | Dokument | Inhalt |
 |----------|--------|
+| [`docs/HANDOFF-NEUER-CHAT.md`](./HANDOFF-NEUER-CHAT.md) | Neuer Cursor-Chat: Kontext + Copy-Paste-Prompt |
+| [`docs/F7-MAPPING.md`](./F7-MAPPING.md) | Content-Merge F7 — Legacy → UX (Audit Phase 1) |
 | [`docs/offeneAufgaben.md`](./offeneAufgaben.md) | Detailliertes Backlog inkl. Pipeline-Tickets |
 | [`docs/defi-akademie-build-dokument.md`](./defi-akademie-build-dokument.md) | Volle UX-Spez (Phasen 1–12) |
+| [`docs/KEY-TAKEAWAYS.md`](./KEY-TAKEAWAYS.md) | Key Takeaways: Format, Pfade, Redaktion |
+| [`docs/CONTENT-AGENT-TAKEAWAYS.md`](./CONTENT-AGENT-TAKEAWAYS.md) | Befüllungsauftrag `takeaways.json` (102 Lektionen) |
 | [`docs/VIDEO_PRODUCTION_WORKFLOW.md`](./VIDEO_PRODUCTION_WORKFLOW.md) | Schritt-für-Schritt Video |
 | [`docs/GITHUB_PAGES.md`](./GITHUB_PAGES.md) | Deploy, Webhooks |
 
 ---
 
-*Letzte inhaltliche Gesamtüberarbeitung dieser Roadmap: 2026-04-20.*
+*Letzte inhaltliche Gesamtüberarbeitung dieser Roadmap: 2026-04-21.*

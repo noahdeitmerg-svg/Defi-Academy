@@ -387,7 +387,7 @@ Zusätzliche Trigger ohne Git-Push:\
 1.  Approved Lektion `Module/modul-NN-*.md` liegt vor
 2.  `lesson-asset-generator/src/cli.js --input ... --out ./output --style ../video-style-engine` erzeugt 4 Asset-Dateien
 3.  `slides_prompt.txt` → in Gamma einspielen → Slide-Bilder
-4.  `voice_script.txt` → ElevenLabs-Render → `voice.mp3`
+4.  `voice_script.txt` → Sanitize / Script Optimizer / Pronunciation (`pipeline/voice/`) → ElevenLabs → `voice.mp3`
 5.  Externe Visuals (Diagramme, Screenshots) nach `video-renderer/assets-input/moduleXX-lessonYY/visuals/` legen
 6.  `video-renderer/scripts/preflight-check.js` verifiziert Inputs (Exit 0 = Go)
 7.  `video-renderer/src/render-lesson.js` (oder `render-batch.js --parallel 2`) erzeugt MP4 + Poster
@@ -606,7 +606,7 @@ Output: `✔ Module X Lesson Y OK` / `✖ Module X Lesson Y <Grund>`, am Ende `A
 
 **Externe Inputs pro Lektion (manuell geliefert):**
 
--   `voice.mp3` — aus ElevenLabs auf Basis von `voice_script.txt`
+-   `voice.mp3` — aus ElevenLabs; Eingabetext aus `voice_script.txt` nach `pipeline/voice`-Aufbereitung
 -   `visuals/vNN.png` — aus Gamma (Slides) + Screenshots / Diagrammen gemäß `visual_plan.json`
 
 Fehlende Visuals werden als didaktischer Platzhalter gerendert — das Video bleibt rendertauglich, wirkt aber provisorisch.

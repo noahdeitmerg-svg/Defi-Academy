@@ -2,7 +2,9 @@
 
 Next.js-Lernplattform (App Router, Tailwind, Markdown/MDX): Module, Lektionen, Quiz, Fortschritt im Browser.
 
-**Zwei Lernpfade:** **Legacy** `/module/…` (`content/modules/moduleN`) und **neue UX-Shell** `/kurs/…` mit Slug-Ordnern (`01-defi-grundlagen` …) — siehe [`docs/ROADMAP.md`](docs/ROADMAP.md) und [`docs/AGENTEN-HANDBUCH.md`](docs/AGENTEN-HANDBUCH.md).
+**Zwei Lernpfade:** **Legacy** `/module/…` (`content/modules/moduleN`) und **neue UX-Shell** `/kurs/…` mit Slug-Ordnern (`01-defi-grundlagen` …) — siehe [`docs/ROADMAP.md`](docs/ROADMAP.md) und [`docs/AGENTEN-HANDBUCH.md`](docs/AGENTEN-HANDBUCH.md).  
+**Key Takeaways (UX):** zentral [`content/takeaways.json`](content/takeaways.json) — Format und Redaktion: [`docs/KEY-TAKEAWAYS.md`](docs/KEY-TAKEAWAYS.md).  
+**Neuer Cursor-Chat / Agent:** [`docs/HANDOFF-NEUER-CHAT.md`](docs/HANDOFF-NEUER-CHAT.md) — Doku-Index: [`docs/README.md`](docs/README.md).
 
 **Repo:** [github.com/noahdeitmerg-svg/Defi-Academy](https://github.com/noahdeitmerg-svg/Defi-Academy)
 
@@ -128,6 +130,7 @@ npm run render:pilot       # Nur erste 5 Lektionen als Smoke-Test
 | Datei | Inhalt |
 |-------|--------|
 | **[docs/AGENTEN-HANDBUCH.md](docs/AGENTEN-HANDBUCH.md)** | **Master für Agenten:** Ist-Stand, 18 Module / ca. 102 Lektionen (Ziel), Deploy, Roadmaps, Doku-Index |
+| [docs/AGENT-DOKUMENTATION-SYNC.md](docs/AGENT-DOKUMENTATION-SYNC.md) | **Pflicht nach Änderungen:** Doku für alle Agenten synchron halten |
 | **Neue UX-Shell** | Start `/`, App `/dashboard`, Kurs `/kurs/...`, Fortschritt, Profil; **Legacy**-Kurs unter `/klassisch` und `/module/...` (nur Ordner `moduleN` in `content/modules/`) |
 | [docs/BUILD.md](docs/BUILD.md) | Node, Build, Akademie-Inhalte |
 | [docs/academy-build.md](docs/academy-build.md) | Academy-Build-Pipeline: 2 Commands + 2 Uploads → Videos |

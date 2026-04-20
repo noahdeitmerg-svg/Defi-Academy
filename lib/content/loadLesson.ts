@@ -5,6 +5,7 @@ import type { Lesson, LessonAssets, QuizQuestion, Slide } from "@/data/types";
 import { ALL_MODULES } from "@/data/courseStructure";
 import { markdownToHtml } from "./parseMarkdown";
 import { resolveUxLessonVideoUrl } from "./resolveUxLessonVideoUrl";
+import { loadTakeaways } from "./loadTakeaways";
 
 const MODULES_ROOT = path.join(process.cwd(), "content", "modules");
 
@@ -114,8 +115,11 @@ export async function loadLesson(
   }
 
   const videoUrl = await resolveUxLessonVideoUrl(modulId, lektionId);
+  const keyTakeaways = loadTakeaways(modulId, lektionId);
 
-  return { lesson, videoUrl, slides, quiz };
+  // `slides` bleibt im Rückgabeobjekt: gleiche Daten wie in `slides.json` (Video-Pipeline / Gamma /
+  // künftige Tools). Die Lektions-UI (`LessonView`) rendert Folien nicht mehr — nur das Video.
+  return { lesson, videoUrl, slides, quiz, keyTakeaways };
 }
 
 export type LessonAssetsWithExercise = LessonAssets & {

@@ -1,10 +1,13 @@
 # Offene Aufgaben
 
-> **Gesamtstand & Prioritäten:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) — dieses File bleibt detailliertes Backlog.
+> **Gesamtstand & Prioritäten:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) — dieses File bleibt detailliertes Backlog.  
+> **Neuer Cursor-Chat:** [`docs/HANDOFF-NEUER-CHAT.md`](./HANDOFF-NEUER-CHAT.md) (Kontext + Prompt-Vorlage).
 
 > Lebendes Backlog für die DeFi-Academy-Pipeline. Nach jedem Prompt
 > aktualisiert: neue offene Punkte werden hinzugefügt, erledigte werden
 > mit Commit-Hash abgehakt. Priorität grob absteigend.
+
+**Agenten (verbindlich):** Nach inhaltlichen Repo-Änderungen die Dokumentation **mitziehen** — Checkliste [`docs/AGENT-DOKUMENTATION-SYNC.md`](./AGENT-DOKUMENTATION-SYNC.md) (Changelog, Handbuch, ROADMAP, Handoff, thematische Docs).
 
 **Roadmap (Gesamt):** [`docs/ROADMAP.md`](ROADMAP.md) — enthält jetzt **Produkt, UX-Shell, Content-Zweispurigkeit, Video-Pipeline und CI**. Video-Kernreihenfolge unverändert: (1) Qualität, (2) Batch, (3) CDN statt großer MP4s im Repo.
 
@@ -135,17 +138,11 @@ Gamma-API-Verifikation + Visual-Screenshots.
 
 ## Content-Qualität
 
-### 🟡 Example-Lektion `module04-lesson02` hat Pflichtverletzungen
+### ✅ Example-Lektion `module04-lesson02` (Validator-Referenz)
 
-Validator findet aktuell:
-
-- Slide Summary: 14 Bullets (erlaubt 6–7)
-- Visual Suggestions: kein „Concept Visual"-Keyword
-
-Das ist die gelieferte Vorlage des Content-Generators. Entweder:
-
-1. Content-Agent-Prompt verschärfen, sodass er diese Grenzen einhält, oder
-2. Example neu schreiben, damit er als Referenz dient.
+Stand 2026-04: Folien-Zusammenfassung auf 7 Slides begrenzt; Visual-Section mit
+Validator-kompatiblem **konzeptionell**-Keyword — `npm run validate-lessons` ohne
+Warnung für diese Lektion. Als Referenz für künftige `lessons/*.md` beibehalten.
 
 ---
 
@@ -156,6 +153,10 @@ Das ist die gelieferte Vorlage des Content-Generators. Entweder:
 - Routen unter `app/(app)/` inkl. `/kurs` und 102 SSG-Lektionen; Landing `/` an SVG-Referenz (`docs/ux-visuals/`).
 - `content/modules/01-defi-grundlagen`, `02-wallets-sicherheit`, `03-blockchain-mechanik`: je 6 Lektionen mit `lesson.md` / `slides.json` / `quiz.json`.
 - Videos in dieser Shell: CDN-URL in `loadLesson.ts` — Upload/Env siehe `docs/ROADMAP.md` Abschnitt B.2.
+
+### 🟡 Key Takeaways (`content/takeaways.json`)
+
+Loader + UI sind umgesetzt; **Redaktion** für alle Lektionen (ca. 102 Keys `modulId/lektionId`) offen — Auftrag und Checkliste: [`docs/CONTENT-AGENT-TAKEAWAYS.md`](./CONTENT-AGENT-TAKEAWAYS.md), Format: [`docs/KEY-TAKEAWAYS.md`](./KEY-TAKEAWAYS.md).
 
 ### 🟢 Auto-Import-Workflow gegen WIP-Module abgesichert
 

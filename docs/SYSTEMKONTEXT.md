@@ -1,8 +1,8 @@
 # DeFi Academy — Systemkontext (Agent & Folge-Chats)
 
-**Zweck:** Kurz-Gedächtnis für Cursor/Agent und neue Chats. Ausführlicher Gesamtstand: **`docs/AGENTEN-HANDBUCH.md`**. Bei **wichtigen** Repo-Änderungen eine Zeile im **Changelog** (Abschnitt 9) ergänzen.
+**Zweck:** Kurz-Gedächtnis für Cursor/Agent und neue Chats. Ausführlicher Gesamtstand: **`docs/AGENTEN-HANDBUCH.md`**. **Neuer Chat (Kontext + Prompt):** **`docs/HANDOFF-NEUER-CHAT.md`**. Bei **wichtigen** Repo-Änderungen eine Zeile im **Changelog** (Abschnitt 9) ergänzen.
 
-**Stand:** 2026-04-20 · Repo: `Defi-Academy` · Default-Branch: `main`
+**Stand:** 2026-04-21 · Repo: `Defi-Academy` · Default-Branch: `main`
 
 ---
 
@@ -35,7 +35,9 @@
 | Pfad | Rolle |
 |------|--------|
 | **`docs/AGENTEN-HANDBUCH.md`** | **Masterdokument** für Agenten (Zahlen, Roadmap, Deploy, Doku-Index). |
+| **`docs/HANDOFF-NEUER-CHAT.md`** | Einstieg für **neue Cursor-Chats**: Ist-Zustand, Links, Copy-Paste-Prompt. |
 | **`docs/ROADMAP.md`** | Gesamt-Roadmap (Produkt, UX, Content, Video, Distribution). |
+| **`docs/F7-MAPPING.md`** | Content-Merge F7 — Legacy → UX Mapping (Phase 1 Audit). |
 | `app/page.tsx` | Marketing-Landing `/`. |
 | `app/(app)/` | Dashboard, Kurs, Fortschritt, Profil, **`/kurs/[modulId]/[lektionId]`**. |
 | `app/module/`, `app/klassisch/` | Legacy-Kurs-UI. |
@@ -55,7 +57,8 @@
 
 1. **Einzel:** in `pipeline-test`: `node src/run-full-pipeline.js …` (CWD `pipeline-test`; `.env` mit ElevenLabs im **Repo-Root**).
 2. **Modul-Batch (Root):** `npm run videos:module -- --module N` — mit `--live`: publish, Dauer-JSON, ggf. Push.
-3. **TTS / Folien / Tabellen:** wie in `docs/AGENTEN-HANDBUCH.md` Abschnitt 6 und `docs/defi_academy_system.md`.
+3. **TTS (Root, Lektionen):** `npm run generate:voice` — Kette: Sanitize → **Script Optimizer** (`pipeline/voice/script_optimizer.js`: Zahlen, Satzlänge, Prosody) → **Pronunciation** (`preprocess_voice_script.js` + `pronunciation_dictionary.json`, PDF-Referenz im Root) → ElevenLabs. Details: **`docs/VIDEO_PRODUCTION_WORKFLOW.md`**. Tests: `npm run test:voice-pipeline`.
+4. **TTS / Folien / Tabellen (Architektur):** `docs/AGENTEN-HANDBUCH.md` Abschnitt 6, `docs/defi_academy_system.md`.
 
 ---
 
@@ -110,14 +113,16 @@
 
 - **Auto-Import:** vereinzelt fehlgeschlagen (z. B. Modul-10-Lauf) — GitHub Actions-Logs; bei fehlendem Ordner Import aus `Module/` anstoßen.
 - **Supabase / Auth:** produktiv nur mit Env; Demo-Modus ohne Secrets möglich.
-- **CDN:** `NEXT_PUBLIC_VIDEO_CDN_URL` für Free-Module in der neuen Lektions-UI setzen und MP4s hochladen.
+- **Tier / Paywall:** zur lokalen Verifikation sind in **`data/courseStructure.ts`** derzeit **alle Module `tier: "free"`** (bis Auth/Zahlung live). `TierGate`: Zugriff wenn Modul free **oder** `progress.tier === "pro"`.
+- **CDN:** `NEXT_PUBLIC_VIDEO_CDN_URL` für UX-Lektionen setzen und MP4s hochladen, wenn nicht unter `public/videos/` (Legacy-Namen).
+- **F7 Content-Merge:** `docs/F7-MAPPING.md` (Audit) liegt vor; Migration und Redirects folgen in späteren Phasen (siehe `docs/ROADMAP.md` F7).
 
 ---
 
 ## 8. UX-Arbeit (Build-Dokument / Lernplattform)
 
 - **Spezifikation:** `docs/defi-akademie-build-dokument.md` — Phasen 1–12; Spez erwähnt teils Next 14, **Ist:** Next 15 + Tailwind 4.
-- **Umgesetzt:** Landing, Public-Nav, App-TopNav, Kursübersicht mit Fortschritts-Karte, Modulkarten (Status-Leiste), Lektionslayout (Sidebar-Karte, Lernziele-Karte, Folien-Thumbnails), Brotkrumen, `docs/ux-visuals/`.
+- **Umgesetzt:** Landing, Public-Nav, App-TopNav, Kursübersicht mit Fortschritts-Karte, Modulkarten (Status-Leiste), Lektionslayout (Sidebar-Karte, Lernziele-Karte, Video, optional Key Takeaways — **keine** Folien-Galerie unter dem Video), Brotkrumen, `docs/ux-visuals/`.
 - **Parallel:** Legacy-Routen unverändert nutzbar.
 
 ---
@@ -133,3 +138,6 @@
 | 2026-04-18 | **UX-Lernshell:** Routen `/`, `/preise`, `/login`, `/registrieren`, `(app)/dashboard|kurs|fortschritt|profil`, dynamisch `/kurs/[modulId]/[lektionId]` (102 Pfade), Legal; `data/courseStructure`, `lib/content/*`, Progress/Auth/Tier; Demo-Content Modul 1; später M2–M3 erweitert. |
 | 2026-04-20 | **Gesamt-Roadmap** in `docs/ROADMAP.md` (Produkt + UX + Content + Video + CI). **SYSTEMKONTEXT** auf Zwei-Pfad-Architektur (Legacy + UX) und CDN-Video aktualisiert. **Modul 16:** `open-quiz.md`-Stub für Validator. **Free-Module UX:** M1–M3 vollständig unter Slug-Ordnern mit `lesson.md` / slides / quiz. |
 | 2026-04-20 | Curriculum-Update: **Modul 0** ergänzt; Referenz auf **18 Module** / ca. **102 Lektionen**; Lernpfad auf Orientation / Foundations / Protocols / Infrastructure / Advanced Analysis and Strategy aktualisiert; Zielstruktur `content/modules/module-00` … `module-17` dokumentiert. |
+| 2026-04-21 | **Voice:** Script Optimizer → Pronunciation (`voice_pipeline.js`). **Doku:** `VIDEO_PRODUCTION_WORKFLOW.md`. **Tier:** alle Module temporär `free` in `courseStructure.ts`. **Neu:** `HANDOFF-NEUER-CHAT.md`. **F7 Vorbereitung (ohne Migration):** `F7-PHASE2-FRONTMATTER.md`, `generate-f7-redirects.js` → `config/f7-*`, `F7-REDIRECTS.md`, `split-modul-17.mjs` → `tmp/`. **`lessons/module04-lesson02`:** Validator ohne Warnung. **`lib/tier/tierPolicy.ts`**, `npm run test:tier-policy`, `f7:redirects`, `split:modul-17`. |
+| 2026-04-21 | **UX Lektionsseite:** Folien-UI unter dem Video entfernt; `SlidesViewer` / `SlideNavigator` / `SlideThumbnailStrip` nach **`components/_deprecated/`** verschoben. **`slides.json`** weiter geladen in `loadLesson.ts` (Video-Pipeline), nicht mehr in `LessonView`. **Agenten-Regel:** `docs/AGENT-DOKUMENTATION-SYNC.md` + `.cursor/rules/agent-documentation-sync.mdc` — nach Änderungen Doku gesamt mitziehen. |
+| 2026-04-21 | **Key Takeaways:** `content/takeaways.json`, `lib/content/loadTakeaways.ts`, `LessonAssets.keyTakeaways`, `components/lesson/KeyTakeaways.tsx` unter dem Video. Doku: `docs/KEY-TAKEAWAYS.md`, Befüllungsauftrag: `docs/CONTENT-AGENT-TAKEAWAYS.md`. |

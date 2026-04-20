@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import type { Tier } from "@/data/types";
 import { useProgress } from "@/lib/progress/useProgress";
 import { PaywallModal } from "@/components/paywall/PaywallModal";
+import { isUxModuleAccessible } from "@/lib/tier/tierPolicy";
 
 export function TierGate({
   moduleTier,
@@ -14,7 +15,7 @@ export function TierGate({
 }) {
   const { progress } = useProgress();
   const [paywallOpen, setPaywallOpen] = useState(false);
-  const allowed = moduleTier === "free" || progress.tier === "pro";
+  const allowed = isUxModuleAccessible(moduleTier, progress.tier);
 
   if (allowed) {
     return <>{children}</>;

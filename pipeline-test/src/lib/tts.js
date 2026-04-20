@@ -1,8 +1,14 @@
 'use strict';
 
+const path = require('path');
 const { spawnSync } = require('child_process');
 const fs = require('fs');
 const { ffmpegBin } = require('./ffmpeg-path');
+
+const repoRoot = path.join(__dirname, '..', '..', '..');
+const { sanitizeVoiceScript } = require(path.join(repoRoot, 'pipeline', 'voice', 'sanitize_voice_script.js'));
+const { prepareVoiceForElevenLabs } = require(path.join(repoRoot, 'pipeline', 'voice', 'voice_pipeline.js'));
+const { enhanceVoiceMp3 } = require(path.join(repoRoot, 'pipeline', 'voice', 'audio_post_process.js'));
 
 const ELEVEN_BASE = 'https://api.elevenlabs.io/v1';
 
@@ -10,30 +16,7 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-/** Markdown- und Pipeline-Artefakte entfernen, die TTS nicht sprechen soll. */
-function sanitizeVoiceScript(raw) {
-  /** Zeile nur aus `**[Slide n]**` bzw. `**[Slide n] — Titel**` (Folien-Markdown). */
-  const slideLineOnly = /^\*\*\[Slide\s*\d+\](?:\s*[—–\-]\s*[^*\n]+)?\*\*\s*$/;
-  /** Gleiches Muster am Zeilenanfang, gefolgt von echtem Sprechertext. */
-  const slidePrefix = /^\*\*\[Slide\s*\d+\](?:\s*[—–\-]\s*[^*]+)?\*\*\s*/;
-
-  const kept = [];
-  for (const line of raw.split(/\r?\n/)) {
-    const trimmed = line.trim();
-    if (trimmed.startsWith('#')) continue;
-    if (/^-{3,}$/.test(trimmed)) continue;
-    if (slideLineOnly.test(trimmed)) continue;
-    const cleaned = line.replace(slidePrefix, '');
-    if (cleaned.trim().length === 0) continue;
-    kept.push(cleaned);
-  }
-  let text = kept.join('\n');
-  text = text.replace(/(\w[\w-]*)\s*\[\s*\1\s*\]/g, '$1');
-  text = text.replace(/\n{3,}/g, '\n\n');
-  return text.trim();
-}
-
-async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity }) {
+async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity, style }) {
   const url = `${ELEVEN_BASE}/text-to-speech/${encodeURIComponent(voiceId)}`;
   const res = await fetch(url, {
     method: 'POST',
@@ -48,7 +31,7 @@ async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity }
       voice_settings: {
         stability,
         similarity_boost: similarity,
-        style: 0,
+        style,
         use_speaker_boost: true,
       },
     }),
@@ -91,12 +74,14 @@ async function synthesizeToMp3({ fullText, outPath, log }) {
   if (!apiKey) throw new Error('ELEVENLABS_API_KEY fehlt.');
   const voiceId = process.env.ELEVENLABS_VOICE_ID;
   if (!voiceId) throw new Error('ELEVENLABS_VOICE_ID fehlt.');
-  const modelId = process.env.ELEVENLABS_MODEL || 'eleven_multilingual_v2';
-  const stability = parseFloat(process.env.ELEVENLABS_STABILITY || '0.55', 10);
-  const similarity = parseFloat(process.env.ELEVENLABS_SIMILARITY || '0.75', 10);
+  const sanitized = sanitizeVoiceScript(fullText);
+  const text = prepareVoiceForElevenLabs(sanitized);
+  if (!text.trim()) throw new Error('Sprechertext nach Voice-Pipeline leer.');
 
-  const text = sanitizeVoiceScript(fullText);
-  if (!text) throw new Error('Sprechertext nach Sanitize leer.');
+  const modelId = process.env.ELEVENLABS_MODEL || 'eleven_multilingual_v3';
+  const stability = parseFloat(process.env.ELEVENLABS_STABILITY || '0.4', 10);
+  const similarity = parseFloat(process.env.ELEVENLABS_SIMILARITY || '0.8', 10);
+  const style = parseFloat(process.env.ELEVENLABS_STYLE || '0.2', 10);
 
   const chunks = [];
   let rest = text;
@@ -123,6 +108,7 @@ async function synthesizeToMp3({ fullText, outPath, log }) {
       text: chunks[i],
       stability,
       similarity,
+      style,
     });
     fs.writeFileSync(part, buf);
     partPaths.push(part);
@@ -130,26 +116,37 @@ async function synthesizeToMp3({ fullText, outPath, log }) {
 
   if (partPaths.length === 1) {
     fs.renameSync(partPaths[0], outPath);
-    return;
+  } else {
+    const listPath = `${outPath}.concat.txt`;
+    const norm = (p) => p.replace(/\\/g, '/');
+    fs.writeFileSync(
+      listPath,
+      partPaths.map((p) => `file '${norm(p)}'`).join('\n'),
+      'utf8'
+    );
+    const r = spawnSync(
+      ffmpegBin(),
+      ['-y', '-f', 'concat', '-safe', '0', '-i', listPath, '-c', 'copy', outPath],
+      { encoding: 'utf8' }
+    );
+    if (r.status !== 0) {
+      throw new Error(`ffmpeg concat MP3: ${r.stderr || r.stdout}`);
+    }
+    for (const p of partPaths) try { fs.unlinkSync(p); } catch (_) {}
+    try { fs.unlinkSync(listPath); } catch (_) {}
   }
 
-  const listPath = `${outPath}.concat.txt`;
-  const norm = (p) => p.replace(/\\/g, '/');
-  fs.writeFileSync(
-    listPath,
-    partPaths.map((p) => `file '${norm(p)}'`).join('\n'),
-    'utf8'
-  );
-  const r = spawnSync(
-    ffmpegBin(),
-    ['-y', '-f', 'concat', '-safe', '0', '-i', listPath, '-c', 'copy', outPath],
-    { encoding: 'utf8' }
-  );
-  if (r.status !== 0) {
-    throw new Error(`ffmpeg concat MP3: ${r.stderr || r.stdout}`);
+  const enhanced = `${outPath}.post.mp3`;
+  enhanceVoiceMp3(outPath, enhanced);
+  try {
+    fs.unlinkSync(outPath);
+    fs.renameSync(enhanced, outPath);
+  } catch (_) {
+    try {
+      fs.copyFileSync(enhanced, outPath);
+      fs.unlinkSync(enhanced);
+    } catch (_) {}
   }
-  for (const p of partPaths) try { fs.unlinkSync(p); } catch (_) {}
-  try { fs.unlinkSync(listPath); } catch (_) {}
 }
 
 module.exports = { sanitizeVoiceScript, synthesizeToMp3 };

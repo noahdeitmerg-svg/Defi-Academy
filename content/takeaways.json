@@ -1,0 +1,5 @@
+{
+  "__description": "Zentrale Mapping-Datei aller Key Takeaways pro Lektion. Wird vom Content Agent befüllt. Schlüssel-Format: 'modulId/lektionId'.",
+  "__schema_version": 1,
+  "takeaways": {}
+}

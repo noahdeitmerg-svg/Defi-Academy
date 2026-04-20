@@ -18,6 +18,7 @@ function lessonsForModule(n: number): string[] {
 }
 
 /** Statische Kursstruktur: 17 Module, 102 Lektionen (je 6 Lektionen pro Modul). */
+/** Temporär: alle `tier: "free"` — freier Zugriff ohne Supabase/Checkout; vor Launch Pro für Module 4–17 wiederherstellen. */
 export const ALL_MODULES: Module[] = [
   {
     id: "01-defi-grundlagen",
@@ -55,7 +56,7 @@ export const ALL_MODULES: Module[] = [
     title: "DEX Mechanik",
     description:
       "Orderbuch vs. AMM, Liquiditätspools, Gebühren und Preisbildung auf dezentralen Märkten.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(4)],
   },
@@ -65,7 +66,7 @@ export const ALL_MODULES: Module[] = [
     title: "Liquidity Pools",
     description:
       "LP-Tokens, Impermanent Loss, Incentives und typische Risiken aus Sicht der Kapitalgeber.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(5)],
   },
@@ -75,7 +76,7 @@ export const ALL_MODULES: Module[] = [
     title: "Lending Markets",
     description:
       "Supply, Borrow, Zinsmodelle und Interaktion mit übergreifenden Protokollgrenzen.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(6)],
   },
@@ -85,7 +86,7 @@ export const ALL_MODULES: Module[] = [
     title: "Sicherheiten & Liquidationen",
     description:
       "Collateral-Faktoren, Health Factor, Liquidationspfade und systemische Kopplungen.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(7)],
   },
@@ -95,7 +96,7 @@ export const ALL_MODULES: Module[] = [
     title: "Stablecoins",
     description:
       "Besichert, algorithmisch, hybride Modelle — Stabilitätsmechanismen und strukturelle Risiken.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(8)],
   },
@@ -105,7 +106,7 @@ export const ALL_MODULES: Module[] = [
     title: "Yield Strategien",
     description:
       "Renditequellen, Trade-offs und warum höhere APR selten „kostenlose“ Zusatzrendite sind.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(9)],
   },
@@ -115,7 +116,7 @@ export const ALL_MODULES: Module[] = [
     title: "Leverage Loops",
     description:
       "Hebel über Lending und DEX, Reflexivität und typische Fehler bei der Risikokontrolle.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(10)],
   },
@@ -125,7 +126,7 @@ export const ALL_MODULES: Module[] = [
     title: "MEV",
     description:
       "Front-Running, Sandwiching, Builder-Märkte — wo Wert extrahiert wird und was das für Nutzer bedeutet.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(11)],
   },
@@ -135,7 +136,7 @@ export const ALL_MODULES: Module[] = [
     title: "Flash Loans",
     description:
       "Atomare Kredite, arbitrage- und liquidationsgetriebene Nutzung, sicherheitsrelevante Muster.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(12)],
   },
@@ -145,7 +146,7 @@ export const ALL_MODULES: Module[] = [
     title: "veTokenomics",
     description:
       "Zeitsperren, Stimmrecht, Emissionen und Anreize — Governance-Mechanik mit zweiter Ordnung.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(13)],
   },
@@ -155,7 +156,7 @@ export const ALL_MODULES: Module[] = [
     title: "Cross-Chain Infrastruktur",
     description:
       "Brücken, Messaging, Vertrauensannahmen und typische Ausfall- oder Ausnutzungsmuster.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(14)],
   },
@@ -165,7 +166,7 @@ export const ALL_MODULES: Module[] = [
     title: "On-Chain Analytics",
     description:
       "Metriken, Datenquellen und Grenzen — wie man Charts liest, ohne sich selbst zu täuschen.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(15)],
   },
@@ -175,7 +176,7 @@ export const ALL_MODULES: Module[] = [
     title: "Composability Risk",
     description:
       "Stapelrisiken, Abhängigkeitsgraphen und wie sich Protokoll-Kombinationen verschärfen können.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(16)],
   },
@@ -185,7 +186,7 @@ export const ALL_MODULES: Module[] = [
     title: "Portfolio Konstruktion & Future of DeFi",
     description:
       "Allokation, Szenarien, RWA-Anbindung und strukturierte Einordnung langfristiger Entwicklungen.",
-    tier: "pro",
+    tier: "free",
     estimatedMinutes: 120,
     lessons: [...lessonsForModule(17)],
   },

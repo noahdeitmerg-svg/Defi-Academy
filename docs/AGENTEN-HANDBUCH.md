@@ -3,7 +3,9 @@
 **Zweck:** Ein Einstiegsdokument für alle Cursor-/KI-Agenten und Menschen im Repo.  
 **Stand:** April 2026 · Branch-Default: `main` · Repo: `Defi-Academy`
 
-> **Regel für Agenten:** Zuerst dieses Handbuch lesen, dann bei Bedarf die verlinkten Fachdokumente. Änderungen am **Ist-Zustand** (Deploy, Module, Pipeline) hier oder im Changelog von `docs/SYSTEMKONTEXT.md` (Abschnitt 9) spiegeln.
+> **Regel für Agenten:** Zuerst dieses Handbuch lesen, dann bei Bedarf die verlinkten Fachdokumente. **Neuer Cursor-Chat:** zuerst **`docs/HANDOFF-NEUER-CHAT.md`** (Kontext + Prompt-Vorlage). Änderungen am **Ist-Zustand** (Deploy, Module, Pipeline) hier oder im Changelog von `docs/SYSTEMKONTEXT.md` (Abschnitt 9) spiegeln.
+
+> **Doku-Sync (verbindlich):** Nach jeder relevanten Repo-Änderung die Dokumentation **mitziehen**, damit alle Agenten und neue Chats auf dem gleichen Stand sind — Checkliste: **`docs/AGENT-DOKUMENTATION-SYNC.md`**.
 
 ---
 
@@ -13,6 +15,7 @@
 - **Prinzip:** Tiefe statt Hype — technisch korrekt, risikobewusst, ohne Marketing-Sprache.
 - **Öffentliche Plattform (heute):** Next.js-App als **statischer Export** auf **GitHub Pages** (kein Vercel im aktuellen Produktiv-Deploy).
 - **UX-Lernshell (umgesetzt, parallel):** Dashboard, Kurs, Lektion, Fortschritt, Profil laut `docs/defi-akademie-build-dokument.md` — **Legacy** `/module/…` und **neu** `/kurs/…` coexistieren. Videos: Legacy `public/videos/` vs. neue Shell **CDN-URL** (`NEXT_PUBLIC_VIDEO_CDN_URL`, siehe `loadLesson.ts`). Supabase/R2 produktiv = optional später.
+- **Tier (Dev):** In `data/courseStructure.ts` sind alle Module vorübergehend **`free`**, damit ohne Supabase der gesamte Kurs testbar ist (`TierGate`); Produktziel bleibt Free vs. Pro — vor Launch zurücksetzen.
 
 ---
 
@@ -76,12 +79,13 @@
 | **Neue Lernshell** | `app/(app)/` — u. a. `/dashboard`, `/kurs`, `/kurs/[modulId]`, `/kurs/[modulId]/[lektionId]`, `/fortschritt`, `/profil` |
 | **Legacy-Kurs** | `app/module/[moduleSlug]/`, `lesson/[lessonSlug]/`, `quiz/` |
 | Klassische Liste | `app/klassisch/page.tsx` |
-| Content **UX-Pfad** | `content/modules/01-defi-grundlagen/…`, `02-wallets-sicherheit/…`, `03-blockchain-mechanik/…` (`module.json`, `*/lesson.md`, `slides.json`, `quiz.json`) |
+| Content **UX-Pfad** | `content/modules/01-defi-grundlagen/…`, `02-wallets-sicherheit/…`, `03-blockchain-mechanik/…` (`module.json`, `*/lesson.md`, `slides.json`, `quiz.json`) · **Key Takeaways:** `content/takeaways.json` (`docs/KEY-TAKEAWAYS.md`) |
 | Content **Legacy** | `content/modules/moduleN/` (`meta.json`, `N-x.md`, ggf. `quiz.json` / `open-quiz.md`) |
 | Content **Zielstruktur (neu)** | `content/modules/module-00/` … `content/modules/module-17/` (dokumentiert; bestehende Ordner vorerst unverändert) |
 | Autoren-Quelle | `Module/modul-NN-*-FINAL.md` → optional Auto-Import nach `content/modules/` |
 | Video **Legacy-UI** | `lib/lessonAssets.ts` → `public/videos/<moduleSlug>-<lessonSlug>.mp4` |
 | Video **UX-Lektion** | `lib/content/loadLesson.ts` → CDN `…/modules/{modulId}/{lektionId}.mp4` |
+| UX **Folien auf `/kurs/…`** | Keine separate Folien-UI unter dem Video — Inhalt im **Video**; `slides.json` bleibt für Pipeline; archivierte Viewer-Komponenten unter `components/_deprecated/` |
 | Brand / Video-Look | `brand/` → `npm run sync:brand` |
 | Pipeline | `pipeline-test/`, `video-renderer/`, `lesson-asset-generator/`, Skripte in `scripts/` |
 
@@ -95,7 +99,7 @@ Terminologie (Module, Lektionen, kein Wort „Curriculum“ in deutscher UI): **
    Markdown aus `content/modules/moduleN/`, Parser `lib/parseLesson.ts`, `lib/lessonSectionParser.ts`; Videos unter `public/videos/`.
 
 2. **UX-Lernshell** (`/kurs/…`)  
-   Struktur `content/modules/<slug>/` mit `module.json`, pro Lektion `lesson.md`, `slides.json`, `quiz.json`; Loader `lib/content/loadModules.ts` + `loadLesson.ts`; Videos per **CDN-URL** (Env). **Free-Module 1–3** sind in diesem Pfad befüllt.
+   Struktur `content/modules/<slug>/` mit `module.json`, pro Lektion `lesson.md`, `slides.json`, `quiz.json`; **Key Takeaways** zentral in `content/takeaways.json` (`loadTakeaways.ts`); Loader `lib/content/loadModules.ts` + `loadLesson.ts`; Videos per **CDN-URL** (Env). **Free-Module 1–3** sind in diesem Pfad befüllt.
 
 Agenten: Inhaltsänderungen je nach Ziel-UI wählen — Legacy-Import (`Module/` → `moduleN`) **und/oder** Slug-Ordner für `/kurs/` pflegen, bis eine Pipeline beides vereinheitlicht.
 
@@ -105,6 +109,7 @@ Agenten: Inhaltsänderungen je nach Ziel-UI wählen — Legacy-Import (`Module/`
 
 - **Gamma:** nur **Einzel-Visuals** (`visual01.png` …), **kein** fertiges Slide-Deck für den Renderer — siehe **`docs/SLIDE_GENERATION_RULES.md`**.
 - **Remotion:** Layout/Folien in `video-style-engine/slide-template.jsx` (+ Brand aus `brand/`).
+- **TTS / ElevenLabs:** `npm run generate:voice` — `prepareVoiceForElevenLabs()` = **Script Optimizer** (Zahlen, Satzlänge, Prosody in `pipeline/voice/script_optimizer.js`) → **Pronunciation** (`preprocess_voice_script.js` + `pronunciation_dictionary.json`). Tests: `npm run test:voice-pipeline`.
 - **Academy-Build (npm-Layer):** Befehle und Ordner **`docs/academy-build.md`**; End-to-End-Flow **`docs/VIDEO_PRODUCTION_WORKFLOW.md`**.
 - **Renderer-Output → Plattform:** `npm run publish-videos` (`scripts/publish-videos.js`), optional `config/video-slug-map.json`.
 
@@ -158,7 +163,11 @@ Lebendes Backlog: **`docs/offeneAufgaben.md`**.
 | Dokument | Rolle |
 |----------|--------|
 | **`docs/AGENTEN-HANDBUCH.md`** (dieses) | Master: Stand, Zahlen, Deploy, Roadmaps, Verweise |
+| **`docs/HANDOFF-NEUER-CHAT.md`** | Neuer Cursor-Chat: kompakter Ist-Stand + **Copy-Paste-Prompt** |
 | **`docs/SYSTEMKONTEXT.md`** | Kurz-Gedächtnis + **Changelog** bei Repo-Meilensteinen |
+| **`docs/F7-MAPPING.md`** | Content-Merge F7 — Legacy → UX (Audit Phase 1) |
+| **`docs/F7-PHASE2-FRONTMATTER.md`** | F7 Phase 2: verbindliches `lesson.md`-Frontmatter + Mapping-Regeln |
+| **`docs/F7-REDIRECTS.md`** | F7: Redirect-Generator, GitHub-Pages-Hinweis, Testplan |
 | **`docs/defi-akademie-build-dokument.md`** | Volle UX-/Plattform-Spezifikation (18 Module inkl. Modul 0, Phasen 1–12) |
 | **`docs/defi_academy_system.md`** | Tiefe Systemdoku, Agenten-Rollen, Pipeline-Details |
 | **`docs/academy-structure.md`** | Terminologie & Hierarchie |
@@ -174,6 +183,8 @@ Lebendes Backlog: **`docs/offeneAufgaben.md`**.
 | **`docs/MIGRATION-NOTES.md`** | Lesson-Asset-Generator Multi-Format |
 | **`docs/offeneAufgaben.md`** | Backlog |
 | **`docs/ROADMAP.md`** | Phasen Video/Distribution |
+| **`docs/README.md`** | Kurz-Index aller Doku-Dateien |
+| **`docs/AGENT-DOKUMENTATION-SYNC.md`** | Pflicht: Doku nach Repo-Änderungen mitziehen (alle Agenten) |
 
 **Hinweis zu Duplikaten:** Inhaltliche Überschneidungen zwischen `defi_academy_system.md` und älteren Abschnitten in `offeneAufgaben.md` sind beabsichtigt bis zur Konsolidierung — verbindliche **Zahlen** und **Deploy-Ist** stehen in **diesem Handbuch** und im Changelog von `SYSTEMKONTEXT.md`.
 

@@ -1,0 +1,14 @@
+---
+description: Nach relevanten Repo-Änderungen Dokumentation synchronisieren (alle Agenten).
+alwaysApply: true
+---
+
+# Doku-Sync (DeFi Academy)
+
+Nach **merge-fähigen** Änderungen am Code, Content-Struktur, Pipeline oder Deploy die betroffene **Dokumentation mitziehen**, damit parallel arbeitende Agenten und neue Chats denselben Ist-Stand haben.
+
+**Checkliste:** `docs/AGENT-DOKUMENTATION-SYNC.md`  
+**Master:** `docs/AGENTEN-HANDBUCH.md` (Regel im Einleitungsblock)  
+**Changelog:** `docs/SYSTEMKONTEXT.md` Abschnitt 9 — mindestens eine Zeile bei fachlich spürbaren Änderungen.
+
+Thematische Docs (ROADMAP, HANDOFF, Fach-Doku, `rg` auf alte Pfade) bei Bedarf anpassen.

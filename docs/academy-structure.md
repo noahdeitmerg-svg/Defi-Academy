@@ -86,7 +86,7 @@ Inhalten.
   "Lending & Stablecoins", "MEV & Flash Loans").
 - **Ablage (zwei parallele Konventionen):**
   - **Legacy:** `content/modules/module1` … `module17` — flache Lektions-`*.md`, `meta.json`, Quiz auf Modul-Ebene.
-  - **UX-Shell:** `content/modules/01-defi-grundlagen` usw. — `module.json`, Unterordner pro Lektion mit `lesson.md`, `slides.json`, `quiz.json` (siehe `lib/content/loadModules.ts`).
+  - **UX-Shell:** `content/modules/01-defi-grundlagen` usw. — `module.json`, Unterordner pro Lektion mit `lesson.md`, `slides.json`, `quiz.json` (siehe `lib/content/loadModules.ts`); **Key Takeaways** zentral in `content/takeaways.json` (`docs/KEY-TAKEAWAYS.md`).
   - **Dokumentierte Zielstruktur:** `content/modules/module-00` … `content/modules/module-17` (ohne sofortige Umbenennung bestehender Ordner).
 - **Quelle:** Autoren-Markdown unter `Module/modul-NN-*-FINAL.md` sowie Pipeline-Outputs in `lessons/`.
 - **Sichtbar in der UI als:** Legacy unter `/module/<moduleSlug>`; UX unter `/kurs` und `/kurs/<modulId>`.

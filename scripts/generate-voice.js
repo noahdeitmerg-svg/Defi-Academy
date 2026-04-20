@@ -9,18 +9,25 @@
  *   (default scripts-dir: ./generated-assets — Pipeline-Output von
  *    npm run generate-assets. Alternativ: ./generator-output, ./lessons/)
  *
+ * Vor ElevenLabs: Sanitize → Script Optimizer (pipeline/voice/script_optimizer.js:
+ * Zahlen, Satzlänge, Prosody) → Voice Preprocessor (pronunciation_dictionary.json)
+ * (pipeline/voice/voice_pipeline.js).
+ * Optional Debug: voice_script_clean.txt (Text wie an ElevenLabs gesendet).
+ * Optional Audio: VOICE_ENHANCE (default an), siehe pipeline/voice/audio_post_process.js
+ *
  * Output je Lektion:
  *   <output-dir>/moduleXX-lessonYY/voice.mp3
  *   (default: ./assets-input)
  *
  * Env:
  *   ELEVENLABS_API_KEY       Pflicht (ausser --dry-run)
- *   ELEVENLABS_MODEL         default: eleven_turbo_v2
+ *   ELEVENLABS_MODEL         default: eleven_multilingual_v3
  *   ELEVENLABS_VOICE         Voice-Name (default: Florian).
  *                            Wird via /v1/voices auf die reale ID gemappt.
  *   ELEVENLABS_VOICE_ID      Direkte Voice-ID — uebersteuert den Namen.
- *   ELEVENLABS_STABILITY     default: 0.5
- *   ELEVENLABS_SIMILARITY    default: 0.75
+ *   ELEVENLABS_STABILITY     default: 0.4
+ *   ELEVENLABS_SIMILARITY    default: 0.8
+ *   ELEVENLABS_STYLE         default: 0.2
  *
  * Usage:
  *   npm run generate:voice
@@ -48,6 +55,10 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const LOG_FILE = path.join(ROOT, 'logs', 'generate-voice.log');
+
+const { sanitizeVoiceScript } = require(path.join(ROOT, 'pipeline', 'voice', 'sanitize_voice_script.js'));
+const { prepareVoiceForElevenLabs } = require(path.join(ROOT, 'pipeline', 'voice', 'voice_pipeline.js'));
+const { enhanceVoiceMp3 } = require(path.join(ROOT, 'pipeline', 'voice', 'audio_post_process.js'));
 
 // .env / .env.local aus Projekt-Root laden, damit ELEVENLABS_API_KEY &
 // Freunde nicht manuell in der Shell gesetzt werden muessen. Bereits
@@ -86,9 +97,9 @@ Flags:
   --help                 Hilfe
 
 Env:
-  ELEVENLABS_API_KEY (pflicht), ELEVENLABS_MODEL (default eleven_turbo_v2),
+  ELEVENLABS_API_KEY (pflicht), ELEVENLABS_MODEL (default eleven_multilingual_v3),
   ELEVENLABS_VOICE (default Florian), ELEVENLABS_VOICE_ID (override),
-  ELEVENLABS_STABILITY, ELEVENLABS_SIMILARITY
+  ELEVENLABS_STABILITY, ELEVENLABS_SIMILARITY, ELEVENLABS_STYLE
 `);
 }
 
@@ -195,39 +206,7 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/**
- * Entfernt Markdown-/Kommentar-Artefakte aus voice_script.txt bevor der Text
- * an ElevenLabs gesendet wird.
- *
- * Ohne diesen Schritt liest die TTS Zeichen wie "#", "##", "---", "[Klammern]"
- * und Section-Marker (z.B. "# section: lesson_title") wörtlich vor.
- *
- * Regeln:
- *   - Zeilen die mit "#" beginnen werden verworfen
- *     (Header + Section-Kommentare + Hinweise).
- *   - Horizontale Trenner ("---") werden verworfen.
- *   - <break> / <emphasis> / SSML-Tags bleiben unveraendert (ElevenLabs
- *     unterstuetzt diese nativ via v1/text-to-speech).
- *   - Phonetische Hilfe in eckigen Klammern direkt hinter einem Akronym
- *     ("DeFi [DeFi]") wird entfernt — ElevenLabs v2.5 kann deutsche
- *     Akronyme selbst aussprechen, und die Klammern werden sonst mitgelesen.
- *   - Mehrfache Leerzeilen werden zu einer zusammengefasst.
- */
-function sanitizeVoiceScript(raw) {
-  const kept = [];
-  for (const line of raw.split(/\r?\n/)) {
-    const trimmed = line.trim();
-    if (trimmed.startsWith('#')) continue;
-    if (/^-{3,}$/.test(trimmed)) continue;
-    kept.push(line);
-  }
-  let text = kept.join('\n');
-  text = text.replace(/(\w[\w-]*)\s*\[\s*\1\s*\]/g, '$1');
-  text = text.replace(/\n{3,}/g, '\n\n');
-  return text.trim();
-}
-
-async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity }) {
+async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity, style }) {
   const url = `${ELEVEN_BASE}/text-to-speech/${encodeURIComponent(voiceId)}`;
   const res = await fetch(url, {
     method: 'POST',
@@ -242,7 +221,7 @@ async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity }
       voice_settings: {
         stability,
         similarity_boost: similarity,
-        style: 0,
+        style,
         use_speaker_boost: true,
       },
     }),
@@ -322,9 +301,10 @@ async function main() {
   log.info('DeFi Academy — generate-voice (ElevenLabs TTS)');
   log.info(`Scripts-Dir:  ${scriptsDir}`);
   log.info(`Output-Dir:   ${outputDir}`);
-  log.info(`Model:        ${process.env.ELEVENLABS_MODEL || 'eleven_turbo_v2 (default)'}`);
-  log.info(`Stability:    ${process.env.ELEVENLABS_STABILITY || '0.5 (default)'}`);
-  log.info(`Similarity:   ${process.env.ELEVENLABS_SIMILARITY || '0.75 (default)'}`);
+  log.info(`Model:        ${process.env.ELEVENLABS_MODEL || 'eleven_multilingual_v3 (default)'}`);
+  log.info(`Stability:    ${process.env.ELEVENLABS_STABILITY || '0.4 (default)'}`);
+  log.info(`Similarity:   ${process.env.ELEVENLABS_SIMILARITY || '0.8 (default)'}`);
+  log.info(`Style:        ${process.env.ELEVENLABS_STYLE || '0.2 (default)'}`);
   log.info(`Concurrency:  ${concurrency}`);
   log.info(`Dry-run:      ${dryRun}`);
   log.info(`Force:        ${force}`);
@@ -358,9 +338,10 @@ async function main() {
     process.exit(1);
   }
 
-  const modelId = process.env.ELEVENLABS_MODEL || 'eleven_turbo_v2';
-  const stability = Number(process.env.ELEVENLABS_STABILITY || '0.5');
-  const similarity = Number(process.env.ELEVENLABS_SIMILARITY || '0.75');
+  const modelId = process.env.ELEVENLABS_MODEL || 'eleven_multilingual_v3';
+  const stability = Number(process.env.ELEVENLABS_STABILITY || '0.4');
+  const similarity = Number(process.env.ELEVENLABS_SIMILARITY || '0.8');
+  const style = Number(process.env.ELEVENLABS_STYLE || '0.2');
 
   let voiceId = null;
   if (!dryRun) {
@@ -394,9 +375,19 @@ async function main() {
     if (!rawText) {
       throw new Error(`voice_script.txt ist leer: ${scriptPath}`);
     }
-    const text = sanitizeVoiceScript(rawText);
-    if (!text) {
+    const lessonDir = path.dirname(scriptPath);
+    const sanitized = sanitizeVoiceScript(rawText);
+    if (!sanitized) {
       throw new Error(`voice_script.txt enthaelt nach Sanitize keinen sprechbaren Text: ${scriptPath}`);
+    }
+    const text = prepareVoiceForElevenLabs(sanitized);
+    if (!text.trim()) {
+      throw new Error(`voice_script.txt enthaelt nach Voice-Pipeline keinen Text: ${scriptPath}`);
+    }
+    try {
+      fs.writeFileSync(path.join(lessonDir, 'voice_script_clean.txt'), text, 'utf8');
+    } catch (_) {
+      /* optional debug */
     }
     log.info(`Generating voice for ${lessonId}  (${text.length} chars, raw ${rawText.length})`, lessonId);
 
@@ -405,13 +396,31 @@ async function main() {
     }
 
     const audio = await ttsWithRetry(
-      { apiKey, voiceId, modelId, text, stability, similarity },
+      { apiKey, voiceId, modelId, text, stability, similarity, style },
       log,
       lessonId
     );
 
     fs.mkdirSync(destDir, { recursive: true });
-    fs.writeFileSync(destPath, audio);
+    const rawMp3 = path.join(destDir, 'voice.raw.mp3');
+    fs.writeFileSync(rawMp3, audio);
+    const enhanced = path.join(destDir, 'voice.post.mp3');
+    enhanceVoiceMp3(rawMp3, enhanced);
+    try {
+      fs.unlinkSync(destPath);
+    } catch (_) {}
+    try {
+      fs.renameSync(enhanced, destPath);
+      fs.unlinkSync(rawMp3);
+    } catch (_) {
+      fs.copyFileSync(rawMp3, destPath);
+      try {
+        fs.unlinkSync(rawMp3);
+      } catch (_) {}
+      try {
+        fs.unlinkSync(enhanced);
+      } catch (_) {}
+    }
     log.info(`Saved voice.mp3  (${audio.length} bytes) → ${path.relative(ROOT, destPath)}`, lessonId);
     return { status: 'generated', bytes: audio.length, path: destPath };
   });

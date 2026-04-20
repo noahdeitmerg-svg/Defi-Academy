@@ -1,6 +1,6 @@
 # DeFi Academy – bereit zum Bauen (Checkliste)
 
-**Agenten:** Gesamtstand und Doku-Index — [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md).
+**Agenten:** Gesamtstand und Doku-Index — [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md). Nach Änderungen am Repo: [`docs/AGENT-DOKUMENTATION-SYNC.md`](./AGENT-DOKUMENTATION-SYNC.md).
 
 ## 1. Voraussetzungen
 
@@ -47,7 +47,7 @@ Browser: **http://localhost:3000**
 ## 5. Akademie-Inhalte
 
 - **Legacy-Kurs (`/module/…`):** `content/modules/module1` … `module17` — `*.md` + optional `quiz.json`, `meta.json`
-- **UX-Kurs (`/kurs/…`):** Slug-Ordner z. B. `content/modules/01-defi-grundlagen/` mit `module.json` und Unterordnern pro Lektion (`lesson.md`, `slides.json`, `quiz.json`)
+- **UX-Kurs (`/kurs/…`):** Slug-Ordner z. B. `content/modules/01-defi-grundlagen/` mit `module.json` und Unterordnern pro Lektion (`lesson.md`, `slides.json`, `quiz.json`); **Key Takeaways** zentral in `content/takeaways.json` (siehe `docs/KEY-TAKEAWAYS.md`)
 - **Import** grosser `moduleN.md`: `npm run import:modules` (optional `--from "Pfad"`)
 - **Begriffshierarchie** (Module / Lektionen / Videos / Quiz / Praxisuebungen): [academy-structure.md](academy-structure.md)
 

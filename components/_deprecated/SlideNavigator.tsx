@@ -1,3 +1,6 @@
+/**
+ * @deprecated Archiviert (Phase 1 UX): siehe SlidesViewer.tsx im gleichen Ordner.
+ */
 "use client";
 
 import { Button } from "@/components/ui/Button";

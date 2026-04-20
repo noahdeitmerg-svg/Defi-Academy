@@ -29,13 +29,13 @@
 
 ## Modul-Überblick
 
-Composability ist das Kern-Merkmal, das DeFi von traditioneller Finanz unterscheidet. In der klassischen Finanzwelt sind Produkte isoliert: Ein Bausparvertrag ist ein Bausparvertrag, eine Aktie ist eine Aktie, eine Anleihe eine Anleihe. Sie interagieren nicht direkt miteinander — außer über den mühsamen Umweg von Cash als Zwischenwährung. In DeFi ist jedes Protokoll ein Smart Contract, und Smart Contracts können andere Smart Contracts aufrufen, deren Output nutzen und ihn weiterverarbeiten. Das Ergebnis nennt man "Money Legos" — Bausteine, die sich zu beliebig komplexen Strukturen zusammensetzen lassen.
+Composability ist das Kern-Merkmal, das DeFi von traditioneller Finanz unterscheidet. In der klassischen Finanzwelt sind Produkte isoliert: Ein Bausparvertrag ist ein Bausparvertrag, eine Aktie ist eine Aktie, eine Anleihe eine Anleihe. Sie interagieren nicht direkt miteinander — außer über den mühsamen Umweg von Cash als Zwischenwährung. In DeFi ist jedes Protokoll ein Smart Contract, und Smart Contracts können andere Smart Contracts aufrufen, deren Output nutzen und ihn weiterverarbeiten. Das Ergebnis nennt man "Money Legos" — Bausteine, die sich zu beliebig komplexen Strukturen zusammensetzen lassen. Genauer: *Money Legos* bezeichnet komponierbare Finanz-Primitive — Smart Contracts, die sich zu komplexeren Finanzstrukturen kombinieren lassen. Diese Metapher ist nicht nur didaktisch bequem, sondern technisch präzise: So wie Lego-Steine durch standardisierte Schnittstellen kombinierbar sind, sind DeFi-Primitive durch standardisierte on-chain Interfaces (ERC-20-Token, Smart-Contract-ABIs, Oracle-Feeds) interoperabel.
 
 Ein konkretes Beispiel. Ein Nutzer staket ETH bei Lido und erhält stETH. Er nimmt das stETH und hinterlegt es bei Aave als Collateral. Gegen dieses Collateral leiht er USDC. Mit dem USDC kauft er mehr ETH auf einer DEX, staket dieses zu Lido, hinterlegt das neue stETH bei Aave, leiht wieder USDC. Das ist ein Leverage-Loop. Drei Protokolle — Lido, Aave, eine DEX — arbeiten zusammen, um eine Position zu erzeugen, die in traditioneller Finanz entweder unmöglich oder nur mit komplexer Institutioneller Infrastruktur möglich wäre.
 
 Dieses Beispiel zeigt sowohl den Vorteil als auch das Risiko der Composability. Vorteil: Kapital-Effizienz, Innovation, emergente Use-Cases, die niemand einzeln designed hat. Risiko: die Position hängt von drei unabhängigen Protokollen ab. Wenn Lido ein Problem hat (Smart-Contract-Bug, Slashing-Event, stETH-Depeg), wird das Aave-Collateral entwertet, die Position wird liquidierbar, der Leverage-Loop kollabiert. Wenn Aave ein Problem hat (Oracle-Attack, Liquidity-Crisis), verliert der Nutzer möglicherweise Zugriff auf seine Position. Wenn der DEX ein Problem hat, kann er die Position nicht mehr unwind. Die Sicherheit der Gesamtposition ist nicht die Sicherheit des schwächsten Protokolls — sie ist die multiplikative Aggregation der Risiken aller beteiligten Protokolle.
 
-Das ist Composability Risk: die Erkenntnis, dass jede Zusatz-Ebene, die einer Position hinzugefügt wird, Risiko multipliziert, nicht addiert. Eine Position mit drei Layern, bei denen jeder eine 95%-Überlebens-Wahrscheinlichkeit über ein Jahr hat, hat nicht 95% Überlebens-Wahrscheinlichkeit, sondern 0,95 × 0,95 × 0,95 = 85,7%. Eine Position mit fünf Layern in der gleichen Konfiguration hat nur 77,4%. Die Intuition über Sicherheit ist durchgehend überoptimistisch, wenn Composability nicht explizit berücksichtigt wird.
+Das ist Composability Risk: die Erkenntnis, dass jede Zusatz-Ebene, die einer Position hinzugefügt wird, Risiko multipliziert, nicht addiert. Eine Position mit drei Layern, bei denen jeder eine 95%-Überlebens-Wahrscheinlichkeit über ein Jahr hat, hat nicht 95% Überlebens-Wahrscheinlichkeit, sondern 0,95 × 0,95 × 0,95 = 85,7%. Dies lässt sich allgemein als 0,95^n formulieren, wobei n die Anzahl der Protokoll-Layer in einer komponierten Position bezeichnet. Eine Position mit fünf Layern in der gleichen Konfiguration hat nur 77,4%. Die Intuition über Sicherheit ist durchgehend überoptimistisch, wenn Composability nicht explizit berücksichtigt wird.
 
 **Die konservative Perspektive:** Composability ist Feature und Risiko zugleich. Das Ziel ist nicht, sie zu vermeiden — das würde bedeuten, die DeFi-Fähigkeiten zu ignorieren, die DeFi überhaupt erst interessant machen. Das Ziel ist, sie informiert zu nutzen: zu wissen, wann Composability Vorteil bringt, wann sie Risiko addiert, und wie man die Balance bewusst setzt. Modul 16 vermittelt das Framework dafür.
 
@@ -93,7 +93,7 @@ Das Risiko: Der Nutzer sieht nur das direkte Protokoll (Aave) und bemerkt die pa
 **Form 3: Diagonale Composability (Cross-Chain)**
 Wenn Composability über Chain-Grenzen hinweg aufgebaut wird. Beispiel: Bitcoin wird über eine Bridge zu WBTC auf Ethereum, WBTC wird als Collateral in Aave auf Arbitrum genutzt, mit dem geliehenen Kapital wird über einen Cross-Chain-DEX auf Base gehandelt. Drei Chains, zwei Bridges, mindestens vier Protokolle.
 
-Das Risiko: Zusätzlich zu den Standard-Composability-Risiken kommen die Cross-Chain-Risiken aus Modul 14. Bridges sind typisch die schwächsten Glieder in solchen Ketten.
+Das Risiko: Zusätzlich zu den Standard-Composability-Risiken kommen die Cross-Chain-Risiken aus Modul 14. Bridges sind typisch die schwächsten Glieder in solchen Ketten. Historisch betrachtet haben sich viele der größten DeFi-Exploits auf Cross-Chain-Bridges ereignet, was sie zu einer kritischen Dependency in komponierten Systemen macht.
 
 **Die echten Vorteile von Composability**
 
@@ -1073,32 +1073,32 @@ Abschließend: Vertikale Composability ist eine der mächtigsten Eigenschaften v
 
 ### Folien-Zusammenfassung
 
-**Slide 1: Was ist vertikale Composability?**
+**[Slide 1] — Was ist vertikale Composability?**
 - Bewusstes Verketten mehrerer Protokolle, wobei Output eines Layers = Input des nächsten
 - Beispiel: ETH → Lido (stETH) → Aave (Collateral) → Borrow USDC → Curve LP → Convex
 - Jeder Layer addiert Rendite UND neues Risiko
 - Drei Haupt-Muster: Yield-Stacking auf LSTs, Stablecoin-LP-Boosting, Cross-Protocol Leverage
 
-**Slide 2: Die Multiplikations-Mathematik**
+**[Slide 2] — Die Multiplikations-Mathematik**
 - Risiken multiplizieren sich, Sicherheiten multiplizieren sich auch (aber "nach unten")
 - Bei 95 % Einzel-Sicherheit: 3 Layer = 85,74 %, 5 Layer = 77,38 %, 8 Layer = 66,34 %
 - Realistische DeFi-Einzel-Sicherheit: 95–98 % für etablierte, 90–95 % für jüngere Protokolle
 - Der Effekt ist nicht-linear: jedes zusätzliche Layer addiert proportional mehr Risiko
 
-**Slide 3: Leverage-Loops — die gefährlichste Stack-Form**
+**[Slide 3] — Leverage-Loops — die gefährlichste Stack-Form**
 - stETH/Aave-Loop: jeder Loop multipliziert Exposure, addiert Liquidations-Risiko
 - 3x Leverage auf stETH/ETH: bei 1,25 Health Factor reichen 5 % Depeg für Liquidation
 - 2022 stETH-Depeg erreichte 0,94 ETH — aggressive Loops komplett liquidiert
 - Rendite-Aufschlag 3x vs. reines Staking: typisch 1,4 Prozentpunkte; Risiko-Aufschlag: gewaltig
 
-**Slide 4: Position-Sizing nach Stack-Tiefe**
+**[Slide 4] — Position-Sizing nach Stack-Tiefe**
 - Single-Layer: bis 15–25 % pro Protokoll
 - Two-Layer: bis 10–15 %
 - Three-Layer: bis 5–10 %
 - Four+ Layer oder Leverage-Loop: max 2–5 %
 - Diese Schwellwerte sind bewusst konservativ — Ziel: kein Event vernichtet >5 % des Portfolios
 
-**Slide 5: Die drei Stacking-Regeln**
+**[Slide 5] — Die drei Stacking-Regeln**
 - Regel 1: Maximal 2–3 Layer; Rendite-Aufschlag oberhalb rechtfertigt Risiko nicht
 - Regel 2: Maximal 2x Leverage; nur auf stabilen Peg-Paaren; Health Factor mindestens 1,8
 - Regel 3: Kein Stacking experimenteller Protokolle (jeder Layer mindestens 18 Monate Track Record, 2 Audits, 500 Mio. USD TVL)
@@ -1106,33 +1106,38 @@ Abschließend: Vertikale Composability ist eine der mächtigsten Eigenschaften v
 
 ### Sprechertext
 
+**[Slide 1]**
 Vertikale Composability — oder einfacher gesagt: Stacking — ist die mächtigste und gleichzeitig gefährlichste Eigenschaft von DeFi. Sie erlaubt dir, mehrere Protokolle übereinanderzuschichten und dabei Rendite zu addieren, die in traditioneller Finanz praktisch unmöglich ist. Sie macht aber auch etwas Zweites, das weniger offensichtlich ist: Sie multipliziert Risiken. In dieser Lektion schauen wir uns genau an, wie diese Multiplikation funktioniert, warum Leverage-Loops eine besondere Aufmerksamkeit brauchen, und wie du Position-Sizing mit Stack-Tiefe koppelst.
 
 Beginnen wir mit dem Bild. Stell dir vor, du startest mit einem ETH. Du zahlst es bei Lido ein und bekommst stETH zurück. Das ist Layer 1. Du nimmst dieses stETH und zahlst es als Collateral bei Aave ein. Das ist Layer 2. Du leihst dir gegen dieses Collateral USDC und bringst das USDC in einen Curve-Pool. Das ist Layer 3. Die resultierenden LP-Tokens legst du bei Convex ab. Das ist Layer 4. Du hast einen vier-Layer-Stack gebaut. Jeder Layer addiert ein bisschen Rendite. Jeder Layer addiert auch ein neues Protokoll, dessen Smart Contracts funktionieren müssen, dessen Governance nichts Katastrophales tut, dessen ökonomisches Design gesund bleibt. Und jetzt kommt die mathematische Beobachtung, die unbequem ist, aber unausweichlich.
 
+**[Slide 2]**
 Nehmen wir an, jedes dieser vier Protokolle hat eine jährliche Ausfall-Wahrscheinlichkeit von 5 Prozent. Das heißt, jedes Protokoll hat eine 95-prozentige Überlebens-Wahrscheinlichkeit pro Jahr. Was ist die Überlebens-Wahrscheinlichkeit des gesamten Stacks? Nicht 95 Prozent. Sondern 95 Prozent hoch vier, also 0,95 mal 0,95 mal 0,95 mal 0,95 — das ergibt etwa 81,5 Prozent. Dein aggregate Ausfall-Risiko ist also nicht 5 Prozent, sondern 18,5 Prozent. Fast vierfach erhöht gegenüber dem Einzel-Protokoll. Bei fünf Layern steigt das Risiko auf 22,6 Prozent, bei acht Layern auf 34 Prozent. Die Rendite, die du durch das zusätzliche Stacking gewinnst, wächst linear — meist ein oder zwei Prozentpunkte pro Layer. Das Risiko wächst nicht-linear und schneller. Das ist die Grundgleichung, auf der alle Stacking-Entscheidungen basieren sollten.
 
+**[Slide 3]**
 Jetzt zu Leverage-Loops, der gefährlichsten Form vertikaler Composability. Ein Leverage-Loop auf stETH und ETH funktioniert so: Du startest mit 1 ETH, wandelst es in 1 stETH, zahlst es als Collateral bei Aave ein. Aave erlaubt bei stETH einen LTV von 75 Prozent. Du leihst dir 0,75 ETH. Diese 0,75 ETH wandelst du wieder in stETH, zahlst es erneut als Collateral ein, leihst dir 0,56 ETH. Und so weiter. Nach vier Iterationen hast du etwa 3 stETH-Exposure gegen dein ursprüngliches 1 ETH Kapital. Das ist 3x Leverage. Die Rendite sieht gut aus — etwa 1,4 Prozentpunkte mehr als reines stETH-Staking. Aber jetzt stell dir vor, was im Juni 2022 passierte. stETH fiel gegenüber ETH auf 0,94. Ein 5-Prozent-Depeg. Bei einem 3x-Leverage-Loop mit Health Factor 1,25 reichen 5 Prozent Depeg, um dich in Liquidation zu bringen. Du verlierst dein Collateral plus eine Liquidations-Penalty von 5 bis 7,5 Prozent. 18 Monate Rendite-Optimierung in einer Stunde vernichtet.
 
+**[Slide 4]**
 Die Lehre aus dieser Analyse ist die Position-Sizing-Matrix. Je tiefer der Stack, desto kleiner der Anteil am Gesamt-Portfolio. Ein einzelnes Protokoll kann 15 bis 25 Prozent deiner DeFi-Allokation tragen. Ein Zwei-Layer-Stack kann 10 bis 15 Prozent tragen. Ein Drei-Layer-Stack 5 bis 10 Prozent. Ab vier Layern oder bei einem Leverage-Loop maximal 2 bis 5 Prozent. Diese Schwellwerte sind bewusst konservativ. Sie nehmen hin, dass dein Portfolio langsamer wächst als eines, das aggressiv in jeden Stack prozentual mehr legt. Im Austausch bekommst du die Eigenschaft, dass kein einzelnes Composability-Event mehr als 5 Prozent deines Portfolios vernichten kann. Das ist der Tausch, den konservative Investoren in DeFi machen — und es ist der Tausch, den du machen solltest.
 
+**[Slide 5]**
 Drei Regeln schließen diese Lektion ab. Erstens: Maximal 2 bis 3 Layer. Die Rendite-Differenz zwischen 3 und 5 Layern ist klein. Die Risiko-Differenz ist groß. Zweitens: Maximal 2x Leverage, und nur auf stabilen Peg-Paaren wie stETH und ETH, und mit einem Health Factor von mindestens 1,8. Nicht 1,3. Nicht 1,5. Mindestens 1,8. Drittens: Kein Stacking experimenteller Protokolle. Jeder Layer in einem Stack muss etabliert sein — mindestens 18 Monate Track Record, mindestens zwei Audits, mindestens 500 Millionen USD TVL. Wenn du ein experimentelles Protokoll ausprobieren willst, tu das in einer eigenständigen Position, nicht als Teil eines Stacks. Diese drei Regeln werden dich Rendite kosten. Sie werden dich auch mit hoher Wahrscheinlichkeit davor bewahren, durch ein einzelnes Event ausgelöscht zu werden. Das ist der fundamentale Tausch in DeFi, und du solltest ihn bewusst machen.
 
 ### Visuelle Vorschläge
 
-**Visual 1: Der vier-Layer-Stack als Diagramm**
+**[Slide 1]**
 Vertikales Diagramm mit vier aufeinanderfolgenden Boxen: ETH → Lido (stETH) → Aave (Collateral + Borrow USDC) → Curve (USDC-LP) → Convex (LP-Stake). Rechts neben jedem Pfeil die addierte Rendite (+ 3,5 %, + 0,5 %, + 2,2 %, + 1,8 %). Rechts unten: "Total Yield: ~8,0 %". Links neben jedem Layer das Risiko-Icon: Smart-Contract-Icon + Peg-Risiko-Icon bei stETH, Liquidations-Icon bei Aave, Pool-Depeg-Icon bei Curve, Governance-Icon bei Convex.
 
-**Visual 2: Die Multiplikations-Tabelle**
+**[Slide 2]**
 Heatmap-Style-Tabelle. Y-Achse: Einzel-Protokoll-Sicherheit (99 %, 98 %, 95 %, 90 %). X-Achse: Anzahl Layer (1, 2, 3, 4, 5, 8). Zellen: Aggregate Überlebens-Wahrscheinlichkeit, eingefärbt von Grün (>95 %) über Gelb (80–95 %) zu Rot (<80 %). Die "95 %"-Zeile deutlich hervorgehoben mit Label: "Realistische DeFi-Welt".
 
-**Visual 3: Der Leverage-Loop-Mechanismus**
+**[Slide 3]**
 Flussdiagramm des stETH-Loops. Ausgangspunkt: 1 ETH. Erste Iteration: → 1 stETH → Aave-Deposit → 0,75 ETH geliehen. Zweite Iteration: 0,75 ETH → 0,75 stETH → Aave-Deposit → 0,56 ETH geliehen. Dritte und vierte Iteration analog. Rechts neben dem Diagramm: Gesamt-stETH-Exposure 3,05, Gesamt-Debt 2,05 ETH, effektiver Leverage 3x. Unterhalb des Diagramms: Depeg-Szenario-Balken zeigen, bei welchem stETH/ETH-Preis (1,00 / 0,95 / 0,90 / 0,85) die Liquidation eintritt, je nach Health Factor (1,25 / 1,5 / 1,8).
 
-**Visual 4: Position-Sizing-Matrix**
+**[Slide 4]**
 Horizontale Balkengrafik. Y-Achse: Stack-Tiefe (Single-Layer, Two-Layer, Three-Layer, Four+ Layer, Leverage-Loop). X-Achse: Maximaler Prozent-Anteil am DeFi-Portfolio (0 % bis 25 %). Balken zeigen den empfohlenen Range (z. B. Single-Layer: 15–25 %, Four+ Layer: 2–5 %). Farb-Gradient von Grün (tolerierbar) bei Single-Layer zu Rot (hohes Risiko) bei Leverage-Loop.
 
-**Visual 5: Die drei Stacking-Regeln als Checkbox-Karte**
+**[Slide 5]**
 Drei vertikal angeordnete Karten mit jeweils einer Regel als Headline, einer konkreten Zahl als Key-Metric, und einer Ein-Satz-Begründung.
 - Karte 1: "Max 2–3 Layer" / "Rendite-Aufschlag >3 Layer: ~1–3 %; Risiko-Aufschlag: ~8 %" / "Der Tausch rechnet sich mathematisch nicht."
 - Karte 2: "Max 2x Leverage" / "Health Factor ≥ 1,8" / "Nur auf stabilen Peg-Paaren."
@@ -1633,6 +1638,106 @@ Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets e
 - `visual_plan.json` — Horizontale-Dependencies-Netzwerk-Diagramm, Chainlink-Oracle-Dependency-Map, LST-Composability-Stack, Bridge-Cascading-Risk-Grafik, Portfolio-Dependency-Graph-Beispiel
 
 Pipeline: Gamma → ElevenLabs → CapCut.
+
+---
+
+## Case Study — DeFi Liquidation Cascades und Protokoll-Risiko
+
+Dieser Abschnitt ist keine eigene Lektion, sondern eine konkrete Anwendung der in den Lektionen 16.4 und 16.5 etablierten Prinzipien. Vertikales Stacking und horizontale Dependencies bleiben ohne Verankerung in realen Ereignissen abstrakt. Eine Liquidations-Kaskade ist das Ereignis, in dem beide Risiko-Dimensionen gleichzeitig sichtbar werden — und in dem die multiplikativen Eigenschaften von Composability Risk aus Kalkulation in Realität übergehen.
+
+### Kontext — Auch reife Protokolle erleben systemischen Stress
+
+Aave ist seit seiner Einführung im Jahr 2020 eines der ausgereiftesten Lending-Protokolle im DeFi-Ökosystem. Es ist vielfach auditiert, hat eine stabile Governance-Struktur, und sein Risk-Management-Framework gehört zu den konservativsten der Branche. Dennoch hat Aave — wie jedes andere Lending-Protokoll — in seiner Geschichte mehrere systemische Stress-Ereignisse erlebt, die zeigten, dass Protokoll-Reife die strukturellen Risiken der Composability nicht eliminiert.
+
+Drei Ereignisse aus den Jahren 2022 und 2023 veranschaulichen dieses Muster besonders klar:
+
+**Juni 2022 — stETH-Depeg unter Marktdruck.** Während der Terra/Luna-Nachwirkungen und des Celsius-Kollapses geriet stETH (Liquid Staking Token von Lido) unter Verkaufsdruck und depeggte temporär auf etwa 0,94 ETH. Nutzer, die stETH bei Aave als Collateral hinterlegt hatten, um ETH zu leihen und daraus Leverage-Loops zu bauen, sahen ihre Positionen unter Druck geraten. Die Kombination aus fallendem stETH/ETH-Kurs und Liquidationen, die stETH gegen ETH am Markt verkauften, verstärkte den Depeg temporär weiter. Aave selbst funktionierte technisch fehlerfrei — aber Positionen, die auf der Composability-Annahme "stETH ≈ ETH" basierten, mussten mit realer Kurs-Divergenz umgehen.
+
+**November 2022 — CRV-Angriffsversuch nach dem FTX-Kollaps.** Im Umfeld des FTX-Kollapses versuchte ein Marktteilnehmer, eine große Short-Position auf CRV aufzubauen, indem er USDC bei Aave als Collateral hinterlegte und gegen dieses CRV lieh, um das geliehene CRV am Markt zu verkaufen. Das Ziel war, den CRV-Kurs zu drücken und Aave in eine Situation zu bringen, in der das hinterlegte Collateral die Schulden nicht mehr deckt — was dem Protokoll Bad Debt beschert hätte. Der Angriff scheiterte letztlich, aber er zeigte, dass die Kombination aus on-chain-beobachtbaren Positionen und thin-liquidity-Märkten einem Angreifer erlaubt, Liquidations-Dynamiken bewusst zu inszenieren. Aave reagierte anschließend mit strukturellen Änderungen — niedrigere Loan-to-Value-Limits für volatile Assets, Isolations-Modi für bestimmte Collateral-Typen.
+
+**März 2023 — USDC-Depeg nach dem SVB-Kollaps.** Als Circle bekannt gab, dass ein Teil der USDC-Reserven bei der kollabierenden Silicon Valley Bank lag, depeggte USDC binnen Stunden auf etwa 0,87 USD. Da USDC in vielen DeFi-Protokollen als Standard-Stablecoin-Collateral und als Kredit-Asset verwendet wird, und da DAI teilweise durch USDC im MakerDAO-PSM gedeckt war, pflanzte sich der Depeg durch mehrere Protokoll-Layer fort. Nutzer, die USDC oder DAI als Collateral für ETH-Kredite verwendet hatten, sahen ihre Health Factors sich plötzlich verschlechtern — nicht durch Kursbewegung des volatilen Assets, sondern durch Collateral-Stabilitätsverlust. Die Situation stabilisierte sich innerhalb weniger Tage, als die US-Regierung die SVB-Einlagen garantierte. Aber in den akuten Stunden zeigte sich, dass "Stablecoin" in DeFi eine Dependency-Annahme ist, keine Garantie.
+
+Diese drei Ereignisse teilen ein gemeinsames Muster: Das Protokoll selbst — Aave — war nie technisch fehlerhaft. Der Stress entstand aus der Interaktion zwischen Protokoll, seinen Inputs (Oracles, Collateral-Assets), seinen Outputs (Liquidationen, die Verkaufsdruck erzeugen) und dem breiteren Markt. Genau das ist Composability Risk in Aktion.
+
+### Angriffs- und Versagensdynamik — Die Kaskaden-Sequenz
+
+Die folgende Sequenz beschreibt das generische Muster einer Liquidations-Kaskade in einem stack-basierten Lending-Protokoll. Sie ist keine Beschreibung eines bestimmten einzelnen Ereignisses, sondern die strukturelle Abstraktion, die sich durch die genannten historischen Fälle zieht.
+
+```
+    [1] Markt-Bewegung
+         (Depeg, Flash-Crash, Confidence-Loss)
+                      ↓
+    [2] Oracle-Update
+         (neue Preise werden on-chain gepostet)
+                      ↓
+    [3] Liquidations-Trigger
+         (Health Factor < 1 bei Positionen mit engem Buffer)
+                      ↓
+    [4] Collateral-Verkauf
+         (Liquidator verkauft Collateral am DEX gegen Debt-Asset)
+                      ↓
+    [5] Liquiditäts-Ungleichgewicht
+         (DEX-Pool-Tiefe reicht nicht für Verkaufs-Volumen)
+                      ↓
+    [6] Preis-Impact + weitere Liquidationen
+         (neuer Preis triggert weitere Positions-Liquidationen)
+                      ↓
+    [Zurück zu Schritt 2 — Feedback-Schleife]
+```
+
+Das Kritische an dieser Sequenz ist die Feedback-Schleife zwischen Schritten 5 und 6. In isolierten Märkten wäre eine Kurs-Bewegung ein diskretes Ereignis: Preis ändert sich, Liquidationen werden ausgelöst, die Situation stabilisiert sich. In compositional gestackten Systemen ist der Liquidations-Output selbst ein Input für das nächste Kurs-Signal. Je größer die Gesamtposition-Menge mit engen Buffern, desto stärker dieser Feedback-Effekt.
+
+**Die vier Systeme, deren Interaktion die Kaskade erzeugt**
+
+Um die Dynamik zu verstehen, muss man die vier beteiligten Systeme und ihre jeweilige Rolle explizit machen:
+
+**Oracle-Systeme.** Oracles (typischerweise Chainlink oder protokoll-eigene Lösungen) liefern dem Lending-Protokoll aktuelle Preise der Collateral- und Debt-Assets. Oracles haben Update-Mechaniken — Preise werden entweder bei Schwellenwert-Überschreitung oder in festen Intervallen aktualisiert. In ruhigen Marktphasen ist das unproblematisch. In Stress-Phasen kann die Oracle-Mechanik zur Verstärkung beitragen: verzögerte Updates führen zu Positionen, die rechnerisch bereits liquidierbar sind, es aber on-chain noch nicht sind; schnelle Updates mit großen Sprüngen können hingegen viele Positionen gleichzeitig in die Liquidierbarkeit überführen. Die Wahl der Oracle-Update-Parameter ist ein Design-Trade-off zwischen Stabilität und Reaktionsschnelligkeit.
+
+**Liquidations-Engines.** Wenn ein Oracle einen neuen Preis postet, der eine Position unter den Liquidations-Schwellenwert bringt, wird sie liquidierbar. Im Aave-Modell melden sich dann Liquidator-Bots, die die Schuld zurückzahlen und dafür das Collateral zu einem Discount erhalten. Dieser Mechanismus ist im Normalfall gut funktionierend — er incentiviert schnelle Abwicklung und hält das Protokoll solvent. In Kaskaden-Szenarien wird der Mechanismus jedoch zum Transmissionsriemen: Liquidator-Bots verkaufen das erhaltene Collateral sofort am DEX, um ihren Gewinn zu realisieren, und dieser Verkauf erzeugt zusätzlichen Abwärtsdruck auf den Preis.
+
+**Lending-Protokolle.** Das Lending-Protokoll selbst ist in gewissem Sinne der neutrale Vermittler in dieser Kaskade. Es führt aus, was die Marktdaten vorgeben: Liquidationen werden ausgeführt, wenn Positionen unter die Schwelle fallen. Das Protokoll hat interne Puffer (Reserve-Faktoren, Liquidations-Boni, Isolations-Modi), aber keine Möglichkeit, einen Markt-getriebenen Verfall aktiv zu verhindern. In den genannten historischen Ereignissen war Aave stets funktional fehlerfrei — der Stress kam von außen, aus der Marktdynamik, zu der das Protokoll als Teilnehmer gehörte.
+
+**Liquidity Pools.** DEX-Pools sind die tatsächliche Exit-Infrastruktur der Kaskade. Wenn ein Liquidator 1 Million USD Collateral verkaufen muss, tut er das über Uniswap, Curve oder vergleichbare DEX-Pools. Die Pool-Tiefe bestimmt, wie viel Preis-Impact dieser Verkauf hat. Bei tiefen Pools (etwa ETH/USDC in hohen Volumen-Phasen) ist der Impact klein. Bei dünnen Pools oder ungewöhnlichen Collateral-Assets (etwa kleine LSTs, exotische Stablecoins, lange-Tail-Governance-Tokens) kann ein einzelner Liquidator-Verkauf den Preis um mehrere Prozent bewegen. Dieser Preis-Impact ist der Mechanismus, über den die Kaskade sich selbst verstärkt.
+
+Das Zusammenspiel dieser vier Systeme ist die konkrete Manifestation von Composability Risk. Kein einzelnes System versagt; die Kaskade entsteht aus ihrer Interaktion unter Stressbedingungen. Genau deshalb ist sie so schwer a priori zu antizipieren — sie ist eine emergente Eigenschaft des Gesamtsystems, nicht ein Bug eines einzelnen Protokolls.
+
+### Lessons for DeFi Users — Lehren für DeFi-Nutzer
+
+Aus der strukturellen Analyse der Liquidations-Kaskade lassen sich konkrete operative Leitlinien ableiten. Diese sind keine abstrakten Prinzipien, sondern direkt umsetzbare Regeln, die Nutzer in ihren eigenen Positionen anwenden können.
+
+**1. Leverage multipliziert Risiko, nicht addiert es.**
+
+Die mathematische Intuition hinter Leverage ist linear: 2x Leverage bedeutet 2x Rendite bei positiver Marktbewegung und 2x Verlust bei negativer. Die reale Dynamik in DeFi ist nicht-linear, weil Leverage-Positionen gleichzeitig Liquidations-Exposure erzeugen. Eine ungelebtere Position mit 10% Buffer übersteht eine 20%-Korrektur problemlos. Eine 2x-leveragte Position mit gleichem absoluten Buffer steht bei derselben Korrektur möglicherweise bereits vor der Liquidation. Das Zusätzliche, das Leverage hinzufügt, ist nicht nur "mehr Volatilität" — es ist die Verschiebung der Position in den Bereich, in dem Kaskaden-Mechanismen greifen.
+
+**2. Halte großzügige Liquidations-Puffer — Health Factor ≥ 1,7 bis 2,0 für konservative Strategien.**
+
+Der Health Factor in Aave (und vergleichbaren Protokollen) ist eine direkte Quantifizierung der Distanz zur Liquidation. Ein Health Factor von 1,0 bedeutet Liquidation; Werte darüber bedeuten Puffer. Konservative Teilnehmer, die Leverage-Positionen über längere Zeiträume halten wollen, sollten einen Health Factor von mindestens 1,7 bis 2,0 anstreben. Das bedeutet: das Collateral muss 70% bis 100% mehr wert sein als der rechnerisch zur Deckung der Schuld notwendige Mindestwert. Diese Spanne ist nicht willkürlich — sie reflektiert die beobachteten Kurs-Bewegungen in historischen Stress-Ereignissen. Ein Health Factor von 1,2 überlebt eine 15%-Korrektur; ein Health Factor von 2,0 überlebt auch eine 40%-Korrektur. Die zusätzliche Rendite, die durch engere Puffer erzielt wird, rechtfertigt selten das zusätzliche Kaskaden-Risiko.
+
+**3. Verstehe Protokoll-Abhängigkeiten explizit.**
+
+Eine Position bei Aave ist nie "nur" eine Position bei Aave. Sie hängt ab von: dem Oracle-System, das die Preise liefert; der Liquidity-Tiefe der DEX-Pools, auf denen das Collateral bei Liquidation verkauft werden würde; der Integrität des Collateral-Assets selbst (im Fall von stETH: der Integrität von Lido und dem ETH-Staking-Mechanismus); und der Integrität des Debt-Assets (im Fall von USDC-Krediten: der Integrität von Circle und der Banking-Infrastruktur, die USDC stützt). Diese Abhängigkeiten müssen explizit dokumentiert werden, bevor eine Position eröffnet wird. Das in Lektion 16.5 vorgestellte Dependency-Mapping ist die strukturelle Methode dafür.
+
+**4. Gestackte Protokolle multiplizieren Risiko.**
+
+Wie in Lektion 16.4 etabliert: Jeder zusätzliche Layer in einem Position-Stack multipliziert die Ausfallwahrscheinlichkeit statt sie zu addieren. Der Leverage-Loop ETH → Lido → Aave → DEX → zurück zu ETH hat vier Protokoll-Layer. Selbst bei 98%-Jahresüberlebens-Wahrscheinlichkeit pro Protokoll ergibt das nur 92,2% Gesamtüberlebens-Wahrscheinlichkeit. Teilnehmer, die sophisticated Leverage-Strategien aufbauen, müssen die Anzahl der Layer explizit bei der Risiko-Kalkulation berücksichtigen — nicht nur die Performance-Kalkulation.
+
+**5. Pre-committed Exit-Trigger vor dem Stress-Ereignis definieren.**
+
+Liquidations-Kaskaden laufen in Minuten bis Stunden ab, nicht in Tagen. In der Hitze eines solchen Ereignisses ist rationale Entscheidungsfindung erheblich eingeschränkt — die Preise bewegen sich schnell, Gas-Preise explodieren, Frontends werden langsam, und die emotionale Belastung ist hoch. Die einzige verlässliche Schutzmaßnahme sind pre-committed Exit-Trigger: vorher festgelegte Schwellenwerte, bei deren Erreichen die Position geschlossen oder reduziert wird. Beispiel für einen konservativen Trigger: "Wenn mein Health Factor unter 1,5 fällt, reduziere ich die Position um 30%, unabhängig von der Einschätzung der Marktlage." Diese Entscheidung muss vorher getroffen und dokumentiert werden, nicht während des Ereignisses.
+
+**6. Sicherheitsleitlinie: Health Factor ≥ 1,7 bis 2,0 für konservative Strategien.**
+
+Als einzelne, leicht merkbare Regel zusammengefasst: Wer konservativ in Lending-Protokollen mit Leverage operieren will, hält den Health Factor jederzeit mindestens bei 1,7, besser bei 2,0 oder darüber. Das ist kein magischer Wert — er reflektiert die empirische Beobachtung, dass die meisten historischen Korrekturen in DeFi im Bereich von 20% bis 40% lagen und dass ein Health Factor von 2,0 solche Korrekturen ohne Liquidation übersteht. Aggressive Teilnehmer, die bei 1,2 bis 1,3 operieren, können in ruhigen Phasen höhere Renditen erzielen — aber sie akzeptieren gleichzeitig, in Kaskaden-Ereignissen unter den Ersten zu sein, die liquidiert werden.
+
+### Überleitung zu Modul 17 — Vom Risiko-Verständnis zur Portfolio-Konstruktion
+
+Diese Case Study schließt den konzeptionellen Bogen von Lektion 16.4 (vertikales Stacking) und Lektion 16.5 (horizontale Dependencies) zur praktischen Anwendung. Liquidations-Kaskaden sind keine exotischen Black-Swan-Ereignisse — sie sind die Grundform, in der Composability Risk sich realisiert, und sie treten in DeFi regelmäßig auf.
+
+Wer dieses Muster verstanden hat, sieht seine eigenen Positionen anders. Eine Leverage-Position ist nicht mehr nur ein Rendite-Vehikel, sondern eine spezifische Kombination von Protokoll-Abhängigkeiten mit einem kalkulierbaren Distanzmaß zum Kaskaden-Szenario. Ein LST-Collateral ist nicht mehr nur ein zinsbringendes Asset, sondern ein Baustein, der bei Depeg-Ereignissen eine charakteristische Stress-Dynamik durchläuft. Ein Stablecoin-Kredit ist nicht mehr nur günstige Liquidität, sondern eine Position, deren Sicherheit von der Integrität der Stablecoin-Reserve-Struktur abhängt.
+
+Genau dieses Verständnis ist die Voraussetzung für die Portfolio-Konstruktion, die in Modul 17 systematisch aufgebaut wird. Das 4-Bucket-Framework aus Modul 17 — Foundation, Core-Yield, Higher-Yield, Exploratory — ist nicht nur eine Allokations-Heuristik, sondern eine strukturelle Antwort auf Composability Risk. Die Bucket-Trennung stellt sicher, dass Positionen mit hohem Composability Risk (typischerweise in Buckets 3 und 4) nicht die Positionen untergraben, die das Portfolio stabilisieren sollen (Buckets 1 und 2). Die pre-committed Exit-Trigger aus Modul 17 sind die direkte Umsetzung der oben diskutierten Regel 5. Die Dependency-Diversifikation aus Modul 17 ist die direkte Umsetzung der oben diskutierten Regeln 3 und 4.
+
+Composability Risk ohne Portfolio-Konstruktion bleibt akademisch. Portfolio-Konstruktion ohne Composability-Risk-Verständnis bleibt naiv. Die Kombination beider — das Ziel von Modul 16 und 17 zusammen — ist das, was einen erfahrenen DeFi-Teilnehmer von einem Anfänger unterscheidet. Die finale Due-Diligence-Fallstudie in Lektion 16.6 und das Portfolio-Framework in Modul 17 bauen beide auf dem Verständnis auf, das diese Case Study vermittelt hat.
 
 ---
 ## Lektion 16.6 — Die eigene Prüf-Checkliste anwenden: Fallstudie

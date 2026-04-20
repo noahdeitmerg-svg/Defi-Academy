@@ -1,0 +1,1006 @@
+{
+  "generatedAt": "2026-04-20T21:34:23.470Z",
+  "sourceDoc": "docs/F7-MAPPING.md",
+  "count": 83,
+  "note": "Bei next.config output: 'export' sind redirects() nicht wirksam — für GitHub Pages siehe docs/F7-REDIRECTS.md",
+  "redirects": [
+    {
+      "legacyPath": "content/modules/module1/1-1.md",
+      "source": "/module/module1/lesson/1-1",
+      "destination": "/kurs/01-defi-grundlagen/01-was-ist-defi",
+      "uxModuleId": "01-defi-grundlagen",
+      "uxLessonId": "01-was-ist-defi"
+    },
+    {
+      "legacyPath": "content/modules/module1/1-2.md",
+      "source": "/module/module1/lesson/1-2",
+      "destination": "/kurs/01-defi-grundlagen/02-lektion",
+      "uxModuleId": "01-defi-grundlagen",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module1/1-3.md",
+      "source": "/module/module1/lesson/1-3",
+      "destination": "/kurs/01-defi-grundlagen/03-lektion",
+      "uxModuleId": "01-defi-grundlagen",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module1/1-4.md",
+      "source": "/module/module1/lesson/1-4",
+      "destination": "/kurs/01-defi-grundlagen/04-lektion",
+      "uxModuleId": "01-defi-grundlagen",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module1/1-5.md",
+      "source": "/module/module1/lesson/1-5",
+      "destination": "/kurs/01-defi-grundlagen/05-lektion",
+      "uxModuleId": "01-defi-grundlagen",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module1/1-6.md",
+      "source": "/module/module1/lesson/1-6",
+      "destination": "/kurs/01-defi-grundlagen/06-lektion",
+      "uxModuleId": "01-defi-grundlagen",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module2/2-1.md",
+      "source": "/module/module2/lesson/2-1",
+      "destination": "/kurs/02-wallets-sicherheit/01-lektion",
+      "uxModuleId": "02-wallets-sicherheit",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module2/2-2.md",
+      "source": "/module/module2/lesson/2-2",
+      "destination": "/kurs/02-wallets-sicherheit/02-lektion",
+      "uxModuleId": "02-wallets-sicherheit",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module2/2-3.md",
+      "source": "/module/module2/lesson/2-3",
+      "destination": "/kurs/02-wallets-sicherheit/03-lektion",
+      "uxModuleId": "02-wallets-sicherheit",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module2/2-4.md",
+      "source": "/module/module2/lesson/2-4",
+      "destination": "/kurs/02-wallets-sicherheit/04-lektion",
+      "uxModuleId": "02-wallets-sicherheit",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module2/2-5.md",
+      "source": "/module/module2/lesson/2-5",
+      "destination": "/kurs/02-wallets-sicherheit/05-lektion",
+      "uxModuleId": "02-wallets-sicherheit",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module2/2-6.md",
+      "source": "/module/module2/lesson/2-6",
+      "destination": "/kurs/02-wallets-sicherheit/06-lektion",
+      "uxModuleId": "02-wallets-sicherheit",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module3/3-1.md",
+      "source": "/module/module3/lesson/3-1",
+      "destination": "/kurs/03-blockchain-mechanik/01-lektion",
+      "uxModuleId": "03-blockchain-mechanik",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module3/3-2.md",
+      "source": "/module/module3/lesson/3-2",
+      "destination": "/kurs/03-blockchain-mechanik/02-lektion",
+      "uxModuleId": "03-blockchain-mechanik",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module3/3-3.md",
+      "source": "/module/module3/lesson/3-3",
+      "destination": "/kurs/03-blockchain-mechanik/03-lektion",
+      "uxModuleId": "03-blockchain-mechanik",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module3/3-4.md",
+      "source": "/module/module3/lesson/3-4",
+      "destination": "/kurs/03-blockchain-mechanik/04-lektion",
+      "uxModuleId": "03-blockchain-mechanik",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module3/3-5.md",
+      "source": "/module/module3/lesson/3-5",
+      "destination": "/kurs/03-blockchain-mechanik/05-lektion",
+      "uxModuleId": "03-blockchain-mechanik",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module3/3-6.md",
+      "source": "/module/module3/lesson/3-6",
+      "destination": "/kurs/03-blockchain-mechanik/06-lektion",
+      "uxModuleId": "03-blockchain-mechanik",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module4/4-1.md",
+      "source": "/module/module4/lesson/4-1",
+      "destination": "/kurs/04-dex-mechanik/01-lektion",
+      "uxModuleId": "04-dex-mechanik",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module4/4-2.md",
+      "source": "/module/module4/lesson/4-2",
+      "destination": "/kurs/04-dex-mechanik/02-lektion",
+      "uxModuleId": "04-dex-mechanik",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module4/4-3.md",
+      "source": "/module/module4/lesson/4-3",
+      "destination": "/kurs/04-dex-mechanik/03-lektion",
+      "uxModuleId": "04-dex-mechanik",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module4/4-4.md",
+      "source": "/module/module4/lesson/4-4",
+      "destination": "/kurs/04-dex-mechanik/04-lektion",
+      "uxModuleId": "04-dex-mechanik",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module4/4-5.md",
+      "source": "/module/module4/lesson/4-5",
+      "destination": "/kurs/04-dex-mechanik/05-lektion",
+      "uxModuleId": "04-dex-mechanik",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module4/4-6.md",
+      "source": "/module/module4/lesson/4-6",
+      "destination": "/kurs/04-dex-mechanik/06-lektion",
+      "uxModuleId": "04-dex-mechanik",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module5/5-1.md",
+      "source": "/module/module5/lesson/5-1",
+      "destination": "/kurs/05-liquidity-pools/01-lektion",
+      "uxModuleId": "05-liquidity-pools",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module5/5-2.md",
+      "source": "/module/module5/lesson/5-2",
+      "destination": "/kurs/05-liquidity-pools/02-lektion",
+      "uxModuleId": "05-liquidity-pools",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module5/5-3.md",
+      "source": "/module/module5/lesson/5-3",
+      "destination": "/kurs/05-liquidity-pools/03-lektion",
+      "uxModuleId": "05-liquidity-pools",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module5/5-4.md",
+      "source": "/module/module5/lesson/5-4",
+      "destination": "/kurs/05-liquidity-pools/04-lektion",
+      "uxModuleId": "05-liquidity-pools",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module5/5-5.md",
+      "source": "/module/module5/lesson/5-5",
+      "destination": "/kurs/05-liquidity-pools/05-lektion",
+      "uxModuleId": "05-liquidity-pools",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module5/5-6.md",
+      "source": "/module/module5/lesson/5-6",
+      "destination": "/kurs/05-liquidity-pools/06-lektion",
+      "uxModuleId": "05-liquidity-pools",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module6/6-1.md",
+      "source": "/module/module6/lesson/6-1",
+      "destination": "/kurs/06-lending-markets/01-lektion",
+      "uxModuleId": "06-lending-markets",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module6/6-2.md",
+      "source": "/module/module6/lesson/6-2",
+      "destination": "/kurs/06-lending-markets/02-lektion",
+      "uxModuleId": "06-lending-markets",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module6/6-3.md",
+      "source": "/module/module6/lesson/6-3",
+      "destination": "/kurs/06-lending-markets/03-lektion",
+      "uxModuleId": "06-lending-markets",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module6/6-4.md",
+      "source": "/module/module6/lesson/6-4",
+      "destination": "/kurs/06-lending-markets/04-lektion",
+      "uxModuleId": "06-lending-markets",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module6/6-5.md",
+      "source": "/module/module6/lesson/6-5",
+      "destination": "/kurs/06-lending-markets/05-lektion",
+      "uxModuleId": "06-lending-markets",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module6/6-6.md",
+      "source": "/module/module6/lesson/6-6",
+      "destination": "/kurs/06-lending-markets/06-lektion",
+      "uxModuleId": "06-lending-markets",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module7/7-1.md",
+      "source": "/module/module7/lesson/7-1",
+      "destination": "/kurs/07-sicherheiten-liquidationen/01-lektion",
+      "uxModuleId": "07-sicherheiten-liquidationen",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module7/7-2.md",
+      "source": "/module/module7/lesson/7-2",
+      "destination": "/kurs/07-sicherheiten-liquidationen/02-lektion",
+      "uxModuleId": "07-sicherheiten-liquidationen",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module7/7-3.md",
+      "source": "/module/module7/lesson/7-3",
+      "destination": "/kurs/07-sicherheiten-liquidationen/03-lektion",
+      "uxModuleId": "07-sicherheiten-liquidationen",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module7/7-4.md",
+      "source": "/module/module7/lesson/7-4",
+      "destination": "/kurs/07-sicherheiten-liquidationen/04-lektion",
+      "uxModuleId": "07-sicherheiten-liquidationen",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module7/7-5.md",
+      "source": "/module/module7/lesson/7-5",
+      "destination": "/kurs/07-sicherheiten-liquidationen/05-lektion",
+      "uxModuleId": "07-sicherheiten-liquidationen",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module7/7-6.md",
+      "source": "/module/module7/lesson/7-6",
+      "destination": "/kurs/07-sicherheiten-liquidationen/06-lektion",
+      "uxModuleId": "07-sicherheiten-liquidationen",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module8/8-1.md",
+      "source": "/module/module8/lesson/8-1",
+      "destination": "/kurs/08-stablecoins/01-lektion",
+      "uxModuleId": "08-stablecoins",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module8/8-2.md",
+      "source": "/module/module8/lesson/8-2",
+      "destination": "/kurs/08-stablecoins/02-lektion",
+      "uxModuleId": "08-stablecoins",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module8/8-3.md",
+      "source": "/module/module8/lesson/8-3",
+      "destination": "/kurs/08-stablecoins/03-lektion",
+      "uxModuleId": "08-stablecoins",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module8/8-4.md",
+      "source": "/module/module8/lesson/8-4",
+      "destination": "/kurs/08-stablecoins/04-lektion",
+      "uxModuleId": "08-stablecoins",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module8/8-5.md",
+      "source": "/module/module8/lesson/8-5",
+      "destination": "/kurs/08-stablecoins/05-lektion",
+      "uxModuleId": "08-stablecoins",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module8/8-6.md",
+      "source": "/module/module8/lesson/8-6",
+      "destination": "/kurs/08-stablecoins/06-lektion",
+      "uxModuleId": "08-stablecoins",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module9/9-1.md",
+      "source": "/module/module9/lesson/9-1",
+      "destination": "/kurs/09-yield-strategien/01-lektion",
+      "uxModuleId": "09-yield-strategien",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module9/9-2.md",
+      "source": "/module/module9/lesson/9-2",
+      "destination": "/kurs/09-yield-strategien/02-lektion",
+      "uxModuleId": "09-yield-strategien",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module9/9-3.md",
+      "source": "/module/module9/lesson/9-3",
+      "destination": "/kurs/09-yield-strategien/03-lektion",
+      "uxModuleId": "09-yield-strategien",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module9/9-4.md",
+      "source": "/module/module9/lesson/9-4",
+      "destination": "/kurs/09-yield-strategien/04-lektion",
+      "uxModuleId": "09-yield-strategien",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module9/9-5.md",
+      "source": "/module/module9/lesson/9-5",
+      "destination": "/kurs/09-yield-strategien/05-lektion",
+      "uxModuleId": "09-yield-strategien",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module9/9-6.md",
+      "source": "/module/module9/lesson/9-6",
+      "destination": "/kurs/09-yield-strategien/06-lektion",
+      "uxModuleId": "09-yield-strategien",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module10/10-1.md",
+      "source": "/module/module10/lesson/10-1",
+      "destination": "/kurs/10-leverage-loops/01-lektion",
+      "uxModuleId": "10-leverage-loops",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module10/10-2.md",
+      "source": "/module/module10/lesson/10-2",
+      "destination": "/kurs/10-leverage-loops/02-lektion",
+      "uxModuleId": "10-leverage-loops",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module10/10-3.md",
+      "source": "/module/module10/lesson/10-3",
+      "destination": "/kurs/10-leverage-loops/03-lektion",
+      "uxModuleId": "10-leverage-loops",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module10/10-4.md",
+      "source": "/module/module10/lesson/10-4",
+      "destination": "/kurs/10-leverage-loops/04-lektion",
+      "uxModuleId": "10-leverage-loops",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module10/10-5.md",
+      "source": "/module/module10/lesson/10-5",
+      "destination": "/kurs/10-leverage-loops/05-lektion",
+      "uxModuleId": "10-leverage-loops",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module10/10-6.md",
+      "source": "/module/module10/lesson/10-6",
+      "destination": "/kurs/10-leverage-loops/06-lektion",
+      "uxModuleId": "10-leverage-loops",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module11/11-1.md",
+      "source": "/module/module11/lesson/11-1",
+      "destination": "/kurs/11-mev/01-lektion",
+      "uxModuleId": "11-mev",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module11/11-2.md",
+      "source": "/module/module11/lesson/11-2",
+      "destination": "/kurs/11-mev/02-lektion",
+      "uxModuleId": "11-mev",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module11/11-3.md",
+      "source": "/module/module11/lesson/11-3",
+      "destination": "/kurs/11-mev/03-lektion",
+      "uxModuleId": "11-mev",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module11/11-4.md",
+      "source": "/module/module11/lesson/11-4",
+      "destination": "/kurs/11-mev/04-lektion",
+      "uxModuleId": "11-mev",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module11/11-5.md",
+      "source": "/module/module11/lesson/11-5",
+      "destination": "/kurs/11-mev/05-lektion",
+      "uxModuleId": "11-mev",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module11/11-6.md",
+      "source": "/module/module11/lesson/11-6",
+      "destination": "/kurs/11-mev/06-lektion",
+      "uxModuleId": "11-mev",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module12/12-1.md",
+      "source": "/module/module12/lesson/12-1",
+      "destination": "/kurs/12-flash-loans/01-lektion",
+      "uxModuleId": "12-flash-loans",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module12/12-2.md",
+      "source": "/module/module12/lesson/12-2",
+      "destination": "/kurs/12-flash-loans/02-lektion",
+      "uxModuleId": "12-flash-loans",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module12/12-3.md",
+      "source": "/module/module12/lesson/12-3",
+      "destination": "/kurs/12-flash-loans/03-lektion",
+      "uxModuleId": "12-flash-loans",
+      "uxLessonId": "03-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module12/12-4.md",
+      "source": "/module/module12/lesson/12-4",
+      "destination": "/kurs/12-flash-loans/04-lektion",
+      "uxModuleId": "12-flash-loans",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module12/12-5.md",
+      "source": "/module/module12/lesson/12-5",
+      "destination": "/kurs/12-flash-loans/05-lektion",
+      "uxModuleId": "12-flash-loans",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module12/12-6.md",
+      "source": "/module/module12/lesson/12-6",
+      "destination": "/kurs/12-flash-loans/06-lektion",
+      "uxModuleId": "12-flash-loans",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module13/13-4.md",
+      "source": "/module/module13/lesson/13-4",
+      "destination": "/kurs/13-vetokenomics/04-lektion",
+      "uxModuleId": "13-vetokenomics",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module13/13-5.md",
+      "source": "/module/module13/lesson/13-5",
+      "destination": "/kurs/13-vetokenomics/05-lektion",
+      "uxModuleId": "13-vetokenomics",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module13/13-6.md",
+      "source": "/module/module13/lesson/13-6",
+      "destination": "/kurs/13-vetokenomics/06-lektion",
+      "uxModuleId": "13-vetokenomics",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module14/14-4.md",
+      "source": "/module/module14/lesson/14-4",
+      "destination": "/kurs/14-cross-chain/04-lektion",
+      "uxModuleId": "14-cross-chain",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module14/14-5.md",
+      "source": "/module/module14/lesson/14-5",
+      "destination": "/kurs/14-cross-chain/05-lektion",
+      "uxModuleId": "14-cross-chain",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module14/14-6.md",
+      "source": "/module/module14/lesson/14-6",
+      "destination": "/kurs/14-cross-chain/06-lektion",
+      "uxModuleId": "14-cross-chain",
+      "uxLessonId": "06-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module15/15-4.md",
+      "source": "/module/module15/lesson/15-4",
+      "destination": "/kurs/15-on-chain-analytics/04-lektion",
+      "uxModuleId": "15-on-chain-analytics",
+      "uxLessonId": "04-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module15/15-5.md",
+      "source": "/module/module15/lesson/15-5",
+      "destination": "/kurs/15-on-chain-analytics/05-lektion",
+      "uxModuleId": "15-on-chain-analytics",
+      "uxLessonId": "05-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module16/16-1.md",
+      "source": "/module/module16/lesson/16-1",
+      "destination": "/kurs/16-composability-risk/01-lektion",
+      "uxModuleId": "16-composability-risk",
+      "uxLessonId": "01-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module16/16-2.md",
+      "source": "/module/module16/lesson/16-2",
+      "destination": "/kurs/16-composability-risk/02-lektion",
+      "uxModuleId": "16-composability-risk",
+      "uxLessonId": "02-lektion"
+    },
+    {
+      "legacyPath": "content/modules/module16/16-3.md",
+      "source": "/module/module16/lesson/16-3",
+      "destination": "/kurs/16-composability-risk/03-lektion",
+      "uxModuleId": "16-composability-risk",
+      "uxLessonId": "03-lektion"
+    }
+  ],
+  "nextConfigRedirects": [
+    {
+      "source": "/module/module1/lesson/1-1",
+      "destination": "/kurs/01-defi-grundlagen/01-was-ist-defi",
+      "permanent": true
+    },
+    {
+      "source": "/module/module1/lesson/1-2",
+      "destination": "/kurs/01-defi-grundlagen/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module1/lesson/1-3",
+      "destination": "/kurs/01-defi-grundlagen/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module1/lesson/1-4",
+      "destination": "/kurs/01-defi-grundlagen/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module1/lesson/1-5",
+      "destination": "/kurs/01-defi-grundlagen/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module1/lesson/1-6",
+      "destination": "/kurs/01-defi-grundlagen/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module2/lesson/2-1",
+      "destination": "/kurs/02-wallets-sicherheit/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module2/lesson/2-2",
+      "destination": "/kurs/02-wallets-sicherheit/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module2/lesson/2-3",
+      "destination": "/kurs/02-wallets-sicherheit/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module2/lesson/2-4",
+      "destination": "/kurs/02-wallets-sicherheit/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module2/lesson/2-5",
+      "destination": "/kurs/02-wallets-sicherheit/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module2/lesson/2-6",
+      "destination": "/kurs/02-wallets-sicherheit/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module3/lesson/3-1",
+      "destination": "/kurs/03-blockchain-mechanik/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module3/lesson/3-2",
+      "destination": "/kurs/03-blockchain-mechanik/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module3/lesson/3-3",
+      "destination": "/kurs/03-blockchain-mechanik/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module3/lesson/3-4",
+      "destination": "/kurs/03-blockchain-mechanik/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module3/lesson/3-5",
+      "destination": "/kurs/03-blockchain-mechanik/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module3/lesson/3-6",
+      "destination": "/kurs/03-blockchain-mechanik/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module4/lesson/4-1",
+      "destination": "/kurs/04-dex-mechanik/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module4/lesson/4-2",
+      "destination": "/kurs/04-dex-mechanik/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module4/lesson/4-3",
+      "destination": "/kurs/04-dex-mechanik/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module4/lesson/4-4",
+      "destination": "/kurs/04-dex-mechanik/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module4/lesson/4-5",
+      "destination": "/kurs/04-dex-mechanik/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module4/lesson/4-6",
+      "destination": "/kurs/04-dex-mechanik/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module5/lesson/5-1",
+      "destination": "/kurs/05-liquidity-pools/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module5/lesson/5-2",
+      "destination": "/kurs/05-liquidity-pools/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module5/lesson/5-3",
+      "destination": "/kurs/05-liquidity-pools/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module5/lesson/5-4",
+      "destination": "/kurs/05-liquidity-pools/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module5/lesson/5-5",
+      "destination": "/kurs/05-liquidity-pools/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module5/lesson/5-6",
+      "destination": "/kurs/05-liquidity-pools/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module6/lesson/6-1",
+      "destination": "/kurs/06-lending-markets/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module6/lesson/6-2",
+      "destination": "/kurs/06-lending-markets/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module6/lesson/6-3",
+      "destination": "/kurs/06-lending-markets/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module6/lesson/6-4",
+      "destination": "/kurs/06-lending-markets/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module6/lesson/6-5",
+      "destination": "/kurs/06-lending-markets/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module6/lesson/6-6",
+      "destination": "/kurs/06-lending-markets/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module7/lesson/7-1",
+      "destination": "/kurs/07-sicherheiten-liquidationen/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module7/lesson/7-2",
+      "destination": "/kurs/07-sicherheiten-liquidationen/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module7/lesson/7-3",
+      "destination": "/kurs/07-sicherheiten-liquidationen/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module7/lesson/7-4",
+      "destination": "/kurs/07-sicherheiten-liquidationen/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module7/lesson/7-5",
+      "destination": "/kurs/07-sicherheiten-liquidationen/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module7/lesson/7-6",
+      "destination": "/kurs/07-sicherheiten-liquidationen/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module8/lesson/8-1",
+      "destination": "/kurs/08-stablecoins/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module8/lesson/8-2",
+      "destination": "/kurs/08-stablecoins/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module8/lesson/8-3",
+      "destination": "/kurs/08-stablecoins/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module8/lesson/8-4",
+      "destination": "/kurs/08-stablecoins/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module8/lesson/8-5",
+      "destination": "/kurs/08-stablecoins/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module8/lesson/8-6",
+      "destination": "/kurs/08-stablecoins/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module9/lesson/9-1",
+      "destination": "/kurs/09-yield-strategien/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module9/lesson/9-2",
+      "destination": "/kurs/09-yield-strategien/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module9/lesson/9-3",
+      "destination": "/kurs/09-yield-strategien/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module9/lesson/9-4",
+      "destination": "/kurs/09-yield-strategien/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module9/lesson/9-5",
+      "destination": "/kurs/09-yield-strategien/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module9/lesson/9-6",
+      "destination": "/kurs/09-yield-strategien/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module10/lesson/10-1",
+      "destination": "/kurs/10-leverage-loops/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module10/lesson/10-2",
+      "destination": "/kurs/10-leverage-loops/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module10/lesson/10-3",
+      "destination": "/kurs/10-leverage-loops/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module10/lesson/10-4",
+      "destination": "/kurs/10-leverage-loops/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module10/lesson/10-5",
+      "destination": "/kurs/10-leverage-loops/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module10/lesson/10-6",
+      "destination": "/kurs/10-leverage-loops/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module11/lesson/11-1",
+      "destination": "/kurs/11-mev/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module11/lesson/11-2",
+      "destination": "/kurs/11-mev/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module11/lesson/11-3",
+      "destination": "/kurs/11-mev/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module11/lesson/11-4",
+      "destination": "/kurs/11-mev/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module11/lesson/11-5",
+      "destination": "/kurs/11-mev/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module11/lesson/11-6",
+      "destination": "/kurs/11-mev/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module12/lesson/12-1",
+      "destination": "/kurs/12-flash-loans/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module12/lesson/12-2",
+      "destination": "/kurs/12-flash-loans/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module12/lesson/12-3",
+      "destination": "/kurs/12-flash-loans/03-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module12/lesson/12-4",
+      "destination": "/kurs/12-flash-loans/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module12/lesson/12-5",
+      "destination": "/kurs/12-flash-loans/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module12/lesson/12-6",
+      "destination": "/kurs/12-flash-loans/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module13/lesson/13-4",
+      "destination": "/kurs/13-vetokenomics/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module13/lesson/13-5",
+      "destination": "/kurs/13-vetokenomics/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module13/lesson/13-6",
+      "destination": "/kurs/13-vetokenomics/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module14/lesson/14-4",
+      "destination": "/kurs/14-cross-chain/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module14/lesson/14-5",
+      "destination": "/kurs/14-cross-chain/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module14/lesson/14-6",
+      "destination": "/kurs/14-cross-chain/06-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module15/lesson/15-4",
+      "destination": "/kurs/15-on-chain-analytics/04-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module15/lesson/15-5",
+      "destination": "/kurs/15-on-chain-analytics/05-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module16/lesson/16-1",
+      "destination": "/kurs/16-composability-risk/01-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module16/lesson/16-2",
+      "destination": "/kurs/16-composability-risk/02-lektion",
+      "permanent": true
+    },
+    {
+      "source": "/module/module16/lesson/16-3",
+      "destination": "/kurs/16-composability-risk/03-lektion",
+      "permanent": true
+    }
+  ]
+}

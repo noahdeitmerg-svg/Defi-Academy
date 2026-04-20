@@ -1,13 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import type { LessonAssets } from "@/data/types";
 import { ALL_MODULES } from "@/data/courseStructure";
 import { useProgress } from "@/lib/progress/useProgress";
 import { VideoPlayer } from "./VideoPlayer";
-import { SlidesViewer } from "./SlidesViewer";
-import { SlideNavigator } from "./SlideNavigator";
-import { SlideThumbnailStrip } from "./SlideThumbnailStrip";
+import { KeyTakeaways } from "./KeyTakeaways";
 import { LearningObjectives } from "./LearningObjectives";
 import { KeyConcepts } from "./KeyConcepts";
 import { ExerciseBlock } from "./ExerciseBlock";
@@ -21,8 +19,7 @@ export function LessonView({
   assets: LessonAssets;
   exerciseHtml: string | null;
 }) {
-  const { lesson, videoUrl, slides, quiz } = assets;
-  const [slideIndex, setSlideIndex] = useState(0);
+  const { lesson, videoUrl, quiz, keyTakeaways } = assets;
   const { markVideoWatched } = useProgress();
 
   const lektionLabel = useMemo(() => {
@@ -61,23 +58,7 @@ export function LessonView({
         />
       </section>
 
-      <section className="mb-8" aria-labelledby="folien-heading">
-        <h2 id="folien-heading" className="text-base font-semibold text-ux-text-primary">
-          Folien
-        </h2>
-        <p className="mt-1 text-xs text-ux-text-muted">
-          Thumbnails und Navigation — MVP ohne Timestamp-Sync zum Video.
-        </p>
-        <div className="mt-4">
-          <SlideThumbnailStrip slides={slides} index={slideIndex} onSelect={setSlideIndex} />
-          <SlideNavigator
-            index={slideIndex}
-            total={slides.length}
-            onChange={setSlideIndex}
-          />
-          <SlidesViewer slides={slides} index={slideIndex} />
-        </div>
-      </section>
+      <KeyTakeaways takeaways={keyTakeaways} />
 
       <KeyConcepts concepts={lesson.keyConcepts} />
 

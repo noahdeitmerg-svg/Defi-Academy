@@ -247,6 +247,7 @@ export type LessonAssets = {
   videoUrl: string;
   slides: Slide[];
   quiz: QuizQuestion[];
+  keyTakeaways: string[];
 };
 
 export type LessonProgress = {
@@ -310,7 +311,7 @@ locked:            #4A4A55
 `ModuleCard`, `LessonListItem`, `ContinueLearningCard`, `ProgressBar`, `TierBadge`
 
 ### Lektion
-`VideoPlayer`, `SlidesViewer`, `SlideNavigator`, `LearningObjectives`, `KeyConcepts`, `ExerciseBlock`
+`VideoPlayer`, `KeyTakeaways` (aus `content/takeaways.json`), `LearningObjectives`, `KeyConcepts`, `ExerciseBlock` — Folien nur **im Video**; die früheren UI-Komponenten `SlidesViewer`, `SlideNavigator`, `SlideThumbnailStrip` liegen archiviert unter `components/_deprecated/` (optional wieder verwendbar).
 
 ### Quiz
 `QuizEngine`, `QuizQuestion`, `QuizFeedback`, `QuizResult`
@@ -337,7 +338,7 @@ Build-Zeit:
   Für jede Lektion:
     1. module.json laden
     2. lesson.md parsen (Frontmatter + Markdown)
-    3. slides.json laden
+    3. slides.json laden (weiterhin für Video-Pipeline; keine Folien-Galerie mehr auf der Lektionsseite)
     4. quiz.json laden
     5. Video-URL aus ENV + lessonId konstruieren
   ↓
@@ -352,9 +353,9 @@ Videos liegen auf Cloudflare R2. Die URL wird dynamisch zusammengebaut:
 ${NEXT_PUBLIC_VIDEO_CDN_URL}/modules/${modulId}/${lektionId}.mp4
 ```
 
-### Video-Slides-Synchronisation
+### Video und Folien
 
-Der `VideoPlayer` emittiert `onProgress(currentTime)`. Der `SlidesViewer` berechnet den aktiven Slide anhand von `slide.timestamp`. Klick auf einen Slide ruft `player.seek(timestamp)` auf.
+Folien werden **im gerenderten Video** gezeigt, nicht als separate UI unter dem Player. Optional kann später ein Player-Feature (Kapitel / Kapitelmarken) ergänzt werden; die archivierten Komponenten unter `components/_deprecated/` dienen nur als Referenz für frühere MVP-Experimente.
 
 ---
 
@@ -617,11 +618,13 @@ defi-akademie/
 │   │   └── TierBadge.tsx
 │   ├── lesson/
 │   │   ├── VideoPlayer.tsx
-│   │   ├── SlidesViewer.tsx
-│   │   ├── SlideNavigator.tsx
 │   │   ├── LearningObjectives.tsx
 │   │   ├── KeyConcepts.tsx
 │   │   └── ExerciseBlock.tsx
+│   ├── _deprecated/
+│   │   ├── SlidesViewer.tsx
+│   │   ├── SlideNavigator.tsx
+│   │   └── SlideThumbnailStrip.tsx
 │   ├── quiz/
 │   │   ├── QuizEngine.tsx
 │   │   ├── QuizQuestion.tsx
@@ -727,6 +730,7 @@ export type LessonAssets = {
   videoUrl: string;
   slides: Slide[];
   quiz: QuizQuestion[];
+  keyTakeaways: string[];
 };
 
 export type LessonProgress = {
@@ -794,6 +798,7 @@ Exportiere diese als Array `ALL_MODULES: Module[]` mit Platzhalter-Beschreibunge
 - Liest `lesson.md` (mit gray-matter für Frontmatter)
 - Parst Markdown mit remark zu HTML
 - Liest `slides.json` und `quiz.json`
+- Liest `keyTakeaways` aus `content/takeaways.json` (Schlüssel `modulId/lektionId`, siehe `lib/content/loadTakeaways.ts`)
 - Konstruiert videoUrl: `${process.env.NEXT_PUBLIC_VIDEO_CDN_URL}/modules/${modulId}/${lektionId}.mp4`
 - Wirft NICHT bei fehlenden Dateien, sondern liefert leere Arrays/Platzhalter zurück
 
@@ -1002,7 +1007,7 @@ MVP-Regel: Alle Nutzer sind standardmäßig "free". Es gibt keine echte Upgrade-
 - Titel + Gold Accent Bar
 - Lernziele
 - VideoPlayer (HTML5 video mit videoUrl aus LessonAssets)
-- SlideNavigator + SlidesViewer (MVP: nur Slide-Anzeige, noch keine Timestamp-Sync)
+- Key Takeaways (wenn in `takeaways.json` eingetragen; sonst ausgeblendet)
 - Key Concepts als Tag-Liste
 - ExerciseBlock (aus Markdown extrahierte Übungsaufgabe)
 - QuizEngine (Button "Quiz starten" → Overlay oder Inline-Anzeige)
@@ -1120,9 +1125,10 @@ Arbeite in dieser Reihenfolge ab. Nach jeder Phase pausieren, Stand zeigen, auf 
 **Phase 8 – Lektion:**
 - LessonLayout mit Sidebar
 - VideoPlayer
-- SlidesViewer + SlideNavigator
+- KeyTakeaways (Daten aus `content/takeaways.json`)
 - LearningObjectives, KeyConcepts, ExerciseBlock
 - LessonFooterNav
+- (Archiv) SlidesViewer / SlideNavigator / SlideThumbnailStrip → `components/_deprecated/`
 
 **Phase 9 – Quiz-Engine:**
 - QuizEngine mit State Machine

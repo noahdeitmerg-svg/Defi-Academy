@@ -1,3 +1,7 @@
+/**
+ * @deprecated Archiviert (Phase 1 UX, F7-Nachgang): Folien laufen im Video;
+ * Lektionsseite nutzt diese Komponente nicht mehr. Für Offline-/Tool-Kontext behalten.
+ */
 "use client";
 
 import type { Slide } from "@/data/types";

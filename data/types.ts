@@ -42,6 +42,8 @@ export type LessonAssets = {
   videoUrl: string;
   slides: Slide[];
   quiz: QuizQuestion[];
+  /** 3–5 Sätze aus `content/takeaways.json`; leer bis Content Agent befüllt. */
+  keyTakeaways: string[];
 };
 
 export type LessonProgress = {

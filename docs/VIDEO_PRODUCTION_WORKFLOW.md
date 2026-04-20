@@ -28,12 +28,17 @@ Produzent:innen und neue Agenten/Entwickler:innen.
 
 ## 1. Pipeline-Uebersicht
 
+**Voice-Strecke (Kernaussage):** Lesson-Content → Voice-Script-Generator
+(`voice_script.txt`) → **Script Optimizer** (Zahlen, Satzlänge, Pausen) →
+**Voice Preprocessor** (Aussprache-Woerterbuch) → **ElevenLabs** (TTS) → **MP3**.
+Details: Abschnitt 4.
+
 ```
 ┌─────────────┐   ┌──────────────────────┐   ┌─────────────────┐   ┌─────────────────┐   ┌────────────────┐
-│  lessons/   │─▶│ Lesson-Asset-        │─▶│ Gamma (Visuals  │─▶│ ElevenLabs      │─▶│ Video-Renderer │
-│  *.md       │   │ Generator            │   │ only — kein     │   │ voice_script →  │   │ Remotion baut  │
+│  lessons/   │─▶│ Lesson-Asset-        │─▶│ Gamma (Visuals  │─▶│ Voice Prep. +   │─▶│ Video-Renderer │
+│  *.md       │   │ Generator            │   │ only — kein     │   │ ElevenLabs →    │   │ Remotion baut  │
 │             │   │                      │   │ Slide-Layout!)  │   │ voice.mp3       │   │ Slides aus     │
-│             │   │                      │   │ slides_prompt → │   │                 │   │ Template       │
+│             │   │                      │   │ slides_prompt → │   │ (s. Abschn. 4)  │   │ Template       │
 │             │   │                      │   │ visualNN.png    │   │                 │   │                │
 └─────────────┘   └──────────────────────┘   └─────────────────┘   └─────────────────┘   └────────────────┘
                          │                           │                     │                     │
@@ -93,7 +98,8 @@ pro Lektion einen Ordner mit:
 ```
 lesson-asset-generator/output/moduleXX-lessonYY/
 ├── slides_prompt.txt       # Input fuer Gamma
-├── voice_script.txt        # Input fuer ElevenLabs
+├── voice_script.txt        # Roh-Sprechertext (Input fuer Voice-Pipeline / ElevenLabs)
+├── voice_script_clean.txt  # Optional: nach generate:voice — Text wie an ElevenLabs gesendet
 ├── visual_plan.json        # Beschreibt welche Visuals gebraucht werden
 ├── video_config.json       # Timing + Metadaten fuer Remotion
 ├── visuals-manifest.json   # Referenzen auf die Visual-Dateien
@@ -241,8 +247,48 @@ Hard-Gate im Preflight.
 ## 4. Voice via ElevenLabs — **automatisiert**
 
 `scripts/generate-voice.js` liest `voice_script.txt` aus dem
-Generator-Output und erzeugt ueber ElevenLabs TTS eine
-`assets-input/moduleXX-lessonYY/voice.mp3`.
+Generator-Output und bereitet den Text fuer TTS auf, bevor ElevenLabs
+`voice.mp3` schreibt.
+
+**End-to-End (inhaltlich):**
+
+```
+Lesson Content (Markdown)
+  → Voice Script Generator (lesson-asset-generator) → voice_script.txt
+  → Script Optimizer (Zahlen, Satzlänge, Pausen; siehe unten)
+  → Voice Preprocessor / Aussprache (Woerterbuch)
+  → ElevenLabs Voice Generation
+  → MP3 Output (voice.mp3; optional voice_script_clean.txt als Debug-Kopie)
+```
+
+**Technische Kette (pro Lektion):**
+
+```
+voice_script.txt
+  → Sanitize (pipeline/voice/sanitize_voice_script.js)
+  → Script Optimizer (pipeline/voice/script_optimizer.js)
+       · Zahlen/Prozent/$-Kürzel/k·M·B (script_normalizer.js, geschützte Segmente)
+       · lange Sätze splitten, Aufzählungen (optimizeSentenceStructure)
+       · Pausen „...“ nach Schlüssel-Sätzen (prosody_engine.js)
+  → Voice Preprocessor (pipeline/voice/preprocess_voice_script.js
+       + pronunciation_dictionary.json — inhaltlich abgestimmt mit
+       defi_academy_pronunciation_dictionary.pdf im Repo-Root)
+  → ElevenLabs (Default: eleven_multilingual_v3, siehe .env.example)
+  → optional Audio-Enhancement (pipeline/voice/audio_post_process.js) → voice.mp3
+```
+
+`prepareVoiceForElevenLabs()` (voice_pipeline.js) verkettet **nur noch**:
+Script Optimizer → Pronunciation (kein separater Prosody-Schritt danach).
+
+**Manueller Zwischenschritt (ohne generate:voice):** Woerterbuch nur anwenden:
+
+```powershell
+node pipeline/voice/preprocess_voice_script.js --input lesson-asset-generator/output/module01-lesson01/voice_script.txt --output lesson-asset-generator/output/module01-lesson01/voice_script_clean.txt
+```
+
+Gesamt-API: `prepareVoiceForElevenLabs()` in `pipeline/voice/voice_pipeline.js`.
+Bei `npm run generate:voice` wird zusaetzlich `voice_script_clean.txt` geschrieben
+(finaler ElevenLabs-Text inkl. Optimizer + Woerterbuch). Tests: `npm run test:voice-pipeline`.
 
 ### 4.1 Setup (einmalig)
 

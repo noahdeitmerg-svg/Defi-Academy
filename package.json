@@ -35,7 +35,12 @@
     "academy-build": "npm run sync:brand && npm run generate-assets && npm run collect-prompts",
     "verify": "npm run validate:content && npm run lint && npm run typecheck && npm run build",
     "import:modules": "node ./node_modules/tsx/dist/cli.mjs scripts/import-modules.ts",
-    "check": "npm run verify"
+    "check": "npm run verify",
+    "test:voice-pipeline": "node --test pipeline/voice/tests/voice_pipeline.test.js",
+    "test:tier-policy": "node --import tsx --test lib/tier/tierPolicy.test.ts",
+    "f7:redirects": "node scripts/generate-f7-redirects.js",
+    "split:modul-17": "node scripts/split-modul-17.mjs",
+    "export:takeaways-input": "node ./node_modules/tsx/dist/cli.mjs scripts/export-takeaways-input.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.103.3",

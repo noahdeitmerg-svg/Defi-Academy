@@ -122,7 +122,7 @@ Mechanisch notwendig — erzeugt Impermanent Loss für LPs.
 
 ## Visuelle Vorschläge
 
-**[Slide 1]** Titelfolie.
+**[Slide 1]** Titelfolie — **konzeptionelle Visualisierung** (nur Marke/Metapher, kein Folien-Layout): DeFi-AMM als geschlossenes System.
 
 **[Slide 2]** Große Formel-Darstellung "x · y = k" auf der Folie. Unten: Pool-Symbol mit zwei Token-Stapeln.
 

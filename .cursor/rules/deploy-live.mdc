@@ -21,3 +21,5 @@ Wenn der Nutzer ausdrücklich will, dass Änderungen **ohne manuelles Nacharbeit
 **Niemals** Tokens, Passwörter oder PATs in Commits, Chats oder Repo-Dateien ablegen — nur als lokale/CI-Umgebungsvariable `GITHUB_TOKEN`.
 
 Nach Push oder erfolgreichem Merge: kurz den Actions-Lauf auf GitHub erwähnen (`Actions` → Workflows).
+
+Bei inhaltlichen Änderungen vor dem Push: **`docs/AGENT-DOKUMENTATION-SYNC.md`** (Doku/Changelog mitziehen).
