@@ -1,19 +1,22 @@
-# Roadmap: Video-Batch (Module 2–16)
+# Roadmap: Video-Batch (Module 4–16)
 
-Kurzliste **vor** dem massenhaften Rendern aller Lektionen.
+Kurzliste **vor** dem massenhaften Rendern der restlichen Module.
 
-## Erledigt (Stand Test)
+## Erledigt
 
 - [x] Tabellen-Bug (3 Spalten CeFi vs. DeFi) in `brand/slide-helpers.js` + Test `pipeline-test/tests/table-rendering.test.js`
-- [x] Lektion **1.1** neu gerendert, `public/videos/module1-1-1.mp4` + Dauer `module1/1-1` in `lesson-audio-durations.json`
+- [x] **Modul 1** — alle 6 Lektionen als MP4 auf `main` (Batch); **1.1** danach noch einmal wegen Tabellen-Fix (`module1-1-1.mp4` + Dauer `module1/1-1`)
+- [x] **Modul 2** — 6 Lektionen, `public/videos/module2-2-1` … `module2-2-6`, Dauer-Keys `module2/2-1` … `2-6` (Commit `e3b0dbd`)
+- [x] **Modul 3** — 6 Lektionen, `public/videos/module3-3-1` … `module3-3-6`, Dauer-Keys `module3/3-1` … `3-6` (Commit `21d01ef`)
+- [x] Stichprobe **Video 1.1** Slide 4 (CeFi vs. DeFi) im Live-Player — bestätigt
+- [x] **`npm run validate:content`** — durchgelaufen (Warnung Modul 16 Quiz optional)
+- [x] **`GITHUB_PAGES=true npm run build`** — lokal durchgelaufen
 
-## Vor dem Groß-Rollout empfohlen
+## Vor dem Groß-Rollout (Module 4+)
 
-1. **Stichprobe Video 1.1** — Slide 4 im Player prüfen (Bullets mit „vs.“).
-2. **`npm run validate:content`** — bei grün OK (Modul 16: nur Warnung Quiz optional).
-3. **`npm run build`** — einmal mit `GITHUB_PAGES=true` für Pages-parity (optional).
-4. **Kosten/Zeit** — pro Modul `npm run videos:module -- --module N` (ElevenLabs + ffmpeg); nicht alle Module parallel ohne Budget-Check.
-5. **Modul 16 Quiz** — `quiz.json` oder `open-quiz.md` ergänzen, falls Quiz-Tab erscheinen soll.
+1. **Kosten/Zeit** — pro Modul `npm run videos:module -- --module N --live`; nicht alle Module ohne Budget-Check hintereinander.
+2. **Modul 16 Quiz** — `quiz.json` oder `open-quiz.md` ergänzen, falls Quiz-Tab erscheinen soll.
+3. Nach großen Änderungen an `Module/*-FINAL.md`: ggf. **Auto-Import** + Content-Validierung erneut fahren.
 
 ## Nach jedem Modul
 
