@@ -4,7 +4,7 @@
 **Projekt:** DeFi Akademie (deutschsprachige DeFi-Lernplattform)
 **Zielumsetzung:** Build Agent in Cursor (Next.js + React)
 **Sprache:** Deutsch
-**Umfang:** 17 Module, 102 Lektionen
+**Umfang:** 18 Module, ca. 102 Lektionen
 
 **Repo-Ist (Parallelbetrieb):** Aktueller Deploy, Content-Ordner und Video-Stand — [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md).
 
@@ -27,9 +27,32 @@ Dieses Dokument ist in zwei Teile gegliedert:
 **Prinzip:** Tiefe statt Hype – technisch korrekt, risikobewusst, praxisorientiert
 
 **Inhaltsumfang:**
-- 17 Module
-- 102 Lektionen
+- 18 Module
+- ca. 102 Lektionen
 - Jede Lektion: Erklärung, Lernziele, Slides, Voice-Script, Visual Suggestions, Übung, Quiz, Video
+
+### Verbindliche Modulreihenfolge (0–17)
+
+- Module 0 — Introduction to the DeFi Academy
+- Module 1 — DeFi Fundamentals
+- Module 2 — Wallets and Security
+- Module 3 — Blockchain Mechanics
+- Module 4 — DEX Mechanics
+- Module 5 — Liquidity Pools
+- Module 6 — Lending Markets
+- Module 7 — Collateral and Liquidations
+- Module 8 — Stablecoins
+- Module 9 — Yield Strategies
+- Module 10 — Leverage Loops
+- Module 11 — MEV
+- Module 12 — Flash Loans
+- Module 13 — veTokenomics
+- Module 14 — Cross-Chain Infrastructure
+- Module 15 — On-Chain Analytics
+- Module 16 — Composability Risk
+- Module 17 — Portfolio Construction and RWA
+
+**Hinweis zu Modul 0:** Dieses Onboarding-Modul dient der Orientierung und erklärt Aufbau der Akademie, Risiko-Bewusstsein sowie Lernmethodik vor den technischen Modulen.
 
 ---
 
@@ -60,15 +83,17 @@ Dieses Dokument ist in zwei Teile gegliedert:
 
 ### Tier-Struktur
 
+- **Orientation:** Module 0 (Introduction)
 - **Free Tier:** Module 1–3 (Grundlagen)
 - **Pro Tier:** Module 4–17 (Paywall-UI sperrt Zugriff, keine echte Zahlung im MVP)
 
 ### Didaktische Gruppierung
 
-- Grundlagen: Module 1–3
-- Protokollmechaniken: Module 4–8
-- Fortgeschrittene Strategien: Module 9–13
-- Infrastruktur & Analyse: Module 14–17
+- Orientation: Module 0
+- Foundations: Module 1–4
+- Protocols: Module 5–10
+- Infrastructure: Module 11–14
+- Advanced Analysis and Strategy: Module 15–17
 
 ---
 
@@ -83,7 +108,7 @@ Dieses Dokument ist in zwei Teile gegliedert:
 
 ### Authentifiziert
 - `/dashboard` – Nutzer-Hub
-- `/kurs` – Kursübersicht (alle 17 Module)
+- `/kurs` – Kursübersicht (alle 18 Module inkl. Modul 0)
 - `/kurs/[modulId]` – Modulseite
 - `/kurs/[modulId]/[lektionId]` – Lektionsseite
 - `/fortschritt` – Fortschrittsbericht
@@ -499,7 +524,7 @@ Der folgende Prompt kann direkt in Cursor eingefügt werden. Empfohlen wird Curs
 ## CURSOR PROMPT – KOPIEREN UND EINFÜGEN
 
 ````
-Du baust die Lernplattform "DeFi Akademie" – eine deutschsprachige DeFi-Lernplattform mit 17 Modulen und 102 Lektionen.
+Du baust die Lernplattform "DeFi Akademie" – eine deutschsprachige DeFi-Lernplattform mit 18 Modulen (inkl. Modul 0) und ca. 102 Lektionen.
 
 Arbeite iterativ: Erstelle das Projekt-Gerüst, dann die einzelnen Phasen in der angegebenen Reihenfolge. Nach jeder Phase kurz pausieren und mir den Stand zeigen.
 
@@ -727,7 +752,7 @@ export type UserProgress = {
 5. KURSSTRUKTUR (data/courseStructure.ts)
 ================================================================
 
-Statische Liste aller 17 Module mit IDs, Titeln und Tier:
+Statische Liste aller 18 Module (Modul 0 bis Modul 17) mit IDs, Titeln und Tier:
 
 ```
 Module 1-3 (tier: "free"):
@@ -947,7 +972,7 @@ MVP-Regel: Alle Nutzer sind standardmäßig "free". Es gibt keine echte Upgrade-
 **Landing Page (/):**
 - Hero: "DeFi verstehen. Ohne Hype." + Untertitel + 2 CTAs
 - Sektion "Was du lernst" mit 4 Kategorien (Grundlagen, Mechaniken, Strategien, Infrastruktur)
-- Sektion "Alle 17 Module" als Liste mit Free/Pro-Badges
+- Sektion "Alle 18 Module" als Liste mit Free/Pro-Badges
 - Sektion "Aufbau einer Lektion": Video → Slides → Übung → Quiz
 - Sektion "Free vs Pro" zwei Spalten
 - FAQ (3–5 Fragen als Platzhalter)
@@ -957,7 +982,7 @@ MVP-Regel: Alle Nutzer sind standardmäßig "free". Es gibt keine echte Upgrade-
 - Begrüßung mit Nutzername
 - Gesamtfortschrittsbalken (X von 102 Lektionen)
 - "Weiter lernen"-Karte mit aktueller Lektion (aus getCurrentLesson)
-- Grid aller 17 Module als ModuleCard (Status: nicht begonnen / in Bearbeitung / abgeschlossen / gesperrt)
+- Grid aller 18 Module als ModuleCard (Status: nicht begonnen / in Bearbeitung / abgeschlossen / gesperrt)
 
 **Kursübersicht (/kurs):**
 - Titel "Alle Module"
@@ -1062,7 +1087,7 @@ Arbeite in dieser Reihenfolge ab. Nach jeder Phase pausieren, Stand zeigen, auf 
 
 **Phase 2 – Content-Pipeline:**
 - TypeScript-Typen (data/types.ts)
-- courseStructure.ts mit allen 17 Modulen
+- courseStructure.ts mit allen 18 Modulen (inkl. Modul 0)
 - loadModules.ts, loadLesson.ts, parseMarkdown.ts
 - Demo-Content für Modul 1, Lektion 1 erstellen
 

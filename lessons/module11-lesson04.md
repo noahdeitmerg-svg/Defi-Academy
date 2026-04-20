@@ -112,7 +112,7 @@ Um deine Anfälligkeit zu senken:
 
 **Live-Monitoring-Tools**
 
-Nach einem verdächtigen Swap kannst du prüfen, ob du gesandwicht wurdest:
+Nach einem verdächtigen Swap kannst du prüfen, ob du sandwiched wurdest:
 - **eigenphi.io** — zeigt MEV-Transaktionen mit Opfern
 - **mevboost.pics** — Supply-Chain-Analyse
 - **metasleuth.io** — Transaktions-Flow-Analyse
@@ -142,29 +142,22 @@ Ohne Sandwich: 272.727 USDC
 Mit Sandwich: 262.605 USDC
 Verlust: 10.122 USDC = 3,7%
 
-**[Slide 4] — Die Slippage-Falle**
-Searcher optimiert Front-Run-Größe
-so, dass Swap gerade noch ausgeführt wird
-Slippage-Toleranz = Gewinn-Obergrenze
+**[Slide 4] — Profitabilitäts-Formel**
+Sandwich Profit ≈ (Front-run price impact + Back-run recovery) − Gas costs − Slippage buffer
+Proportional: Swap-Größe² / Pool-Liquidität × Slippage
+Je größer + liquider + höhere Slippage = desto profitabler
 
-**[Slide 5] — Profitabilitäts-Formel**
-Gewinn ∝ Swap-Größe² / Pool-Liquidität × Slippage
-Je größer + liquider + höhere Slippage
-= desto profitabler
+**[Slide 5] — Anfälligkeitsfaktoren**
+Slippage als Einfallstor: Searcher optimiert Front-Run-Größe, sodass Swap gerade noch ausgeführt wird — Slippage-Toleranz = Gewinn-Obergrenze
+Trade-Größen-Schwellen: < 1.000 USD fast nie · 1.000–10.000 manchmal · 10.000–100.000 oft · > 100.000 fast immer
 
-**[Slide 6] — Schwellen-Regeln**
-< 1.000 USD: fast nie
-1.000-10.000: manchmal
-10.000-100.000: oft
-> 100.000: fast immer
-
-**[Slide 7] — Anti-Sandwich-Checkliste**
+**[Slide 6] — Anti-Sandwich-Checkliste**
 Slippage niedrig
 Private RPC (Flashbots Protect)
 CowSwap für große Trades
 Trades aufsplitten
 
-**[Slide 8] — Die zugrundeliegende Ursache**
+**[Slide 7] — Die zugrundeliegende Ursache**
 Information-Asymmetry
 Mempool ist öffentlich
 Lösung: Transaktionen privat halten
@@ -177,15 +170,13 @@ Lösung: Transaktionen privat halten
 
 **[Slide 3]** Ein konkretes Beispiel. Alice verkauft 100 ETH gegen USDC auf Uniswap V2. Pool hat 1.000 ETH und 3 Millionen USDC. Ohne Sandwich bekommt Alice 272.727 USDC. Der Searcher macht einen Front-Run-Verkauf von 20 ETH, dann erfolgt Alice-Swap, dann Back-Run-Kauf von 20 ETH. Alice bekommt jetzt nur 262.605 USDC — Verlust von 10.122 Dollar, etwa 3,7 Prozent. Das ist exakt der Searcher-Gewinn.
 
-**[Slide 4]** Die Slippage-Falle ist subtil. Alice hat 2 Prozent Slippage gesetzt — ihre Transaktion müsste fehlschlagen bei 3,7 Prozent tatsächlichem Verlust. Aber der Searcher sieht ihre Slippage-Toleranz im Mempool. Er optimiert seine Front-Run-Größe so, dass Alice-Transaktion gerade noch innerhalb der Slippage-Toleranz ausgeführt wird. Die Slippage-Toleranz ist also faktisch die Obergrenze des Searcher-Gewinns, nicht der Schutz, den Alice sich wünscht.
+**[Slide 4]** Die Profitabilitäts-Formel für Sandwiches. Kompakt: Sandwich-Profit ist ungefähr gleich dem Front-Run-Price-Impact plus Back-Run-Recovery, minus Gas-Kosten und minus Slippage-Buffer. Das heißt: der Searcher verdient an beiden Bewegungen, muss aber Gas und seinen eigenen Slippage-Puffer abziehen. Proportional gilt: Gewinn ist proportional zu Swap-Größe zum Quadrat geteilt durch Pool-Liquidität, mal Slippage-Toleranz. Je größer der Swap relativ zur Pool-Liquidität, desto quadratisch mehr Gewinn. Und höhere Slippage bedeutet mehr Spielraum für den Searcher.
 
-**[Slide 5]** Die Profitabilitäts-Formel für Sandwiches. Gewinn ist proportional zu Swap-Größe zum Quadrat geteilt durch Pool-Liquidität, mal Slippage-Toleranz. Das heißt: je größer der Swap relativ zur Pool-Liquidität, desto quadratisch mehr Gewinn. Und höhere Slippage bedeutet mehr Spielraum für den Searcher.
+**[Slide 5]** Zwei zentrale Anfälligkeitsfaktoren. Erstens, die Slippage-Falle. Alice hat 2 Prozent Slippage gesetzt — ihre Transaktion müsste fehlschlagen bei 3,7 Prozent tatsächlichem Verlust. Aber der Searcher sieht ihre Slippage-Toleranz im Mempool. Er optimiert seine Front-Run-Größe so, dass Alice-Transaktion gerade noch innerhalb der Slippage-Toleranz ausgeführt wird. Die Slippage-Toleranz ist also faktisch die Obergrenze des Searcher-Gewinns, nicht der Schutz, den Alice sich wünscht. Zweitens, Trade-Größen-Schwellen auf Ethereum Mainnet. Swaps unter 1.000 Dollar: fast nie sandwichfähig, weil Gas-Kosten den Gewinn auffressen. 1.000 bis 10.000 Dollar: manchmal, abhängig vom Pool. 10.000 bis 100.000 Dollar: oft. Über 100.000 Dollar: fast immer, wenn keine Schutz-Maßnahmen aktiv sind. Auf Layer-2 sind die Schwellen deutlich niedriger wegen günstigerer Gas-Preise — schon 100 bis 500 Dollar Swaps können sandwichfähig sein.
 
-**[Slide 6]** Praktische Schwellen auf Ethereum Mainnet. Swaps unter 1.000 Dollar: fast nie sandwichfähig, weil Gas-Kosten den Gewinn auffressen. 1.000 bis 10.000 Dollar: manchmal, abhängig vom Pool. 10.000 bis 100.000 Dollar: oft. Über 100.000 Dollar: fast immer, wenn keine Schutz-Maßnahmen aktiv sind. Auf Layer-2 sind die Schwellen deutlich niedriger wegen günstigerer Gas-Preise — schon 100 bis 500 Dollar Swaps können sandwichfähig sein.
+**[Slide 6]** Die Anti-Sandwich-Checkliste. Erstens: Slippage niedrig setzen, 0,1 bis 0,5 Prozent für Stablecoin-Pairs, 0,5 bis 1 Prozent für volatile. Zweitens: private RPC wie Flashbots Protect oder MEV Blocker nutzen. Drittens: CowSwap für größere Trades über 10.000 Dollar. Viertens: 1inch mit MEV-Protection-Flag. Fünftens: Trades in mehrere kleine aufsplitten. Sechstens: tiefe Liquiditäts-Pools wählen statt exotische Pairs. Details in der nächsten Lektion.
 
-**[Slide 7]** Die Anti-Sandwich-Checkliste. Erstens: Slippage niedrig setzen, 0,1 bis 0,5 Prozent für Stablecoin-Pairs, 0,5 bis 1 Prozent für volatile. Zweitens: private RPC wie Flashbots Protect oder MEV Blocker nutzen. Drittens: CowSwap für größere Trades über 10.000 Dollar. Viertens: 1inch mit MEV-Protection-Flag. Fünftens: Trades in mehrere kleine aufsplitten. Sechstens: tiefe Liquiditäts-Pools wählen statt exotische Pairs. Details in der nächsten Lektion.
-
-**[Slide 8]** Die zugrundeliegende Ursache ist Information-Asymmetry. Der Searcher sieht deine Transaktion, bevor sie ausgeführt wird. Du siehst nicht seine Bots. Das ist kein technischer Bug, sondern Architektur: der öffentliche Mempool ist öffentlich by design. Die Lösung ist nicht, auf Fairness zu hoffen. Die Lösung ist, die Asymmetry zu eliminieren — deine Transaktionen nicht mehr öffentlich zu machen. Das behandelt die nächste Lektion.
+**[Slide 7]** Die zugrundeliegende Ursache ist Information-Asymmetry. Der Searcher sieht deine Transaktion, bevor sie ausgeführt wird. Du siehst nicht seine Bots. Das ist kein technischer Bug, sondern Architektur: der öffentliche Mempool ist öffentlich by design. Die Lösung ist nicht, auf Fairness zu hoffen. Die Lösung ist, die Asymmetry zu eliminieren — deine Transaktionen nicht mehr öffentlich zu machen. Das behandelt die nächste Lektion.
 
 ## Visuelle Vorschläge
 
@@ -195,15 +186,13 @@ Lösung: Transaktionen privat halten
 
 **[Slide 3]** AMM-Kurve mit drei Preis-Punkten markiert.
 
-**[Slide 4]** Slippage-Bar: Einstellung vs. Searcher-Optimierung.
+**[Slide 4]** Formel-Darstellung (Sandwich-Profit-Formel + proportionale Skalierung) mit Beispiel-Berechnungen bei verschiedenen Größen.
 
-**[Slide 5]** Formel-Darstellung mit Beispiel-Berechnungen bei verschiedenen Größen.
+**[Slide 5]** Zwei-Spalten-Layout: links Slippage-Bar (Einstellung vs. Searcher-Optimierung), rechts Schwellen-Tabelle nach Swap-Größe.
 
-**[Slide 6]** Schwellen-Tabelle nach Swap-Größe.
+**[Slide 6]** Checkliste mit 6 Schutz-Maßnahmen.
 
-**[Slide 7]** Checkliste mit 6 Schutz-Maßnahmen.
-
-**[Slide 8]** Information-Asymmetry-Illustration: Searcher sieht Alice, Alice sieht Searcher nicht.
+**[Slide 7]** Information-Asymmetry-Illustration: Searcher sieht Alice, Alice sieht Searcher nicht.
 
 ## Übung
 
@@ -241,8 +230,8 @@ Der Hauptgrund ist das **Gas-Kosten-zu-Gewinn-Verhältnis**. Auf Ethereum Mainne
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Sandwich-Konzept → 3-Transaktions-Sequenz → Profitabilitäts-Mathematik → Slippage als Einfallstor → Trade-Größen-Schwellen → L1 vs. L2 → Eigene Exposition
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Die drei Transaktionen → Rechen-Beispiel → Profitabilitäts-Formel → Anfälligkeitsfaktoren (Slippage + Trade-Größen-Schwellen) → Anti-Sandwich-Checkliste → Zugrundeliegende Ursache
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Sandwich-Attack-Diagramm (Front-Run → Victim → Back-Run), Profitabilitäts-Rechenbeispiel, Slippage-Exposition-Tabelle, Trade-Größen-Schwellen-Chart, Historische Sandwich-Events
 
 Pipeline: Gamma → ElevenLabs → CapCut.

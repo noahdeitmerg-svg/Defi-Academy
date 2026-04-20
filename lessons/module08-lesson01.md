@@ -32,7 +32,7 @@ Beispiele: **USDC** (Circle), **USDT** (Tether), **PYUSD** (PayPal).
 
 **Kategorie 2: Krypto-besichert (dezentral)**
 
-Nutzer hinterlegen Krypto-Assets (typisch ETH, Liquid-Staking-Tokens, andere Stablecoins) als Sicherheit in Smart Contracts und mintzen gegen die Sicherheit Stablecoins. Der Mechanismus ist strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7 — mit einem Zusatz: das "geliehene" Asset ist der Stablecoin selbst, der vom Protokoll neu kreiert wird.
+Nutzer hinterlegen Krypto-Assets (typisch ETH, Liquid-Staking-Tokens, andere Stablecoins) als Sicherheit in Smart Contracts und minten gegen die Sicherheit Stablecoins. Der Mechanismus ist strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7 — mit einem Zusatz: das "geliehene" Asset ist der Stablecoin selbst, der vom Protokoll neu kreiert wird.
 
 Beispiele: **DAI** (MakerDAO, jetzt Sky), **LUSD** (Liquity), **crvUSD** (Curve), **GHO** (Aave).
 
@@ -52,8 +52,10 @@ Diese Kategorie umfasst unterschiedliche Designs, die keine klassische Besicheru
 **3a. Pure algorithmisch (historisch gescheitert)**
 Kein echtes Collateral. Peg wird durch Supply-Anpassungen oder Auktions-Mechanismen gehalten. Beispiele: UST (Terra, kollabiert 2022), Empty Set Dollar, Basis Cash. Alle scheiterten strukturell. Diese Kategorie ist für konservative Portfolios nicht relevant.
 
+**Warum pure algorithmische Designs reflexiv sind:** Algorithmische Stablecoins stabilisieren ihren Preis häufig über einen Governance-Token (bei UST war das LUNA). Der Mechanismus ist reflexiv: Das Vertrauen in den Stablecoin hängt vom Wert des Governance-Tokens ab, und der Wert des Governance-Tokens hängt vom Vertrauen in den Stablecoin. Wenn das Vertrauen sinkt, kann der Governance-Token schnell an Wert verlieren — und damit bricht auch die Peg-Verteidigung zusammen, sodass der Stablecoin depeggt. UST und LUNA im Mai 2022 sind das Lehrbuchbeispiel für diesen Kaskaden-Effekt.
+
 **3b. Delta-neutral synthetisch**
-Das Protokoll hält spot-long in einem volatilen Asset (z.B. ETH), hedged die Volatilität durch short-Positionen auf Perpetual Futures, und mintet Stablecoins basierend auf dem delta-neutralen Wert. Beispiel: **USDe** (Ethena). Strukturell innovativ, aber mit eigenen Risiken (Funding-Rate-Risiko, Exchange-Risiko).
+Das Protokoll hält spot-long in einem volatilen Asset (z.B. ETH), hedget die Volatilität durch short-Positionen auf Perpetual Futures, und mintet Stablecoins basierend auf dem delta-neutralen Wert. Beispiel: **USDe** (Ethena). Strukturell innovativ, aber mit eigenen Risiken (Funding-Rate-Risiko, Exchange-Risiko).
 
 **3c. Hybrid mit Rendite**
 Kombinieren Besicherung mit integrierten Rendite-Mechanismen. Beispiele: **sDAI** (DAI auf Savings Rate), **sUSDS** (USDS auf Sky Savings Rate).
@@ -75,7 +77,7 @@ Ein "robuster" Stablecoin ist einer, dessen Annahmen auch in Extrem-Situationen 
 
 **Die Peg-Arbitrage**
 
-Der Peg entsteht in allen Kategorien durch **Arbitrage-Möglichkeiten**. Wenn ein Stablecoin über dem Peg handelt (z.B. USDC = 1,01 USD), gibt es einen Anreiz, neue USDC zu mintzen (gegen 1 USD Reserven) und am Markt für 1,01 USD zu verkaufen — der Gewinn von 0,01 USD pro Token. Dieser Arbitrage-Druck bringt den Preis zurück zu 1,00.
+Der Peg entsteht in allen Kategorien durch **Arbitrage-Möglichkeiten**. Wenn ein Stablecoin über dem Peg handelt (z.B. USDC = 1,01 USD), gibt es einen Anreiz, neue USDC zu minten (gegen 1 USD Reserven) und am Markt für 1,01 USD zu verkaufen — der Gewinn von 0,01 USD pro Token. Dieser Arbitrage-Druck bringt den Preis zurück zu 1,00.
 
 Umgekehrt, wenn USDC unter dem Peg handelt (z.B. 0,99 USD): Arbitrageur kauft USDC am Markt für 0,99 USD, löst es beim Emittenten für 1 USD ein, Gewinn 0,01 USD.
 
@@ -131,7 +133,7 @@ Voraussetzung: Einlöse-Prozess + Liquidität + geringe Kosten
 
 **[Slide 4]** Fiat-besicherte Stablecoins. USDC von Circle, USDT von Tether, PYUSD von PayPal. Ein Unternehmen hält echte Dollars — oder äquivalente Reserven wie kurzlaufende US-Staatsanleihen — und gibt entsprechend Tokens aus. Peg durch tatsächliche Besicherung. Blacklisting ist möglich: der Emittent kann Token einzelner Adressen einfrieren. Das ist Feature und Risiko zugleich.
 
-**[Slide 5]** Krypto-besicherte Stablecoins. DAI vom Sky-Ökosystem, LUSD von Liquity, crvUSD von Curve, GHO von Aave. Nutzer hinterlegen Krypto-Assets als Sicherheit und mintzen dagegen Stablecoins. Typisch 150 Prozent oder mehr Überbesicherung. Ein Liquidations-Mechanismus schützt vor Unterbesicherung. Bei wirklich dezentralen Designs ist kein Blacklisting möglich.
+**[Slide 5]** Krypto-besicherte Stablecoins. DAI vom Sky-Ökosystem, LUSD von Liquity, crvUSD von Curve, GHO von Aave. Nutzer hinterlegen Krypto-Assets als Sicherheit und minten dagegen Stablecoins. Typisch 150 Prozent oder mehr Überbesicherung. Ein Liquidations-Mechanismus schützt vor Unterbesicherung. Bei wirklich dezentralen Designs ist kein Blacklisting möglich.
 
 **[Slide 6]** Die algorithmische und hybride Kategorie. Pure algorithmische Designs — UST, Empty Set Dollar, Basis Cash — sind historisch alle gescheitert. Delta-neutrale Designs wie USDe von Ethena halten spot-long und hedgen via Perpetual-Shorts — strukturell innovativ, aber mit eigenen Risiken. Hybrid-Rendite-Designs wie sDAI oder sUSDS kombinieren Besicherung mit integrierten Yield-Mechanismen.
 

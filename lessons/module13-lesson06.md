@@ -196,18 +196,9 @@ Rational, nicht faul
 Ve-Indirekt über Convex-LP
 Zeit/Energie woanders
 
-**[Slide 7] — Ausschluss-Kriterien**
-Passiv-Investor
-Horizont < 1 Jahr
-Volatilitäts-intolerant
-Portfolio < $10k
-Hobby-DeFi-Nutzer
-
-**[Slide 8] — Konservatives Portfolio**
-50% Stables, 20% LP via Convex
-15% Liquid Staking, 10% cvxCRV
-5-7% Gesamt-APR
-7-8%-Ziel erreicht ohne direkten Lock
+**[Slide 7] — Ausschluss-Kriterien und Portfolio-Beispiel**
+Ausschluss: Passiv-Investor, Horizont <1 Jahr, Volatilitäts-intolerant, Portfolio <$10k, Hobby-DeFi
+Konservatives Portfolio: 50% Stables, 20% LP via Convex, 15% Liquid Staking, 10% cvxCRV — 5-7% APR erreicht ohne direkten Lock
 
 ## Sprechertext
 
@@ -223,9 +214,7 @@ Hobby-DeFi-Nutzer
 
 **[Slide 6]** Strategie 4: die Ignoranz-Strategie. Das klingt schockierend, ist aber rational für 80 bis 90 Prozent der Retail-Nutzer. ve-Locks sind komplex und zeitintensiv. Die meisten sind nicht aktiv genug für optimiertes Voting. Kapital-Bindung ist bei vielen nicht sinnvoll. Nutze ve-basierte Protokolle als LP über Wrapper wie Convex, aber lock selbst nichts. Das ist nicht faul — es ist rational.
 
-**[Slide 7]** Klare Ausschluss-Kriterien: wenn du passiv investieren willst, wenn dein Horizont unter 1 Jahr ist, wenn du Token-Volatilität nicht tolerieren kannst, wenn dein Portfolio unter 10.000 Dollar ist, wenn DeFi dein Nebenhobby ist. In diesen Fällen: Strategie 4 oder komplett andere DeFi-Bereiche.
-
-**[Slide 8]** Ein konservatives Portfolio-Beispiel. 50 Prozent Stablecoin-Supply auf Aave oder Morpho. 20 Prozent LP via Convex. 15 Prozent Liquid Staking. 10 Prozent cvxCRV. 5 Prozent Cash-Reserve. Erwartete Gesamt-Rendite 5,4 bis 7,2 Prozent plus ETH-Exposition. Erreicht das 7 bis 8 Prozent Ziel dieses Kurses ohne direkte ve-Locks, ohne 4-Jahre-Bindungen. Die ve-Erträge fließen indirekt über Convex in die LP-Positionen. Für die meisten Retail-Nutzer ist das die richtige Antwort.
+**[Slide 7]** Klare Ausschluss-Kriterien und ein konkretes Portfolio-Beispiel. Ausschluss-Kriterien: wenn du passiv investieren willst, wenn dein Horizont unter 1 Jahr ist, wenn du Token-Volatilität nicht tolerieren kannst, wenn dein Portfolio unter 10.000 Dollar ist, wenn DeFi dein Nebenhobby ist. In diesen Fällen: Strategie 4 oder komplett andere DeFi-Bereiche. Ein konservatives Portfolio-Beispiel für alle anderen: 50 Prozent Stablecoin-Supply auf Aave oder Morpho. 20 Prozent LP via Convex. 15 Prozent Liquid Staking. 10 Prozent cvxCRV. 5 Prozent Cash-Reserve. Erwartete Gesamt-Rendite 5,4 bis 7,2 Prozent plus ETH-Exposition. Erreicht das 7 bis 8 Prozent Ziel dieses Kurses ohne direkte ve-Locks, ohne 4-Jahre-Bindungen. Die ve-Erträge fließen indirekt über Convex in die LP-Positionen. Für die meisten Retail-Nutzer ist das die richtige Antwort.
 
 ## Visuelle Vorschläge
 
@@ -241,9 +230,7 @@ Hobby-DeFi-Nutzer
 
 **[Slide 6]** Paradoxe Entscheidung visualisiert: "Nicht-Nutzung" als rationale Wahl.
 
-**[Slide 7]** Ausschluss-Checkliste.
-
-**[Slide 8]** Portfolio-Tortendiagramm mit prozentualer Aufteilung.
+**[Slide 7]** Zwei-Spalten-Layout: links Ausschluss-Checkliste, rechts Portfolio-Tortendiagramm mit prozentualer Aufteilung.
 
 ## Übung
 
@@ -273,15 +260,15 @@ Die scheinbar "geringere" Rendite von Strategie 4 ist in Wirklichkeit oft die h�
 <details>
 <summary>Antwort anzeigen</summary>
 
-Alice's Profil passt zu einer Hybrid-Strategie mit moderatem Aktivitäts-Level. Eine konkrete Empfehlung: **Portfolio-Verteilung:** **45% in Convex-LP-Positionen ($4.500):** Strategie 1, mehrere Pools für Diversifikation. Vorschlag: $2.000 in stETH/ETH Curve-Pool über Convex (stabiler Yield von LSTs, geringes IL-Risiko), $1.500 in sUSDe oder GHO Curve-Pool über Convex (Stablecoin-Exposition mit zusätzlichen Rewards), $1.000 in tricrypto oder ähnlichem Multi-Asset-Pool für Volatilitäts-Beimischung. Erwartete APR: 8-13%. **30% in cvxCRV gestaked ($3.000):** Strategie 2. Timing beachten: wenn cvxCRV unter 0,92 Peg handelt, am Markt kaufen. Sonst direkt an Convex deponieren. Gestaked für laufende 3CRV + CRV + CVX Rewards. Erwartete APR: 12-18%. **15% in vlCVX ($1.500):** Strategie 3, moderat eingesetzt. 16 Wochen Lock, aber Alice hat die Zeit für aktives oder delegiertes Voting. Delegations-Service wie Llama.Airforce empfohlen für Effizienz. Rewards in multiplen Tokens — Tax-Tracking nötig. Erwartete APR: 15-25%. **10% Liquid-Reserve ($1.000):** Stablecoins (USDC auf Aave), um flexibel auf Opportunities zu reagieren (z.B. Bribe-Spikes, Marktvolatilität). 4-5% APR. **Gesamt-erwartete APR:** 10,8-14,5% gewichtet. Erreicht Alice's 10-15% Ziel innerhalb konservativer Grenzen. **Warum diese Verteilung:** **Rationale für 45% LP:** Größter Anteil, weil das der konservativste Teil des ve-Ökosystems ist. Kein Lock, diversifiziert über Pools. Base-Yield solide, hängt nicht stark von CVX-Preis ab. **Rationale für 30% cvxCRV:** Mittel-Anteil für liquide CRV-Exposition. Wenn der Peg günstig ist, ist der Einstieg billig. Die Liquidität gibt Alice Flexibilität zum Ausstieg. **Rationale für 15% vlCVX:** Kleinster aktiver Anteil. Das 16-Wochen-Lock und die aktive Management-Anforderung begrenzen die Position. Aber genug, um von den höheren Bribe-Renditen zu profitieren. **Rationale für 10% Liquid-Reserve:** Wichtig für Flexibilität. Wenn Alice gute Opportunities sieht, kann sie schnell reagieren. Auch für eventuelle Verluste an anderer Stelle. **Wichtige Praxis-Tipps für Alice:** **Tipp 1: Graduelle Einstiegs-Strategie.** Nicht alles auf einmal deployen. Monat 1: nur Strategie 1 (LP via Convex) — lernen wie das System funktioniert. Monat 2-3: cvxCRV hinzufügen. Monat 4-6: vlCVX experimentieren, zuerst mit kleinerer Position. Nach 12 Monaten: volles Portfolio. **Tipp 2: Automatisierungs-Services nutzen.** Claim-Aggregatoren für die verschiedenen Rewards. Llama.Airforce für Vote-Delegation (reduziert den wöchentlichen Management-Aufwand von 30+ Minuten auf 5 Minuten). **Tipp 3: Monatliche Review.** Am Monatsende: APRs der verschiedenen Komponenten prüfen, Peg-Situationen checken, ob Rebalancing sinnvoll ist. 30-60 Minuten/Monat. **Tipp 4: Tax-Tracking von Anfang an.** Tool wie Koinly oder ähnlich einrichten, ab Tag 1 Rewards tracken. Am Jahresende ist es viel einfacher als rückwirkend. **Tipp 5: Exit-Plan haben.** Bevor Alice einsteigt: unter welchen Bedingungen würde sie aussteigen? CRV-Preis unter bestimmtem Level? vlCVX-Bribes unter bestimmter APR? Das vorab festlegen verhindert emotionale Entscheidungen. **Risiko-Bewertung:** Diese Allocation hat moderates Risiko. Hauptgefahren: CRV/CVX-Preis-Crash (würde alle drei Strategien gleichzeitig treffen), Convex-Smart-Contract-Problem, Curve-Wars-Shift weg von Convex. Diversifikation über die drei Strategien mildert einige, aber nicht alle Risiken. Alice sollte maximal 40-50% ihres Gesamt-DeFi-Portfolios in ve-Tokenomics haben — andere 50-60% in unabhängige Strategien (Stablecoin-Supply, Liquid Staking, etc.). **Zusammenfassung:** Die empfohlene Verteilung nutzt Alice's Erfahrung und Zeit-Budget optimal, erreicht ihr Rendite-Ziel, und hält das Risiko im akzeptablen Rahmen. Wichtig ist die graduelle Umsetzung und diszipliniertes Monitoring. Nach 12 Monaten hat Alice genug Erfahrung, um die Allocation bei Bedarf anzupassen.
+Alices Profil passt zu einer Hybrid-Strategie mit moderatem Aktivitäts-Level. Eine konkrete Empfehlung: **Portfolio-Verteilung:** **45% in Convex-LP-Positionen ($4.500):** Strategie 1, mehrere Pools für Diversifikation. Vorschlag: $2.000 in stETH/ETH Curve-Pool über Convex (stabiler Yield von LSTs, geringes IL-Risiko), $1.500 in sUSDe oder GHO Curve-Pool über Convex (Stablecoin-Exposition mit zusätzlichen Rewards), $1.000 in tricrypto oder ähnlichem Multi-Asset-Pool für Volatilitäts-Beimischung. Erwartete APR: 8-13%. **30% in cvxCRV gestaked ($3.000):** Strategie 2. Timing beachten: wenn cvxCRV unter 0,92 Peg handelt, am Markt kaufen. Sonst direkt an Convex deponieren. Gestaked für laufende 3CRV + CRV + CVX Rewards. Erwartete APR: 12-18%. **15% in vlCVX ($1.500):** Strategie 3, moderat eingesetzt. 16 Wochen Lock, aber Alice hat die Zeit für aktives oder delegiertes Voting. Delegations-Service wie Llama.Airforce empfohlen für Effizienz. Rewards in multiplen Tokens — Tax-Tracking nötig. Erwartete APR: 15-25%. **10% Liquid-Reserve ($1.000):** Stablecoins (USDC auf Aave), um flexibel auf Opportunities zu reagieren (z.B. Bribe-Spikes, Marktvolatilität). 4-5% APR. **Gesamt-erwartete APR:** 10,8-14,5% gewichtet. Erreicht Alices 10-15% Ziel innerhalb konservativer Grenzen. **Warum diese Verteilung:** **Rationale für 45% LP:** Größter Anteil, weil das der konservativste Teil des ve-Ökosystems ist. Kein Lock, diversifiziert über Pools. Base-Yield solide, hängt nicht stark von CVX-Preis ab. **Rationale für 30% cvxCRV:** Mittel-Anteil für liquide CRV-Exposition. Wenn der Peg günstig ist, ist der Einstieg billig. Die Liquidität gibt Alice Flexibilität zum Ausstieg. **Rationale für 15% vlCVX:** Kleinster aktiver Anteil. Das 16-Wochen-Lock und die aktive Management-Anforderung begrenzen die Position. Aber genug, um von den höheren Bribe-Renditen zu profitieren. **Rationale für 10% Liquid-Reserve:** Wichtig für Flexibilität. Wenn Alice gute Opportunities sieht, kann sie schnell reagieren. Auch für eventuelle Verluste an anderer Stelle. **Wichtige Praxis-Tipps für Alice:** **Tipp 1: Graduelle Einstiegs-Strategie.** Nicht alles auf einmal deployen. Monat 1: nur Strategie 1 (LP via Convex) — lernen wie das System funktioniert. Monat 2-3: cvxCRV hinzufügen. Monat 4-6: vlCVX experimentieren, zuerst mit kleinerer Position. Nach 12 Monaten: volles Portfolio. **Tipp 2: Automatisierungs-Services nutzen.** Claim-Aggregatoren für die verschiedenen Rewards. Llama.Airforce für Vote-Delegation (reduziert den wöchentlichen Management-Aufwand von 30+ Minuten auf 5 Minuten). **Tipp 3: Monatliche Review.** Am Monatsende: APRs der verschiedenen Komponenten prüfen, Peg-Situationen checken, ob Rebalancing sinnvoll ist. 30-60 Minuten/Monat. **Tipp 4: Tax-Tracking von Anfang an.** Tool wie Koinly oder ähnlich einrichten, ab Tag 1 Rewards tracken. Am Jahresende ist es viel einfacher als rückwirkend. **Tipp 5: Exit-Plan haben.** Bevor Alice einsteigt: unter welchen Bedingungen würde sie aussteigen? CRV-Preis unter bestimmtem Level? vlCVX-Bribes unter bestimmter APR? Das vorab festlegen verhindert emotionale Entscheidungen. **Risiko-Bewertung:** Diese Allocation hat moderates Risiko. Hauptgefahren: CRV/CVX-Preis-Crash (würde alle drei Strategien gleichzeitig treffen), Convex-Smart-Contract-Problem, Curve-Wars-Shift weg von Convex. Diversifikation über die drei Strategien mildert einige, aber nicht alle Risiken. Alice sollte maximal 40-50% ihres Gesamt-DeFi-Portfolios in ve-Tokenomics haben — andere 50-60% in unabhängige Strategien (Stablecoin-Supply, Liquid Staking, etc.). **Zusammenfassung:** Die empfohlene Verteilung nutzt Alices Erfahrung und Zeit-Budget optimal, erreicht ihr Rendite-Ziel, und hält das Risiko im akzeptablen Rahmen. Wichtig ist die graduelle Umsetzung und diszipliniertes Monitoring. Nach 12 Monaten hat Alice genug Erfahrung, um die Allocation bei Bedarf anzupassen.
 </details>
 
 ## Video-Pipeline-Assets
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → 4 Retail-Strategien → Convex-LP (Strategie 1) → cvxCRV (Strategie 2) → vlCVX (Strategie 3) → Ignorieren als valide Option → Portfolio-Verteilungs-Beispiel → Typische Fehler
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Strategie 1 (LP via Wrapper) → Strategie 2 (cvxCRV) → Strategie 3 (vlCVX) → Strategie 4 (Ignorieren) → Entscheidungs-Matrix → Ausschluss-Kriterien und Portfolio-Beispiel
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Vier-Strategien-Matrix, Portfolio-Pie-Chart, Entscheidungsbaum nach Profil, Aufwand-vs-Rendite-Grafik, Fehlerbeispiele
 
 Pipeline: Gamma → ElevenLabs → CapCut.

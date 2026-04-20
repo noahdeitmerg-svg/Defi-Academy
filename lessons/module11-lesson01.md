@@ -177,7 +177,7 @@ Teilweise richtig, aber gefährlich vereinfacht. **Was richtig ist:** Ein signif
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → MEV-Definition → Mempool-Mechanik → Transaktions-Lebenszyklus → Warum Reihenfolge wert ist → Historische Evolution → MEV als Kostenfaktor
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — MEV-Definitions-Diagramm, Mempool-Visualisierung, Transaktions-Lifecycle-Flow, PoW-to-PBS-Zeitleiste
 
 Pipeline: Gamma → ElevenLabs → CapCut.

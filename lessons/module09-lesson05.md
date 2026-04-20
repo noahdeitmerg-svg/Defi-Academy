@@ -57,7 +57,7 @@ Curve-LPs können ihre Rendite durch **veCRV** (vote-escrowed CRV) boosten. Um v
 
 **Mechanik:**
 1. Du zahlst deinen Curve-LP-Token bei Convex ein
-2. Convex staked ihn mit der gepoolten veCRV-Position für maximalen Boost
+2. Convex stakt ihn mit der gepoolten veCRV-Position für maximalen Boost
 3. Du erhältst: Trading-Fees + CRV-Rewards (geboostet) + CVX-Rewards
 
 **Stärken:**
@@ -69,8 +69,9 @@ Curve-LPs können ihre Rendite durch **veCRV** (vote-escrowed CRV) boosten. Um v
 - Zusätzliche Smart-Contract-Ebene (Convex ist ein weiteres Protokoll zwischen dir und Curve)
 - CVX-Token-Exposure (zusätzliches Preisrisiko)
 - Nur für Curve-LPs relevant
+- **Impermanent Loss als Basis-Risiko der LP-Position:** Convex entfernt IL nicht — es optimiert nur den Yield auf eine bestehende Curve-LP-Position. IL bei Curve-Stablepools ist typischerweise gering (Assets sind korreliert), bei volatilen Pools (z.B. tricrypto) aber weiterhin präsent. Die detaillierte IL-Mechanik ist in Modul 5 erklärt.
 
-**Typische Rendite-Boost durch Convex:** 1,5–2,5x im Vergleich zu ungesockeltem Curve-LP. Bei einer Base-Curve-LP-Rendite von 3% ergibt das 4,5–7,5% mit Convex-Boost.
+**Typische Rendite-Boost durch Convex:** 1,5–2,5x im Vergleich zu Curve-LP ohne Convex-Boost. Bei einer Base-Curve-LP-Rendite von 3% ergibt das 4,5–7,5% mit Convex-Boost.
 
 **Morpho Vaults — Die moderne Lending-Aggregation (2024)**
 
@@ -171,7 +172,7 @@ Transparent, diversifiziert
 
 **[Slide 3]** Yearn Finance, der Veteran seit 2020. Breite Palette an Vault-Strategien. Stablecoin-Rotation zwischen Lending-Protokollen, Curve-LP mit Convex-Boost, ETH-Staking-Strategien. Gebühren: 2 Prozent Management und 20 Prozent Performance Fee. Netto-Rendite auf Stablecoin-Vaults typisch 3 bis 5 Prozent. Längster Track-Record aller Aggregatoren.
 
-**[Slide 4]** Convex Finance, der Curve-Spezialist. Curve-LPs können ihre Rendite durch veCRV boosten, aber veCRV erfordert 4 Jahre Lock-up — unflexibel. Convex poolt veCRV zentral und gibt allen Nutzern den Boost. Mechanik: du deponierst deinen Curve-LP-Token, Convex staked mit seinem veCRV-Pool, du bekommst Trading Fees plus geboostete CRV-Rewards plus CVX-Rewards. Typischer Boost: 1,5 bis 2,5 fache Rendite im Vergleich zu ungebondetem Curve-LP.
+**[Slide 4]** Convex Finance, der Curve-Spezialist. Curve-LPs können ihre Rendite durch veCRV boosten, aber veCRV erfordert 4 Jahre Lock-up — unflexibel. Convex poolt veCRV zentral und gibt allen Nutzern den Boost. Mechanik: du deponierst deinen Curve-LP-Token, Convex stakt mit seinem veCRV-Pool, du bekommst Trading Fees plus geboostete CRV-Rewards plus CVX-Rewards. Typischer Boost: 1,5 bis 2,5 fache Rendite im Vergleich zu Curve-LP ohne Convex-Boost.
 
 **[Slide 5]** Morpho Vaults sind die moderne Lending-Aggregation. Morpho Blue ist die Basis, Vaults die aggregierende Schicht. Kuratoren wie Steakhouse Financial, Gauntlet oder Re7 definieren Risiko-Strategien und allokieren Kapital. Stablecoin-Vaults erreichen 5 bis 7 Prozent APY — oft 1 bis 2 Prozentpunkte über einfachem Aave-Supply. Professionelles Risiko-Management mit Modellen.
 
@@ -200,7 +201,7 @@ Transparent, diversifiziert
 **Aufgabe: Aggregator-Vergleich**
 
 1. Besuche yearn.fi und finde einen USDC-Vault. Notiere: APY, Strategie, TVL, Gebühren.
-2. Besuche convexfinance.com und finde einen 3pool-Boost. Notiere: APR, Rewards-Quellen, Vergleich zu ungeboostedem Curve.
+2. Besuche convexfinance.com und finde einen 3pool-Boost. Notiere: APR, Rewards-Quellen, Vergleich zu Curve ohne Convex-Boost.
 3. Besuche app.morpho.org und finde einen von Steakhouse kuratierten USDC-Vault. Notiere: APY, Risiko-Parameter, Kurator-Info.
 4. Berechne die 1-Jahres-Rendite auf 10.000 USD in jedem Vault.
 5. Vergleiche mit direktem USDC-Supply auf Aave V3.
@@ -230,7 +231,7 @@ Mehrere Gründe. Erstens: Markt-Auswahl-Expertise. Morpho Blue hat viele isolier
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Aggregator-Architektur → Yearn → Convex → Morpho Vaults → Kostenstruktur → Due-Diligence-Checkliste
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Aggregator-Architektur-Diagramm, Yearn-Interface-Screenshot, Convex-Boost-Mechanik, Morpho-Vault-Interface, Kurator-Profile-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.

@@ -9,9 +9,10 @@
 ## 1. Produkt & Ziel
 
 - Öffentliche **Lernplattform** (Module, Lektionen, Quiz, Video), statisch auf **GitHub Pages**.
-- **Lernprogramm:** **17 Module**, **102 Lektionen** — siehe `docs/defi-akademie-build-dokument.md` und `docs/AGENTEN-HANDBUCH.md` Abschnitt 2.
+- **Lernprogramm:** **18 Module**, **ca. 102 Lektionen** — siehe `docs/defi-akademie-build-dokument.md` und `docs/AGENTEN-HANDBUCH.md` Abschnitt 2.
 - **Quelle aller Module (inkl. Modul 17):** `Module/modul-NN-*-FINAL.md` — Modul 17: **`modul-17-portfolio-construction-rwa-FINAL.md`**.
 - **Zwei UI-Pfade:** (1) **Legacy** `/module/…` aus `content/modules/module1` … `module17`. (2) **UX-Shell** `/kurs/…` aus Slug-Ordnern `content/modules/01-defi-grundlagen` usw. (`loadLesson.ts`, `lesson.md`).
+- **Modul 0 (neu):** Orientation / Introduction. Das Modul führt in Struktur, Risikobewusstsein und Lernmethodik ein, bevor technische Module starten.
 - **Brand 2.0** für Folien/Videos: `brand/render-slide-v2.js`, `brand/colors.json`, `brand/slide-helpers.js`.
 
 ---
@@ -43,6 +44,7 @@
 | `lib/content.ts`, `lib/parseLesson.ts` | Legacy-Pfad. |
 | `content/modules/moduleN/` | Legacy importierte Lektionen (`*.md`, `meta.json`, Quiz). |
 | `content/modules/01-defi-grundlagen/` … `03-blockchain-mechanik/` | UX-Free-Module (`module.json`, `…/lesson.md`). |
+| `content/modules/module-00` … `module-17` | Dokumentierte Zielstruktur (neu); bestehende Ordner bleiben bis Migration unverändert. |
 | `Module/` | **FINAL**-Markdown der Kursautoren. |
 | `docs/ux-visuals/` | SVG-Ziel-Layouts (Referenz). |
 | `pipeline-test/`, `video-renderer/`, `scripts/` | Video-Pipeline, Batch, Publish. |
@@ -62,6 +64,37 @@
 - **Modul 1–3 (Legacy `public/videos/`):** je 6 Lektionen auf `main` (Naming `module1-1-1` … / `module3-3-6` je nach Publish-Lauf).
 - **Modul 4–17:** noch **nicht** per Batch in Produktion — Roadmap: **`docs/VIDEO_BATCH_ROADMAP.md`**.
 - **Neue UX-Shell:** Video-URL wird beim Build aufgelöst: zuerst **`public/videos/moduleN-N-M.mp4`** (gleiche Namen wie Legacy/`publish-videos`), sonst **`NEXT_PUBLIC_VIDEO_CDN_URL/modules/<modulId>/<lektionId>.mp4`**. Ohne lokale Datei und ohne CDN-Datei bleibt der Stream leer.
+- **Pipeline-Konsistenz:** Modul 0 folgt derselben Video-Pipeline wie alle anderen Module (Lesson Content → Gamma → ElevenLabs → Remotion → MP4).
+
+---
+
+## 5.1 Curriculum-Referenz (verbindlich)
+
+- Modul 0 — Introduction to the DeFi Academy
+- Modul 1 — DeFi Fundamentals
+- Modul 2 — Wallets and Security
+- Modul 3 — Blockchain Mechanics
+- Modul 4 — DEX Mechanics
+- Modul 5 — Liquidity Pools
+- Modul 6 — Lending Markets
+- Modul 7 — Collateral and Liquidations
+- Modul 8 — Stablecoins
+- Modul 9 — Yield Strategies
+- Modul 10 — Leverage Loops
+- Modul 11 — MEV
+- Modul 12 — Flash Loans
+- Modul 13 — veTokenomics
+- Modul 14 — Cross-Chain Infrastructure
+- Modul 15 — On-Chain Analytics
+- Modul 16 — Composability Risk
+- Modul 17 — Portfolio Construction and RWA
+
+**Lernpfad:**
+- Orientation: Modul 0
+- Foundations: Module 1–4
+- Protocols: Module 5–10
+- Infrastructure: Module 11–14
+- Advanced Analysis and Strategy: Module 15–17
 
 ---
 
@@ -95,7 +128,8 @@
 |--------|--------|
 | 2026-04 | `SYSTEMKONTEXT.md` angelegt: Stack, Pipeline, Videos M1–M3, Deploy, offene Punkte, UX-Platzhalter. |
 | 2026-04-18 | UX **Phase 1:** `ux-*` Design-Tokens, JetBrains Mono, `components/ui/*`, `lucide-react`, `lib/utils/cn.ts`; `npm run build` grün. |
-| 2026-04-18 | **`docs/AGENTEN-HANDBUCH.md`** Masterdokument; SYSTEMKONTEXT auf **17 Module** / **Modul 4–17** Video-Batch; `VIDEO_BATCH_ROADMAP` Titel/Kurztext angeglichen. |
+| 2026-04-18 | **`docs/AGENTEN-HANDBUCH.md`** Masterdokument; damaliger Stand vor Modul-0-Erweiterung, Video-Batch-Plan für spätere Pro-Module. |
 | 2026-04-18 | Korrektur: **Modul 17** liegt in `Module/modul-17-portfolio-construction-rwa-FINAL.md`; Doku unterscheidet klar `Module/` (Quelle) vs. `content/modules/` (Import). |
 | 2026-04-18 | **UX-Lernshell:** Routen `/`, `/preise`, `/login`, `/registrieren`, `(app)/dashboard|kurs|fortschritt|profil`, dynamisch `/kurs/[modulId]/[lektionId]` (102 Pfade), Legal; `data/courseStructure`, `lib/content/*`, Progress/Auth/Tier; Demo-Content Modul 1; später M2–M3 erweitert. |
 | 2026-04-20 | **Gesamt-Roadmap** in `docs/ROADMAP.md` (Produkt + UX + Content + Video + CI). **SYSTEMKONTEXT** auf Zwei-Pfad-Architektur (Legacy + UX) und CDN-Video aktualisiert. **Modul 16:** `open-quiz.md`-Stub für Validator. **Free-Module UX:** M1–M3 vollständig unter Slug-Ordnern mit `lesson.md` / slides / quiz. |
+| 2026-04-20 | Curriculum-Update: **Modul 0** ergänzt; Referenz auf **18 Module** / ca. **102 Lektionen**; Lernpfad auf Orientation / Foundations / Protocols / Infrastructure / Advanced Analysis and Strategy aktualisiert; Zielstruktur `content/modules/module-00` … `module-17` dokumentiert. |

@@ -213,7 +213,7 @@ Die LP-Rendite ist 5% (aus dem LP-Token-Wert-Anstieg, der bereits Gebühren und 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → V2-LP-Einrichtung Schritt für Schritt → Pool-Auswahl-Kriterien → Dashboard-Kennzahlen → Monitoring-Routine → Position schließen → Smart-Contract-Risiko-Checkliste
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Uniswap-V2-Add-Liquidity-Screenshot, Pool-Auswahl-Matrix, DeBank/Zapper-Dashboard, Position-schließen-Flow, Risk-Checkliste
 
 Pipeline: Gamma → ElevenLabs → CapCut.

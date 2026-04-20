@@ -128,15 +128,9 @@ Schuld zahlen → Bonus
 FL → Mint → Swap → Burn → Repay
 LP-Fee-Extraktion
 
-**[Slide 7] — Searcher-Pyramide**
-Top (10): Millionen Gewinn
-Mid (100-500): 100k-1M
-Long-Tail (Tausende): Lern-Projekte
-
-**[Slide 8] — Retail-Relevanz**
-Schutz-Strategien besser einschätzen
-Protokoll-Health verstehen
-Unsichtbare Kosten sehen
+**[Slide 7] — Searcher-Pyramide und Retail-Relevanz**
+Top 10: Millionen Gewinn | Mid 100-500: 100k-1M | Long-Tail: Lern-Projekte
+Für Retail: Schutz-Strategien einschätzen, Protokoll-Health verstehen, unsichtbare Kosten erkennen
 
 ## Sprechertext
 
@@ -152,9 +146,7 @@ Unsichtbare Kosten sehen
 
 **[Slide 6]** JIT-Liquidity-Bots bei Uniswap V3. Flash Loan, Mint konzentrierte Liquidität vor Swap, Swap erfolgt durch Liquidität, Bot kassiert Fees, Burn sofort. Besonders gegen reguläre LPs schädliche MEV-Form.
 
-**[Slide 7]** Searcher-Pyramide. Top-Tier etwa 10 Teams mit Millionen Gewinn, dedizierter Infrastruktur, Block-Builder-Beziehungen. Mid-Tier 100-500 mit spezialisierten Strategien. Long-Tail Tausende mit Lern-Projekten. Für alle: Flash Loans gleiche Infrastruktur. Unterschied in Strategie-Qualität und Geschwindigkeit.
-
-**[Slide 8]** Relevanz für Retail, auch ohne Searcher zu werden. MEV auf deinen Trades nutzt Flash Loans — Verständnis hilft Schutz. Protokolle mit aktiven Searchern oft gesünder. Unsichtbare Kosten werden transparenter durch Searcher-Logik-Verständnis.
+**[Slide 7]** Die Searcher-Pyramide und Retail-Relevanz. Top-Tier etwa 10 Teams mit Millionen Gewinn, dedizierter Infrastruktur, Block-Builder-Beziehungen. Mid-Tier 100 bis 500 mit spezialisierten Strategien. Long-Tail Tausende mit Lern-Projekten. Für alle: Flash Loans als gleiche Infrastruktur, Unterschied in Strategie-Qualität und Geschwindigkeit. Relevanz für Retail, auch ohne selbst Searcher zu werden: MEV auf deinen Trades nutzt Flash Loans — Verständnis hilft beim Schutz. Protokolle mit aktiven Searchern sind oft gesünder. Unsichtbare Kosten werden transparenter durch Searcher-Logik-Verständnis.
 
 ## Visuelle Vorschläge
 
@@ -164,8 +156,7 @@ Unsichtbare Kosten sehen
 **[Slide 4]** Bundle-Struktur mit FL-Integration.
 **[Slide 5]** Liquidations-Bot-Wettbewerb.
 **[Slide 6]** JIT-Liquidity-Timing.
-**[Slide 7]** Searcher-Pyramide.
-**[Slide 8]** Retail-Perspektive-Checkliste.
+**[Slide 7]** Zwei-Spalten-Layout: links Searcher-Pyramide, rechts Retail-Perspektive-Checkliste.
 
 ## Übung
 
@@ -201,8 +192,8 @@ Negative Effekte: Erstens: DEX-Preis-Divergenz ohne Flash-Loan-Arbitrage. Preise
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → MEV + Flash Loans → Arbitrage-Beispiel mit Zahlen → Liquidations-MEV → Bundle-Struktur → Demokratisierung der Searcher → Grenzen im Wettbewerb
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Synergie MEV + FL → Arbitrage-Bot → Bundle-Integration → Liquidations-Bots → JIT-Liquidity → Searcher-Pyramide und Retail-Relevanz
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Flash-Loan-MEV-Arbitrage-Rechenbeispiel, Searcher-Landschaft-Grafik, MEV-Bundle-Diagramm, Pareto-Verteilung-Chart, Infrastruktur-Stack
 
 Pipeline: Gamma → ElevenLabs → CapCut.

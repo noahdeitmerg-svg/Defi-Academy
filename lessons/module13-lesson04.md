@@ -18,7 +18,7 @@ In Lektion 13.2 haben wir gesehen: veCRV hat starke Vorteile (Boost, Fees, Stimm
 
 Convex Finance (Launch Mai 2021) trat mit einer eleganten Lösung auf: **"Gib uns dein CRV, wir kümmern uns um den Lock und das Voting — du bekommst die Vorteile ohne die Nachteile."**
 
-Die Funktionsweise klingt zu gut, um wahr zu sein. Aber sie funktioniert — mit eigenen Trade-offs, die wir im Detail erklären.
+Die Funktionsweise klingt zu schön, um wahr zu sein. Aber sie funktioniert — mit eigenen Trade-offs, die wir im Detail erklären.
 
 **Die drei Convex-Tokens**
 
@@ -81,7 +81,7 @@ Das eigentliche Macht-Zentrum von Convex ist vlCVX.
 
 Convex hält veCRV (permanent gelockt von cvxCRV-Nutzern). Wenn Convex wöchentlich über Gauge-Weights abstimmt, entscheidet tatsächlich die vlCVX-Community. **vlCVX ist damit die effektive Stimme über Milliarden USD in Curve-Emissionen.**
 
-Das macht vlCVX zu einem der wertvollsten Governance-Tokens in DeFi. Protokolle, die CRV-Emissionen zu ihren Pools lenken wollen, bribbeln vlCVX-Halter direkt (über Votium).
+Das macht vlCVX zu einem der wertvollsten Governance-Tokens in DeFi. Protokolle, die CRV-Emissionen zu ihren Pools lenken wollen, zahlen Bribes an vlCVX-Halter direkt (über Votium).
 
 **Die typischen vlCVX-Yield-Zahlen:**
 - **Bribes:** historisch 5-20% APR, hochvolatil je nach aktuellem Markt
@@ -118,7 +118,7 @@ Die häufigste Convex-Nutzung für normale Nutzer ist **nicht** cvxCRV-Halten od
 - Typisch: 5-10% APR insgesamt
 - Keine eigene CRV-Lock nötig
 
-**Die Rechnung ist klar:** Für Retail-LPs ist Convex-Deposit fast immer besser als direktes Curve-Staking. Das ist der Grund, warum Convex's LP-TVL konstant hoch bleibt.
+**Die Rechnung ist klar:** Für Retail-LPs ist Convex-Deposit fast immer besser als direktes Curve-Staking. Das ist der Grund, warum der LP-TVL von Convex konstant hoch bleibt.
 
 **Die Trade-offs von Convex**
 
@@ -164,17 +164,9 @@ Stimmt über Convex-Votes ab
 Kontrolliert Milliarden CRV-Emissionen
 Bribes als Haupt-Einkommen
 
-**[Slide 7] — LP-Deposit (Retail-Fall)**
-LP auf Curve direkt: 2-4% APR
-LP auf Convex: 5-10% APR
-Kein eigener Lock nötig
-Der Haupt-Use-Case
-
-**[Slide 8] — Trade-offs**
-Zusätzliches Smart-Contract-Risiko
-cvxCRV-Peg-Discount
-CVX-Preis-Abhängigkeit
-Governance-Zentralisierung
+**[Slide 7] — LP-Deposit und Retail-Empfehlungen**
+LP via Convex: 5-10% APR statt 2-4% direkt auf Curve, kein eigener Lock nötig — Haupt-Use-Case
+Trade-offs: zusätzliches Smart-Contract-Risiko, cvxCRV-Peg-Discount, CVX-Preis-Abhängigkeit, Governance-Zentralisierung
 
 ## Sprechertext
 
@@ -190,9 +182,7 @@ Governance-Zentralisierung
 
 **[Slide 6]** vlCVX ist das Machtzentrum von Convex. Nutzer locken CVX für 16 Wochen, bekommen vlCVX mit Stimmrechten in Convex' Governance. Convex wiederum entscheidet über Gauge-Weight-Votes bei Curve. Damit kontrolliert vlCVX-Community effektiv Milliarden USD CRV-Emissionen. Haupt-Einkommen: Bribes über Votium, typisch 5 bis 20 Prozent APR. Plus Base-Rewards. Gesamt oft 10 bis 25 Prozent APR.
 
-**[Slide 7]** Der häufigste Convex-Use-Case für Retail: LP-Deposit. Alice hat 10.000 Dollar in 3pool auf Curve. Direkt gestakt: 2 bis 4 Prozent APR. Über Convex deponiert: 5 bis 10 Prozent APR — durch Convex' veCRV-Boost plus CVX-Rewards. Kein eigener Lock nötig. Für Retail-LPs fast immer besser als direktes Curve-Staking.
-
-**[Slide 8]** Die ehrlichen Trade-offs. Erstens: zusätzliches Smart-Contract-Risiko — du vertraust nicht nur Curve, sondern auch Convex. Zweitens: cvxCRV-Peg-Discount, 5 bis 10 Prozent Verlust beim Ausstieg. Drittens: CVX-Preis-Abhängigkeit — bei fallendem CVX sinken reale Renditen. Viertens: Governance-Zentralisierung — wer über Convex partizipiert, trägt zur Zentralisierung bei. Für LPs sind diese Trade-offs meist akzeptabel im Austausch für den signifikanten Rendite-Boost.
+**[Slide 7]** Der häufigste Convex-Use-Case für Retail mit den zugehörigen Trade-offs. LP-Deposit: Alice hat 10.000 Dollar in 3pool auf Curve. Direkt gestakt: 2 bis 4 Prozent APR. Über Convex deponiert: 5 bis 10 Prozent APR — durch Convex-eigenen veCRV-Boost plus CVX-Rewards. Kein eigener Lock nötig. Für Retail-LPs fast immer besser als direktes Curve-Staking. Die ehrlichen Trade-offs: Erstens: zusätzliches Smart-Contract-Risiko — du vertraust nicht nur Curve, sondern auch Convex. Zweitens: cvxCRV-Peg-Discount, 5 bis 10 Prozent Verlust beim Ausstieg. Drittens: CVX-Preis-Abhängigkeit — bei fallendem CVX sinken reale Renditen. Viertens: Governance-Zentralisierung — wer über Convex partizipiert, trägt zur Zentralisierung bei. Für LPs sind diese Trade-offs meist akzeptabel im Austausch für den signifikanten Rendite-Boost.
 
 ## Visuelle Vorschläge
 
@@ -208,9 +198,7 @@ Governance-Zentralisierung
 
 **[Slide 6]** **SCREENSHOT SUGGESTION:** Votium-Bribe-Dashboard für vlCVX-Voter.
 
-**[Slide 7]** APR-Vergleich: Curve direkt vs. Convex, mit Aufschlüsselung der Reward-Komponenten.
-
-**[Slide 8]** Vier-Trade-offs-Karten mit Warnsymbolen.
+**[Slide 7]** Zwei-Spalten-Layout: links APR-Vergleich (Curve direkt vs. Convex) mit Aufschlüsselung der Reward-Komponenten, rechts Vier-Trade-offs-Karten mit Warnsymbolen.
 
 ## Übung
 
@@ -253,8 +241,8 @@ Der Discount reflektiert strukturelle Unterschiede zwischen CRV und cvxCRV, die 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Convex als Wrapper → cvxCRV-Mechanik → vlCVX-Rolle → Bribes & Votium → Convex vs. direktes veCRV → cvxCRV-Peg → Retail-Empfehlungen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Das Problem → Drei Convex-Tokens → Die Mechanik → cvxCRV-Peg → vlCVX-Machtzentrum → LP-Deposit und Retail-Empfehlungen
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Convex-Wrapper-Diagramm, CRV-veCRV-cvxCRV-Flow, vlCVX-Voting-Zyklus, cvxCRV-Peg-Chart, Retail-Entscheidungsbaum
 
 Pipeline: Gamma → ElevenLabs → CapCut.

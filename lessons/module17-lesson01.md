@@ -7,6 +7,7 @@
 ## Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Portfolio Construction (Top-down-Allokations-Entscheidungen über Asset-Klassen und Buckets) von Positions-Level-Entscheidungen (Bottom-up-Protokoll-Auswahl) unterscheiden und erklären, warum beide Ebenen der Analyse für kohärentes DeFi-Engagement notwendig sind
 - Ein Vier-Bucket-Allokations-Framework (Stable Yield, ETH/BTC Beta, Active Yield Strategies, Speculative Exploration) auf das eigene Portfolio anwenden, mit expliziten Prozent-Ranges, die mit der Portfolio-Größe skalieren
 - DeFi-Exposure in ein breiteres Krypto-Portfolio (inkl. direkter BTC/ETH-Holdings und CEX-gehaltener Assets) und in ein ganzheitliches Vermögens-Portfolio (inkl. traditioneller Finanz) integrieren, mit einem gestuften Allokations-Ansatz
@@ -38,6 +39,7 @@ Ich schlage ein Vier-Bucket-Framework als nützliche Heuristik vor. Dieses Frame
 Die prozentuale Aufteilung zwischen den Buckets hängt stark von deiner Portfolio-Größe, deinem Risiko-Toleranz-Profil und deiner Lebensphase ab. Hier drei repräsentative Beispiele:
 
 **Konservativer Einsteiger (5.000–25.000 USD, Risiko-avers):**
+
 - Bucket 1 (Stable Yield): 60–70 %
 - Bucket 2 (ETH/BTC Beta): 20–30 %
 - Bucket 3 (Active Yield): 5–10 %
@@ -46,6 +48,7 @@ Die prozentuale Aufteilung zwischen den Buckets hängt stark von deiner Portfoli
 Die Philosophie: Lernen zuerst, Kapitalerhalt priorisieren, langsam Vertrauen aufbauen. Der speculative Bucket ist bewusst klein, weil das Lernen selbst nicht von einer großen Position abhängt.
 
 **Moderater Mittelstand (25.000–100.000 USD, mittlere Risiko-Toleranz):**
+
 - Bucket 1: 45–55 %
 - Bucket 2: 25–35 %
 - Bucket 3: 10–20 %
@@ -54,6 +57,7 @@ Die Philosophie: Lernen zuerst, Kapitalerhalt priorisieren, langsam Vertrauen au
 Die Philosophie: Etabliertes Fundament mit selektiver Expansion in aktivere Strategien. Erfahrung aus den ersten Monaten bestimmt, wie schnell die aktiveren Buckets wachsen.
 
 **Engagierter Praktiker (100.000+ USD, höhere Risiko-Toleranz):**
+
 - Bucket 1: 35–45 %
 - Bucket 2: 25–35 %
 - Bucket 3: 20–30 %
@@ -68,6 +72,7 @@ Wichtige Beobachtung: In keinem der drei Profile geht Bucket 4 über 10 %. Das i
 DeFi ist nicht dein gesamtes Vermögen. Für die meisten Teilnehmer sollte DeFi eine Komponente sein, die in zwei weiteren Schichten eingebettet ist:
 
 **Gesamt-Krypto-Portfolio** (inkludiert DeFi, aber auch CEX-Holdings, Cold-Storage-ETH/BTC, eventuell CEX-Derivatives-Positionen). Eine übliche Struktur für einen Mid-Sized-Krypto-Teilnehmer:
+
 - 40–60 % Cold Storage (ETH, BTC in Hardware-Wallets, explizit nicht in DeFi)
 - 25–40 % DeFi (die oben diskutierten vier Buckets)
 - 10–20 % CEX (für Liquidität, Convenience, bestimmte Strategien)
@@ -109,6 +114,7 @@ In der Praxis kombinieren die meisten disziplinierten Teilnehmer beide Ansätze:
 **Rebalancing-Trigger:**
 
 Empfohlene Regel-Set:
+
 - **Zeit-basiert**: Quartärliche Review der Gesamt-Bucket-Struktur; wenn Abweichungen > 25 % vom Target, Rebalancing.
 - **Threshold-basiert**: Wenn eine einzelne Bucket-Allokation um > 30 % von Target abweicht, unabhängig vom Zeitpunkt, Rebalancing.
 - **Event-basiert**: Nach einem bedeutenden Markt-Event (> 20 % Krypto-Markt-Bewegung in 4 Wochen), Review und potentielles Rebalancing.
@@ -128,45 +134,53 @@ Portfolio Construction ist zu mindestens 50 % ein psychologisches Thema, nicht n
 Diese psychologischen Dynamiken sind schwer in der Theorie zu vermitteln, weil sie nur in der Erfahrung wirklich verständlich werden. Aber das Wissen, dass sie existieren und dass sie normale Teile des Langzeit-Investors-Lebens sind, hilft dir, sie zu überstehen, wenn sie eintreten.
 
 ---
+
 ## Folien-Zusammenfassung
 
 **Slide 1: Portfolio Construction vs. Positions-Analyse**
+
 - Positions-Analyse (bottom-up): "Soll ich in Protokoll X einsteigen?"
 - Portfolio Construction (top-down): "Welche Rolle spielt Protokoll X in meiner Gesamt-Struktur?"
 - Beide Ebenen notwendig für kohärente Entscheidungen
 - Ausschließlich bottom-up → versteckte Konzentrations-Risiken
 
 **Slide 2: Die vier Asset-Klassen des DeFi-Portfolios**
+
 - Bucket 1 — Stable Yield: 4–8 % p.a., niedrige Volatilität, langer Horizont, "Kapitalerhalt-Kern"
 - Bucket 2 — ETH/BTC Beta: direkte Krypto-Preis-Exposure + optional Staking-Yield, hohe Volatilität
 - Bucket 3 — Active Yield Strategies: 7–12 % p.a., mittlere Volatilität, aktives Monitoring
 - Bucket 4 — Speculative Exploration: max 5–10 %, "Lern-Budget", 100 %-Verlust-Akzeptanz
 
 **Slide 3: Allokations-Beispiele nach Portfolio-Profil**
+
 - Konservativer Einsteiger: Bucket 1: 60–70 %, Bucket 4: 0–5 %
 - Moderater Mittelstand: Bucket 1: 45–55 %, Bucket 3: 10–20 %
 - Engagierter Praktiker: Bucket 1: 35–45 %, Bucket 3: 20–30 %
 - In keinem Profil Bucket 4 > 10 %
 
 **Slide 4: Integration mit breiterem Portfolio**
+
 - Gesamt-Krypto: 40–60 % Cold Storage, 25–40 % DeFi, 10–20 % CEX
 - Gesamt-Vermögen: typisch 5–25 % Krypto-Allokation
 - Krypto-Optimierung trivial, wenn Gesamt-Vermögen schlecht strukturiert
 - DeFi ist Komponente, nicht Ganzes
 
 **Slide 5: Zeit-Horizonte und Positions-Matching**
+
 - Lang (3+ Jahre): Bucket 1 und 2 → wenige Entscheidungen, Katastrophen-Vermeidung
 - Mittel (3–18 Monate): Bucket 3 → vierteljährliche Re-Evaluation, aktiv
 - Kurz (Wochen bis 3 Monate): Bucket 4 → klare Exit-Trigger
 - Fehl-Passung zwischen Positions-Charakteristik und Horizont = häufige Schadens-Quelle
 
 **Slide 6: Rebalancing-Strategien**
+
 - Mean-Reversion: trim wohlperformende, stock schwach-performende auf
 - Momentum-Respect: lasse gute Positionen laufen bis zu extremen Abweichungen
 - Praktische Kombination: Bucket 1 streng mean-reversion, Bucket 2 moderat-momentum
 - Trigger: quartärlich + threshold (> 30 % Abweichung) + event-basiert
 
 **Slide 7: Psychologische Dimensionen**
+
 - Drawdown-Management: nicht-handeln in 6–18 monatigen 30–50 %-Crashes
 - FOMO-Resistenz: in Bull-Markets keine Bucket-4-Drift erlauben
 - Capitulation-Pressure: in Bear-Markets Bucket 1 und 2 intakt halten
@@ -197,6 +211,7 @@ Split-Screen-Diagramm. Links: "Positions-Analyse (Bottom-up)" — Box mit "Proto
 
 **Visual 2: Die Vier-Bucket-Struktur als Pyramide**
 Pyramiden-Diagramm mit vier Ebenen, von unten nach oben:
+
 - Basis (breit): Bucket 1 — Stable Yield, 4–8 % p.a., lang
 - Zweite Ebene: Bucket 2 — ETH/BTC Beta, hoher Volatilität, lang
 - Dritte Ebene: Bucket 3 — Active Yield, 7–12 %, mittel
@@ -205,6 +220,7 @@ Links der Pyramide: Risiko-Skala (niedrig unten, hoch oben). Rechts: Zeit-Horizo
 
 **Visual 3: Allokations-Beispiele nach Profil**
 Drei vertikale Balkendiagramme nebeneinander, jeweils mit 4 Farb-Segmenten für die Buckets.
+
 - Balken 1: "Konservativer Einsteiger" — 65 % Bucket 1 (blau), 25 % Bucket 2 (grün), 7 % Bucket 3 (gelb), 3 % Bucket 4 (rot)
 - Balken 2: "Moderater Mittelstand" — 50 %, 30 %, 15 %, 5 %
 - Balken 3: "Engagierter Praktiker" — 40 %, 30 %, 25 %, 5 %
@@ -212,6 +228,7 @@ Legende oben mit Farb-Bedeutungen.
 
 **Visual 4: Portfolio-Schichtung**
 Konzentrische Kreise, von innen nach außen:
+
 - Kleinster Kern: DeFi-Portfolio (vier Buckets)
 - Mittlerer Ring: Gesamt-Krypto-Portfolio (DeFi + Cold Storage + CEX)
 - Äußerer Ring: Gesamt-Vermögens-Portfolio (Krypto + tradFi-Assets)
@@ -222,6 +239,7 @@ Horizontale Zeit-Achse von "Wochen" bis "Jahrzehnte". Vier Balken darüber, jewe
 
 **Visual 6: Rebalancing-Trigger-Entscheidungsbaum**
 Flussdiagramm:
+
 - Start: "Quartärliche Review?"
 - Falls ja: Prüfe jede Bucket-Allokation gegen Target
 - Falls Abweichung > 30 %: Rebalance
@@ -243,6 +261,7 @@ Diese Übung führt dich durch den vollständigen Portfolio-Construction-Prozess
 Beantworte schriftlich:
 
 **Portfolio-Profil:**
+
 - Gesamt-DeFi-Kapital (aktuell oder geplant): _____
 - Gesamt-Krypto-Kapital (inkl. Cold Storage, CEX): _____
 - Gesamt-Vermögen (inkl. tradFi): _____
@@ -250,11 +269,13 @@ Beantworte schriftlich:
 - DeFi-Allokation als % der Krypto-Allokation: _____ %
 
 **Risiko-Toleranz-Test (Szenario-Antworten):**
+
 - In einem 40 %-Krypto-Crash über 6 Monate würde ich: (a) Panik-Verkaufen, (b) Nichts tun, (c) Aufstocken
 - In einem Bull-Market mit neuen 100 %-APY-Protokollen würde ich: (a) Alle verfügbaren Mittel reinstecken, (b) Kleine Explorations-Position nehmen, (c) Methodische Due Diligence machen bevor irgendetwas
 - Bei einem 2-Mio-USD-Protokoll-Exploit in einem Protokoll, in dem ich 10 % meines Portfolios habe, würde ich: (a) Alle Positionen komplett liquidieren, (b) Spezifisch das exploited Protokoll analysieren und kalibriert reagieren, (c) Nichts tun, weil "es ist schon passiert"
 
 **Lebens-Phase:**
+
 - Alter / Lebensphase
 - Zeit-Horizont für Vermögensaufbau (Jahre bis zur benötigten Liquidität)
 - Verfügbare Management-Zeit pro Woche: _____ Stunden
@@ -265,12 +286,14 @@ Basierend auf diesen Antworten, klassifiziere dich in eines der drei Profile (Ko
 
 Basierend auf deinem Profil, definiere konkrete Target-Allokationen:
 
-| Bucket | Target % | Target USD-Betrag | Begründung |
-|---|---|---|---|
-| 1. Stable Yield | ___ % | ___ USD | Warum dieser % Wert? |
-| 2. ETH/BTC Beta | ___ % | ___ USD | Warum dieser % Wert? |
-| 3. Active Yield | ___ % | ___ USD | Warum dieser % Wert? |
-| 4. Speculative | ___ % | ___ USD | Warum dieser % Wert? |
+
+| Bucket          | Target % | Target USD-Betrag | Begründung           |
+| --------------- | -------- | ----------------- | -------------------- |
+| 1. Stable Yield | ___ %    | ___ USD           | Warum dieser % Wert? |
+| 2. ETH/BTC Beta | ___ %    | ___ USD           | Warum dieser % Wert? |
+| 3. Active Yield | ___ %    | ___ USD           | Warum dieser % Wert? |
+| 4. Speculative  | ___ %    | ___ USD           | Warum dieser % Wert? |
+
 
 **Teil 3: Konkrete Positions-Auswahl pro Bucket (60 Minuten)**
 
@@ -302,9 +325,7 @@ Schreibe deine spezifischen Rebalancing-Regeln auf:
 Schreibe drei Pre-Commitments auf, die dich vor dir selbst schützen:
 
 1. **Drawdown-Pre-Commitment**: Was ist dein explicit-written Commitment für das Verhalten in einem 30–50 %-Crash? Beispiel: "In einem Crash von mehr als 30 % werde ich für mindestens 30 Tage keine substantiellen Portfolio-Änderungen machen, außer Rebalancing nach bestehenden Regeln."
-
 2. **FOMO-Pre-Commitment**: Was ist dein explicit-written Commitment für euphorische Markt-Phasen? Beispiel: "Ich werde Bucket 4 niemals über 10 % meines Portfolios wachsen lassen, unabhängig davon, wie attraktiv neue Opportunities aussehen."
-
 3. **Capitulation-Pre-Commitment**: Was ist dein explicit-written Commitment für tiefe Bear-Market-Phasen? Beispiel: "Ich werde meine Bucket 1 und Bucket 2 Kern-Positionen niemals um mehr als 25 % reduzieren, auch nicht in einer Capitulation-Phase."
 
 **Teil 6: Dokumentation und Review-Kalender (15 Minuten)**
@@ -321,7 +342,7 @@ Ein vollständiges Portfolio-Konstruktions-Dokument (3.000–5.000 Wörter), das
 
 **Frage 1:** Du bist ein 32-jähriger Software-Engineer mit 150.000 USD DeFi-Kapital, 80.000 USD zusätzlich in Cold-Storage ETH/BTC, und einem Gesamt-Vermögen (inkl. Altersvorsorge und Aktien-Portfolio) von etwa 850.000 USD. Du hast etwa 5 Stunden pro Woche für DeFi-Management. Ein befreundeter Trader drängt dich zu einer aggressiven Allokation: 60 % in Bucket 3 (Active Yield, hauptsächlich Leverage-Loops), 30 % in Bucket 4 (Speculative), 10 % kombiniert in Buckets 1 und 2. Seine Argumentation: "Du bist jung, hast technisches Verständnis, und das Krypto-Bull-Cycle gerade erst an." Ist diese Empfehlung für deine Situation sinnvoll? Analysiere systematisch, und konstruiere eine alternative, besser zugeschnittene Allokation.
 
-<details><summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 **Analyse der Freund-Empfehlung:**
 
@@ -352,24 +373,21 @@ Die Empfehlung ist nicht nur aggressiv, sondern auch schlecht-diversifiziert —
 Basierend auf deinem tatsächlichen Profil (32, technisch versiert, 150k DeFi, 27 % Krypto-Gesamt-Anteil, 5 Std/Woche Management-Zeit), schlage ich eine "Moderater Mittelstand mit leichter Tilt zu aktiver"-Allokation vor:
 
 - **Bucket 1 (Stable Yield): 45 % = 67.500 USD**
- - 20.000 Aave V3 USDC-Supply (Mainnet)
- - 15.000 Morpho Blue USDC-Supply
- - 15.000 DAI in Sky Savings Rate
- - 17.500 in RWA-Produkten (z. B. BUIDL oder OUSG — wir covern das in Lektion 17.2)
-
+- 20.000 Aave V3 USDC-Supply (Mainnet)
+- 15.000 Morpho Blue USDC-Supply
+- 15.000 DAI in Sky Savings Rate
+- 17.500 in RWA-Produkten (z. B. BUIDL oder OUSG — wir covern das in Lektion 17.2)
 - **Bucket 2 (ETH/BTC Beta): 30 % = 45.000 USD**
- - 25.000 in stETH direkt
- - 15.000 in rETH oder cbETH (für LST-Diversifikation)
- - 5.000 in tokenisiertem BTC (z. B. WBTC in einer konservativen Lending-Strategie)
-
+- 25.000 in stETH direkt
+- 15.000 in rETH oder cbETH (für LST-Diversifikation)
+- 5.000 in tokenisiertem BTC (z. B. WBTC in einer konservativen Lending-Strategie)
 - **Bucket 3 (Active Yield): 20 % = 30.000 USD**
- - 10.000 in Convex-Boost auf Curve-Stablecoin-LP (2-Layer-Stack, eingehalten)
- - 10.000 in Pendle Fixed-Yield auf USDC (6-Monats-Lock)
- - 10.000 in einer konservativen Leverage-Loop auf stETH/ETH (1,5x Leverage, Health Factor 1,9, 4 Layer gesamt aber nur 1 effektiver Leverage-Layer — unter der 5 % Bucket-Größe)
-
+- 10.000 in Convex-Boost auf Curve-Stablecoin-LP (2-Layer-Stack, eingehalten)
+- 10.000 in Pendle Fixed-Yield auf USDC (6-Monats-Lock)
+- 10.000 in einer konservativen Leverage-Loop auf stETH/ETH (1,5x Leverage, Health Factor 1,9, 4 Layer gesamt aber nur 1 effektiver Leverage-Layer — unter der 5 % Bucket-Größe)
 - **Bucket 4 (Speculative): 5 % = 7.500 USD**
- - Verteilt auf 2–3 Positionen, jeweils 2.000–3.500 USD
- - Nur Protokolle, die die Mindest-Anforderungen (12 Monate, 2 Audits, 200 Mio TVL) erfüllen
+- Verteilt auf 2–3 Positionen, jeweils 2.000–3.500 USD
+- Nur Protokolle, die die Mindest-Anforderungen (12 Monate, 2 Audits, 200 Mio TVL) erfüllen
 
 **Erwartete Rendite dieser alternativen Allokation:**
 
@@ -386,11 +404,11 @@ Im Vergleich zur Freund-Empfehlung würde die aggressivere Allokation im Bull-Ca
 
 "Jugend" und "technisches Verständnis" sind keine Rechtfertigung für aggressive Allokation — sie sind Rechtfertigung für geduldige Kapitalakkumulation über Jahrzehnte. Die mathematische Realität des Compoundings begünstigt Teilnehmer, die Draw-Downs überleben, nicht diejenigen, die in guten Jahren maximale Rendite erzielen aber in schlechten Jahren substantielle Verluste haben. Die alternative Allokation ist methodisch kalibriert zu deinem tatsächlichen Kontext — Portfolio-Größe, Gesamt-Vermögens-Kontext, Management-Zeit, Lebensphase — und produziert über einen vollständigen Markt-Zyklus wahrscheinlich bessere Ergebnisse als die aggressive Empfehlung deines Freundes.
 
-</details>
+
 
 **Frage 2:** Du bist 8 Monate in deine DeFi-Reise und beobachtest: Dein Portfolio hat durch eine ETH-Rally von 45 % deutlich zu Bucket 2 gedriftet. Ursprüngliche Allokation war 45 % Bucket 1, 30 % Bucket 2, 20 % Bucket 3, 5 % Bucket 4. Aktuelle Allokation: 35 % Bucket 1, 40 % Bucket 2, 20 % Bucket 3, 5 % Bucket 4. Die Drift ist primär in Bucket 2 (stETH-Positionen, die durch ETH-Appreciation gewachsen sind). Soll du rebalancieren? Unter welchen Bedingungen ja, unter welchen nein? Was sind die konkreten Aktionen, die du in Erwägung ziehen würdest?
 
-<details><summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 **Situations-Analyse:**
 
@@ -405,11 +423,13 @@ Gleichzeitig ist Bucket 1 von 45 % auf 35 % gefallen, also 22 % unter Target. Da
 Wir haben in der Lektion festgestellt, dass Bucket 2 typisch "moderat-momentum-respect" behandelt wird — Drift in wohlperformenden ETH-Positionen wird teils toleriert. Die Frage ist, ob 33 % Abweichung in das "tolerable Drift"-Fenster fällt oder das "rebalance"-Fenster.
 
 Argumente für "tolerable Drift" (nicht rebalancieren):
+
 - ETH/BTC Beta ist bewusst eine langfristige Überzeugungs-Position. Wenn ETH rally, dann profitiere davon.
 - Frühe Rebalancing kostet potentiell Rendite, wenn die ETH-Rally weitergeht.
 - Steuerliche Implikationen: In manchen Jurisdictionen triggern Swaps steuerpflichtige Events.
 
 Argumente für "rebalance":
+
 - Die 33 %-Abweichung überschreitet die vorher-festgelegte Threshold-Regel.
 - Eine Disziplin ist nur nützlich, wenn sie eingehalten wird, auch wenn sie sich momentan suboptimal anfühlt.
 - Eine gebruchte Regel schwächt alle zukünftigen Regel-Einhaltungen.
@@ -417,11 +437,13 @@ Argumente für "rebalance":
 **Faktor 2: Was sind die Second-Order-Konsequenzen?**
 
 Wenn du nicht rebalancierst:
+
 - Bucket 1 bleibt unter-gewichtet. Im Falle eines Bear-Markets hast du weniger Kapitalerhalt-Tranche als geplant.
 - Bucket 2's absoluter USD-Wert ist höher als ursprünglich gewollt. Im Falle eines 50 %-ETH-Crash verlierst du entsprechend mehr absolut.
 - Deine Risiko-Exposition driftet in einer unkontrollierten Weise.
 
 Wenn du rebalancierst:
+
 - Du verkaufst etwas stETH (wandelst in USDC oder ähnliches um) und sockelst Bucket 1 auf.
 - Du gibst potentielle weitere ETH-Upside auf.
 - Du hast ggf. steuerpflichtige Events.
@@ -435,25 +457,25 @@ Wichtig ist hier: Die Drift kommt aus Markt-Bewegung, nicht aus verschobener Ris
 In diesem spezifischen Fall würde ich eine nuancierte Strategie empfehlen, nicht volles Zurück-zu-Target-Rebalancing:
 
 **Schritt 1: Teilweise Rebalance Bucket 2 von 40 % zu 35 %.**
+
 - Konkret: Verkaufe stETH im Wert von etwa 7.500 USD (falls dein Portfolio 150k ist). Wandle in USDC.
 - Verbleibendes Bucket 2 ist bei 35 %, immer noch über Target aber nicht mehr überhalb der Threshold.
 - Bucket 1 steigt auf ~40 %, immer noch unter Target aber näher dran.
 
 **Schritt 2: Lass weitere Markt-Bewegung entscheiden.**
+
 - Wenn ETH weiter rally und Bucket 2 wieder auf 40 %+ steigt, rebalance erneut teilweise.
 - Wenn ETH kracht und Bucket 2 unter 30 % fällt, dann wäre Bucket 1 (das jetzt bei 40 % liegt) der Ort, aus dem du in Bucket 2 verschiebst.
 
 **Schritt 3: Quartärliche Review einhalten.**
+
 - Unabhängig von der aktuellen Aktion, bei nächstem quartärlichem Review: vollständige Re-Evaluation.
 
 **Warum teilweises Rebalancing?**
 
 1. **Es respektiert die Threshold-Regel**, ohne zur harten "Zurück-zu-Target"-Linie zu gehen. Du hast die Situation adressiert aber nicht über-reagiert.
-
 2. **Es behält einige Momentum-Respekt-Philosophie** für Bucket 2. Nach der Teil-Rebalance hast du immer noch leicht über-gewichtete ETH-Exposure, die von weiterer Rally profitieren kann.
-
 3. **Es ist tax-effizient**. Ein kleinerer Swap hat kleinere steuerliche Implikationen als ein voller Swap.
-
 4. **Es ist psychologisch nachhaltig**. Vollständige Rebalances fühlen sich oft wie "Verkauf von Gewinnen, die ich behalten möchte" an und können zu Regel-Brüchen in zukünftigen Zyklen führen. Teilweise Rebalances sind einfacher durchzuhalten.
 
 **Situationen, in denen ich gar nicht rebalancieren würde:**
@@ -472,7 +494,7 @@ In diesem spezifischen Fall würde ich eine nuancierte Strategie empfehlen, nich
 
 Rebalancing-Entscheidungen sind nicht binär. Die interessanten Fälle sind die mittleren — 33 % Abweichung, unentschieden zwischen "tolerable drift" und "rebalance". Das methodische Vorgehen ist, nuanciert zu reagieren (teilweises Rebalancing), nicht extrem (voller Rebalance oder gar nichts). Ein Rebalancing-System, das nur "vollständig rebalance bei Threshold" und "gar nichts sonst" als Optionen hat, ist zu grob für die Realität. Nuance in der Ausführung, kombiniert mit Disziplin in den Regeln, ist das reifere Framework.
 
-</details>
+
 
 ## Video-Pipeline-Assets
 

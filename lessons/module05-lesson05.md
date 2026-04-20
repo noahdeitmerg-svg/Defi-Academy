@@ -206,7 +206,7 @@ Zwei Hauptgründe. Erstens: Volatilität. USDC/USDT schwankt normal um weniger a
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → V3-Range-Konzept → IL bei engen Ranges → V3-Entscheidungsmatrix → Rebalancing-Last → Heuristiken für konservative V3 → Pool-Typ-Eignung
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Range-Breite-vs-Fee-Yield-Kurve, Out-of-Range-Szenarien, V3-Analytics-Screenshot, Rebalance-Gas-Kosten-Tabelle, Stable-V3-vs-Volatile-V3-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.

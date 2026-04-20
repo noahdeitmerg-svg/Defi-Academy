@@ -104,11 +104,9 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 **[Slide 5] — ERC-1155:** Fungible und non-fungible in einem Contract. Gaming, Editions, Batch-Operations.
 
-**[Slide 6] — Metadaten:** HTTP (zentral), IPFS (dezentral aber optional), On-Chain (permanent aber teuer).
+**[Slide 6] — Metadaten + NFTs in DeFi:** HTTP (zentral), IPFS (dezentral aber optional), On-Chain (permanent aber teuer). DeFi-Relevanz: Uniswap V3 LP-Positionen, ve-Tokens, Drainer-Vektoren.
 
-**[Slide 7] — NFTs in DeFi:** Uniswap V3 LP-Positionen, ve-Tokens, Drainer-Vektoren.
-
-**[Slide 8] — Verteidigung:** setApprovalForAll misstrauen, revoke.cash-NFT-Tab nutzen.
+**[Slide 7] — Verteidigung:** setApprovalForAll misstrauen, revoke.cash-NFT-Tab nutzen.
 
 ## Sprechertext
 
@@ -118,15 +116,13 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 **[Slide 3]** ERC-721 ist der klassische NFT-Standard. Der Contract speichert pro Token-ID einen Besitzer. Die Standardfunktionen: ownerOf für den Besitzer einer ID, balanceOf für die Anzahl NFTs dieser Collection, transferFrom für einzelne Transfers, approve für einzelne IDs — und setApprovalForAll für alle IDs einer Collection.
 
-**[Slide 4]** setApprovalForAll ist der gefährlichste NFT-Mechanismus. Wenn du eine Collection auf OpenSea listen willst, fordert der Marktplatz diese Approval. Damit darf der Marktplatz alle deine aktuellen und zukünftigen NFTs dieser Collection bewegen. Eine gefälschte Marktplatz-Site kann das missbrauchen. Einmal signiert, sind alle wertvollen NFTs in Gefahr. Verteidigung: setApprovalForAll nur auf vertrauenswürdigen Sites, revoke.cash-NFT-Tab regelmäßig checken, bei Zweifel lieber einzel-approven als alles.
+**[Slide 4]** setApprovalForAll ist der gefährlichste NFT-Mechanismus. Wenn du eine Collection auf OpenSea listen willst, fordert der Marktplatz diese Approval. Damit darf der Marktplatz alle deine aktuellen und zukünftigen NFTs dieser Collection bewegen. Eine gefälschte Marktplatz-Site kann das missbrauchen. Einmal signiert, sind alle wertvollen NFTs in Gefahr. Verteidigung: setApprovalForAll nur auf vertrauenswürdigen Sites, revoke.cash-NFT-Tab regelmäßig prüfen, bei Zweifel lieber einzelne Token-IDs genehmigen als alles.
 
 **[Slide 5]** ERC-1155 ist der Mehrzweck-Standard. Unterstützt beide — fungible und non-fungible — in einem Contract. Pro Token-ID und pro Adresse eine Balance. Eine Token-ID kann 1.000.000 Exemplare haben oder nur 1. Use Cases: Gaming mit vielen Item-Typen, limitierte Kunst-Editions, Batch-Operations für Effizienz.
 
-**[Slide 6]** NFT-Metadaten werden auf drei Arten gespeichert. Off-chain HTTP: URL zeigt auf normalen Web-Server. Billig, aber wenn der Server ausfällt, ist die Darstellung weg. Off-chain IPFS: dezentral, aber nur verfügbar, solange Nodes die Daten pinnen. On-chain: alle Metadaten im Contract. Permanent und zensur-resistent, aber teuer. Die meisten NFTs sind HTTP oder IPFS — die "Permanenz" einer NFT ist oft nicht so absolut, wie behauptet.
+**[Slide 6]** NFT-Metadaten werden auf drei Arten gespeichert. Off-chain HTTP: URL zeigt auf normalen Web-Server. Billig, aber wenn der Server ausfällt, ist die Darstellung weg. Off-chain IPFS: dezentral, aber nur verfügbar, solange Nodes die Daten pinnen. On-chain: alle Metadaten im Contract. Permanent und zensur-resistent, aber teuer. Die meisten NFTs sind HTTP oder IPFS — die "Permanenz" einer NFT ist oft nicht so absolut, wie behauptet. Warum das alles für DeFi-Nutzer relevant ist: Erstens, Uniswap V3 LP-Positionen sind NFTs. Wer konzentrierte Liquidität bereitstellt, bekommt einen ERC-721-Token. Zweitens, manche Protokolle wie Curve nutzen NFTs für gelockte ve-Tokens. Drittens, Drainer-Vektoren. setApprovalForAll ist einer der gefährlichsten Signatur-Typen, auch wenn du selbst keine teuren NFTs hältst.
 
-**[Slide 7]** Warum das alles für DeFi-Nutzer relevant ist. Erstens: Uniswap V3 LP-Positionen sind NFTs. Wer konzentrierte Liquidität bereitstellt, bekommt einen ERC-721-Token. Zweitens: manche Protokolle wie Curve nutzen NFTs für gelockte ve-Tokens. Drittens: Drainer-Vektoren. setApprovalForAll ist einer der gefährlichsten Signatur-Typen, auch wenn du selbst keine teuren NFTs hältst.
-
-**[Slide 8]** Verteidigung. Prinzipielle Regel: setApprovalForAll ist ein Maximal-Vertrauens-Signal — sparsam verwenden. Nur auf Sites signieren, die du kennst und die gerade legitim einen Bulk-Transfer rechtfertigen. revoke.cash hat einen separaten Tab für NFT-Approvals — monatlich durchgehen. Bei Zweifeln: einzelne Token-IDs approven statt alles.
+**[Slide 7]** Verteidigung. Prinzipielle Regel: setApprovalForAll ist ein Maximal-Vertrauens-Signal — sparsam verwenden. Nur auf Sites signieren, die du kennst und die gerade legitim einen Bulk-Transfer rechtfertigen. revoke.cash hat einen separaten Tab für NFT-Approvals — monatlich durchgehen. Bei Zweifeln: einzelne Token-IDs genehmigen statt alles.
 
 ## Visuelle Vorschläge
 
@@ -140,11 +136,9 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 **[Slide 5]** Vergleichsdiagramm ERC-721 vs. ERC-1155.
 
-**[Slide 6]** Drei-Spalten-Vergleich der Metadaten-Optionen mit jeweiligen Trade-offs.
+**[Slide 6]** Drei-Spalten-Vergleich der Metadaten-Optionen mit jeweiligen Trade-offs. **SCREENSHOT SUGGESTION:** Uniswap-V3-LP-Position-Seite, die die Position als NFT zeigt.
 
-**[Slide 7]** **SCREENSHOT SUGGESTION:** Uniswap-V3-LP-Position-Seite, die die Position als NFT zeigt.
-
-**[Slide 8]** **SCREENSHOT SUGGESTION:** revoke.cash NFT-Approvals-Tab.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** revoke.cash NFT-Approvals-Tab.
 
 ## Übung
 
@@ -161,7 +155,7 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 
 ## Quiz
 
-**Frage 1:** Warum ist `setApprovalForAll` ein systematisch gefährlicher als `approve` für einzelne Token-IDs?
+**Frage 1:** Warum ist `setApprovalForAll` systematisch gefährlicher als `approve` für einzelne Token-IDs?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -169,7 +163,7 @@ Das NFT-Ökosystem überlappt mit Tokenized Assets (Fan Tokens, Membership-Päss
 `setApprovalForAll` gibt unbeschränkten Zugriff auf alle aktuellen und zukünftigen NFTs einer Collection — eine einzige Signatur reicht für potenziell Millionen Dollar. `approve(tokenId)` gibt Zugriff nur auf einen einzelnen NFT — jeder weitere NFT erfordert eine neue, explizite Approval. Bei einem Drainer-Angriff bekommt der Angreifer mit `setApprovalForAll` sofort eine ganze Collection; mit `approve` nur einen einzelnen NFT und muss für weitere jeweils neue Signaturen erwirken, was viel auffälliger ist. Der Komfort-Nachteil von einzelnen Approvals ist deutlich — bei jedem NFT-Transfer eine eigene Signatur — weshalb Marktplätze routinemäßig `setApprovalForAll` anfordern. Für Nutzer ist das akzeptables Risiko nur bei vertrauenswürdigen, etablierten Marktplätzen.
 </details>
 
-**Frage 2:** Du kaufst eine NFT für 500 USD auf einem seriösen Marktplatz. Zwei Jahre später schaut die NFT in deiner Wallet merkwürdig aus — die Bilder sind verschwunden oder zeigen Fehler. Was könnte passiert sein und wie prüfst du es?
+**Frage 2:** Du kaufst eine NFT für 500 USD auf einem seriösen Marktplatz. Zwei Jahre später sieht die NFT in deiner Wallet merkwürdig aus — die Bilder sind verschwunden oder zeigen Fehler. Was könnte passiert sein und wie prüfst du es?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -181,8 +175,8 @@ Wahrscheinliche Ursache: die Metadaten waren off-chain gespeichert und der zugeh
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Slides: Titel → ERC-721 vs. ERC-1155 → Use Cases → setApprovalForAll-Risiko → Metadaten on-chain/off-chain → Royalties (EIP-2981) → NFT-Approval-Hygiene
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → Fungible vs. Non-fungible → ERC-721 → setApprovalForAll-Risiko → ERC-1155 → Metadaten + NFTs in DeFi → Verteidigung
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — ERC-721 vs. ERC-1155 Vergleichstabelle, setApprovalForAll-Drainer-Flow, IPFS/HTTPS/On-Chain-Storage-Diagramm, revoke.cash NFT-Tab-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.

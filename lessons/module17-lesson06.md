@@ -9,15 +9,10 @@
 Nach Abschluss dieser Lektion können die Lernenden:
 
 1. Implement a structured 12-month plan that systematically transitions from Academy-completion to confident, methodical DeFi practice, with clear milestones for each quarter.
-
 2. Execute the Foundation-Setup phase (Months 1–3) — establishing infrastructure, initial positions, journal system, and baseline monitoring routines that form the operational foundation of long-term DeFi practice.
-
 3. Deploy the Framework-Activation phase (Months 4–6) — activating systematic due diligence processes, establishing rebalancing cycles, building community engagement, and developing feedback loops that enable continuous calibration.
-
 4. Navigate the Strategy-Expansion phase (Months 7–9) — conducting careful allocation experiments, integrating lessons-learned from the first 6 months, and selectively expanding portfolio complexity when and where it's justified.
-
 5. Complete the Consolidation-and-Planning phase (Months 10–12) — consolidating insights from the first year, conducting comprehensive portfolio reviews, and planning for Year 2 with realistic, experience-informed goals.
-
 6. Reflect on the complete Academy journey — integrating the frameworks from all 17 modules into a coherent personal practice philosophy and positioning yourself for long-term (5+ years, multiple market cycles) DeFi engagement.
 
 ## Erklärung
@@ -51,6 +46,7 @@ Die ersten drei Monate sind die wichtigsten. Hier etablierst du die operationell
 Ziel: eine sichere, professionell verwaltete Wallet-Infrastruktur.
 
 Konkrete Schritte:
+
 - Wenn noch nicht vorhanden: Kauf einer Hardware-Wallet (Ledger oder Trezor, direkt vom Hersteller)
 - Setup in abgelegter, nicht-kompromittierter Umgebung
 - Seed-Phrase-Backup mit physischer Methode (Metall-Plate oder ähnlich), nicht digital
@@ -70,6 +66,7 @@ Eine einzige Wallet für alles ist suboptimal. Sophisticated Teilnehmer nutzen s
 - **Ops Wallet (optional)**: separate Wallet für Community-Aktivitäten, NFTs, experimentelle Dinge, die du von deiner Haupt-Wallet trennen möchtest
 
 Konkrete Schritte:
+
 - Setup der verschiedenen Wallet-Accounts
 - Clear documentation welche Wallet für welchen Zweck
 - Test-Transfers zwischen den Wallets
@@ -89,6 +86,7 @@ Du brauchst Tools, um deine Positionen zu überwachen. Etablierte Tools für 202
 - **Simple Spreadsheet** (Google Sheets oder Excel): für manuelle Performance-Tracking
 
 Konkrete Schritte:
+
 - Setup der gewählten Tools mit deinen Wallet-Adressen (nur read-only)
 - Integration in deine tägliche Routine (z. B. Morgen-Check von DeBank)
 - Erstelle eine persönliche Watchlist von Protokollen, die du folgen möchtest (typisch 10–20 Protokolle zu Beginn)
@@ -100,6 +98,7 @@ Zeit-Einsatz: 3–5 Stunden.
 Der wichtigste strukturelle Schritt der gesamten 12 Monate.
 
 Das Journal ist nicht ein Buch im wörtlichen Sinne, sondern ein strukturiertes Dokumentations-System. Format-Optionen:
+
 - Obsidian oder Notion (empfohlen für strukturierte Dokumentation)
 - Google Docs mit clear structure
 - Markdown-Dateien in Git-Repository (für technisch-orientierte Teilnehmer)
@@ -129,12 +128,14 @@ Wenn du bereits DeFi-Positionen hast, ist Monat 2 die Zeit, sie gegen das 4-Buck
 Für einen methodischen Aufbau:
 
 **Bucket 1 (Stable Yield) Setup**:
+
 - Start mit 50–60 % des DeFi-Portfolios in Bucket 1
 - Konkrete Anfangs-Positionen: Aave V3 USDC-Supply auf Ethereum oder Arbitrum, eventuell sUSDS (MakerDAO Savings)
 - Für mittlere Portfolios (50k+): zusätzlich eine RWA-Position (z. B. BUIDL bei Accredited-Status, BENJI für kleinere Schwellen)
 - Nicht in diesem Monat: Pendle, Morpho Curated, oder andere sophisticated Bucket-1-Strategien
 
 **Bucket 2 (ETH-BTC Beta) Setup**:
+
 - 20–25 % des DeFi-Portfolios in Bucket 2
 - Konkrete Anfangs-Positionen: wstETH (Lido) für ETH-Exposure mit Staking-Yield, potentiell WBTC oder tBTC für BTC-Exposure
 - Einfach halten: single Provider pro Asset initial, keine Multi-Provider-Diversifikation
@@ -204,6 +205,7 @@ Zeit-Einsatz: 4–6 Stunden für den umfassenden Review.
 **Foundation-Phase-Milestone-Check:**
 
 Am Ende von Monat 3 solltest du haben:
+
 - ✓ Sichere Hardware-Wallet-Infrastruktur mit Backups
 - ✓ Segmentierte Wallet-Architektur
 - ✓ Monitoring-Tools aktiv
@@ -264,6 +266,7 @@ Standard-Rebalancing-Trigger:
 - **Event-basiert**: Rebalancing nach signifikanten Markt-Events (Drawdowns >30 %, Protokoll-Upgrades mit Risk-Parameter-Changes)
 
 Konkrete Schritte in Monat 5:
+
 - Führe den ersten strukturierten Rebalance durch (falls Drift oder Calendar-Trigger aktiv)
 - Dokumentiere den Rebalance-Prozess im Journal
 - Dokumentiere Gas-Kosten und Slippage des Rebalance
@@ -276,6 +279,7 @@ Zeit-Einsatz: 3–6 Stunden für den Rebalance, plus 1–2 Stunden für Dokument
 Governance-Partizipation ist Teil der sophisticated DeFi-Praxis. Sie ist aber auch zeit-intensiv, also muss sie selektiv sein.
 
 Konkrete Schritte:
+
 - Identifiziere 2–3 Protokolle, deren Governance du aktiv folgen möchtest (typisch deine Top-3-Positionen)
 - Setup von Governance-Notifications (via Tally, Boardroom, oder Protokoll-spezifische Kanäle)
 - Definiere deinen Governance-Participation-Approach: willst du aktiv abstimmen? Nur beobachten? Selektiv engagieren bei wichtigen Proposals?
@@ -291,11 +295,13 @@ Wichtig: Governance-Teilnahme ist wertvoll, aber nicht-Teilnahme ist auch legiti
 DeFi-Communities können wertvoll sein — für aktuelle Informationen, Risk-Signals, Lern-Ressourcen — aber auch problematisch (Social-Signal-Effect, FOMO-Trigger, Zeit-Sinks).
 
 Konkrete Schritte:
+
 - Identifiziere 3–5 qualitativ hochwertige Informations-Quellen (Blogs, Newsletters, Twitter-Accounts von seriösen Analysten, nicht Influencern)
 - Integriere diese in deine wöchentliche Routine (15–30 Minuten Reading-Zeit)
 - Setze explizite Limits auf weniger-wertvolle Quellen (Discord-Channels mit hohem Noise, Twitter-Scrolling, Reddit-Threads)
 
 Beispiele für qualitativ hochwertige Quellen (nicht erschöpfend):
+
 - **Bankless Podcast**: breites Coverage
 - **The Defiant Newsletter**: News-Aggregation
 - **Alex Svanevik (Nansen)**: on-chain Analytics
@@ -307,6 +313,7 @@ Beispiele für qualitativ hochwertige Quellen (nicht erschöpfend):
 **Woche 23: Peer-Learning-Struktur etablieren**
 
 Falls möglich, etabliere Peer-Learning-Beziehungen:
+
 - Ein oder zwei andere Academy-Absolventen oder seriöse DeFi-Teilnehmer für gelegentlichen Austausch
 - Monatliche oder quartärliche Check-ins (virtuell oder persönlich)
 - Austausch von DD-Insights und Portfolio-Lessons
@@ -328,6 +335,7 @@ Zeit-Einsatz: 4–6 Stunden.
 **Framework-Activation-Phase-Milestone-Check:**
 
 Am Ende von Monat 6 solltest du haben:
+
 - ✓ Etablierte Six-Dimension-DD für alle Positionen plus institutional-inspired Extensions
 - ✓ Neue-Position-Evaluation-Prozess dokumentiert und erprobt
 - ✓ Erstes Rebalancing durchgeführt
@@ -358,11 +366,13 @@ Liquidity-Provisioning in DEXes ist eine klassische Bucket-3-Strategie. Für mod
 - **Balancer oder Curve Weighted Pools**: für diversifizierte LP-Positions
 
 Vermeide initially:
+
 - Leveraged LP-Strategien
 - LP-Positionen in volatilen Token-Paaren (x-USDC, y-USDC mit ungetesteten x, y)
 - Extreme concentrated positions (sehr enge Uniswap V3 ranges)
 
 Konkrete Schritte:
+
 - Evaluation von 2–3 LP-Optionen mit vollständiger DD
 - Implementation EINER LP-Position initial, in angemessener Größe (5–10 % des Bucket-3-Budgets)
 - Monitoring-Setup für IL-Tracking und Performance-Vergleich vs. einfachen Alternative
@@ -378,6 +388,7 @@ Nach 6 Monaten hast du Erfahrung mit Rebalancing. In Woche 27–28 optimierst du
 - Order-Execution: welche Plattformen haben die beste Slippage für deine typischen Trades (1inch, Paraswap, Cow Protocol, direkt)?
 
 Konkrete Schritte:
+
 - Review der Rebalancing-Kosten der letzten 2 Quartale
 - Identifikation von Optimierungs-Potentialen
 - Adjustierung deines Rebalancing-Playbooks
@@ -456,6 +467,7 @@ Umfassender Review der Phase 3:
 **Strategy-Expansion-Phase-Milestone-Check:**
 
 Am Ende von Monat 9 solltest du haben:
+
 - ✓ Bucket-3-Aktivierung mit mindestens einer LP-Position
 - ✓ Rebalancing-Prozess optimiert
 - ✓ Sophistication-Readiness-Check dokumentiert
@@ -466,9 +478,7 @@ Am Ende von Monat 9 solltest du haben:
 **Wichtige Caveats für Phase 3:**
 
 - **Expansion ist nicht Pflicht**: Wenn die ersten 6 Monate gezeigt haben, dass dein aktuelles Setup gut funktioniert und du keinen klaren Rationale für Expansion hast, ist Konsolidierung die bessere Strategie.
-
 - **Weniger ist oft mehr**: Sophisticated Teilnehmer mit vielen Positionen haben oft schlechtere Outcomes als einfachere Teilnehmer mit 5–10 gut-managed Positionen. Die richtige Anzahl für dich ist die, die du ohne Stress managen kannst.
-
 - **Markt-Phasen sind nicht dein Problem**: Auch wenn eine sophisticated Strategy gerade "heiß" ist (z. B. LRTs während eines Restaking-Bull-Cycles), ist Timing-basierte Entscheidungsfindung oft suboptimal. Entscheide basierend auf deiner persönlichen Bereitschaft, nicht auf Markt-Momentum.
 
 ## Phase 4: Consolidation und Year-2-Planning (Monat 10–12)
@@ -489,6 +499,7 @@ Führe eine rigorose quantitative Analyse der 9-Monats-Performance durch:
 - **Cost-Analysis**: totale Gas-Kosten, total Fees paid, net performance nach allen Kosten
 
 Tool-Vorschläge:
+
 - DeBank oder Zerion für Portfolio-Level Performance
 - Spreadsheet für Custom-Analysis und Benchmark-Comparison
 - Etherscan für Cost-Aggregation
@@ -571,6 +582,7 @@ Am Ende von Monat 12: ein umfassender Year-1-Abschluss-Bericht im Journal, mit:
 **Consolidation-Phase-Milestone-Check:**
 
 Am Ende von Monat 12 solltest du haben:
+
 - ✓ Umfassende quantitative Performance-Analyse
 - ✓ Qualitative Reflexion über Entscheidungs-Qualität
 - ✓ Strategische Anpassungen basierend auf Year-1-Learnings
@@ -623,12 +635,14 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 ## Folien-Zusammenfassung
 
 **Slide 1: Der 12-Monats-Action-Plan in vier Phasen**
+
 - Phase 1 (Monat 1–3): Foundation-Setup — Infrastructure, initiale Positionen, Journal
 - Phase 2 (Monat 4–6): Framework-Activation — systematische DD, Rebalancing, Community
 - Phase 3 (Monat 7–9): Strategy-Expansion — selektive Bucket-3, bedingte Sophistication, RWA-Kalibrierung
 - Phase 4 (Monat 10–12): Consolidation und Year-2-Planning
 
 **Slide 2: Phase 1 Foundation-Setup Milestones**
+
 - Sichere Hardware-Wallet-Infrastruktur mit Backups
 - Segmentierte Wallet-Architektur (Hot, Main, Cold, Ops)
 - Monitoring-Tools aktiv (DeBank, Zerion, DeFiLlama)
@@ -638,6 +652,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - Stablecoin-Dependency-Analyse
 
 **Slide 3: Phase 2 Framework-Activation Milestones**
+
 - Erweiterte DD mit institutional-inspired Standards
 - Neue-Position-Evaluation-Prozess in 5 Schritten
 - Erstes strukturiertes Rebalancing
@@ -645,6 +660,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - Selektive Community-Integration mit hochwertigen Quellen
 
 **Slide 4: Phase 3 Strategy-Expansion Milestones**
+
 - Bucket-3-Aktivierung mit LP-Position
 - Rebalancing-Prozess optimiert
 - Sophistication-Readiness-Check
@@ -652,6 +668,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - RWA-Allocation basierend auf Makro-Regime-Assessment
 
 **Slide 5: Phase 4 Consolidation Milestones**
+
 - Quantitative und qualitative Performance-Analyse
 - Strategische Anpassungen basierend auf Learnings
 - Evolviertes Journal-System für Year 2
@@ -659,6 +676,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - Long-Term-Vision (5+ Jahre) formuliert
 
 **Slide 6: Fünf Verhaltensweisen erfolgreicher DeFi-Teilnehmer**
+
 - Disziplin über Expertise
 - Humility über Sophistication
 - Long-Term-Perspektive (Jahre, nicht Wochen)
@@ -666,6 +684,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - Balance mit anderen Lebens-Aspekten
 
 **Slide 7: Die internalisierten Academy-Frameworks nach 12 Monaten**
+
 - Six-Dimension-Framework als automatisches Denk-Muster
 - 4-Bucket-Struktur als Portfolio-Intuition
 - Sophistication-Kriterien als Expansion-Filter
@@ -673,6 +692,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - Institutional-Signal-Interpretation als Due-Diligence-Layer
 
 **Slide 8: Ausblick auf die langfristige Trajectory**
+
 - Volle Markt-Zyklen durchleben (3–5 Jahre)
 - Technologie-Evolution navigieren
 - Regulatorische Veränderungen anpassen
@@ -834,7 +854,7 @@ Der Plan ist nicht heilig. Er ist ein Starting-Point, der während des Jahres an
 
 **Frage 1:** Nach Abschluss der Academy stehst du vor der Entscheidung, wie du die nächsten 12 Monate strukturierst. Du hast ein Portfolio von 40.000 USD, 4 Stunden pro Woche verfügbare Zeit, und bist seit 8 Monaten in DeFi aktiv (einen partiellen Bull-Market erlebt, keine signifikante Bear-Phase). Du überlegst drei Optionen: (A) Den Standard-12-Monats-Plan aus der Lektion genau folgen, (B) Den Plan beschleunigen und in 6 Monaten durchlaufen, weil du "schon viel Erfahrung hast", (C) Nur die ersten 6 Monate sorgfältig durchführen und dann "spontan weitermachen". Welche Option würdest du wählen, welche Anpassungen am Plan würdest du vornehmen, und was sind die spezifischen Risiken jeder Option?
 
-<details><summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 **Situations-Analyse:**
 
@@ -845,22 +865,26 @@ Diese Frage adressiert eine fundamentale Entscheidung über den Umgang mit dem A
 **Option A: Standard-Plan folgen**
 
 Vorteile:
+
 - Struktur ist erprobt und auf graduelle Entwicklung ausgelegt
 - Phase-Gates verhindern zu schnelle Expansion
 - Monthly Reviews etablieren Disziplin
 - Kompatibel mit deinen Zeit- und Portfolio-Ressourcen
 
 Nachteile:
+
 - Könnte sich "langsam" anfühlen angesichts deiner Vorerfahrung
 - Einige Monate könnten weniger intensives Engagement erfordern
 
 **Option B: Beschleunigte 6-Monats-Version**
 
 Vorteile:
+
 - Schnellere Progression (oberflächlich attraktiv)
 - "Mehr erreichen" in kürzerer Zeit
 
 Nachteile (und warum diese Option problematisch ist):
+
 - **Foundation-Setup ist nicht beschleunigbar**: Hardware-Wallet-Setup, Journal-Etablierung, und initiale Position-Aufbau brauchen Zeit für Verfestigung, nicht nur für Implementation. Eine beschleunigte Phase 1 führt oft zu oberflächlichem Setup, das später zusammenbricht.
 - **Framework-Integration braucht Übung**: Die Frameworks aus Modul 16 und 17 werden durch wiederholte Anwendung internalisiert, nicht durch schnelle Einmal-Ausführung. Compressed Timelines erzeugen nicht Internalisierung.
 - **Markt-Exposure-Zeit**: Viele Lernen in DeFi kommen durch das Erleben von Markt-Entwicklungen über Zeit. Ein 6-Monats-Plan gibt dir weniger Markt-Exposure-Zeit.
@@ -872,10 +896,12 @@ Nachteile (und warum diese Option problematisch ist):
 **Option C: "Spontan weitermachen" nach 6 Monaten**
 
 Vorteile:
+
 - Flexibilität
 - Möglicherweise weniger "Admin-Last"
 
 Nachteile (und warum diese Option am problematischsten ist):
+
 - **Discipline-Erosion**: Wenn nach 6 Monaten die strukturierten Reviews und Checkpoints wegfallen, tendiert die Praxis zu Drift. Dies ist empirisch beobachtet in verschiedenen Kontexten (Portfolio-Management, Fitness, Beruf).
 - **Learnings-Integration-Loss**: Die Phase 4 Consolidation und Year-2-Planning sind explizit für die Integration der Learnings der ersten 9 Monate designed. Wenn diese Phase übersprungen wird, bleiben wichtige Lernen unintegriert.
 - **Komfort-Zone-Falle**: Ohne strukturierte Erweiterungs-Impulse (Phase 3) und Reflexions-Zyklen (Phase 4) bleiben viele Teilnehmer in ihrem ersten Setup "stecken", ohne zu merken, dass sie stagnieren.
@@ -923,10 +949,12 @@ Bei deinem Profil sind spezifische Behavioral Risks wahrscheinlicher:
 **Spezifische Risiken jeder Option zusammengefasst:**
 
 **Option A Risiken (mit Anpassungen):**
+
 - Foundation-Phase könnte sich langsam anfühlen → Mitigation: nutze die Zeit für DD-Vertiefung
 - Manche Monate könnten unterausgelastet sein → Mitigation: nutze diese für Reading und Reflexion, nicht für Aktions-Impulsivität
 
 **Option B Risiken:**
+
 - Unzureichende Framework-Internalisierung durch compressed Timeline
 - Foundation-Setup oberflächlich, bricht unter Stress zusammen
 - Dunning-Kruger-Falle mit Überschätzung der eigenen Kompetenz
@@ -934,6 +962,7 @@ Bei deinem Profil sind spezifische Behavioral Risks wahrscheinlicher:
 - Emotionale Kalibrierung unvollständig
 
 **Option C Risiken:**
+
 - Discipline-Erosion nach 6 Monaten
 - Learnings-Integration-Loss durch Skipping von Phase 4
 - Komfort-Zone-Falle mit Stagnation
@@ -949,11 +978,11 @@ Der 12-Monats-Plan ist nicht bürokratisch oder unnötig komplex. Er repräsenti
 
 "Ich bin 8 Monate in DeFi und fühle mich wissend. Aber ich erkenne, dass dies ein Punkt ist, an dem ich wahrscheinlich meine Kompetenz überschätze. Der 12-Monats-Plan ist auf graduelle Entwicklung ausgelegt, und ich werde ihm treu folgen. Wenn sich am Ende herausstellt, dass ich tatsächlich schneller gekonnt hätte, ist das ein kleines verlorenes Momentum. Wenn sich aber herausstellt, dass die Standard-Zeit angemessen war, habe ich ein solides Fundament. Die Asymmetrie ist klar: die Risiken der Beschleunigung sind größer als die Risiken des Durchhaltens."
 
-</details>
+
 
 **Frage 2:** Am Ende von Monat 8 bemerkst du, dass deine Routine zu erodieren beginnt: du verpasst zwei Monthly Reviews hintereinander, dein Journal-System ist nicht auf dem aktuellen Stand, und du fühlst dich vom Portfolio-Management übernommen. Gleichzeitig zeigt dein Portfolio gute Performance und du bist versucht, die Routine als "unnötig in guten Zeiten" zu rationalisieren. Wie solltest du reagieren, welche Warnsignale sind präsent, und welche konkreten Schritte ergreifst du?
 
-<details><summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 **Situations-Diagnose:**
 
@@ -976,6 +1005,7 @@ Das Gefühl, "vom Portfolio-Management übernommen" zu sein, ist ein direktes Si
 **Warnsignal 4: Gute Performance als Rationalisierung**
 
 Dies ist das gefährlichste Element. Die Versuchung, Good-Performance als Validierung des aktuellen Zustands zu sehen ("es funktioniert, also brauche ich die Disziplin nicht mehr"), ist eine klassische Falle. Die Realität:
+
 - Good Performance in Bull-Markets ist oft Markt-getrieben, nicht Strategie-getrieben
 - Disziplin-Erosion in Good-Times wird zum Desaster in Bad-Times
 - "In guten Zeiten" Disziplin halten ist leichter als "in schlechten Zeiten" — wenn du es in guten Zeiten nicht durchhältst, wirst du es in schlechten Zeiten auch nicht durchhalten
@@ -998,6 +1028,7 @@ Bevor wir zur Response gehen, ist wichtig, die spezifischen Rationalisierungen z
 **Schritt 1: Pause und explizite Reflexion (heute, 1 Stunde)**
 
 Setze dich hin und schreibe eine ehrliche Reflexion:
+
 - Was ist in den letzten 2 Monaten passiert? Was hat zur Erosion beigetragen?
 - Was triggered das Gefühl der Überwältigung? Konkrete Trigger identifizieren
 - Welche Rationalisierungen hast du produziert? Liste sie explizit auf
@@ -1037,6 +1068,7 @@ Wichtig: Portfolio-Simplifikation ist kein Scheitern — es ist kalibrierte Resp
 **Schritt 5: Re-Commitment zum Plan (nach Simplifikation)**
 
 Nach der Simplifikation sollte die operationelle Last manageable sein. Dokumentiere:
+
 - Die Lernen aus dieser Erosion-Phase
 - Die durchgeführten Simplifikationen mit Rationale
 - Die angepassten Erwartungen für Phase 4 (Monate 10–12)
@@ -1064,6 +1096,7 @@ Es ist leichter, Disziplin aufrechtzuerhalten, als sie wiederherzustellen. Eine 
 **Die Integration dieser Erfahrung:**
 
 Wenn du diese Situation erfolgreich navigierst, wird sie zu einer der wertvollsten Lerndungs-Erfahrungen deines ersten Jahres. Dokumentiere sie ausführlich in deinem Journal, weil:
+
 - Du wirst in Year 2, 3, 4 ähnliche Versuchungen haben
 - Die Lernen aus dieser Erfahrung werden dich immun machen gegen die gleiche Erosion
 - Du kannst anderen (Peers, Mentees) von dieser Erfahrung berichten und sie so unterstützen
@@ -1071,6 +1104,7 @@ Wenn du diese Situation erfolgreich navigierst, wird sie zu einer der wertvollst
 **Die Bottom Line:**
 
 Disziplin-Erosion in Good-Times ist eines der gefährlichsten Muster in DeFi-Praxis. Die richtige Response ist sofortige Korrektur durch:
+
 1. Ehrliche Reflexion
 2. Routine-Wiederherstellung
 3. Komplexitäts-Audit
@@ -1080,7 +1114,7 @@ Disziplin-Erosion in Good-Times ist eines der gefährlichsten Muster in DeFi-Pra
 
 Und die innere Haltung: "Good-Times sind nicht eine Entschuldigung für Disziplin-Reduktion. Sie sind die Gelegenheit, Disziplin zu stärken, während es relativ leicht ist."
 
-</details>
+
 
 ## Video-Pipeline-Assets
 

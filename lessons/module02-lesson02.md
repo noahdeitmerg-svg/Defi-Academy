@@ -4,7 +4,7 @@
 
 Nach Abschluss dieser Lektion können die Lernenden:
 - Die drei Hauptbedrohungsszenarien für Seed-Phrasen benennen
-- Papier-, Metall- und Shamir-Storage anhand realistischer Trade-offs vergleichen
+- Papier-, Metall- und Shamir-Storage anhand realistischer Kompromisse vergleichen
 - Ein Storage-Setup entsprechend dem eigenen Kapital- und Bedrohungsprofil wählen
 - Die Rolle der BIP-39-Passphrase als zusätzliche Schutzschicht gegen physischen Zwang und Seed-Phrase-Diebstahl einordnen
 - Ein Inheritance-Setup konzipieren, das Asset-Verlust bei Tod oder Handlungsunfähigkeit vermeidet
@@ -20,7 +20,7 @@ Eine Seed-Phrase sicher zu speichern ist das kritischste Einzelproblem in DeFi-S
 
 **Bedrohung 3: Zugangsverlust.** Du selbst oder deine Erben finden die Phrase nicht mehr wieder.
 
-Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche Phrase ist stehl-anfällig. Zusätzliche Kopien multiplizieren die Angriffsfläche. Das gute Setup ist ein bewusster Trade-off, kein Patentrezept.
+Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche Phrase ist stehl-anfällig. Zusätzliche Kopien multiplizieren die Angriffsfläche. Das gute Setup ist ein bewusster Kompromiss, kein Patentrezept.
 
 **Option 1: Papier**
 
@@ -115,31 +115,27 @@ Diese Tabelle ist Orientierung, nicht Dogma. Dein tatsächliches Bedrohungsprofi
 
 **[Slide 4]** Metall: feuerfest, wasserfest, permanent. 50–100 USD Investition. Standard für signifikantes Kapital.
 
-**[Slide 5]** Shamir Secret Sharing: k-of-n Shares. Einzel-Share wertlos. Diversifiziert Storage-Risiko.
+**[Slide 5]** Zusätzliche Schutzschichten: Shamir Secret Sharing (k-of-n Shares, Einzel-Share wertlos) und BIP-39-Passphrase (13. Wort, Decoy-Wallet bei Zwang). Beide Methoden kombinierbar.
 
-**[Slide 6]** BIP-39-Passphrase: 13. Wort. Echte Wallet hinter Passphrase versteckt. Passphrase-Verlust = Asset-Verlust.
+**[Slide 6]** Inheritance-Problem: Phrase ohne Nachfolgeplan = permanenter Verlust für Erben.
 
-**[Slide 7]** Inheritance-Problem: Phrase ohne Nachfolgeplan = permanenter Verlust für Erben.
-
-**[Slide 8]** Empfehlung nach Kapitalgröße: von Papier bis Multisig, je nach Betrag.
+**[Slide 7]** Empfehlung nach Kapitalgröße: von Papier bis Multisig, je nach Betrag.
 
 ## Sprechertext
 
 **[Slide 1]** Seed-Phrase-Storage ist das kritischste Einzelproblem in DeFi-Sicherheit.
 
-**[Slide 2]** Drei Bedrohungen: Diebstahl, Zerstörung, Zugangsverlust. Sie arbeiten oft gegeneinander. Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche ist stehl-anfällig. Kopien vermehren die Angriffsfläche. Gutes Setup ist Trade-off, nicht Patentrezept.
+**[Slide 2]** Drei Bedrohungen: Diebstahl, Zerstörung, Zugangsverlust. Sie arbeiten oft gegeneinander. Eine sehr sicher versteckte Phrase ist schwer zugänglich. Eine leicht zugängliche ist stehl-anfällig. Kopien vermehren die Angriffsfläche. Gutes Setup ist Kompromiss, nicht Patentrezept.
 
 **[Slide 3]** Papier: kostenlos, universell verständlich. Gut für Erben. Aber: Feuer, Wasser, verblassende Tinte. Für kleine Beträge ausreichend — bis vielleicht fünftausend Dollar. Für signifikantes Kapital zu riskant.
 
 **[Slide 4]** Metall: Edelstahl schmilzt bei vierzehnhundert Grad, normale Hausbrände erreichen sechs- bis achthundert. Wasserfest, korrosionsbeständig. Fünfzig bis hundert Dollar Investition. Für signifikante Beträge der Standard.
 
-**[Slide 5]** Shamir Secret Sharing: die Phrase wird in mathematisch getrennte Shares aufgeteilt. Zwei von drei Shares rekonstruieren die Phrase. Ein einzelner Share ist wertlos. Löst Diebstahl und Zerstörung gleichzeitig. Trezor Model T unterstützt das nativ. Komplexer, erfordert gute Dokumentation.
+**[Slide 5]** Zwei ergänzende Schutzschichten, die mit jedem Medium kombiniert werden können. Erstens Shamir Secret Sharing: die Phrase wird in mathematisch getrennte Shares aufgeteilt. Zwei von drei Shares rekonstruieren die Phrase. Ein einzelner Share ist wertlos. Löst Diebstahl und Zerstörung gleichzeitig. Trezor Model T unterstützt das nativ. Zweitens BIP-39-Passphrase: ein beliebiges zusätzliches Wort. Ohne Passphrase führt die Seed-Phrase zu einer Decoy-Wallet, mit Passphrase zur echten Wallet. Schützt auch gegen physischen Zwang. Warnung: Passphrase-Verlust bedeutet Asset-Verlust.
 
-**[Slide 6]** Zusätzlich zu jedem Medium: BIP-39-Passphrase. Ein beliebiges zusätzliches Wort. Ohne Passphrase kommt die Seed-Phrase zu einer Decoy-Wallet. Mit Passphrase zur echten Wallet. Schützt auch gegen physischen Zwang. Warnung: Passphrase-Verlust bedeutet Asset-Verlust.
+**[Slide 6]** Das Inheritance-Problem. Was passiert mit deinen Assets, wenn du stirbst? Eine nicht-findbare oder nicht-verstandene Phrase bedeutet permanenten Verlust für deine Erben. Ansätze: schriftliche Anleitung, Multisig, Shamir-Shares bei Familie. Verzicht auf Planung ist auch Entscheidung — aber bewusst sollte sie sein.
 
-**[Slide 7]** Das Inheritance-Problem. Was passiert mit deinen Assets, wenn du stirbst? Eine nicht-findbare oder nicht-verstandene Phrase bedeutet permanenten Verlust für deine Erben. Ansätze: schriftliche Anleitung, Multisig, Shamir-Shares bei Familie. Verzicht auf Planung ist auch Entscheidung — aber bewusst sollte sie sein.
-
-**[Slide 8]** Empfehlung nach Kapitalgröße: unter tausend Dollar Papier. Bis zehntausend Metall ein Ort. Bis hunderttausend Metall zwei Orte plus Hardware-Wallet. Über hunderttausend Metall plus Shamir oder Multisig plus Inheritance-Planung. Orientierung, nicht Dogma.
+**[Slide 7]** Empfehlung nach Kapitalgröße: unter tausend Dollar Papier. Bis zehntausend Metall ein Ort. Bis hunderttausend Metall zwei Orte plus Hardware-Wallet. Über hunderttausend Metall plus Shamir oder Multisig plus Inheritance-Planung. Orientierung, nicht Dogma.
 
 ## Visuelle Vorschläge
 
@@ -147,10 +143,9 @@ Diese Tabelle ist Orientierung, nicht Dogma. Dein tatsächliches Bedrohungsprofi
 **[Slide 2]** Dreieck mit den drei Bedrohungen an den Ecken. Pfeile, die zeigen wie Lösung für eine Bedrohung andere verschlimmert.
 **[Slide 3]** Foto einer Seed-Phrase auf Papier. Daneben Icons: Feuer, Wasser, verblassende Tinte.
 **[Slide 4]** **SCREENSHOT SUGGESTION:** Cryptosteel-Website oder Produktfoto der Capsule mit sichtbaren Buchstabenplättchen.
-**[Slide 5]** Diagramm: eine Phrase wird in drei Shares gesplittet. Zwei kombiniert rekonstruieren die Phrase; einer allein wird durchgestrichen.
-**[Slide 6]** Diagramm: Seed-Phrase ohne Passphrase → Wallet A (leer). Seed-Phrase + Passphrase → Wallet B (echt).
-**[Slide 7]** Familienbaum-Icon, Wallet im Zentrum, Fragezeichen über Erben. Lösungsansätze rechts.
-**[Slide 8]** Tabelle mit Kapitalstufen und Empfehlungen.
+**[Slide 5]** Zwei nebeneinanderliegende Diagramme. Links: Shamir-Aufteilung — eine Phrase wird in drei Shares gesplittet, zwei kombiniert rekonstruieren die Phrase, einer allein wird durchgestrichen. Rechts: Passphrase-Effekt — Seed-Phrase ohne Passphrase führt zu Wallet A (leer), Seed-Phrase plus Passphrase zu Wallet B (echt).
+**[Slide 6]** Familienbaum-Icon, Wallet im Zentrum, Fragezeichen über Erben. Lösungsansätze rechts.
+**[Slide 7]** Tabelle mit Kapitalstufen und Empfehlungen.
 
 ## Übung
 
@@ -189,9 +184,9 @@ Vor Szenarien, in denen ein Angreifer die Seed-Phrase findet oder erhält — en
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → 3 Bedrohungen → Papier → Metall → Shamir SSS → BIP-39-Passphrase → Inheritance → Kapital-Empfehlungstabelle
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min. wegen 8 Slides)
-- `visual_plan.json` — Bedrohungsdreieck, Papier-Foto mit Schadenseffekten, Cryptosteel-Produktbild, 2-of-3-Shamir-Diagramm, Decoy/Real-Wallet-Diagramm, Inheritance-Baum, Kapital-Empfehlungstabelle
+- `slides_prompt.txt` — 7 Slides: Titel → 3 Bedrohungen → Papier → Metall → Zusätzliche Schutzschichten (Shamir + Passphrase) → Inheritance → Kapital-Empfehlungstabelle
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Bedrohungsdreieck, Papier-Foto mit Schadenseffekten, Cryptosteel-Produktbild, kombiniertes Shamir-und-Passphrase-Diagramm, Inheritance-Baum, Kapital-Empfehlungstabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.
 

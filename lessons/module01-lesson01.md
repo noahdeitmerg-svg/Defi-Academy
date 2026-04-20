@@ -3,6 +3,7 @@
 ## Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - DeFi präzise definieren und von CeFi sowie traditionellem Finanzwesen abgrenzen
 - Die drei technischen Eigenschaften identifizieren, die ein System "DeFi" machen
 - Erkennen, warum viele Produkte, die sich "DeFi" nennen, es technisch nicht sind
@@ -30,6 +31,7 @@ Viele DeFi-Protokolle ergänzen diese drei Eigenschaften zusätzlich durch sogen
 **Die CeFi-Abgrenzung**
 
 Plattformen wie Coinbase, Binance oder Kraken sind **CeFi** (Centralized Finance). Sie bieten Zugang zu Krypto-Assets, aber:
+
 - Sie verwahren die Gelder der Kunden (Custody)
 - Sie verlangen KYC und können Konten sperren
 - Die internen Salden sind nicht auf der Blockchain — nur die Ein- und Auszahlungen sind sichtbar
@@ -39,6 +41,7 @@ Der Unterschied wurde 2022 deutlich sichtbar: FTX (CeFi) konnte Kundengelder mis
 **Die "DeFi-Washing"-Problematik**
 
 Viele Produkte vermarkten sich als DeFi, sind es aber technisch nicht. Prüfsteine:
+
 - Gibt es einen Admin-Schlüssel, der Nutzer-Gelder bewegen kann? → Kein echtes DeFi
 - Kann ein zentrales Team Nutzer sperren? → Kein echtes DeFi
 - Sind die Gelder auf einer Off-Chain-Datenbank statt in einem Smart Contract? → Kein DeFi
@@ -54,17 +57,21 @@ DeFi: Eine präzise Definition
 Finanzanwendungen auf öffentlichen Blockchains, ausgeführt durch Smart Contracts, ohne zentrale Intermediäre
 
 **[Slide 3] — Drei technische Eigenschaften**
+
 1. Non-Custodial — Nutzer halten eigene Assets
 2. Permissionless — kein KYC, kein Gatekeeping
 3. Transparent — alles on-chain prüfbar
 
 **[Slide 4] — CeFi vs. DeFi**
-| Eigenschaft | CeFi | DeFi |
-|---|---|---|
-| Custody | Plattform | Nutzer |
-| KYC | Pflicht | Nein |
-| Ausführung | Datenbank | Smart Contract |
-| Transparenz | Intern | Öffentlich |
+
+
+| Eigenschaft | CeFi      | DeFi           |
+| ----------- | --------- | -------------- |
+| Custody     | Plattform | Nutzer         |
+| KYC         | Pflicht   | Nein           |
+| Ausführung  | Datenbank | Smart Contract |
+| Transparenz | Intern    | Öffentlich     |
+
 
 **[Slide 5] — Der FTX-Moment**
 FTX (CeFi) kollabierte durch Missbrauch von Kundengeldern.
@@ -73,6 +80,7 @@ Warum? Bei DeFi existiert die Möglichkeit des Missbrauchs technisch nicht.
 
 **[Slide 6] — Prüfsteine gegen "DeFi-Washing"**
 Fragen zur Echtheitsprüfung:
+
 - Admin-Schlüssel mit Zugriff auf Nutzergelder?
 - Möglichkeit zur Nutzersperrung?
 - Off-Chain-Datenbank statt Smart Contract?
@@ -132,19 +140,19 @@ Erstelle eine kurze schriftliche Analyse (3–5 Sätze pro Plattform). Recherchi
 
 **Frage 1:** Welche drei technischen Eigenschaften muss ein System erfüllen, um als DeFi zu gelten?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Non-Custodial (Nutzer halten eigene Assets), Permissionless (kein KYC/Gatekeeping), Transparent und prüfbar (alle Transaktionen und Code sind öffentlich einsehbar).
-</details>
+
+
 
 **Frage 2:** Warum funktionierten Aave und Uniswap während des FTX-Kollapses weiter, obwohl der gesamte Kryptomarkt unter Druck stand?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Weil diese Protokolle non-custodial sind. Sie verwahren keine Nutzergelder, sondern die Gelder liegen in Smart Contracts, auf die kein zentrales Team Zugriff hat. Die Möglichkeit des Missbrauchs, die FTX nutzte, existiert technisch nicht. Nutzer können jederzeit mit dem Protokoll interagieren, auch wenn das ursprüngliche Entwicklerteam verschwinden würde.
-</details>
+
+
 
 ## Video-Pipeline-Assets
 

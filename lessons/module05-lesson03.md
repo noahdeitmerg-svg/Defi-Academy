@@ -217,7 +217,7 @@ LP schlägt Buy-and-Hold in Seitwärtsmärkten mit hohem Handelsvolumen. In solc
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Netto-Rendite-Formel → LP-Profitability-Beispiel → Sustainable vs. Temporary Yield → LP vs. Buy-and-Hold → Marktbedingungen-Matrix → Entscheidungsheuristik
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Netto-Rendite-Formel-Box, Beispielrechnung (Fees+Rewards−IL−Gas), Yield-Source-Breakdown-Pie, LP-vs-HODL-Chart, Marktregime-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.

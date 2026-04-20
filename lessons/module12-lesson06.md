@@ -6,7 +6,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Entscheiden, ob Flash Loans persönlich sinnvoll sind
 - Die wichtigsten Tools konkret anwenden
 - Konservativ einschätzen, wann Flash Loans NICHT die Lösung sind
-- DeFi-Saver, Instadapp, Contango als Retail-taugliche Interfaces für Flash-Loan-Operationen konfigurieren
+- DeFi Saver, Instadapp, Furucombo als Retail-taugliche Interfaces für Flash-Loan-Operationen konfigurieren
 - Die Abwägung zwischen Smart-Contract-Risiko (zusätzliche Layer) und Kapitaleffizienz (keine Pre-Funding-Notwendigkeit) bewusst treffen
 - Eine eigene Entscheidungs-Heuristik entwickeln: "Flash Loan nutzen, wenn X; vermeiden, wenn Y"
 
@@ -38,7 +38,7 @@ Aus Lektionen 12.1-12.3:
 - Auto-Rebalancing (kostenpflichtig)
 - Positions-Dashboard
 
-UX: Web-App, MetaMask-Integration, drag-and-drop-artige Flows.
+UX: Web-App, MetaMask-Integration, Drag-and-Drop-ähnliche Flows.
 Kosten: 0,05-0,3% Service-Gebühr + Gas.
 
 **Instadapp (instadapp.io)** — Alternative mit ähnlichen Features.
@@ -143,20 +143,9 @@ Einfachere Lösung?
 Kosten vs. Nutzen?
 Verstehe ich es?
 
-**[Slide 7] — Sicherheits-Regeln**
-Kleine Test-Menge
-Aktuelle Tool-Version
-Nicht bei Kongestion
-Slippage konservativ
-Simulation prüfen
-Monitor nach Execution
-
-**[Slide 8] — Wann NICHT**
-Normale Swaps
-Unter $5.000
-Kein Verständnis
-Als Spekulation
-Ungetestet
+**[Slide 7] — Sicherheits-Regeln und Wann NICHT**
+Regeln: Test-Menge erst, aktuelle Tool-Version, konservative Slippage, Simulation lesen, Monitor nach Execution
+Wann NICHT: normale Swaps, unter $5k, kein Verständnis, als Spekulation, ungetestete Strategien
 
 ## Sprechertext
 
@@ -166,15 +155,13 @@ Ungetestet
 
 **[Slide 3]** Die vier legitimen Retail-Anwendungen. Collateral-Swap: Sicherheits-Asset ändern ohne Position aufzulösen, 1-3 Mal pro Jahr. Debt-Refinancing: Schulden zu günstigerem Protokoll, 1-3 Mal pro Jahr. Self-Liquidation: Notfall, hoffentlich nie genutzt. Leverage-Loop-Aufbau: einmalig pro Position, wie in Modul 10.
 
-**[Slide 4]** DeFi Saver, defisaver.com — umfassendster Retail-Aggregator. Collateral-Swap für Aave V3, Compound, Maker. Leverage-Loop-Builder. Debt-Refinancing. Self-Liquidation. Auto-Rebalancing gegen Gebühr. Web-App mit MetaMask-Integration, drag-and-drop-artige Flows. Kosten 0,05-0,3 Prozent Service-Gebühr plus Gas. Für die meisten Retail-Anwendungen erste Wahl.
+**[Slide 4]** DeFi Saver, defisaver.com — umfassendster Retail-Aggregator. Collateral-Swap für Aave V3, Compound, Maker. Leverage-Loop-Builder. Debt-Refinancing. Self-Liquidation. Auto-Rebalancing gegen Gebühr. Web-App mit MetaMask-Integration, Drag-and-Drop-ähnliche Flows. Kosten 0,05-0,3 Prozent Service-Gebühr plus Gas. Für die meisten Retail-Anwendungen erste Wahl.
 
 **[Slide 5]** Weitere Tools. Instadapp etwas technischer mit DSL für programmierbare Interaktionen. Furucombo als Visual Builder — drag-and-drop eigene Flash-Loan-Kombinationen ohne Solidity lernen. Beide Alternativen zu DeFi Saver.
 
 **[Slide 6]** Entscheidungs-Matrix vor jedem Einsatz. Erstens: konkretes Problem, das Flash Loans lösen? Nein → nicht nutzen. Zweitens: einfachere Lösung? Ja praktikabel → einfacher. Drittens: rechtfertigt Nutzen Komplexität? Gas plus Fee unter 30 Prozent Nutzen okay. Über 50 Prozent meist nicht. Viertens: verstehe ich es? Kann Schritte erklären okay. Blind klicken nicht ausführen.
 
-**[Slide 7]** Sechs Sicherheits-Regeln. Test mit kleiner Menge 500-2.000 Dollar zuerst. Aktuelle Tool-Version. Nicht bei Netzwerk-Kongestion. Slippage konservativ 0,1-0,5 Prozent. Simulation vor Execution wirklich lesen. Nach Ausführung auf Etherscan monitoren.
-
-**[Slide 8]** Wann NICHT. Für normale Swaps, DEX reicht. Unter 5.000 Dollar Operation, Gas zu hoch relativ. Bei fehlendem Verständnis, blind-Vertrauen gefährlich. Als Spekulations-Tool, FLs sind Effizienz-Tool. Bei ungetesteter Strategie, atomare Ausführung = keine Korrektur. Konservative Zusammenfassung: 95 Prozent der Fälle keine Flash Loans. 4 Prozent sinnvoll für spezifische Situationen. 1 Prozent Notfälle. Verstehe Konzept, nutze nur bei Bedarf.
+**[Slide 7]** Sicherheits-Regeln und wann NICHT — die Synthese der Lektion. Sechs Sicherheits-Regeln: Test mit kleiner Menge 500 bis 2.000 Dollar zuerst. Aktuelle Tool-Version. Nicht bei Netzwerk-Kongestion. Slippage konservativ 0,1 bis 0,5 Prozent. Simulation vor Execution wirklich lesen. Nach Ausführung auf Etherscan monitoren. Wann NICHT: für normale Swaps reicht ein DEX. Unter 5.000 Dollar Operation ist Gas zu hoch relativ. Bei fehlendem Verständnis ist blind-Vertrauen gefährlich. Als Spekulations-Tool unbrauchbar — Flash Loans sind Effizienz-Tool, nicht Hebel. Bei ungetesteter Strategie ist die atomare Ausführung gleichbedeutend mit keine Korrektur möglich. Konservative Zusammenfassung: 95 Prozent der Fälle keine Flash Loans, 4 Prozent sinnvoll für spezifische Situationen, 1 Prozent Notfälle. Verstehe das Konzept, nutze es nur bei Bedarf.
 
 ## Visuelle Vorschläge
 
@@ -184,8 +171,7 @@ Ungetestet
 **[Slide 4]** **SCREENSHOT SUGGESTION:** DeFi Saver Dashboard.
 **[Slide 5]** **SCREENSHOT SUGGESTION:** Furucombo Visual Builder.
 **[Slide 6]** Entscheidungsbaum mit 4 Fragen.
-**[Slide 7]** Sechs-Regeln-Checkliste.
-**[Slide 8]** Rote-Flaggen-Liste.
+**[Slide 7]** Zwei-Spalten-Layout: links Sechs-Regeln-Checkliste, rechts Rote-Flaggen-Liste „Wann NICHT".
 
 ## Übung
 
@@ -221,8 +207,8 @@ Kritische Situation, geordnete Entscheidungen. Schritt 1: Ruhig bleiben (2-3 Min
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Retail-Tools Übersicht → DeFi Saver → Instadapp → Contango → Entscheidungs-Heuristik → Wann NICHT nutzen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Meistens nicht → 4 Retail-Anwendungen → DeFi Saver → Instadapp und Furucombo → Entscheidungs-Matrix → Sicherheits-Regeln und Wann NICHT
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Tool-Screenshots, Entscheidungsbaum, Risk-Reward-Matrix, Kostenkalkulations-Tabelle, Lern-Roadmap
 
 Pipeline: Gamma → ElevenLabs → CapCut.

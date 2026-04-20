@@ -19,7 +19,7 @@ Token-Approvals sind absolut notwendig, damit DeFi funktioniert — und gleichze
 Der ERC-20-Standard definiert zwei Funktionen, die zusammen das Approval-System bilden:
 
 1. `approve(spender, amount)` — Der Token-Besitzer sagt dem Token-Contract: "Die Adresse `spender` darf bis zu `amount` meiner Tokens bewegen."
-2. `transferFrom(from, to, amount)` — Der Spender kann dann innerhalb des approved Limits Tokens von `from` zu beliebiger Adresse senden.
+2. `transferFrom(from, to, amount)` — Der Spender kann dann innerhalb des genehmigten Limits Tokens von `from` zu beliebiger Adresse senden.
 
 Warum das notwendig ist: Smart Contracts können nicht auf deine Tokens zugreifen, ohne dass du es explizit zulässt. Ein DEX, der einen Swap durchführen will, braucht erst Approval, dann kann er `transferFrom` aufrufen.
 
@@ -102,19 +102,17 @@ Verwandtes Problem: manchmal tauchen in deiner Wallet unbekannte Tokens auf, die
 
 **[Slide 1]** Titel: Token-Approvals und Drainer-Angriffe
 
-**[Slide 2]** Das approve/transferFrom-Pattern: Besitzer approves, Spender transferFrom. Notwendig für DeFi.
+**[Slide 2]** Das approve/transferFrom-Pattern: Besitzer ruft approve, Spender ruft transferFrom. Notwendig für DeFi.
 
 **[Slide 3]** Unlimited Approval: Standard-Default, komfortabel, aber langfristig riskant. Bleibt bestehen bis Widerruf.
 
-**[Slide 4]** Vier Drainer-Phasen: Köder, Connect+Signatur, Transfer, Obfuskation.
+**[Slide 4]** Drainer-Anatomie: 4 Phasen (Köder → Connect+Signatur → Transfer → Obfuskation) × 4 Varianten (klassische Approval, Permit, setApprovalForAll, direkter Transfer).
 
-**[Slide 5]** Vier Drainer-Varianten: klassische Approval, Permit, setApprovalForAll, direkter Transfer.
+**[Slide 5]** Mark-Cuban-Fall: 870.000 USD verloren durch gefälschte Extension und Ausnutzung bestehender Approvals.
 
-**[Slide 6]** Mark-Cuban-Fall: 870.000 USD verloren durch gefälschte Extension und Ausnutzung bestehender Approvals.
+**[Slide 6]** Approval-Audit-Workflow: revoke.cash → Bewerten → Widerrufen → Monatlich wiederholen.
 
-**[Slide 7]** Approval-Audit-Workflow: revoke.cash → Bewerten → Widerrufen → Monatlich wiederholen.
-
-**[Slide 8]** Gift-Token-Regel: Unbekannte Tokens nicht antasten.
+**[Slide 7]** Gift-Token-Regel: Unbekannte Tokens nicht antasten.
 
 ## Sprechertext
 
@@ -124,26 +122,23 @@ Verwandtes Problem: manchmal tauchen in deiner Wallet unbekannte Tokens auf, die
 
 **[Slide 3]** Standard-Problem: viele DApps fordern Unlimited Approval — der maximale Wert. Begründung: keine Folge-Approvals, weniger Gas. Risiko: bei späterem Hack oder Bösartigkeit kann der Angreifer alle Tokens ziehen. Approval bleibt bis zum expliziten Widerruf bestehen.
 
-**[Slide 4]** Drainer-Angriffe laufen in vier Phasen. Phase eins: Köder — bösartige Website, Phishing, gefälschte Ads. Phase zwei: Connect und Signatur. Phase drei: Transfer via transferFrom, Sekunden nach Approval. Phase vier: Obfuskation durch Mixer und Bridges.
+**[Slide 4]** Drainer-Angriffe folgen einer klaren Anatomie aus vier Phasen und vier Varianten. Die vier Phasen: Phase eins ist der Köder — bösartige Website, Phishing, gefälschte Ads. Phase zwei ist Connect und Signatur. Phase drei ist der Transfer via transferFrom, oft Sekunden nach der Approval. Phase vier ist Obfuskation durch Mixer und Bridges. Die vier Varianten der Signatur: klassisch als On-Chain-Approval; Permit, off-chain und ohne Gas, besonders tückisch; setApprovalForAll für NFTs — eine Signatur öffnet die ganze Collection; direkter Transfer, seltener und oft mit verdächtiger UI. Permit und setApprovalForAll sind die häufigsten.
 
-**[Slide 5]** Vier Varianten. Klassisch: On-Chain-Approval. Permit: off-chain, kein Gas, besonders tückisch. setApprovalForAll für NFTs: eine Signatur öffnet ganze Collection. Direkter Transfer: seltener, UI oft verdächtig. Variante B und C sind die häufigsten.
+**[Slide 5]** Beispiel Mark Cuban, September 2023. 870.000 Dollar verloren durch mutmaßlich gefälschte MetaMask-Extension. Der Angreifer kontrollierte damit die Wallet und nutzte bestehende, legitime Approvals. Lehre: auch ohne neue Signaturen kann kompromittierte Wallet ausgeraubt werden.
 
-**[Slide 6]** Beispiel Mark Cuban, September 2023. 870.000 Dollar verloren durch mutmaßlich gefälschte MetaMask-Extension. Der Angreifer kontrollierte damit die Wallet und nutzte bestehende, legitime Approvals. Lehre: auch ohne neue Signaturen kann kompromittierte Wallet ausgeraubt werden.
+**[Slide 6]** Der Approval-Audit. Schritt eins: revoke.cash, Wallet verbinden, Approvals anzeigen. Schritt zwei: jede Approval bewerten. Schritt drei: widerrufen, was du nicht mehr brauchst. Schritt vier: monatlich wiederholen. Nach Kompromittierungsverdacht sofort.
 
-**[Slide 7]** Der Approval-Audit. Schritt eins: revoke.cash, Wallet verbinden, Approvals anzeigen. Schritt zwei: jede Approval bewerten. Schritt drei: widerrufen, was du nicht mehr brauchst. Schritt vier: monatlich wiederholen. Nach Kompromittierungsverdacht sofort.
-
-**[Slide 8]** Zusatzregel: Gift-Tokens. Unbekannte Tokens in deiner Wallet? Nicht antasten. Keine Swaps, keine Approvals, keine Claims. Jede Interaktion kann eine Falle sein.
+**[Slide 7]** Zusatzregel: Gift-Tokens. Unbekannte Tokens in deiner Wallet? Nicht antasten. Keine Swaps, keine Approvals, keine Claims. Jede Interaktion kann eine Falle sein.
 
 ## Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 **[Slide 2]** Diagramm: Nutzer → approve → Token-Contract. Nutzer → swap-Call → DEX-Contract → transferFrom → Token-Contract.
 **[Slide 3]** Beispiel-Unlimited-Approval-Anzeige in Wallet. Warnsymbol.
-**[Slide 4]** Vier-Phasen-Timeline mit beispielhaften Screens pro Phase.
-**[Slide 5]** Vier Varianten-Karten mit Gefahrenstufen.
-**[Slide 6]** **SCREENSHOT SUGGESTION:** Nachrichtenartikel zum Mark-Cuban-Vorfall oder Etherscan-Transaction des Drains.
-**[Slide 7]** **SCREENSHOT SUGGESTION:** revoke.cash-Interface mit realer Approval-Liste und Revoke-Button.
-**[Slide 8]** Beispiel-Gift-Token in Wallet mit "Do not interact"-Icon.
+**[Slide 4]** Matrix-Visualisierung: 4 Phasen (Köder, Connect+Signatur, Transfer, Obfuskation) als horizontale Timeline, darunter 4 Varianten-Karten (klassische Approval, Permit, setApprovalForAll, direkter Transfer) mit Gefahrenstufen.
+**[Slide 5]** **SCREENSHOT SUGGESTION:** Nachrichtenartikel zum Mark-Cuban-Vorfall oder Etherscan-Transaction des Drains.
+**[Slide 6]** **SCREENSHOT SUGGESTION:** revoke.cash-Interface mit realer Approval-Liste und Revoke-Button.
+**[Slide 7]** Beispiel-Gift-Token in Wallet mit "Do not interact"-Icon.
 
 ## Übung
 
@@ -184,9 +179,9 @@ Drei Gründe. Erstens: die Permit-Signatur ist off-chain und kostet kein Gas —
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → approve/transferFrom → Unlimited Approval → 4 Drainer-Phasen → 4 Drainer-Varianten → Mark-Cuban-Fall → Approval-Audit-Workflow → Gift-Token-Regel
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
-- `visual_plan.json` — approve-Flussdiagramm, Unlimited-Approval-Screenshot, Vier-Phasen-Timeline, Mark-Cuban-Artikel, revoke.cash-Interface, Gift-Token-Beispiel
+- `slides_prompt.txt` — 7 Slides: Titel → approve/transferFrom → Unlimited Approval → Drainer-Anatomie (4 Phasen × 4 Varianten) → Mark-Cuban-Fall → Approval-Audit-Workflow → Gift-Token-Regel
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — approve-Flussdiagramm, Unlimited-Approval-Screenshot, Drainer-Matrix (4 Phasen × 4 Varianten), Mark-Cuban-Artikel, revoke.cash-Interface, Gift-Token-Beispiel
 
 Pipeline: Gamma → ElevenLabs → CapCut.
 

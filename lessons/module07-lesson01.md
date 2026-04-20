@@ -108,7 +108,7 @@ LB: Liquidations-Bonus für Liquidator-Bots
 **[Slide 3] — Beispiel ETH-Collateral auf Aave**
 LTV 80%, LT 83%, LB 5%
 10.000 USD ETH → max. 8.000 USD borgbar
-4% Preis-Drop → Liquidation
+~4% Preis-Drop → Liquidation
 
 **[Slide 4] — Warum der Liquidations-Bonus existiert**
 Motiviert Liquidator-Bots zur Ausführung
@@ -132,7 +132,7 @@ Der Puffer ist dein Überlebensraum.
 
 ## Sprechertext
 
-**[Slide 1]** Modul 7 behandelt die Borrow-Seite. In Modul 6 standst du auf der Supply-Seite. Jetzt bist du derjenige, der Kapital aufnimmt — gegen Sicherheiten. Das ist der mächtigste Hebel in DeFi und gleichzeitig der häufigste Weg, Kapital permanent zu verlieren. Diese erste Lektion legt die Grundmechanik.
+**[Slide 1]** Modul 7 behandelt die Borrow-Seite. In Modul 6 standest du auf der Supply-Seite. Jetzt bist du derjenige, der Kapital aufnimmt — gegen Sicherheiten. Das ist der mächtigste Hebel in DeFi und gleichzeitig der häufigste Weg, Kapital permanent zu verlieren. Diese erste Lektion legt die Grundmechanik.
 
 **[Slide 2]** Drei Parameter definieren jeden Collateral-Asset. LTV, Loan-to-Value, ist die maximale Borrow-Quote. LT, Liquidation Threshold, ist die Quote, ab der deine Position liquidiert wird — etwas höher als LTV. LB, Liquidation Bonus, ist der Abschlag, den ein Liquidator bekommt, wenn er deine Position ausführt. Diese drei Zahlen musst du für jede Position kennen, bevor du borgst.
 
@@ -200,7 +200,7 @@ Startposition: 20.000 USD Collateral, 14.000 USD Schuld, Verhältnis 70%. Liquid
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Collateral-Grundlagen → LTV, LT, LB definiert → Sicherheitspuffer → Collateral-Asset-Vergleich → Rechenbeispiel → Entscheidungsheuristik
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — LTV/LT/LB-Achse-Diagramm, Collateral-Parameter-Tabelle (ETH/wstETH/WBTC/USDC), Sicherheitspuffer-Visualisierung, Aave-Markt-Parameter-Screenshot, Rechenbeispiel-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.

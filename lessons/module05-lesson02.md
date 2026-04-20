@@ -189,7 +189,7 @@ Weil IL exponentiell mit dem Preisänderungs-Faktor wächst. Stablecoins halten 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → IL-Mechanik → Herleitung der Formel → IL-Tabelle für Preisänderungen → Impermanent vs. Realized Loss → IL-Diagramm → IL in verschiedenen Pool-Typen
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — IL-Formel-Herleitung, Preisabweichung-vs-IL-Kurve, IL-Tabelle (0/25/50/100/500%), Impermanent-vs-Realized-Vergleich, Pool-Typ-Matrix (Stable/Blue-Chip/Volatil)
 
 Pipeline: Gamma → ElevenLabs → CapCut.

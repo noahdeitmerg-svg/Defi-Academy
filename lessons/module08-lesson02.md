@@ -52,7 +52,7 @@ Fiat-besicherte Stablecoins dominieren nach Market Cap. Zusammen machen USDC und
 
 **USDT — Tether**
 
-**Emittent:** Tether Limited (Sitz auf den British Virgin Islands, operativ Hongkong)
+**Emittent:** Tether Limited (Sitz auf den British Virgin Islands, operativ in Hongkong)
 
 **Reserve-Struktur (Stand aktueller Attestations):**
 - Kurzlaufende US-Treasuries (etwa 80%)
@@ -242,7 +242,7 @@ Drei Probleme mit dieser Logik. Erstens: historische Stabilität garantiert kein
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → USDC-Architektur → USDT-Architektur → Reserve-Vergleich → USDC-Depeg März 2023 → Regulatorisches Risiko → Fiat-Stablecoin-Landscape (PYUSD/FDUSD)
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Circle/Tether-Reserve-Berichte-Screenshots, SVB-Depeg-Chart März 2023, Regulatorische-Landschaft-Matrix (USA/EU/Asien), Reserve-Vergleichs-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.

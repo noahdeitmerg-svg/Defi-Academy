@@ -201,7 +201,7 @@ Weil Stablecoin-Supply-Raten algorithmisch aus Utilization und Borrow-Nachfrage 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Supply-Stack (Aave/Compound/Morpho) → Protokoll-Diversifikation → Sustainable vs. Temporary Yield → Realistische Renditeziele → Netto-Rendite-Kalkulation → Gewichtungs-Matrix
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Supply-Stack-Pie-Chart, Yield-Source-Breakdown (Base vs. Rewards), Historische-Supply-Rate-Chart, Netto-Rendite-Rechenbeispiel, Exit-Trigger-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.

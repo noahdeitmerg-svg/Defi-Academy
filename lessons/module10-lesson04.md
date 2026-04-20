@@ -18,14 +18,20 @@ Leverage-Loops tragen nicht nur die üblichen DeFi-Risiken in verstärkter Form 
 
 Das ist das größte Risiko bei Liquid-Staking-Loops. Der Loop setzt voraus, dass das Collateral (wstETH) im Wesentlichen 1:1 zum Borrow-Asset (ETH) handelt. Wenn das Verhältnis bricht — wie Juni 2022 bei -6% Depeg — wird die Position unterbesichert.
 
-**Mechanik:** Bei 3x Leverage und 80% Collateral-Nutzung reicht eine 6% Depeg, um die Position in Liquidations-Zone zu bringen. Der Schaden: Liquidations-Penalty (2-5% auf das liquidierte Collateral) plus der Depeg-Verlust selbst, multipliziert mit dem Leverage.
+**Mechanik:** Der Leverage verstärkt jede Preisbewegung im Collateral-Asset linear. Bei 3x Leverage entspricht eine 6% Depeg einem 18% Drawdown auf das Eigenkapital. Bei hohem LTV (über 85%) kann dieselbe Depeg zusätzlich die Liquidations-Schwelle überschreiten.
 
-**Konkretes Beispiel:** 30.000 USD wstETH-Collateral, 3x-Leverage. stETH/ETH fällt um 6%. Effektiver Portfolio-Verlust:
-- Direkt: 3x × 6% = 18% auf Ursprungs-Kapital = 5.400 USD
-- Plus Liquidations-Penalty (wenn triggert): ~3% = 900 USD
-- **Gesamt: ~6.300 USD auf 10.000 USD Einsatz = 63% Verlust**
+**Konkretes Beispiel:** Eigenkapital 10.000 USD, 3x-Leverage → Collateral 30.000 USD wstETH, Schuld 20.000 USD WETH. stETH/ETH fällt um 6%:
+- Collateral fällt auf 30.000 × 0,94 = 28.200 USD
+- Eigenkapital fällt auf 28.200 − 20.000 = 8.200 USD
+- **Drawdown: 1.800 USD = 18% vom Eigenkapital**
+- Health Factor fällt von ~1,43 auf ~1,34 — noch keine Liquidation bei 3x
 
-Das ist nur der worst-case einer moderaten Depeg. Bei extremerem Depeg (wie hypothetisch 10%) wäre der Verlust noch höher.
+**Bei höherem Leverage oder größerem Depeg wird es gefährlich:**
+- 3x-Loop + 10% Depeg → HF 1,18, Drawdown 30%
+- 5x-Loop + 6% Depeg → HF 1,02, Liquidation wahrscheinlich + Penalty
+- Bei Liquidation: zusätzliche 2-5% Penalty auf liquidiertes Collateral
+
+Für 2x-Loop (Sweet Spot): 6% Depeg = 12% Drawdown, HF 1,78 → sicher. Das ist der Grund, warum konservative Leverage-Begrenzung essenziell ist.
 
 **Mitigation:**
 - Leverage begrenzen auf 2-2,5x, wo 6% Depeg nicht zur Liquidation führt
@@ -124,8 +130,9 @@ Die spezifischen Risiken von Loops
 
 **[Slide 2] — Risiko 1: Peg-Depeg**
 wstETH/ETH depeggt
-Bei 3x Loop: 6% Depeg = 18% Portfolio-Verlust
-Juni 2022 als historisches Beispiel
+Bei 3x Loop: 6% Depeg = 18% Drawdown (1.800 USD bei 10k Einsatz)
+Bei 5x Loop + 6% Depeg: Liquidations-Risiko + Penalty
+Juni 2022 als historisches Beispiel (0,94 ETH)
 
 **[Slide 3] — Risiko 2: Zinssatz-Sprünge**
 Borrow-Rate kann von 2,5% auf 5-10% springen
@@ -152,9 +159,9 @@ Rechnet sich das individuell?
 
 ## Sprechertext
 
-**[Slide 1]** Diese Lektion sezeniert die spezifischen Risiken von Leverage-Loops. Sie sind nicht nur die üblichen DeFi-Risiken verstärkt — sie haben eigene, strategie-spezifische Schwachstellen.
+**[Slide 1]** Diese Lektion seziert die spezifischen Risiken von Leverage-Loops. Sie sind nicht nur die üblichen DeFi-Risiken verstärkt — sie haben eigene, strategie-spezifische Schwachstellen.
 
-**[Slide 2]** Risiko 1: Peg-Depeg. Der Loop setzt voraus, dass wstETH etwa 1:1 zu ETH handelt. Wenn das Ratio bricht — Juni 2022 war minus 6 Prozent — wird die Position unterbesichert. Bei 3-fachem Leverage und 80 Prozent LTV-Nutzung reicht eine 6-Prozent-Depeg für die Liquidation. Der Schaden: 3x mal 6 Prozent ist 18 Prozent direkter Portfolio-Verlust, plus Liquidations-Penalty. Bei 10.000 USD Einsatz können das 6.300 USD Verlust sein — 63 Prozent.
+**[Slide 2]** Risiko 1: Peg-Depeg. Der Loop setzt voraus, dass wstETH etwa 1:1 zu ETH handelt. Wenn das Ratio bricht — Juni 2022 war minus 6 Prozent — verstärkt der Leverage jede Bewegung. Bei 3-fachem Leverage bedeutet eine 6-Prozent-Depeg einen 18-Prozent-Drawdown auf das Eigenkapital. Bei 10.000 US-Dollar Einsatz sind das 1.800 US-Dollar Verlust. Bei höherem Leverage oder größerem Depeg kommt die Liquidation hinzu, mit zusätzlicher Penalty von 2 bis 5 Prozent. Für 5-fachen Leverage bei 6-Prozent-Depeg kann der Gesamt-Verlust bereits 40 Prozent oder mehr betragen.
 
 **[Slide 3]** Risiko 2: Zinssatz-Sprünge. ETH-Borrow-Rate auf Aave ist normal 2 bis 3 Prozent. In Stress-Szenarien kann sie auf 5 bis 10 Prozent springen. Trigger: Utilization-Spikes, massive Leveraged-Staking-Nachfrage, oder Protokoll-Events. Wenn die Borrow-Rate über den Yield springt, wird der Loop negativ Carry — er verliert täglich Geld. Der Halter muss entscheiden: deleveragen oder aussitzen. Beide Optionen sind unangenehm.
 
@@ -220,7 +227,7 @@ Mehrere Gründe. Erstens: Risiko-adjustierte Rendite. Bei 0,5% Spread und 3x Lev
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → 5 Haupt-Risiken → Loop-Risk-Diagramm → Depeg-Szenarien → Liquidations-Kaskaden → Historische Katastrophen → Mitigations-Matrix
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Loop-Risk-Dependency-Diagramm, stETH-Depeg-Cascade-Simulation, Liquidations-Kaskaden-Grafik, Historische Events-Timeline, Mitigations-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.

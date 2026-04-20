@@ -201,8 +201,8 @@ Szenario hängt von der Oracle-Update-Latenz ab. Wenn Chainlink den neuen Preis 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Oracle-Rolle im Lending → Chainlink-Architektur → Uniswap-TWAP → Oracle-Failure-Szenarien → Flash-Loan-Manipulation → Historische Oracle-Failures → Due-Diligence-Checkliste
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Oracle-Rolle → Chainlink-Architektur → Oracle-Angriffs-Vektoren (inkl. Flash Loan) → Oracle-Preis ≠ Spot-Preis → Robuste Oracle-Setups → Due-Diligence-Checkliste
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Oracle-Datenflussdiagramm, Chainlink-Aggregator-Architektur, TWAP-vs-Spot-Preis-Chart, Flash-Loan-Angriff-Zeitleiste, Oracle-Design-Vergleichstabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.

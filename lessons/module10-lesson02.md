@@ -239,7 +239,7 @@ Reine Kosten-Nutzen-Abwägung. Manueller Loop auf Mainnet erfordert 5-10 separat
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → wstETH-Loop-Konzept → Aave-E-Mode → Loop-Schritte → Parameter-Wahl → Zap-Services → Manueller vs. Zap
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — wstETH-Loop-Flussdiagramm, Aave-E-Mode-Interface-Screenshot, Parameter-Setting-Tabelle, DeFi-Saver-UI, Gas-Kosten-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.

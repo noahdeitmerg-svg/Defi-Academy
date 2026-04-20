@@ -22,7 +22,7 @@ Aber: LSTs sind nicht alle gleich. Das Design-Detail entscheidet über Risiko, L
 
 **Design:**
 - Du zahlst ETH ein → bekommst **stETH** im Verhältnis 1:1
-- stETH ist ein **Rebase-Token**: dein Balance wächst automatisch jeden Tag durch Staking-Rewards
+- stETH ist ein **Rebase-Token**: deine Balance wächst automatisch jeden Tag durch Staking-Rewards
 - Alternative: **wstETH** (wrapped stETH) — der Kurs zum ETH wächst statt der Balance, besser für DeFi-Integration
 
 **Node-Operatoren:**
@@ -178,7 +178,7 @@ Diversifikation über Protokolle
 
 **[Slide 2]** Das Prinzip. Du zahlst ETH ein, das Protokoll aggregiert viele solche Einzahlungen zu 32-ETH-Validatoren, operiert über Node-Operatoren. Du erhältst einen Liquid-Staking-Token zurück — deine Position repräsentierend. Keine 32-ETH-Hürde. Das Protokoll trägt das Slashing-Risiko, das du als Einzelnutzer hättest.
 
-**[Slide 3]** Lido, der Marktführer. Etwa 30 Prozent aller gestakten ETH. stETH ist ein Rebase-Token — dein Balance wächst automatisch durch Rewards. wstETH ist die gewrappte Version, bei der der Kurs wächst statt der Balance. Besser für DeFi-Integration. 10 Prozent Gebühr, Netto-APR etwa 3,2 bis 4,5 Prozent. Beste Liquidität aller LSTs, tiefste DeFi-Integration. Kritikpunkt: Marktkonzentration durch Dominanz.
+**[Slide 3]** Lido, der Marktführer. Etwa 30 Prozent aller gestakten ETH. stETH ist ein Rebase-Token — deine Balance wächst automatisch durch Rewards. wstETH ist die gewrappte Version, bei der der Kurs wächst statt der Balance. Besser für DeFi-Integration. 10 Prozent Gebühr, Netto-APR etwa 3,2 bis 4,5 Prozent. Beste Liquidität aller LSTs, tiefste DeFi-Integration. Kritikpunkt: Marktkonzentration durch Dominanz.
 
 **[Slide 4]** Rocket Pool, der dezentralere Konkurrent. Permissionless Operatoren — jeder kann mit 8 oder 16 ETH plus RPL-Collateral Node-Operator werden. Über 3.000 unabhängige Operatoren. rETH ist ein Reward-Token — der Wechselkurs wächst über Zeit. Keine Rebase-Komplexität. Gebühr etwa 14 Prozent im Durchschnitt. Netto-APR 3,0 bis 4,3 Prozent. Strukturell dezentraler, aber geringere Liquidität — etwa ein Zehntel der Lido-TVL.
 
@@ -202,7 +202,7 @@ Diversifikation über Protokolle
 
 **[Slide 6]** Preis-Chart von stETH Juni 2022 mit markiertem Depeg. **SCREENSHOT SUGGESTION:** Historischer stETH/ETH-Chart auf Curve.
 
-**[Slide 7]** Allokations-Kuchen-Diagramm mit 60/25/15-Aufteilung.
+**[Slide 7]** Kreisdiagramm mit 60/25/15-Aufteilung.
 
 ## Übung
 
@@ -225,7 +225,7 @@ Diversifikation über Protokolle
 
 ## Quiz
 
-**Frage 1:** Warum ist Lido's Marktdominanz von ~30% aller gestakten ETH sowohl Stärke als auch strukturelles Risiko?
+**Frage 1:** Warum ist Lidos Marktdominanz von ~30% aller gestakten ETH sowohl Stärke als auch strukturelles Risiko?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -246,7 +246,7 @@ stETH ist vollständig durch gestaktes ETH gedeckt — 1 stETH repräsentiert ge
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Liquid Staking-Prinzip → Lido (stETH) → Rocket Pool (rETH) → Frax (frxETH/sfrxETH) → Vergleichsmatrix → Portfolio-Allokation
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — LST-Mechanik-Diagramm, Protokoll-Vergleichstabelle (Zentralisierung/TVL/Design), stETH-Depeg-Chart Juni 2022, Governance-Struktur-Übersicht
 
 Pipeline: Gamma → ElevenLabs → CapCut.

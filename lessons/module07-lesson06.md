@@ -27,7 +27,7 @@ Du hältst ETH langfristig, brauchst aber Liquidität für einen bestimmten Zwec
 **Use-Case 2: Leveraged Staking (moderat)**
 ETH staken über Lido → wstETH erhalten. wstETH als Collateral hinterlegen → ETH borgen → ETH wieder staken → wstETH erhalten → wiederholen.
 
-**Ziel:** Boost des Staking-Yields durch Leverage. Bei 3% Staking-Yield und 1,5x Leverage kommt man auf ~4,5% netto (nach Borrow-Zinsen) — immer noch konservativ, aber besser als 3%.
+**Ziel:** Boost des Staking-Yields durch Leverage. Bei 3% Staking-Yield und 1,5x Leverage ergibt sich ~4,5% brutto. Nach Abzug der ETH-Borrow-Zinsen (typisch 2–3%) verbleibt eine Netto-Rendite von etwa 3,5–4% — immer noch konservativ, aber besser als 3%.
 
 **Konservative Ausführung:**
 - Nur 1,5x oder 2x Leverage, nicht mehr
@@ -38,7 +38,7 @@ ETH staken über Lido → wstETH erhalten. wstETH als Collateral hinterlegen →
 Mehr Details zu dieser Strategie in Modul 10 (Leverage-Loops).
 
 **Use-Case 3: Stablecoin-Swap zur Rendite-Optimierung**
-Du hast USDC auf Aave mit 4% APY. Du möchtest aber auch USDT-Exposition haben, weil USDT-Pools gerade bessere Renditen bieten. Statt USDC zu verkaufen und USDT zu kaufen (Slippage, Gas), kannst du USDC als Collateral hinterlegen und USDT borgen — in Stablecoin-E-Mode.
+Du hast USDC auf Aave mit 4% APY. Du möchtest aber auch USDT-Exposure haben, weil USDT-Pools gerade bessere Renditen bieten. Statt USDC zu verkaufen und USDT zu kaufen (Slippage, Gas), kannst du USDC als Collateral hinterlegen und USDT borgen — in Stablecoin-E-Mode.
 
 **Konservative Ausführung:**
 - Bei sehr engen Peg-Asset-Paaren kann LTV-Nutzung moderat höher sein (60–70% des Max)
@@ -145,7 +145,7 @@ Aave-App, DeBank, HAL.xyz, Tenderly, Wallet-Warnungen
 **[Slide 7] — Die ehrliche Frage**
 7–8% oft ohne Borrowing erreichbar
 Borrowing = Zusatz, nicht Basis
-Starte ohne, füge später hinzu wenn disziplin vorhanden
+Starte ohne, füge später hinzu, wenn Disziplin vorhanden
 
 ## Sprechertext
 
@@ -223,7 +223,7 @@ Ohne Borrowing kann ein diversifiziertes konservatives Portfolio realistisch 4�
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Sinnvolle Borrow-Use-Cases → Borrow-Hygiene-Checkliste → Notfall-Reaktionsplan → Break-Even-Kalkulation → Monitoring-Ritual → Wann kein Borrowing nötig ist
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Borrow-Use-Case-Kategorien, Hygiene-Checkliste als Infografik, Notfall-Entscheidungsbaum, Break-Even-Rechenbeispiel, Portfolio-ohne-Borrow-Szenario
 
 Pipeline: Gamma → ElevenLabs → CapCut.

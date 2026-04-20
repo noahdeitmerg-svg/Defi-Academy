@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="100" y="101" width="200" height="36" rx="4"
+        stroke="#F5B841" fill="none" stroke-width="2"/>
+    <circle cx="120" cy="119" r="3" fill="#F5B841"/>
+    <line x1="134" y1="119" x2="180" y2="119" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1"/>
+    <rect x="100" y="155" width="200" height="36" rx="4"
+        stroke="rgba(245, 184, 65, 0.35)" fill="none" stroke-width="2"/>
+    <circle cx="120" cy="173" r="3" fill="#F5B841"/>
+    <line x1="134" y1="173" x2="180" y2="173" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1"/>
+    <rect x="100" y="209" width="200" height="36" rx="4"
+        stroke="rgba(245, 184, 65, 0.35)" fill="none" stroke-width="2"/>
+    <circle cx="120" cy="227" r="3" fill="#F5B841"/>
+    <line x1="134" y1="227" x2="180" y2="227" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1"/>
+    <rect x="100" y="263" width="200" height="36" rx="4"
+        stroke="rgba(245, 184, 65, 0.35)" fill="none" stroke-width="2"/>
+    <circle cx="120" cy="281" r="3" fill="#F5B841"/>
+    <line x1="134" y1="281" x2="180" y2="281" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1"/>
+    <line x1="314" y1="137" x2="314" y2="155" stroke="#F5B841" stroke-width="1.5"/>
+    <path d="M 310 149 L 314 155 L 318 149" stroke="#F5B841" fill="none" stroke-width="1.5"/>
+    <line x1="314" y1="191" x2="314" y2="209" stroke="#F5B841" stroke-width="1.5"/>
+    <path d="M 310 203 L 314 209 L 318 203" stroke="#F5B841" fill="none" stroke-width="1.5"/>
+    <line x1="314" y1="245" x2="314" y2="263" stroke="#F5B841" stroke-width="1.5"/>
+    <path d="M 310 257 L 314 263 L 318 257" stroke="#F5B841" fill="none" stroke-width="1.5"/>
+    <line x1="76" y1="142" x2="84" y2="150" stroke="rgba(245, 184, 65, 0.35)" stroke-width="1"/>
+    <line x1="76" y1="150" x2="84" y2="142" stroke="rgba(245, 184, 65, 0.35)" stroke-width="1"/>
+    <line x1="76" y1="196" x2="84" y2="204" stroke="rgba(245, 184, 65, 0.35)" stroke-width="1"/>
+    <line x1="76" y1="204" x2="84" y2="196" stroke="rgba(245, 184, 65, 0.35)" stroke-width="1"/>
+    <line x1="76" y1="250" x2="84" y2="258" stroke="rgba(245, 184, 65, 0.35)" stroke-width="1"/>
+    <line x1="76" y1="258" x2="84" y2="250" stroke="rgba(245, 184, 65, 0.35)" stroke-width="1"/>
+  </g>
+</svg>

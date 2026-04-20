@@ -192,23 +192,18 @@ Höhere Builder-Diversität
 90%+ Backrun-Refunds
 Alternative zu Flashbots
 
-**[Slide 5] — CowSwap**
-swap.cow.fi
-Intent statt Transaktion
-Solver-Wettbewerb
-Coincidence of Wants
+**[Slide 5] — Intent-basierte Systeme**
+CowSwap (swap.cow.fi): Intent statt Transaktion, Solver-Wettbewerb, Coincidence of Wants
+Uniswap X: in Standard-Uniswap-Interface integriert, Dutch-Auction-Mechanik
+1inch Fusion: nutzt 1inch-Liquiditäts-Aggregation
+Strukturell kein Sandwich möglich
 
-**[Slide 6] — Uniswap X + 1inch Fusion**
-Intent-basierte Alternativen
-Integriert in bekannte Interfaces
-Wachsender Solver-Markt
-
-**[Slide 7] — Entscheidungs-Matrix**
+**[Slide 6] — Entscheidungs-Matrix**
 < 5.000 USD: Aggregator mit MEV-Flag
 5.000-50.000: Flashbots RPC
 50.000+: CowSwap
 
-**[Slide 8] — Layered Defense**
+**[Slide 7] — Layered Defense**
 1. Private RPC als Default
 2. DEX-Aggregator
 3. Intent-basiert für große Trades
@@ -225,13 +220,11 @@ Wachsender Solver-Markt
 
 **[Slide 4]** MEV Blocker ist die Alternative von CoW-Team. mevblocker.io. Funktioniert ähnlich wie Flashbots Protect, aber mit höherer Builder-Diversität und höheren Backrun-Refunds, oft 90 Prozent plus. In 2024 und 2025 hat es an Marktanteil gewonnen. Beide Tools sind gut — die Wahl ist Geschmackssache.
 
-**[Slide 5]** CowSwap ist das prominenteste Intent-basierte DEX. swap.cow.fi. Du signierst eine Limit Order — "verkaufe 100 ETH für mindestens 290.000 USDC". Die Order geht in einen Off-Chain-Pool. Solver konkurrieren um Ausführung. Bei Coincidence of Wants — wenn gleichzeitig jemand das Gegenteil will — wird direkt gematcht ohne DEX-Liquidität. Das spart Fees und Slippage. MEV-Schutz ist strukturell, weil keine öffentliche Transaktion existiert.
+**[Slide 5]** Intent-basierte Systeme — die strukturell sicherste Schutz-Klasse. CowSwap ist das prominenteste Beispiel: swap.cow.fi. Du signierst eine Limit Order — "verkaufe 100 ETH für mindestens 290.000 USDC". Die Order geht in einen Off-Chain-Pool. Solver konkurrieren um Ausführung. Bei Coincidence of Wants — wenn gleichzeitig jemand das Gegenteil will — wird direkt gematcht ohne DEX-Liquidität. Das spart Fees und Slippage. MEV-Schutz ist strukturell, weil keine öffentliche Transaktion existiert. Uniswap X ist die Alternative von Uniswap Labs, integriert in das Standard-Uniswap-Interface — keine separate App nötig — und nutzt eine Dutch-Auction-Mechanik. 1inch Fusion nutzt 1inch's umfangreiche Liquiditäts-Aggregation. Alle drei bieten ähnlichen Schutz, unterscheiden sich aber in Solver-Diversität und unterstützten Pairs.
 
-**[Slide 6]** Uniswap X und 1inch Fusion sind Alternativen. Uniswap X ist in das Standard-Uniswap-Interface integriert — keine separate App nötig. 1inch Fusion nutzt 1inch's umfangreiche Liquiditäts-Aggregation. Beide bieten ähnlichen Schutz wie CowSwap, aber haben aktuell weniger Solver, was bei exotischen Pairs zu etwas schlechteren Preisen führen kann.
+**[Slide 6]** Die Entscheidungs-Matrix für welches Tool wann. Unter 5.000 Dollar: Aggregator wie 1inch mit MEV-Protection-Flag. 5.000 bis 50.000 Dollar: Flashbots Protect RPC plus Uniswap oder 1inch. Über 50.000 Dollar: CowSwap. Für sehr große Trades über 500.000 Dollar auch OTC-Deals mit Market Makern in Betracht ziehen.
 
-**[Slide 7]** Die Entscheidungs-Matrix für welches Tool wann. Unter 5.000 Dollar: Aggregator wie 1inch mit MEV-Protection-Flag. 5.000 bis 50.000 Dollar: Flashbots Protect RPC plus Uniswap oder 1inch. Über 50.000 Dollar: CowSwap. Für sehr große Trades über 500.000 Dollar auch OTC-Deals mit Market Makern in Betracht ziehen.
-
-**[Slide 8]** Layered Defense für maximalen Schutz. Erstens: Private RPC als Default in MetaMask — schützt alle Transaktionen, nicht nur Swaps. Zweitens: DEX-Aggregator nutzen statt Uniswap direkt. Drittens: Intent-basiert für große Trades. Viertens: Slippage konservativ halten. Fünftens: bei wirklich großen Trades in Tranchen aufteilen. In Kombination erreicht das 95 Prozent plus MEV-Schutz bei minimalen Zusatzkosten. Die einmalige 5-Minuten-Konfiguration spart typisch 100 bis 1.000 Dollar pro Jahr für aktive Nutzer.
+**[Slide 7]** Layered Defense für maximalen Schutz. Erstens: Private RPC als Default in MetaMask — schützt alle Transaktionen, nicht nur Swaps. Zweitens: DEX-Aggregator nutzen statt Uniswap direkt. Drittens: Intent-basiert für große Trades. Viertens: Slippage konservativ halten. Fünftens: bei wirklich großen Trades in Tranchen aufteilen. In Kombination erreicht das 95 Prozent plus MEV-Schutz bei minimalen Zusatzkosten. Die einmalige 5-Minuten-Konfiguration spart typisch 100 bis 1.000 Dollar pro Jahr für aktive Nutzer.
 
 ## Visuelle Vorschläge
 
@@ -243,13 +236,11 @@ Wachsender Solver-Markt
 
 **[Slide 4]** **SCREENSHOT SUGGESTION:** MEV Blocker Website.
 
-**[Slide 5]** **SCREENSHOT SUGGESTION:** CowSwap Swap-Interface mit Solver-Preisen.
+**[Slide 5]** Drei-Spalten-Layout der Intent-basierten Systeme: **SCREENSHOT SUGGESTION:** CowSwap Swap-Interface mit Solver-Preisen | Uniswap X Settings mit MEV-Schutz-Toggle | 1inch Fusion Order-Flow.
 
-**[Slide 6]** **SCREENSHOT SUGGESTION:** Uniswap X Settings mit MEV-Schutz-Toggle.
+**[Slide 6]** Entscheidungs-Matrix als Tabelle.
 
-**[Slide 7]** Entscheidungs-Matrix als Tabelle.
-
-**[Slide 8]** Fünf-Schichten-Pyramide der Layered Defense.
+**[Slide 7]** Fünf-Schichten-Pyramide der Layered Defense.
 
 ## Übung
 
@@ -301,8 +292,8 @@ Bei 200.000 USD Trade-Größe sind mehrere Faktoren relevant, die CowSwap strukt
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Flashbots Protect Setup → MEV Blocker → CowSwap-Mechanik → Uniswap X (Dutch Auction) → Intent-basiertes Trading → Schutz nach Trade-Größe → Praktische Empfehlungen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Drei Schutz-Kategorien → Flashbots Protect → MEV Blocker → Intent-basierte Systeme (CowSwap, Uniswap X, 1inch Fusion) → Entscheidungs-Matrix → Layered Defense
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — RPC-Setup-Screenshots, CowSwap-Interface, Solver-Wettbewerb-Diagramm, Uniswap-X-Auction-Flow, Trade-Größen-Schutz-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.

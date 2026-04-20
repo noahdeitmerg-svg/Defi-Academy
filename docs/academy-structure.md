@@ -28,6 +28,44 @@ Lektion kann drei Lern-Artefakte tragen: **Video**, **Quiz**,
 "technisch darf eins fehlen", inhaltlich aber normal Bestandteil einer
 vollwertigen Lektion.
 
+Aktueller Zielumfang: **18 Module** (Modul 0 bis Modul 17), ca.
+**102 Lektionen**.
+
+### 1.1 Modulreihenfolge und Lernpfad
+
+Module:
+
+- Modul 0 — Introduction to the DeFi Academy
+- Modul 1 — DeFi Fundamentals
+- Modul 2 — Wallets and Security
+- Modul 3 — Blockchain Mechanics
+- Modul 4 — DEX Mechanics
+- Modul 5 — Liquidity Pools
+- Modul 6 — Lending Markets
+- Modul 7 — Collateral and Liquidations
+- Modul 8 — Stablecoins
+- Modul 9 — Yield Strategies
+- Modul 10 — Leverage Loops
+- Modul 11 — MEV
+- Modul 12 — Flash Loans
+- Modul 13 — veTokenomics
+- Modul 14 — Cross-Chain Infrastructure
+- Modul 15 — On-Chain Analytics
+- Modul 16 — Composability Risk
+- Modul 17 — Portfolio Construction and RWA
+
+Lernpfad:
+
+- Orientation: Modul 0
+- Foundations: Module 1–4
+- Protocols: Module 5–10
+- Infrastructure: Module 11–14
+- Advanced Analysis and Strategy: Module 15–17
+
+Hinweis zu Modul 0: Das Onboarding-Modul vermittelt Struktur der
+Akademie, Risiko-Bewusstsein und Lernmethodik vor den technischen
+Inhalten.
+
 ---
 
 ## 2. Ebenen im Detail
@@ -49,6 +87,7 @@ vollwertigen Lektion.
 - **Ablage (zwei parallele Konventionen):**
   - **Legacy:** `content/modules/module1` … `module17` — flache Lektions-`*.md`, `meta.json`, Quiz auf Modul-Ebene.
   - **UX-Shell:** `content/modules/01-defi-grundlagen` usw. — `module.json`, Unterordner pro Lektion mit `lesson.md`, `slides.json`, `quiz.json` (siehe `lib/content/loadModules.ts`).
+  - **Dokumentierte Zielstruktur:** `content/modules/module-00` … `content/modules/module-17` (ohne sofortige Umbenennung bestehender Ordner).
 - **Quelle:** Autoren-Markdown unter `Module/modul-NN-*-FINAL.md` sowie Pipeline-Outputs in `lessons/`.
 - **Sichtbar in der UI als:** Legacy unter `/module/<moduleSlug>`; UX unter `/kurs` und `/kurs/<modulId>`.
 - **Ersetzt:** *Curriculum Modules* — wir sagen einfach **Module**.
@@ -167,7 +206,7 @@ Wo die Regel **nicht** greift:
 ## 5. Beziehungen zu anderen Doku-Dokumenten
 
 - [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) — **Masterdokument**
-  für Agenten: aktueller Deploy-Ist, Ziel **17 Module / 102 Lektionen**,
+  für Agenten: aktueller Deploy-Ist, Ziel **18 Module / ca. 102 Lektionen**,
   Roadmaps, Verzeichnis-Index.
 - [`docs/defi_academy_system.md`](./defi_academy_system.md) — System-
   Ueberblick, Rollen-Kataster, Roadmap, Infrastruktur. Fuehrt im Kopf

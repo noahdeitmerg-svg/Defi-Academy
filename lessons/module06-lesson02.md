@@ -35,7 +35,7 @@ Die Borrow-Rate ist eine stückweise lineare Funktion der Utilization:
 ```
 Utilization 0% → Borrow-Rate ≈ 0%
 Utilization steigt → Borrow-Rate steigt linear (flach)
-Am "Kink-Point" (typisch 80–90%) → Steilheit erhöht sich dramatisch
+Am "Kink-Point" (typisch 80–90%) → Steilheit erhöht sich stark
 Utilization 100% → Borrow-Rate kann 50%+ erreichen
 ```
 
@@ -131,11 +131,11 @@ Supply-Rate = Borrow-Rate × Utilization × (1 − Reserve Factor)
 
 **[Slide 2]** Die Grundformel. Utilization gleich geborgte Assets geteilt durch gesamte Supply. Wenn 80 Prozent der USDC im Pool geborgt sind, ist die Utilization 80 Prozent. Der Zins-Mechanismus: hohe Utilization bedeutet hohe Nachfrage, bedeutet hohe Zinsen. Niedrige Utilization bedeutet umgekehrt niedrige Zinsen.
 
-**[Slide 3]** Die Standard-Zinskurve ist stückweise linear. Von null bis zum Kink-Point wächst die Borrow-Rate langsam — das ist der Normalbetrieb. Der Kink-Point liegt typisch bei 80 bis 90 Prozent Utilization. Oberhalb des Kinks wird die Kurve dramatisch steiler. Bei 95 Prozent Utilization können Borrow-Raten bereits bei 15 bis 20 Prozent liegen. Bei 100 Prozent sind 50 Prozent plus möglich. Diese Steilheit ist Absicht — sie soll Utilization zurück unter den Kink treiben.
+**[Slide 3]** Die Standard-Zinskurve ist stückweise linear. Von null bis zum Kink-Point wächst die Borrow-Rate langsam — das ist der Normalbetrieb. Der Kink-Point liegt typisch bei 80 bis 90 Prozent Utilization. Oberhalb des Kinks wird die Kurve deutlich steiler. Bei 95 Prozent Utilization können Borrow-Raten bereits bei 15 bis 20 Prozent liegen. Bei 100 Prozent sind 50 Prozent plus möglich. Diese Steilheit ist Absicht — sie soll Utilization zurück unter den Kink treiben.
 
 **[Slide 4]** Die Supply-Rate-Formel. Supply-Rate gleich Borrow-Rate mal Utilization mal, eins minus Reserve Factor. Der Reserve Factor ist der Anteil, den das Protokoll einbehält — typisch 10 bis 30 Prozent. Bei 90 Prozent Utilization und 4 Prozent Borrow-Rate und 15 Prozent Reserve Factor liegt die Supply-Rate bei etwa 3 Prozent.
 
-**[Slide 5]** Der Spread zwischen Borrow- und Supply-Rate hat zwei Quellen. Erstens: Utilization unter hundert Prozent — der ungenutzte Teil des Pools verdient keine Zinsen, aber er wird auf alle Supplier verteilt. Zweitens: Reserve Factor — das Protokoll-Anteil geht nicht an Supplier. Für dich als Supplier: dein effektiver Zins hängt von beiden Faktoren ab. Bei niedriger Utilization ist dein effektiver Zins niedrig, selbst wenn die Borrow-Rate hoch scheint.
+**[Slide 5]** Der Spread zwischen Borrow- und Supply-Rate hat zwei Quellen. Erstens: Utilization unter hundert Prozent — der ungenutzte Teil des Pools verdient keine Zinsen, aber er wird auf alle Supplier verteilt. Zweitens: Reserve Factor — der Protokoll-Anteil geht nicht an Supplier. Für dich als Supplier: dein effektiver Zins hängt von beiden Faktoren ab. Bei niedriger Utilization ist dein effektiver Zins niedrig, selbst wenn die Borrow-Rate hoch scheint.
 
 **[Slide 6]** Zwei strukturelle Schwachstellen, die du kennen musst. Liquidity Crunch: wenn alle Supplier gleichzeitig auszahlen wollen, aber die Pool-Liquidität geborgt ist, können Auszahlungen temporär blockiert sein. Das ist keine Insolvenz — das Geld kommt zurück, wenn Borrower zurückzahlen oder neue Supplier einzahlen. Aber kurzfristig kannst du nicht auf deine Position zugreifen. Zinsspirale: plötzliche Utilization-Spikes treiben Borrow-Raten hoch, was bestehende Borrower zwingen kann, Positionen aufzulösen — was wiederum Märkte destabilisiert. Beide Szenarien treten selten auf, sind aber reale Risiken bei extremen Marktbewegungen.
 
@@ -185,7 +185,7 @@ Utilization = 85 / 100 = 85%. Supply-Rate = 5% × 85% × (1 − 0,10) = 3,825%. 
 <details>
 <summary>Antwort anzeigen</summary>
 
-Für Supplier: über den Kink-Point steigen die Zinsen stark, der effektive Supply-Yield kann sich verdrei- oder vervierfachen. Kurzfristig attraktiv — solange die Lage so bleibt, verdient man mehr. Für bestehende Borrower: sie zahlen plötzlich deutlich mehr Zinsen auf ihre laufenden Kredite. Eine Position, die bei 80% Utilization 3% Zinsen zahlte, kann bei 95% auf 15%+ springen. Das kann dazu zwingen, Positionen teilweise oder ganz aufzulösen, was wiederum Kollateral verkauft und möglicherweise Liquidationen auslöst. In extremen Fällen kann das eine Kaskade auslösen. Für den Borrower ist Zinsrisiko also ein echter Belastungsfaktor, das bei Positionsgrößen-Entscheidungen berücksichtigt werden muss.
+Für Supplier: über den Kink-Point steigen die Zinsen stark, der effektive Supply-Yield kann sich verdrei- oder vervierfachen. Kurzfristig attraktiv — solange die Lage so bleibt, verdient man mehr. Für bestehende Borrower: sie zahlen plötzlich deutlich mehr Zinsen auf ihre laufenden Kredite. Eine Position, die bei 80% Utilization 3% Zinsen zahlte, kann bei 95% auf 15%+ springen. Das kann Borrower dazu zwingen, Positionen teilweise oder ganz aufzulösen, was wiederum den Verkauf von Collateral erzwingt und möglicherweise Liquidationen auslöst. In extremen Fällen kann das eine Kaskade auslösen. Für den Borrower ist Zinsrisiko also ein echter Belastungsfaktor, der bei Positionsgrößen-Entscheidungen berücksichtigt werden muss.
 </details>
 
 ## Video-Pipeline-Assets
@@ -193,7 +193,7 @@ Für Supplier: über den Kink-Point steigen die Zinsen stark, der effektive Supp
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Utilization Rate → Zinskurven-Grafik → Kink-Point → Supply-APY aus Borrow-APY → Utilization-Profile verschiedener Märkte → Monitoring-Praxis
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Utilization-Rate-Formel, Zinskurven-Diagramm (pre/post Kink), Supply-vs-Borrow-APY-Chart, Aave-V3-Markt-Parameter-Screenshot, Utilization-Historie-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.

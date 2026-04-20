@@ -3,6 +3,7 @@
 ## Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Die sieben Kernrisiken in DeFi identifizieren und voneinander abgrenzen
 - Verstehen, wie sich diese Risiken in der Praxis manifestieren
 - Eine erste Risikobewertung für eine beliebige DeFi-Position durchführen
@@ -140,6 +141,7 @@ Jede DeFi-Position hat ein Risikoprofil aus diesen sieben Dimensionen. Eine einf
 **Aufgabe: Risikoanalyse einer realen Position**
 
 Wähle eine bekannte DeFi-Position, die du online recherchieren kannst — z.B. "stETH-Looping auf Aave" oder "USDC-Supply auf Morpho". Erstelle eine Risikomatrix mit den sieben Risiken. Bewerte für jede Risikodimension:
+
 - Hoch / Mittel / Niedrig
 - Begründung (eine Zeile)
 
@@ -149,19 +151,19 @@ Wähle eine bekannte DeFi-Position, die du online recherchieren kannst — z.B. 
 
 **Frage 1:** Ein Freund erzählt dir, er legt seine USDC in ein unbekanntes Protokoll mit "Audit" und 150% APY. Welche drei Risiken sollten deine Alarmglocken auslösen?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 1. Rug-Pull-Risiko: unbekanntes Protokoll mit extrem hohem APY ist klassisches Warnsignal. 2. Smart-Contract-Risiko: ein einzelnes Audit ist keine Garantie, besonders wenn der Auditor nicht bekannt ist oder der Code komplex ist. 3. Unklare Kapitalquelle: 150% APY muss von irgendwoher kommen — oft sind es Token-Emissionen, die den Token-Preis drücken, oder recycelte Deposits, die bei Abflüssen kollabieren (Ponzi-Dynamik).
-</details>
+
+
 
 **Frage 2:** Warum ist Komponierbarkeits-Risiko besonders gefährlich für fortgeschrittene Nutzer?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Fortgeschrittene Nutzer bauen oft tiefe Stacks mit vielen Protokollen (z.B. Liquid Staking + Lending + Derivate + Yield Aggregator). Jede zusätzliche Protokoll-Ebene fügt eine neue Risikoquelle hinzu, und ein Bruch auf einer tieferen Ebene kann alle darauf aufbauenden Positionen betreffen. Die Risikokorrelation ist nicht additiv, sondern multiplikativ — kleine Einzelrisiken können gemeinsam ein großes Gesamtrisiko bilden. Fortgeschrittene Nutzer halten oft höhere absolute Beträge, sodass die absoluten Verluste signifikant sind.
-</details>
+
+
 
 ## Video-Pipeline-Assets
 

@@ -47,9 +47,33 @@ Neue oder risikoreichere Assets können in Isolation Mode gelistet werden. Ein N
 
 Du kannst jederzeit entscheiden, ob ein Asset in deinem Aave-Portfolio als Sicherheit genutzt wird oder nur als reine Supply-Position. Das ist wichtig für konservative Supplier, die **nicht** borgen wollen — sie können Collateral-Status deaktivieren, um das Liquidationsrisiko auszuschließen.
 
+**Health Factor — der zentrale Sicherheitsindikator**
+
+Wenn du als Borrower auf Aave eine Position hältst, ist der Health Factor (HF) die wichtigste Kennzahl zur Einschätzung deiner Liquidationsgefahr. Die Formel:
+
+```
+HF = (Collateral-Wert × Liquidation Threshold) / Schulden-Wert
+```
+
+Ein HF > 1 bedeutet: die Position ist sicher. Ein HF = 1 bedeutet: die Position ist genau an der Liquidationsschwelle. Ein HF < 1 bedeutet: die Position wird liquidiert, sobald ein Liquidator es profitabel für sich entscheidet.
+
+Beispiel: 10.000 USD ETH-Collateral, Liquidation Threshold 80%, 5.000 USDC Schuld:
+
+```
+HF = (10.000 × 0,80) / 5.000 = 1,6
+```
+
+Fällt der ETH-Preis um 30%, sinkt der Collateral-Wert auf 7.000 USD:
+
+```
+HF = (7.000 × 0,80) / 5.000 = 1,12
+```
+
+Der HF ist live im Aave-Dashboard sichtbar. Modul 7 vertieft Health-Factor-Management, Liquidations-Mechanik und Cascade-Szenarien.
+
 **GHO — Aaves natives Stablecoin**
 
-Aave hat mit GHO ein eigenes überbesichertes Stablecoin herausgegeben. Nutzer können GHO gegen Aave-Collateral borgen. Die Mechanik ähnelt MakerDAOs DAI-Modell, mit Aave-spezifischen Features (Stakers bekommen Rabatte). Für reine Supplier nicht direkt relevant, aber gut zu wissen.
+Aave hat mit GHO einen eigenen überbesicherten Stablecoin herausgegeben. Nutzer können GHO gegen Aave-Collateral borgen. Die Mechanik ähnelt MakerDAOs DAI-Modell, mit Aave-spezifischen Features (Stakers bekommen Rabatte). Für reine Supplier nicht direkt relevant, aber gut zu wissen.
 
 **Aave-Governance-Token (AAVE)**
 
@@ -93,13 +117,15 @@ Höhere LTV für korrelierte Assets.
 Stablecoin E-Mode: bis 93% LTV.
 ETH-Correlated: bis 93% LTV.
 
-**[Slide 4] — Isolation Mode**
-Neue/riskantere Assets mit festem Schuld-Limit.
-Schützt Protokoll vor Risiko-Ausbreitung.
+**[Slide 4] — Isolation Mode + Collateral-Switch**
+Isolation Mode: neue/riskantere Assets mit festem Schuld-Limit, schützt Protokoll vor Risiko-Ausbreitung.
+Collateral-Switch: Asset kann als Sicherheit aktiviert/deaktiviert werden — wichtig für reine Supplier ohne Borrow-Absicht.
 
-**[Slide 5] — Collateral-Switch**
-Asset kann als Sicherheit aktiviert/deaktiviert werden.
-Wichtig für reine Supplier ohne Borrow-Absicht.
+**[Slide 5] — Health Factor**
+HF = (Collateral × Liquidation Threshold) / Schulden.
+HF > 1: sicher. HF = 1: an der Schwelle. HF < 1: liquidierbar.
+Beispiel: 10.000 USD ETH, LT 80%, 5.000 USDC Schuld → HF = 1,6.
+Bei −30% ETH-Preis: HF = 1,12. Live im Aave-Dashboard.
 
 **[Slide 6] — Safety Module**
 AAVE-Staker tragen Restrisiko.
@@ -119,9 +145,9 @@ Track-record: kein Protokoll-Hack seit Launch.
 
 **[Slide 3]** Aave V3 führte Efficient Mode ein — kurz E-Mode. Damit können hoch korrelierte Assets als Collateral mit sehr hoher LTV genutzt werden. Stablecoin-E-Mode: USDC, USDT, DAI, bis 93 Prozent Belehnung. ETH-Correlated-E-Mode: ETH, wstETH, weETH, rETH, ebenfalls bis 93 Prozent. Für Borrow-Strategien ist das zentral, für reine Supplier weniger direkt relevant, aber gut zu wissen.
 
-**[Slide 4]** Isolation Mode ist für neue oder riskantere Assets. Ein Isolation-Asset kann nur bis zu einem festen Schuld-Limit belehnt werden, und nur gegen bestimmte Stablecoins. Das schützt das Protokoll davor, dass ein problematisches neues Asset Kaskaden auslöst.
+**[Slide 4]** Isolation Mode und Collateral-Switch. Isolation Mode ist für neue oder riskantere Assets: ein Isolation-Asset kann nur bis zu einem festen Schuld-Limit belehnt werden, und nur gegen bestimmte Stablecoins. Das schützt das Protokoll vor Kaskaden durch problematische Assets. Der Collateral-Switch erlaubt dir, pro Asset zu entscheiden, ob es als Sicherheit genutzt wird oder nur als reine Supply-Position. Wenn du nicht borgen willst, deaktivierst du Collateral-Status — das schließt jede Liquidationsgefahr aus.
 
-**[Slide 5]** Eine wichtige Funktion für konservative Supplier: der Collateral-Switch. Du kannst entscheiden, ob dein Asset als Collateral genutzt wird oder nur als reine Supply-Position. Wenn du nicht borgen willst, solltest du Collateral-Status deaktivieren. Das schließt jede Liquidationsgefahr aus.
+**[Slide 5]** Der Health Factor ist die zentrale Sicherheitskennzahl für jede Borrow-Position. Die Formel: Collateral-Wert mal Liquidation Threshold geteilt durch Schulden-Wert. HF größer eins bedeutet, die Position ist sicher. HF gleich eins: sie steht an der Liquidationsschwelle. HF kleiner eins: sie wird liquidiert, sobald ein Liquidator es profitabel macht. Ein konkretes Beispiel: zehntausend Dollar ETH-Collateral bei einem Liquidation Threshold von achtzig Prozent und fünftausend USDC Schuld ergibt einen Health Factor von eins Komma sechs. Fällt der ETH-Preis um dreißig Prozent, sinkt der Collateral-Wert auf siebentausend Dollar und der Health Factor auf eins Komma eins zwei — die Position ist immer noch sicher, aber der Puffer schrumpft deutlich. Der Health Factor ist live im Aave-Dashboard sichtbar. Modul sieben vertieft Health-Factor-Management, Liquidations-Mechanik und Cascade-Szenarien.
 
 **[Slide 6]** Das Safety Module. AAVE-Token-Halter können ihre AAVE im Safety Module staken und erhalten Zinsen dafür. Im Gegenzug tragen sie Restrisiko: bei Protokoll-Shortfall können bis zu 30 Prozent der gestakten AAVE verwendet werden, um Deckungslücken zu schließen. Das ist eine Puffer-Schicht, die normale Supplier schützt. Kam noch nie zum Einsatz, aber als Mechanismus vorhanden.
 
@@ -135,9 +161,9 @@ Track-record: kein Protokoll-Hack seit Launch.
 
 **[Slide 3]** E-Mode-Darstellung: Assets gruppiert mit erhöhter LTV im Vergleich zum Normal-Mode.
 
-**[Slide 4]** Diagramm: Normal-Asset-Pool vs. Isolated-Asset-Pool, letzterer abgetrennt mit Limit.
+**[Slide 4]** Zwei-Spalten-Vergleich: links Normal-Asset-Pool vs. Isolated-Asset-Pool mit Schuld-Limit, rechts **SCREENSHOT SUGGESTION:** Aave-Supply-Detail mit "Use as collateral"-Toggle.
 
-**[Slide 5]** **SCREENSHOT SUGGESTION:** Aave-Supply-Detail mit "Use as collateral"-Toggle.
+**[Slide 5]** Health-Factor-Formel prominent dargestellt, darunter Rechenbeispiel-Tabelle: 10.000 USD ETH-Collateral + 5.000 USDC Schuld bei LT 80% → HF 1,6; nach −30% ETH → HF 1,12. **SCREENSHOT SUGGESTION:** Aave-Dashboard mit live angezeigtem Health Factor einer Demo-Position.
 
 **[Slide 6]** Safety-Module-Flussdiagramm: AAVE-Staking → Rewards + Restrisiko.
 
@@ -182,8 +208,8 @@ AAVE-Stakers tragen ein Haircut-Risiko: bei einem Protokoll-Shortfall (z.B. durc
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Aave-V3-Architektur → Efficient Mode → Isolation Mode → Health Factor live am Dashboard → HF-Walkthrough bei Preisbewegungen → Markt-Parameter (LTV, LT, LP) → Safety Module
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → 4 Kernkomponenten → Efficient Mode → Isolation Mode + Collateral-Switch → Health Factor (Formel + Beispiel) → Safety Module → Realistische Renditen
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Aave-V3-Interface-Screenshot, Health-Factor-Rechenbeispiel-Tabelle, Efficient/Isolation-Mode-Diagramme, Liquidations-Nähe-Visualisierung, Markt-Parameter-Vergleich verschiedener Assets
 
 Pipeline: Gamma → ElevenLabs → CapCut.

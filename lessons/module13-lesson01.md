@@ -6,7 +6,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Das Vote-Escrow-Modell als Design-Muster präzise erklären
 - Die wirtschaftlichen Anreize hinter Lock-basierten Stimmrechten verstehen
 - Den Unterschied zwischen ve-Modellen und klassischer Token-Governance benennen
-- Die Zeit-gewichtete Stimmrechts-Formel (lineare Dekay-Mechanik von veCRV) anwenden
+- Die Zeit-gewichtete Stimmrechts-Formel (lineare Decay-Mechanik von veCRV) anwenden
 - Das Abwägen zwischen Lock-Dauer, Liquidität und Governance-Einfluss praxisnah einordnen
 - Die Auswirkungen von ve-Modellen auf Token-Zirkulation und Markt-Dynamik (reduzierter Float, Preisstabilität) bewerten
 
@@ -106,7 +106,7 @@ Nutzer lockt für 1 Woche bis 4 Jahre
 Je länger = mehr veToken
 Nicht transferierbar
 
-**[Slide 4] — Die Math**
+**[Slide 4] — Die Lock-Mathematik**
 1.000 CRV × 4 Jahre = 1.000 veCRV
 1.000 CRV × 2 Jahre = 500 veCRV
 1.000 CRV × 1 Jahr = 250 veCRV
@@ -123,16 +123,10 @@ Flash-Loan-resistent
 Incentives gegen Apathie
 Liquidität gebunden
 
-**[Slide 7] — Die Trade-offs**
-Opportunitäts-Kosten (4 Jahre!)
-Illiquidität
-Token-Preis-Risiko
-Verwaltungs-Aufwand
-
-**[Slide 8] — Die Philosophie**
-"Wer am Erfolg interessiert ist, sollte gebunden sein"
-Wertbasierte Governance-Aussage
-Inspirierte ganze Design-Welle
+**[Slide 7] — Trade-offs und Philosophie**
+Trade-offs: Opportunitäts-Kosten (4 Jahre), Illiquidität, Preis-Risiko, Verwaltungs-Aufwand
+Philosophie: "Wer am Erfolg interessiert ist, sollte gebunden sein"
+Wertbasierte Governance-Aussage, inspirierte ganze Design-Welle
 
 ## Sprechertext
 
@@ -148,9 +142,7 @@ Inspirierte ganze Design-Welle
 
 **[Slide 6]** Warum das Modell strukturell robust ist. Lock-Zeit zwingt Langfrist-Denken. Flash-Loan-Nutzer können zwar CRV borgen, aber nicht veCRV werden — der Lock sprengt den Flash Loan. Die wirtschaftlichen Vorteile geben echte Incentives gegen Apathie. LPs, die ihren Boost wollen, halten veCRV und binden Liquidität.
 
-**[Slide 7]** Die ehrlichen Trade-offs. Kapital gebunden bis zu 4 Jahre — das sind echte Opportunitäts-Kosten. Komplette Illiquidität — du kannst nicht aussteigen, auch in Krisen nicht. Token-Preis-Risiko — wenn CRV um 80 Prozent fällt, fällt dein USD-Wert mit. Und aktiver Verwaltungs-Aufwand — optimales Voting erfordert wöchentliche Entscheidungen.
-
-**[Slide 8]** Die Philosophie hinter veTokenomics. Es ist nicht nur ein technisches Feature, sondern eine Governance-Aussage: wer am Erfolg des Protokolls wirklich interessiert ist, sollte auch wirklich gebunden sein. Die Eleganz dieses Designs inspirierte eine ganze Welle von Protokollen — Balancer, Pendle, Velodrome, viele mehr. Wir behandeln sie in Lektion 13.5.
+**[Slide 7]** Die ehrlichen Trade-offs und die zugrundeliegende Philosophie. Trade-offs: Kapital gebunden bis zu 4 Jahre — das sind echte Opportunitäts-Kosten. Komplette Illiquidität — du kannst nicht aussteigen, auch in Krisen nicht. Token-Preis-Risiko — wenn CRV um 80 Prozent fällt, fällt dein USD-Wert mit. Und aktiver Verwaltungs-Aufwand — optimales Voting erfordert wöchentliche Entscheidungen. Die Philosophie hinter veTokenomics rechtfertigt diese Härte: es ist nicht nur ein technisches Feature, sondern eine Governance-Aussage: wer am Erfolg des Protokolls wirklich interessiert ist, sollte auch wirklich gebunden sein. Die Eleganz dieses Designs inspirierte eine ganze Welle von Protokollen — Balancer, Pendle, Velodrome, viele mehr. Wir behandeln sie in Lektion 13.5.
 
 ## Visuelle Vorschläge
 
@@ -166,9 +158,7 @@ Inspirierte ganze Design-Welle
 
 **[Slide 6]** Vier-Lösungen-gegen-Probleme-Matrix.
 
-**[Slide 7]** Trade-offs-Liste mit Warnsymbolen.
-
-**[Slide 8]** **SCREENSHOT SUGGESTION:** Curve Governance-Interface oder ein Convex-Dashboard.
+**[Slide 7]** Zwei-Spalten-Layout: links Trade-offs-Liste mit Warnsymbolen, rechts **SCREENSHOT SUGGESTION** Curve Governance-Interface oder ein Convex-Dashboard.
 
 ## Übung
 
@@ -212,9 +202,9 @@ Dein Freund hat einen berechtigten Punkt — Krypto ist schnelllebig, und 4 Jahr
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Was ist Vote-Escrow → Stimmrecht-Formel → veCRV-Dekay → Anreize & Game-Theory → Abgrenzung zu klassischer Governance → Markt-Effekte
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
-- `visual_plan.json` — Vote-Escrow-Diagramm, Stimmrecht-Dekay-Chart, veCRV-Formel-Visualisierung, Governance-Vergleichs-Tabelle, Token-Zirkulations-Chart
+- `slides_prompt.txt` — 7 Folien: Titel → Das Problem → Die Lösung (veToken) → Lock-Mathematik → Drei Vorteile → Strukturelle Robustheit → Trade-offs und Philosophie
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Vote-Escrow-Diagramm, Stimmrecht-Decay-Chart, veCRV-Formel-Visualisierung, Governance-Vergleichs-Tabelle, Token-Zirkulations-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
 

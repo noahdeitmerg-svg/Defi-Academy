@@ -8,7 +8,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Problematische ERC-20-Varianten (Fee-on-Transfer, Rebase, Pause-fähig) erkennen
 - Den `approve/transferFrom`-Mechanismus im Kontext von DeFi-Composability einordnen (Verbindung zu Modul 2)
 - Einen Token-Contract auf Etherscan anhand der ABI und der verifizierten Source Code analysieren
-- Governance- und Admin-Funktionen (Pause, Blacklist, Mint) als zentrale Smart-Contract-Risk- und Operator-Risk-Indikatoren identifizieren
+- Governance- und Admin-Funktionen (Pause, Blacklist, Mint) als zentrale Smart-Contract-Risk- und Rug-Pull-Indikatoren (Admin-Missbrauch) identifizieren
 
 ## Erklärung
 
@@ -37,7 +37,7 @@ Write-Funktion. Sender überträgt `amount` von eigener Adresse zu `to`. Nur der
 Write-Funktion. Besitzer erlaubt einer anderen Adresse (`spender`), bis zu `amount` seiner Tokens zu bewegen. Kernstück des DeFi-Ökosystems.
 
 **4. `transferFrom(from, to, amount)`**
-Write-Funktion. Der approved Spender bewegt `amount` vom Besitzer `from` zu `to`.
+Write-Funktion. Der autorisierte Spender bewegt `amount` vom Besitzer `from` zu `to`.
 
 **5. `allowance(owner, spender)`**
 Read-Funktion. Zeigt, wie viel `spender` vom `owner` bewegen darf.
@@ -122,61 +122,49 @@ Das Verhältnis ist immer 1:1 und mathematisch garantiert. Deshalb handeln WETH 
 
 **[Slide 1] — Titel:** Der ERC-20-Token-Standard
 
-**[Slide 2] — Was ist ein Token?** Smart Contract mit balance-Mapping. USDC auf 0xA0b869... speichert pro Adresse einen Wert.
+**[Slide 2] — Token-Grundlage + 6 Pflicht-Funktionen:** Smart Contract mit balance-Mapping (z.B. USDC auf 0xA0b869...). Pflicht-Interface: balanceOf, transfer, approve, transferFrom, allowance, totalSupply.
 
-**[Slide 3] — Die sechs Pflicht-Funktionen:** balanceOf, transfer, approve, transferFrom, allowance, totalSupply.
+**[Slide 3] — Events:** Transfer und Approval. Grundlage für Etherscan-Tracking.
 
-**[Slide 4] — Events:** Transfer und Approval. Grundlage für Etherscan-Tracking.
+**[Slide 4] — Decimals:** Integer-Rechnung. USDC = 6, ETH/DAI = 18, WBTC = 8. Häufige Fehlerquelle.
 
-**[Slide 5] — Decimals:** Integer-Rechnung. USDC = 6, ETH/DAI = 18, WBTC = 8. Häufige Fehlerquelle.
+**[Slide 5] — Mint/Burn:** USDC/USDT zentral, DAI collateralized, LP-Tokens automatisch, Memecoins fixed.
 
-**[Slide 6] — Mint/Burn:** USDC/USDT zentral, DAI collateralized, LP-Tokens automatisch, Memecoins fixed.
+**[Slide 6] — Problematische Varianten:** Fee-on-Transfer, Rebase, Pause-fähig, Blacklist, Upgradeable.
 
-**[Slide 7] — Problematische Varianten:** Fee-on-Transfer, Rebase, Pause-fähig, Blacklist, Upgradeable.
-
-**[Slide 8] — WETH:** ETH selbst ist kein ERC-20. WETH als 1:1-Wrapper für DeFi-Kompatibilität.
-
-**[Slide 9] — Lesen auf Etherscan:** Jeder ERC-20 hat eine Contract-Page mit "Read Contract" und "Write Contract"-Tabs.
+**[Slide 7] — WETH + Etherscan-Inspektion:** ETH ist kein ERC-20, WETH als 1:1-Wrapper. Jeder ERC-20 hat "Read Contract" und "Write Contract"-Tabs auf Etherscan.
 
 ## Sprechertext
 
 **[Slide 1]** Lektion 3.4: Der ERC-20-Token-Standard. Das ist der wichtigste Smart-Contract-Standard in DeFi. USDC, DAI, AAVE, UNI — alle ERC-20. Wer ERC-20 versteht, kann jeden Token einordnen.
 
-**[Slide 2]** Ein Token ist kein digitales Objekt in deiner Wallet. Es ist ein Smart Contract mit einem internen Ledger. Das Contract speichert ein Mapping: Adresse auf Balance. Wenn du "USDC hältst", bedeutet das: der USDC-Contract hat einen Eintrag, der deiner Adresse einen Wert zuordnet. Die offizielle USDC-Adresse auf Ethereum ist 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48. Schreib sie dir auf — sie wird dir oft begegnen.
+**[Slide 2]** Ein Token ist kein digitales Objekt in deiner Wallet. Es ist ein Smart Contract mit einem internen Ledger. Das Contract speichert ein Mapping: Adresse auf Balance. Wenn du "USDC hältst", bedeutet das: der USDC-Contract hat einen Eintrag, der deiner Adresse einen Wert zuordnet. Die offizielle USDC-Adresse auf Ethereum ist 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48. Schreib sie dir auf — sie wird dir oft begegnen. Sechs Pflicht-Funktionen definiert der Standard: balanceOf zeigt, wie viel eine Adresse hält. transfer bewegt Tokens vom Sender. approve erlaubt einem Spender, Tokens zu bewegen. transferFrom ist die Bewegung durch den Spender. allowance zeigt, wie viel der Spender darf. totalSupply zählt alle existierenden Tokens.
 
-**[Slide 3]** Sechs Pflicht-Funktionen. balanceOf: wie viel hält eine Adresse. transfer: Sender bewegt Tokens. approve: Besitzer erlaubt Spender, Tokens zu bewegen. transferFrom: der Spender bewegt die approved Tokens. allowance: wie viel darf Spender bewegen. totalSupply: wie viele Tokens existieren insgesamt.
+**[Slide 3]** Zwei Events. Transfer wird bei jedem Transfer emittiert, Approval bei jeder Approval. Diese Events werden on-chain in Block-Logs geschrieben. Das ist der Grund, warum Etherscan dir die Token-Bewegungen pro Adresse anzeigen kann — es liest diese Events aus.
 
-**[Slide 4]** Zwei Events. Transfer wird bei jedem Transfer emittiert, Approval bei jeder Approval. Diese Events werden on-chain in Block-Logs geschrieben. Das ist der Grund, warum Etherscan dir die Token-Bewegungen pro Adresse anzeigen kann — es liest diese Events aus.
+**[Slide 4]** Decimals — der häufigste Verwechslungspunkt. Smart Contracts rechnen mit Integern. Wenn USDC "100 USDC" anzeigt, speichert der Contract 100 mal 10 hoch 6 — also 100 Millionen. Weil USDC 6 Decimals hat. ETH und DAI haben 18, WBTC hat 8, USDC und USDT haben 6. Wenn du direkt mit dem Contract interagierst, musst du mit Decimals multiplizieren. Apps erledigen das für dich, bei manueller Interaktion nicht.
 
-**[Slide 5]** Decimals — der häufigste Verwechslungspunkt. Smart Contracts rechnen mit Integern. Wenn USDC "100 USDC" anzeigt, speichert der Contract 100 mal 10 hoch 6 — also 100 Millionen. Weil USDC 6 Decimals hat. ETH und DAI haben 18, WBTC hat 8, USDC und USDT haben 6. Wenn du direkt mit dem Contract interagierst, musst du mit Decimals multiplizieren. Apps erledigen das für dich, bei manueller Interaktion nicht.
+**[Slide 5]** Mint und Burn — das Erschaffen und Zerstören von Tokens. USDC und USDT werden zentral vom Emittenten geminted, wenn USD eingeht. DAI wird von Nutzern geminted, die Sicherheiten in MakerDAO sperren. LP-Tokens werden automatisch beim Hinzufügen von Liquidität geminted. Memecoins sind oft fixed supply — alles beim Deployment geminted, danach nicht mehr.
 
-**[Slide 6]** Mint und Burn — das Erschaffen und Zerstören von Tokens. USDC und USDT werden zentral vom Emittenten geminted, wenn USD eingeht. DAI wird von Nutzern geminted, die Sicherheiten in MakerDAO sperren. LP-Tokens werden automatisch beim Hinzufügen von Liquidität geminted. Memecoins sind oft fixed supply — alles beim Deployment geminted, danach nicht mehr.
+**[Slide 6]** Nicht jeder ERC-20 verhält sich standardkonform. Fünf Varianten, die Probleme machen können. Fee-on-Transfer: Token belastet bei jedem Transfer eine Gebühr. Viele Protokolle brechen. Rebase: Balance aller Halter wird automatisch angepasst. Kalkulationen werden falsch. Pause-fähig: Emittent kann Transfers stoppen. USDC und USDT haben das. Blacklist: spezifische Adressen können gesperrt werden. Auch USDC und USDT. Upgradeable: Contract kann nachträglich geändert werden. Flexibilität, aber auch Risiko.
 
-**[Slide 7]** Nicht jeder ERC-20 verhält sich standardkonform. Fünf Varianten, die Probleme machen können. Fee-on-Transfer: Token belastet bei jedem Transfer eine Gebühr. Viele Protokolle brechen. Rebase: Balance aller Halter wird automatisch angepasst. Kalkulationen werden falsch. Pause-fähig: Emittent kann Transfers stoppen. USDC und USDT haben das. Blacklist: spezifische Adressen können gesperrt werden. Auch USDC und USDT. Upgradeable: Contract kann nachträglich geändert werden. Flexibilität, aber auch Risiko.
-
-**[Slide 8]** Wichtig: ETH selbst ist kein ERC-20. Das native Asset folgt einem älteren Standard. Um ETH in Protokollen zu nutzen, die ERC-20 erwarten, wird es in WETH gewickelt. Du sendest ETH an den WETH-Contract und bekommst die gleiche Menge WETH zurück. Umgekehrt: WETH burnen und ETH zurückbekommen. Verhältnis immer 1:1, mathematisch garantiert. Deshalb handeln WETH und ETH zum exakt gleichen Preis.
-
-**[Slide 9]** Jeder ERC-20-Contract auf Etherscan hat zwei Tabs: Read Contract und Write Contract. Read zeigt die Read-Funktionen — balanceOf, totalSupply, decimals — die du aufrufen kannst, ohne zu signieren. Write zeigt die Write-Funktionen — transfer, approve — die eine Signatur und Gas brauchen. Diese direkte Interaktion mit Contracts ist die letzte Instanz, wenn ein Frontend nicht funktioniert oder manipuliert wirkt.
+**[Slide 7]** Wichtig: ETH selbst ist kein ERC-20. Das native Asset folgt einem älteren Standard. Um ETH in Protokollen zu nutzen, die ERC-20 erwarten, wird es in WETH gewickelt. Du sendest ETH an den WETH-Contract und bekommst die gleiche Menge WETH zurück. Umgekehrt: WETH burnen und ETH zurückbekommen. Verhältnis immer 1:1, mathematisch garantiert. Deshalb handeln WETH und ETH zum exakt gleichen Preis. Für die direkte Inspektion hat jeder ERC-20-Contract auf Etherscan zwei Tabs: Read Contract und Write Contract. Read zeigt die Read-Funktionen — balanceOf, totalSupply, decimals — die du aufrufen kannst, ohne zu signieren. Write zeigt die Write-Funktionen — transfer, approve — die eine Signatur und Gas brauchen. Diese direkte Interaktion mit Contracts ist die letzte Instanz, wenn ein Frontend nicht funktioniert oder manipuliert wirkt.
 
 ## Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 
-**[Slide 2]** Mapping-Darstellung: Adressen links, Balances rechts, Pfeile dazwischen.
+**[Slide 2]** Mapping-Darstellung: Adressen links, Balances rechts, Pfeile dazwischen. Darunter Funktionsliste mit kurzen Beschreibungen. **SCREENSHOT SUGGESTION:** USDC-Contract auf Etherscan, Read-Tab mit sichtbaren Standardfunktionen.
 
-**[Slide 3]** Funktionsliste mit kurzen Beschreibungen. **SCREENSHOT SUGGESTION:** USDC-Contract auf Etherscan, Read-Tab mit sichtbaren Standardfunktionen.
+**[Slide 3]** Event-Flow: Transfer-Call → Event emittiert → Etherscan liest Event.
 
-**[Slide 4]** Event-Flow: Transfer-Call → Event emittiert → Etherscan liest Event.
+**[Slide 4]** Decimals-Tabelle mit den häufigsten Tokens. Daneben die Integer-Umrechnung von "100 USDC" zu 100000000.
 
-**[Slide 5]** Decimals-Tabelle mit den häufigsten Tokens. Daneben die Integer-Umrechnung von "100 USDC" zu 100000000.
+**[Slide 5]** Mint/Burn-Flow-Diagramme für die vier Token-Kategorien.
 
-**[Slide 6]** Mint/Burn-Flow-Diagramme für die vier Token-Kategorien.
+**[Slide 6]** Fünf Warn-Karten für die problematischen Varianten mit jeweiligen Beispielen.
 
-**[Slide 7]** Fünf Warn-Karten für die problematischen Varianten mit jeweiligen Beispielen.
-
-**[Slide 8]** Diagramm des WETH-Deposit/Withdraw-Flows.
-
-**[Slide 9]** **SCREENSHOT SUGGESTION:** Etherscan-Contract-Page mit geöffnetem "Read Contract"-Tab bei USDC.
+**[Slide 7]** Diagramm des WETH-Deposit/Withdraw-Flows. **SCREENSHOT SUGGESTION:** Etherscan-Contract-Page mit geöffnetem "Read Contract"-Tab bei USDC.
 
 ## Übung
 
@@ -216,8 +204,8 @@ Drei mögliche Ursachen. 1. **Falsche Chain:** Du hast den Token auf Ethereum Ma
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → ERC-20-Standardfunktionen → Decimals & totalSupply → Mint/Burn → approve/transferFrom → Problematische Varianten (Fee-on-Transfer, Rebase, Pause) → Admin/Governance-Funktionen → Due-Diligence-Checkliste
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → Token-Grundlage + 6 Pflicht-Funktionen → Events → Decimals → Mint/Burn → Problematische Varianten → WETH + Etherscan-Inspektion
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — ERC-20-Interface-Diagramm, Decimals-Beispiel, approve/transferFrom-Flussdiagramm, USDT/USDC-Code-Screenshot (Blacklist/Pause), Etherscan-Token-Seite
 
 Pipeline: Gamma → ElevenLabs → CapCut.

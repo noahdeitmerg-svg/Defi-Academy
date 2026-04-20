@@ -214,7 +214,7 @@ Mindestens drei zusätzliche Risikoquellen. Erstens: Vault-Kurator-Risiko. Der K
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Compound V3 Base-Asset-Architektur → Compound vs. Aave → Morpho-P2P-Matching → Morpho Blue Primitive → Vault-Ökosystem → Protokoll-Auswahl-Matrix
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Compound-V3-Interface-Screenshot, Morpho-P2P-Matching-Diagramm, Morpho-Blue-Modular-Architecture, Vault-Kurator-Struktur, Protokoll-Vergleichstabelle (TVL/Audit/Governance)
 
 Pipeline: Gamma → ElevenLabs → CapCut.

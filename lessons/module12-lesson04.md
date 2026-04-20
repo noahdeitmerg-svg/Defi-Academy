@@ -26,10 +26,10 @@ Markiert den Beginn der Flash-Loan-Angriffs-Ära.
 1. Flash-Loan 10.000 ETH von dYdX
 2. Teil für manipulierte bZx-Kurzposition
 3. Rest für Uniswap-WBTC-Kauf — bewegt Uniswap-Preis
-4. bZx nutzte Uniswap als Oracle → zeigt jetzt manipulierten Preis
+4. bZx nutzt Uniswap als Oracle → zeigt jetzt manipulierten Preis
 5. Position profitabel schließen, Rückzahlung
 
-**Verlust:** ~350k USD ersten, ~600k USD zweiten Angriff.
+**Verlust:** ca. 350k USD beim ersten Angriff, ca. 600k USD beim zweiten — zusammen ca. 1 Mio. USD.
 
 **Muster: Oracle-Manipulation** — Protokoll nutzt DEX-Pool als Oracle, Angreifer manipuliert DEX-Preis mit Flash-Loan-Kapital.
 
@@ -69,7 +69,7 @@ Auf Solana, aber Mechanismus EVM-übertragbar.
 **Angriff:**
 1. Große Position im dünn gehandelten MNGO-Token
 2. MNGO-Preis gepumpt auf anderen Exchanges
-3. Mango's interner Oracle reflektiert pumped Preis
+3. Mangos interner Oracle reflektiert den manipulierten Preis
 4. Position als Sicherheit für Millionen USDC-Borrow genutzt
 5. Mit geborgten Mitteln geflohen
 
@@ -83,7 +83,7 @@ Auf Solana, aber Mechanismus EVM-übertragbar.
 
 1. Flash-Loan 50M USDT
 2. USDC-Preis in Curve Y Pool manipulieren
-3. Harvest's fUSDC-Vault liest manipulierten Preis
+3. Harvests fUSDC-Vault liest manipulierten Preis
 4. Depositiert USDC bei niedrigem Preis, bekommt disproportional viele Shares
 5. Manipulation umgekehrt, Shares verkauft mit Gewinn
 
@@ -158,20 +158,9 @@ Illiquide-Asset-Manipulation
 117M USD
 Juristische Verurteilung
 
-**[Slide 7] — 5 Angriffs-Muster**
-Oracle-Manipulation
-Governance-Kaperung
-Reward-Fehler
-Bug-Verstärkung
-Illiquide Collateral
-
-**[Slide 8] — Resistenz-Checkliste**
-Chainlink/TWAP?
-Time-Lock?
-Time-Weighted Shares?
-Liquide Collateral?
-Mehrfach audited?
-Rate-Limits?
+**[Slide 7] — 5 Muster + 6-Punkt-Checkliste**
+Muster: Oracle-Manipulation, Governance-Kaperung, Reward-Fehler, Bug-Verstärkung, Illiquide Collateral
+Checkliste: Chainlink/TWAP | Time-Lock 24h-7d | Time-Weighted Shares | Liquide Collateral | Mehrere Audits | Rate-Limits
 
 ## Sprechertext
 
@@ -187,9 +176,7 @@ Rate-Limits?
 
 **[Slide 6]** Mango Markets Oktober 2022 auf Solana. Angreifer öffnete Position im illiquiden MNGO-Token, pumpte Preis, nutzte Position als Sicherheit für USDC-Borrow, floh. 117 Millionen Verlust. Angreifer argumentierte "legitime Strategie", wurde 2024 wegen Marktmanipulation verurteilt. Muster: illiquide Assets als Sicherheit.
 
-**[Slide 7]** Die fünf Haupt-Muster. Erstens: Oracle-Manipulation durch DEX-Pool-Bewegung. Zweitens: Governance-Kaperung ohne Time-Lock. Drittens: Reward- oder Share-Berechnungs-Fehler durch Single-Block-Snapshots. Viertens: existierende Bugs, die durch Flash-Loan-Skalierung ausnutzbar werden. Fünftens: illiquide Assets als Sicherheit mit manipulierbaren Preisen.
-
-**[Slide 8]** Die sechs-Punkt-Checkliste. Oracle: Chainlink oder TWAP 30+ Minuten resistent, Spot-Preis nicht. Governance: Time-Locks 24 Stunden bis 7 Tage. Shares: time-weighted, nicht Single-Block. Sicherheiten: nur liquide Assets mit 10M+ Tages-Volumen. Mehrere unabhängige Audits. Rate-Limits auf sensitive Funktionen. Prüfe vor jedem neuen Protokoll — 30-60 Minuten Recherche schützt vor katastrophalen Verlusten.
+**[Slide 7]** Die fünf Haupt-Muster und sechs-Punkt-Checkliste in einem. Die Muster: Erstens, Oracle-Manipulation durch DEX-Pool-Bewegung. Zweitens, Governance-Kaperung ohne Time-Lock. Drittens, Reward- oder Share-Berechnungs-Fehler durch Single-Block-Snapshots. Viertens, existierende Bugs, die durch Flash-Loan-Skalierung ausnutzbar werden. Fünftens, illiquide Assets als Sicherheit mit manipulierbaren Preisen. Die sechs-Punkt-Resistenz-Checkliste: Oracle Chainlink oder TWAP 30+ Minuten resistent, Spot-Preis nicht. Governance Time-Locks 24 Stunden bis 7 Tage. Shares time-weighted, nicht Single-Block. Sicherheiten nur liquide Assets mit 10M+ Tages-Volumen. Mehrere unabhängige Audits. Rate-Limits auf sensitive Funktionen. Prüfe vor jedem neuen Protokoll — 30 bis 60 Minuten Recherche schützt vor katastrophalen Verlusten.
 
 ## Visuelle Vorschläge
 
@@ -199,8 +186,7 @@ Rate-Limits?
 **[Slide 4]** Beanstalk-Hack-Flow.
 **[Slide 5]** Euler-Hack-Complexity.
 **[Slide 6]** **SCREENSHOT SUGGESTION:** Mango Exploit TX auf Solscan.
-**[Slide 7]** Fünf-Muster-Matrix.
-**[Slide 8]** Checkliste mit Ja/Nein-Markierungen.
+**[Slide 7]** Zwei-Spalten-Layout: links Fünf-Muster-Matrix, rechts Sechs-Punkt-Checkliste mit Ja/Nein-Markierungen.
 
 ## Übung
 
@@ -223,7 +209,7 @@ Wähle drei DeFi-Protokolle, prüfe für jedes die 6-Punkt-Checkliste:
 <details>
 <summary>Antwort anzeigen</summary>
 
-Beanstalk hatte fundamentale Schwachstelle: On-Chain-Governance ohne Time-Lock plus Flash-Loan-Verfügbarkeit plus liquider Governance-Token. Wenn alle drei Bedingungen erfüllt sind, ist Angriff nur Zeitfrage. Mathematische Certainty: mit 1 Mrd USD temporär Governance-Stimmen kaufen, abstimmen, verkaufen heißt effektiv jede Governance-Entscheidung treffen. Solange Transaktion profitabel (Wert extrahierbar > Gas + Fee), wird irgendwann jemand sie ausführen. Sicherheitsmodelle basierten auf falschen Annahmen — Designer gingen von "langsamer" Stimmrechts-Akkumulation aus, Flash Loans zerstörten das. Lehren für moderne Governance: Erstens: Time-Locks non-negotiable, 24-72h bis 7 Tage Delay. Flash-Loan-Stimmen können nichts bewirken, weil Time-Lock verhindert Ausnutzung. Zweitens: Snapshot-basierte Stimmrechts-Berechnung — Stimmrechte zum Zeitpunkt eines früheren Blocks. Drittens: Vesting-/Lock-basierte Stimmrechte wie Curve's veCRV — Flash-Loan-Nutzer haben 0 Lock-Zeit, minimal Stimmrechte. Viertens: Emergency-Mechanismen außerhalb Governance — Multisig-Zustimmung, Guardian-Role. Fünftens: wirtschaftliche Anreize gegen Governance-Angriffe. Praktische Anwendung: alle großen Protokolle (Aave, Compound, Maker, Curve) implementieren 2+ dieser Lehren. Seit 2023 keine großen Governance-Flash-Loan-Angriffe auf etablierte Protokolle. Neue Protokolle/Chains könnten Lehren ignorieren und Katastrophen wiederholen — deshalb bleibt Flash-Loan-Verständnis wichtig.
+Beanstalk hatte fundamentale Schwachstelle: On-Chain-Governance ohne Time-Lock plus Flash-Loan-Verfügbarkeit plus liquider Governance-Token. Wenn alle drei Bedingungen erfüllt sind, ist Angriff nur Zeitfrage. Mathematische Sicherheit: mit 1 Mrd USD temporär Governance-Stimmen kaufen, abstimmen, verkaufen heißt effektiv jede Governance-Entscheidung treffen. Solange Transaktion profitabel (Wert extrahierbar > Gas + Fee), wird irgendwann jemand sie ausführen. Sicherheitsmodelle basierten auf falschen Annahmen — Designer gingen von "langsamer" Stimmrechts-Akkumulation aus, Flash Loans zerstörten das. Lehren für moderne Governance: Erstens: Time-Locks non-negotiable, 24-72h bis 7 Tage Delay. Flash-Loan-Stimmen können nichts bewirken, weil Time-Lock verhindert Ausnutzung. Zweitens: Snapshot-basierte Stimmrechts-Berechnung — Stimmrechte zum Zeitpunkt eines früheren Blocks. Drittens: Vesting-/Lock-basierte Stimmrechte wie Curves veCRV — Flash-Loan-Nutzer haben 0 Lock-Zeit, minimal Stimmrechte. Viertens: Emergency-Mechanismen außerhalb Governance — Multisig-Zustimmung, Guardian-Role. Fünftens: wirtschaftliche Anreize gegen Governance-Angriffe. Praktische Anwendung: alle großen Protokolle (Aave, Compound, Maker, Curve) implementieren 2+ dieser Lehren. Seit 2023 keine großen Governance-Flash-Loan-Angriffe auf etablierte Protokolle. Neue Protokolle/Chains könnten Lehren ignorieren und Katastrophen wiederholen — deshalb bleibt Flash-Loan-Verständnis wichtig.
 </details>
 
 **Frage 2:** Entwirf einen Due-Diligence-Prozess (7-10 Schritte) für neues DeFi-Protokoll (3 Monate live)?
@@ -238,8 +224,8 @@ Systematischer 9-Schritte-Prozess: Schritt 1: Dokumentation lesen (30-45 Min). S
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → bZx (2020) → Harvest (2020) → Cream (2021) → Mango (2022) → Beanstalk (2022) → Gemeinsame Muster → Due-Diligence-Checkliste
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Grundmechanismus → bZx (Feb 2020) → Beanstalk (Apr 2022) → Euler (Mär 2023) → Mango (Okt 2022) → 5 Muster und 6-Punkt-Checkliste
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Angriffs-Zeitleiste, Oracle-Manipulations-Diagramme, Protokoll-Schwachstellen-Matrix, Due-Diligence-Flowchart, Exploit-Volumen-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.

@@ -8,7 +8,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Verstehen, warum der Preis bei großen Swaps stark vom "fairen" Preis abweicht
 - Die Rolle der 0,3%-Gebühr in Uniswap V2 und deren Verteilung an LPs einordnen
 - Den Begriff "Spot Price" aus den aktuellen Pool-Beständen ableiten und den tatsächlichen Ausführungspreis davon abgrenzen
-- Die Bedeutung der Pool-Tiefe (Liquidity Depth) für Price Impact quantitativ einschätzen
+- Die Bedeutung der Pool-Tiefe (Liquidity Depth) für Preis-Impact quantitativ einschätzen
 
 ## Erklärung
 
@@ -40,6 +40,8 @@ Beispiel: Ein ETH/USDC-Pool hält 1.000 ETH und 3.000.000 USDC. Der Spot-Preis v
 
 Wenn mehr USDC nachgefragt wird als ETH im Verhältnis, verändert sich das Ratio — und damit der Preis.
 
+**Kernprinzip:** Der Preis in einem AMM ergibt sich aus dem Verhältnis der Poolreserven (Preis ≈ y / x). Trades verschieben die Reserven entlang der x·y=k-Kurve — und damit auch den Preis.
+
 **Ein Swap in Zahlen**
 
 Angenommen, du willst 10 ETH in USDC tauschen. Vor dem Swap:
@@ -69,6 +71,8 @@ Gleichzeitig hat die Formel eine unangenehme Eigenschaft: **Die meiste Liquidit�
 Der Pool-Preis kann vom externen Marktpreis abweichen. Wenn der externe Markt ETH bei 3.000 USDC handelt, aber der Pool bei 2.990 USDC quotiert, entsteht ein Arbitrage-Anreiz: Jemand kauft ETH aus dem Pool (billig) und verkauft es auf dem externen Markt (teurer). Dieser Arbitrage-Trade verschiebt das Verhältnis im Pool, bis der Pool-Preis wieder dem externen Preis entspricht.
 
 Arbitrage ist ein wesentlicher Teil des AMM-Mechanismus. Sie hält den Pool-Preis am "wahren" Markt ausgerichtet — auf Kosten der Liquiditätsanbieter, die durch die Arbitrage **Impermanent Loss** erleiden (Modul 5).
+
+**Wichtig zum Verständnis:** Impermanent Loss entsteht nur, wenn sich der Marktpreis relativ zum Pool verändert. Bei konstantem Preis entsteht kein Impermanent Loss.
 
 ## Folien-Zusammenfassung
 
@@ -114,7 +118,7 @@ Mechanisch notwendig — erzeugt Impermanent Loss für LPs.
 
 **[Slide 6]** Die Kurve. Die Constant-Product-Formel hat eine schöne Eigenschaft: der Pool kann nie vollständig leergehandelt werden. Um alle ETH herauszuziehen, müsste man unendlich viele USDC einzahlen. Das ist ein Schutz gegen Pool-Ausräumung. Die unangenehme Eigenschaft: die Liquidität verteilt sich über den gesamten Preisbereich, aber die meiste liegt in Bereichen, die praktisch nie erreicht werden. Das ist kapital-ineffizient. Uniswap V3 löst dieses Problem teilweise — kommt in Lektion 4.4.
 
-**[Slide 7]** Arbitrage. Der Pool-Preis kann vom externen Marktpreis abweichen. Wenn das passiert, entsteht ein Anreiz: Arbitrageure kaufen, wo der Preis niedriger ist, und verkaufen, wo er höher ist. Diese Arbitrage verschiebt das Pool-Verhältnis zurück zum Marktpreis. Arbitrage ist mechanisch notwendig für funktionierende AMMs — und sie erzeugt Impermanent Loss für Liquiditätsanbieter. Das ist das Haupt-Risiko des LP-Seins, und wir gehen in Modul 5 tief hinein.
+**[Slide 7]** Arbitrage. Der Pool-Preis kann vom externen Marktpreis abweichen. Wenn das passiert, entsteht ein Anreiz: Arbitrageure kaufen, wo der Preis niedriger ist, und verkaufen, wo er höher ist. Diese Arbitrage verschiebt das Pool-Verhältnis zurück zum Marktpreis. Arbitrage ist mechanisch notwendig für funktionierende AMMs — und sie erzeugt Impermanent Loss für Liquiditätsanbieter. Das ist das Haupt-Risiko für Liquiditätsanbieter, und wir gehen in Modul 5 tief hinein.
 
 ## Visuelle Vorschläge
 
@@ -168,7 +172,7 @@ Weil die Liquidität sich über den gesamten theoretischen Preisbereich von null
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → x·y=k Visualisierung → Pool-Beispiel → Swap-Preisberechnung → Price-Impact-Effekt bei großen Swaps → 0,3%-Fee-Struktur → V2-Grenzen
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — x·y=k Hyperbel-Kurve, Pool-Zustand-Diagramm vor/nach Swap, Price-Impact-Kurve über Trade-Größe, Uniswap-V2-Interface-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.

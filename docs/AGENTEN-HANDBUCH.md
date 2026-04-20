@@ -20,12 +20,35 @@
 
 | Begriff | Wert | Quelle / Bedeutung |
 |--------|------|---------------------|
-| **Ziel-Lernprogramm** | **17 Module**, **102 Lektionen** | `docs/defi-akademie-build-dokument.md` (UX-/Plattform-Spezifikation) |
-| **Kursautoren-Quelle (`Module/`)** | **Alle 17 Module** als `modul-NN-*-FINAL.md` — Modul 17: **`modul-17-portfolio-construction-rwa-FINAL.md`** | Hier liegt das vollständige Rohmaterial; bei inhaltlicher Arbeit **immer** diesen Ordner prüfen. |
-| **Plattform-Build (`content/modules/`)** | (a) Legacy **`module1`…`module17`** — (b) UX-Slugs **`01-defi-grundlagen`**, **`02-wallets-sicherheit`**, **`03-blockchain-mechanik`** (je `module.json`, Lektionsordner mit `lesson.md`) | (a) Auto-Import aus `Module/`. (b) Free-Module 1–3 für `/kurs/…` befüllt; Modul 4–17 UX-Ordner folgen nach Entscheid / Import-Tool. |
+| **Ziel-Lernprogramm** | **18 Module**, **ca. 102 Lektionen** | `docs/defi-akademie-build-dokument.md` (UX-/Plattform-Spezifikation) |
+| **Kursautoren-Quelle (`Module/`)** | **Module 0–17** als `modul-NN-*-FINAL.md` — Modul 17: **`modul-17-portfolio-construction-rwa-FINAL.md`** | Hier liegt das vollständige Rohmaterial; bei inhaltlicher Arbeit **immer** diesen Ordner prüfen. |
+| **Plattform-Build (`content/modules/`)** | (a) Legacy **`module1`…`module17`** — (b) UX-Slugs **`01-defi-grundlagen`**, **`02-wallets-sicherheit`**, **`03-blockchain-mechanik`** (je `module.json`, Lektionsordner mit `lesson.md`) | (a) Auto-Import aus `Module/`. (b) Free-Module 1–3 für `/kurs/…` befüllt; Modul 0 + 4–17 UX-Ordner folgen nach Entscheid / Import-Tool. |
 | **Videos auf `main` (`public/videos/`)** | **Modul 1–3** je 6 Lektionen fertig | Modul **4–17**: Batch noch ausstehend — siehe Abschnitt 7 |
 
-**Wichtig für Doku-Konsistenz:** Ältere Texte wiesen fälschlich „Modul 4–16“ aus. Korrekt ist **„Modul 4–17“** (= alles nach den drei Free-Grundlagenmodulen), solange die Vision 17 Module umfasst.
+**Modul 0 (neu):** Orientation/Introduction. Zweck: Studierende vor den technischen Modulen in Struktur der Akademie, Risiko-Bewusstsein und Lernmethodik einführen.
+
+### Verbindliche Modulreihenfolge (0–17)
+
+1. Module 0 — Introduction to the DeFi Academy  
+2. Module 1 — DeFi Fundamentals  
+3. Module 2 — Wallets and Security  
+4. Module 3 — Blockchain Mechanics  
+5. Module 4 — DEX Mechanics  
+6. Module 5 — Liquidity Pools  
+7. Module 6 — Lending Markets  
+8. Module 7 — Collateral and Liquidations  
+9. Module 8 — Stablecoins  
+10. Module 9 — Yield Strategies  
+11. Module 10 — Leverage Loops  
+12. Module 11 — MEV  
+13. Module 12 — Flash Loans  
+14. Module 13 — veTokenomics  
+15. Module 14 — Cross-Chain Infrastructure  
+16. Module 15 — On-Chain Analytics  
+17. Module 16 — Composability Risk  
+18. Module 17 — Portfolio Construction and RWA
+
+**Lernpfad (aktualisiert):** Orientation (Modul 0) → Foundations (1–4) → Protocols (5–10) → Infrastructure (11–14) → Advanced Analysis and Strategy (15–17).
 
 ---
 
@@ -55,6 +78,7 @@
 | Klassische Liste | `app/klassisch/page.tsx` |
 | Content **UX-Pfad** | `content/modules/01-defi-grundlagen/…`, `02-wallets-sicherheit/…`, `03-blockchain-mechanik/…` (`module.json`, `*/lesson.md`, `slides.json`, `quiz.json`) |
 | Content **Legacy** | `content/modules/moduleN/` (`meta.json`, `N-x.md`, ggf. `quiz.json` / `open-quiz.md`) |
+| Content **Zielstruktur (neu)** | `content/modules/module-00/` … `content/modules/module-17/` (dokumentiert; bestehende Ordner vorerst unverändert) |
 | Autoren-Quelle | `Module/modul-NN-*-FINAL.md` → optional Auto-Import nach `content/modules/` |
 | Video **Legacy-UI** | `lib/lessonAssets.ts` → `public/videos/<moduleSlug>-<lessonSlug>.mp4` |
 | Video **UX-Lektion** | `lib/content/loadLesson.ts` → CDN `…/modules/{modulId}/{lektionId}.mp4` |
@@ -135,7 +159,7 @@ Lebendes Backlog: **`docs/offeneAufgaben.md`**.
 |----------|--------|
 | **`docs/AGENTEN-HANDBUCH.md`** (dieses) | Master: Stand, Zahlen, Deploy, Roadmaps, Verweise |
 | **`docs/SYSTEMKONTEXT.md`** | Kurz-Gedächtnis + **Changelog** bei Repo-Meilensteinen |
-| **`docs/defi-akademie-build-dokument.md`** | Volle UX-/Plattform-Spezifikation (17 Module, Phasen 1–12) |
+| **`docs/defi-akademie-build-dokument.md`** | Volle UX-/Plattform-Spezifikation (18 Module inkl. Modul 0, Phasen 1–12) |
 | **`docs/defi_academy_system.md`** | Tiefe Systemdoku, Agenten-Rollen, Pipeline-Details |
 | **`docs/academy-structure.md`** | Terminologie & Hierarchie |
 | **`docs/academy-build.md`** | Academy-Build npm-Workflow |

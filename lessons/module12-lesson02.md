@@ -130,13 +130,9 @@ Sich selbst liquidieren
 Vermeidet 5-15% Bonus
 Notfall-Tool
 
-**[Slide 7] — Tools für Retail**
-DeFi Saver (defisaver.com)
-Instadapp
-Furucombo
-
-**[Slide 8] — Relevanz-Matrix**
-Arbitrage/Liquidation: niedrig
+**[Slide 7] — Retail-Tools und Relevanz**
+DeFi Saver (defisaver.com), Instadapp, Furucombo
+Arbitrage/Liquidation: niedrig für Retail
 Collateral-Swap/Refinancing: hoch
 Self-Liquidation: Notfall
 
@@ -154,9 +150,7 @@ Self-Liquidation: Notfall
 
 **[Slide 6]** Anwendung 5: Self-Liquidation, Notfall-Tool. Position nahe Liquidations-Schwelle. Externe Liquidation kostet 5 bis 15 Prozent Bonus. Self-Liquidation via Flash Loan vermeidet das. Kann mehrere Tausend Dollar sparen.
 
-**[Slide 7]** Tools für Retail-Nutzer. DeFi Saver als umfassendstes Angebot mit Drag-and-Drop-UI. Instadapp Lite für Ein-Klick-Lösungen. Furucombo als Visual Builder für eigene Logik. Alle kostenlos oder mit kleinen Service-Gebühren.
-
-**[Slide 8]** Die Relevanz-Matrix. Arbitrage und Liquidation: niedrig für Retail. Collateral-Swap und Refinancing: hoch — bei Portfolio-Umstrukturierungen oder Zins-Optimierung. Self-Liquidation: Notfall. Die praktische Empfehlung: DeFi Saver als Tool im Portfolio-Toolkit haben, für spezifische Situationen einsetzen.
+**[Slide 7]** Tools für Retail-Nutzer und ihre Relevanz. DeFi Saver als umfassendstes Angebot mit Drag-and-Drop-UI, Instadapp Lite für Ein-Klick-Lösungen, Furucombo als Visual Builder für eigene Logik — alle kostenlos oder mit kleinen Service-Gebühren. Die Relevanz-Matrix für Retail: Arbitrage und Liquidation sind niedrig — das überlassen normale Nutzer den professionellen Searchern. Collateral-Swap und Refinancing sind hoch relevant — bei Portfolio-Umstrukturierungen oder Zins-Optimierung. Self-Liquidation ist eine Notfall-Option. Die praktische Empfehlung: DeFi Saver als Tool im Portfolio-Toolkit haben, für spezifische Situationen einsetzen.
 
 ## Visuelle Vorschläge
 
@@ -166,8 +160,7 @@ Self-Liquidation: Notfall
 **[Slide 4]** **SCREENSHOT SUGGESTION:** DeFi Saver Collateral-Swap-Interface.
 **[Slide 5]** Debt-Migration-Diagramm Aave → Compound.
 **[Slide 6]** Self-Liquidation vs. externe Liquidation Vergleich.
-**[Slide 7]** **SCREENSHOT SUGGESTION:** Furucombo Visual-Builder.
-**[Slide 8]** Relevanz-Matrix tabellarisch.
+**[Slide 7]** Zwei-Spalten-Layout: links **SCREENSHOT SUGGESTION** Furucombo Visual-Builder, rechts Relevanz-Matrix tabellarisch.
 
 ## Übung
 
@@ -208,8 +201,8 @@ Die Kosten-Hierarchie: **Manuelles Deleveraging (beste Option):** 250-500 USD Ko
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → 5 Haupt-Anwendungsfälle → Collateral-Swap-Walkthrough → Self-Liquidation → Debt-Refinancing → Leverage-Eröffnung → Retail-Relevanz
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Arbitrage → Liquidationen → Collateral-Swap → Debt-Refinancing → Self-Liquidation → Retail-Tools und Relevanz
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Anwendungsfälle-Matrix, Collateral-Swap-Flowchart, Self-Liquidation-Diagramm, Debt-Refinancing-Szenario, Kostenhierarchie-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.

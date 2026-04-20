@@ -199,15 +199,11 @@ Yield 4,4%, 7–8% bei moderatem ETH-Anstieg
 Yield 5,3%, 7–8% bereits bei geringer ETH-Bewegung
 Höhere Komplexität
 
-**[Slide 6] — Nutzer-Profile**
-A: Einsteiger, zeit-arm
-B: mittlere Erfahrung
-C: fortgeschritten, höheres Zeit-Budget
+**[Slide 6] — Profil-Wahl und Regeln**
+Nutzer-Profil: A (Einsteiger) / B (mittlere Erfahrung) / C (fortgeschritten)
+6 Regeln: Protokoll-Div., Mechanismus-Div., Reserve, Monitoring, Exit-Trigger, Realismus
 
-**[Slide 7] — Die 6 Regeln**
-Diversifikation Protokolle, Mechanismen, Reserve, Monatlich monitoren, Exit-Trigger, realistisch
-
-**[Slide 8] — Bär-Markt-Test**
+**[Slide 7] — Bär-Markt-Test**
 ETH −50% → Portfolio ca. −10 bis −11%
 Strukturell robust, aber nicht null-Verlust
 
@@ -223,11 +219,9 @@ Strukturell robust, aber nicht null-Verlust
 
 **[Slide 5]** Strategie C, die Yield-Maximierte Variante. Sieben Positionen inklusive PT-sUSDe, Curve-Convex-LP und weETH als LRT. Yield-Rendite etwa 5,3 Prozent. 7 bis 8 Prozent werden bereits bei geringer ETH-Bewegung erreicht. Aber: höhere Komplexität mit mehr Monitoring-Aufwand und zusätzlichen Risiko-Ebenen durch sUSDe und LRT-Exposure.
 
-**[Slide 6]** Welche Strategie passt zu welchem Nutzer. A für Einsteiger und zeit-arme Nutzer unter einer Stunde Management pro Monat. B für mittlere Erfahrung und 2 bis 3 Stunden pro Monat. C für fortgeschrittene Nutzer mit 5 oder mehr Stunden pro Monat. Die Wahl ist individuell — es gibt keine objektiv beste Option.
+**[Slide 6]** Profil-Wahl und die sechs Regeln. Welche Strategie passt zu welchem Nutzer. A für Einsteiger und zeit-arme Nutzer unter einer Stunde Management pro Monat. B für mittlere Erfahrung und zwei bis drei Stunden pro Monat. C für fortgeschrittene Nutzer mit fünf oder mehr Stunden pro Monat. Die Wahl ist individuell — es gibt keine objektiv beste Option. Sechs Regeln gelten unabhängig von der Strategie. Erstens: Diversifikation über Protokolle — keine Position über 30 Prozent. Zweitens: Diversifikation über Mechanismen — Mix aus Lending, Staking, LP, Fixed Yield. Drittens: Reserve halten, mindestens 5 bis 10 Prozent. Viertens: monatliches Monitoring. Fünftens: Exit-Trigger klar definiert. Und sechstens: realistische Erwartungen — 7 bis 8 Prozent ist Ziel, nicht Garantie.
 
-**[Slide 7]** Sechs Regeln unabhängig von der Strategie. Diversifikation über Protokolle — keine Position über 30 Prozent. Diversifikation über Mechanismen — Mix aus Lending, Staking, LP, Fixed Yield. Reserve halten, mindestens 5 bis 10 Prozent. Monatliches Monitoring. Exit-Trigger klar definiert. Und realistische Erwartungen — 7 bis 8 Prozent ist Ziel, nicht Garantie.
-
-**[Slide 8]** Der Bär-Markt-Test. Wenn ETH 50 Prozent fällt über 12 Monate, alle drei Strategien zeigen ähnliche Verluste von etwa 10 bis 11 Prozent. Das ist strukturell robust, aber kein Null-Verlust. Portfolios mit ETH-Exposure verlieren in Bär-Markets Wert — das ist unvermeidlich. Der Unterschied zu konzentrierten Portfolios: der konservative Mix begrenzt die Verluste deutlich.
+**[Slide 7]** Der Bär-Markt-Test. Wenn ETH 50 Prozent fällt über 12 Monate, alle drei Strategien zeigen ähnliche Verluste von etwa 10 bis 11 Prozent. Das ist strukturell robust, aber kein Null-Verlust. Portfolios mit ETH-Exposure verlieren in Bär-Markets Wert — das ist unvermeidlich. Der Unterschied zu konzentrierten Portfolios: der konservative Mix begrenzt die Verluste deutlich.
 
 ## Visuelle Vorschläge
 
@@ -241,11 +235,9 @@ Strukturell robust, aber nicht null-Verlust
 
 **[Slide 5]** Kuchendiagramm Strategie C mit Rendite-Bereichen.
 
-**[Slide 6]** Drei-Profile-Tabelle mit Empfehlung.
+**[Slide 6]** Zwei-Spalten-Layout: links Drei-Profile-Tabelle (A/B/C) mit Empfehlung, rechts Sechs-Regeln-Checkliste.
 
-**[Slide 7]** Sechs-Regeln-Checkliste.
-
-**[Slide 8]** Bär-Markt-Stress-Test-Tabelle.
+**[Slide 7]** Bär-Markt-Stress-Test-Tabelle.
 
 ## Übung
 
@@ -307,8 +299,8 @@ Weil Bär-Markts der Stresstest für jede Strategie sind und die Zeit, in der sc
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Strategie-Aufbau → Portfolio-Beispiele A/B/C → Yield-Source-Breakdown → Realistische Renditeziele → Monitoring-Protokoll → Bär-Markt-Test
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Die ehrliche Einordnung → Strategie A (Minimalist) → Strategie B (Balanced) → Strategie C (Yield-Maximiert) → Profil-Wahl und Regeln → Bär-Markt-Test
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Strategie-Aufbau-Pyramide, Portfolio-Pie-Charts A/B/C, Yield-Breakdown-Chart, Rendite-Erwartungen-Matrix, Bär-Markt-Stress-Test-Simulation
 
 Pipeline: Gamma → ElevenLabs → CapCut.

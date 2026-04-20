@@ -7,7 +7,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Eine monatliche Sicherheits-Routine etablieren
 - Einen Notfall-Plan für den Fall einer Wallet-Kompromittierung dokumentieren
 - Die Kapital-Aufteilung zwischen Vault, DeFi- und Transaktions-Wallet begründet festlegen (Default 70/25/5)
-- Die drei mentalen Sicherheitsregeln (Annahme der Kompromittierung, Slow is Security, keine Nachsorge) in der täglichen Praxis anwenden
+- Die drei mentalen Sicherheitsregeln (Annahme der Kompromittierung, Langsamkeit ist Sicherheit, keine Rettung im Nachhinein) in der täglichen Praxis anwenden
 - Die Verzahnung von Storage, Signatur, Approval und Multisig zu einem konsistenten Produktions-Setup integrieren
 
 ## Erklärung
@@ -99,7 +99,7 @@ Sicherheit in DeFi ist kein Produkt, sondern eine Praxis. Die besten Setups werd
 Drei mentale Regeln:
 1. **Annahme der Kompromittierung:** Plane für den Fall, dass dein aktives Wallet gehackt ist. Was würde maximal verloren gehen? Ist das akzeptabel?
 2. **Slow ist Sicherheit:** Drainer leben von Hektik. Bei jeder ungewöhnlichen Signatur: zehn Sekunden pausieren, prüfen, dann signieren.
-3. **Kein Fix im Nachhinein:** Transaktionen sind unwiderruflich. Prävention ist alles, Nachsorge ist Verlustbegrenzung.
+3. **Kein Fix im Nachhinein:** Transaktionen sind unwiderruflich. Prävention ist alles, Reaktion nach dem Vorfall ist reine Verlustbegrenzung.
 
 ## Folien-Zusammenfassung
 
@@ -113,7 +113,7 @@ Drei mentale Regeln:
 
 **[Slide 5]** Notfall-Plan: neue Wallet, Assets transferieren, Approvals widerrufen.
 
-**[Slide 6]** Das Sicherheits-Mindset: Annahme der Kompromittierung, Slow is Security, keine Nachsorge.
+**[Slide 6]** Das Sicherheits-Mindset: Annahme der Kompromittierung, Langsamkeit ist Sicherheit („Slow is Security"), keine Rettung im Nachhinein.
 
 ## Sprechertext
 
@@ -123,11 +123,11 @@ Drei mentale Regeln:
 
 **[Slide 3]** Bei hunderttausend Dollar Gesamtkapital: siebzigtausend im Vault, fünfundzwanzigtausend in DeFi, fünftausend für Experimente. Die Zahlen sind Orientierung. Logik: je aktiver genutzt, desto weniger Kapital.
 
-**[Slide 4]** Monatliche Routine. Approval-Audit auf revoke.cash. Position-Check auf DeBank oder Zapper. Firmware- und Software-Updates. Backup-Zustand quartalsweise. Inheritance-Plan jährlich. Gute Sicherheit ist Disziplin, nicht einmaliges Setup.
+**[Slide 4]** Monatliche Routine. Approval-Audit auf revoke.cash oder Rabby. Position-Check auf DeBank oder Zapper. Firmware- und Software-Updates. Backup-Zustand quartalsweise. Inheritance-Plan jährlich. Gute Sicherheit ist Disziplin, nicht einmaliges Setup.
 
 **[Slide 5]** Notfall-Plan bei Kompromittierungsverdacht. Neue Wallet mit neuer Seed-Phrase auf sauberem Gerät erstellen. Alle wertvollen Assets transferieren. LP- und Lending-Positionen schließen. Dann Approvals der alten Wallet widerrufen. Geschwindigkeit ist entscheidend — oft hast du nur Sekunden bis Minuten.
 
-**[Slide 6]** Das Mindset. Annahme der Kompromittierung: plane für den Fall, dass dein aktives Wallet gehackt ist. Slow is Security: Drainer leben von Hektik, zehn Sekunden Pause bei ungewöhnlichen Signaturen. Keine Nachsorge: Transaktionen sind unwiderruflich, Prävention ist alles. Diese drei Prinzipien ersetzen keine technischen Werkzeuge — aber ohne sie sind die Werkzeuge wertlos.
+**[Slide 6]** Das Sicherheits-Mindset. Annahme der Kompromittierung: plane für den Fall, dass dein aktives Wallet gehackt ist. Langsamkeit ist Sicherheit — auf Englisch „Slow is Security": Drainer leben von Hektik, zehn Sekunden Pause bei ungewöhnlichen Signaturen. Keine Rettung im Nachhinein: Transaktionen sind unwiderruflich, Prävention ist alles. Diese drei Prinzipien ersetzen keine technischen Werkzeuge — aber ohne sie sind die Werkzeuge wertlos.
 
 ## Visuelle Vorschläge
 
@@ -176,7 +176,7 @@ Sofort: Transfer aller wertvollen Assets aus der Transaktions-Wallet zur DeFi-Wa
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 6 Slides: Titel → Drei-Wallet-Modell → Aufteilungs-Beispiel 70/25/5 → Monatliche Routine → Notfall-Plan → Sicherheits-Mindset
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Drei-Kreise-Diagramm Vault/DeFi/Transaktion, Kuchendiagramm 70/25/5, Kalender-Checkliste, Notfall-Flussdiagramm, Mindset-Icons
 
 Pipeline: Gamma → ElevenLabs → CapCut.

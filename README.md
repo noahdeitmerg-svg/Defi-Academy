@@ -127,7 +127,7 @@ npm run render:pilot       # Nur erste 5 Lektionen als Smoke-Test
 
 | Datei | Inhalt |
 |-------|--------|
-| **[docs/AGENTEN-HANDBUCH.md](docs/AGENTEN-HANDBUCH.md)** | **Master für Agenten:** Ist-Stand, 17 Module / 102 Lektionen (Ziel), Deploy, Roadmaps, Doku-Index |
+| **[docs/AGENTEN-HANDBUCH.md](docs/AGENTEN-HANDBUCH.md)** | **Master für Agenten:** Ist-Stand, 18 Module / ca. 102 Lektionen (Ziel), Deploy, Roadmaps, Doku-Index |
 | **Neue UX-Shell** | Start `/`, App `/dashboard`, Kurs `/kurs/...`, Fortschritt, Profil; **Legacy**-Kurs unter `/klassisch` und `/module/...` (nur Ordner `moduleN` in `content/modules/`) |
 | [docs/BUILD.md](docs/BUILD.md) | Node, Build, Akademie-Inhalte |
 | [docs/academy-build.md](docs/academy-build.md) | Academy-Build-Pipeline: 2 Commands + 2 Uploads → Videos |
@@ -146,7 +146,8 @@ Statischer Export, **GitHub Actions** → Pages: [docs/GITHUB_PAGES.md](docs/GIT
 
 ## Akademie-Inhalte
 
-Inhalt unter **`content/modules/`** (Module → Lektionen → Quiz/Praxisuebung).
+Inhalt unter **`content/modules/`** (Module → Lektionen → Quiz/Praxisuebung).  
+Dokumentierte Zielstruktur für das Curriculum: `content/modules/module-00` … `content/modules/module-17` (Modul 0 = Orientation / Introduction).
 Neue `.md`-Lektionen dort reichen; die App liest zur Laufzeit. Die
 vollstaendige Begriffshierarchie steht in
 [docs/academy-structure.md](docs/academy-structure.md).

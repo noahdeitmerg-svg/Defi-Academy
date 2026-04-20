@@ -83,9 +83,9 @@ Der Zusammenbruch von FTX selbst betraf DeFi nur mittelbar (weil FTX eine CEX wa
 
 1. **Hoher systemweiter Leverage:** Wenn viele Nutzer hochgehebelt sind, sind viele Positionen gleichzeitig fragil. Eine Bewegung triggert Massen-Liquidationen.
 
-2. **Konzentrierte Collateral-Typen:** Wenn ein einzelner Asset-Typ (z.B. stETH) in Vielen Positionen das Collateral ist, führt ein Depeg zu sehr vielen gleichzeitigen Liquidationen.
+2. **Konzentrierte Collateral-Typen:** Wenn ein einzelner Asset-Typ (z.B. stETH) in vielen Positionen das Collateral ist, führt ein Depeg zu sehr vielen gleichzeitigen Liquidationen.
 
-3. **Ähnliche Positions-Struktur:** Wenn viele Nutzer dieselben Strategie fahren (z.B. stETH → ETH-Loop), werden sie alle gleichzeitig betroffen.
+3. **Ähnliche Positions-Struktur:** Wenn viele Nutzer dieselbe Strategie fahren (z.B. stETH → ETH-Loop), werden sie alle gleichzeitig betroffen.
 
 4. **Oracle-Lags in Krisen:** Oracle-Updates können während extremer Volatilität verzögert sein, was "verzögerte Crashes" erzeugt, wenn das Update endlich kommt.
 
@@ -96,7 +96,7 @@ Der Zusammenbruch von FTX selbst betraf DeFi nur mittelbar (weil FTX eine CEX wa
 Wie schützt sich eine konservative Strategie gegen Kaskaden?
 
 **1. Niedriger Leverage:**
-Bei Health Factor 2,0+ überlebt die Position auch 50%-Crashes. Bei HF 1,2 wird sie schon bei 20%-Crash kritisch. Der Multiplikator-Effekt von HF-Höhe ist dramatisch.
+Bei Health Factor 2,0+ überlebt die Position auch 50%-Crashes. Bei HF 1,2 wird sie schon bei 20%-Crash kritisch. Der Multiplikator-Effekt von HF-Höhe ist erheblich.
 
 **2. Diversifikation der Collateral-Typen:**
 Nicht nur stETH, nicht nur WBTC, nicht nur ETH. Mehrere unkorrelierte (oder nur schwach korrelierte) Collaterals.
@@ -185,7 +185,7 @@ Stell dir folgende Position vor: 20.000 USD ETH-Collateral, 12.000 USD USDC-Schu
 2. Szenario A: ETH fällt langsam über 2 Wochen um 30%. Was passiert? Kannst du reagieren?
 3. Szenario B: ETH crasht in 4 Stunden um 30%. Was passiert? Kannst du reagieren?
 4. Szenario C: Simultaner 30%-Crash und Gas-Kongestion (Gas-Preise 5x normal). Was passiert?
-5. Welches Sicherheitspolster (HF-Zielwert) hättest du setzen müssen, um alle drei Szenarien zu überleben?
+5. Welchen Sicherheitspuffer (HF-Zielwert) hättest du setzen müssen, um alle drei Szenarien zu überleben?
 
 **Deliverable:** Schriftliche Analyse der drei Szenarien (je 3–5 Sätze) + Antwort auf Frage 5 mit Begründung.
 
@@ -211,8 +211,8 @@ Leveraged Staking basiert auf der Annahme, dass stETH strukturell gleich ETH ist
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Kaskaden-Mechanik → Feedback-Loop → Black Thursday März 2020 → Terra/UST Mai 2022 → FTX-Kollaps November 2022 → Stress-Signale → Verhaltensregeln
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min. wegen mehrerer Fallstudien)
+- `slides_prompt.txt` — 7 Folien: Titel → Kaskaden-Mechanik → Black Thursday März 2020 → Terra/UST Mai 2022 → stETH-Depeg Juni 2022 → Kaskaden-Verstärker → Konservative Widerstandsfähigkeit
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Kaskaden-Feedback-Loop-Diagramm, Historische-Crash-Zeitleiste, Black-Thursday-ETH-Chart, UST-Depeg-Chart, System-Leverage-Indikatoren (DeFiLlama), Stress-Signal-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.

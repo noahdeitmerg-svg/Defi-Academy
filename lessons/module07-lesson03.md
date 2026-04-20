@@ -14,6 +14,10 @@ Nach Abschluss dieser Lektion können die Lernenden:
 
 Wenn dein Health Factor unter 1 fällt, beginnt der Liquidations-Prozess. Dieser Prozess ist vollständig automatisiert — kein Mensch entscheidet, kein Gnadenakt. Ein Smart Contract führt aus, was im Code steht. Diese Lektion erklärt den genauen Ablauf.
 
+**Warum Liquidationen existieren**
+
+Liquidationen schützen Lending-Protokolle vor Bad Debt. Wenn eine Position zu wenig Collateral hat, muss sie geschlossen werden, um das System solvent zu halten. Ohne diesen Mechanismus würde jede Position, deren Collateral-Wert unter die Schuld fällt, eine uneinbringliche Forderung — Bad Debt — für das Protokoll erzeugen. Bei ausreichendem Volumen würde das Protokoll insolvent und alle Supplier würden Verluste erleiden. Liquidationen sind also kein Strafmechanismus gegen einzelne Borrower, sondern eine strukturelle Solvenz-Sicherung für das Gesamtsystem.
+
 **Schritt 1: Der Liquidator-Bot erkennt die Gelegenheit**
 
 Spezialisierte Programme — Liquidator-Bots — überwachen Lending-Protokolle kontinuierlich. Sie lesen Pool-Zustände und Preis-Feeds alle paar Sekunden. Wenn eine Position unter Health Factor 1 fällt, identifiziert der Bot sie als "liquidatable".
@@ -61,6 +65,8 @@ Nach der Liquidation:
 - Die verbleibende Position (falls nicht voll liquidiert) ist wieder oberhalb Health Factor 1
 
 **Beispiel einer Full Liquidation:**
+
+**Hinweis zum Beispiel:** Dieses Setup zeigt den Worst Case — eine Position genau am LTV-Maximum. Ein konservativer Nutzer (HF 2,0+) wäre bei −10% ETH-Fall nicht liquidierbar. Das Beispiel illustriert die Mechanik, nicht empfohlene Praxis.
 
 Startposition:
 - 10 ETH Collateral bei 3.000 USD/ETH (30.000 USD)
@@ -198,8 +204,8 @@ Wenn eine Position langsam in die Liquidations-Zone rutscht — durch moderate P
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Liquidations-Trigger → Keeper-Bot-Rolle → Full vs. Partial Liquidation → Close Factor → Liquidations-Walkthrough → Etherscan-Analyse
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 6 Folien: Titel → Die vier Schritte einer Liquidation → Bot-Wettbewerb und Gas-Wars → Partial vs. Full Liquidation (Close Factor) → Beispiel-Rechnung → Etherscan-Transparenz
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Liquidations-Flussdiagramm, Keeper-Bot-Anreizstruktur, Close-Factor-Effekt-Grafik, Etherscan-Liquidation-Tx-Screenshot, Full-vs-Partial-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.

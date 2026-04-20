@@ -23,7 +23,7 @@ Das klingt verlockend — mehr Rendite ohne zusätzliches Kapital. Aber die zus�
 1. Ein ETH-Staker hinterlegt sein gestaktes ETH (oder LSTs wie wstETH, rETH) bei EigenLayer.
 2. Das Protokoll erlaubt diesem ETH, zusätzlich als Sicherheit für andere Protokolle zu dienen — sogenannte **AVS** (Actively Validated Services).
 3. Die AVS zahlen Rewards an die Restaker für diese zusätzliche Sicherung.
-4. Im Gegenzug kann der Restaker für Fehlverhalten der AVS-Infrastruktur slashed werden.
+4. Im Gegenzug kann der Restaker für Fehlverhalten der AVS-Infrastruktur geslasht werden.
 
 **Was ist ein AVS?**
 
@@ -31,7 +31,7 @@ AVS sind Middleware-Protokolle, die eigene Ethereum-ähnliche Sicherheits-Garant
 
 **Beispiele für AVS:**
 - **EigenDA:** Data-Availability-Service für Layer-2s (größter AVS)
-- **AltLayer:** Rollup-as-a-Service mit restaked Security
+- **AltLayer:** Rollup-as-a-Service mit restakter Sicherheit
 - **Lagrange:** Cross-Chain-Proofs
 - **Drosera:** Security-Monitoring
 - Weitere ~20+ AVS im Launch
@@ -115,7 +115,7 @@ Ein typischer LRT könnte folgende Rendite-Quellen haben:
 **Was zu vermeiden ist:**
 - 100% der ETH-Exposure in LRTs
 - Exotische LRTs mit kurzer History
-- Leveraged LRT-Positionen (kumuliert Risiken dramatisch)
+- Leveraged LRT-Positionen (kumuliert Risiken erheblich)
 - Pure Point-Farming ohne Verständnis der zugrunde liegenden Mechanik
 
 **Die praktische Alternative**
@@ -168,7 +168,7 @@ Reines Liquid Staking oft die bessere Wahl
 
 **[Slide 1]** Restaking ist eine der wichtigsten Innovationen im Ethereum-Ökosystem der letzten Jahre. Es klingt verlockend: mehr Rendite ohne zusätzliches Kapital. Aber die zusätzliche Rendite kommt aus zusätzlichem Risiko. Diese Lektion seziert die Mechanik konservativ.
 
-**[Slide 2]** Das Grundkonzept. Gestaktes ETH wird nochmal genutzt, um zusätzliche Protokolle zu sichern. Ein Staker hinterlegt sein gestaktes ETH oder LSTs bei EigenLayer. Das Protokoll erlaubt diesem ETH, zusätzlich als Sicherheit für AVS zu dienen — Actively Validated Services. Die AVS zahlen Rewards. Im Gegenzug kann der Restaker bei AVS-Fehlverhalten zusätzlich slashed werden.
+**[Slide 2]** Das Grundkonzept. Gestaktes ETH wird nochmal genutzt, um zusätzliche Protokolle zu sichern. Ein Staker hinterlegt sein gestaktes ETH oder LSTs bei EigenLayer. Das Protokoll erlaubt diesem ETH, zusätzlich als Sicherheit für AVS zu dienen — Actively Validated Services. Die AVS zahlen Rewards. Im Gegenzug kann der Restaker bei AVS-Fehlverhalten zusätzlich geslasht werden.
 
 **[Slide 3]** Was AVS sind. Middleware-Protokolle, die Ethereum-ähnliche Sicherheit brauchen, aber nicht genug Wert haben, um ein eigenes Validator-Netzwerk aufzubauen. Sie leihen sich Sicherheit von Ethereum über EigenLayer. Beispiele: EigenDA — Data-Availability-Service für Layer-2s. AltLayer — Rollup-as-a-Service. Lagrange für Cross-Chain-Proofs. Etwa 20 AVS im Launch.
 
@@ -212,7 +212,7 @@ Wähle einen LRT (EtherFi weETH oder Renzo ezETH) und analysiere:
 
 ## Quiz
 
-**Frage 1:** Warum erhöht Restaking (und LRTs) die Risiko-Komplexität dramatisch im Vergleich zu einfachem Liquid Staking?
+**Frage 1:** Warum erhöht Restaking (und LRTs) die Risiko-Komplexität deutlich im Vergleich zu einfachem Liquid Staking?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -233,7 +233,7 @@ Weil nur die nachhaltigen Anteile langfristig verlässlich sind. Eine LRT mit an
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Restaking-Konzept → EigenLayer-Architektur → AVS-System → LRTs (ezETH/eETH/rsETH) → Points-Rewards kritisch → Risiko-Layer
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Restaking-Dependency-Diagramm, AVS-Liste-Screenshot, LRT-Vergleichstabelle, Sustainable-vs-Temporary-Yield-Breakdown
 
 Pipeline: Gamma → ElevenLabs → CapCut.

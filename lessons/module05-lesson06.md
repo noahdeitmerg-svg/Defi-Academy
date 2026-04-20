@@ -58,7 +58,7 @@ Das größte Risiko einer gepeggten LP-Position ist ein Depeg-Ereignis. Historis
 
 **USDC-Depeg, März 2023:** Als die Silicon Valley Bank kollabierte (wo Circle einen Teil der USDC-Reserven hielt), depeggte USDC kurzzeitig auf 0,88 USD. Curve-Pools mit USDC erlebten massive Umschichtungen — LPs saßen plötzlich auf mehr USDC und weniger anderer Stables als erwartet. Peg kehrte innerhalb weniger Tage zurück, aber zwischenzeitliche Exits realisierten den Verlust.
 
-**stETH-Depeg, Juni 2022:** Nach dem Luna/3AC-Kollaps depeggte stETH temporär auf 0,94 ETH. Der Curve stETH/ETH-Pool erlebte starken Umschichtungen.
+**stETH-Depeg, Juni 2022:** Nach dem Luna/3AC-Kollaps depeggte stETH temporär auf 0,94 ETH. Der Curve stETH/ETH-Pool erlebte starke Umschichtungen.
 
 **Lektion:** Gepeggte LP-Positionen sind **nicht risikofrei**. Sie sind "low IL", aber sie tragen ein konzentriertes Depeg-Risiko. Diversifikation über verschiedene Peg-Typen (fiat-besichert, krypto-besichert, liquid-staking-basiert) reduziert dieses Risiko.
 
@@ -68,14 +68,14 @@ Viele Curve-Pools zahlen zusätzlich zu Trading-Gebühren CRV-Rewards (Curves ei
 
 **Kurze Erklärung:**
 - CRV-Tokens können für bis zu 4 Jahre gesperrt werden → veCRV
-- veCRV gibt Governance-Macht und boosted die eigenen LP-Rewards
-- Convex Finance poolt veCRV und bietet den Boost ohne selbst locken zu müssen
+- veCRV gibt Governance-Macht und boostet die eigenen LP-Rewards
+- Convex Finance poolt veCRV und bietet den Boost ohne dass LPs selbst CRV locken müssen
 
 **Für konservative LPs:**
 - Einfachste Version: LP auf Curve, keine CRV-Sperre, kein Convex — moderate aber stabile Rendite
 - Komplexere Version: LP auf Curve, staken auf Convex für zusätzliche CRV- und CVX-Rewards — höhere Rendite, aber zusätzliches Smart-Contract-Risiko (zwei Protokolle statt einem) und Exposure zu Reward-Token-Preisen
 
-Für das Kurs-Ziel von 7–8% ist direkte Curve-LP oft ausreichend. Convex-Stacking ist nicht verboten, aber es fügt Komplexität hinzu, ohne die Ziel-Rendite dramatisch zu verändern.
+Für das Kurs-Ziel von 7–8% ist eine direkte Curve-LP-Position oft ausreichend. Convex-Stacking ist nicht verboten, aber es fügt Komplexität hinzu, ohne die Ziel-Rendite deutlich zu verändern.
 
 **Realistische Renditen auf Curve**
 
@@ -205,7 +205,7 @@ Konzentriertes Depeg-Risiko. Obwohl die Pools "low IL" sind und diversifiziert a
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → StableSwap-Formel → Curve-Pool-Typen → Depeg-Historie (USDC/UST) → Amp-Parameter-Mechanik → CRV-Rewards-Einordnung → Portfolio-Integration
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — StableSwap-Kurve vs. Constant-Product, Curve-Pool-Screenshot (3pool, stETH/ETH), Depeg-Event-Charts (USDC März 2023, stETH Juni 2022), Amp-Parameter-Effekt-Diagramm, Stablecoin-Diversifikations-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.

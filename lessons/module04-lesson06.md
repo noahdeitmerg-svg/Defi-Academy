@@ -223,7 +223,7 @@ Weil ein Swap von 10.000 USD in einem einzelnen Pool signifikanten Preis-Impact 
 <details>
 <summary>Antwort anzeigen</summary>
 
-Bei 3% Slippage kann ein Sandwich-Angreifer bis zu 3% des Swap-Wertes extrahieren — das sind bis zu 30 USD pro Swap. Bei 52 Swaps pro Jahr sind das potenziell 1.560 USD. Bei einem typischen DeFi-Portfolio im Bereich 10.000–50.000 USD entspricht das 3–15% Rendite-Verlust nur durch schlechte Swap-Hygiene — mehr als die gesamte Ziel-Rendite eines konservativen Portfolios. Die Lösung ist trivial: MEV-Schutz (kostet nichts zusätzlich) plus engere Slippage (0,5%). Damit reduziert sich der erwartbare Angreifer-Gewinn dramatisch. Das Beispiel zeigt, warum saubere Ausführung keine "Optimierung" ist, sondern Basis-Hygiene.
+Bei 3% Slippage kann ein Sandwich-Angreifer bis zu 3% des Swap-Wertes extrahieren — das sind bis zu 30 USD pro Swap. Bei 52 Swaps pro Jahr sind das potenziell 1.560 USD. Bei einem typischen DeFi-Portfolio im Bereich 10.000–50.000 USD entspricht das 3–15% Rendite-Verlust nur durch schlechte Swap-Hygiene — mehr als die gesamte Ziel-Rendite eines konservativen Portfolios. Die Lösung ist trivial: MEV-Schutz (kostet nichts zusätzlich) plus engere Slippage (0,5%). Damit reduziert sich der erwartbare Angreifer-Gewinn deutlich. Das Beispiel zeigt, warum saubere Ausführung keine "Optimierung" ist, sondern Basis-Hygiene.
 </details>
 
 ## Video-Pipeline-Assets
@@ -231,7 +231,7 @@ Bei 3% Slippage kann ein Sandwich-Angreifer bis zu 3% des Swap-Wertes extrahiere
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Aggregator-Funktion → 1inch/CoW/Paraswap/Odos → Route-Splitting-Mechanik → Intent-basierte Systeme → Professionelle Swap-Checkliste → Plattform-Wahl-Matrix
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Route-Splitting-Diagramm über mehrere Pools, Aggregator-Interface-Screenshot (CoW Swap, 1inch), Pre-Trade-Checkliste als Infografik, Plattform-Wahl-Matrix nach Swap-Größe
 
 Pipeline: Gamma → ElevenLabs → CapCut.

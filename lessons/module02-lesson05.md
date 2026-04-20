@@ -6,7 +6,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Die Funktionsweise und Schutzgrenzen von Hardware-Wallets verstehen
 - Ein Safe-Multisig-Setup konfigurieren und seinen Nutzen einordnen
 - Entscheiden, wann Hardware-Wallet vs. Multisig vs. beides angemessen ist
-- Drei typische Multisig-Konfigurationen (2-of-3 Personal, 3-of-5 Team, 2-of-2 Couple) in ihren Anwendungsfällen gegenüberstellen
+- Drei typische Multisig-Konfigurationen (2-of-3 Personal, 3-of-5 Team, 2-of-2 Paar) in ihren Anwendungsfällen gegenüberstellen
 - Die Rolle von Account Abstraction (ERC-4337) und Smart Wallets (Safe, Rhinestone, Ambire, Zerion) in der zukünftigen Wallet-Landschaft einordnen
 - Eine Entscheidungsmatrix anwenden, um das passende Wallet-Setup nach Kapitalstufe (< 1k / 1–10k / 10–100k / > 100k USD) zu wählen
 
@@ -32,7 +32,7 @@ Ein Hardware-Wallet ist ein spezialisiertes Gerät, das den Private Key isoliert
 
 **Ledger Nano S Plus / Nano X** — Marktführer, breite Chain-Unterstützung, Closed-Source Secure Element (umstritten), 2020er Kundendaten-Leak betraf nicht die Hardware, aber machte Ledger-Besitzer zu Phishing-Zielen. Preiswert ab ca. 80 USD. Clear-Signing wird ausgebaut.
 
-**Trezor Model T / Safe 3 / Safe 5** — Open-Source Firmware, Shamir-SSS-Unterstützung (SLIP-39), Touchscreen (Model T), weniger Chain-Apps als Ledger. Ca. 150–250 USD.
+**Trezor Model T / Trezor Safe 3 / Trezor Safe 5** — Open-Source Firmware, Shamir-SSS-Unterstützung (SLIP-39), Touchscreen (Model T), weniger Chain-Apps als Ledger. Ca. 150–250 USD.
 
 **GridPlus Lattice1** — Größeres Display, bessere Clear-Signing-Fähigkeit, teurer (ca. 400 USD). SafeCards für Backup-Key-Lagerung.
 
@@ -47,8 +47,8 @@ Ein Multisig-Wallet erfordert mehrere Unterschriften für jede Transaktion. Komp
 **Typische Konfigurationen:**
 
 *2-of-3 Personal*
-- Owner 1: Hardware-Wallet Nummer 1 (Hauptgerät)
-- Owner 2: Hardware-Wallet Nummer 2 (Backup, anderer Ort)
+- Owner 1: Hardware-Wallet 1 (Hauptgerät)
+- Owner 2: Hardware-Wallet 2 (Backup, anderer Ort)
 - Owner 3: Mobile/Hot Wallet für tägliche Bestätigungen
 - Szenario: Verlust eines Geräts → zwei andere reichen für Recovery
 
@@ -57,7 +57,7 @@ Ein Multisig-Wallet erfordert mehrere Unterschriften für jede Transaktion. Komp
 - Owner 4–5: Externe Vertraute (z.B. Legal, Advisor)
 - Szenario: zwei Team-Mitglieder kompromittiert → Recovery noch möglich
 
-*2-of-2 Couple*
+*2-of-2 Paar*
 - Owner 1: Person A
 - Owner 2: Person B
 - Beide müssen zustimmen (z.B. ehegemeinschaftliche Finanzkontrolle)
@@ -71,7 +71,7 @@ Ein Multisig-Wallet erfordert mehrere Unterschriften für jede Transaktion. Komp
 **Nachteile:**
 - Höhere Gas-Kosten (mehrere Signaturen)
 - Komplexere Koordination bei Transaktionen
-- Einzelne DeFi-Protokolle haben historisch Probleme mit Contract-Wallets (verbessert sich, Account-Abstraktion hilft)
+- Einzelne DeFi-Protokolle haben historisch Probleme mit Contract-Wallets (verbessert sich, Account Abstraction hilft)
 
 **Account Abstraction und Smart Wallets**
 
@@ -100,17 +100,15 @@ Die Investition in Hardware-Wallet und Safe-Setup zahlt sich ab dem niedrigen 4-
 
 **[Slide 2]** Hardware-Wallet: Private Key bleibt auf isoliertem Gerät. Signatur im Gerät, physische Bestätigung.
 
-**[Slide 3]** Hardware-Wallet-Grenzen: schützt nicht gegen Seed-Phrase-Verlust, böse Signaturen, Phishing.
+**[Slide 3]** Hardware-Wallets: Modelle und Schutzgrenzen. Ledger (Einstieg), Trezor (Open-Source), GridPlus (Premium). Schützt NICHT gegen Seed-Phrase-Verlust, böse Signaturen, Phishing.
 
-**[Slide 4]** Modelle: Ledger (Einstieg), Trezor (Open-Source), GridPlus (Premium).
+**[Slide 4]** Safe-Konzept: Smart Contract mit Owners-Liste und Threshold k-of-n.
 
-**[Slide 5]** Safe-Konzept: Smart Contract mit Owners-Liste und Threshold k-of-n.
+**[Slide 5]** Konfigurationen: 2-of-3 Personal, 3-of-5 Team, 2-of-2 Paar.
 
-**[Slide 6]** Konfigurationen: 2-of-3 Personal, 3-of-5 Team, 2-of-2 Couple.
+**[Slide 6]** Account Abstraction: ERC-4337, Smart Wallets, Recovery ohne Multisig-Komplexität.
 
-**[Slide 7]** Account Abstraction: ERC-4337, Smart Wallets, Recovery ohne Multisig-Komplexität.
-
-**[Slide 8]** Entscheidungsmatrix: von Software-Wallet bis Multisig je nach Kapital.
+**[Slide 7]** Entscheidungsmatrix: von Software-Wallet bis Multisig je nach Kapital.
 
 ## Sprechertext
 
@@ -118,28 +116,25 @@ Die Investition in Hardware-Wallet und Safe-Setup zahlt sich ab dem niedrigen 4-
 
 **[Slide 2]** Ein Hardware-Wallet ist ein spezialisiertes Gerät, das den Private Key isoliert speichert. Der Key verlässt das Gerät nie. Transaktionen werden auf dem Gerät signiert, nur die fertige Signatur geht an den Computer. Jede Signatur braucht physische Bestätigung.
 
-**[Slide 3]** Was Hardware-Wallets nicht können: sie schützen nicht gegen Seed-Phrase-Kompromittierung — wenn die gestohlen wird, ist der Schutz weg. Sie schützen nicht vollständig gegen böse Signaturen, die der Nutzer selbst bestätigt — siehe Bybit-Hack. Sie schützen nicht gegen Phishing, wenn Seed-Phrase oder PIN auf gefälschten Seiten eingegeben werden.
+**[Slide 3]** Drei populäre Modelle und was Hardware-Wallets nicht leisten. Ledger Nano S Plus: Marktführer, achtzig Dollar, breite Unterstützung. Trezor Model T und Trezor Safe 3/5: Open-Source-Firmware, Shamir-Unterstützung, teurer. GridPlus Lattice1: Premium mit großem Display, etwa vierhundert Dollar. Für den Einstieg reicht Ledger; konsistente Nutzung ist wichtiger als das Modell. Wichtig sind aber auch die Grenzen: Hardware-Wallets schützen nicht gegen Seed-Phrase-Kompromittierung — wenn die gestohlen wird, ist der Schutz weg. Sie schützen nicht vollständig gegen böse Signaturen, die der Nutzer selbst bestätigt — siehe Bybit-Hack. Und sie schützen nicht gegen Phishing, wenn Seed-Phrase oder PIN auf gefälschten Seiten eingegeben werden.
 
-**[Slide 4]** Drei populäre Modelle. Ledger Nano S Plus: Marktführer, achtzig Dollar, breite Unterstützung. Trezor: Open-Source-Firmware, Shamir-Unterstützung, teurer. GridPlus Lattice1: Premium mit großem Display, etwa vierhundert Dollar. Für den Einstieg reicht Ledger. Konsistente Nutzung ist wichtiger als das Modell.
+**[Slide 4]** Multisig: Safe ist die Standard-Implementierung. Ein Smart Contract mit einer Liste von Ownern und einem Threshold. Zum Beispiel zwei-von-drei: drei Signer definiert, zwei reichen für eine Transaktion. Kompromittierung einer einzelnen Wallet führt nicht zum Verlust.
 
-**[Slide 5]** Multisig: Safe ist die Standard-Implementierung. Ein Smart Contract mit einer Liste von Ownern und einem Threshold. Zum Beispiel zwei-von-drei: drei Signer definiert, zwei reichen für eine Transaktion. Kompromittierung einer einzelnen Wallet führt nicht zum Verlust.
+**[Slide 5]** Typische Konfigurationen. Zwei-von-drei persönlich: Hardware eins, Hardware zwei an anderem Ort, Mobile für Bestätigungen. Drei-von-fünf Team: Kernmitglieder plus externe Vertraute. Zwei-von-zwei Paar: gemeinsame Finanzkontrolle. Jede Konfiguration ist ein Kompromiss zwischen Sicherheit und Bedienbarkeit.
 
-**[Slide 6]** Typische Konfigurationen. Zwei-von-drei persönlich: Hardware eins, Hardware zwei an anderem Ort, Mobile für Bestätigungen. Drei-von-fünf Team: Kernmitglieder plus externe Vertraute. Zwei-von-zwei Paar: gemeinsame Finanzkontrolle. Jede Konfiguration ist Trade-off zwischen Sicherheit und Bedienbarkeit.
+**[Slide 6]** ERC-4337, seit 2023 live, bringt Account Abstraction. Smart Wallets können Social Recovery ohne Multisig-Komplexität, Session Keys für begrenzte Autorisierungen, Gasless Transactions. Safe, Rhinestone, Ambire, Zerion implementieren Teile davon. Das Feld wächst schnell.
 
-**[Slide 7]** ERC-4337, seit 2023 live, bringt Account Abstraction. Smart Wallets können Social Recovery ohne Multisig-Komplexität, Session Keys für begrenzte Autorisierungen, Gasless Transactions. Safe, Rhinestone, Ambire, Zerion implementieren Teile davon. Das Feld wächst schnell.
-
-**[Slide 8]** Entscheidungsmatrix. Unter tausend Dollar: Software-Wallet reicht. Bis zehntausend: Software plus Hardware. Bis hunderttausend: Hardware als Default, separate DeFi-Wallet für aktive Positionen. Über hunderttausend: Safe mit mehreren Hardware-Wallets als Signer. Ab niedrigen vierstelligen Beträgen amortisiert sich die Investition in ordentliche Wallet-Infrastruktur.
+**[Slide 7]** Entscheidungsmatrix. Unter tausend Dollar: Software-Wallet reicht. Bis zehntausend: Software plus Hardware. Bis hunderttausend: Hardware als Default, separate DeFi-Wallet für aktive Positionen. Über hunderttausend: Safe-Multisig mit mehreren Hardware-Wallets als Signer. Ab niedrigen vierstelligen Beträgen amortisiert sich die Investition in ordentliche Wallet-Infrastruktur.
 
 ## Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 **[Slide 2]** Diagramm: Computer (kompromittiert?) ↔ Hardware-Wallet (isoliert) — mit Pfeil für Transaktion-Hinschicken und Signatur-Zurückgeben.
-**[Slide 3]** Drei rote Kreuze neben "Seed-Phrase-Diebstahl", "Böse Signatur bestätigt", "Phishing".
-**[Slide 4]** **SCREENSHOT SUGGESTION:** Produktbilder von Ledger Nano S Plus, Trezor Model T, GridPlus Lattice1 nebeneinander.
-**[Slide 5]** **SCREENSHOT SUGGESTION:** app.safe.global-Interface mit beispielhafter 2-of-3-Konfiguration und pending Transaction.
-**[Slide 6]** Drei Karten: Personal, Team, Couple — jede mit Icon und Szenario.
-**[Slide 7]** Diagramm: klassische EOA vs. Smart Wallet mit Zusatzfeatures.
-**[Slide 8]** Tabelle Kapital vs. Empfehlung.
+**[Slide 3]** Zweigeteiltes Layout. Links: **SCREENSHOT SUGGESTION** Produktbilder von Ledger Nano S Plus, Trezor Model T, GridPlus Lattice1 nebeneinander. Rechts: drei rote Kreuze neben "Seed-Phrase-Diebstahl", "Böse Signatur bestätigt", "Phishing".
+**[Slide 4]** **SCREENSHOT SUGGESTION:** app.safe.global-Interface mit beispielhafter 2-of-3-Konfiguration und pending Transaction.
+**[Slide 5]** Drei Karten: Personal, Team, Paar — jede mit Icon und Szenario.
+**[Slide 6]** Diagramm: klassische EOA vs. Smart Wallet mit Zusatzfeatures.
+**[Slide 7]** Tabelle Kapital vs. Empfehlung.
 
 ## Übung
 
@@ -176,9 +171,9 @@ Hardware-Wallet schützt gegen Remote-Signatur und Malware-Diebstahl des Private
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → Hardware-Wallet-Funktion → Grenzen → 3 Modelle (Ledger/Trezor/GridPlus) → Safe-Konzept → 3 Konfigurationen → Account Abstraction ERC-4337 → Entscheidungsmatrix
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
-- `visual_plan.json` — Hardware-Wallet-Isolationsdiagramm, Schutz-Grenzen-Icons, Produktfotos Ledger/Trezor/GridPlus, Safe-Interface-Screenshot, Konfigurations-Karten, Entscheidungsmatrix
+- `slides_prompt.txt` — 7 Slides: Titel → Hardware-Wallet-Funktion → Modelle und Schutzgrenzen (Ledger/Trezor/GridPlus) → Safe-Konzept → 3 Konfigurationen → Account Abstraction ERC-4337 → Entscheidungsmatrix
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
+- `visual_plan.json` — Hardware-Wallet-Isolationsdiagramm, Produktfotos mit Schutz-Grenzen-Icons kombiniert, Safe-Interface-Screenshot, Konfigurations-Karten, EOA-vs-Smart-Wallet-Diagramm, Entscheidungsmatrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.
 

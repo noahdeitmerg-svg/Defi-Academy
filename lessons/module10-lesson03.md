@@ -107,12 +107,12 @@ Die Ausfall-Wahrscheinlichkeit wächst nicht linear mit dem Leverage, sondern ex
 | Leverage | LTV | HF | Liquidations-Puffer | Netto-Rendite* | Ausfallrate** |
 |---|---|---|---|---|---|
 | 1x (ohne Loop) | 0% | ∞ | ∞ | 3,5% | 0% |
-| 1,5x | 50% | 1,9 | ~45% | 4% | sehr niedrig |
-| 2x | 66% | 1,44 | ~30% | 4,5% | niedrig |
-| 2,5x | 73% | 1,3 | ~22% | 5% | moderat |
-| 3x | 79% | 1,2 | ~16% | 5,5% | erhöht |
-| 4x | 84% | 1,13 | ~11% | 6,5% | hoch |
-| 5x | 88% | 1,08 | ~7% | 7% | sehr hoch |
+| 1,5x | 33% | 2,85 | ~65% | 4% | sehr niedrig |
+| 2x | 50% | 1,90 | ~47% | 4,5% | niedrig |
+| 2,5x | 60% | 1,58 | ~37% | 5% | moderat |
+| 3x | 67% | 1,43 | ~30% | 5,5% | erhöht |
+| 4x | 75% | 1,27 | ~21% | 6,5% | hoch |
+| 5x | 80% | 1,19 | ~16% | 7% | sehr hoch |
 
 *Annahme: 3,5% Yield, 2,5% Borrow-Cost
 **Subjektive Einschätzung bei normaler Marktvolatilität
@@ -155,10 +155,10 @@ Loop lohnt nur bei Borrow < Yield
 Historisch: Spread 0,5-1,5% normal, kann negativ werden
 
 **[Slide 5] — Leverage vs. Liquidations-Puffer**
-2x → 30% Puffer
-3x → 16% Puffer
-4x → 11% Puffer
-5x → 7% Puffer
+2x → 47% Puffer (LTV 50%, HF 1,90)
+3x → 30% Puffer (LTV 67%, HF 1,43)
+4x → 21% Puffer (LTV 75%, HF 1,27)
+5x → 16% Puffer (LTV 80%, HF 1,19)
 
 **[Slide 6] — Die zentrale Erkenntnis**
 Rendite wächst linear mit Leverage
@@ -176,11 +176,11 @@ Min 6-12 Monate Halte-Dauer
 
 **[Slide 2]** Die Grundformel ist simpel. Netto-Rendite gleich Yield mal Leverage minus Borrow-Cost mal Leverage-minus-1. Konkret: bei 3,5 Prozent Yield, 3-fach Leverage, 2,5 Prozent Borrow-Cost: 3,5 mal 3 ist 10,5 Prozent Brutto. Minus 2,5 mal 2 gleich 5 Prozent Borrow-Kosten. Ergibt 5,5 Prozent Netto. Der Leverage verstärkt den Spread zwischen Yield und Borrow.
 
-**[Slide 3]** Die Sensitivität auf Zinsänderungen ist dramatisch. Wenn ETH-Borrow-Rate auf 3,5 Prozent steigt bei gleichem 3,5 Prozent Yield: die Netto-Rendite fällt auf 3,5 Prozent — identisch zum einfachen Halten, aber mit mehr Risiko. Bei 4 Prozent Borrow: Netto 2,5 Prozent, weniger als einfaches Halten. Negativ Carry — der Loop arbeitet gegen dich.
+**[Slide 3]** Die Sensitivität auf Zinsänderungen ist erheblich. Wenn ETH-Borrow-Rate auf 3,5 Prozent steigt bei gleichem 3,5 Prozent Yield: die Netto-Rendite fällt auf 3,5 Prozent — identisch zum einfachen Halten, aber mit mehr Risiko. Bei 4 Prozent Borrow: Netto 2,5 Prozent, weniger als einfaches Halten. Negativ Carry — der Loop arbeitet gegen dich.
 
 **[Slide 4]** Break-Even. Der Loop ist identisch zum Halten, wenn Borrow gleich Yield ist. Profitabel nur bei Borrow kleiner als Yield. Historisch ist der Spread 0,5 bis 1,5 Prozent normal. In extremen Bull-Markets kann er auf null oder negativ fallen, weil viele Leveraged-Staking-Strategien gleichzeitig aktiv sind und ETH-Borrow-Rates nach oben treiben.
 
-**[Slide 5]** Leverage versus Liquidations-Puffer. Bei 2-fach Leverage hast du etwa 30 Prozent Puffer bis Liquidation. Bei 3-fach 16 Prozent. Bei 4-fach 11 Prozent. Bei 5-fach nur noch 7 Prozent. Das Liquidations-Risiko wächst exponentiell mit dem Leverage, nicht linear.
+**[Slide 5]** Leverage versus Liquidations-Puffer. Bei 2-fach Leverage hast du etwa 47 Prozent Puffer bis Liquidation. Bei 3-fach 30 Prozent. Bei 4-fach 21 Prozent. Bei 5-fach 16 Prozent. Das Liquidations-Risiko wächst exponentiell mit dem Leverage, nicht linear.
 
 **[Slide 6]** Die zentrale Erkenntnis dieser Lektion. Die Rendite wächst linear mit Leverage — plus 0,5 Prozentpunkte pro Leverage-Stufe bei unseren Beispielzahlen. Aber das Risiko wächst überproportional. Von 2 auf 4-fach Leverage sind 2 Prozentpunkte mehr Rendite, aber das Liquidations-Risiko vervielfacht sich. Für das 7 bis 8 Prozent Jahresziel ist 2 bis 2,5-fach Leverage oft der konservative Sweet Spot, kombiniert mit anderen Portfolio-Teilen.
 
@@ -246,7 +246,7 @@ Weil sie die klare Schwelle zwischen profitablen und unprofitablen Positionen de
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Rendite-Formel → Leverage-Multiple-Mathematik → Break-Even-Punkte → Safe Leverage Limits → Zins-Sensitivität → Wachstumsgrenzen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Rendite-Formel-Grafik, Leverage-Multiple-Tabelle pro LTV, Break-Even-Diagramm, Safe-Limits-Empfehlung, Sensitivitäts-Analyse-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.

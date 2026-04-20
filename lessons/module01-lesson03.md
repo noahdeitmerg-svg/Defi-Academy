@@ -3,6 +3,7 @@
 ## Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Die vier grundlegenden Bausteine von DeFi benennen und ihre Funktion erklären
 - Verstehen, wie Smart Contracts Geld ohne Intermediäre bewegen
 - Die Rolle von Tokens als Abstraktion für unterschiedliche Vermögenswerte einordnen
@@ -33,6 +34,7 @@ Smart Contracts sind das Herz von DeFi. Sie ersetzen den Intermediär.
 Ein Token ist eine Einheit innerhalb eines Smart Contracts. Der Contract führt ein internes Ledger ("address X hält Y tokens") und bietet Standardfunktionen für Übertragung. Der wichtigste Token-Standard ist **ERC-20** — er definiert, welche Funktionen ein Token-Contract bereitstellen muss (`balanceOf`, `transfer`, `approve`, `transferFrom`). Weil alle ERC-20-Tokens diese Schnittstelle teilen, kann jedes DeFi-Protokoll mit jedem ERC-20-Token umgehen, ohne Sonderlogik.
 
 Tokens repräsentieren alles mögliche:
+
 - **Native Assets** wie ETH (ETH selbst ist technisch kein ERC-20, aber gewickelt als WETH wird es eins)
 - **Stablecoins** wie USDC, USDT, DAI
 - **Governance-Tokens** wie UNI, AAVE, MKR
@@ -45,6 +47,7 @@ Ein Token ist also nicht "Geld". Ein Token ist eine kryptographisch abgesicherte
 **Baustein 4: Wallets**
 
 Eine Wallet ist das Interface des Nutzers zur Blockchain. Technisch besteht eine Wallet aus:
+
 - Einem **Private Key** (ein großes zufälliges Zahlenwerk)
 - Einer daraus abgeleiteten **Public Key / Adresse**
 - Software, die Transaktionen mit dem Private Key signiert
@@ -58,6 +61,7 @@ Wir behandeln Wallet-Architektur und Sicherheit ausführlich in Modul 2.
 **Wie die vier Bausteine zusammenspielen**
 
 Ein typischer DeFi-Vorgang sieht so aus:
+
 1. Dein Wallet signiert eine Transaktion, die eine Funktion in einem Smart Contract aufruft.
 2. Die Transaktion wird an die Blockchain gesendet.
 3. Validatoren führen den Smart-Contract-Code aus und aktualisieren das globale Ledger.
@@ -72,24 +76,28 @@ Kein Mensch hat entschieden, keine Bank hat autorisiert. Der Code hat ausgeführ
 Die vier Bausteine von DeFi
 
 **[Slide 2] — Baustein 1: Blockchain**
+
 - Öffentliches, verteiltes Ledger
 - Läuft auf tausenden Computern synchron
 - Einträge sind praktisch unveränderlich
 - Ethereum = dominante DeFi-Blockchain
 
 **[Slide 3] — Baustein 2: Smart Contract**
+
 - Programm auf der Blockchain
 - Deterministisch, unveränderlich
 - Ersetzt den Intermediär
 - Beispiel: `swap(ETH, USDC, 1)` → automatisch
 
 **[Slide 4] — Baustein 3: Token**
+
 - Einheit in einem Smart Contract
 - ERC-20 = Standard-Interface
 - Repräsentiert Assets: Stables, Governance, LP, Staking
 - Nicht "Geld", sondern kryptographische Eintragung
 
 **[Slide 5] — Baustein 4: Wallet**
+
 - Interface zur Blockchain
 - Verwaltet Private Key — nicht Tokens
 - Signiert Transaktionen
@@ -137,6 +145,7 @@ Zusammenspiel: deine Wallet signiert eine Transaktion. Sie geht an die Blockchai
 **Aufgabe: Zerlege einen realen DeFi-Vorgang**
 
 Öffne app.uniswap.org und simuliere (nicht ausführen!) einen Swap von 0,1 ETH zu USDC. Identifiziere vor dem Klicken auf "Swap":
+
 1. Welcher Smart Contract wird aufgerufen? (Findest du im Transaktionsdetail, bevor du bestätigst, oder via etherscan.io unter "Uniswap Router")
 2. Welche Tokens sind beteiligt (mit Contract-Adressen)?
 3. Welche Wallet signiert die Transaktion?
@@ -148,19 +157,19 @@ Zusammenspiel: deine Wallet signiert eine Transaktion. Sie geht an die Blockchai
 
 **Frage 1:** Warum sagt man, dass eine Wallet "keine Tokens hält"?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Tokens sind keine physischen Objekte, die in der Wallet lagern. Sie sind Einträge in Smart Contracts — der Token-Contract führt ein Ledger mit "Adresse X hält Y Tokens". Die Wallet verwaltet nur den Private Key, der die Autorität über eine bestimmte Adresse gewährt. Wenn du eine neue Wallet-Software installierst und denselben Private Key importierst, siehst du dieselben Token-Balancen, weil diese in den jeweiligen Token-Contracts liegen, nicht in der Wallet-App.
-</details>
+
+
 
 **Frage 2:** Was ist der Unterschied zwischen einem Smart Contract und einem traditionellen Server-Programm?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Ein Smart Contract läuft auf einer Blockchain und wird von allen Validatoren gleichzeitig ausgeführt — der Output ist deterministisch und prüfbar. Ein Server-Programm läuft auf einem zentralen Server, und nur der Betreiber sieht die interne Logik und die Daten. Smart Contracts sind nach Deployment unveränderlich (außer explizit eingebaute Upgrade-Mechanismen), Server-Programme können jederzeit vom Betreiber geändert werden. Smart Contracts benötigen keinen Intermediär zur Ausführung, Server-Programme werden vom Betreiber kontrolliert.
-</details>
+
+
 
 ## Video-Pipeline-Assets
 

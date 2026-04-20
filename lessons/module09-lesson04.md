@@ -31,7 +31,7 @@ Bei Fälligkeit kannst du PT 1:1 gegen das zugrundeliegende Asset (z.B. ETH oder
 
 Stell dir stETH vor, mit Fälligkeit in 6 Monaten:
 - 1 stETH = 1 PT-stETH + 1 YT-stETH
-- PT-stETH handelt heute mit Abschlag (sagen wir 0,975 ETH)
+- PT-stETH wird heute mit Abschlag gehandelt (sagen wir 0,975 ETH)
 - YT-stETH repräsentiert den erwarteten Yield für 6 Monate
 
 **Als PT-Käufer:** Du kaufst 1 PT-stETH für 0,975 ETH heute. In 6 Monaten kannst du es 1:1 gegen stETH einlösen — effektiv hast du 0,025 ETH in 6 Monaten verdient, was einer annualisierten Rendite von **~5,1% fixed** entspricht.
@@ -64,7 +64,7 @@ Du willst 10.000 USDC für 6 Monate parken und möchtest sicher wissen, wie viel
 Du willst ETH-Staking-Exposure für ein Jahr mit garantierter Rendite. PT-weETH (1 Jahr) bringt beispielsweise 8% fixed. Du kaufst PT-weETH mit 5 ETH Einsatz, bekommst am Ende 5 × 1,08 = 5,4 weETH. Garantiert.
 
 **Szenario 3: sUSDe mit Fixed Yield statt Variable**
-sUSDes variable APY kann von 5% bis 25% schwanken. Wer berechenbare Rendite will, kann PT-sUSDe kaufen und einen fixed Rate einfrieren. Reduziert das Funding-Rate-Risiko von sUSDe signifikant.
+sUSDes variable APY kann von 5% bis 25% schwanken. Wer berechenbare Rendite will, kann PT-sUSDe kaufen und eine fixed Rate einfrieren. Reduziert das Funding-Rate-Risiko von sUSDe signifikant.
 
 **Die Risiken von Pendle**
 
@@ -133,11 +133,11 @@ Gestaffelte Fälligkeitstermine
 
 **[Slide 2]** Das Grundkonzept. Pendle spaltet yield-tragende Assets in zwei Teile. PT, Principal Token, repräsentiert den Principal-Anspruch zu einem festen Fälligkeitsdatum. YT, Yield Token, repräsentiert den Anspruch auf alle Yield-Einnahmen bis Fälligkeit. Bei Fälligkeit kannst du PT 1:1 gegen das zugrundeliegende Asset einlösen. YT wird wertlos — bis dahin hat er dir den kumulierten Yield gebracht. 1 stETH gleich 1 PT-stETH plus 1 YT-stETH.
 
-**[Slide 3]** Wie PT zum Fixed-Yield-Tool wird. PT handeln heute mit Abschlag, weil der Yield in der Zukunft noch nicht eingetreten ist. Beispiel: PT-stETH mit 6 Monaten Fälligkeit handelt bei 0,975 ETH. Du kaufst das heute. In 6 Monaten löst du 1:1 gegen stETH ein. Effektive Rendite: 2,5 Prozent in 6 Monaten, annualisiert 5,1 Prozent fixed. Garantiert, keine Zins-Schwankungen. Das ist das konservative Kern-Anwendungsfall.
+**[Slide 3]** Wie PT zum Fixed-Yield-Tool wird. PT werden heute mit Abschlag gehandelt, weil der Yield in der Zukunft noch nicht eingetreten ist. Beispiel: PT-stETH mit 6 Monaten Fälligkeit wird bei 0,975 ETH gehandelt. Du kaufst das heute. In 6 Monaten löst du 1:1 gegen stETH ein. Effektive Rendite: 2,5 Prozent in 6 Monaten, annualisiert 5,1 Prozent fixed. Garantiert, keine Zins-Schwankungen. Das ist das konservative Kern-Anwendungsfall.
 
 **[Slide 4]** Typische Fixed-Yield-Raten aktuell. PT-stETH bei 6 Monaten Fälligkeit etwa 5 bis 6 Prozent fixed. PT-USDC je nach Underlying 6 bis 10 Prozent. PT-sUSDe 10 bis 15 Prozent — höher wegen sUSDes höherer Underlying-Rendite. PT-weETH 7 bis 12 Prozent. Diese Zahlen variieren über Zeit — prüfe app.pendle.finance für aktuelle Werte.
 
-**[Slide 5]** Drei Anwendungs-Szenarien. Erstens: fixed Stablecoin-Yield für bekannten Zeithorizont. Du willst 10.000 Dollar für 6 Monate parken und exakt wissen, was am Ende da ist. PT-USDC mit 8 Prozent fixed: 10.400 Dollar nach 6 Monaten. Zweitens: fixed ETH-Staking-Rendite. PT-weETH mit einem Jahr Fälligkeit und 8 Prozent fixed garantiert dir die Rendite. Drittens: sUSDe-Risiko-Reduktion. sUSDes variable APY schwankt stark — PT-sUSDe friert einen fixed Rate ein.
+**[Slide 5]** Drei Anwendungs-Szenarien. Erstens: fixed Stablecoin-Yield für bekannten Zeithorizont. Du willst 10.000 Dollar für 6 Monate parken und exakt wissen, was am Ende da ist. PT-USDC mit 8 Prozent fixed: 10.400 Dollar nach 6 Monaten. Zweitens: fixed ETH-Staking-Rendite. PT-weETH mit einem Jahr Fälligkeit und 8 Prozent fixed garantiert dir die Rendite. Drittens: sUSDe-Risiko-Reduktion. sUSDes variable APY schwankt stark — PT-sUSDe friert eine fixed Rate ein.
 
 **[Slide 6]** Die Risiken von Pendle. Smart-Contract-Risiko ist höher als bei einfachem Staking, weil das Protokoll komplexer ist. Mehrere Audits mindern das. Underlying-Asset-Risiko: ein PT-stETH setzt voraus, dass stETH bei Fälligkeit 1:1 einlösbar ist. Bei einem stETH-Depeg oder Lido-Kollaps wäre die PT-Position beeinträchtigt. Liquiditätsrisiko: wer vor Fälligkeit aussteigen will, verkauft auf DEXs zu dem dann gültigen Marktpreis. Fälligkeits-Bindung: bei regulären PTs kein Früh-Ausstieg ohne Sekundärmarkt.
 
@@ -200,8 +200,8 @@ Mehrere Bedingungen. Erstens: wenn Flexibilität wichtiger ist als Planbarkeit. 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Yield-Trennung Prinzip → PT/YT-Mechanik → Pendle AMM → Fixed Yield Strategie → YT-Spekulation → Implied APY → Pendle-Portfolio-Rolle
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → PT/YT-Aufspaltung → PT als Fixed-Yield-Tool → Typische Fixed-Yield-Raten → Anwendungs-Szenarien → Risiken → Konservative Allokation
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — PT/YT-Split-Diagramm, Pendle-Interface-Screenshot, Fixed-vs-Variable-Yield-Chart, Pendle-Pool-Beispiele, Maturity-Timeline
 
 Pipeline: Gamma → ElevenLabs → CapCut.

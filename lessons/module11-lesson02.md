@@ -196,8 +196,8 @@ Der fundamentale Unterschied liegt in der **Herkunft des Gewinns**. Bei DEX-Arbi
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → 4 MEV-Typen-Übersicht → Arbitrage → Sandwich → Liquidation → JIT-Liquidity → Benign vs. Toxic → Eigene Exposition
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Typ 1: Arbitrage → Typ 2: Sandwich → Typ 3: Liquidationen → Typ 4: JIT Liquidity → Weitere Typen → Schädlichkeit nach Typ
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — MEV-Typen-Matrix, Arbitrage-Flow-Chart, Sandwich-Mechanik-Grafik, JIT-Liquidity-Diagramm, Nutzer-Impact-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.

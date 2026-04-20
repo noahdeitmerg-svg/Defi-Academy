@@ -12,7 +12,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 
 ## Erklärung
 
-Jede Transaktion auf Ethereum kostet Gas. Gas ist kein Token — es ist eine Maßeinheit für Rechenarbeit. Jede Operation auf der Ethereum Virtual Machine (EVM) hat einen festen Gas-Preis in Rechen-Einheiten. Eine einfache Addition kostet 3 Gas, eine Speicherung in den permanenten State kostet 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen.
+Jede Transaktion auf Ethereum kostet Gas. Gas misst den Rechenaufwand einer Operation — der Gas Price bestimmt die tatsächlichen Kosten der Transaktion. Gas ist kein Token, sondern eine Maßeinheit. Jede Operation auf der Ethereum Virtual Machine (EVM) hat einen festen Gas-Preis in Rechen-Einheiten. Eine einfache Addition kostet 3 Gas, eine Speicherung in den permanenten State kostet 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen.
 
 **Warum Gas existiert**
 
@@ -91,61 +91,49 @@ Auf Layer-2-Netzwerken wie Arbitrum, Optimism und Base ist Gas drastisch günsti
 
 **[Slide 1] — Titel:** Wie Gas auf Ethereum funktioniert
 
-**[Slide 2] — Was ist Gas?** Einheit für EVM-Rechenarbeit. Kein Token. Jede Operation hat fixen Gas-Preis in Einheiten.
+**[Slide 2] — Was ist Gas?** Einheit für EVM-Rechenarbeit. Kein Token. Jede Operation hat fixen Gas-Preis in Einheiten. Zwei Zwecke: Spam-Prävention + Validator-Kompensation.
 
-**[Slide 3] — Warum Gas existiert:** Spam-Prävention + Validator-Kompensation.
+**[Slide 3] — Gas vs. ETH:** Gas in Einheiten gezählt, bezahlt in ETH. Umrechnung via Gas Price (Gwei).
 
-**[Slide 4] — Gas vs. ETH:** Gas in Einheiten gezählt, bezahlt in ETH. Umrechnung via Gas Price (Gwei).
+**[Slide 4] — Die Formel:** Kosten = Gas Used × Gas Price × 10⁻⁹. Beispiel: 21.000 × 30 Gwei = 0,00063 ETH.
 
-**[Slide 5] — Die Formel:** Kosten = Gas Used × Gas Price × 10⁻⁹. Beispiel: 21.000 × 30 Gwei = 0,00063 ETH.
+**[Slide 5] — Drei Gas-Größen:** Gas Limit (max), Gas Used (tatsächlich), Gas Price (Preis/Einheit).
 
-**[Slide 6] — Drei Gas-Größen:** Gas Limit (max), Gas Used (tatsächlich), Gas Price (Preis/Einheit).
+**[Slide 6] — Typische Verbräuche + Failed Transactions:** Tabelle von ETH-Transfer bis Aave-Borrow. Failed Tx kosten trotzdem Gas — häufige Gründe: Slippage, fehlende Approval, Out-of-Gas.
 
-**[Slide 7] — Typische Gas-Verbräuche:** Tabelle mit ETH-Transfer bis Aave-Borrow.
-
-**[Slide 8] — Failed Transactions:** Kosten trotzdem Gas. Häufige Gründe.
-
-**[Slide 9] — Tools:** etherscan.io/gastracker, Wallet-Integration, blocknative.
+**[Slide 7] — Tools:** etherscan.io/gastracker, Wallet-Integration, blocknative.
 
 ## Sprechertext
 
 **[Slide 1]** Willkommen zu Modul 3. Wir öffnen die Motorhaube. Erste Lektion: Gas. Ohne ein klares Gas-Verständnis bist du in DeFi blind für einen wesentlichen Kostenfaktor.
 
-**[Slide 2]** Gas ist eine Einheit für Rechenarbeit auf der Ethereum Virtual Machine. Kein Token — eine Maßeinheit. Jede Operation kostet einen festen Betrag Gas. Eine Addition: 3 Gas. Ein Speicher-Schreibvorgang: 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen.
+**[Slide 2]** Gas misst den Rechenaufwand einer Operation auf der Ethereum Virtual Machine — der Gas Price bestimmt die tatsächlichen Kosten der Transaktion. Gas ist kein Token, sondern eine Maßeinheit. Jede Operation kostet einen festen Betrag Gas. Eine Addition: 3 Gas. Ein Speicher-Schreibvorgang: 20.000 Gas. Eine Transaktion ist die Summe aller Gas-Kosten der beteiligten Operationen. Warum existiert Gas überhaupt? Zwei Gründe. Erstens: Spam-Prävention. Ohne Gas-Kosten könnte jeder beliebig viel Rechenarbeit anfordern und das Netzwerk lahmlegen. Zweitens: Validator-Kompensation. Wer Blöcke produziert, wird bezahlt.
 
-**[Slide 3]** Warum existiert Gas? Zwei Gründe. Erstens: Spam-Prävention. Ohne Gas-Kosten könnte jeder beliebig viel Rechenarbeit anfordern und das Netzwerk lahmlegen. Zweitens: Validator-Kompensation. Wer Blöcke produziert, wird bezahlt.
+**[Slide 3]** Gas wird in Einheiten gezählt, bezahlt in ETH. Der Umrechnungsfaktor ist der Gas Price, gemessen in Gwei. Ein Gwei ist ein Milliardstel ETH. Wenn der Gas Price 30 Gwei ist, kostet jede Gas-Einheit 30 Milliardstel ETH.
 
-**[Slide 4]** Gas wird in Einheiten gezählt, bezahlt in ETH. Der Umrechnungsfaktor ist der Gas Price, gemessen in Gwei. Ein Gwei ist ein Milliardstel ETH. Wenn der Gas Price 30 Gwei ist, kostet jede Gas-Einheit 30 Milliardstel ETH.
+**[Slide 4]** Die Formel: Kosten in ETH gleich Gas Used mal Gas Price in Gwei mal 10 hoch minus 9. Ein Beispiel: eine einfache ETH-Überweisung verbraucht 21.000 Gas. Bei einem Gas Price von 30 Gwei kostet das 0,00063 ETH — bei einem ETH-Preis von 3.000 USD ungefähr 1,89 USD.
 
-**[Slide 5]** Die Formel: Kosten in ETH gleich Gas Used mal Gas Price in Gwei mal 10 hoch minus 9. Ein Beispiel: eine einfache ETH-Überweisung verbraucht 21.000 Gas. Bei einem Gas Price von 30 Gwei kostet das 0,00063 ETH — bei einem ETH-Preis von 3.000 USD ungefähr 1,89 USD.
+**[Slide 5]** Drei Größen musst du unterscheiden. Gas Limit: das maximale Gas, das du bereit bist zu verbrauchen. Wird es überschritten, scheitert die Transaktion, das verbrauchte Gas geht trotzdem verloren. Gas Used: das tatsächlich verbrauchte Gas. Nicht-verbrauchtes Gas wird zurückerstattet. Gas Price: der Preis pro Einheit.
 
-**[Slide 6]** Drei Größen musst du unterscheiden. Gas Limit: das maximale Gas, das du bereit bist zu verbrauchen. Wird es überschritten, scheitert die Transaktion, das verbrauchte Gas geht trotzdem verloren. Gas Used: das tatsächlich verbrauchte Gas. Nicht-verbrauchtes Gas wird zurückerstattet. Gas Price: der Preis pro Einheit.
+**[Slide 6]** Typische Gas-Verbräuche geben dir eine Orientierung. ETH-Transfer: 21.000. ERC-20-Transfer: 45.000 bis 65.000. ERC-20-Approval: ähnliche Größenordnung. Uniswap V3 Swap: 120.000 bis 180.000. Aave Supply: 200.000 bis 300.000. Aave Borrow: 300.000 bis 400.000. Uniswap V3 LP-Position: 350.000 bis 500.000. Wichtig: Failed Transactions kosten trotzdem Gas. Häufige Ursachen: Slippage zu niedrig, fehlende Approval, Liquidation schon durch andere durchgeführt, oder Out-of-Gas wenn das Limit zu niedrig war. Gerade bei hohen Gas-Preisen lohnt sich ein Sicherheitspuffer.
 
-**[Slide 7]** Typische Gas-Verbräuche. ETH-Transfer: 21.000. ERC-20-Transfer: 45.000 bis 65.000. ERC-20-Approval: ähnliche Größenordnung. Uniswap V3 Swap: 120.000 bis 180.000. Aave Supply: 200.000 bis 300.000. Aave Borrow: 300.000 bis 400.000. Uniswap V3 LP-Position: 350.000 bis 500.000. Diese Zahlen geben dir eine Orientierung — tatsächliche Werte variieren.
-
-**[Slide 8]** Wichtig: Failed Transactions kosten trotzdem Gas. Häufige Ursachen: Slippage zu niedrig, fehlende Approval, Liquidation schon durch andere durchgeführt, oder Out-of-Gas wenn das Limit zu niedrig war. Gerade bei hohen Gas-Preisen lohnt sich ein Sicherheitspuffer.
-
-**[Slide 9]** Drei Tools, die du kennen solltest: etherscan.io/gastracker zeigt aktuelle und historische Gas-Preise. Deine Wallet zeigt aktuelle Preise direkt im Bestätigungsfenster. Blocknative bietet detailliertere Prognosen mit Wahrscheinlichkeiten. Für größere Transaktionen lohnt sich der Blick vor dem Klick.
+**[Slide 7]** Drei Tools, die du kennen solltest: etherscan.io/gastracker zeigt aktuelle und historische Gas-Preise. Deine Wallet zeigt aktuelle Preise direkt im Bestätigungsfenster. Blocknative bietet detailliertere Prognosen mit Wahrscheinlichkeiten. Für größere Transaktionen lohnt sich der Blick vor dem Klick.
 
 ## Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 
-**[Slide 2]** Vereinfachte EVM-Grafik: Operationen mit jeweiligem Gas-Preis als kleine Zellen.
+**[Slide 2]** Vereinfachte EVM-Grafik: Operationen mit jeweiligem Gas-Preis als kleine Zellen. Zusätzlich zweigeteiltes Layout: Spam-Prävention mit blockiertem Angriffs-Icon, Validator-Kompensation mit Belohnungs-Icon.
 
-**[Slide 3]** Zweispaltiges Layout: Spam-Prävention (links) mit blockiertem Angriffs-Icon, Validator-Kompensation (rechts) mit Belohnungs-Icon.
+**[Slide 3]** Umrechnungsgrafik: Gas-Einheiten → Gwei → ETH → USD.
 
-**[Slide 4]** Umrechnungsgrafik: Gas-Einheiten → Gwei → ETH → USD.
+**[Slide 4]** Formel groß zentriert, darunter Beispielrechnung mit eingesetzten Zahlen.
 
-**[Slide 5]** Formel groß zentriert, darunter Beispielrechnung mit eingesetzten Zahlen.
+**[Slide 5]** Drei nebeneinander dargestellte Balken: Gas Limit (maximal), Gas Used (tatsächlich, kleiner), Gas Price (separat).
 
-**[Slide 6]** Drei nebeneinander dargestellte Balken: Gas Limit (maximal), Gas Used (tatsächlich, kleiner), Gas Price (separat).
+**[Slide 6]** Tabelle mit Gas-Verbräuchen + Beispiel einer Failed Transaction. **SCREENSHOT SUGGESTION:** Etherscan-Transaction-Detail-Seite einer realen Uniswap-Transaktion mit sichtbarem "Gas Used by Transaction"-Feld, daneben Etherscan-Seite mit rotem "Fail"-Status und trotzdem abgerechnetem Gas.
 
-**[Slide 7]** Tabelle mit Gas-Verbräuchen. **SCREENSHOT SUGGESTION:** Etherscan-Transaction-Detail-Seite einer realen Uniswap-Transaktion mit sichtbarem "Gas Used by Transaction"-Feld.
-
-**[Slide 8]** Beispiel einer Failed Transaction. **SCREENSHOT SUGGESTION:** Etherscan-Seite mit rotem "Fail"-Status und trotzdem abgerechnetem Gas.
-
-**[Slide 9]** **SCREENSHOT SUGGESTION:** etherscan.io/gastracker mit aktuellem Gas Price und 24h-Verlaufs-Chart.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** etherscan.io/gastracker mit aktuellem Gas Price und 24h-Verlaufs-Chart.
 
 ## Übung
 
@@ -186,8 +174,8 @@ Eine ERC-20-Transfer-Transaktion verbraucht etwa 55.000 Gas. Berechnung: 55.000 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 9 Slides: Titel → Was ist Gas → Warum Gas → Gas vs. ETH → Formel → 3 Gas-Größen → Typische Verbräuche → Failed Transactions → Tools
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → Was ist Gas + Zwecke → Gas vs. ETH → Formel → 3 Gas-Größen → Typische Verbräuche + Failed Tx → Tools
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — EVM-Operationen-Grafik, Spam-/Validator-Icons, Gas→Gwei→ETH→USD Umrechnung, Formel-Grafik, 3 Gas-Balken, Etherscan-Screenshots (Tx-Detail, Failed-Tx), gastracker-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.

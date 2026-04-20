@@ -152,8 +152,8 @@ Erstens: Fiat-on-ramp und off-ramp. DEXs handeln nur on-chain Tokens, nicht EUR 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 6 Slides: Titel → CEX-Architektur → DEX-Architektur → 3 strukturelle Unterschiede → AMM vs. Orderbook → Entscheidungsmatrix CEX/DEX
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → CEX-Architektur → DEX-Architektur → 3 strukturelle Unterschiede → Warum keine Order Books on-chain → Wann DEX, wann CEX → Marktstruktur
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — CEX-Stack-Diagramm (Custody/KYC/Orderbook), DEX-Stack-Diagramm (Wallet/Smart Contract/Pool), Vergleichstabelle, Uniswap-Screenshot vs. Binance-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.

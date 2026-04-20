@@ -3,6 +3,7 @@
 ## Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Die fundamentalen Probleme erklären, die DeFi zu lösen versucht
 - Die vier Kernprinzipien identifizieren, die DeFi-Protokolle antreiben
 - Verstehen, warum Komponierbarkeit der wichtigste Vorteil von DeFi ist
@@ -52,12 +53,14 @@ Komponierbarkeit ist mehr als Bequemlichkeit. Sie verändert fundamental, wie In
 Warum existiert DeFi? Die Kernprinzipien
 
 **[Slide 2] — Die vier strukturellen Probleme**
+
 1. Gatekeeping — institutioneller Zugang erforderlich
 2. Settlement-Zeiten — Tage statt Sekunden
 3. Intransparenz — private Datenbanken
 4. Geschlossene Systeme — keine Komposition
 
 **[Slide 3] — Die vier Kernprinzipien**
+
 1. Self-Custody
 2. Permissionless Innovation
 3. Transparenz
@@ -125,19 +128,19 @@ Beispiel: Eine stETH-Position auf Aave kombiniert zwei Protokolle (Lido + Aave).
 
 **Frage 1:** Was bedeutet "Komponierbarkeit" in DeFi, und warum ist sie strukturell so mächtig?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Komponierbarkeit bedeutet, dass DeFi-Protokolle andere Protokolle als Bausteine verwenden können, weil alle auf denselben öffentlichen Smart-Contract-Standards laufen. Sie ist strukturell mächtig, weil neue Protokolle nicht das gesamte Finanz-Ökosystem neu bauen müssen — sie nutzen bestehende Bausteine. Das führt zu Innovationszyklen, die in traditionellem Finanzwesen unmöglich sind, weil dort APIs beschränkt und Systeme proprietär sind.
-</details>
+
+
 
 **Frage 2:** Was ist die Kehrseite der Komponierbarkeit, und welches Risiko entsteht dadurch?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 Komponierbarkeits-Risiko: Je tiefer ein Baustein im Stack liegt, desto größer ist die systemische Wirkung, wenn er bricht. Wenn ein basales Protokoll (z.B. ein Stablecoin oder ein Liquid-Staking-Token) depeggt oder gehackt wird, können alle darauf aufbauenden Protokolle betroffen sein. Ein Beispiel wäre der stETH-Depeg im Juni 2022, der Liquidationen in mehreren darauf aufbauenden Protokollen auslöste.
-</details>
+
+
 
 ## Video-Pipeline-Assets
 

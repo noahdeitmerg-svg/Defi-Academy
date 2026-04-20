@@ -49,7 +49,7 @@ Kann das 7-8%-Ziel ohne Leverage-Loops erreicht werden? Ja, mit einigen Vorausse
 - Neutrales ETH: 0
 - +10% ETH: 1.500 USD = 3%
 - +20% ETH: 3.000 USD = 6%
---10% ETH: -1.500 USD = -3%
+- Bei ETH −10%: −1.500 USD = −3%
 
 **Gesamt-Rendite-Szenarien:**
 - Bear-Markt (ETH -20%): 4,48% - 6% = **-1,52%**
@@ -156,26 +156,18 @@ Bull-Markt: Loop bringt +8% vs. ohne Loop
 Bear-Markt: Loop bringt -15% mehr Verlust
 Strukturell asymmetrisch
 
-**[Slide 5] — Wann Loops rational sind**
-Spezifische Bull-Convictions
-Sehr große Positionen
-Kurzfristig-taktisch mit Exit-Kriterium
-Professionelle Full-Time-Manager
+**[Slide 5] — Rationale vs. irrationale Gründe**
+Rational: spezifische Bull-Convictions, sehr große Positionen, taktisch mit Exit, Full-Time-Management
+Irrational: Rendite-Gier, Social Pressure (FOMO), "funktioniert im Bull-Markt"-Pauschal, Langeweile
 
-**[Slide 6] — Schlechte Gründe für Loops**
-Höhere Rendite-Gier
-Social Pressure (FOMO)
-"In Bull-Märkten"-Pauschal
-Langeweile
-
-**[Slide 7] — Die 5 Test-Fragen**
+**[Slide 6] — Die 5 Test-Fragen**
 Verstehe ich alle Risiken?
 Klare Regeln vorhanden?
 Kann ich Verluste aushalten?
 Ziel ohne Loop erreichbar?
 3+ Monate Erfahrung?
 
-**[Slide 8] — Die konservative Kernaussage**
+**[Slide 7] — Die konservative Kernaussage**
 Für die meisten Nutzer: nicht nutzen
 Stattdessen diversifiziertes Portfolio
 Risiko-Management über Rendite
@@ -188,15 +180,13 @@ Risiko-Management über Rendite
 
 **[Slide 3]** Das 7 bis 8 Prozent Ziel ist ohne Leverage erreichbar. Ein diversifiziertes Portfolio mit 55 Prozent Stablecoin-Mix, 30 Prozent Liquid Staking, 5 Prozent LP und Reserve bringt etwa 4,5 Prozent Yield plus ETH-Exposition. In neutralen Märkten sind das 4,5 Prozent Gesamt-Rendite. In moderaten Bull-Markets 7 bis 8 Prozent. Ohne Liquidations-Risiko, mit deutlich geringerer psychologischer Belastung.
 
-**[Slide 4]** Die zentrale Erkenntnis: das Leverage-Risiko ist asymmetrisch. In Bull-Markten bringt der Loop plus 8 Prozentpunkte gegenüber ohne. In Bear-Markten bringt er minus 15 Prozentpunkte. Das klingt fair in der Theorie, ist aber asymmetrisch: 8 Prozent weniger Gewinn ist okay. 15 Prozent mehr Verlust ist emotional und finanziell dramatisch. Das ist nicht Bias — es ist die tatsächliche Verteilung in historischen Märkten.
+**[Slide 4]** Die zentrale Erkenntnis: das Leverage-Risiko ist asymmetrisch. In Bull-Markten bringt der Loop plus 8 Prozentpunkte gegenüber ohne. In Bear-Markten bringt er minus 15 Prozentpunkte. Das klingt fair in der Theorie, ist aber asymmetrisch: 8 Prozent weniger Gewinn ist okay. 15 Prozent mehr Verlust ist emotional und finanziell gravierend. Das ist nicht Bias — es ist die tatsächliche Verteilung in historischen Märkten.
 
-**[Slide 5]** Es gibt Szenarien, in denen Loops rational sind. Spezifische Markt-Sicht mit hohen Bull-Convictions — du bist überzeugt von Bull-Markt und willst überproportional profitieren. Sehr große Positionen, wo die 1 bis 2 Prozent zusätzliche Rendite absolut signifikant sind. Kurzfristig-taktisch mit klarem Exit-Kriterium. Professionelle Trader mit aktivem Full-Time-Management. Diese Szenarien existieren, aber sie decken nicht die Mehrheit der Nutzer ab.
+**[Slide 5]** Rationale gegenüber irrationalen Gründen. Rational sind Loops in spezifischen Szenarien: bei hohen Bull-Convictions, wo du überproportional profitieren willst; bei sehr großen Positionen, wo die 1 bis 2 Prozent zusätzliche Rendite absolut signifikant sind; kurzfristig-taktisch mit klarem Exit-Kriterium; oder für professionelle Trader mit aktivem Full-Time-Management. Diese Szenarien existieren, decken aber nicht die Mehrheit der Nutzer ab. Irrational sind dagegen die typischen schlechten Gründe: "Ich will 10 Prozent statt 5" — Rendite-Gier ohne Risiko-Bewusstsein. "Andere machen das auch" — Social Pressure und FOMO. "In Bull-Markten funktioniert es immer" — zu pauschal. "Ich habe Zeit" — Langeweile ist keine Investment-Strategie. Diese Motivationen führen typischerweise zu Verlusten.
 
-**[Slide 6]** Schlechte Gründe für Loops. "Ich will 10 Prozent statt 5" — Rendite-Gier ohne Risiko-Bewusstsein. "Andere machen das auch" — Social Pressure und FOMO. "In Bull-Markten funktioniert es immer" — zu pauschal. "Ich habe Zeit" — Langeweile ist kein Investment-Strategie. Diese Motivationen führen typischerweise zu Verlusten.
+**[Slide 6]** Fünf Test-Fragen vor jedem Loop. Verstehe ich alle fünf Risiken wirklich? Habe ich klare, schriftliche Regeln für alle sechs Rebalancing-Szenarien? Kann ich einen 30 Prozent Temporär-Verlust emotional aushalten? Erreicht mein Portfolio ohne Loop nicht bereits mein Ziel? Habe ich mindestens drei Monate diszipliniert mit einfachen Strategien praktiziert? Wenn auch nur eine Antwort nein ist: Leverage-Loops sind nicht die richtige Strategie für dich aktuell.
 
-**[Slide 7]** Fünf Test-Fragen vor jedem Loop. Verstehe ich alle fünf Risiken wirklich? Habe ich klare, schriftliche Regeln für alle sechs Rebalancing-Szenarien? Kann ich einen 30 Prozent Temporär-Verlust emotional aushalten? Erreicht mein Portfolio ohne Loop nicht bereits mein Ziel? Habe ich mindestens drei Monate diszipliniert mit einfachen Strategien praktiziert? Wenn auch nur eine Antwort nein ist: Leverage-Loops sind nicht die richtige Strategie für dich aktuell.
-
-**[Slide 8]** Die konservative Kernaussage dieses Moduls. Das 7 bis 8 Prozent Jahresziel ist durch diversifizierte Portfolios ohne Leverage-Loops erreichbar. Leverage-Loops können die Rendite verstärken, aber mit asymmetrisch erhöhtem Downside-Risiko. Für die meisten konservativen Nutzer ist die beste Anwendung dieses Moduls: verstehen, was Loops sind, um informiert zu entscheiden — aber sie selbst nicht zu nutzen. Zumindest nicht, bis substantielle Erfahrung und klare Disziplin vorhanden sind.
+**[Slide 7]** Die konservative Kernaussage dieses Moduls. Das 7 bis 8 Prozent Jahresziel ist durch diversifizierte Portfolios ohne Leverage-Loops erreichbar. Leverage-Loops können die Rendite verstärken, aber mit asymmetrisch erhöhtem Downside-Risiko. Für die meisten konservativen Nutzer ist die beste Anwendung dieses Moduls: verstehen, was Loops sind, um informiert zu entscheiden — aber sie selbst nicht zu nutzen. Zumindest nicht, bis substantielle Erfahrung und klare Disziplin vorhanden sind.
 
 ## Visuelle Vorschläge
 
@@ -208,13 +198,11 @@ Risiko-Management über Rendite
 
 **[Slide 4]** Asymmetrisches Risiko-Diagramm: Upside vs. Downside in verschiedenen Szenarien.
 
-**[Slide 5]** Vier-Szenarien-Matrix, in denen Loops rational sind.
+**[Slide 5]** Zwei-Spalten-Layout: links Vier-Szenarien-Matrix „Loops rational", rechts „Rote-Flaggen"-Liste irrationaler Gründe.
 
-**[Slide 6]** "Rote Flaggen"-Liste für schlechte Gründe.
+**[Slide 6]** Die 5 Fragen als Entscheidungs-Flowchart.
 
-**[Slide 7]** Die 5 Fragen als Entscheidungs-Flowchart.
-
-**[Slide 8]** Konservative Kernaussage prominent dargestellt.
+**[Slide 7]** Konservative Kernaussage prominent dargestellt.
 
 ## Übung
 
@@ -257,8 +245,8 @@ Das häufigste Gegenargument: "Mit klaren Regeln und Disziplin kann man Loops si
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Stop-Signale → Alternative Strategien → Markt-Phasen → Rationale Entscheidung → Persönliche Kriterien → Praktische Anwendung
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Nicht für (Nicht-Nutzer) → 7-8% ohne Leverage → Asymmetrisches Risiko → Rationale vs. irrationale Gründe → Die 5 Test-Fragen → Konservative Kernaussage
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Stop-Signal-Matrix, Alternativ-Strategien-Übersicht, Markt-Phasen-Indikatoren, Entscheidungsmatrix (Leverage vs. Passiv), persönliche Kriterien-Checkliste
 
 Pipeline: Gamma → ElevenLabs → CapCut.

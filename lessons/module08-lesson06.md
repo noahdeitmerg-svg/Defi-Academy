@@ -129,7 +129,7 @@ Handle, wenn:
 - Kurzfristige APY-Verschiebungen (weniger als 1%)
 - Allgemeine Krypto-Markt-Volatilität, die Stablecoins nicht direkt betrifft
 
-**Integrations ins Gesamt-Portfolio**
+**Integration ins Gesamt-Portfolio**
 
 Der Stablecoin-Anteil ist nur ein Teil des konservativen DeFi-Portfolios. Typische Integration mit 7–8%-Zielrendite:
 
@@ -167,15 +167,12 @@ Diversifiziert über 6 Positionen inkl. sUSDe
 60% USDC-Aave, 30% sDAI, 10% USDT
 → ~4,2% Rendite, minimale Komplexität
 
-**[Slide 6] — Wahl nach Profil**
-Zeit, Risiko-Toleranz, Rendite-Ziel
-Keine "richtige" Allokation — nur passende
-
-**[Slide 7] — Rebalancing-Protokoll**
+**[Slide 6] — Wahl nach Profil + Rebalancing**
+Zeit, Risiko-Toleranz, Rendite-Ziel definieren die Wahl A/B/C
 Monatlich: Check, News, Entscheidung, Gas
-Trigger klar definiert (40% Konzentration, 2% APY-Diff, Depeg >2%)
+Trigger: 40% Konzentration, 2% APY-Diff, Depeg >2%
 
-**[Slide 8] — Portfolio-Integration**
+**[Slide 7] — Portfolio-Integration**
 50–60% Stables + 20–30% Staking + 10–15% Spot + 5–10% Reserve
 Gesamt-Ziel 7–8% aus Mischung
 
@@ -191,11 +188,9 @@ Gesamt-Ziel 7–8% aus Mischung
 
 **[Slide 5]** Option C: minimal. 60 Prozent USDC Aave, 30 Prozent sDAI, 10 Prozent USDT. Drei Positionen total. Etwa 4,2 Prozent. Gut für Einsteiger oder Leute mit wenig Zeit.
 
-**[Slide 6]** Die Wahl hängt von dir ab. Keine Option ist objektiv richtig oder falsch. Orientierungs-Fragen: Wie viel Zeit pro Monat? Wie hoch die Risiko-Toleranz? Welches Rendite-Ziel? Für Einsteiger oder Zeit-arme Nutzer ist Option A oder C besser. Für aktivere Nutzer mit Expertise ist Option B attraktiv. In keinem Fall aus Stablecoin-Allokation allein 7 bis 8 Prozent realistisch — das muss aus dem Portfolio-Mix kommen.
+**[Slide 6]** Wahl nach Profil und Rebalancing. Die Wahl hängt von dir ab — keine Option ist objektiv richtig oder falsch. Orientierungs-Fragen: Wie viel Zeit pro Monat? Wie hoch die Risiko-Toleranz? Welches Rendite-Ziel? Für Einsteiger oder Zeit-arme Nutzer ist Option A oder C besser. Für aktivere Nutzer mit Expertise ist Option B attraktiv. Das monatliche Rebalancing-Protokoll dauert etwa fünfzehn bis zwanzig Minuten: fünf Minuten Positions-Check in DeBank, fünf bis zehn Minuten Protokoll-News, fünf Minuten Rebalancing-Entscheidung, dazu ein Gas-Kosten-Check. Trigger für Aktion: eine Position über vierzig Prozent der Stable-Allokation, APY-Differenz über zwei Prozent für dieselbe Stable mit signifikanter Position, Depeg über zwei Prozent, oder Protokoll-Krise. Kleine tägliche Schwankungen triggern nichts.
 
-**[Slide 7]** Monatliches Rebalancing-Protokoll. Fünf Minuten Positions-Check in DeBank. Fünf bis zehn Minuten Protokoll-News. Fünf Minuten Rebalancing-Entscheidung. Gas-Kosten-Check. Trigger für Aktion: eine Position über 40 Prozent der Stable-Allokation, APY-Differenz über 2 Prozent für dieselbe Stable mit signifikanter Position, Depeg über 2 Prozent, oder Protokoll-Krise. Kleine tägliche Schwankungen triggern nichts.
-
-**[Slide 8]** Integration ins Gesamt-Portfolio. Stablecoin-Anteil ist typisch 50 bis 60 Prozent eines konservativen DeFi-Portfolios. Der Rest ist 20 bis 30 Prozent Liquid Staking, 10 bis 15 Prozent direktes ETH oder BTC, 5 bis 10 Prozent Reserve. Die 7 bis 8 Prozent Gesamt-Rendite kommen aus der Mischung: 4 bis 6 Prozent vom Stables-Anteil, 3 bis 4 Prozent aus Staking plus ETH-Preis-Beiträge, kleinere Anteile aus LP. In Bear-Markets fällt das, in Bull-Markets steigt es. Das ist die strukturelle Realität — keine Garantie, nur realistische Erwartung.
+**[Slide 7]** Integration ins Gesamt-Portfolio. Stablecoin-Anteil ist typisch 50 bis 60 Prozent eines konservativen DeFi-Portfolios. Der Rest ist 20 bis 30 Prozent Liquid Staking, 10 bis 15 Prozent direktes ETH oder BTC, 5 bis 10 Prozent Reserve. Die 7 bis 8 Prozent Gesamt-Rendite kommen aus der Mischung: 4 bis 6 Prozent vom Stables-Anteil, 3 bis 4 Prozent aus Staking plus ETH-Preis-Beiträge, kleinere Anteile aus LP. In Bear-Markets fällt das, in Bull-Markets steigt es. Das ist die strukturelle Realität — keine Garantie, nur realistische Erwartung.
 
 ## Visuelle Vorschläge
 
@@ -209,11 +204,9 @@ Gesamt-Ziel 7–8% aus Mischung
 
 **[Slide 5]** Kuchen-Diagramm Option C mit Rendite-Berechnung.
 
-**[Slide 6]** Entscheidungs-Flowchart nach Nutzer-Profil.
+**[Slide 6]** Zwei-Spalten-Layout: links Entscheidungs-Flowchart nach Nutzer-Profil, rechts Rebalancing-Kalender-Visualisierung mit Trigger-Liste.
 
-**[Slide 7]** Rebalancing-Kalender-Visualisierung und Trigger-Liste.
-
-**[Slide 8]** Gesamt-Portfolio-Kuchen mit Rendite-Aufschlüsselung.
+**[Slide 7]** Gesamt-Portfolio-Kuchen mit Rendite-Aufschlüsselung.
 
 ## Übung
 
@@ -254,8 +247,8 @@ Rationale Entscheidung erfordert systematische Analyse mehrerer Faktoren. Ersten
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Diversifikations-Prinzip → Allokations-Beispiele nach Portfolio-Größe → Vertikale vs. horizontale Diversifikation → Rebalancing-Ritual → Exit-/Rotations-Plan → Monitoring-Routine
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Drei-Dimensionen-Diversifikation → Option A (einfach) → Option B (yield-optimiert) → Option C (minimal) → Wahl + Rebalancing → Portfolio-Integration
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Portfolio-Allokations-Pie-Charts für drei Größen, Diversifikations-Matrix, Rebalancing-Flowchart, Exit-Trigger-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.

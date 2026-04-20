@@ -22,7 +22,7 @@ Ein Uniswap-V2-ETH/USDC-Pool hat zum Beispiel 1.000 ETH und 3.000.000 USDC. Der 
 
 **Was der LP-Token repräsentiert**
 
-Der LP-Token ist ein ERC-20-Token, der deinen Pool-Anteil verkörpert. Er hat drei wichtige Eigenschaften:
+Der LP-Token ist ein ERC-20-Token, der deinen Pool-Anteil verkörpert. LP-Tokens repräsentieren den prozentualen Anteil eines Nutzers am Liquidity Pool. Sie haben drei wichtige Eigenschaften:
 
 1. **Er wächst im Wert**, wenn der Pool wächst (durch Gebühren-Einnahmen).
 2. **Er ist transferierbar** — du kannst ihn an eine andere Adresse senden, und der Empfänger hält dann den Pool-Anteil.
@@ -33,7 +33,7 @@ Wenn du 1% der LP-Tokens hältst und der Pool nach einem Jahr 1.200 ETH und 3.60
 **Die zwei Einnahmequellen eines LP**
 
 **Quelle 1: Trading-Gebühren**
-Jeder Swap im Pool zahlt eine Gebühr (0,3% Standard bei V2, variabel bei V3). Diese Gebühr fließt zurück in den Pool und erhöht den Wert der LP-Tokens proportional.
+Jeder Swap im Pool zahlt eine Gebühr (0,3% Standard bei V2, variabel bei V3). Trading Fees werden proportional zum Poolanteil an Liquidity Provider verteilt. Konkret: Die Gebühr fließt zurück in den Pool und erhöht den Wert der LP-Tokens proportional zum gehaltenen Anteil.
 
 **Quelle 2: Rewards (Liquidity Mining)**
 Einige Protokolle zahlen zusätzlich Belohnungen in ihrem nativen Token (z.B. UNI, CRV, BAL), um Liquidität anzuziehen. Diese Rewards sind **separat** von den Trading-Gebühren.
@@ -48,11 +48,15 @@ Eine LP-Position, deren Rendite zu 80% aus Rewards besteht, ist fragil. Eine Pos
 
 Ein häufiger Irrglaube: "LPs sind wie Sparbücher mit hohen Zinsen." Das ist falsch.
 
-Ein LP ist ein Marktmacher. Marktmachen ist eine reale Dienstleistung am Markt — du stellst Liquidität bereit, und im Gegenzug bekommst du Gebühren für dein Risiko. Dieses Risiko heißt Impermanent Loss, und es ist keine theoretische Gefahr, sondern bei jedem Preisänderung mathematisch real. Darauf gehen wir in Lektion 5.2 ein.
+Ein LP ist ein Marktmacher. Marktmachen ist eine reale Dienstleistung am Markt — du stellst Liquidität bereit, und im Gegenzug bekommst du Gebühren für dein Risiko. Dieses Risiko heißt Impermanent Loss, und es ist keine theoretische Gefahr, sondern bei jeder Preisänderung mathematisch real. Darauf gehen wir in Lektion 5.2 ein.
 
 **Wer LP-Sein ernst nimmt**
 
 Professionelle Marktmacher (Wintermute, Amber Group, Jump Trading) stellen auf CEXs Liquidität bereit — und verdienen damit Geld. Sie haben hochentwickelte Modelle für Volatilität, Spread und Inventar-Risiko. Retail-LPs in DeFi machen eine vereinfachte Version dieser Dienstleistung. Die gute Nachricht: Du brauchst keine Quant-Modelle, um verantwortlich zu sein. Du brauchst nur zu verstehen, was du tust — und genau das ist Ziel dieses Moduls.
+
+**Warum Pool-Größe zählt**
+
+Große Pools reduzieren den Preisimpact einzelner Trades und verringern dadurch Slippage. Für Trader bedeutet das bessere Ausführungspreise; für LPs bedeutet tiefe Liquidität mehr Handelsvolumen und damit mehr Gebühreneinnahmen pro Dollar Kapital. Die Konsequenz: Pool-Tiefe und Trading-Volumen bedingen sich gegenseitig.
 
 ## Folien-Zusammenfassung
 
@@ -147,7 +151,7 @@ Drei Gründe. Erstens: Reward-Programme haben ein Ende — entweder zeitlich def
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 6 Slides: Titel → LP im AMM → LP-Token als Anteilsnachweis → 2 Einnahmequellen (Fees/Rewards) → Pool-Tiefe & Rendite → LP-Entscheidungsraster
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — LP-Rolle-Diagramm, Pool-Share-Visualisierung, Fees/Rewards-Vergleich, TVL-Einfluss auf Rendite-Chart, Uniswap-Pool-Analytics-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.

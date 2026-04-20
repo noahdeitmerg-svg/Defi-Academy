@@ -124,7 +124,7 @@ Historisch 3–8%, an risk-free rate orientiert
 Sky-Zwilling zu sDAI mit Sky-Points-Bonus
 Im Kern sehr ähnlich zu sDAI
 
-**[Slide 5] — Ethena's USDe / sUSDe**
+**[Slide 5] — Ethenas USDe / sUSDe**
 Delta-neutral-Hedging-Design
 Rendite: Staking + Funding Rates
 Historisch 10–20% APY
@@ -150,7 +150,7 @@ Unbekannte Yield-Stables: 0%
 
 **[Slide 4]** sUSDS ist der Zwilling von sDAI im Sky-Ökosystem. Sky hat USDS parallel zu DAI eingeführt, mit zusätzlichen Sky-Points als Loyalitäts-Programm. sUSDS ist die Savings-Variante. Kernmechanik ist sehr ähnlich zu sDAI. Für konservative Nutzer ist der Unterschied gering.
 
-**[Slide 5]** Ethena's USDe und die Savings-Variante sUSDe. Ein innovatives Delta-neutrales Design. Das Protokoll hält ETH spot-long und hedged gleichzeitig via Perpetual-Futures-Shorts auf CEXs. Die Netto-Exposition ist null. Die Rendite kommt aus Staking des unterliegenden stETH und aus Funding-Rate-Einnahmen der Shorts. Historisch 10 bis 20 Prozent APY — deutlich höher als sDAI. Aber: viele zusätzliche Risiken. Funding Rates können negativ werden. Exchange-Ausfall-Risiko. Liquidations-Risiko bei extremen Bewegungen. Komplexe Custody-Strukturen. Für konservative Portfolios nur als kleine Allokation geeignet, wenn überhaupt.
+**[Slide 5]** Ethenas USDe und die Savings-Variante sUSDe. Ein innovatives Delta-neutrales Design. Das Protokoll hält ETH spot-long und hedget gleichzeitig via Perpetual-Futures-Shorts auf CEXs. Die Netto-Exposition ist null. Die Rendite kommt aus Staking des unterliegenden stETH und aus Funding-Rate-Einnahmen der Shorts. Historisch 10 bis 20 Prozent APY — deutlich höher als sDAI. Aber: viele zusätzliche Risiken. Funding Rates können negativ werden. Exchange-Ausfall-Risiko. Liquidations-Risiko bei extremen Bewegungen. Komplexe Custody-Strukturen. Für konservative Portfolios nur als kleine Allokation geeignet, wenn überhaupt.
 
 **[Slide 6]** Drei sinnvolle Anwendungs-Szenarien. Erstens: passives Cash parken. Wandle Teile deiner Stablecoin-Bestände in sDAI um, verdiene automatisch Zinsen. Zweitens: Notreserve mit Ertrag. Die fünftausend Dollar Reserve, die einfach so rumliegen, verdienen jetzt 5 Prozent. Drittens: als Collateral. sDAI kann in vielen Lending-Protokollen als Sicherheit genutzt werden — du bekommst Yield und kannst darauf borgen, wenn gewünscht.
 
@@ -212,7 +212,7 @@ Mehrere Probleme. Erstens: Konzentrationsrisiko. 100% eines signifikanten Portfo
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Yield-bearing Grundprinzip → sDAI/DSR → sUSDS → Ethena USDe/sUSDe → Delta-Hedging-Mechanik → Risiko-Vergleich
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — DSR-Mechanik-Diagramm, Yield-Source-Breakdown für jeden Stablecoin, Delta-Hedging-Flow (Ethena), Risiko-vs-Rendite-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.

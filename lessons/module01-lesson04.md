@@ -3,6 +3,7 @@
 ## Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
+
 - Die sechs Hauptkategorien von DeFi-Protokollen benennen und ihre Funktion erklären
 - Verfolgen, wie Kapital durch diese Kategorien fließt
 - Tools wie DeFiLlama nutzen, um die Größe und Relevanz verschiedener Protokolle einzuschätzen
@@ -29,6 +30,7 @@ Wichtige Protokolle: Aave (größtes Lending-Protokoll), Compound, Morpho, Spark
 **Kategorie 3: Stablecoins**
 
 Stablecoins sind Tokens, die einen Peg zu einem externen Asset halten — meistens dem US-Dollar. Es gibt drei Haupttypen:
+
 - **Fiat-besichert** (USDC, USDT): gedeckt durch echte Dollar-Reserven bei einem Emittenten
 - **Krypto-besichert** (DAI, crvUSD): gedeckt durch On-Chain-Sicherheiten in Smart Contracts
 - **Algorithmisch** (z.B. UST — historisches Beispiel): durch Algorithmen stabilisiert, oft fragil. Hybrid-Modelle wie FRAX kombinieren algorithmische Mechanismen mit Sicherheiten und gelten daher als teilweise besichert.
@@ -89,6 +91,7 @@ Jeder Pfeil ist eine Transaktion. Jede Station ist ein Protokoll. Das Kapital zi
 Die DeFi-Landschaft
 
 **[Slide 2] — Sechs Hauptkategorien**
+
 1. DEXs (Swaps)
 2. Lending & Borrowing
 3. Stablecoins
@@ -113,6 +116,7 @@ USD → USDC → Aave → Borrow ETH → Lido stETH → Curve LP → Convex.
 Sechs Stationen. Sechs Risikoquellen.
 
 **[Slide 7] — Navigations-Tools**
+
 - DeFiLlama: TVL-Landschaft
 - DeBank: Wallet-Portfolios
 - Dune Analytics: Custom-Metriken
@@ -161,6 +165,7 @@ Drei Tools zur Navigation. DeFiLlama zeigt dir, wie viel Kapital in jedem Protok
 **Aufgabe: DeFi-Landkarte selbst erstellen**
 
 Gehe auf defillama.com. Wähle die Top-10-Protokolle nach TVL. Ordne jedes der sechs Kategorien zu (einige fallen in mehrere Kategorien). Notiere für jedes Protokoll:
+
 1. Name
 2. Kategorie(n)
 3. Aktueller TVL
@@ -172,21 +177,21 @@ Gehe auf defillama.com. Wähle die Top-10-Protokolle nach TVL. Ordne jedes der s
 
 **Frage 1:** Nenne die sechs Hauptkategorien von DeFi-Protokollen und je ein Beispiel.
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 1. DEXs (z.B. Uniswap), 2. Lending & Borrowing (z.B. Aave), 3. Stablecoins (z.B. USDC oder DAI), 4. Liquid Staking (z.B. Lido), 5. Derivate/Perpetuals (z.B. GMX oder dYdX), 6. Yield-Aggregatoren (z.B. Yearn oder Convex).
-</details>
+
+
 
 **Frage 2:** Warum ist der TVL (Total Value Locked) eine wichtige, aber unvollständige Metrik?
 
-<details>
-<summary>Antwort anzeigen</summary>
+Antwort anzeigen
 
 TVL zeigt, wie viel Kapital in einem Protokoll hinterlegt ist, was ein Indikator für Vertrauen und Nutzung ist. Aber TVL ist unvollständig: Er kann durch wenige Wale dominiert sein, kann durch recycelte Deposits aufgebläht werden (wenn das gleiche Kapital durch mehrere Protokolle gezählt wird), und er sagt nichts über Profitabilität oder Risiko aus. Ein hoher TVL ist kein Garant für Sicherheit — mehrere Hacks trafen hoch-TVL-Protokolle.
 
 TVL kann außerdem durch sogenannte Rehypothecation aufgebläht werden. Dabei wird dasselbe Kapital mehrfach in verschiedenen Protokollen verwendet und gezählt. Dadurch kann der aggregierte TVL höher erscheinen als die tatsächliche ökonomische Nutzung.
-</details>
+
+
 
 ## Video-Pipeline-Assets
 

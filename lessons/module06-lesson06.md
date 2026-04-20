@@ -66,7 +66,7 @@ Wenn Liquidationen nicht schnell genug ausgeführt werden oder der Collateral sc
 
 **Historische Beispiele:**
 - Mehrere kleinere Bad-Debt-Events auf Aave, meist durch Governance-Entscheidungen abgefangen
-- Kleinere Lending-Protokolle haben größere Bad-Debt-Events erlebt (z.B. Sonne Finance, Euler nach Hack)
+- Kleinere Lending-Protokolle haben größere Bad-Debt-Events erlebt (z.B. Sonne Finance, Euler Finance nach Hack)
 
 **Mitigation:**
 - Nur Protokolle mit etablierten Safety-Modulen oder Insurance-Mechanismen (Aave Safety Module)
@@ -193,7 +193,7 @@ Vorab definieren, in Stress konsistent anwenden
 **Aufgabe: Persönliches Monitoring- und Exit-Protokoll entwerfen**
 
 1. Definiere dein persönliches Monitoring-Protokoll:
- - Täglich: was wirst du checken, wie lange?
+ - Täglich: was wirst du prüfen, wie lange?
  - Wöchentlich: welche Metriken?
  - Monatlich: welche Entscheidungen?
 
@@ -231,7 +231,7 @@ Weil in Krisen das Gehirn nicht rational arbeitet. Unter Stress fallen Menschen 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Fünf Hauptrisiken → Smart Contract Risk → Oracle Risk → Liquidity Risk → Monitoring-Ritual → Exit-Trigger
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Risiko-Matrix-Übersicht, Hack-Historie-Chart (DeFiLlama), Monitoring-Dashboard-Screenshots (DeBank/Zapper), Exit-Trigger-Entscheidungsbaum, Notfall-Prozedur-Flussdiagramm
 
 Pipeline: Gamma → ElevenLabs → CapCut.

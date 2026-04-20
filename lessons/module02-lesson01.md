@@ -8,7 +8,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Verstehen, warum Seed-Phrasen-Kompromittierung einem Total-Verlust gleichkommt
 - Die Einwegrichtung der kryptographischen Hierarchie anhand der Größenordnung des Schlüsselraums (2^256) erklären
 - BIP-44-Derivationspfade interpretieren und begründen, warum derselbe Seed in verschiedenen Wallet-Apps unterschiedliche Adressen zeigen kann
-- Einen bewussten Check der eigenen Wallet-Struktur (Private Key, Seed Phrase, mehrfache Accounts) sicher durchführen
+- Einen bewussten Check der eigenen Wallet-Struktur (Private Key, Seed-Phrase, mehrfache Accounts) sicher durchführen
 
 ## Erklärung
 
@@ -32,7 +32,7 @@ Die Hierarchie: `Private Key → Public Key → Adresse` — von links nach rech
 
 **Das Problem: Private Keys skalieren schlecht.** Eine lange Hex-Zeichenkette ist nicht merkbar. Wer mehrere Adressen verwenden will (aus Privacy- und Sicherheitsgründen oft sinnvoll), braucht mehrere Keys. Manuelles Verwalten wird schnell unpraktisch.
 
-**Die Lösung: BIP-39 und hierarchische deterministische Wallets.** BIP-39 ist der Standard, der Seed-Phrasen einführt — 12 oder 24 Wörter aus einer definierten Liste von 2048 Wörtern. Diese Wörter kodieren eine große Zufallszahl.
+**Die Lösung: BIP-39 und hierarchische deterministische Wallets.** BIP-39 ist der Standard, der Seed-Phrasen einführt — 12 oder 24 Wörter aus einer definierten Liste von 2048 Wörtern. Diese Wörter kodieren eine extrem große Zufallszahl.
 
 Beispiel einer 12-Wort-Seed-Phrase (fiktiv):
 ```
@@ -78,13 +78,13 @@ Seed-Phrase → Master-Seed → Master Private Key
 
 **[Slide 2]** Eine Wallet besteht aus drei Elementen. Aus dem Private Key wird der Public Key berechnet. Aus dem Public Key wird die Adresse gehasht. Von links nach rechts einfach berechenbar, rückwärts kryptographisch unmöglich.
 
-**[Slide 3]** Der Private Key ist eine 256-Bit-Zufallszahl. Der Zahlenraum umfasst etwa zehn hoch siebenundsiebzig mögliche Werte — in der Größenordnung der Atome im sichtbaren Universum. Niemand kann einen Private Key erraten. Wer den Key hat, kontrolliert die Adresse vollständig.
+**[Slide 3]** Der Private Key ist eine 256-Bit-Zufallszahl. Der Zahlenraum umfasst etwa zehn hoch siebenundsiebzig mögliche Werte — in der Größenordnung der Atome im sichtbaren Universum. Niemand kann einen Private Key erraten. Wer den Private Key hat, kontrolliert die Adresse vollständig.
 
 **[Slide 4]** Die Adresse ist ein Hash des Public Key, gekürzt auf 20 Bytes. Sie ist öffentlich, jeder sieht sie auf Etherscan. Aus der Adresse lässt sich weder der Public Key noch der Private Key rückrechnen. Deine Adresse zu teilen ist also sicher.
 
 **[Slide 5]** Problem: einzelne Private Keys skalieren schlecht. Lange Hex-Zeichenkette, nicht merkbar, mehrere Adressen erfordern mehrere Keys. Hier kommt BIP-39 ins Spiel.
 
-**[Slide 6]** BIP-39: zwölf oder vierundzwanzig Wörter aus einer definierten Liste von zweitausendachtundvierzig Wörtern. Diese kodieren eine große Zufallszahl. Aus dieser Seed-Phrase wird ein Master-Seed generiert, und aus dem Master-Seed werden deterministisch beliebig viele Private Keys abgeleitet. Eine Seed-Phrase, alle abgeleiteten Adressen.
+**[Slide 6]** BIP-39: zwölf oder vierundzwanzig Wörter aus einer definierten Liste von zweitausendachtundvierzig Wörtern. Diese kodieren eine extrem große Zufallszahl. Aus dieser Seed-Phrase wird ein Master-Seed generiert, und aus dem Master-Seed werden deterministisch beliebig viele Private Keys abgeleitet. Eine Seed-Phrase, alle abgeleiteten Adressen.
 
 **[Slide 7]** Die Kernkonsequenz: die Seed-Phrase ist dein Master-Schlüssel. Ihre Kompromittierung bedeutet Total-Verlust aller abgeleiteten Assets — auch solcher, die du noch gar nicht erstellt hast. Deshalb niemals digital speichern. Keine Screenshots, keine Cloud, keine Notiz-Apps. Wir behandeln Storage-Optionen in der nächsten Lektion.
 
@@ -134,7 +134,7 @@ Ein unterschiedlicher Derivationspfad. BIP-44 definiert einen Standard-Pfad (`m/
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Hierarchie Private/Public/Adresse → 2^256-Zahlenraum → Adresse als Hash → Skalierungsproblem Keys → BIP-39-Ableitung → Kernkonsequenz Seed-Phrase
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 8–10 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Einbahnstraßen-Diagramm, Zahlenraum-Visualisierung, Etherscan-Screenshot vitalik.eth, BIP-39-Baum-Diagramm, rotes Warnsymbol
 
 Pipeline: Gamma → ElevenLabs → CapCut.

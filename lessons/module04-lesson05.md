@@ -25,7 +25,7 @@ Preisdifferenzen zwischen Pools werden ausgeglichen. Ein Searcher sieht, dass ET
 Ein Lending-Protokoll hat einen unterbesicherten Kreditnehmer. Searcher konkurrieren darum, die Liquidation auszuführen und die Liquidations-Prämie zu verdienen. Auch diese Form von MEV ist **funktional notwendig** — Liquidationen halten Lending-Protokolle solvent. Der Wettbewerb geht oft fast vollständig an die Validatoren, aber das System funktioniert.
 
 **3. Sandwich-Angriffe (Frontrunning/Backrunning)**
-Wie in Lektion 4.3 beschrieben: Searcher erkennt pending Swap, schaltet einen Kauf vor und einen Verkauf nach dem Nutzer-Swap. Der Profit ist der Slippage-Verlust des Nutzers. Diese Form von MEV ist **schädlich** — sie ist direkte Extraktion aus den Nutzern.
+Wie in Lektion 4.3 beschrieben: Searcher erkennt ausstehenden Swap, schaltet einen Kauf vor und einen Verkauf nach dem Nutzer-Swap. Der Profit ist der Slippage-Verlust des Nutzers. Diese Form von MEV ist **schädlich** — sie ist direkte Extraktion aus den Nutzern.
 
 **Größenordnungen**
 
@@ -93,21 +93,17 @@ Jährlich mehrere Milliarden USD auf Ethereum.
 Searcher → Builder → Relay → Validator.
 MEV-Boost ist Standard auf Ethereum.
 
-**[Slide 5] — Öffentlicher Mempool als Schwachstelle**
-Transaktionen sind vor Ausführung sichtbar.
-Das ermöglicht Sandwich-Angriffe.
+**[Slide 5] — Mempool-Mechanik**
+Öffentlicher Mempool macht Transaktionen vor Ausführung sichtbar und ermöglicht Sandwich-Angriffe.
+Privater Relay geht direkt an Builder — umgeht den öffentlichen Mempool.
 
-**[Slide 6] — Private Mempools als Schutz**
-Transaktion geht direkt an Builder.
-Keine Sichtbarkeit im öffentlichen Mempool.
-
-**[Slide 7] — Praktische Tools**
+**[Slide 6] — Praktische Tools**
 - Flashbots Protect
 - MEV Blocker
 - CoW Swap
 - Rabby (integriert)
 
-**[Slide 8] — Layer-2-Situation**
+**[Slide 7] — Layer-2-Situation**
 MEV aktuell reduziert durch zentrale Sequencer.
 Kann sich mit Dezentralisierung ändern.
 
@@ -121,13 +117,11 @@ Kann sich mit Dezentralisierung ändern.
 
 **[Slide 4]** Die Supply-Chain ist mehrstufig. Searcher sind Bots, die Mempool-Opportunities identifizieren. Builder konstruieren Blöcke aus Searcher-Bundles plus öffentlichen Transaktionen. Relays reichen Blöcke an Validatoren. Validatoren veröffentlichen den profitabelsten Block. Dieses System, genannt MEV-Boost, ist auf Ethereum Quasi-Standard.
 
-**[Slide 5]** Die Schwachstelle für Nutzer ist der öffentliche Mempool. Jede Transaktion ist dort sichtbar, bevor sie gemint wird. Ein Sandwich-Bot kann sie analysieren, entscheiden, ob ein Angriff profitabel ist, und entsprechend positionieren.
+**[Slide 5]** Die Schwachstelle für Nutzer ist der öffentliche Mempool. Jede Transaktion ist dort sichtbar, bevor sie gemint wird. Ein Sandwich-Bot kann sie analysieren, entscheiden, ob ein Angriff profitabel ist, und entsprechend positionieren. Die Verteidigung ist, den öffentlichen Mempool zu umgehen. Eine Transaktion wird an einen privaten Relay gesendet, der sie direkt an Builder und Validatoren weitergibt. Sie ist erst im Block sichtbar, wenn der Block bereits produziert ist. Dann ist es zu spät für einen Sandwich.
 
-**[Slide 6]** Die Verteidigung ist, den öffentlichen Mempool zu umgehen. Eine Transaktion wird an einen privaten Relay gesendet, der sie direkt an Builder und Validatoren weitergibt. Sie ist erst im Block sichtbar, wenn der Block bereits produziert ist. Dann ist es zu spät für einen Sandwich.
+**[Slide 6]** Praktische Tools. Flashbots Protect ist der Original-Dienst, zuverlässig, seit Jahren etabliert. MEV Blocker ist eine community-getragene Alternative. CoW Swap integriert MEV-Schutz direkt in die DEX-Oberfläche und aggregiert dabei über mehrere DEXs. Rabby Wallet hat einen eingebauten Toggle. Die Empfehlung: für größere Swaps immer einen davon aktivieren.
 
-**[Slide 7]** Praktische Tools. Flashbots Protect ist der Original-Dienst, zuverlässig, seit Jahren etabliert. MEV Blocker ist eine community-getragene Alternative. CoW Swap integriert MEV-Schutz direkt in die DEX-Oberfläche und aggregiert dabei über mehrere DEXs. Rabby Wallet hat einen eingebauten Toggle. Die Empfehlung: für größere Swaps immer einen davon aktivieren.
-
-**[Slide 8]** Auf Layer-2s ist die MEV-Situation aktuell strukturell reduziert. Arbitrum, Optimism, Base haben jeweils einen zentralen Sequencer, der Transaktions-Reihenfolge bestimmt. Sandwich-Angriffe sind dort aktuell selten. Das kann sich ändern, wenn Sequencer dezentralisiert werden — das ist ein laufendes Design-Thema. Für jetzt: auf Layer-2s meist kein dedizierter MEV-Schutz nötig, auf Mainnet unbedingt.
+**[Slide 7]** Auf Layer-2s ist die MEV-Situation aktuell strukturell reduziert. Arbitrum, Optimism, Base haben jeweils einen zentralen Sequencer, der Transaktions-Reihenfolge bestimmt. Sandwich-Angriffe sind dort aktuell selten. Das kann sich ändern, wenn Sequencer dezentralisiert werden — das ist ein laufendes Design-Thema. Für jetzt: auf Layer-2s meist kein dedizierter MEV-Schutz nötig, auf Mainnet unbedingt.
 
 ## Visuelle Vorschläge
 
@@ -139,13 +133,11 @@ Kann sich mit Dezentralisierung ändern.
 
 **[Slide 4]** Flussdiagramm der Supply-Chain mit Beispiel-Block-Produktion.
 
-**[Slide 5]** Mempool-Visualisierung: viele pending Transaktionen, Angreifer-Bot beobachtet. **SCREENSHOT SUGGESTION:** blocknative.com Mempool Explorer live.
+**[Slide 5]** Mempool-Visualisierung: viele ausstehende Transaktionen, Angreifer-Bot beobachtet. Daneben Seite-an-Seite-Vergleich „öffentlicher Mempool" vs. „privater Relay" mit jeweiligem Routing-Pfad. **SCREENSHOT SUGGESTION:** blocknative.com Mempool Explorer live.
 
-**[Slide 6]** Seite-an-Seite: "öffentlicher Mempool" vs. "privater Relay" mit jeweiligem Routing-Pfad.
+**[Slide 6]** Vier Tool-Logos und kurze Beschreibungen. **SCREENSHOT SUGGESTION:** Rabby-Einstellungen mit MEV-Schutz-Toggle.
 
-**[Slide 7]** Vier Tool-Logos und kurze Beschreibungen. **SCREENSHOT SUGGESTION:** Rabby-Einstellungen mit MEV-Schutz-Toggle.
-
-**[Slide 8]** Tabelle: Ethereum L1 vs. Arbitrum/Optimism/Base — MEV-Status und Empfehlung.
+**[Slide 7]** Tabelle: Ethereum L1 vs. Arbitrum/Optimism/Base — MEV-Status und Empfehlung.
 
 ## Übung
 
@@ -186,8 +178,8 @@ Erstens: privaten Mempool einrichten — Flashbots Protect, MEV Blocker oder CoW
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Slides: Titel → MEV-Definition → 3 Kategorien (Arbitrage/Sandwich/Liquidation) → MEV-Supply-Chain → Sandwich-Attack-Anatomie → Schutz-Mechanismen → Private-Mempool-Setup
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min., Bridge zu Modul 11)
+- `slides_prompt.txt` — 7 Slides: Titel → MEV-Definition → 3 Kategorien → MEV-Supply-Chain → Mempool-Mechanik (öffentlich vs. privat) → Schutz-Tools → Layer-2-Situation
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — MEV-Kategorien-Diagramm, Searcher/Builder/Proposer-Flow, Sandwich-Zeitleiste (front/victim/back), Flashbots-Protect-Setup-Screenshot, CoW-Swap-Interface
 
 Pipeline: Gamma → ElevenLabs → CapCut.

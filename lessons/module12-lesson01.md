@@ -16,6 +16,13 @@ Ein Flash Loan ist ein Kredit, der **in derselben Transaktion aufgenommen und zu
 
 **Die Grundmechanik: atomare Transaktionen**
 
+Die EVM-Atomarität folgt einem einfachen Prinzip:
+
+> **Transaction success → state committed**
+> **Transaction failure → full revert**
+>
+> Konzeptuell: `State(t+1) = State(t) + Δ` bei Erfolg, sonst `State(t+1) = State(t)`.
+
 Eine Ethereum-Transaktion kann beliebig viele Schritte enthalten: Contract-Calls, Token-Transfers, Berechnungen. Entscheidend: alle Schritte passieren **entweder komplett oder gar nicht**. Wenn am Ende eine Bedingung nicht erfüllt ist, wird alles rückgängig gemacht.
 
 **Das ermöglicht Flash Loans:**
@@ -85,29 +92,24 @@ Ethereum-TX: alle Schritte atomisch
 Entweder komplett oder gar nicht
 Grundlage für Flash Loans
 
-**[Slide 4] — Sicherheits-Garantie**
-Risiko für Kreditgeber: mathematisch null
-Entweder Rückzahlung oder Revert
-Kein Flucht-Szenario
+**[Slide 4] — Sicherheits-Garantie vs. TradFi**
+Risiko für Kreditgeber: mathematisch null — entweder Rückzahlung oder Revert
+TradFi: Zeit zwischen Auszahlung/Rückzahlung → Sicherheiten nötig
+DeFi: Atomarität eliminiert Zeit, Flash Loans ohne Sicherheiten möglich
 
-**[Slide 5] — TradFi vs DeFi**
-TradFi: Zeit zwischen Auszahlung/Rückzahlung
-Braucht Sicherheiten
-DeFi: Atomarität eliminiert Zeit
-
-**[Slide 6] — Fee-Struktur**
+**[Slide 5] — Fee-Struktur**
 Aave V3: 0,05%
 Balancer V2: 0%
 Uniswap V3 Flash Swap: Swap-Fee
 Extrem günstig
 
-**[Slide 7] — Nutzer-Verteilung**
+**[Slide 6] — Nutzer-Verteilung**
 MEV-Searcher 60-70%
 Power-User 15-25%
 Angreifer 5-10% historisch
 Protokoll-Integration wachsend
 
-**[Slide 8] — Technische Hürde**
+**[Slide 7] — Technische Hürde**
 Normale Wallet: nicht nutzbar
 Smart Contract Programmierung nötig
 Oder: Aggregator-Tools (DeFi Saver)
@@ -120,26 +122,23 @@ Oder: Aggregator-Tools (DeFi Saver)
 
 **[Slide 3]** Grundmechanik ist die Atomarität von Ethereum-Transaktionen. Eine Transaktion kann viele Schritte enthalten. Alle passieren entweder komplett oder gar nicht. Es gibt kein "halb ausgeführt". Das ist die Grundlage für Flash Loans.
 
-**[Slide 4]** Sicherheits-Garantie für den Kreditgeber ist mathematisch. Entweder Rückzahlung plus Fee, oder die Transaktion wird revertiert und der Contract hat wieder sein Ausgangs-Kapital. Kein Zwischenfall möglich.
+**[Slide 4]** Sicherheits-Garantie für den Kreditgeber ist mathematisch — entweder Rückzahlung plus Fee, oder die Transaktion wird revertiert und der Contract hat wieder sein Ausgangs-Kapital. Kein Zwischenfall möglich. In TradFi funktioniert das nicht, weil keine Atomarität existiert. Bank-Überweisungen dauern Stunden oder Tage. Zwischen Auszahlung und Rückzahlung existiert Zeit zum Fliehen. Deshalb braucht TradFi Sicherheiten. In Ethereum: alles in einer 12-Sekunden-Transaktion — Atomarität eliminiert die Zeit, und Flash Loans ohne Sicherheiten werden möglich.
 
-**[Slide 5]** In TradFi funktioniert das nicht, weil keine Atomarität existiert. Bank-Überweisungen dauern Stunden oder Tage. Zwischen Auszahlung und Rückzahlung existiert Zeit zum Fliehen. Deshalb braucht TradFi Sicherheiten. In Ethereum: alles in einer 12-Sekunden-Transaktion.
+**[Slide 5]** Weil Risiko null ist, sind Fees extrem niedrig. Aave V3: 0,05 Prozent. Balancer V2: null Prozent komplett kostenlos. Uniswap V3 Flash Swap: entspricht Swap-Fee. Selbst bei 1 Million Dollar Flash Loan nur 0 bis 500 Dollar Fee plus Gas.
 
-**[Slide 6]** Weil Risiko null ist, sind Fees extrem niedrig. Aave V3: 0,05 Prozent. Balancer V2: null Prozent komplett kostenlos. Uniswap V3 Flash Swap: entspricht Swap-Fee. Selbst bei 1 Million Dollar Flash Loan nur 0 bis 500 Dollar Fee plus Gas.
+**[Slide 6]** Wer nutzt Flash Loans. MEV-Searcher 60 bis 70 Prozent — Arbitrage und Liquidationen. Power-User 15 bis 25 Prozent — Collateral-Swaps über Tools. Angreifer historisch 5 bis 10 Prozent — die spektakulärsten DeFi-Hacks. Protokoll-Integration wachsend.
 
-**[Slide 7]** Wer nutzt Flash Loans. MEV-Searcher 60 bis 70 Prozent — Arbitrage und Liquidationen. Power-User 15 bis 25 Prozent — Collateral-Swaps über Tools. Angreifer historisch 5 bis 10 Prozent — die spektakulärsten DeFi-Hacks. Protokoll-Integration wachsend.
-
-**[Slide 8]** Die technische Hürde. Flash Loans sind nicht über normale Wallets aufrufbar, weil gesamte Logik in einer atomaren Transaktion stehen muss. Erfordert Smart Contract Programmierung. Ausnahme: Aggregator-Tools wie DeFi Saver oder Instadapp bieten UIs für häufige Patterns.
+**[Slide 7]** Die technische Hürde. Flash Loans sind nicht über normale Wallets aufrufbar, weil gesamte Logik in einer atomaren Transaktion stehen muss. Erfordert Smart Contract Programmierung. Ausnahme: Aggregator-Tools wie DeFi Saver oder Instadapp bieten UIs für häufige Patterns.
 
 ## Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 **[Slide 2]** Flash-Loan-Ablauf: Borrow → Action → Repay in einer TX.
 **[Slide 3]** Atomarität als "All-or-Nothing"-Box.
-**[Slide 4]** Sicherheits-Flowchart.
-**[Slide 5]** TradFi vs DeFi Zeit-Dimension.
-**[Slide 6]** Fee-Vergleichstabelle der Anbieter.
-**[Slide 7]** Tortendiagramm der Nutzer-Kategorien.
-**[Slide 8]** **SCREENSHOT SUGGESTION:** DeFi Saver Flash-Loan-Interface.
+**[Slide 4]** Zwei-Spalten-Layout: links Sicherheits-Flowchart (atomare Garantie), rechts TradFi-vs-DeFi Zeit-Dimension.
+**[Slide 5]** Fee-Vergleichstabelle der Anbieter.
+**[Slide 6]** Tortendiagramm der Nutzer-Kategorien.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** DeFi Saver Flash-Loan-Interface.
 
 ## Übung
 
@@ -175,7 +174,7 @@ Mehrere wichtige Punkte. Erstens: Flash Loans im Hintergrund. 1inch-Aggregator-R
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Was ist ein Flash Loan → Atomic Transaction → Flash-Loan-Flow-Diagramm → Revert-Mechanik → Vergleich zum klassischen Kredit → Praxis-Relevanz
+- `slides_prompt.txt` — 7 Folien: Titel → Was ist ein Flash Loan → Atomare Transaktion → Sicherheits-Garantie & TradFi-Vergleich → Fee-Struktur → Nutzer-Verteilung → Technische Hürde
 - `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Flash-Loan-Flow-Diagramm (Borrow → Action → Repay), Atomic-Transaction-Visualisierung, Revert-Mechanismus-Grafik, Vergleichstabelle TradFi-Kredit vs. Flash Loan
 

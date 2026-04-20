@@ -17,14 +17,16 @@ In Lektion 7.1 hast du die statischen LTV-Parameter kennengelernt. In der Praxis
 **Die Formel**
 
 ```
-Health Factor = (Collateral-Wert × Liquidation Threshold) / Schuld-Wert
+Health Factor = (Collateral Value × Liquidation Threshold) / Borrowed Value
 ```
 
-Der Health Factor ist die Risiko-Metrik, die Aave und ähnliche Protokolle anzeigen. Er hat drei entscheidende Werte:
+Der Health Factor ist die Risiko-Metrik, die Aave und ähnliche Protokolle anzeigen. Die drei Zustände:
 
-- **Health Factor > 1:** Position ist sicher
-- **Health Factor = 1:** Position ist direkt an der Liquidations-Grenze
-- **Health Factor < 1:** Position kann liquidiert werden
+- **HF > 1** → Position sicher
+- **HF = 1** → Liquidation möglich
+- **HF < 1** → Liquidation wahrscheinlich
+
+Bei HF ≤ 1 wird die Position liquidiert, sobald ein Liquidator es profitabel für sich entscheidet.
 
 **Konkretes Beispiel**
 
@@ -82,6 +84,10 @@ Health Factor kann sich **ohne dein Zutun** ändern. Drei Mechanismen:
 
 Dieser dritte Punkt wird oft übersehen. Bei hohen Borrow-Zinsen kann die Schuld signifikant wachsen, während der Collateral-Preis stabil bleibt — und trotzdem nähert sich der Health Factor 1 an.
 
+**Der Sicherheitsabstand zum Liquidation Threshold**
+
+Viele Nutzer halten bewusst einen Sicherheitsabstand zum Liquidation Threshold — etwa Health Factor 1,5 statt 1,1. Dieser Buffer reduziert das Risiko plötzlicher Liquidationen bei Marktbewegungen. Eine Position mit HF 1,1 kann bei einem einzigen 10%-Preissprung schon im Liquidationsbereich landen; bei HF 1,5 bleiben 30–40% Puffer, bevor es kritisch wird. Der richtige HF-Zielwert hängt von der Strategie, der Asset-Volatilität und der persönlichen Monitoring-Kapazität ab — siehe die folgenden Zielbereiche.
+
 **Konservative Health-Factor-Zielwerte**
 
 Für verschiedene Strategien sind unterschiedliche Health-Factor-Zielbereiche sinnvoll:
@@ -122,10 +128,10 @@ Eine einfache Daumenregel: Wenn dein Health Factor unter 1,5 fällt, solltest du
 Health Factor: Die zentrale Risiko-Metrik
 
 **[Slide 2] — Die Formel**
-HF = (Collateral × LT) / Schuld
-> 1: sicher
-= 1: Liquidations-Grenze
-< 1: liquidiert
+HF = (Collateral Value × Liquidation Threshold) / Borrowed Value
+HF > 1 → sicher
+HF = 1 → Liquidation möglich
+HF < 1 → Liquidation wahrscheinlich
 
 **[Slide 3] — Die Beziehung zum LTV**
 HF = LT / aktuelles LTV
@@ -155,7 +161,7 @@ Nicht warten bis 1,1
 
 **[Slide 1]** In Lektion 7.1 hattest du die statischen LTV-Parameter. In der Praxis beobachtest du aber eine dynamische Metrik: den Health Factor. Das ist die zentrale Zahl, an der du deine Position ausrichtest.
 
-**[Slide 2]** Die Formel. Health Factor gleich Collateral-Wert mal Liquidation Threshold, geteilt durch Schuld-Wert. Drei Werte sind entscheidend. Über eins: Position sicher. Genau eins: Liquidations-Grenze. Unter eins: Position kann liquidiert werden. Das ist alles. Wenn du den Health Factor verstehst und beobachtest, verstehst du deine Risiko-Lage.
+**[Slide 2]** Die Formel. Health Factor gleich Collateral Value mal Liquidation Threshold, geteilt durch Borrowed Value. Die drei Zustände sind klar definiert. HF größer eins bedeutet, Position sicher. HF gleich eins bedeutet, Liquidation möglich. HF kleiner eins bedeutet, Liquidation wahrscheinlich. Das ist alles. Wenn du den Health Factor verstehst und beobachtest, verstehst du deine Risiko-Lage.
 
 **[Slide 3]** Die Beziehung zum LTV. Health Factor gleich LT geteilt durch aktuelles LTV. Wenn du bei 50 Prozent LTV stehst und LT 83 Prozent ist, dann Health Factor gleich 0,83 geteilt durch 0,50 — also 1,66. Bei 30 Prozent LTV hättest du 2,77. Bei 70 Prozent LTV nur noch 1,19. Das Verhältnis ist nicht-linear: die letzten Prozent Richtung LT sind die gefährlichsten.
 
@@ -222,7 +228,7 @@ Zinsakkumulation wirkt schleichend. Über Tage oder Wochen sichtbar als langsame
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Health-Factor-Formel → HF-Rechenbeispiel → HF bei Preisbewegungen → HF-Zielwerte (konservativ/ausgewogen/aggressiv) → Zinsakkumulations-Effekt → Monitoring-Tools
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — HF-Formel-Visualisierung, HF-Walkthrough-Tabelle (Preisbewegungen), Aave-Dashboard-Screenshot mit HF-Anzeige, Hal-Alert-Setup-Screenshot, HF-Zonen-Grafik (grün/gelb/rot)
 
 Pipeline: Gamma → ElevenLabs → CapCut.

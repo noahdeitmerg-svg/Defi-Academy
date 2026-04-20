@@ -108,7 +108,7 @@ Der Vektor war eine Typed-Data-Signatur (EIP-712), die ein Safe-Upgrade darstell
 
 **[Slide 6]** Die Lehren. Erstens: Wallet-Anzeige ist nicht zwingend Signatur-Inhalt. Zweitens: Blind-Signing ist gefährlich — viele Hardware-Wallets zeigen bei Typed Data nur Hash. Drittens: Clear-Signing — Decodierung in lesbare Form — ist essentiell. Viertens: Transaction-Simulation zeigt die tatsächlichen Effekte vor dem Signieren.
 
-**[Slide 7]** Regeln. Jede Transaktion simulieren, Rabby macht es automatisch. Bei Typed Data einzelne Felder lesen. Unbekannte DApps ohne Verständnis nicht anfassen. Und Hardware-Wallet verwenden — der kompromittierte Browser kann ohne physische Bestätigung nicht signieren.
+**[Slide 7]** Regeln. Jede Transaktion simulieren, Rabby macht es automatisch. Bei Typed Data einzelne Felder lesen. Unbekannte DApps nicht signieren, bevor du ihr Verhalten verstehst. Und Hardware-Wallet verwenden — der kompromittierte Browser kann ohne physische Bestätigung nicht signieren.
 
 ## Visuelle Vorschläge
 
@@ -155,7 +155,7 @@ Weil das Bybit-Team die Hardware-Wallets korrekt nutzte — sie bestätigten bew
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → 3 Signatur-Typen → Gefahr von Typed Data → Permit/Permit2 → Bybit-Hack Case Study → 4 Lehren → Praktische Regeln
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Drei-Spalten-Vergleich Signaturtypen, Permit2-Signatur-Dialog, Bybit-Hack-Zeitleiste (1,5 Mrd. USD), Clear-Signing-Checkliste, Rabby-Simulation-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.

@@ -57,7 +57,7 @@ Als Swapper merkst du von V2 vs. V3 wenig direkt. Die Uniswap-Oberfläche routet
 - Engere Spreads bei liquiden Paaren (höhere konzentrierte Liquidität → geringerer Preis-Impact)
 - Mehrere Fee-Tiers (optimiert für das gewählte Paar)
 
-Aggregatoren (1inch, Matcha) splittet Swaps automatisch über V2-, V3- und andere DEX-Pools, um den besten Gesamtpreis zu erreichen.
+Aggregatoren (1inch, Matcha) splitten Swaps automatisch über V2-, V3- und andere DEX-Pools, um den besten Gesamtpreis zu erreichen.
 
 ## Folien-Zusammenfassung
 
@@ -163,7 +163,7 @@ V3 erfordert aktive Entscheidungen: Preisbereich wählen, überwachen, gegebenen
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Problem von V2 → Konzentrierte Liquidität → Ticks & Ranges → Fee Tiers (0,01/0,05/0,3/1%) → In-Range vs. Out-of-Range → V3-Pool-Auswahl-Matrix
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — V2-Liquiditätsverteilung vs. V3-konzentrierte Liquidität, Tick-Diagramm, Fee-Tier-Tabelle, Range-Position-Visualisierung, Uniswap-V3-Interface-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 200 80 A 120 120 0 0 1 270.5342302750968 297.08203932499373" stroke="#F5B841" fill="none" stroke-width="3"/>
+    <path d="M 270.5342302750968 297.08203932499373 A 120 120 0 0 1 102.91796067500631 270.5342302750968" stroke="rgba(245, 184, 65, 0.35)" fill="none" stroke-width="2"/>
+    <path d="M 102.91796067500631 270.5342302750968 A 120 120 0 0 1 102.9179606750063 129.46576972490323" stroke="#F5B841" fill="none" stroke-width="3"/>
+    <path d="M 102.9179606750063 129.46576972490323 A 120 120 0 0 1 199.99999999999997 80" stroke="rgba(245, 184, 65, 0.35)" fill="none" stroke-width="2"/>
+    <line x1="200" y1="92" x2="200" y2="68" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1"/>
+    <line x1="263.4808072475871" y1="287.37383539249436" x2="277.58765330260644" y2="306.79024325749305" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1"/>
+    <line x1="112.62616460750569" y1="263.4808072475871" x2="93.20975674250695" y2="277.58765330260644" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1"/>
+    <line x1="112.62616460750567" y1="136.51919275241292" x2="93.20975674250694" y2="122.41234669739356" stroke="rgba(245, 184, 65, 0.15)" stroke-width="1"/>
+    <circle cx="200" cy="200" r="50" stroke="rgba(245, 184, 65, 0.35)" fill="none" stroke-width="1" stroke-dasharray="4 4"/>
+    <circle cx="200" cy="200" r="14" stroke="#F5B841" fill="none" stroke-width="2"/>
+    <circle cx="200" cy="200" r="4" fill="#F5B841"/>
+  </g>
+</svg>

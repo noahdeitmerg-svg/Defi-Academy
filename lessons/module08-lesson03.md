@@ -16,7 +16,17 @@ Krypto-besicherte Stablecoins entstehen nicht durch ein zentrales Unternehmen mi
 
 **Das Grundprinzip: Überbesicherung**
 
-Alle krypto-besicherten Stablecoins arbeiten mit **Überbesicherung**: für jeden gemintierten Dollar muss mehr als ein Dollar an Sicherheit hinterlegt sein. Typisch 130–200% Besicherungsquote. Diese Puffer ist nötig, weil das Collateral volatil ist — und bei Preis-Verfall müssen Liquidationen rechtzeitig erfolgen, bevor die Position unterbesichert wird.
+Alle krypto-besicherten Stablecoins arbeiten mit **Überbesicherung**: für jeden geminteten Dollar muss mehr als ein Dollar an Sicherheit hinterlegt sein. Typisch 130–200% Besicherungsquote. Dieser Puffer ist nötig, weil das Collateral volatil ist — und bei Preis-Verfall müssen Liquidationen rechtzeitig erfolgen, bevor die Position unterbesichert wird.
+
+**Die Collateral-Ratio-Formel**
+
+Die Besicherungsquote wird als **Collateral Ratio** (CR) formalisiert:
+
+```
+Collateral Ratio = Collateral Value / Stablecoin Debt
+```
+
+Ein Beispiel: 150% Collateralization bedeutet, dass für 100 USD Stablecoins etwa 150 USD Collateral hinterlegt sind. Je höher die Collateral Ratio, desto größer der Puffer bis zur Liquidation — desto sicherer die Position, aber auch desto kapital-ineffizienter für den Nutzer, der mintet. Jedes Protokoll definiert eine **Minimum Collateral Ratio**, unterhalb derer die Position liquidierbar wird (z.B. 110% bei LUSD, 150% bei vielen DAI-Vaults).
 
 **DAI — Der Pionier (Sky Protocol, früher MakerDAO)**
 
@@ -85,10 +95,10 @@ LUSD von Liquity Protocol ist der puristisch dezentrale Ansatz. Design-Grundsät
 - **110% Minimum-Collateralization-Ratio** (sehr aggressiv)
 - **0% Zins** auf Borrow (einmalige Borrow-Fee und Redemption-Fee statt)
 - **Unveränderbar:** keine Governance, keine Upgrades, keine Admin-Keys
-- **Redemption-Mechanismus:** LUSD kann jederzeit gegen ETH aus der globalen Pool getauscht werden
+- **Redemption-Mechanismus:** LUSD kann jederzeit gegen ETH aus dem globalen Pool getauscht werden
 
 **Peg-Mechanismen:**
-1. **Bei LUSD > 1,10 USD:** Neue Vaults mintzen profitable LUSD (100% LUSD-Preis × 110% CR = 121% Rendite auf ETH-Einlage), das erhöht das Supply
+1. **Bei LUSD > 1,10 USD:** Neue Vaults minten profitable LUSD (100% LUSD-Preis × 110% CR = 121% Rendite auf ETH-Einlage), das erhöht das Supply
 2. **Bei LUSD < 1,00 USD:** Redemptions werden profitabel (LUSD unter Peg einlösen gegen vollen ETH-Wert), das verringert das Supply
 
 **Stärken:**
@@ -100,7 +110,7 @@ LUSD von Liquity Protocol ist der puristisch dezentrale Ansatz. Design-Grundsät
 **Schwächen:**
 - Nur ETH als Collateral (keine Diversifikation auf Collateral-Ebene)
 - Kleinere TVL als DAI oder crvUSD
-- Redemption-Mechanismus kann bei starkem Sell-Druck unangenehm für Borrower sein (forced redemption triggert, wenn LUSD unter Peg handelt)
+- Redemption-Mechanismus kann bei starkem Sell-Druck unangenehm für Borrower sein (erzwungene Redemption wird ausgelöst, wenn LUSD unter Peg handelt)
 - Weniger in andere DeFi-Protokolle integriert
 
 **Weitere relevante krypto-besicherte Stablecoins**
@@ -126,7 +136,7 @@ Eine sinnvolle Diversifikation könnte 50% USDC (als Hauptanker), 30% USDT (Liqu
 Krypto-besicherte Stablecoins: DAI, crvUSD, LUSD
 
 **[Slide 2] — Grundprinzip**
-Überbesicherung: Sicherheit > gemintierter Stablecoin
+Überbesicherung: Sicherheit > geminteter Stablecoin
 Typisch 130–200% CR
 Liquidations-Mechanismus bei Unterbesicherung
 
@@ -161,7 +171,7 @@ Meiden: Algo/Hybrid ohne Track-Record
 
 **[Slide 1]** Krypto-besicherte Stablecoins entstehen durch dezentrale Smart Contracts, nicht durch zentrale Unternehmen mit Dollar-Reserven. Das gibt andere Risikoprofile — und unterschiedliche Stärken und Schwächen.
 
-**[Slide 2]** Das Grundprinzip ist Überbesicherung. Für jeden gemintierten Stablecoin-Dollar muss mehr als ein Dollar Sicherheit hinterlegt sein. Typisch 130 bis 200 Prozent. Der Puffer ist nötig, weil das Collateral volatil ist. Bei Preis-Verfall muss liquidiert werden, bevor die Position unterbesichert wird — strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7.
+**[Slide 2]** Das Grundprinzip ist Überbesicherung. Für jeden geminteten Stablecoin-Dollar muss mehr als ein Dollar Sicherheit hinterlegt sein. Typisch 130 bis 200 Prozent. Der Puffer ist nötig, weil das Collateral volatil ist. Bei Preis-Verfall muss liquidiert werden, bevor die Position unterbesichert wird — strukturell ähnlich zu den Lending-Protokollen aus Modul 6 und 7.
 
 **[Slide 3]** DAI, der Pionier seit 2017. Das Ökosystem heißt heute Sky. Das Collateral-Portfolio hat sich stark entwickelt: heute etwa 50 Prozent Real World Assets — US-Treasuries via externe Partner. 20 Prozent USDC als Stabilitätspuffer. 20 Prozent ETH-basierte Assets. DAI ist nicht mehr rein dezentral — es hat Exposure zu USA-Banksystem und Circle. Aber: sehr etabliert, mehrere Peg-Verteidigungs-Mechanismen, diversifiziertes Collateral.
 
@@ -228,8 +238,8 @@ LUSD kann jederzeit 1:1 gegen ETH aus dem globalen Vault-Pool eingelöst werden.
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Krypto-besichert-Grundlagen → DAI/MakerDAO → crvUSD & LLAMMA → LUSD & Redemption → Vergleichsmatrix → Hybrid vs. Pure → Risikoprofile
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Überbesicherung-Grundprinzip → DAI/Sky → crvUSD & LLAMMA → LUSD (puristisch dezentral) → Weitere (GHO, USDS, FRAX) → Konservative Auswahl
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — CDP-Mechanik-Diagramm, MakerDAO-PSM-Architektur, LLAMMA-Soft-Liquidation-Grafik, LUSD-Redemption-Flow, Stablecoin-Design-Vergleichstabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.

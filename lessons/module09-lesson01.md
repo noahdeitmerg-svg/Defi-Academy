@@ -36,18 +36,37 @@ Priority Fees (Tips) von Transaktionen im vorgeschlagenen Block, plus MEV-Einkom
 
 **Gesamt-Staking-Yield:** Typisch 3–5% APR, abhängig von Netzwerk-Bedingungen.
 
+**APR vs. APY: Der Unterschied**
+
+In Yield-Strategien begegnen dir zwei zentrale Rendite-Metriken, und sie sind nicht austauschbar:
+
+- **APR (Annual Percentage Rate):** Die einfache Jahresrendite **ohne Zinseszins**. APR sagt dir, wie viel Ertrag das Kapital pro Jahr erzeugt, wenn die Erträge nicht reinvestiert werden.
+- **APY (Annual Percentage Yield):** Die effektive Jahresrendite **inklusive Compounding**. APY berücksichtigt, dass zwischenzeitliche Erträge reinvestiert werden und selbst wieder Rendite erzeugen.
+
+Bei gleichem nominalen Zinssatz ist APY immer ≥ APR. Der Abstand hängt von der Compounding-Frequenz ab: je häufiger automatisch reinvestiert wird, desto größer die Differenz.
+
+Mathematisch wird Compounding durch die Standardformel beschrieben:
+
+```
+A = P × (1 + r/n)^(n×t)
+```
+
+Dabei sind: `A` der Endbetrag, `P` der Startbetrag, `r` der nominale Jahreszins (APR als Dezimalzahl), `n` die Anzahl der Compounding-Perioden pro Jahr und `t` die Anzahl der Jahre. Bei 5% APR mit täglichem Compounding (`n=365`) über ein Jahr entsteht ein APY von etwa 5,127%; bei monatlichem Compounding (`n=12`) etwa 5,116%. Der absolute Unterschied wirkt in einem Jahr klein, aber **über längere Zeiträume summiert sich der Effekt erheblich**: 5% APR über 10 Jahre ergeben 62,9% Gesamtertrag, 5,127% APY (täglich) dagegen 65,9% — und über 30 Jahre trennen die beiden Zahlen bereits über 100 Prozentpunkte. Compounding hat langfristig einen großen Einfluss auf Renditen.
+
+Für das 7–8%-Jahresziel dieses Moduls gilt: Protokoll-Dashboards zeigen meist APR (bei Staking, Lending, LPs) oder APY (bei yield-bearing Stablecoins wie sDAI oder sUSDe). Immer prüfen, welche Metrik dargestellt wird — sonst vergleicht man Äpfel mit Birnen.
+
 **Slashing-Risiko**
 
-Validatoren, die das Protokoll schwer verletzen, werden **slashed** — ein Teil ihres Stakes wird permanent verloren. Schwere Slashing-Offences:
+Validatoren, die das Protokoll schwer verletzen, werden **geslasht** — ein Teil ihres Stakes wird permanent verloren. Schwere Slashing-Offences:
 
 1. **Double Attestation:** Über zwei verschiedene Blöcke in derselben Epoch attestieren (typisch durch falsche Redundanz-Setups)
 2. **Double Proposal:** Zwei verschiedene Blöcke für dieselbe Slot vorschlagen
 3. **Surround Vote:** Eine ältere Attestation, die eine neuere umschließt
 
-Die Strafe: sofort ~1 ETH verloren plus ein größerer Teil während der verbleibenden Exit-Periode, insgesamt historisch 1–2 ETH. Bei korreliertem Slashing (mehrere Validatoren slashed gleichzeitig) können die Strafen deutlich höher sein — bis zu 16 ETH pro Validator (der Hälfte-Slashing).
+Die Strafe: sofort ~1 ETH verloren plus ein größerer Teil während der verbleibenden Exit-Periode, insgesamt historisch 1–2 ETH. Bei korreliertem Slashing (mehrere Validatoren geslasht gleichzeitig) können die Strafen deutlich höher sein — bis zu 16 ETH pro Validator (der Hälfte-Slashing).
 
 **Häufiger ist: Inactivity Penalty**
-Wenn ein Validator offline ist, verliert er kontinuierlich kleine Beträge. Nicht dramatisch bei kurzen Ausfällen, aber relevant bei längerer Downtime.
+Wenn ein Validator offline ist, verliert er kontinuierlich kleine Beträge. Nicht schwerwiegend bei kurzen Ausfällen, aber relevant bei längerer Downtime.
 
 **Withdrawal und Exit-Queue**
 
@@ -140,7 +159,7 @@ CEX Staking: 2,5–4%
 
 **[Slide 3]** Zwei Reward-Quellen. Consensus-Layer-Rewards: neu geprägte ETH durch das Protokoll, etwa 2,5 bis 3 Prozent APR. Execution-Layer-Rewards: Priority Fees und MEV-Einkommen aus vorgeschlagenen Blöcken, 0,5 bis 1,5 Prozent APR. Zusammen typisch 3 bis 5 Prozent Gesamt-Staking-Yield.
 
-**[Slide 4]** Das Slashing-Risiko. Validatoren, die das Protokoll schwer verletzen, verlieren einen Teil ihres Stakes. Historisch bei Einzelfällen 1 bis 2 ETH. Bei korreliertem Slashing — wenn viele Validatoren gleichzeitig slashed werden — können die Strafen bis zu 16 ETH pro Validator betragen. Häufiger als Slashing ist die Inactivity Penalty bei Offline-Sein, die langsam Stake reduziert.
+**[Slide 4]** Das Slashing-Risiko. Validatoren, die das Protokoll schwer verletzen, verlieren einen Teil ihres Stakes. Historisch bei Einzelfällen 1 bis 2 ETH. Bei korreliertem Slashing — wenn viele Validatoren gleichzeitig geslasht werden — können die Strafen bis zu 16 ETH pro Validator betragen. Häufiger als Slashing ist die Inactivity Penalty bei Offline-Sein, die langsam Stake reduziert.
 
 **[Slide 5]** Die Exit-Queue. Seit dem Shanghai-Upgrade können Validatoren ihren Stake zurückziehen. Aber die Queue ist begrenzt auf etwa 0,25 Prozent der aktiven Validatoren pro Epoch. Das reicht im Normalbetrieb, aber in Krisenzeiten mit vielen Exits können Wartezeiten von Wochen entstehen. Ein reales Liquiditäts-Risiko für Solo-Staker.
 
@@ -177,7 +196,7 @@ CEX Staking: 2,5–4%
 3. Klicke auf einen zufälligen Validator und untersuche:
  - Wie viele Attestations wurden bisher abgegeben
  - Wie viele davon korrekt
- - Wurde er jemals slashed
+ - Wurde er jemals geslasht
 4. Überlege: Welche Informationen helfen dir, die Staking-Gesundheit einzuschätzen?
 
 **Deliverable:** Datensammlung + kurze Analyse (4–6 Sätze): Was sagen die aktuellen Zahlen über den Zustand des Ethereum-Staking-Netzwerks aus?
@@ -197,7 +216,7 @@ Mehrere Gründe. Erstens: Kapital-Hürde. Solo-Staking benötigt 32 ETH Mindest-
 <details>
 <summary>Antwort anzeigen</summary>
 
-Slashing ist eine harte Strafe für absichtliche oder grobe Protokoll-Verletzungen: Double Attestation, Double Proposal, Surround Vote. Die Strafe ist sofort wirksam und bedeutet dauerhaften Verlust von 1 ETH oder mehr, bei korrelierten Events bis zu 16 ETH pro Validator. Slashing führt automatisch zum Exit des Validators. Inactivity Penalty ist eine weiche Strafe für Offline-Sein oder fehlende Attestations. Der Validator verliert kontinuierlich kleine Beträge, solange er offline ist. Nach Wiederherstellung der Verbindung stoppt die Strafe. Die Gefahr: Slashing ist selten, aber katastrophal wenn es passiert (meist durch schlechte Setup-Entscheidungen wie doppelte Validator-Instanzen). Inactivity Penalty ist häufiger, aber meist nur einstellig USD-Verlust pro Tag. Problematisch wird Inactivity erst bei sehr langem Offline-Sein oder wenn die Gesamt-Chain während einer "Inactivity Leak"-Phase ist (wenn mehr als ein Drittel der Validatoren offline sind, verstärken sich die Strafen dramatisch, um Chain-Finalität wiederherzustellen). Für Solo-Staker ist Inactivity Prevention durch redundante Setups (aber NICHT doppelte Validator — das wäre Slashing-trigger) wichtig. Liquid-Staking-Nutzer sind von beiden praktisch unbetroffen, weil die Protokolle professionelle Operatoren mit robusten Setups einsetzen.
+Slashing ist eine harte Strafe für absichtliche oder grobe Protokoll-Verletzungen: Double Attestation, Double Proposal, Surround Vote. Die Strafe ist sofort wirksam und bedeutet dauerhaften Verlust von 1 ETH oder mehr, bei korrelierten Events bis zu 16 ETH pro Validator. Slashing führt automatisch zum Exit des Validators. Inactivity Penalty ist eine weiche Strafe für Offline-Sein oder fehlende Attestations. Der Validator verliert kontinuierlich kleine Beträge, solange er offline ist. Nach Wiederherstellung der Verbindung stoppt die Strafe. Die Gefahr: Slashing ist selten, aber katastrophal wenn es passiert (meist durch schlechte Setup-Entscheidungen wie doppelte Validator-Instanzen). Inactivity Penalty ist häufiger, aber meist nur einstellig USD-Verlust pro Tag. Problematisch wird Inactivity erst bei sehr langem Offline-Sein oder wenn die Gesamt-Chain während einer "Inactivity Leak"-Phase ist (wenn mehr als ein Drittel der Validatoren offline sind, verstärken sich die Strafen deutlich, um Chain-Finalität wiederherzustellen). Für Solo-Staker ist Inactivity Prevention durch redundante Setups (aber NICHT doppelte Validator — das wäre Slashing-trigger) wichtig. Liquid-Staking-Nutzer sind von beiden praktisch unbetroffen, weil die Protokolle professionelle Operatoren mit robusten Setups einsetzen.
 </details>
 
 ## Video-Pipeline-Assets

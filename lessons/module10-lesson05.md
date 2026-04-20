@@ -60,7 +60,7 @@ Nach vollständigem Aufbau:
 **Tägliches Monitoring (1-2 Minuten):**
 - DeBank oder Aave-App öffnen
 - Health Factor prüfen — im grünen Bereich (>1,8)?
-- Aktueller wstETH/ETH-Ratio checken (z.B. auf Curve) — stabil?
+- Aktuelles wstETH/ETH-Ratio checken (z.B. auf Curve) — stabil?
 
 **Wöchentliches Monitoring (10-15 Minuten):**
 - Yield/Borrow-Spread überprüfen
@@ -161,9 +161,9 @@ Ohne alle acht Punkte ist die Position nicht konservativ — egal wie niedrig de
 **[Slide 1] — Titel**
 Praktische Umsetzung und Monitoring
 
-**[Slide 2] — Vorab-Entscheidung**
-Schriftlich dokumentieren:
-Kapital-Anteil, Leverage, HF-Ziel, Exit-Trigger, Zeit-Horizont, Monitoring
+**[Slide 2] — Disziplin vor Transaktion**
+Schriftlich dokumentieren: Kapital-Anteil, Leverage, HF-Ziel, Exit-Trigger, Zeit-Horizont, Monitoring
+Psychologische Fallen meiden: Hoffnung, Sunk-Cost, Überkonfidenz, Regelbruch
 
 **[Slide 3] — Aufbau-Prozess**
 1. Dry Run (Test-Position)
@@ -185,13 +185,7 @@ HF < 2,0: prüfen
 HF < 1,7: 30-50% deleveragen
 HF < 1,5: 70-100% deleveragen
 
-**[Slide 7] — Psychologische Fallen**
-"Es wird wieder steigen" (Hoffnung)
-"Sunk-Cost-Fallacy"
-"Ich bin erfahren" (Überkonfidenz)
-"Regel einmal umgehen"
-
-**[Slide 8] — Die 8-Punkt-Checkliste**
+**[Slide 7] — Die 8-Punkt-Checkliste**
 Alle 8 Punkte = konservative Position
 Weniger = nicht konservativ
 
@@ -199,7 +193,7 @@ Weniger = nicht konservativ
 
 **[Slide 1]** Eine Loop-Position aufzubauen ist eine Sache. Sie professionell zu managen eine andere. Diese Lektion gibt dir die praktischen Werkzeuge und Routinen für verantwortliches Loop-Management.
 
-**[Slide 2]** Der wichtigste Schritt: die Vorab-Entscheidung. Bevor irgendeine Transaktion passiert, dokumentiere schriftlich: Kapital-Anteil, Ziel-Leverage, Ziel-Health-Factor, Exit-Trigger, Zeit-Horizont, Monitoring-Plan. Das nicht im Voraus zu dokumentieren ist der häufigste Fehler — in Stress-Situationen werden Entscheidungen dann panisch getroffen.
+**[Slide 2]** Der wichtigste Schritt: die Vorab-Entscheidung und Disziplin. Bevor irgendeine Transaktion passiert, dokumentiere schriftlich: Kapital-Anteil, Ziel-Leverage, Ziel-Health-Factor, Exit-Trigger, Zeit-Horizont, Monitoring-Plan. Das nicht im Voraus zu dokumentieren ist der häufigste Fehler — in Stress-Situationen werden Entscheidungen dann panisch getroffen. Genauso wichtig ist der Schutz vor psychologischen Fallen. Erstens: "Es wird schon wieder steigen" — in Bär-Märkten hoffen Loop-Halter auf Erholung, während es tiefer geht. Zweitens: Sunk-Cost-Fallacy. Vergangene Verluste sind irrelevant für zukünftige Entscheidungen. Drittens: Überkonfidenz durch Erfahrung. Jeder neue Crash kann neue Mechaniken zeigen. Viertens: einmalige Regelbrüche führen zu weiteren. Konsistenz wichtiger als Optimierung.
 
 **[Slide 3]** Der Aufbau-Prozess. Erstens: Dry Run für Anfänger. Eine kleine Test-Position aufbauen, alle Schritte durchgehen. Zweitens: schrittweiser Aufbau — 40 Prozent Tag 1, 30 Prozent Tag 3-5, 30 Prozent Tag 10 plus. Drittens: Setup-Verifikation — Health Factor prüfen, Liquidations-Preis notieren, Alerts einrichten.
 
@@ -209,15 +203,13 @@ Weniger = nicht konservativ
 
 **[Slide 6]** Die Rebalancing-Matrix für klare Regeln. HF fällt unter 2,0 durch Preis-Bewegung: prüfen, abhängig von Trend reagieren. HF unter 1,7: 30 bis 50 Prozent deleveragen sofort. HF unter 1,5: 70 bis 100 Prozent deleveragen. Yield-Borrow-Spread unter 0,5 Prozent: schrittweises Deleveraging. stETH-ETH-Ratio unter 0,98: Alert-Modus. Unter 0,97: signifikantes Deleveraging. Unter 0,95: komplettes Deleveraging.
 
-**[Slide 7]** Psychologische Fallen, vor denen man sich schützen muss. Erstens: "Es wird schon wieder steigen" — in Bär-Märkten hoffen Loop-Halter auf Erholung, während es tiefer geht. Zweitens: Sunk-Cost-Fallacy. Vergangene Verluste sind irrelevant für zukünftige Entscheidungen. Drittens: Überkonfidenz durch Erfahrung. Jeder neue Crash kann neue Mechaniken zeigen. Viertens: einmalige Regelbrüche führen zu weiteren. Konsistenz wichtiger als Optimierung.
-
-**[Slide 8]** Die 8-Punkte-Checkliste für jede Loop-Position. Schriftliche Vorab-Dokumentation. Max Kapital-Anteil definiert. HF-Ziel klar. Exit-Trigger schriftlich. Monitoring-Plan. Alerts konfiguriert. Rebalancing-Matrix dokumentiert. Regelbasierte Disziplin. Ohne alle acht Punkte ist die Position nicht konservativ — egal wie niedrig der Leverage ist.
+**[Slide 7]** Die 8-Punkte-Checkliste für jede Loop-Position. Schriftliche Vorab-Dokumentation. Max Kapital-Anteil definiert. HF-Ziel klar. Exit-Trigger schriftlich. Monitoring-Plan. Alerts konfiguriert. Rebalancing-Matrix dokumentiert. Regelbasierte Disziplin. Ohne alle acht Punkte ist die Position nicht konservativ — egal wie niedrig der Leverage ist.
 
 ## Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 
-**[Slide 2]** Vorab-Checkliste-Template als visuelles Dokument.
+**[Slide 2]** Zwei-Spalten-Layout: links Vorab-Checkliste-Template als visuelles Dokument, rechts Vier-Fallen-Karten mit Warnung (Hoffnung, Sunk-Cost, Überkonfidenz, Regelbruch).
 
 **[Slide 3]** Stufen-Diagramm des Aufbau-Prozesses mit Zeitachse.
 
@@ -227,9 +219,7 @@ Weniger = nicht konservativ
 
 **[Slide 6]** Rebalancing-Matrix als Entscheidungstabelle.
 
-**[Slide 7]** Vier-Fallen-Karten mit Warnung.
-
-**[Slide 8]** 8-Punkt-Checkliste als prominentes Abschluss-Visual.
+**[Slide 7]** 8-Punkt-Checkliste als prominentes Abschluss-Visual.
 
 ## Übung
 
@@ -268,8 +258,8 @@ Survival Bias auf einem einzelnen Datenpunkt. Dass eine Position 6 Monate ohne A
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Schrittweiser Aufbau → Alert-System → Monitoring-Dashboard → Rebalancing-Regeln → Notfall-Prozedur → Positions-Disziplin
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Disziplin vor Transaktion → Aufbau-Prozess → Monitoring-System → Alert-Services → Rebalancing-Matrix → 8-Punkt-Checkliste
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Schrittweise-Aufbau-Zeitleiste, Alert-System-Screenshots (Hal, DeFi Saver), Dashboard-Beispiel, Rebalance-Regel-Entscheidungsbaum, Notfall-Flowchart
 
 Pipeline: Gamma → ElevenLabs → CapCut.

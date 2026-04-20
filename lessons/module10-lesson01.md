@@ -108,7 +108,7 @@ Ein Loop verändert deine Risiko-Position fundamental:
 3. **Du bist Peg-Risiko ausgesetzt** — wenn wstETH im Verhältnis zu ETH depeggt (wie Juni 2022), wird dein Collateral-Wert unterbesichert relativ zur Schuld
 4. **Du bist Zins-Risiko ausgesetzt** — wenn Borrow-Zinsen steigen, wird dein Carry-Trade unprofitabel
 
-Das sind **vier zusätzliche Risiko-Ebenen** über einfaches Halten hinaus. Sie müssen alle gleichzeitig günstig sein, damit der Loop Sinn macht.
+Das sind **zusätzliche Risiko-Ebenen** über einfaches Halten hinaus. In Lektion 10.4 werden die **5 Haupt-Risiken** (Peg-Depeg, Zins-Sprünge, Liquidations-Kaskade, Smart-Contract-Komposition, Withdraw-Lock) vollständig seziert. Sie müssen alle gleichzeitig günstig sein, damit der Loop Sinn macht.
 
 ## Folien-Zusammenfassung
 
@@ -154,7 +154,7 @@ Vier zusätzliche Risiko-Ebenen
 
 **[Slide 2]** Die Grundmechanik. Du hinterlegst ein Asset als Sicherheit, borgst ein anderes, tauschst das geborgte Asset zurück in dasselbe Ursprungs-Asset, und hinterlegst es erneut. Das wiederholst du mehrere Runden. Das Ergebnis: deine effektive Position in dem Basis-Asset ist größer als dein ursprüngliches Kapital. Das ist Leverage.
 
-**[Slide 3]** Ein konkretes Beispiel. Du startest mit 10 wstETH. Runde 1: hinterlegst 10 wstETH, borgst 8 ETH, stakest zu 8 wstETH, hinterlegst neu. Runde 2: borgst 6,4 ETH, stakest zu 6,4 wstETH. Runde 3: 5,1 ETH. Nach 3 bis 5 Runden hast du etwa 35 wstETH Collateral und 25 ETH Schuld. Effektiver Leverage: 3,5 fach.
+**[Slide 3]** Ein konkretes Beispiel. Du startest mit 10 wstETH. Runde 1: hinterlegst 10 wstETH, borgst 8 ETH, stakst zu 8 wstETH, hinterlegst neu. Runde 2: borgst 6,4 ETH, stakst zu 6,4 wstETH. Runde 3: 5,1 ETH. Nach 3 bis 5 Runden hast du etwa 35 wstETH Collateral und 25 ETH Schuld. Effektiver Leverage: 3,5 fach.
 
 **[Slide 4]** Warum das lohnt. Angenommen wstETH-Staking bringt 3,5 Prozent, ETH-Borrow-Kosten sind 2,5 Prozent. Ohne Loop: 3,5 Prozent auf 10 ETH ist 0,35 ETH pro Jahr. Mit 3,5-fachem Loop: 35 wstETH × 3,5 Prozent Staking gleich 1,225 ETH Brutto minus 25 ETH × 2,5 Prozent Borrow gleich 0,625 ETH Kosten, netto 0,6 ETH Rendite. Das sind 6 Prozent auf die ursprünglichen 10 ETH Kapital. Der Leverage hat die Netto-Rendite fast verdoppelt. Das ist Carry-Trade-Mechanik.
 
@@ -184,7 +184,7 @@ Vier zusätzliche Risiko-Ebenen
 
 **Aufgabe: Loop-Grundmechanik nachvollziehen**
 
-Nimm an: du startest mit 5 ETH, gestaked als 5 wstETH. Borrow-LTV ist 75% (konservativer als Max). Ignoriere Gas-Kosten für diese Übung.
+Nimm an: du startest mit 5 ETH, gestakt als 5 wstETH. Borrow-LTV ist 75% (konservativer als Max). Ignoriere Gas-Kosten für diese Übung.
 
 Berechne:
 1. Runde 1: Wie viel ETH kannst du borgen? Wie viel wstETH bekommst du nach Staking?
@@ -197,7 +197,7 @@ Berechne:
 
 ## Quiz
 
-**Frage 1:** Ein Freund sagt: "Leverage-Loops sind eigentlich risikofrei, weil man sich nur mit sich selbst leverageed — das Collateral ist immer da." Was stimmt daran nicht?
+**Frage 1:** Ein Freund sagt: "Leverage-Loops sind eigentlich risikofrei, weil man sich nur mit sich selbst hebelt — das Collateral ist immer da." Was stimmt daran nicht?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -218,7 +218,7 @@ Ein Carry-Trade ist eine klassische Finanz-Strategie, bei der man ein niedrig-ve
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → Loop-Mechanik → Iteration-Beispiel → Leverage Multiple → Loop-Arten → Carry-Trade-Analogie → Einsatzfeld
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Loop-Iteration-Diagramm, Leverage-Multiple-Berechnung, Loop-Typen-Matrix, Carry-Trade-Analogie-Grafik
 
 Pipeline: Gamma → ElevenLabs → CapCut.

@@ -136,17 +136,13 @@ Das ist besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wen
 
 **[Slide 3] — Address Page:** Balance, Token Balances, Transactions, Internal Tx, Token Transfers, NFT Transfers, Analytics.
 
-**[Slide 4] — Transaction Page:** Status, From/To, Value, Gas, Input Data, Logs, State Changes.
+**[Slide 4] — Transaction Page + Event-Logs:** Status, From/To, Value, Gas, Input Data. Logs-Tab zeigt alle emittierten Events — Grundlage jeder Schritt-für-Schritt-Rekonstruktion.
 
-**[Slide 5] — Event-Logs:** Alle emittierten Events. Schritt-für-Schritt-Rekonstruktion der Transaktion.
+**[Slide 5] — Contract Pages:** Code, Read Contract, Write Contract. Verifiziert = grüner Haken.
 
-**[Slide 6] — Contract Pages:** Code, Read Contract, Write Contract. Verifiziert = grüner Haken.
+**[Slide 6] — Token Approval Checker + Token-Recherche-Workflow:** etherscan.io/tokenapprovalchecker als Alternative zu revoke.cash. Sechs-Schritte-Check: Verifiziert? Holders? Transfers? Alter? Code-Patterns?
 
-**[Slide 7] — Token Approval Checker:** etherscan.io/tokenapprovalchecker. Integrierte Alternative zu revoke.cash.
-
-**[Slide 8] — Token-Recherche-Workflow:** Verifiziert? Holders? Transfers? Alter? Code-Patterns?
-
-**[Slide 9] — Direkte Contract-Interaktion:** Write Contract Tab. Notfall-Withdrawals ohne offizielles Frontend.
+**[Slide 7] — Direkte Contract-Interaktion:** Write Contract Tab. Notfall-Withdrawals ohne offizielles Frontend.
 
 ## Sprechertext
 
@@ -156,17 +152,13 @@ Das ist besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wen
 
 **[Slide 3]** Die Address Page. Oben die ETH-Balance. Darunter Token Balances als Dropdown mit allen ERC-20-Tokens. Dann die Transactions-Liste. Wichtig: normale Transactions zeigen nur, was die Adresse signiert oder direkt empfangen hat. Viele Token-Bewegungen passieren über Smart-Contract-Ausführung — die stehen in Internal Transactions und Token Transfers. Wer nur den ersten Tab liest, sieht einen Teil der Wahrheit nicht.
 
-**[Slide 4]** Die Transaction Page. Status: Success oder Fail. From und To. Value: oft 0 bei Contract-Interaktionen. Die drei Gas-Werte. Und besonders wichtig: Input Data. Etherscan hat eine "Decoded Input Data"-Funktion, die dir zeigt, welche Funktion aufgerufen wurde und mit welchen Parametern. Das ist die Basis jeder forensischen Analyse.
+**[Slide 4]** Die Transaction Page. Status: Success oder Fail. From und To. Value: oft 0 bei Contract-Interaktionen. Die drei Gas-Werte. Und besonders wichtig: Input Data. Etherscan hat eine "Decoded Input Data"-Funktion, die dir zeigt, welche Funktion aufgerufen wurde und mit welchen Parametern. Das ist die Basis jeder forensischen Analyse. Der Logs-Tab zeigt alle während der Transaktion emittierten Events. Für einen ERC-20-Transfer siehst du: Transfer von Adresse A zu Adresse B, mit Value X. Eine komplexe DeFi-Transaktion kann 10 bis 30 Events emittieren. Wer Events lesen kann, versteht jeden Schritt.
 
-**[Slide 5]** Event-Logs. Der Logs-Tab zeigt alle während der Transaktion emittierten Events. Für einen ERC-20-Transfer siehst du: Transfer von Adresse A zu Adresse B, mit Value X. Eine komplexe DeFi-Transaktion kann 10 bis 30 Events emittieren. Wer Events lesen kann, versteht jeden Schritt.
+**[Slide 5]** Contract Pages haben zusätzliche Tabs. Code — der Solidity-Quellcode, wenn verifiziert. Read Contract — alle Read-Funktionen, die du ohne Signatur aufrufen kannst. Write Contract — alle Write-Funktionen, die du mit Wallet-Signatur aufrufen kannst. Der grüne Haken bei "Contract" zeigt, ob verifiziert wurde. Unverifizierte Contracts zeigen nur Bytecode — unlesbar für Menschen. Ernsthafte DeFi-Regel: niemals mit unverifizierten Contracts interagieren.
 
-**[Slide 6]** Contract Pages haben zusätzliche Tabs. Code — der Solidity-Quellcode, wenn verifiziert. Read Contract — alle Read-Funktionen, die du ohne Signatur aufrufen kannst. Write Contract — alle Write-Funktionen, die du mit Wallet-Signatur aufrufen kannst. Der grüne Haken bei "Contract" zeigt, ob verifiziert wurde. Unverifizierte Contracts zeigen nur Bytecode — unlesbar für Menschen. Ernsthafte DeFi-Regel: niemals mit unverifizierten Contracts interagieren.
+**[Slide 6]** Etherscan hat einen eigenen Token Approval Checker auf etherscan.io/tokenapprovalchecker. Funktional ähnlich wie revoke.cash, aber direkt integriert. Zeigt aktive ERC-20- und NFT-Approvals und erlaubt direkten Widerruf. Beide Tools sind nützlich; beide sollten in deiner Monatsroutine sein. Für die Token-Recherche selbst gibt es einen klaren Workflow. Contract-Adresse auf Etherscan eingeben. Prüfen: verifiziert? Wenn nicht — Warnung. Token-Übersicht: Name, Symbol, totalSupply, Decimals. Holders-Tab: wie ist die Verteilung? Ein einzelner Holder mit mehr als 50% ist Zentralisierungsrisiko. Transfers-Tab: wie aktiv ist der Handel? Contract Code: gibt es Fee-on-Transfer, Blacklist, bösartige Patterns? Contract-Alter: sehr junge Tokens sind hochrisiko. Mit diesem Workflow kannst du jeden Token in fünf Minuten einordnen.
 
-**[Slide 7]** Etherscan hat einen eigenen Token Approval Checker auf etherscan.io/tokenapprovalchecker. Funktional ähnlich wie revoke.cash, aber direkt integriert. Zeigt aktive ERC-20- und NFT-Approvals und erlaubt direkten Widerruf. Beide Tools sind nützlich; beide sollten in deiner Monatsroutine sein.
-
-**[Slide 8]** Token-Recherche-Workflow. Contract-Adresse auf Etherscan eingeben. Prüfen: verifiziert? Wenn nicht — Warnung. Token-Übersicht: Name, Symbol, totalSupply, Decimals. Holders-Tab: wie ist die Verteilung? Ein einzelner Holder mit mehr als 50% ist Zentralisierungsrisiko. Transfers-Tab: wie aktiv ist der Handel? Contract Code: gibt es Fee-on-Transfer, Blacklist, bösartige Patterns? Contract-Alter: sehr junge Tokens sind hochrisiko. Mit diesem Workflow kannst du jeden Token in fünf Minuten einordnen.
-
-**[Slide 9]** Im Notfall kannst du direkt mit einem Contract interagieren — Write Contract Tab, Connect to Web3, Funktion wählen, Parameter eingeben, signieren. Besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wenn die offizielle Website nicht funktioniert. Erfordert Verständnis der Funktionssignaturen und korrekte Parameter — vergiss Decimals nicht. Für Fortgeschrittene ist das eine essentielle Rückfallebene.
+**[Slide 7]** Im Notfall kannst du direkt mit einem Contract interagieren — Write Contract Tab, Connect to Web3, Funktion wählen, Parameter eingeben, signieren. Besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wenn die offizielle Website nicht funktioniert. Erfordert Verständnis der Funktionssignaturen und korrekte Parameter — vergiss Decimals nicht. Für Fortgeschrittene ist das eine essentielle Rückfallebene.
 
 ## Visuelle Vorschläge
 
@@ -176,17 +168,13 @@ Das ist besonders nützlich bei Notfall-Withdrawals aus Lending-Protokollen, wen
 
 **[Slide 3]** **SCREENSHOT SUGGESTION:** Etherscan Address Page mit sichtbaren Tabs (Transactions, Internal Txns, Token Transfers, etc.).
 
-**[Slide 4]** **SCREENSHOT SUGGESTION:** Etherscan Transaction Detail Page mit markierten Bereichen (Status, From/To, Input Data, Logs).
+**[Slide 4]** **SCREENSHOT SUGGESTION:** Etherscan Transaction Detail Page mit markierten Bereichen (Status, From/To, Input Data, Logs). Darunter Auszug aus einer Logs-Ansicht mit mehreren dekodierten Events.
 
-**[Slide 5]** Auszug aus einer Logs-Ansicht mit mehreren dekodierten Events.
+**[Slide 5]** **SCREENSHOT SUGGESTION:** USDC-Contract-Page auf Etherscan mit sichtbaren Tabs (Code, Read Contract, Write Contract) und grünem Verified-Haken.
 
-**[Slide 6]** **SCREENSHOT SUGGESTION:** USDC-Contract-Page auf Etherscan mit sichtbaren Tabs (Code, Read Contract, Write Contract) und grünem Verified-Haken.
+**[Slide 6]** **SCREENSHOT SUGGESTION:** etherscan.io/tokenapprovalchecker mit aktiven Approvals einer Beispiel-Wallet. Daneben Checkliste mit sechs Schritten für Token-Recherche.
 
-**[Slide 7]** **SCREENSHOT SUGGESTION:** etherscan.io/tokenapprovalchecker mit aktiven Approvals einer Beispiel-Wallet.
-
-**[Slide 8]** Checkliste mit sechs Schritten für Token-Recherche.
-
-**[Slide 9]** **SCREENSHOT SUGGESTION:** Etherscan Write Contract Tab mit geöffnetem Funktions-Feld.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** Etherscan Write Contract Tab mit geöffnetem Funktions-Feld.
 
 ## Übung
 
@@ -228,8 +216,8 @@ Ein unverifizierter Contract zeigt auf Etherscan nur den kompilierten Bytecode, 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Slides: Titel → Etherscan-Haupt-Sektionen → Transaktionsdetails → Event Logs → Internal Transactions → Contract-Inspektion → Read/Write-Interaktion → Forensik-Workflow
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Slides: Titel → Drei Seiten-Typen → Address Page → Transaction Page + Event-Logs → Contract Pages → Token Approval Checker + Token-Recherche-Workflow → Direkte Contract-Interaktion
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Etherscan-Adress-Seite, Tx-Detail-Annotationen, Event-Log-Decoding, Read/Write-Contract-Screenshot, verifiziert/unverifiziert-Vergleich, Forensik-Workflow-Flowchart
 
 Pipeline: Gamma → ElevenLabs → CapCut.

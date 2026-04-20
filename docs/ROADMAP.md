@@ -10,8 +10,8 @@ Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipelin
 
 | Thema | Ziel |
 |--------|------|
-| Lernprogramm | **17 Module**, **102 Lektionen**, deutsch, technisch korrekt, **ohne Anlageberatung** |
-| Didaktik | Module 1–3 **Free**, 4–17 **Pro** (Zahlungslogik später) |
+| Lernprogramm | **18 Module**, **ca. 102 Lektionen**, deutsch, technisch korrekt, **ohne Anlageberatung** |
+| Didaktik | Modul 0 **Orientation/Introduction**, Module 1–3 **Free**, 4–17 **Pro** (Zahlungslogik später) |
 | Autoren-Quelle | `Module/modul-NN-*-FINAL.md` (insb. Modul 17: Portfolio/RWA) |
 
 ---
@@ -40,6 +40,35 @@ Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipelin
 | **Sidebar-Titel** | Slug-basierte Kurzlabels; optional echte Titel aus `lesson.md` pro Lektion laden. |
 | **Ein-Kurs-Pipeline** | Langfristig: eine Content-Quelle statt Legacy `moduleN` + UX-Slug-Ordnern parallel. |
 
+### B.4 Curriculum-Referenz (ab sofort verbindlich)
+
+- **Module 0–17 (Reihenfolge in der Navigation):**
+  - Modul 0 — Introduction to the DeFi Academy
+  - Modul 1 — DeFi Fundamentals
+  - Modul 2 — Wallets and Security
+  - Modul 3 — Blockchain Mechanics
+  - Modul 4 — DEX Mechanics
+  - Modul 5 — Liquidity Pools
+  - Modul 6 — Lending Markets
+  - Modul 7 — Collateral and Liquidations
+  - Modul 8 — Stablecoins
+  - Modul 9 — Yield Strategies
+  - Modul 10 — Leverage Loops
+  - Modul 11 — MEV
+  - Modul 12 — Flash Loans
+  - Modul 13 — veTokenomics
+  - Modul 14 — Cross-Chain Infrastructure
+  - Modul 15 — On-Chain Analytics
+  - Modul 16 — Composability Risk
+  - Modul 17 — Portfolio Construction and RWA
+- **Zweck von Modul 0:** Onboarding/Orientierung vor den Technik-Modulen; Struktur der Akademie, Risiko-Bewusstsein und Lernmethodik.
+- **Lernpfad (aktualisiert):**
+  - Orientation: Modul 0
+  - Foundations: Module 1–4
+  - Protocols: Module 5–10
+  - Infrastructure: Module 11–14
+  - Advanced Analysis and Strategy: Module 15–17
+
 ---
 
 ## C. Content-Pfade (zwei Stränge — nicht verwechseln)
@@ -48,6 +77,8 @@ Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipelin
 |--------|--------|---------|
 | **Legacy (Pages-Kurs)** | `content/modules/module1` … `module17` | `/module/…`, `validate:content`, alter Parser |
 | **UX-Build (Slug-Module)** | `content/modules/01-defi-grundlagen`, `02-wallets-sicherheit`, `03-blockchain-mechanik` | `/kurs/…`, `lib/content/loadLesson.ts` (`lesson.md`, `slides.json`, `quiz.json`) |
+
+**Dokumentierter Zielpfad (neu):** `content/modules/module-00` … `content/modules/module-17` (ohne bestehende Ordner umzubenennen).
 
 **Stand Free-Module UX-Pfad:** Modul **1–3** mit je **6** Lektionsordnern und Texten/Folien/Quiz; **Videos:** zuerst **A** `public/videos/`, später **B** CDN.
 

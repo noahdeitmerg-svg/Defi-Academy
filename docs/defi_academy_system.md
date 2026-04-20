@@ -289,11 +289,47 @@ Die Plattform umfasst:
 
 ------------------------------------------------------------------------
 
+## 7.1 Curriculum-Referenz (aktualisiert)
+
+Die Akademie umfasst **18 Module** (Modul 0 bis Modul 17) mit ca. 102 Lektionen:
+
+- Modul 0 — Introduction to the DeFi Academy
+- Modul 1 — DeFi Fundamentals
+- Modul 2 — Wallets and Security
+- Modul 3 — Blockchain Mechanics
+- Modul 4 — DEX Mechanics
+- Modul 5 — Liquidity Pools
+- Modul 6 — Lending Markets
+- Modul 7 — Collateral and Liquidations
+- Modul 8 — Stablecoins
+- Modul 9 — Yield Strategies
+- Modul 10 — Leverage Loops
+- Modul 11 — MEV
+- Modul 12 — Flash Loans
+- Modul 13 — veTokenomics
+- Modul 14 — Cross-Chain Infrastructure
+- Modul 15 — On-Chain Analytics
+- Modul 16 — Composability Risk
+- Modul 17 — Portfolio Construction and RWA
+
+Lernpfad:
+
+- Orientation: Modul 0
+- Foundations: Module 1--4
+- Protocols: Module 5--10
+- Infrastructure: Module 11--14
+- Advanced Analysis and Strategy: Module 15--17
+
+Modul 0 dient als Onboarding und erklärt Struktur der Akademie, Risiko-
+Bewusstsein und Lernmethodik vor den technischen Modulen.
+
+------------------------------------------------------------------------
+
 ## 8. Monetarisierungsstruktur
 
 Free Tier:
 
-Module 1--3
+Module 1--3 (nach Orientation-Modul 0)
 
 Pro Tier:
 
@@ -307,7 +343,7 @@ Geplantes Modell:
 
 ## 9. Roadmap
 
-Phase 1 -- Kursmodule erstellen (laufend; **Ziel 17 Module / 102 Lektionen** — Ist-Import siehe `docs/AGENTEN-HANDBUCH.md` §2)\
+Phase 1 -- Kursmodule erstellen (laufend; **Ziel 18 Module / ca. 102 Lektionen** — Ist-Import siehe `docs/AGENTEN-HANDBUCH.md` §2)\
 Phase 2 -- Plattformstruktur definieren ✅\
 Phase 3 -- Website bauen ✅ (Next.js auf GitHub Pages live)\
 Phase 4 -- Stabilität & Content-Pipeline-Automation ✅ (Auto-Import, Webhook-Deploy, Content-Validator, MDX-Safety)\
@@ -378,7 +414,7 @@ Zusätzliche Trigger ohne Git-Push:\
     -   `lib/lessonSectionParser.ts` erkennt die 6 Pflicht-Sektionen (Explanation, Slide Summary, Voice Narration Script, Visual Suggestions, Exercise, Quiz) in deutscher und englischer Schreibweise
     -   `lib/parseLesson.ts` baut aus den Sections das `ParsedLesson`-Objekt
     -   `lib/mdxSafe.ts` maskiert Prosa-`<` (z. B. `<$10k`, `<1 Jahr`), damit MDX sie nicht als JSX interpretiert
--   Normalisiertes Ziel: `content/modules/moduleN/` mit `meta.json`, `N-1.md` … `N-6.md`, und `quiz.json` (MC) **oder** `open-quiz.md` (Freitext)
+-   Normalisiertes Ziel: `content/modules/module-00/` … `content/modules/module-17/` (dokumentierte Zielstruktur) mit `meta.json`, `N-1.md` … `N-6.md`, und `quiz.json` (MC) **oder** `open-quiz.md` (Freitext)
 -   Sanity-Check: `npm run validate:content` (läuft lokal via `npm run check` und in CI)
     -   **errors** (blocken CI): Pflichtabschnitte in Lessons fehlen, keine Lessons im Modulordner
     -   **warnings** (CI grün): kein `quiz.json`/`open-quiz.md` (Quiz-Tab wird im Frontend ausgeblendet), kein `meta.json` (Slug als Titel-Fallback)
@@ -624,7 +660,7 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 ### Dokumente im Repo
 
 -   `README.md` — Einstieg
--   `docs/AGENTEN-HANDBUCH.md` — **Masterdokument** für Agenten (Ist-Zustand, 17 Module / 102 Lektionen Ziel, Deploy, Roadmaps)
+-   `docs/AGENTEN-HANDBUCH.md` — **Masterdokument** für Agenten (Ist-Zustand, 18 Module / ca. 102 Lektionen Ziel, Deploy, Roadmaps)
 -   `docs/defi_academy_system.md` — **dieses Dokument**, ausführliche Referenz (Rollen, Pipeline-Details)
 -   `docs/BUILD.md` — Build- und Dev-Setup
 -   `docs/GITHUB.md` — Git-/GitHub-Basics

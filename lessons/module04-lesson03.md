@@ -28,6 +28,8 @@ Slippage ist die zusätzliche, nicht-deterministische Abweichung, die zwischen S
 
 **Slippage-Toleranz** ist die maximale Preisverschlechterung, die du akzeptierst. Wird sie überschritten, revertiert die Transaktion.
 
+**Wichtig zur Abgrenzung:** Slippage entsteht durch Preis-Impact innerhalb des Pools — verursacht durch die eigene Swap-Größe und durch andere Trades zwischen Signatur und Ausführung. Sie ist nicht identisch mit Netzwerkgebühren: Gas-Kosten sind eine separate, feste Größe pro Transaktion (siehe Modul 3) und unabhängig vom Pool-Zustand.
+
 **Typische Slippage-Einstellungen:**
 
 - **Stablecoin-Swaps (USDC ↔ USDT):** 0,1–0,5%
@@ -40,9 +42,11 @@ Wer 50% Slippage akzeptiert, akzeptiert effektiv, zu jedem Preis zu kaufen. Das 
 
 **Der Sandwich-Angriff**
 
+Bevor wir den Angriff zerlegen, ein kurzer Begriff: Der **Mempool** ist der Warteraum für noch nicht bestätigte Transaktionen. Jede signierte Transaktion landet zuerst dort und ist für Block-Builder und Bots öffentlich einsehbar, bevor sie in einen Block aufgenommen wird.
+
 Der häufigste Slippage-bezogene Angriff ist der **Sandwich-Angriff**. Er läuft in drei Schritten:
 
-1. Angreifer sieht deine pending Transaktion im Mempool
+1. Angreifer sieht deine ausstehende Transaktion im Mempool
 2. Angreifer schaltet **vor** deiner Transaktion einen Kauf (pusht den Preis nach oben) — Front-Running
 3. Deine Transaktion läuft zum schlechteren Preis
 4. Angreifer verkauft **direkt nach** deiner Transaktion zu einem höheren Preis — Back-Running
@@ -101,7 +105,7 @@ Slippage-Toleranz = max. akzeptierte Abweichung.
 - Sehr illiquide: >10% (extrem riskant)
 
 **[Slide 5] — Sandwich-Angriff**
-1. Angreifer sieht pending Tx
+1. Angreifer sieht ausstehende Transaktion
 2. Kauft vor dir → Preis steigt
 3. Dein Trade läuft schlechter
 4. Angreifer verkauft nach dir → Gewinn
@@ -127,7 +131,7 @@ Revert ist der Schutzmechanismus.
 
 **[Slide 4]** Typische Slippage-Werte hängen stark vom gehandelten Asset ab. Stablecoin-Swaps: 0,1 bis 0,5 Prozent. Liquide Majors wie ETH oder BTC: 0,5 bis 1 Prozent. Mid-Caps: 1 bis 3 Prozent. Illiquide Tokens brauchen 3 bis 10 Prozent — aber hier beginnt die Gefahrenzone. Wer mehr als 10 Prozent akzeptiert, kauft praktisch zu jedem Preis. Das ist fast nie sinnvoll.
 
-**[Slide 5]** Der häufigste Slippage-bezogene Angriff: der Sandwich-Angriff. Der Angreifer sieht deine pending Transaktion im Mempool. Er schaltet vor deiner Transaktion einen Kauf — das pusht den Preis nach oben. Deine Transaktion läuft jetzt zum schlechteren Preis. Direkt nach deiner Transaktion verkauft der Angreifer — zu einem höheren Preis als er gekauft hat. Der Gewinn des Angreifers ist ungefähr gleich deinem Slippage-Verlust.
+**[Slide 5]** Der häufigste Slippage-bezogene Angriff: der Sandwich-Angriff. Der Angreifer sieht deine ausstehende Transaktion im Mempool. Er schaltet vor deiner Transaktion einen Kauf — das pusht den Preis nach oben. Deine Transaktion läuft jetzt zum schlechteren Preis. Direkt nach deiner Transaktion verkauft der Angreifer — zu einem höheren Preis als er gekauft hat. Der Gewinn des Angreifers ist ungefähr gleich deinem Slippage-Verlust.
 
 **[Slide 6]** Schutz. Erstens: niedrige Slippage-Toleranz. Bei 0,5 Prozent hat der Angreifer wenig Spielraum. Bei 10 Prozent nimmt er die volle Marge. Zweitens: private Mempools. MEV Blocker, Flashbots Protect oder CoW Swap senden deine Transaktion nicht in den öffentlichen Mempool. Der Angreifer sieht die Transaktion erst, wenn sie bereits gemint ist. Drittens: DEX-Aggregatoren mit integriertem Sandwich-Schutz. Viertens: kleinere Swaps bei illiquiden Tokens.
 
@@ -143,7 +147,7 @@ Revert ist der Schutzmechanismus.
 
 **[Slide 4]** Tabelle mit Asset-Typen und empfohlenen Slippage-Werten.
 
-**[Slide 5]** Sandwich-Diagramm: drei Blöcke auf einer Timeline — Angreifer-Kauf, dein Swap, Angreifer-Verkauf. Gewinn-Markierung beim Angreifer. **SCREENSHOT SUGGESTION:** Eigentcher (eigenphi.io) oder MEV-Boost-Explorer, der einen realen Sandwich-Angriff zeigt.
+**[Slide 5]** Sandwich-Diagramm: drei Blöcke auf einer Timeline — Angreifer-Kauf, dein Swap, Angreifer-Verkauf. Gewinn-Markierung beim Angreifer. **SCREENSHOT SUGGESTION:** EigenPhi (eigenphi.io) oder MEV-Boost-Explorer, der einen realen Sandwich-Angriff zeigt.
 
 **[Slide 6]** Vier-Punkte-Checkliste mit Icons. **SCREENSHOT SUGGESTION:** MEV-Blocker-Website (mevblocker.io) oder Flashbots-Protect-Interface.
 
@@ -179,7 +183,7 @@ Preis-Impact ist die deterministische, vorhersehbare Abweichung vom Spot-Preis, 
 <details>
 <summary>Antwort anzeigen</summary>
 
-Die Slippage-Toleranz definiert den maximalen Verlust, den der Nutzer akzeptiert. Ein Sandwich-Angreifer kann maximal bis zu diesem Limit Gewinn extrahieren — alles darüber würde die Transaktion reverten lassen und seinen Angriff unrentabel machen. Bei 0,5% Slippage hat der Angreifer maximal 0,5% Marge. Bei 10% Slippage kann der Angreifer 10% Marge extrahieren, was einen großen Swap extrem lukrativ für MEV-Bots macht. Konservative Slippage-Einstellungen begrenzen also strukturell das profit-potenzial von Angreifern.
+Die Slippage-Toleranz definiert den maximalen Verlust, den der Nutzer akzeptiert. Ein Sandwich-Angreifer kann maximal bis zu diesem Limit Gewinn extrahieren — alles darüber würde die Transaktion reverten lassen und seinen Angriff unrentabel machen. Bei 0,5% Slippage hat der Angreifer maximal 0,5% Marge. Bei 10% Slippage kann der Angreifer 10% Marge extrahieren, was einen großen Swap extrem lukrativ für MEV-Bots macht. Konservative Slippage-Einstellungen begrenzen also strukturell das Profit-Potenzial von Angreifern.
 </details>
 
 ## Video-Pipeline-Assets
@@ -187,7 +191,7 @@ Die Slippage-Toleranz definiert den maximalen Verlust, den der Nutzer akzeptiert
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Slides: Titel → Preis-Impact vs. Slippage → Slippage-Toleranz → Sandwich-Attack-Mechanik → Profile pro Asset-Typ → Uniswap-Interface-Walkthrough → Schutz-Strategien
-- `voice_script.txt` — *Voice Narration Script* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Preis-Impact-vs-Slippage-Vergleichsdiagramm, Sandwich-Attack-Zeitleiste, Slippage-Profile-Tabelle (Stable/Blue-Chip/Long-Tail), Uniswap-Settings-Screenshot
 
 Pipeline: Gamma → ElevenLabs → CapCut.

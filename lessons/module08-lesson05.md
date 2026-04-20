@@ -52,14 +52,14 @@ Wenn das zugrundeliegende Collateral stark und schnell fällt, können Liquidati
 
 **Auslöser 4: Mechanismus-Versagen (algorithmische Stables)**
 
-Der Peg-Mechanismus selbst versagt unter Stress. Bei algorithmischen Stablecoins kann das katastrophal sein — das ganze System ist darauf ausgelegt, durch Supply-Anpassungen den Peg zu halten, und wenn die Anpassung nicht greift, spirt das System ins Chaos.
+Der Peg-Mechanismus selbst versagt unter Stress. Bei algorithmischen Stablecoins kann das katastrophal sein — das ganze System ist darauf ausgelegt, durch Supply-Anpassungen den Peg zu halten, und wenn die Anpassung nicht greift, stürzt das System ins Chaos.
 
 **Frühwarnsignale:**
 - Treibende Peg-Abweichungen (kleine, aber anhaltende)
 - Sinkende Nachfrage nach dem System-Token (z.B. LUNA-Preis-Verfall)
 - Wachsender Druck auf den Stabilitäts-Mechanismus
 
-**Historisch:** UST-Kollaps Mai 2022 — Anchor-Protocol-Outflows triggerten einen Spiral in dem LUNA-Preis fiel, der UST-Mint-Mechanismus versagte, beide Tokens kollabierten. Etwa 60 Mrd. USD zerstört.
+**Historisch:** UST-Kollaps Mai 2022 — Anchor-Protocol-Outflows lösten eine Spirale aus, in der LUNA-Preis fiel, der UST-Mint-Mechanismus versagte, beide Tokens kollabierten. Etwa 60 Mrd. USD zerstört.
 
 **Auslöser 5: Funding-Rate oder Yield-Kollaps (delta-neutrale Stables)**
 
@@ -167,7 +167,7 @@ Signifikant: schnell handeln
 
 **[Slide 3]** Die historischen Fälle als Lehrmaterial. USDC im März 2023 — SVB-Bank-Kollaps, 3,3 Milliarden eingefroren, 72 Stunden Depeg, dann Erholung. UST im Mai 2022 — algorithmisches Versagen, permanenter Kollaps, 60 Milliarden zerstört. DAI im März 2020 — Black Thursday, temporäres Bad-Debt-Problem bei MakerDAO, DAI selbst hielt Peg größtenteils, aber das Protokoll war nahe am Abgrund. Jeder Fall zeigt unterschiedliche Mechanismus-Versagen.
 
-**[Slide 4]** Preis-Frühwarnsignale. Chronische minor deviations um 0,998 bis 0,999 — nicht akut, aber Aufmerksamkeit. Anhaltende Drift unter 0,99 — ernsthaftes Warnzeichen, der Arbitrage-Mechanismus funktioniert nicht effektiv. Unter 0,97 — signifikantes Risiko, meist ein echtes Infrastructure- oder Collateral-Problem. Unter 0,90 — stark gefährdet, ohne schnelle Korrektur weitere Verfall wahrscheinlich.
+**[Slide 4]** Preis-Frühwarnsignale. Chronische minor deviations um 0,998 bis 0,999 — nicht akut, aber Aufmerksamkeit. Anhaltende Drift unter 0,99 — ernsthaftes Warnzeichen, der Arbitrage-Mechanismus funktioniert nicht effektiv. Unter 0,97 — signifikantes Risiko, meist ein echtes Infrastructure- oder Collateral-Problem. Unter 0,90 — stark gefährdet, ohne schnelle Korrektur ist weiterer Verfall wahrscheinlich.
 
 **[Slide 5]** Monitoring-Tools. CoinGecko für Preis-Übersicht. DeFiLlama Stablecoins-Dashboard. Curve-Pool-Charts reflektieren On-Chain-Preise besonders schnell. Reserve-Transparenz-Seiten der Emittenten. HAL.xyz für konfigurierbare Alerts bei Preis-Abweichungen. Nansen für on-chain Flow-Analyse. Diese Tools sind öffentlich und kostenlos.
 
@@ -233,8 +233,8 @@ Teilweise, aber nicht optimal. Die Diversifikation auf Protokoll-Ebene ist vorha
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Fünf Depeg-Auslöser → USDC-Depeg 2023 → UST-Kollaps 2022 → DAI-Stress 2020 → Frühwarnsignale → Monitoring-Tools → Notfall-Aktionen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Fünf Depeg-Auslöser → Historische Fälle (USDC/UST/DAI) → Preis-Frühwarnsignale → Monitoring-Tools → Depeg-Reaktion → Diversifikation als Beste Verteidigung
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Depeg-Kategorien-Grafik, Historische-Depeg-Zeitleiste, Curve-Pool-Imbalance-Screenshot, DeFiLlama-Peg-Tracker, Notfall-Entscheidungsbaum
 
 Pipeline: Gamma → ElevenLabs → CapCut.

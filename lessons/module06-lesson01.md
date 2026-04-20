@@ -43,7 +43,7 @@ Du zahlst 10.000 USDC in einen Aave-USDC-Pool ein. Folgende Dinge passieren:
 Ein Borrower will 5.000 USDC aufnehmen. Bevor das geht, muss er Sicherheiten hinterlegen — zum Beispiel ETH. Der Vorgang:
 
 1. Supply von 10.000 USD in ETH als Sicherheit.
-2. Der Protokoll bewertet die Sicherheit mit einem Loan-to-Value-Ratio (z.B. 75% für ETH). Das bedeutet: Mit 10.000 USD ETH-Sicherheit kann bis zu 7.500 USDC geborgt werden.
+2. Das Protokoll bewertet die Sicherheit mit einem Loan-to-Value-Ratio (z.B. 75% für ETH). Das bedeutet: Mit 10.000 USD ETH-Sicherheit kann bis zu 7.500 USDC geborgt werden.
 3. Der Borrower nimmt 5.000 USDC auf — wohlgemerkt unterhalb der Maximalgrenze.
 4. Er zahlt laufend Zinsen auf die 5.000 USDC.
 
