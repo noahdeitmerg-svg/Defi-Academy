@@ -1,0 +1,17 @@
+{
+  "lessonId": "03-lektion",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Gas, Gebühren, Priorität",
+      "timestamp": 0,
+      "content": "Gas als Ressource erklären"
+    },
+    {
+      "id": 2,
+      "title": "Merksatz",
+      "timestamp": 90,
+      "content": "Kurz halten, sauber verifizieren, Risiko nicht wegdiskutieren."
+    }
+  ]
+}

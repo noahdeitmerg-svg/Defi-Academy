@@ -1,0 +1,17 @@
+{
+  "lessonId": "03-lektion",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Smart Contracts als Bausteine",
+      "timestamp": 0,
+      "content": "Den Zweck von Smart Contracts in DeFi nennen"
+    },
+    {
+      "id": 2,
+      "title": "Merksatz",
+      "timestamp": 90,
+      "content": "Kurz halten, sauber verifizieren, Risiko nicht wegdiskutieren."
+    }
+  ]
+}

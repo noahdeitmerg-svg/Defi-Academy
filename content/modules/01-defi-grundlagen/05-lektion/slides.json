@@ -1,0 +1,17 @@
+{
+  "lessonId": "05-lektion",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Risiken in DeFi",
+      "timestamp": 0,
+      "content": "Technische, ökonomische und Bedienfehler unterscheiden"
+    },
+    {
+      "id": 2,
+      "title": "Merksatz",
+      "timestamp": 90,
+      "content": "Kurz halten, sauber verifizieren, Risiko nicht wegdiskutieren."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "03-blockchain-mechanik",
+  "number": 3,
+  "title": "Blockchain Mechanik",
+  "description": "Transaktionen, State, Finalität und Kosten — die technische Basis, auf der DeFi-Protokolle aufsetzen.",
+  "tier": "free",
+  "estimatedMinutes": 120,
+  "lessons": ["01-lektion", "02-lektion", "03-lektion", "04-lektion", "05-lektion", "06-lektion"]
+}

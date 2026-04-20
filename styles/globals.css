@@ -87,4 +87,25 @@
   .font-ux-mono {
     font-family: var(--font-ux-mono);
   }
+
+  /* UX-Referenz (SVG „Ziel Website“) — Sektions-Labels & Hero */
+  .ux-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-ux-text-muted);
+  }
+
+  .ux-hero-glow {
+    pointer-events: none;
+    position: absolute;
+    inset: -40% -20% auto -20%;
+    height: min(70vh, 520px);
+    background: radial-gradient(
+      ellipse 55% 45% at 50% 0%,
+      color-mix(in srgb, var(--color-ux-accent-gold) 14%, transparent) 0%,
+      transparent 68%
+    );
+  }
 }

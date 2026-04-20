@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { LessonAssets } from "@/data/types";
-import { AccentBar } from "@/components/ui/AccentBar";
+import { ALL_MODULES } from "@/data/courseStructure";
 import { useProgress } from "@/lib/progress/useProgress";
 import { VideoPlayer } from "./VideoPlayer";
 import { SlidesViewer } from "./SlidesViewer";
 import { SlideNavigator } from "./SlideNavigator";
+import { SlideThumbnailStrip } from "./SlideThumbnailStrip";
 import { LearningObjectives } from "./LearningObjectives";
 import { KeyConcepts } from "./KeyConcepts";
 import { ExerciseBlock } from "./ExerciseBlock";
 import { QuizEngine } from "@/components/quiz/QuizEngine";
+import { UxTitleGoldBars } from "@/components/brand/UxLogo";
 
 export function LessonView({
   assets,
@@ -23,15 +25,22 @@ export function LessonView({
   const [slideIndex, setSlideIndex] = useState(0);
   const { markVideoWatched } = useProgress();
 
+  const lektionLabel = useMemo(() => {
+    const mod = ALL_MODULES.find((m) => m.id === lesson.moduleId);
+    const n = mod?.number ?? 0;
+    const idx = mod?.lessons.indexOf(lesson.id) ?? 0;
+    return `${n}.${idx + 1}`;
+  }, [lesson.id, lesson.moduleId]);
+
   return (
     <article>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ux-text-muted">
-        Modul {lesson.moduleId}
+      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-ux-text-muted">
+        Lektion {lektionLabel}
       </p>
       <h1 className="mt-2 text-2xl font-bold tracking-tight text-ux-text-primary md:text-3xl">
         {lesson.title}
       </h1>
-      <AccentBar />
+      <UxTitleGoldBars />
 
       <LearningObjectives items={lesson.learningObjectives} />
 
@@ -57,9 +66,10 @@ export function LessonView({
           Folien
         </h2>
         <p className="mt-1 text-xs text-ux-text-muted">
-          MVP: Anzeige ohne Timestamp-Sync zum Video.
+          Thumbnails und Navigation — MVP ohne Timestamp-Sync zum Video.
         </p>
         <div className="mt-4">
+          <SlideThumbnailStrip slides={slides} index={slideIndex} onSelect={setSlideIndex} />
           <SlideNavigator
             index={slideIndex}
             total={slides.length}

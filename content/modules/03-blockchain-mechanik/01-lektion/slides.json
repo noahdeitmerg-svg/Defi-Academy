@@ -1,0 +1,17 @@
+{
+  "lessonId": "01-lektion",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Transaktionen und State",
+      "timestamp": 0,
+      "content": "State-Übergänge grob beschreiben"
+    },
+    {
+      "id": 2,
+      "title": "Merksatz",
+      "timestamp": 90,
+      "content": "Kurz halten, sauber verifizieren, Risiko nicht wegdiskutieren."
+    }
+  ]
+}

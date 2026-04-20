@@ -1,0 +1,17 @@
+{
+  "lessonId": "05-lektion",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Hardware-Wallets in der Praxis",
+      "timestamp": 0,
+      "content": "Transaktionssignatur auf dem Gerät verstehen"
+    },
+    {
+      "id": 2,
+      "title": "Merksatz",
+      "timestamp": 90,
+      "content": "Kurz halten, sauber verifizieren, Risiko nicht wegdiskutieren."
+    }
+  ]
+}

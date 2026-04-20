@@ -1,0 +1,9 @@
+{
+  "id": "02-wallets-sicherheit",
+  "number": 2,
+  "title": "Wallets & Sicherheit",
+  "description": "Schlüsselverwaltung, Hardware- vs. Software-Wallets, gängige Angriffsvektoren und pragmatische Absicherung.",
+  "tier": "free",
+  "estimatedMinutes": 120,
+  "lessons": ["01-lektion", "02-lektion", "03-lektion", "04-lektion", "05-lektion", "06-lektion"]
+}

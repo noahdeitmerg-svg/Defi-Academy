@@ -1,0 +1,17 @@
+{
+  "lessonId": "01-lektion",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Schlüssel, Adressen, Accounts",
+      "timestamp": 0,
+      "content": "Public Key / Private Key grob erklären"
+    },
+    {
+      "id": 2,
+      "title": "Merksatz",
+      "timestamp": 90,
+      "content": "Kurz halten, sauber verifizieren, Risiko nicht wegdiskutieren."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "lessonId": "04-lektion",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Phishing und Social Engineering",
+      "timestamp": 0,
+      "content": "Gängige Angriffsmuster erkennen"
+    },
+    {
+      "id": 2,
+      "title": "Merksatz",
+      "timestamp": 90,
+      "content": "Kurz halten, sauber verifizieren, Risiko nicht wegdiskutieren."
+    }
+  ]
+}

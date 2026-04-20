@@ -1,0 +1,17 @@
+{
+  "lessonId": "03-lektion",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Seed Phrase und Backup",
+      "timestamp": 0,
+      "content": "Backup-Regeln formulieren"
+    },
+    {
+      "id": 2,
+      "title": "Merksatz",
+      "timestamp": 90,
+      "content": "Kurz halten, sauber verifizieren, Risiko nicht wegdiskutieren."
+    }
+  ]
+}

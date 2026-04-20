@@ -1,0 +1,29 @@
+{
+  "lessonId": "02-lektion",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Was ist die zentrale Kernaussage zu „DeFi, TradFi und CeFi“?",
+      "options": [
+        "Technik und Risiko transparent machen",
+        "Renditen sind garantiert, wenn man früh dran ist",
+        "DeFi braucht keine Wallet",
+        "Smart Contracts sind immer reversibel"
+      ],
+      "correctIndex": 0,
+      "explanation": "Didaktischer Kern bleibt: Mechanik und Risiko ehrlich benennen — keine Garantien."
+    },
+    {
+      "id": 2,
+      "question": "Welche Haltung passt zu Self-Custody?",
+      "options": [
+        "Verantwortung für Schlüssel und Transaktionen liegt beim Nutzer",
+        "Die Chain erstattet Verluste bei Bedienfehlern",
+        "Seed Phrase in Notizen-App speichern ist Best Practice",
+        "Phishing betrifft nur Börsen"
+      ],
+      "correctIndex": 0,
+      "explanation": "Self-Custody bedeutet Eigenverantwortung für Schlüssel, Adressen und Verifikation."
+    }
+  ]
+}
