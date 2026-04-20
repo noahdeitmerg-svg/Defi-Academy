@@ -230,7 +230,7 @@ Teilweise richtig, aber gefährlich vereinfacht. **Was richtig ist:** Ein signif
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
 - `slides_prompt.txt` — 7 Folien: Titel → MEV-Definition → Mempool-Mechanik → Transaktions-Lebenszyklus → Warum Reihenfolge wert ist → Historische Evolution → MEV als Kostenfaktor
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — MEV-Definitions-Diagramm, Mempool-Visualisierung, Transaktions-Lifecycle-Flow, PoW-to-PBS-Zeitleiste
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -435,8 +435,8 @@ Der fundamentale Unterschied liegt in der **Herkunft des Gewinns**. Bei DEX-Arbi
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → 4 MEV-Typen-Übersicht → Arbitrage → Sandwich → Liquidation → JIT-Liquidity → Benign vs. Toxic → Eigene Exposition
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Typ 1: Arbitrage → Typ 2: Sandwich → Typ 3: Liquidationen → Typ 4: JIT Liquidity → Weitere Typen → Schädlichkeit nach Typ
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — MEV-Typen-Matrix, Arbitrage-Flow-Chart, Sandwich-Mechanik-Grafik, JIT-Liquidity-Diagramm, Nutzer-Impact-Tabelle
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -468,7 +468,11 @@ Searcher sind spezialisierte Firmen (oder Einzelpersonen), die kontinuierlich na
 - **On-Chain-Monitoring** aller Lending-Positionen, DEX-Preise, Oracle-Updates
 - **Strategie-Entwicklung** — spezifische Bots für Arbitrage, Sandwich, Liquidation, etc.
 
-**Output:** **Bundles** — Gruppen von Transaktionen, die in einer bestimmten Reihenfolge zusammen ausgeführt werden sollen. Ein Bundle könnte aussehen: "Führe TX1 (Front-Run), TX2 (Nutzer-Swap, schon im Mempool), TX3 (Back-Run) in dieser Reihenfolge aus. Ich zahle Gas-Priorität X."
+**Output:** **Bundles**.
+
+> **Bundle (Definition):** Ein Bundle ist eine geordnete Menge von Transaktionen, die zusammen an Block-Builder gesendet werden, um eine garantierte Ausführungs-Reihenfolge sicherzustellen.
+
+Konkret: Gruppen von Transaktionen, die in einer bestimmten Reihenfolge zusammen ausgeführt werden sollen. Ein Bundle könnte aussehen: "Führe TX1 (Front-Run), TX2 (Nutzer-Swap, schon im Mempool), TX3 (Back-Run) in dieser Reihenfolge aus. Ich zahle Gas-Priorität X."
 
 Searcher bieten für die Inklusion ihrer Bundles in einen Block — typisch durch hohe `priorityFee` oder durch direkte Zahlung an den Builder.
 
@@ -554,38 +558,32 @@ Früher: Miner → sieht Mempool → baut Block
 Heute: Searcher → Builder → Relay → Proposer
 PBS = Proposer-Builder Separation
 
-**[Slide 3] — Searcher**
-Scannen Mempool + On-Chain
-Spezialisierte Bots
-Erstellen Bundles
-Bieten um Block-Inklusion
+**[Slide 3] — Die drei Akteure**
+Searcher: scannen Mempool + On-Chain, erstellen Bundles, bieten um Block-Inklusion
+Builder: stellen Blöcke aus Mempool + Searcher-Bundles zusammen, optimieren auf maximalen Wert
+Proposer/Validator: wählt besten Block aus Relay-Angeboten, signiert Header, +5-10% Rewards durch MEV-Boost
 
-**[Slide 4] — Builder**
-Stellen Blöcke zusammen
-Optimieren auf maximalen Wert
-10-15 aktive Builder auf Ethereum
-Top 2 bauen >60% aller Blöcke
-
-**[Slide 5] — Relay**
+**[Slide 4] — Relay**
 Vermittlung Builder ↔ Proposer
-Lösen Vertrauens-Problem
-Flashbots, ultra sound, Aestus
-Zensur-Diskussion: OFAC-Filter
+Lösen Vertrauens-Problem (Header-Signatur ohne vollen Block)
+Flashbots, ultra sound, Aestus, Titan
+Zensur-Diskussion: OFAC-Filter bei einigen Relays
 
-**[Slide 6] — Proposer/Validator**
-Wählt besten Block aus Angeboten
-+5-10% Rewards durch MEV-Boost
-Signiert Header ohne vollen Block
-
-**[Slide 7] — MEV-Boost**
+**[Slide 5] — MEV-Boost**
 Open-Source Software von Flashbots
 >90% Ethereum-Validatoren nutzen es
 Ermöglicht PBS auf Ethereum heute
 
-**[Slide 8] — Für Nutzer relevant**
-Zentralisierungs-Tendenz bei Buildern
-Censorship-Risiken bei einigen Relays
+**[Slide 6] — Zentralisierungs-Tendenzen**
+10-15 aktive Builder auf Ethereum
+Top 2 bauen >60% aller Blöcke
+Zensur-Risiken bei einigen Relays
 Grundlage für Protokoll-Alternativen
+
+**[Slide 7] — Für Nutzer relevant**
+Positiv: MEV-Wert fließt zu Validatoren (höhere Staking-Rewards)
+Negativ: Zentralisierung + Zensur-Potenzial
+Voraussetzung für Schutz-Tools in Lektion 11.5
 
 ### Sprechertext
 
@@ -593,17 +591,15 @@ Grundlage für Protokoll-Alternativen
 
 **[Slide 2]** Vor dem Merge war die Struktur einfach: der Miner sieht den Mempool und baut den Block selbst. Alle MEV-Entscheidungen lagen bei ihm. Nach dem Merge ist das komplexer. Die Rollen sind aufgeteilt: Searcher finden Gelegenheiten, Builder stellen Blöcke zusammen, Relays vermitteln, Proposer signieren. Das heißt Proposer-Builder Separation, kurz PBS.
 
-**[Slide 3]** Rolle 1: Searcher. Das sind spezialisierte Firmen mit Bots, die den Mempool tausende Male pro Sekunde scannen. Sie monitoren alle Lending-Positionen, DEX-Preise, Oracle-Updates. Ihre Output: Bundles — Gruppen von Transaktionen in spezifischer Reihenfolge, die zusammen in einen Block sollen. Sie bieten um Inklusion durch Gas-Priority oder direkte Zahlung an den Builder.
+**[Slide 3]** Die drei zentralen Akteure in der neuen Supply-Chain. Erstens: Searcher. Spezialisierte Firmen mit Bots, die den Mempool tausende Male pro Sekunde scannen. Sie monitoren alle Lending-Positionen, DEX-Preise, Oracle-Updates. Ihre Output: Bundles — Gruppen von Transaktionen in spezifischer Reihenfolge, die zusammen in einen Block sollen. Sie bieten um Inklusion durch Gas-Priority oder direkte Zahlung an den Builder. Zweitens: Builder. Sie bekommen den öffentlichen Mempool plus Bundles von Searchern und konstruieren den wertvollsten Block. Drittens: Proposer, also der Validator, der in diesem Slot den Block proposen darf. Er wählt aus den Angeboten verschiedener Relays das beste aus. Signiert Header, bekommt dann den vollen Block. Einkommens-Vorteil: 5 bis 10 Prozent zusätzliche Rewards durch MEV-Boost. Das macht Staking profitabler.
 
-**[Slide 4]** Rolle 2: Builder. Sie bekommen den öffentlichen Mempool plus Bundles von Searchern und konstruieren den wertvollsten Block. Etwa 10 bis 15 aktive Builder existieren auf Ethereum. Die Top 2 — beaverbuild und rsync-builder — bauen regelmäßig über 60 Prozent aller Blöcke. Das ist eine deutliche Zentralisierungs-Tendenz.
+**[Slide 4]** Die vermittelnde Rolle: Relays. Vermittlungs-Instanzen zwischen Buildern und Proposern. Sie lösen ein Vertrauens-Problem: der Validator muss einen Block signieren, ohne ihn vorher vollständig zu sehen. Der Relay sieht alles, prüft, und zeigt dem Validator nur den Header. Bekannte Relays: Flashbots, ultra sound, Aestus, Titan. Wichtig: nach den Tornado-Cash-Sanktionen 2022 filtern manche Relays sanktionierte Adressen. Nutzer, die Zensur-Resistenz wollen, wählen ultra sound.
 
-**[Slide 5]** Rolle 3: Relay. Vermittlungs-Instanzen zwischen Buildern und Proposern. Sie lösen ein Vertrauens-Problem: der Validator muss einen Block signieren, ohne ihn vorher vollständig zu sehen. Der Relay sieht alles, prüft, und zeigt dem Validator nur den Header. Bekannte Relays: Flashbots, ultra sound, Aestus, Titan. Wichtig: nach den Tornado-Cash-Sanktionen 2022 filtern manche Relays sanktionierte Adressen. Nutzer, die Zensur-Resistenz wollen, wählen ultra sound.
+**[Slide 5]** MEV-Boost ist die Open-Source-Software von Flashbots, die das Ganze möglich macht. Validatoren installieren es als Middleware. Es verbindet sich mit mehreren Relays und wählt automatisch das beste Angebot. Über 90 Prozent aller Ethereum-Validatoren nutzen MEV-Boost. Das heißt: PBS ist der Standard, nicht die Ausnahme.
 
-**[Slide 6]** Rolle 4: Proposer. Der Validator, der in diesem Slot den Block proposen darf. Er wählt aus den Angeboten verschiedener Relays das beste. Signiert Header, bekommt dann den vollen Block. Einkommens-Vorteil: 5 bis 10 Prozent zusätzliche Rewards durch MEV-Boost. Das macht Staking profitabler.
+**[Slide 6]** Zentralisierungs-Tendenzen sind die Kehrseite. Etwa 10 bis 15 aktive Builder existieren auf Ethereum. Die Top 2 — beaverbuild und rsync-builder — bauen regelmäßig über 60 Prozent aller Blöcke. Das ist eine deutliche Zentralisierungs-Tendenz. Hinzu kommen Zensur-Risiken bei Relays, die OFAC-Adressen filtern. Diese Probleme sind die Grundlage für die Protokoll-Alternativen, die in der letzten Lektion dieses Moduls diskutiert werden.
 
-**[Slide 7]** MEV-Boost ist die Open-Source-Software von Flashbots, die das Ganze möglich macht. Validatoren installieren es als Middleware. Es verbindet sich mit mehreren Relays und wählt automatisch das beste Angebot. Über 90 Prozent aller Ethereum-Validatoren nutzen MEV-Boost. Das heißt: PBS ist der Standard, nicht die Ausnahme.
-
-**[Slide 8]** Warum das für Nutzer relevant ist. Positiv: mehr Wettbewerb unter Buildern bedeutet, dass MEV-Wert zu Validatoren fließt statt bei einzelnen Minern. Negativ: Zentralisierungs-Tendenz bei wenigen Buildern, Censorship-Risiken bei einigen Relays. Für den Nutzer selbst ändert sich wenig — MEV findet weiter statt. Aber das Verständnis der Struktur ist Voraussetzung, um die Schutz-Tools in der nächsten Lektion richtig einordnen zu können.
+**[Slide 7]** Warum das für Nutzer relevant ist. Positiv: mehr Wettbewerb unter Buildern bedeutet, dass MEV-Wert zu Validatoren fließt statt bei einzelnen Minern. Negativ: Zentralisierungs-Tendenz bei wenigen Buildern, Zensur-Risiken bei einigen Relays. Für den Nutzer selbst ändert sich wenig — MEV findet weiter statt. Aber das Verständnis der Struktur ist Voraussetzung, um die Schutz-Tools in der nächsten Lektion richtig einordnen zu können.
 
 ### Visuelle Vorschläge
 
@@ -611,17 +607,15 @@ Grundlage für Protokoll-Alternativen
 
 **[Slide 2]** Vergleich: Pre-Merge (einfache Miner-Rolle) vs. Post-Merge (4-Rollen-PBS).
 
-**[Slide 3]** Searcher-Workflow: Mempool-Scan → Bundle-Erstellung → Gebot.
+**[Slide 3]** Drei-Spalten-Layout der Akteure: Searcher-Workflow (Mempool-Scan → Bundle → Gebot) | Builder (Block-Konstruktion aus Mempool + Bundles) | Proposer (Auswahl + Header-Signatur + Reward-Schichten).
 
-**[Slide 4]** Builder-Marktanteile als Tortendiagramm. **SCREENSHOT SUGGESTION:** mevboost.pics oder relayscan.io Dashboard.
+**[Slide 4]** Relay-Architektur: Header-Flow mit Trust-Boundaries. Optional: Liste von Relays mit Zensur-Status.
 
-**[Slide 5]** Relay-Architektur: Header-Flow mit Trust-Boundaries. Optional: Liste von Relays mit Censorship-Status.
+**[Slide 5]** MEV-Boost-Adoption-Chart über Zeit seit Merge.
 
-**[Slide 6]** Proposer-Flow mit Reward-Schichten (Base + Priority + MEV).
+**[Slide 6]** Builder-Marktanteile als Tortendiagramm. **SCREENSHOT SUGGESTION:** mevboost.pics oder relayscan.io Dashboard.
 
-**[Slide 7]** MEV-Boost-Adoption-Chart über Zeit seit Merge.
-
-**[Slide 8]** Matrix: PBS-Effekte auf Nutzer (positive und negative).
+**[Slide 7]** Matrix: PBS-Effekte auf Nutzer (positive und negative).
 
 ### Übung
 
@@ -650,15 +644,15 @@ PBS löst ein fundamentales Problem: ohne PBS würden Validatoren, die MEV extra
 <details>
 <summary>Antwort anzeigen</summary>
 
-Drei Gründe, warum das Verständnis relevant ist. **Erstens: Ausführungs-Qualität.** Wenn der Nutzer einen Swap abschickt, landet er im öffentlichen Mempool. Dort ist er sichtbar für alle Searcher. Wenn der Swap groß genug ist, wird er mit hoher Wahrscheinlichkeit gesandwicht — und der Nutzer zahlt einen schlechteren Preis. Ohne Verständnis der Supply-Chain sieht der Nutzer nur den Endergebnis: "mein Swap hat 0,3% mehr gekostet als die UI sagte." Mit Verständnis weiß er: das ist MEV, und es ist vermeidbar durch Alternativen wie Flashbots Protect oder CowSwap. **Zweitens: Censorship-Awareness.** Wenn der Nutzer seine Transaktion an bestimmte Adressen schickt (z.B. historisch Tornado Cash, aber auch andere sanktionierte Adressen), wird sie möglicherweise von zensierenden Relays gefiltert. Das führt zu "unerklärlich langsamen" Transaktionen — der Nutzer glaubt, sein Gas-Preis war zu niedrig, aber tatsächlich zensiert die Infrastruktur. Verständnis: der Nutzer kann eine Flashbots-Protect-RPC konfigurieren, die nicht-zensierende Relays bevorzugt. **Drittens: Economic-Awareness.** Das MEV-Ökosystem betrifft die Fee-Dynamiken auf Ethereum. In Perioden hoher MEV-Aktivität steigen Gas-Preise strukturell, weil Searcher für Priority bieten. Das betrifft auch nicht-MEV-Transaktionen — jeder zahlt mehr Gas, weil der Markt aufgeheizt ist. Verständnis: der Nutzer kann für zeitunkritische Transaktionen Off-Peak-Zeiten wählen (z.B. Wochenenden, oder europäische Nachtstunden — Asien-Peak-Zeit in Krypto). Ein guter Analogie: "ich nutze das Internet, was interessieren mich Router?" stimmt im Alltag. Aber wenn die Internet-Verbindung schlecht ist, ist Verständnis der Router-Rolle hilfreich für Troubleshooting. Ähnlich bei MEV: im Normalfall egal, aber bei unerklärlichen Swap-Ergebnissen, langsamen Transaktionen, oder hohen Gas-Kosten ist das Verständnis plötzlich sehr praktisch. Zudem: der Nutzer, der MEV versteht, trifft bessere Entscheidungen. Er nutzt geschütze RPCs als Default. Er wählt geeignete DEX-Aggregatoren. Er timt Large Trades richtig. All das spart real Geld über Zeit — oft mehrere Prozent des Transaktions-Volumens. Für aktive DeFi-Nutzer sind das substantielle Einsparungen.
+Drei Gründe, warum das Verständnis relevant ist. **Erstens: Ausführungs-Qualität.** Wenn der Nutzer einen Swap abschickt, landet er im öffentlichen Mempool. Dort ist er sichtbar für alle Searcher. Wenn der Swap groß genug ist, wird er mit hoher Wahrscheinlichkeit sandwiched — und der Nutzer zahlt einen schlechteren Preis. Ohne Verständnis der Supply-Chain sieht der Nutzer nur den Endergebnis: "mein Swap hat 0,3% mehr gekostet als die UI sagte." Mit Verständnis weiß er: das ist MEV, und es ist vermeidbar durch Alternativen wie Flashbots Protect oder CowSwap. **Zweitens: Censorship-Awareness.** Wenn der Nutzer seine Transaktion an bestimmte Adressen schickt (z.B. historisch Tornado Cash, aber auch andere sanktionierte Adressen), wird sie möglicherweise von zensierenden Relays gefiltert. Das führt zu "unerklärlich langsamen" Transaktionen — der Nutzer glaubt, sein Gas-Preis war zu niedrig, aber tatsächlich zensiert die Infrastruktur. Verständnis: der Nutzer kann eine Flashbots-Protect-RPC konfigurieren, die nicht-zensierende Relays bevorzugt. **Drittens: Economic-Awareness.** Das MEV-Ökosystem betrifft die Fee-Dynamiken auf Ethereum. In Perioden hoher MEV-Aktivität steigen Gas-Preise strukturell, weil Searcher für Priority bieten. Das betrifft auch nicht-MEV-Transaktionen — jeder zahlt mehr Gas, weil der Markt aufgeheizt ist. Verständnis: der Nutzer kann für zeitunkritische Transaktionen Off-Peak-Zeiten wählen (z.B. Wochenenden, oder europäische Nachtstunden — Asien-Peak-Zeit in Krypto). Ein guter Analogie: "ich nutze das Internet, was interessieren mich Router?" stimmt im Alltag. Aber wenn die Internet-Verbindung schlecht ist, ist Verständnis der Router-Rolle hilfreich für Troubleshooting. Ähnlich bei MEV: im Normalfall egal, aber bei unerklärlichen Swap-Ergebnissen, langsamen Transaktionen, oder hohen Gas-Kosten ist das Verständnis plötzlich sehr praktisch. Zudem: der Nutzer, der MEV versteht, trifft bessere Entscheidungen. Er nutzt geschütze RPCs als Default. Er wählt geeignete DEX-Aggregatoren. Er timt Large Trades richtig. All das spart real Geld über Zeit — oft mehrere Prozent des Transaktions-Volumens. Für aktive DeFi-Nutzer sind das substantielle Einsparungen.
 </details>
 
 ### Video-Pipeline-Assets
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → PBS-Konzept → Searcher-Rolle → Builder-Rolle → Proposer/Validator-Rolle → Relay-Infrastruktur → MEV-Boost → Zentralisierungs-Risiken
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Vor und nach dem Merge → Die drei Akteure (Searcher, Builder, Proposer) → Relay-Vermittlung → MEV-Boost → Zentralisierungs-Tendenzen → Für Nutzer relevant
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — MEV-Supply-Chain-Diagramm (Searcher→Builder→Proposer), PBS-Architektur, Flashbots-MEV-Boost-Flow, Builder-Market-Share-Chart, Historische Evolution
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -779,7 +773,7 @@ Um deine Anfälligkeit zu senken:
 
 **Live-Monitoring-Tools**
 
-Nach einem verdächtigen Swap kannst du prüfen, ob du gesandwicht wurdest:
+Nach einem verdächtigen Swap kannst du prüfen, ob du sandwiched wurdest:
 - **eigenphi.io** — zeigt MEV-Transaktionen mit Opfern
 - **mevboost.pics** — Supply-Chain-Analyse
 - **metasleuth.io** — Transaktions-Flow-Analyse
@@ -809,29 +803,22 @@ Ohne Sandwich: 272.727 USDC
 Mit Sandwich: 262.605 USDC
 Verlust: 10.122 USDC = 3,7%
 
-**[Slide 4] — Die Slippage-Falle**
-Searcher optimiert Front-Run-Größe
-so, dass Swap gerade noch ausgeführt wird
-Slippage-Toleranz = Gewinn-Obergrenze
+**[Slide 4] — Profitabilitäts-Formel**
+Sandwich Profit ≈ (Front-run price impact + Back-run recovery) − Gas costs − Slippage buffer
+Proportional: Swap-Größe² / Pool-Liquidität × Slippage
+Je größer + liquider + höhere Slippage = desto profitabler
 
-**[Slide 5] — Profitabilitäts-Formel**
-Gewinn ∝ Swap-Größe² / Pool-Liquidität × Slippage
-Je größer + liquider + höhere Slippage
-= desto profitabler
+**[Slide 5] — Anfälligkeitsfaktoren**
+Slippage als Einfallstor: Searcher optimiert Front-Run-Größe, sodass Swap gerade noch ausgeführt wird — Slippage-Toleranz = Gewinn-Obergrenze
+Trade-Größen-Schwellen: < 1.000 USD fast nie · 1.000–10.000 manchmal · 10.000–100.000 oft · > 100.000 fast immer
 
-**[Slide 6] — Schwellen-Regeln**
-< 1.000 USD: fast nie
-1.000-10.000: manchmal
-10.000-100.000: oft
-> 100.000: fast immer
-
-**[Slide 7] — Anti-Sandwich-Checkliste**
+**[Slide 6] — Anti-Sandwich-Checkliste**
 Slippage niedrig
 Private RPC (Flashbots Protect)
 CowSwap für große Trades
 Trades aufsplitten
 
-**[Slide 8] — Die zugrundeliegende Ursache**
+**[Slide 7] — Die zugrundeliegende Ursache**
 Information-Asymmetry
 Mempool ist öffentlich
 Lösung: Transaktionen privat halten
@@ -844,15 +831,13 @@ Lösung: Transaktionen privat halten
 
 **[Slide 3]** Ein konkretes Beispiel. Alice verkauft 100 ETH gegen USDC auf Uniswap V2. Pool hat 1.000 ETH und 3 Millionen USDC. Ohne Sandwich bekommt Alice 272.727 USDC. Der Searcher macht einen Front-Run-Verkauf von 20 ETH, dann erfolgt Alice-Swap, dann Back-Run-Kauf von 20 ETH. Alice bekommt jetzt nur 262.605 USDC — Verlust von 10.122 Dollar, etwa 3,7 Prozent. Das ist exakt der Searcher-Gewinn.
 
-**[Slide 4]** Die Slippage-Falle ist subtil. Alice hat 2 Prozent Slippage gesetzt — ihre Transaktion müsste fehlschlagen bei 3,7 Prozent tatsächlichem Verlust. Aber der Searcher sieht ihre Slippage-Toleranz im Mempool. Er optimiert seine Front-Run-Größe so, dass Alice-Transaktion gerade noch innerhalb der Slippage-Toleranz ausgeführt wird. Die Slippage-Toleranz ist also faktisch die Obergrenze des Searcher-Gewinns, nicht der Schutz, den Alice sich wünscht.
+**[Slide 4]** Die Profitabilitäts-Formel für Sandwiches. Kompakt: Sandwich-Profit ist ungefähr gleich dem Front-Run-Price-Impact plus Back-Run-Recovery, minus Gas-Kosten und minus Slippage-Buffer. Das heißt: der Searcher verdient an beiden Bewegungen, muss aber Gas und seinen eigenen Slippage-Puffer abziehen. Proportional gilt: Gewinn ist proportional zu Swap-Größe zum Quadrat geteilt durch Pool-Liquidität, mal Slippage-Toleranz. Je größer der Swap relativ zur Pool-Liquidität, desto quadratisch mehr Gewinn. Und höhere Slippage bedeutet mehr Spielraum für den Searcher.
 
-**[Slide 5]** Die Profitabilitäts-Formel für Sandwiches. Gewinn ist proportional zu Swap-Größe zum Quadrat geteilt durch Pool-Liquidität, mal Slippage-Toleranz. Das heißt: je größer der Swap relativ zur Pool-Liquidität, desto quadratisch mehr Gewinn. Und höhere Slippage bedeutet mehr Spielraum für den Searcher.
+**[Slide 5]** Zwei zentrale Anfälligkeitsfaktoren. Erstens, die Slippage-Falle. Alice hat 2 Prozent Slippage gesetzt — ihre Transaktion müsste fehlschlagen bei 3,7 Prozent tatsächlichem Verlust. Aber der Searcher sieht ihre Slippage-Toleranz im Mempool. Er optimiert seine Front-Run-Größe so, dass Alice-Transaktion gerade noch innerhalb der Slippage-Toleranz ausgeführt wird. Die Slippage-Toleranz ist also faktisch die Obergrenze des Searcher-Gewinns, nicht der Schutz, den Alice sich wünscht. Zweitens, Trade-Größen-Schwellen auf Ethereum Mainnet. Swaps unter 1.000 Dollar: fast nie sandwichfähig, weil Gas-Kosten den Gewinn auffressen. 1.000 bis 10.000 Dollar: manchmal, abhängig vom Pool. 10.000 bis 100.000 Dollar: oft. Über 100.000 Dollar: fast immer, wenn keine Schutz-Maßnahmen aktiv sind. Auf Layer-2 sind die Schwellen deutlich niedriger wegen günstigerer Gas-Preise — schon 100 bis 500 Dollar Swaps können sandwichfähig sein.
 
-**[Slide 6]** Praktische Schwellen auf Ethereum Mainnet. Swaps unter 1.000 Dollar: fast nie sandwichfähig, weil Gas-Kosten den Gewinn auffressen. 1.000 bis 10.000 Dollar: manchmal, abhängig vom Pool. 10.000 bis 100.000 Dollar: oft. Über 100.000 Dollar: fast immer, wenn keine Schutz-Maßnahmen aktiv sind. Auf Layer-2 sind die Schwellen deutlich niedriger wegen günstigerer Gas-Preise — schon 100 bis 500 Dollar Swaps können sandwichfähig sein.
+**[Slide 6]** Die Anti-Sandwich-Checkliste. Erstens: Slippage niedrig setzen, 0,1 bis 0,5 Prozent für Stablecoin-Pairs, 0,5 bis 1 Prozent für volatile. Zweitens: private RPC wie Flashbots Protect oder MEV Blocker nutzen. Drittens: CowSwap für größere Trades über 10.000 Dollar. Viertens: 1inch mit MEV-Protection-Flag. Fünftens: Trades in mehrere kleine aufsplitten. Sechstens: tiefe Liquiditäts-Pools wählen statt exotische Pairs. Details in der nächsten Lektion.
 
-**[Slide 7]** Die Anti-Sandwich-Checkliste. Erstens: Slippage niedrig setzen, 0,1 bis 0,5 Prozent für Stablecoin-Pairs, 0,5 bis 1 Prozent für volatile. Zweitens: private RPC wie Flashbots Protect oder MEV Blocker nutzen. Drittens: CowSwap für größere Trades über 10.000 Dollar. Viertens: 1inch mit MEV-Protection-Flag. Fünftens: Trades in mehrere kleine aufsplitten. Sechstens: tiefe Liquiditäts-Pools wählen statt exotische Pairs. Details in der nächsten Lektion.
-
-**[Slide 8]** Die zugrundeliegende Ursache ist Information-Asymmetry. Der Searcher sieht deine Transaktion, bevor sie ausgeführt wird. Du siehst nicht seine Bots. Das ist kein technischer Bug, sondern Architektur: der öffentliche Mempool ist öffentlich by design. Die Lösung ist nicht, auf Fairness zu hoffen. Die Lösung ist, die Asymmetry zu eliminieren — deine Transaktionen nicht mehr öffentlich zu machen. Das behandelt die nächste Lektion.
+**[Slide 7]** Die zugrundeliegende Ursache ist Information-Asymmetry. Der Searcher sieht deine Transaktion, bevor sie ausgeführt wird. Du siehst nicht seine Bots. Das ist kein technischer Bug, sondern Architektur: der öffentliche Mempool ist öffentlich by design. Die Lösung ist nicht, auf Fairness zu hoffen. Die Lösung ist, die Asymmetry zu eliminieren — deine Transaktionen nicht mehr öffentlich zu machen. Das behandelt die nächste Lektion.
 
 ### Visuelle Vorschläge
 
@@ -862,15 +847,13 @@ Lösung: Transaktionen privat halten
 
 **[Slide 3]** AMM-Kurve mit drei Preis-Punkten markiert.
 
-**[Slide 4]** Slippage-Bar: Einstellung vs. Searcher-Optimierung.
+**[Slide 4]** Formel-Darstellung (Sandwich-Profit-Formel + proportionale Skalierung) mit Beispiel-Berechnungen bei verschiedenen Größen.
 
-**[Slide 5]** Formel-Darstellung mit Beispiel-Berechnungen bei verschiedenen Größen.
+**[Slide 5]** Zwei-Spalten-Layout: links Slippage-Bar (Einstellung vs. Searcher-Optimierung), rechts Schwellen-Tabelle nach Swap-Größe.
 
-**[Slide 6]** Schwellen-Tabelle nach Swap-Größe.
+**[Slide 6]** Checkliste mit 6 Schutz-Maßnahmen.
 
-**[Slide 7]** Checkliste mit 6 Schutz-Maßnahmen.
-
-**[Slide 8]** Information-Asymmetry-Illustration: Searcher sieht Alice, Alice sieht Searcher nicht.
+**[Slide 7]** Information-Asymmetry-Illustration: Searcher sieht Alice, Alice sieht Searcher nicht.
 
 ### Übung
 
@@ -908,8 +891,8 @@ Der Hauptgrund ist das **Gas-Kosten-zu-Gewinn-Verhältnis**. Auf Ethereum Mainne
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Sandwich-Konzept → 3-Transaktions-Sequenz → Profitabilitäts-Mathematik → Slippage als Einfallstor → Trade-Größen-Schwellen → L1 vs. L2 → Eigene Exposition
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Die drei Transaktionen → Rechen-Beispiel → Profitabilitäts-Formel → Anfälligkeitsfaktoren (Slippage + Trade-Größen-Schwellen) → Anti-Sandwich-Checkliste → Zugrundeliegende Ursache
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Sandwich-Attack-Diagramm (Front-Run → Victim → Back-Run), Profitabilitäts-Rechenbeispiel, Slippage-Exposition-Tabelle, Trade-Größen-Schwellen-Chart, Historische Sandwich-Events
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1110,23 +1093,18 @@ Höhere Builder-Diversität
 90%+ Backrun-Refunds
 Alternative zu Flashbots
 
-**[Slide 5] — CowSwap**
-swap.cow.fi
-Intent statt Transaktion
-Solver-Wettbewerb
-Coincidence of Wants
+**[Slide 5] — Intent-basierte Systeme**
+CowSwap (swap.cow.fi): Intent statt Transaktion, Solver-Wettbewerb, Coincidence of Wants
+Uniswap X: in Standard-Uniswap-Interface integriert, Dutch-Auction-Mechanik
+1inch Fusion: nutzt 1inch-Liquiditäts-Aggregation
+Strukturell kein Sandwich möglich
 
-**[Slide 6] — Uniswap X + 1inch Fusion**
-Intent-basierte Alternativen
-Integriert in bekannte Interfaces
-Wachsender Solver-Markt
-
-**[Slide 7] — Entscheidungs-Matrix**
+**[Slide 6] — Entscheidungs-Matrix**
 < 5.000 USD: Aggregator mit MEV-Flag
 5.000-50.000: Flashbots RPC
 50.000+: CowSwap
 
-**[Slide 8] — Layered Defense**
+**[Slide 7] — Layered Defense**
 1. Private RPC als Default
 2. DEX-Aggregator
 3. Intent-basiert für große Trades
@@ -1143,13 +1121,11 @@ Wachsender Solver-Markt
 
 **[Slide 4]** MEV Blocker ist die Alternative von CoW-Team. mevblocker.io. Funktioniert ähnlich wie Flashbots Protect, aber mit höherer Builder-Diversität und höheren Backrun-Refunds, oft 90 Prozent plus. In 2024 und 2025 hat es an Marktanteil gewonnen. Beide Tools sind gut — die Wahl ist Geschmackssache.
 
-**[Slide 5]** CowSwap ist das prominenteste Intent-basierte DEX. swap.cow.fi. Du signierst eine Limit Order — "verkaufe 100 ETH für mindestens 290.000 USDC". Die Order geht in einen Off-Chain-Pool. Solver konkurrieren um Ausführung. Bei Coincidence of Wants — wenn gleichzeitig jemand das Gegenteil will — wird direkt gematcht ohne DEX-Liquidität. Das spart Fees und Slippage. MEV-Schutz ist strukturell, weil keine öffentliche Transaktion existiert.
+**[Slide 5]** Intent-basierte Systeme — die strukturell sicherste Schutz-Klasse. CowSwap ist das prominenteste Beispiel: swap.cow.fi. Du signierst eine Limit Order — "verkaufe 100 ETH für mindestens 290.000 USDC". Die Order geht in einen Off-Chain-Pool. Solver konkurrieren um Ausführung. Bei Coincidence of Wants — wenn gleichzeitig jemand das Gegenteil will — wird direkt gematcht ohne DEX-Liquidität. Das spart Fees und Slippage. MEV-Schutz ist strukturell, weil keine öffentliche Transaktion existiert. Uniswap X ist die Alternative von Uniswap Labs, integriert in das Standard-Uniswap-Interface — keine separate App nötig — und nutzt eine Dutch-Auction-Mechanik. 1inch Fusion nutzt 1inch's umfangreiche Liquiditäts-Aggregation. Alle drei bieten ähnlichen Schutz, unterscheiden sich aber in Solver-Diversität und unterstützten Pairs.
 
-**[Slide 6]** Uniswap X und 1inch Fusion sind Alternativen. Uniswap X ist in das Standard-Uniswap-Interface integriert — keine separate App nötig. 1inch Fusion nutzt 1inch's umfangreiche Liquiditäts-Aggregation. Beide bieten ähnlichen Schutz wie CowSwap, aber haben aktuell weniger Solver, was bei exotischen Pairs zu etwas schlechteren Preisen führen kann.
+**[Slide 6]** Die Entscheidungs-Matrix für welches Tool wann. Unter 5.000 Dollar: Aggregator wie 1inch mit MEV-Protection-Flag. 5.000 bis 50.000 Dollar: Flashbots Protect RPC plus Uniswap oder 1inch. Über 50.000 Dollar: CowSwap. Für sehr große Trades über 500.000 Dollar auch OTC-Deals mit Market Makern in Betracht ziehen.
 
-**[Slide 7]** Die Entscheidungs-Matrix für welches Tool wann. Unter 5.000 Dollar: Aggregator wie 1inch mit MEV-Protection-Flag. 5.000 bis 50.000 Dollar: Flashbots Protect RPC plus Uniswap oder 1inch. Über 50.000 Dollar: CowSwap. Für sehr große Trades über 500.000 Dollar auch OTC-Deals mit Market Makern in Betracht ziehen.
-
-**[Slide 8]** Layered Defense für maximalen Schutz. Erstens: Private RPC als Default in MetaMask — schützt alle Transaktionen, nicht nur Swaps. Zweitens: DEX-Aggregator nutzen statt Uniswap direkt. Drittens: Intent-basiert für große Trades. Viertens: Slippage konservativ halten. Fünftens: bei wirklich großen Trades in Tranchen aufteilen. In Kombination erreicht das 95 Prozent plus MEV-Schutz bei minimalen Zusatzkosten. Die einmalige 5-Minuten-Konfiguration spart typisch 100 bis 1.000 Dollar pro Jahr für aktive Nutzer.
+**[Slide 7]** Layered Defense für maximalen Schutz. Erstens: Private RPC als Default in MetaMask — schützt alle Transaktionen, nicht nur Swaps. Zweitens: DEX-Aggregator nutzen statt Uniswap direkt. Drittens: Intent-basiert für große Trades. Viertens: Slippage konservativ halten. Fünftens: bei wirklich großen Trades in Tranchen aufteilen. In Kombination erreicht das 95 Prozent plus MEV-Schutz bei minimalen Zusatzkosten. Die einmalige 5-Minuten-Konfiguration spart typisch 100 bis 1.000 Dollar pro Jahr für aktive Nutzer.
 
 ### Visuelle Vorschläge
 
@@ -1161,13 +1137,11 @@ Wachsender Solver-Markt
 
 **[Slide 4]** **SCREENSHOT SUGGESTION:** MEV Blocker Website.
 
-**[Slide 5]** **SCREENSHOT SUGGESTION:** CowSwap Swap-Interface mit Solver-Preisen.
+**[Slide 5]** Drei-Spalten-Layout der Intent-basierten Systeme: **SCREENSHOT SUGGESTION:** CowSwap Swap-Interface mit Solver-Preisen | Uniswap X Settings mit MEV-Schutz-Toggle | 1inch Fusion Order-Flow.
 
-**[Slide 6]** **SCREENSHOT SUGGESTION:** Uniswap X Settings mit MEV-Schutz-Toggle.
+**[Slide 6]** Entscheidungs-Matrix als Tabelle.
 
-**[Slide 7]** Entscheidungs-Matrix als Tabelle.
-
-**[Slide 8]** Fünf-Schichten-Pyramide der Layered Defense.
+**[Slide 7]** Fünf-Schichten-Pyramide der Layered Defense.
 
 ### Übung
 
@@ -1219,8 +1193,8 @@ Bei 200.000 USD Trade-Größe sind mehrere Faktoren relevant, die CowSwap strukt
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Flashbots Protect Setup → MEV Blocker → CowSwap-Mechanik → Uniswap X (Dutch Auction) → Intent-basiertes Trading → Schutz nach Trade-Größe → Praktische Empfehlungen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Drei Schutz-Kategorien → Flashbots Protect → MEV Blocker → Intent-basierte Systeme (CowSwap, Uniswap X, 1inch Fusion) → Entscheidungs-Matrix → Layered Defense
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — RPC-Setup-Screenshots, CowSwap-Interface, Solver-Wettbewerb-Diagramm, Uniswap-X-Auction-Flow, Trade-Größen-Schutz-Matrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1400,29 +1374,23 @@ Dedizierte MEV-Chain für alle EVMs
 Encrypted Order Flow + Nutzer-Refunds
 Status: Testnet, Launch ~2026+
 
-**[Slide 4] — Encrypted Mempool**
-Threshold Encryption
-Transaktion verschlüsselt bis Finalisierung
-Sandwich strukturell unmöglich
-Shutter auf Gnosis produktiv
+**[Slide 4] — Drei Protokoll-Lösungen**
+Encrypted Mempool (Threshold Encryption): Transaktion verschlüsselt bis Finalisierung — Sandwich strukturell unmöglich
+Batch-Auktionen: Trades periodisch gesammelt, Clearing zum einheitlichen Preis — kein Sandwich möglich
+Order-Flow-Auktionen (OFAs): Wallets auktionieren Flow, Nutzer bekommen MEV-Anteil — institutionalisiert MEV, eliminiert nicht
 
-**[Slide 5] — Batch-Auktionen**
-Trades werden periodisch gesammelt
-Clearing zum einheitlichen Preis
-Kein Sandwich möglich
-CowSwap produktiv
+**[Slide 5] — Reifegrad und produktive Umsetzungen**
+Encrypted Mempool: Shutter Network produktiv auf Gnosis Chain
+Batch-Auktionen: CowSwap produktiv auf Ethereum
+OFAs: erste Wallet-Integrationen (z.B. MetaMask)
+Ethereum L1 Integration noch Jahre entfernt
 
-**[Slide 6] — Order-Flow-Auktionen**
-Wallets auktionieren Flow
-Nutzer/Wallet bekommen MEV-Anteil
-Institutionalisiert MEV, eliminiert nicht
-
-**[Slide 7] — Zeitplan-Erwartung**
+**[Slide 6] — Zeitplan-Erwartung**
 2025-2026: aktuelle Tools Standard
 2026-2028: SUAVE möglich
 2028+: Encrypted Mempool auf L1
 
-**[Slide 8] — Nutzer-Strategie**
+**[Slide 7] — Nutzer-Strategie**
 Heute: aktuelle Tools nutzen
 Nicht auf Zukunft warten
 Entwicklung beobachten
@@ -1436,15 +1404,13 @@ Kritisch bei Marketing-Claims
 
 **[Slide 3]** SUAVE ist die Flashbots-Initiative einer dedizierten MEV-Chain. Statt dass jede Chain ihre eigene Builder-Relay-Struktur hat, wäre SUAVE eine universelle Infrastruktur für alle EVM-Chains. Features: Cross-Chain-MEV-Optimierung, Encrypted Order Flow — Transaktionen verschlüsselt submittiert —, Nutzer-Refunds für MEV-Gewinne. Status: in Testnet, Launch geplant für 2026 und später. Ambitioniertes Projekt mit unklarem Zeitplan.
 
-**[Slide 4]** Encrypted Mempool ist einer der elegantesten Ansätze. Threshold Encryption: Transaktionen werden verschlüsselt in den Mempool gestellt. Erst nach Block-Finalisierung werden sie entschlüsselt und ausgeführt. Sandwich ist strukturell unmöglich, weil Searcher nicht sieht was die Transaktion tut, bevor die Reihenfolge festgelegt ist. Shutter Network ist bereits produktiv auf Gnosis Chain. Ethereum L1 Integration ist noch Jahre entfernt.
+**[Slide 4]** Drei zentrale Protokoll-Lösungen werden parallel entwickelt. Erstens: Encrypted Mempool. Threshold Encryption sorgt dafür, dass Transaktionen verschlüsselt in den Mempool gestellt werden. Erst nach Block-Finalisierung werden sie entschlüsselt und ausgeführt. Sandwich ist strukturell unmöglich, weil Searcher nicht sieht was die Transaktion tut, bevor die Reihenfolge festgelegt ist. Zweitens: Batch-Auktionen. Statt kontinuierlicher Ausführung werden Transaktionen in Batches gesammelt und alle zum gleichen Clearing-Preis ausgeführt. Keine Reihenfolgen-Abhängigkeit innerhalb eines Batches — Sandwich unmöglich. Bewährt aus traditionellen Finanzmärkten — Börsen-Eröffnungs-Auktionen funktionieren so. Nachteil: Latenz statt instant-execution. Drittens: Order-Flow-Auktionen, OFAs. Wallets wie MetaMask auktionieren den Nutzer-Transaktions-Flow an den Meistbietenden. Builder und Searcher bieten, der Gewinner bekommt exklusiven Zugang und teilt den Gewinn mit Nutzer und Wallet. Kritik: das institutionalisiert MEV statt es zu eliminieren. Es wird besser verteilt — Wallet und Nutzer bekommen einen Anteil — aber das Grundmuster bleibt.
 
-**[Slide 5]** Batch-Auktionen. Statt kontinuierlicher Ausführung werden Transaktionen in Batches gesammelt und alle zum gleichen Clearing-Preis ausgeführt. Keine Reihenfolgen-Abhängigkeit innerhalb eines Batches — Sandwich unmöglich. CowSwap nutzt dieses Prinzip bereits produktiv. Bewährt aus traditionellen Finanzmärkten — Börsen-Eröffnungs-Auktionen funktionieren so. Nachteil: Latenz statt instant-execution.
+**[Slide 5]** Reifegrad und produktive Umsetzungen der drei Lösungen heute. Encrypted Mempool ist als Shutter Network bereits produktiv auf Gnosis Chain — funktioniert, wird genutzt, aber kleine Chain. Batch-Auktionen sind als CowSwap auf Ethereum produktiv — größtes Volumen aller Intent-DEXs. OFAs sind in ersten Wallet-Integrationen sichtbar, etwa bei MetaMask, aber noch experimentell. Ethereum L1 Integration aller drei Mechanismen ist noch Jahre entfernt — die Bauteile existieren, die Integration in den Standard-Stack braucht Zeit.
 
-**[Slide 6]** Order-Flow-Auktionen, OFAs. Wallets wie MetaMask auktionieren den Nutzer-Transaktions-Flow an den Meistbietenden. Builder und Searcher bieten, der Gewinner bekommt exklusiven Zugang und teilt den Gewinn mit Nutzer und Wallet. Kritik: das institutionalisiert MEV statt es zu eliminieren. Es wird besser verteilt — Wallet und Nutzer bekommen einen Anteil — aber das Grundmuster bleibt.
+**[Slide 6]** Realistischer Zeitplan. Kurzfristig 2025 bis 2026: aktuelle Nutzer-Tools werden Standard, Wallet-integrierte OFAs häufiger. Mittelfristig 2026 bis 2028: SUAVE möglicherweise produktiv, Batch-Auktionen breiter adaptiert, Encrypted Mempool auf L2s. Langfristig ab 2028: Ethereum L1 möglicherweise mit Encrypted Mempool, MEV als fair-verteiltes Feature statt eliminiert.
 
-**[Slide 7]** Realistischer Zeitplan. Kurzfristig 2025 bis 2026: aktuelle Nutzer-Tools werden Standard, Wallet-integrierte OFAs häufiger. Mittelfristig 2026 bis 2028: SUAVE möglicherweise produktiv, Batch-Auktionen breiter adaptiert, Encrypted Mempool auf L2s. Langfristig ab 2028: Ethereum L1 möglicherweise mit Encrypted Mempool, MEV als fair-verteiltes Feature statt eliminiert.
-
-**[Slide 8]** Die pragmatische Nutzer-Strategie. Erstens: nicht auf die Zukunft warten — die aktuellen Tools sind effektiv, nutze sie heute. Zweitens: auf L1 bleiben wenn MEV-Schutz wichtig ist — Ethereum Mainnet hat die besten Tools. Drittens: bei L2-Wahl MEV beachten — Gnosis Chain mit Shutter ist MEV-resistent. Viertens: offene Augen halten — das Feld entwickelt sich schnell. Fünftens: kritisch bleiben — neue MEV-free-Claims sind oft Marketing, prüfe die tatsächlichen Mechanismen. MEV wird wahrscheinlich nicht auf einen Schlag gelöst, sondern graduell verbessert. Erwarte Evolution, nicht Revolution.
+**[Slide 7]** Die pragmatische Nutzer-Strategie. Erstens: nicht auf die Zukunft warten — die aktuellen Tools sind effektiv, nutze sie heute. Zweitens: auf L1 bleiben wenn MEV-Schutz wichtig ist — Ethereum Mainnet hat die besten Tools. Drittens: bei L2-Wahl MEV beachten — Gnosis Chain mit Shutter ist MEV-resistent. Viertens: offene Augen halten — das Feld entwickelt sich schnell. Fünftens: kritisch bleiben — neue MEV-free-Claims sind oft Marketing, prüfe die tatsächlichen Mechanismen. MEV wird wahrscheinlich nicht auf einen Schlag gelöst, sondern graduell verbessert. Erwarte Evolution, nicht Revolution.
 
 ### Visuelle Vorschläge
 
@@ -1454,15 +1420,13 @@ Kritisch bei Marketing-Claims
 
 **[Slide 3]** SUAVE-Architektur-Diagramm: Multi-Chain-Builder mit Encrypted Flow.
 
-**[Slide 4]** Threshold-Encryption-Flow: Verschlüsselung → Mempool → Finalisierung → Entschlüsselung.
+**[Slide 4]** Drei-Spalten-Layout der Protokoll-Lösungen: Threshold-Encryption-Flow (Verschlüsselung → Mempool → Finalisierung → Entschlüsselung) | Batch-Auktion-Visualisierung (Sammeln → Clearing → Ausführung) | OFA-Auktions-Flow (Wallet → Bieter → Gewinner → Refund).
 
-**[Slide 5]** Batch-Auktion-Visualisierung: Sammeln → Clearing → Ausführung.
+**[Slide 5]** Reifegrad-Tabelle: jede Lösung mit Status (produktiv/experimentell), Beispiel-Implementierung (Shutter/CowSwap/MetaMask) und Chain-Verfügbarkeit.
 
-**[Slide 6]** OFA-Auktions-Flow: Wallet → Bieter → Gewinner → Refund.
+**[Slide 6]** Zeitstrahl 2025-2030 mit Meilensteinen.
 
-**[Slide 7]** Zeitstrahl 2025-2030 mit Meilensteinen.
-
-**[Slide 8]** Nutzer-Strategie-Checkliste.
+**[Slide 7]** Nutzer-Strategie-Checkliste.
 
 ### Übung
 
@@ -1503,8 +1467,8 @@ Eine kontraintuitive, aber wichtige Perspektive. MEV hat mehrere Funktionen im �
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Workaround vs. Protokoll-Lösung → SUAVE-Architektur → Threshold Encryption → Batch-Auktionen → OFA-Mechanik → Zeitstrahl 2025-2030 → Nutzer-Strategie
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Workaround vs. Protokoll-Lösung → SUAVE-Architektur → Drei Protokoll-Lösungen (Encrypted Mempool, Batch-Auktionen, OFAs) → Reifegrad und produktive Umsetzungen → Zeitstrahl 2025-2030 → Nutzer-Strategie
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Protokoll-Lösungs-Landkarte, SUAVE-Multi-Chain-Diagramm, Threshold-Encryption-Flow, OFA-Auktions-Zeitleiste, Zukunfts-Roadmap
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1520,7 +1484,7 @@ Fünf Fragen zum integrierten Verständnis von Modul 11.
 <details>
 <summary>Antwort anzeigen</summary>
 
-Eine typische Swap-Transaktion durchläuft folgenden Prozess: **Schritt 1: Wallet-Signatur.** Alice signiert in ihrer Wallet (z.B. MetaMask) die Swap-Transaktion mit ihrem privaten Schlüssel. Die Transaktion enthält: Zielcontract (z.B. Uniswap Router), Funktion, Parameter (Token-Paar, Betrag, Slippage-Toleranz), Gas-Preis. **Schritt 2: Broadcast über RPC.** Die signierte Transaktion wird an einen Ethereum-Node gesendet — typisch Infura, Alchemy, oder (im geschützten Fall) Flashbots Protect/MEV Blocker. Bei Standard-RPC geht sie in den öffentlichen Mempool. **Schritt 3: Mempool-Propagation.** Innerhalb von Millisekunden verbreitet sich die Transaktion über das Peer-to-Peer-Netzwerk zu den meisten Ethereum-Nodes und damit zu allen Searchern. **Schritt 4: Searcher-Analyse.** Spezialisierte Searcher-Bots analysieren die Transaktion: "ist sie sandwichfähig? ist back-running profitable? gibt es Arbitrage-Gelegenheiten?". Wenn ja, konstruiert der Searcher ein Bundle: ein oder mehrere Transaktionen, die zusammen mit Alice-Swap ausgeführt werden sollen. **Schritt 5: Builder-Submission.** Der Searcher sendet sein Bundle an einen oder mehrere **Builder**. Gleichzeitig sammelt der Builder den öffentlichen Mempool-Content und Bundles von anderen Searchern. **Schritt 6: Builder-Block-Konstruktion.** Jeder Builder konstruiert einen Block, der die maximal mögliche Wertschöpfung darstellt: reguläre Transaktionen + MEV-Bundles in optimaler Reihenfolge. Top-Builder sind beaverbuild, rsync-builder, Titan. **Schritt 7: Relay-Angebot.** Der Builder sendet den fertigen Block (als Angebot) an mehrere **Relays** — Flashbots Relay, ultra sound, Aestus, etc. Der Relay verifiziert Block-Validität und den darin enthaltenen Proposer-Payment. **Schritt 8: Proposer-Auswahl.** Der für diesen Slot designierte **Validator** nutzt MEV-Boost, um aus allen Relay-Angeboten das beste (höchste Zahlung an ihn) auszuwählen. Er signiert den Block-Header — ohne die Transaktionen vorher zu sehen. **Schritt 9: Block-Finalisierung.** Nach Header-Signatur erhält der Validator den vollen Block-Content und propagiert ihn an das Netzwerk. Andere Validatoren verifizieren und bestätigen (Attestation). **Schritt 10: Ausführung.** Alice-Swap ist jetzt on-chain ausgeführt. Wenn gesandwicht wurde, hat sie einen schlechteren Ausführungspreis bekommen als ohne. **Die vier Hauptakteure:** **Searcher** (findet MEV-Gelegenheiten, erstellt Bundles), **Builder** (konstruiert optimale Blocks), **Relay** (vermittelt zwischen Builder und Validator), **Validator/Proposer** (signiert und publiziert Block). Der gesamte Prozess dauert typisch 12 Sekunden (eine Ethereum-Slot-Zeit). In dieser Zeit passieren alle diese Schritte automatisch und parallel.
+Eine typische Swap-Transaktion durchläuft folgenden Prozess: **Schritt 1: Wallet-Signatur.** Alice signiert in ihrer Wallet (z.B. MetaMask) die Swap-Transaktion mit ihrem privaten Schlüssel. Die Transaktion enthält: Zielcontract (z.B. Uniswap Router), Funktion, Parameter (Token-Paar, Betrag, Slippage-Toleranz), Gas-Preis. **Schritt 2: Broadcast über RPC.** Die signierte Transaktion wird an einen Ethereum-Node gesendet — typisch Infura, Alchemy, oder (im geschützten Fall) Flashbots Protect/MEV Blocker. Bei Standard-RPC geht sie in den öffentlichen Mempool. **Schritt 3: Mempool-Propagation.** Innerhalb von Millisekunden verbreitet sich die Transaktion über das Peer-to-Peer-Netzwerk zu den meisten Ethereum-Nodes und damit zu allen Searchern. **Schritt 4: Searcher-Analyse.** Spezialisierte Searcher-Bots analysieren die Transaktion: "ist sie sandwichfähig? ist back-running profitable? gibt es Arbitrage-Gelegenheiten?". Wenn ja, konstruiert der Searcher ein Bundle: ein oder mehrere Transaktionen, die zusammen mit Alice-Swap ausgeführt werden sollen. **Schritt 5: Builder-Submission.** Der Searcher sendet sein Bundle an einen oder mehrere **Builder**. Gleichzeitig sammelt der Builder den öffentlichen Mempool-Content und Bundles von anderen Searchern. **Schritt 6: Builder-Block-Konstruktion.** Jeder Builder konstruiert einen Block, der die maximal mögliche Wertschöpfung darstellt: reguläre Transaktionen + MEV-Bundles in optimaler Reihenfolge. Top-Builder sind beaverbuild, rsync-builder, Titan. **Schritt 7: Relay-Angebot.** Der Builder sendet den fertigen Block (als Angebot) an mehrere **Relays** — Flashbots Relay, ultra sound, Aestus, etc. Der Relay verifiziert Block-Validität und den darin enthaltenen Proposer-Payment. **Schritt 8: Proposer-Auswahl.** Der für diesen Slot designierte **Validator** nutzt MEV-Boost, um aus allen Relay-Angeboten das beste (höchste Zahlung an ihn) auszuwählen. Er signiert den Block-Header — ohne die Transaktionen vorher zu sehen. **Schritt 9: Block-Finalisierung.** Nach Header-Signatur erhält der Validator den vollen Block-Content und propagiert ihn an das Netzwerk. Andere Validatoren verifizieren und bestätigen (Attestation). **Schritt 10: Ausführung.** Alice-Swap ist jetzt on-chain ausgeführt. Wenn sandwiched wurde, hat sie einen schlechteren Ausführungspreis bekommen als ohne. **Die vier Hauptakteure:** **Searcher** (findet MEV-Gelegenheiten, erstellt Bundles), **Builder** (konstruiert optimale Blocks), **Relay** (vermittelt zwischen Builder und Validator), **Validator/Proposer** (signiert und publiziert Block). Der gesamte Prozess dauert typisch 12 Sekunden (eine Ethereum-Slot-Zeit). In dieser Zeit passieren alle diese Schritte automatisch und parallel.
 </details>
 
 **Frage 2:** Alice und Bob wollen jeder 100.000 USDC in ETH swappen. Alice nutzt Uniswap direkt über Infura-RPC. Bob nutzt CowSwap. Beide bekommen den gleichen "quoted price" von 3.000 USD pro ETH. Warum werden ihre tatsächlichen Ausführungspreise wahrscheinlich unterschiedlich sein?
@@ -1528,7 +1492,7 @@ Eine typische Swap-Transaktion durchläuft folgenden Prozess: **Schritt 1: Walle
 <details>
 <summary>Antwort anzeigen</summary>
 
-Mehrere Faktoren führen zu unterschiedlichen Ausführungen, obwohl der initial "quoted price" gleich ist. **Für Alice (Uniswap direkt):** Ihre Transaktion geht in den öffentlichen Mempool. Searcher-Bots identifizieren sie sofort als großen, sandwichfähigen Swap. Wahrscheinlich wird die Transaktion gesandwicht: Front-Run drückt den Preis, Alice-Swap erfolgt zu ungünstigerem Kurs, Back-Run verkauft mit Gewinn. Wenn Alice's Slippage-Toleranz z.B. 0,5% ist, wird der Searcher seine Front-Run-Größe so optimieren, dass der effektive Ausführungspreis ~0,45-0,48% schlechter ist als der quoted price. Konkret: statt 33,33 ETH bekommt Alice vielleicht 33,17 ETH — eine Differenz von 0,16 ETH (~480 USD). Zusätzliche Risiken: (a) Pool-Impact durch ihren Trade selbst — bei 100.000 USD bewegt sie den Preis in einem mittleren Pool messbar. (b) Backrun-Arbitrage zwischen Pools nach ihrem Swap, was ihr selbst nicht direkt schadet, aber zeigt, dass MEV extrahiert wird. **Für Bob (CowSwap):** Seine Transaktion geht nicht in den öffentlichen Mempool. Stattdessen ist sie eine signierte Intent-Order im CowSwap-Batch-System. Hier passieren mehrere positive Effekte: **Erstens: Coincidence of Wants möglich.** Wenn in derselben Batch-Periode (5-30 Sekunden) andere Nutzer das entgegengesetzte Trade wollen (ETH zu USDC verkaufen), matched CowSwap direkt — ohne DEX-Pool zu nutzen. Das eliminiert Pool-Impact komplett. Selbst wenn kein perfekter CoW entsteht, können Teile gematcht werden. **Zweitens: Solver-Wettbewerb optimiert Route.** Mehrere professionelle Solver konkurrieren um das Recht, Bob's Order auszuführen. Jeder schlägt eine Route vor (z.B. über Uniswap V3, Curve, Balancer, oder Kombination). Der Solver mit dem besten Preis gewinnt. Das ist strukturell optimaler als eine einzelne AMM-Route. **Drittens: Kein Sandwich möglich.** Die Order ist im Batch-System, kein Searcher kann davor oder danach traden, weil alle Batch-Trades zur gleichen Zeit und zum gleichen Clearing-Preis ausgeführt werden. **Viertens: Gas-Effizienz.** Der Solver bundelt mehrere User-Trades in wenige on-chain Transaktionen. Der Gas-Anteil pro Nutzer ist niedriger. **Fünftens: Optional Surplus Capture.** In manchen Fällen kann der Solver den Trade sogar **besser** ausführen als den quoted price — z.B. wenn in den 30 Sekunden seit dem Quote sich Preise günstiger bewegt haben. Das Surplus fließt meist an den Nutzer (je nach Solver-Konfiguration). **Zusammenfassung:** Alice's tatsächliche Ausführung ist wahrscheinlich 0,3-0,8% schlechter als der quoted price (durch Sandwich + Pool-Impact). Bob's Ausführung ist wahrscheinlich 0,1-0,5% besser oder gleich dem quoted price (durch CoW + optimale Route). Die Differenz: ~0,5-1,3% von 100.000 USD = 500-1.300 USD pro Trade. **Die Lehre:** Quoted Price ist nicht gleich Actual Execution Price. Die Strukturen drumherum — welches DEX, welcher Mempool, welches Intent-System — machen oft größere Preisunterschiede als die Fee-Strukturen selbst. Für große Trades ist die Wahl des Execution-Pfads mindestens so wichtig wie die Wahl des DEX-Protokolls.
+Mehrere Faktoren führen zu unterschiedlichen Ausführungen, obwohl der initial "quoted price" gleich ist. **Für Alice (Uniswap direkt):** Ihre Transaktion geht in den öffentlichen Mempool. Searcher-Bots identifizieren sie sofort als großen, sandwichfähigen Swap. Wahrscheinlich wird die Transaktion sandwiched: Front-Run drückt den Preis, Alice-Swap erfolgt zu ungünstigerem Kurs, Back-Run verkauft mit Gewinn. Wenn Alice's Slippage-Toleranz z.B. 0,5% ist, wird der Searcher seine Front-Run-Größe so optimieren, dass der effektive Ausführungspreis ~0,45-0,48% schlechter ist als der quoted price. Konkret: statt 33,33 ETH bekommt Alice vielleicht 33,17 ETH — eine Differenz von 0,16 ETH (~480 USD). Zusätzliche Risiken: (a) Pool-Impact durch ihren Trade selbst — bei 100.000 USD bewegt sie den Preis in einem mittleren Pool messbar. (b) Backrun-Arbitrage zwischen Pools nach ihrem Swap, was ihr selbst nicht direkt schadet, aber zeigt, dass MEV extrahiert wird. **Für Bob (CowSwap):** Seine Transaktion geht nicht in den öffentlichen Mempool. Stattdessen ist sie eine signierte Intent-Order im CowSwap-Batch-System. Hier passieren mehrere positive Effekte: **Erstens: Coincidence of Wants möglich.** Wenn in derselben Batch-Periode (5-30 Sekunden) andere Nutzer das entgegengesetzte Trade wollen (ETH zu USDC verkaufen), matched CowSwap direkt — ohne DEX-Pool zu nutzen. Das eliminiert Pool-Impact komplett. Selbst wenn kein perfekter CoW entsteht, können Teile gematcht werden. **Zweitens: Solver-Wettbewerb optimiert Route.** Mehrere professionelle Solver konkurrieren um das Recht, Bob's Order auszuführen. Jeder schlägt eine Route vor (z.B. über Uniswap V3, Curve, Balancer, oder Kombination). Der Solver mit dem besten Preis gewinnt. Das ist strukturell optimaler als eine einzelne AMM-Route. **Drittens: Kein Sandwich möglich.** Die Order ist im Batch-System, kein Searcher kann davor oder danach traden, weil alle Batch-Trades zur gleichen Zeit und zum gleichen Clearing-Preis ausgeführt werden. **Viertens: Gas-Effizienz.** Der Solver bundelt mehrere User-Trades in wenige on-chain Transaktionen. Der Gas-Anteil pro Nutzer ist niedriger. **Fünftens: Optional Surplus Capture.** In manchen Fällen kann der Solver den Trade sogar **besser** ausführen als den quoted price — z.B. wenn in den 30 Sekunden seit dem Quote sich Preise günstiger bewegt haben. Das Surplus fließt meist an den Nutzer (je nach Solver-Konfiguration). **Zusammenfassung:** Alice's tatsächliche Ausführung ist wahrscheinlich 0,3-0,8% schlechter als der quoted price (durch Sandwich + Pool-Impact). Bob's Ausführung ist wahrscheinlich 0,1-0,5% besser oder gleich dem quoted price (durch CoW + optimale Route). Die Differenz: ~0,5-1,3% von 100.000 USD = 500-1.300 USD pro Trade. **Die Lehre:** Quoted Price ist nicht gleich Actual Execution Price. Die Strukturen drumherum — welches DEX, welcher Mempool, welches Intent-System — machen oft größere Preisunterschiede als die Fee-Strukturen selbst. Für große Trades ist die Wahl des Execution-Pfads mindestens so wichtig wie die Wahl des DEX-Protokolls.
 </details>
 
 **Frage 3:** Warum ist "niedrige Slippage setzen" eine schlechte primäre Schutz-Strategie, obwohl es intuitiv wie der naheliegendste Schutz aussieht?
@@ -1544,7 +1508,7 @@ Niedrige Slippage hat Schutz-Wert, aber sie hat fundamentale Grenzen, die sie al
 <details>
 <summary>Antwort anzeigen</summary>
 
-Die 5 wichtigsten Gewohnheiten für konservativen MEV-Schutz im Alltag: **Gewohnheit 1: Private RPC als Default in allen Wallets.** Einmalige Setup: Flashbots Protect oder MEV Blocker in MetaMask, Rabby, oder anderer Wallet als primäres Ethereum-Netzwerk konfigurieren. Für L2s analog (wenn verfügbar). Alle Transaktionen (nicht nur Swaps — auch Approvals, Lending, Staking) gehen dann automatisch durch Private Mempool. Das schützt vor vielen MEV-Formen ohne dass du daran denken musst. Aufwand: 5-10 Minuten einmalig. **Gewohnheit 2: DEX-Aggregator statt Direkt-DEX.** Verwende 1inch, Matcha, oder CowSwap statt direkt Uniswap. Die Aggregatoren haben integrierten MEV-Schutz (oft als Toggle) und bessere Routen. 1inch mit aktiviertem "MEV Protection"-Flag oder Matcha's RFQ-System sind gute Defaults für mittlere Trade-Größen. Mental-Model: "DEX-Aggregator first, DEX-direkt nur wenn Aggregator nicht unterstützt". **Gewohnheit 3: CowSwap für Trades über 10.000 USD.** Bei großen Trades ist CowSwap (oder Uniswap X) die klare Wahl. Die Batch-Auktion-Struktur eliminiert Sandwich strukturell, und die Solver-Konkurrenz gibt oft bessere Preise als direkte DEX-Ausführung. Die 30-60 Sekunden Latenz ist akzeptabel für größere Trades, wo Präzision wichtiger ist als Geschwindigkeit. Mental-Trigger: "Über 10.000 USD → CowSwap-Tab öffnen". **Gewohnheit 4: Konservative Slippage als sekundärer Schutz.** Slippage-Werte als Sekundär-Verteidigung: 0,1-0,3% für Stablecoin-Pairs, 0,3-0,8% für liquide Token, 1-2% nur für exotische Pairs. Nie "Auto-Slippage" in Wallets verwenden — das ist oft zu hoch gesetzt (1-3%) und macht dich zum Ziel. Wenn Transaktion mit niedriger Slippage fehlschlägt: lieber neu submitten als Slippage erhöhen. **Gewohnheit 5: Post-Trade-Monitoring mit MEV-Tools.** Nach größeren Trades (ab 10.000 USD) prüfe mit eigenphi.io oder ähnlichen Tools, ob du gesandwicht wurdest. Das ist weniger "Schutz" als "Lernen": wenn du gesandwicht wurdest trotz Schutz-Tools, gibt es einen Lücken in deiner Setup-Kette, die du adressieren solltest. Das schärft deine Intuition über Zeit. **Zusätzliche Bonus-Gewohnheiten:** **Bonus 6:** Nie mit Browser-Wallet auf frischen, unbekannten Websites verbinden ohne Verifikation — viele "MEV-Schutz"-Sites sind Phishing. Immer direkte URLs verwenden (protect.flashbots.net, swap.cow.fi, etc.). **Bonus 7:** Bei Arbitrum/Base/andere L2s separate Konfiguration prüfen — nicht alle L2s haben gleiche MEV-Schutz-Coverage wie Ethereum. Für L2 mit schwachem Schutz: Trades über 5.000 USD lieber auf Mainnet oder auf CowSwap L2 (wo verfügbar) machen. **Bonus 8:** Große portfoliorelevante Trades in Tranchen aufteilen. 200.000 USD-Trade als 5× 40.000-USD-Trades über 1-2 Stunden reduziert MEV-Exposition und Pool-Impact. **Die Gesamtstrategie:** Diese Gewohnheiten zusammen sind **opt-in, einmal aufgesetzt, dann Default**. Der mentale Overhead ist gering — du denkst nicht bei jedem Trade darüber nach, weil die Tools im Hintergrund arbeiten. Der ökonomische Nutzen ist substantiell: für aktive DeFi-Nutzer typisch 0,5-2% des Trade-Volumens, also hunderte bis tausende USD pro Jahr. Die einmalige Setup-Zeit (~30 Minuten über alle Tools) amortisiert sich in typisch <1 Monat. Das ist eine der höchsten ROI-Aktivitäten in aktivem DeFi.
+Die 5 wichtigsten Gewohnheiten für konservativen MEV-Schutz im Alltag: **Gewohnheit 1: Private RPC als Default in allen Wallets.** Einmalige Setup: Flashbots Protect oder MEV Blocker in MetaMask, Rabby, oder anderer Wallet als primäres Ethereum-Netzwerk konfigurieren. Für L2s analog (wenn verfügbar). Alle Transaktionen (nicht nur Swaps — auch Approvals, Lending, Staking) gehen dann automatisch durch Private Mempool. Das schützt vor vielen MEV-Formen ohne dass du daran denken musst. Aufwand: 5-10 Minuten einmalig. **Gewohnheit 2: DEX-Aggregator statt Direkt-DEX.** Verwende 1inch, Matcha, oder CowSwap statt direkt Uniswap. Die Aggregatoren haben integrierten MEV-Schutz (oft als Toggle) und bessere Routen. 1inch mit aktiviertem "MEV Protection"-Flag oder Matcha's RFQ-System sind gute Defaults für mittlere Trade-Größen. Mental-Model: "DEX-Aggregator first, DEX-direkt nur wenn Aggregator nicht unterstützt". **Gewohnheit 3: CowSwap für Trades über 10.000 USD.** Bei großen Trades ist CowSwap (oder Uniswap X) die klare Wahl. Die Batch-Auktion-Struktur eliminiert Sandwich strukturell, und die Solver-Konkurrenz gibt oft bessere Preise als direkte DEX-Ausführung. Die 30-60 Sekunden Latenz ist akzeptabel für größere Trades, wo Präzision wichtiger ist als Geschwindigkeit. Mental-Trigger: "Über 10.000 USD → CowSwap-Tab öffnen". **Gewohnheit 4: Konservative Slippage als sekundärer Schutz.** Slippage-Werte als Sekundär-Verteidigung: 0,1-0,3% für Stablecoin-Pairs, 0,3-0,8% für liquide Token, 1-2% nur für exotische Pairs. Nie "Auto-Slippage" in Wallets verwenden — das ist oft zu hoch gesetzt (1-3%) und macht dich zum Ziel. Wenn Transaktion mit niedriger Slippage fehlschlägt: lieber neu submitten als Slippage erhöhen. **Gewohnheit 5: Post-Trade-Monitoring mit MEV-Tools.** Nach größeren Trades (ab 10.000 USD) prüfe mit eigenphi.io oder ähnlichen Tools, ob du sandwiched wurdest. Das ist weniger "Schutz" als "Lernen": wenn du sandwiched wurdest trotz Schutz-Tools, gibt es einen Lücken in deiner Setup-Kette, die du adressieren solltest. Das schärft deine Intuition über Zeit. **Zusätzliche Bonus-Gewohnheiten:** **Bonus 6:** Nie mit Browser-Wallet auf frischen, unbekannten Websites verbinden ohne Verifikation — viele "MEV-Schutz"-Sites sind Phishing. Immer direkte URLs verwenden (protect.flashbots.net, swap.cow.fi, etc.). **Bonus 7:** Bei Arbitrum/Base/andere L2s separate Konfiguration prüfen — nicht alle L2s haben gleiche MEV-Schutz-Coverage wie Ethereum. Für L2 mit schwachem Schutz: Trades über 5.000 USD lieber auf Mainnet oder auf CowSwap L2 (wo verfügbar) machen. **Bonus 8:** Große portfoliorelevante Trades in Tranchen aufteilen. 200.000 USD-Trade als 5× 40.000-USD-Trades über 1-2 Stunden reduziert MEV-Exposition und Pool-Impact. **Die Gesamtstrategie:** Diese Gewohnheiten zusammen sind **opt-in, einmal aufgesetzt, dann Default**. Der mentale Overhead ist gering — du denkst nicht bei jedem Trade darüber nach, weil die Tools im Hintergrund arbeiten. Der ökonomische Nutzen ist substantiell: für aktive DeFi-Nutzer typisch 0,5-2% des Trade-Volumens, also hunderte bis tausende USD pro Jahr. Die einmalige Setup-Zeit (~30 Minuten über alle Tools) amortisiert sich in typisch <1 Monat. Das ist eine der höchsten ROI-Aktivitäten in aktivem DeFi.
 </details>
 
 **Frage 5:** MEV-Schutz-Tools sind "kostenlose Versicherung" — warum nutzen dann trotzdem viele DeFi-Nutzer sie nicht? Was sagt das über menschliches Verhalten in neuartigen Märkten aus?
