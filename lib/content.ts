@@ -59,7 +59,11 @@ export async function getAllModules(): Promise<ModuleMeta[]> {
 
   try {
     const entries = await fs.readdir(LEGACY_CONTENT_ROOT, { withFileTypes: true });
-    const dirs = entries.filter((e) => e.isDirectory()).map((e) => e.name);
+    /** Nur `moduleN`-Ordner — UX-Build (`01-defi-grundlagen` + `module.json`) bleibt außen vor. */
+    const dirs = entries
+      .filter((e) => e.isDirectory())
+      .map((e) => e.name)
+      .filter((name) => /^module\d+$/i.test(name));
     const modules: ModuleMeta[] = [];
     for (const slug of dirs.sort()) {
       const mod = await getModule(slug);

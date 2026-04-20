@@ -1,0 +1,23 @@
+{
+  "lessonId": "01-was-ist-defi",
+  "slides": [
+    {
+      "id": 1,
+      "title": "Was ist DeFi?",
+      "timestamp": 0,
+      "content": "Decentralized Finance – Finanzdienstleistungen ohne Intermediäre."
+    },
+    {
+      "id": 2,
+      "title": "Kernmerkmale",
+      "timestamp": 60,
+      "content": "Permissionless, transparent, komponierbar."
+    },
+    {
+      "id": 3,
+      "title": "Abgrenzung",
+      "timestamp": 180,
+      "content": "Unterschied zu TradFi und CeFi."
+    }
+  ]
+}

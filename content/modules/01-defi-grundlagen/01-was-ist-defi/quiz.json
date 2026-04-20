@@ -1,0 +1,41 @@
+{
+  "lessonId": "01-was-ist-defi",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Was bedeutet 'permissionless' im DeFi-Kontext?",
+      "options": [
+        "Nur verifizierte Nutzer haben Zugang",
+        "Jeder kann ohne Erlaubnis teilnehmen",
+        "Es gibt keine Regeln",
+        "Transaktionen sind kostenlos"
+      ],
+      "correctIndex": 1,
+      "explanation": "Permissionless bedeutet, dass kein Gatekeeper den Zugang kontrolliert."
+    },
+    {
+      "id": 2,
+      "question": "Was unterscheidet DeFi von traditionellem Banking?",
+      "options": [
+        "DeFi nutzt Smart Contracts statt Intermediäre",
+        "DeFi ist immer günstiger",
+        "DeFi garantiert höhere Renditen",
+        "DeFi benötigt keine Wallet"
+      ],
+      "correctIndex": 0,
+      "explanation": "Der Kernunterschied liegt in der Nutzung von Smart Contracts statt menschlicher Vermittler."
+    },
+    {
+      "id": 3,
+      "question": "Was heißt 'komponierbar' bei DeFi-Protokollen?",
+      "options": [
+        "Die UI kann angepasst werden",
+        "Protokolle können miteinander kombiniert werden",
+        "Der Code ist öffentlich",
+        "Transaktionen lassen sich rückgängig machen"
+      ],
+      "correctIndex": 1,
+      "explanation": "Komponierbarkeit erlaubt es, Protokolle wie Bausteine zusammenzusetzen."
+    }
+  ]
+}

@@ -126,6 +126,7 @@ npm run render:pilot       # Nur erste 5 Lektionen als Smoke-Test
 | Datei | Inhalt |
 |-------|--------|
 | **[docs/AGENTEN-HANDBUCH.md](docs/AGENTEN-HANDBUCH.md)** | **Master für Agenten:** Ist-Stand, 17 Module / 102 Lektionen (Ziel), Deploy, Roadmaps, Doku-Index |
+| **Neue UX-Shell** | Start `/`, App `/dashboard`, Kurs `/kurs/...`, Fortschritt, Profil; **Legacy**-Kurs unter `/klassisch` und `/module/...` (nur Ordner `moduleN` in `content/modules/`) |
 | [docs/BUILD.md](docs/BUILD.md) | Node, Build, Akademie-Inhalte |
 | [docs/academy-build.md](docs/academy-build.md) | Academy-Build-Pipeline: 2 Commands + 2 Uploads → Videos |
 | [docs/academy-structure.md](docs/academy-structure.md) | Hierarchie: DeFi Akademie → Module → Lektionen → Videos / Quiz / Praxisuebungen |

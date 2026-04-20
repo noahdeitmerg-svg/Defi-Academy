@@ -1,0 +1,16 @@
+{
+  "id": "01-defi-grundlagen",
+  "number": 1,
+  "title": "DeFi Grundlagen",
+  "description": "Einführung in die Grundkonzepte von Decentralized Finance. Du lernst, was DeFi ist, wie es funktioniert und warum es relevant ist.",
+  "tier": "free",
+  "estimatedMinutes": 90,
+  "lessons": [
+    "01-was-ist-defi",
+    "02-lektion",
+    "03-lektion",
+    "04-lektion",
+    "05-lektion",
+    "06-lektion"
+  ]
+}
