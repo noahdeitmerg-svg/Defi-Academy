@@ -14,6 +14,8 @@
 | UI | `components/lesson/KeyTakeaways.tsx` (in `LessonView` direkt nach dem Video) |
 | TypeScript-Typ | `data/types.ts` → `LessonAssets.keyTakeaways` |
 
+**Input für Redaktion / Content-Agent:** `npm run export:takeaways-input` erzeugt `exports/takeaways-input/modul-01.md` … `modul-17.md` (je Modul alle `lesson.md`-Bodies + `quiz.json`, ohne Slides).
+
 ---
 
 ## JSON-Format (`content/takeaways.json`)

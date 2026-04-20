@@ -12,11 +12,26 @@ type ValidationIssue = {
 };
 
 const REQUIRED_SECTION_ALIASES: Array<{ canonical: string; aliases: string[] }> = [
-  { canonical: "Explanation", aliases: ["Explanation"] },
-  { canonical: "Slide Summary", aliases: ["Slide Summary"] },
-  { canonical: "Voice Narration Script", aliases: ["Voice Narration Script"] },
-  { canonical: "Visual Suggestions", aliases: ["Visual Suggestions"] },
-  { canonical: "Exercise", aliases: ["Exercise", "Practical Exercise"] },
+  {
+    canonical: "Explanation",
+    aliases: ["Explanation", "Erklärung"],
+  },
+  {
+    canonical: "Slide Summary",
+    aliases: ["Slide Summary", "Folien-Zusammenfassung"],
+  },
+  {
+    canonical: "Voice Narration Script",
+    aliases: ["Voice Narration Script", "Sprechertext"],
+  },
+  {
+    canonical: "Visual Suggestions",
+    aliases: ["Visual Suggestions", "Visuelle Vorschläge"],
+  },
+  {
+    canonical: "Exercise",
+    aliases: ["Exercise", "Practical Exercise", "Übung"],
+  },
 ];
 
 function normalizeText(text: string): string {

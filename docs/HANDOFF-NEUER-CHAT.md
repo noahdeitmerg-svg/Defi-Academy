@@ -30,7 +30,7 @@ Lange Cursor-Chats verlieren mit der Zeit **Kontext** (Token-Budget, Zusammenfas
 | Neue Lernshell | `app/(app)/` — `/kurs`, `/kurs/[modulId]/[lektionId]`, Dashboard, Fortschritt, Profil |
 | Legacy-Kurs | `app/module/...`, `app/klassisch/` — Content unter `content/modules/module1` … `module16` (+ ggf. 17 nur in `Module/`) |
 | Kursstruktur (SSG) | **`data/courseStructure.ts`** — `ALL_MODULES`, Lektions-IDs; **`lib/content/loadModules.ts`**, **`loadLesson.ts`** |
-| UX-Content (Slug) | `content/modules/01-defi-grundlagen/`, `02-…`, `03-…` — je `module.json`, `*/lesson.md`, `slides.json` (Pipeline, nicht mehr Folien-UI auf der Seite), `quiz.json` · **Key Takeaways:** `content/takeaways.json` → `docs/KEY-TAKEAWAYS.md`, Befüllung: `docs/CONTENT-AGENT-TAKEAWAYS.md` |
+| UX-Content (Slug) | `content/modules/01-defi-grundlagen/`, `02-…`, `03-…` — je `module.json`, `*/lesson.md`, `slides.json` (Pipeline, nicht mehr Folien-UI auf der Seite), `quiz.json` · **Key Takeaways:** `content/takeaways.json` (Free-Module 1–3 mit erster Redaktion befüllt) → `docs/KEY-TAKEAWAYS.md`, Rest: `docs/CONTENT-AGENT-TAKEAWAYS.md` · **Export für Agent:** `npm run export:takeaways-input` |
 | Autoren-Quelle | **`Module/modul-NN-*-FINAL.md`** — Modul 17: **`Module/modul-17-portfolio-construction-rwa-FINAL.md`** |
 | Fortschritt / Tier | `lib/progress/*`, **`lib/tier/TierGate.tsx`** + **`lib/tier/tierPolicy.ts`** (`isUxModuleAccessible`) — Free-Modul **oder** `progress.tier === "pro"` öffnet Inhalt |
 | **Temporär (Entwicklung)** | In **`data/courseStructure.ts`** sind **alle Module `tier: "free"`** (Kommentar in Datei), damit ohne Supabase/Checkout alles in `/kurs/…` testbar ist. **Vor Launch:** Module 4–17 wieder auf `pro` setzen, wenn Zahlung live ist. |

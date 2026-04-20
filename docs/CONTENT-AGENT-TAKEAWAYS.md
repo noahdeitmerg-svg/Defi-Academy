@@ -29,9 +29,9 @@
 
 ## Abdeckung (Checkliste)
 
-- [ ] Modul `01-defi-grundlagen` — 6 Lektionen  
-- [ ] Modul `02-wallets-sicherheit` — 6 Lektionen  
-- [ ] Modul `03-blockchain-mechanik` — 6 Lektionen  
+- [x] Modul `01-defi-grundlagen` — 6 Lektionen *(Stand Repo: eingetragen)*  
+- [x] Modul `02-wallets-sicherheit` — 6 Lektionen *(Stand Repo: eingetragen)*  
+- [x] Modul `03-blockchain-mechanik` — 6 Lektionen *(Stand Repo: eingetragen)*  
 - [ ] Module `04-dex-mechanik` … `17-portfolio-future` — je 6 Lektionen (gesamt 84)
 
 **Hinweis:** Ordner unter `content/modules/` existieren für Modul 4–17 im UX-Pfad ggf. noch nicht — Keys in `takeaways.json` können **trotzdem** gesetzt werden; sobald `lesson.md` existiert, erscheinen die Takeaways automatisch.

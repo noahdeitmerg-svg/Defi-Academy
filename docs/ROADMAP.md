@@ -122,7 +122,7 @@ Reihenfolge wie historisch beschlossen — weiterhin maßgeblich für **MP4-Prod
 | # | Meilenstein | Status | Anmerkung |
 |---|-------------|--------|------------|
 | F1 | UX-Shell + Landing + Kurs/Lektion SSG | **Erledigt** | SVG-Referenz `docs/ux-visuals/` |
-| F2 | Free-Module 1–3 im UX-Pfad inhaltlich | **Erledigt** | `lesson.md` / slides / quiz je Lektion · **Key Takeaways:** Struktur + UI **erledigt** (`content/takeaways.json`, Loader, `KeyTakeaways`); **Inhalt** für alle 102 Lektionen offen — `docs/CONTENT-AGENT-TAKEAWAYS.md` |
+| F2 | Free-Module 1–3 im UX-Pfad inhaltlich | **Erledigt** | `lesson.md` / slides / quiz je Lektion · **Key Takeaways:** Struktur + UI **erledigt**; **Redaktion** für Free-UX **18/102** Lektionen in `takeaways.json` — Rest `docs/CONTENT-AGENT-TAKEAWAYS.md` · Export: `npm run export:takeaways-input` |
 | F3 | Free-Lektionen **sichtbar** in UX-Player | **A erledigt** (MP4s in `public/videos/`) | **B:** CDN Slug-Pfade + Env — gemeinsam nachziehen, Repo dann schlanker. |
 | F4 | Video-Batch Modul 4–17 | **Offen** | Pipeline + Budget |
 | F5 | Modul 16 Quiz (Legacy) | **Erledigt** | `open-quiz.md` Platzhalter → Validator grün |

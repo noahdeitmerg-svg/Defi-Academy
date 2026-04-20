@@ -156,7 +156,7 @@ Warnung für diese Lektion. Als Referenz für künftige `lessons/*.md` beibehalt
 
 ### 🟡 Key Takeaways (`content/takeaways.json`)
 
-Loader + UI sind umgesetzt; **Redaktion** für alle Lektionen (ca. 102 Keys `modulId/lektionId`) offen — Auftrag und Checkliste: [`docs/CONTENT-AGENT-TAKEAWAYS.md`](./CONTENT-AGENT-TAKEAWAYS.md), Format: [`docs/KEY-TAKEAWAYS.md`](./KEY-TAKEAWAYS.md).
+Loader + UI sind umgesetzt. **Redaktion:** Free-UX-Module **1–3** (18 Lektionen) in `content/takeaways.json` eingetragen; **verbleibend** ca. **84** Keys für Slug-Module 4–17 (sobald `lesson.md` existieren, erscheinen Takeaways automatisch). Auftrag/Checkliste: [`docs/CONTENT-AGENT-TAKEAWAYS.md`](./CONTENT-AGENT-TAKEAWAYS.md), Format: [`docs/KEY-TAKEAWAYS.md`](./KEY-TAKEAWAYS.md). Export-Hilfe für den Agenten: `npm run export:takeaways-input` → `exports/takeaways-input/modul-NN.md`.
 
 ### 🟢 Auto-Import-Workflow gegen WIP-Module abgesichert
 
@@ -178,6 +178,8 @@ Zusätzlich: **`components/lesson/VideoPlayer.tsx`** in der **UX-Lektion** gegen
 
 ## Erledigt
 
+- ✅ **`validate:content` / Auto-Import:** Pflicht-Abschnitte akzeptieren jetzt **deutsche** Markdown-Überschriften (`Erklärung`, `Folien-Zusammenfassung`, `Sprechertext`, `Visuelle Vorschläge`, `Übung`) parallel zu den englischen Namen — `auto-import.yml` schlägt nach `import:modules` nicht mehr an dieser Stelle fehl. **Modul 17 (Legacy):** `content/modules/module17/open-quiz.md`-Stub ergänzt → `validate:content` ohne Quiz-Warnung.
+- ✅ **Key Takeaways (Redaktion, Teilmenge):** `content/takeaways.json` mit je 3 Bullets pro Lektion für **`01-defi-grundlagen`**, **`02-wallets-sicherheit`**, **`03-blockchain-mechanik`** (18 Keys), inhaltlich an den jeweiligen `lesson.md`-Frontmatter-/Kurzteilen ausgerichtet.
 - ✅ **Doku-Sync 2026-04-20:** `docs/ROADMAP.md` als Gesamt-Roadmap neu gefasst; `docs/SYSTEMKONTEXT.md` und `docs/AGENTEN-HANDBUCH.md` auf Zwei-Pfad-Architektur (Legacy `/module` + UX `/kurs`) und CDN-Videos aktualisiert; Modul **16** `open-quiz.md`-Stub ergänzt (Validator ohne Quiz-Warnung).
 - ✅ **lesson-asset-generator: Multi-Format-Parser integriert.**
   Video-Agent-Lieferung (`lesson-asset-generator-migrated.zip`) ins Repo

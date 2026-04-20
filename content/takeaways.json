@@ -1,5 +1,96 @@
 {
-  "__description": "Zentrale Mapping-Datei aller Key Takeaways pro Lektion. Wird vom Content Agent befüllt. Schlüssel-Format: 'modulId/lektionId'.",
+  "__description": "Zentrale Mapping-Datei aller Key Takeaways pro Lektion. Schlüssel-Format: 'modulId/lektionId'.",
   "__schema_version": 1,
-  "takeaways": {}
+  "takeaways": {
+    "01-defi-grundlagen/01-was-ist-defi": [
+      "DeFi sind finanzielle Anwendungen auf öffentlichen Blockchains, die über Smart Contracts laufen und ohne klassischen zentralen Intermediär auskommen.",
+      "Permissionless bedeutet: Protokollzugang wird nicht von einem Gatekeeper lizenziert — Frontends können trotzdem eingeschränkt sein.",
+      "Transparente, prüfbare Ledger und komponierbare Bausteine sind typische Merkmale — sie ersetzen kein eigenes Risikourteil."
+    ],
+    "01-defi-grundlagen/02-lektion": [
+      "TradFi und CeFi verlassen sich auf Institutionen, Gatekeeping und oft Verwahrung; DeFi setzt auf öffentliche Regeln im Smart-Contract-Code.",
+      "CeFi kann Krypto bedienen, bleibt aber zentral — DeFi-Qualität misst man an Custody, Permissioning und Nachvollziehbarkeit on-chain.",
+      "Vertrauen verlagert sich von einer Marke zur überprüfbaren Mechanik — das ändert nichts daran, dass Nutzerfehler und Angriffe real bleiben."
+    ],
+    "01-defi-grundlagen/03-lektion": [
+      "Smart Contracts führen Regeln deterministisch aus, sobald sie durch Transaktionen angesprochen werden — Bugs sind oft genauso bindend wie korrekte Logik.",
+      "Upgrade-Pfade können Wartbarkeit bringen, verschieben aber Vertrauen auf Governance und Admin-Rollen — bewusst einordnen.",
+      "Minimalistische Oberflächen und Audits mindern Angriffsfläche, ersetzen aber keine eigene Verifikation vor größeren Beträgen."
+    ],
+    "01-defi-grundlagen/04-lektion": [
+      "Liquidität ist die Voraussetzung dafür, dass dezentrale Märkte fair handelbar bleiben — sonst dominieren Slippage und Manipulation.",
+      "Orderbuch und AMM sind unterschiedliche Preisbildungslogiken; für tiefe Mechanik sind spätere Module die richtige Stufe.",
+      "Ohne strukturelles Bild von Märkten sind Risiko- und Strategie-Diskussionen leicht zu optimistisch."
+    ],
+    "01-defi-grundlagen/05-lektion": [
+      "Technische Risiken (Code, Upgrades), ökonomische Risiken (Incentives, Kaskaden, Oracles) und Bedienfehler überlagern sich — getrennt denken, gemeinsam bewerten.",
+      "Systemrisiken entstehen auch durch Kopplungen zwischen Protokollen, nicht nur durch Einzelfehler einer App.",
+      "Ehrliche Risikokommunikation ist didaktischer Kern — Rendit-Versprechen sind kein Ersatz für Mechanik-Verständnis."
+    ],
+    "01-defi-grundlagen/06-lektion": [
+      "Erste On-Chain-Schritte: kleine Beträge, klare Ziele, dokumentierte Abläufe — Totalverlust muss als Szenario denkbar sein.",
+      "Testnet üben ist sinnvoll, ersetzt aber nicht die psychologische und finanzielle Ernsthaftigkeit von Mainnet.",
+      "Persönliche No-Gos (z. B. Seed im Klartext) vorab schriftlich festhalten reduziert impulsive Fehler."
+    ],
+    "02-wallets-sicherheit/01-lektion": [
+      "Wallets verwalten Schlüssel; die Adresse empfängt — wer den Private Key kontrolliert, kontrolliert die Mittel.",
+      "Die Seed Phrase ist der Master-Backup: ihr Verlust oder Leak bedeutet faktisch Verlust der Souveränität über die Assets.",
+      "Self-Custody hat kein „Passwort zurücksetzen“ wie eine Web-App — Verantwortung liegt beim Nutzer."
+    ],
+    "02-wallets-sicherheit/02-lektion": [
+      "Hot Wallets optimieren Alltag und Geschwindigkeit; Cold Storage reduziert Angriffsfläche für größere, seltener genutzte Bestände.",
+      "Ein sinnvolles Muster ist Tagesbudget im Hot Wallet und getrennte Lagerung für Kernbestände — ohne starre Dogmatik, aber mit klaren Grenzen.",
+      "Convenience und Sicherheit sind Zielkonflikt; bewusste Trennung schlägt „alles auf einem Gerät“."
+    ],
+    "02-wallets-sicherheit/03-lektion": [
+      "Seed niemals unverschlüsselt in Clouds oder als Foto speichern — physische Redundanz und Zugangskontrolle sind Standard.",
+      "Social Recovery kann Komfort bieten, verschiebt aber Vertrauen auf Guardians und Abläufe — kritisch prüfen.",
+      "Backup-Strategie ist Teil der Sicherheitsarchitektur, nicht Nebenprodukt."
+    ],
+    "02-wallets-sicherheit/04-lektion": [
+      "Phishing nutzt Dringlichkeit, gefälschte Domains und gefakte Support-Kanäle — menschliche Aufmerksamkeit ist die Hauptlinie.",
+      "Verifikationsgewohnheiten (Lesezeichen, Hardware-Bestätigung, Misstrauen gegenüber DMs) senken Trefferquote der Angreifer.",
+      "Clipboard-Hijacking und Fake-Extensions sind reale Angriffsvektoren neben klassischer E-Mail."
+    ],
+    "02-wallets-sicherheit/05-lektion": [
+      "Hardware-Wallets isolieren die Signatur — reines Screen-Phishing reicht oft nicht ohne zusätzliche Hürden.",
+      "Firmware- und Supply-Chain-Risiken bleiben: nur offizielle Kanäle, Checksummen und Gerätewechsel planvoll angehen.",
+      "Die Signatur auf dem Gerät ist das Kontrollmoment — blind bestätigen bleibt gefährlich."
+    ],
+    "02-wallets-sicherheit/06-lektion": [
+      "Operations-Hygiene trennt sensible Nutzung von Leisure-Profilen und hält die Softwarefläche klein.",
+      "Multisig verteilt Kontrolle und kann Schwellen für größere Aktionen setzen — Konzept für Teams und hohe Beträge kennen.",
+      "Ein schriftlicher Notfallplan (Geräteverlust, Seed-Kompromittierung) verkürzt Reaktionszeit im Stress."
+    ],
+    "03-blockchain-mechanik/01-lektion": [
+      "Transaktionen ändern den globalen State; Nonces und Sequenzierung verhindern Doppel-Ausführung und definieren Reihenfolge.",
+      "„Pending“ ist kein finaler Erfolg — Sicherheitslogik sollte auf Finalität warten, nicht auf Mempool-Sichtbarkeit.",
+      "State-Übergänge sind die Grundlage dafür, warum DeFi-Protokolle deterministisch reagieren können."
+    ],
+    "03-blockchain-mechanik/02-lektion": [
+      "Finalität ist je nach Konsens unterschiedlich schnell „hart“ — probabilistische Modelle tragen Reorg-Risiko länger.",
+      "Reorgs können Abhängigkeiten in Brücken und Oracles treffen — DeFi-Architektur muss Zeitfenster mitdenken.",
+      "Konsens verstehen heißt: wissen, wann man welche Sicherheitsannahmen für welche Aktion braucht."
+    ],
+    "03-blockchain-mechanik/03-lektion": [
+      "Gas bepreist Rechenarbeit und Speicher; Blockspace ist knapp — Märkte priorisieren über Gebote.",
+      "Base Fee und Priority Fee (EIP-1559-Stil) erklären, warum Nutzer oft „volles Netz“ als hohe Kosten wahrnehmen.",
+      "Ohne Gas-Verständnis werden Transaktionen schwer debugbar und teuer."
+    ],
+    "03-blockchain-mechanik/04-lektion": [
+      "EOAs signieren klassische Transaktionen; Contract Accounts führen Code aus — unterschiedliche Angriffs- und UX-Profile.",
+      "Eine Signatur ist nicht automatisch eine Zahlung — Permit, Approvals und typed data (z. B. EIP-712) können weitreichende Rechte geben.",
+      "Phishing zielt auf Signatur-Dialoge: Inhalt, Domain und Scope vor Bestätigung prüfen."
+    ],
+    "03-blockchain-mechanik/05-lektion": [
+      "Das Oracle-Problem: On-Chain-Code braucht Off-Chain-Wahrheit — die Schnittstelle ist klassische Fehler- und Manipulationsfläche.",
+      "Preis-Feeds steuern Liquidationen und AMM-Logik — Oracle-Design ist Kernrisiko vieler Protokolle.",
+      "Manipulations- und Ausfallrisiken gehören zur Protokollbewertung, nicht zum Fine-Tuning."
+    ],
+    "03-blockchain-mechanik/06-lektion": [
+      "L2/Rollups zielen auf Durchsatz und Kosten — mit eigener Vertrauenskette und typischen Bridge-Risiken.",
+      "Nutzer-Komplexität steigt durch mehrere Umgebungen; Adress- und Netzwerkverwechslung sind häufige Verlustursachen.",
+      "Skalierung ist Trade-off: UX, Sicherheit und Vertrauensannahmen verschieben sich, statt „gratis schneller“ zu werden."
+    ]
+  }
 }
