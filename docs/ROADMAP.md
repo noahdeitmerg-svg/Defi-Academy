@@ -28,8 +28,8 @@ Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipelin
 
 ### B.2 Videos in der neuen Shell
 
-- URL-Konvention in Code: **`${NEXT_PUBLIC_VIDEO_CDN_URL}/modules/${modulId}/${lektionId}.mp4`** (Default-CDN siehe `.env.local.example` / Build-Dokument).
-- **Ohne** korrekte MP4s auf dem CDN zeigt der Player leere Streams — das Repo versioniert **keine** großen MP4s (`/videos/` ist gitignored).
+- **Reihenfolge (Implementierung):** Zuerst **`public/videos/moduleN-N-M.mp4`** (Legacy-Namen wie `publish-videos` / `lessonAssets`), sonst **CDN** `…/modules/<modulId>/<lektionId>.mp4` (`NEXT_PUBLIC_VIDEO_CDN_URL`, siehe `.env.local.example`). Code: `lib/content/resolveUxLessonVideoUrl.ts`.
+- **Geplant (Betrieb):** **A** — MP4s unter `public/videos/` erzeugen (`npm run publish-videos` o. ä.) und **committen** (nur `public/videos/`, nicht das gitignorte Root-`/videos/`). **B** — danach CDN mit Slug-Pfaden befüllen und Repo schlank halten.
 
 ### B.3 Offen (ohne externe Keys nur teilweise automatisierbar)
 
@@ -49,7 +49,7 @@ Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipelin
 | **Legacy (Pages-Kurs)** | `content/modules/module1` … `module17` | `/module/…`, `validate:content`, alter Parser |
 | **UX-Build (Slug-Module)** | `content/modules/01-defi-grundlagen`, `02-wallets-sicherheit`, `03-blockchain-mechanik` | `/kurs/…`, `lib/content/loadLesson.ts` (`lesson.md`, `slides.json`, `quiz.json`) |
 
-**Stand Free-Module UX-Pfad:** Modul **1–3** mit je **6** Lektionsordnern und Texten/Folien/Quiz (Videos extern CDN).
+**Stand Free-Module UX-Pfad:** Modul **1–3** mit je **6** Lektionsordnern und Texten/Folien/Quiz; **Videos:** zuerst **A** `public/videos/`, später **B** CDN.
 
 **Offen:** Modul **4–17** im UX-Pfad anlegen **oder** Import-Tool so erweitern, dass aus `Module/` konsistent Slug-Strukturen werden.
 
@@ -91,7 +91,7 @@ Reihenfolge wie historisch beschlossen — weiterhin maßgeblich für **MP4-Prod
 |---|-------------|--------|------------|
 | F1 | UX-Shell + Landing + Kurs/Lektion SSG | **Erledigt** | SVG-Referenz `docs/ux-visuals/` |
 | F2 | Free-Module 1–3 im UX-Pfad inhaltlich | **Erledigt** | `lesson.md` / slides / quiz je Lektion |
-| F3 | CDN-MP4s für alle **18** Free-Lektionen (Slug-Pfade) | **Offen** | Upload/Hosting; Env setzen |
+| F3 | Free-Lektionen **sichtbar** in UX-Player | **Offen** | **A:** `public/videos/module1-1-1` … `module3-3-6` committen. **B:** CDN Slug-Pfade + Env (nach A). |
 | F4 | Video-Batch Modul 4–17 | **Offen** | Pipeline + Budget |
 | F5 | Modul 16 Quiz (Legacy) | **Erledigt** | `open-quiz.md` Platzhalter → Validator grün |
 | F6 | Zahlung + Pro-Zugang produktiv | **Offen** | Produkt/Compliance |
