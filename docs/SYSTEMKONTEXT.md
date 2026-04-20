@@ -61,7 +61,7 @@
 
 - **Modul 1–3 (Legacy `public/videos/`):** je 6 Lektionen auf `main` (Naming `module1-1-1` … / `module3-3-6` je nach Publish-Lauf).
 - **Modul 4–17:** noch **nicht** per Batch in Produktion — Roadmap: **`docs/VIDEO_BATCH_ROADMAP.md`**.
-- **Neue UX-Shell:** gleiche Inhalte brauchen **CDN-MP4s** unter Slug-Pfaden (`01-defi-grundlagen/01-was-ist-defi.mp4` etc.), sofern nicht nur Legacy-Player genutzt wird.
+- **Neue UX-Shell:** Video-URL wird beim Build aufgelöst: zuerst **`public/videos/moduleN-N-M.mp4`** (gleiche Namen wie Legacy/`publish-videos`), sonst **`NEXT_PUBLIC_VIDEO_CDN_URL/modules/<modulId>/<lektionId>.mp4`**. Ohne lokale Datei und ohne CDN-Datei bleibt der Stream leer.
 
 ---
 

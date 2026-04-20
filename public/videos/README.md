@@ -20,6 +20,12 @@ public/videos/module13-13-4.mp4
 `<moduleSlug>` und `<lessonSlug>` stammen direkt aus der URL der Lektion,
 z. B. `/module/module6/lesson/6-3` → Datei `module6-6-3.mp4`.
 
+**Neue UX-Lektion** (`/kurs/01-defi-grundlagen/01-was-ist-defi` usw.): dieselbe
+Datei `module1-1-1.mp4` wird beim Build erkannt, sofern sie unter
+`public/videos/` liegt (Zuordnung über `data/courseStructure` und
+`lib/content/resolveUxLessonVideoUrl.ts`). Fehlt die Datei, wird
+`NEXT_PUBLIC_VIDEO_CDN_URL/modules/<modulId>/<lektionId>.mp4` verwendet.
+
 Passendes Posterbild (optional):
 
 ```

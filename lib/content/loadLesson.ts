@@ -4,15 +4,9 @@ import matter from "gray-matter";
 import type { Lesson, LessonAssets, QuizQuestion, Slide } from "@/data/types";
 import { ALL_MODULES } from "@/data/courseStructure";
 import { markdownToHtml } from "./parseMarkdown";
+import { resolveUxLessonVideoUrl } from "./resolveUxLessonVideoUrl";
 
 const MODULES_ROOT = path.join(process.cwd(), "content", "modules");
-
-function videoCdnUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_VIDEO_CDN_URL?.replace(/\/$/, "") ??
-    "https://cdn.defi-akademie.de"
-  );
-}
 
 function placeholderLesson(
   modulId: string,
@@ -119,7 +113,7 @@ export async function loadLesson(
     /* quiz.json fehlt */
   }
 
-  const videoUrl = `${videoCdnUrl()}/modules/${modulId}/${lektionId}.mp4`;
+  const videoUrl = await resolveUxLessonVideoUrl(modulId, lektionId);
 
   return { lesson, videoUrl, slides, quiz };
 }
