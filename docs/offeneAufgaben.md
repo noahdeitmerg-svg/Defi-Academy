@@ -6,7 +6,7 @@
 > aktualisiert: neue offene Punkte werden hinzugefügt, erledigte werden
 > mit Commit-Hash abgehakt. Priorität grob absteigend.
 
-**Roadmap (Phasen):** siehe [`docs/ROADMAP.md`](ROADMAP.md) — Reihenfolge: (1) Video + Gamma High Quality, (2) alle Videos automatisch generieren, (3) vor GitHub-Push Vimeo/Hosting statt großer MP4s im Repo.
+**Roadmap (Gesamt):** [`docs/ROADMAP.md`](ROADMAP.md) — enthält jetzt **Produkt, UX-Shell, Content-Zweispurigkeit, Video-Pipeline und CI**. Video-Kernreihenfolge unverändert: (1) Qualität, (2) Batch, (3) CDN statt großer MP4s im Repo.
 
 ## Legende
 
@@ -151,6 +151,12 @@ Das ist die gelieferte Vorlage des Content-Generators. Entweder:
 
 ## Plattform
 
+### ✅ UX-Lernshell & Free-Content (Slug-Pfad)
+
+- Routen unter `app/(app)/` inkl. `/kurs` und 102 SSG-Lektionen; Landing `/` an SVG-Referenz (`docs/ux-visuals/`).
+- `content/modules/01-defi-grundlagen`, `02-wallets-sicherheit`, `03-blockchain-mechanik`: je 6 Lektionen mit `lesson.md` / `slides.json` / `quiz.json`.
+- Videos in dieser Shell: CDN-URL in `loadLesson.ts` — Upload/Env siehe `docs/ROADMAP.md` Abschnitt B.2.
+
 ### 🟢 Auto-Import-Workflow gegen WIP-Module abgesichert
 
 Der `validate:content`-Step ist auf `warn` für fehlendes `quiz.json` /
@@ -165,10 +171,13 @@ muss nur noch ein echtes gerendertes Video gegenkontrolliert werden —
 `npm run render-videos && npm run publish-videos` und dann die
 Lesson-Page im Browser prüfen.
 
+Zusätzlich: **`components/lesson/VideoPlayer.tsx`** in der **UX-Lektion** gegen CDN-URL testen (nicht nur `public/videos/`).
+
 ---
 
 ## Erledigt
 
+- ✅ **Doku-Sync 2026-04-20:** `docs/ROADMAP.md` als Gesamt-Roadmap neu gefasst; `docs/SYSTEMKONTEXT.md` und `docs/AGENTEN-HANDBUCH.md` auf Zwei-Pfad-Architektur (Legacy `/module` + UX `/kurs`) und CDN-Videos aktualisiert; Modul **16** `open-quiz.md`-Stub ergänzt (Validator ohne Quiz-Warnung).
 - ✅ **lesson-asset-generator: Multi-Format-Parser integriert.**
   Video-Agent-Lieferung (`lesson-asset-generator-migrated.zip`) ins Repo
   gezogen: neue Files `src/format-detector.js`, `src/module-parser.js`,

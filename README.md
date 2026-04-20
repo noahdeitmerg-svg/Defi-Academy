@@ -2,6 +2,8 @@
 
 Next.js-Lernplattform (App Router, Tailwind, Markdown/MDX): Module, Lektionen, Quiz, Fortschritt im Browser.
 
+**Zwei Lernpfade:** **Legacy** `/module/…` (`content/modules/moduleN`) und **neue UX-Shell** `/kurs/…` mit Slug-Ordnern (`01-defi-grundlagen` …) — siehe [`docs/ROADMAP.md`](docs/ROADMAP.md) und [`docs/AGENTEN-HANDBUCH.md`](docs/AGENTEN-HANDBUCH.md).
+
 **Repo:** [github.com/noahdeitmerg-svg/Defi-Academy](https://github.com/noahdeitmerg-svg/Defi-Academy)
 
 ---

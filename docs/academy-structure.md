@@ -46,10 +46,11 @@ vollwertigen Lektion.
 
 - **Rolle:** Thematische Grossbloecke (z. B. "Fundament",
   "Lending & Stablecoins", "MEV & Flash Loans").
-- **Ablage:** `content/modules/<moduleSlug>/` (Build-Layer), mit
-  Quelle in `lessons/` bzw. `Module/<Tier>/files/`.
-- **Sichtbar in der UI als:** Karten-Grid auf der Startseite und als
-  Einstiegsseite unter `/module/<moduleSlug>`.
+- **Ablage (zwei parallele Konventionen):**
+  - **Legacy:** `content/modules/module1` … `module17` — flache Lektions-`*.md`, `meta.json`, Quiz auf Modul-Ebene.
+  - **UX-Shell:** `content/modules/01-defi-grundlagen` usw. — `module.json`, Unterordner pro Lektion mit `lesson.md`, `slides.json`, `quiz.json` (siehe `lib/content/loadModules.ts`).
+- **Quelle:** Autoren-Markdown unter `Module/modul-NN-*-FINAL.md` sowie Pipeline-Outputs in `lessons/`.
+- **Sichtbar in der UI als:** Legacy unter `/module/<moduleSlug>`; UX unter `/kurs` und `/kurs/<modulId>`.
 - **Ersetzt:** *Curriculum Modules* — wir sagen einfach **Module**.
 
 ### 2.3 Lektionen
@@ -62,8 +63,8 @@ vollwertigen Lektion.
 - **Pflicht-Sektionen** (siehe `scripts/validate-lessons.js`):
   Lesson Title, Learning Objectives, Explanation, Slide Summary,
   Voice Narration Script, Visual Suggestions, Exercise, Quiz.
-- **Sichtbar in der UI als:** `/module/<moduleSlug>/lesson/<lessonSlug>`
-  inkl. linker Sidebar-Navigation.
+- **Sichtbar in der UI als:** Legacy `/module/<moduleSlug>/lesson/<lessonSlug>`
+  inkl. linker Sidebar-Navigation; UX `/kurs/<modulId>/<lektionId>`.
 - **Ersetzt:** *Curriculum Lessons* — wir sagen einfach **Lektionen**.
 
 ### 2.4 Videos

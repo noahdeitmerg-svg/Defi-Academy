@@ -46,7 +46,8 @@ Browser: **http://localhost:3000**
 
 ## 5. Akademie-Inhalte
 
-- **Standard:** `content/modules/<moduleSlug>/*.md` + optional `quiz.json`, `meta.json`
+- **Legacy-Kurs (`/module/…`):** `content/modules/module1` … `module17` — `*.md` + optional `quiz.json`, `meta.json`
+- **UX-Kurs (`/kurs/…`):** Slug-Ordner z. B. `content/modules/01-defi-grundlagen/` mit `module.json` und Unterordnern pro Lektion (`lesson.md`, `slides.json`, `quiz.json`)
 - **Import** grosser `moduleN.md`: `npm run import:modules` (optional `--from "Pfad"`)
 - **Begriffshierarchie** (Module / Lektionen / Videos / Quiz / Praxisuebungen): [academy-structure.md](academy-structure.md)
 

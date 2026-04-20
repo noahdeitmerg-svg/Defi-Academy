@@ -3,7 +3,7 @@
 **Zweck:** Ein Einstiegsdokument für alle Cursor-/KI-Agenten und Menschen im Repo.  
 **Stand:** April 2026 · Branch-Default: `main` · Repo: `Defi-Academy`
 
-> **Regel für Agenten:** Zuerst dieses Handbuch lesen, dann bei Bedarf die verlinkten Fachdokumente. Änderungen am **Ist-Zustand** (Deploy, Module, Pipeline) hier oder im Changelog von `docs/SYSTEMKONTEXT.md` spiegeln.
+> **Regel für Agenten:** Zuerst dieses Handbuch lesen, dann bei Bedarf die verlinkten Fachdokumente. Änderungen am **Ist-Zustand** (Deploy, Module, Pipeline) hier oder im Changelog von `docs/SYSTEMKONTEXT.md` (Abschnitt 9) spiegeln.
 
 ---
 
@@ -12,7 +12,7 @@
 - **DeFi Akademie** (UI-Deutsch; technischer Repo-/Meta-Name teils „Academy“): deutschsprachiges **Lernprogramm** mit Modulen, Lektionen, Videos, Quiz und Praxisübungen.
 - **Prinzip:** Tiefe statt Hype — technisch korrekt, risikobewusst, ohne Marketing-Sprache.
 - **Öffentliche Plattform (heute):** Next.js-App als **statischer Export** auf **GitHub Pages** (kein Vercel im aktuellen Produktiv-Deploy).
-- **Parallel geplant (UX-Build):** erweiterte Lernplattform laut `docs/defi-akademie-build-dokument.md` (u. a. Dashboard, Supabase optional, Cloudflare R2 für Video-CDN) — schrittweise; bestehende Pages-App bleibt bis zur Migration die Quelle der Wahrheit für Live-Kurse.
+- **UX-Lernshell (umgesetzt, parallel):** Dashboard, Kurs, Lektion, Fortschritt, Profil laut `docs/defi-akademie-build-dokument.md` — **Legacy** `/module/…` und **neu** `/kurs/…` coexistieren. Videos: Legacy `public/videos/` vs. neue Shell **CDN-URL** (`NEXT_PUBLIC_VIDEO_CDN_URL`, siehe `loadLesson.ts`). Supabase/R2 produktiv = optional später.
 
 ---
 
@@ -22,8 +22,8 @@
 |--------|------|---------------------|
 | **Ziel-Lernprogramm** | **17 Module**, **102 Lektionen** | `docs/defi-akademie-build-dokument.md` (UX-/Plattform-Spezifikation) |
 | **Kursautoren-Quelle (`Module/`)** | **Alle 17 Module** als `modul-NN-*-FINAL.md` — Modul 17: **`modul-17-portfolio-construction-rwa-FINAL.md`** | Hier liegt das vollständige Rohmaterial; bei inhaltlicher Arbeit **immer** diesen Ordner prüfen. |
-| **Plattform-Build (`content/modules/`)** | Slugs **`module1`** … **`module17`** (Lektions-`.md`, `meta.json`, ggf. Quiz) | Entsteht durch **Auto-Import** aus `Module/`; wenn lokal ein Ordner fehlt, Import-Workflow / Branch-Stand prüfen — **nicht** schließen, Modul 17 fehle inhaltlich. |
-| **Videos auf `main` (`public/videos/`)** | **Modul 1–3** je 6 Lektionen fertig | Modul **4–17**: Batch noch ausstehend — siehe §7 |
+| **Plattform-Build (`content/modules/`)** | (a) Legacy **`module1`…`module17`** — (b) UX-Slugs **`01-defi-grundlagen`**, **`02-wallets-sicherheit`**, **`03-blockchain-mechanik`** (je `module.json`, Lektionsordner mit `lesson.md`) | (a) Auto-Import aus `Module/`. (b) Free-Module 1–3 für `/kurs/…` befüllt; Modul 4–17 UX-Ordner folgen nach Entscheid / Import-Tool. |
+| **Videos auf `main` (`public/videos/`)** | **Modul 1–3** je 6 Lektionen fertig | Modul **4–17**: Batch noch ausstehend — siehe Abschnitt 7 |
 
 **Wichtig für Doku-Konsistenz:** Ältere Texte wiesen fälschlich „Modul 4–16“ aus. Korrekt ist **„Modul 4–17“** (= alles nach den drei Free-Grundlagenmodulen), solange die Vision 17 Module umfasst.
 
@@ -41,7 +41,7 @@
 | CI | Push auf `main` → `nextjs.yml` (Validierung, Build, Pages). Auto-Import: `auto-import.yml` bei Änderungen unter `Module/**/*.md` |
 | Auth / Backend | **Nicht** produktiv angebunden; Supabase nur in UX-Spezifikation / später |
 
-**UX-Build-Ergänzung (Phase 1 erledigt):** Design-Tokens für die neue UI-Schicht im Namespace `ux-*` in `styles/globals.css`, Komponenten unter `components/ui/`, `lucide-react`, JetBrains Mono-Variable für UX-Mono — ohne die bestehenden Brand-Tokens für Video/Slide zu ersetzen.
+**UX-Build:** `ux-*`-Tokens, Landing, Kurs-, Lektions- und Navigations-Komponenten (siehe `docs/ux-visuals/`); `components/ui/` für Basis-Widgets; JetBrains Mono für UX-Mono — Brand-Tokens für Video/Slide (`brand/`) bleiben separat.
 
 ---
 
@@ -49,13 +49,15 @@
 
 | Bereich | Pfad / Datei |
 |--------|----------------|
-| Start | `app/page.tsx` |
-| Modul | `app/module/[moduleSlug]/` |
-| Lektion | `app/module/[moduleSlug]/lesson/[lessonSlug]/` |
-| Quiz | `app/module/[moduleSlug]/quiz/` |
-| Content (Build) | `content/modules/moduleN/` (`meta.json`, `N-x.md`, ggf. `quiz.json` / `open-quiz.md`) |
+| Landing (Marketing) | `app/page.tsx` → `/` |
+| **Neue Lernshell** | `app/(app)/` — u. a. `/dashboard`, `/kurs`, `/kurs/[modulId]`, `/kurs/[modulId]/[lektionId]`, `/fortschritt`, `/profil` |
+| **Legacy-Kurs** | `app/module/[moduleSlug]/`, `lesson/[lessonSlug]/`, `quiz/` |
+| Klassische Liste | `app/klassisch/page.tsx` |
+| Content **UX-Pfad** | `content/modules/01-defi-grundlagen/…`, `02-wallets-sicherheit/…`, `03-blockchain-mechanik/…` (`module.json`, `*/lesson.md`, `slides.json`, `quiz.json`) |
+| Content **Legacy** | `content/modules/moduleN/` (`meta.json`, `N-x.md`, ggf. `quiz.json` / `open-quiz.md`) |
 | Autoren-Quelle | `Module/modul-NN-*-FINAL.md` → optional Auto-Import nach `content/modules/` |
-| Video-Erkennung | `lib/lessonAssets.ts` → `public/videos/<moduleSlug>-<lessonSlug>.mp4` |
+| Video **Legacy-UI** | `lib/lessonAssets.ts` → `public/videos/<moduleSlug>-<lessonSlug>.mp4` |
+| Video **UX-Lektion** | `lib/content/loadLesson.ts` → CDN `…/modules/{modulId}/{lektionId}.mp4` |
 | Brand / Video-Look | `brand/` → `npm run sync:brand` |
 | Pipeline | `pipeline-test/`, `video-renderer/`, `lesson-asset-generator/`, Skripte in `scripts/` |
 
@@ -65,13 +67,13 @@ Terminologie (Module, Lektionen, kein Wort „Curriculum“ in deutscher UI): **
 
 ## 5. Zwei Content-Stränge (nicht verwechseln)
 
-1. **Bestehende GitHub-Pages-Kurs-App**  
-   MDX/Markdown aus `content/modules/`, Parser in `lib/parseLesson.ts`, `lib/lessonSectionParser.ts`, Slides/Quiz in der aktuellen Lesson-UX.
+1. **Legacy GitHub-Pages-Kurs** (`/module/…`)  
+   Markdown aus `content/modules/moduleN/`, Parser `lib/parseLesson.ts`, `lib/lessonSectionParser.ts`; Videos unter `public/videos/`.
 
-2. **UX-Neuaufbau (Build-Dokument)**  
-   Zielstruktur u. a. `content/modules/01-defi-grundlagen/` mit `module.json`, `lesson.md`, `slides.json`, `quiz.json` — **noch nicht** die alleinige Quelle der Live-Seite; Umsetzung in Phasen, siehe `docs/defi-akademie-build-dokument.md` und `docs/SYSTEMKONTEXT.md` §8.
+2. **UX-Lernshell** (`/kurs/…`)  
+   Struktur `content/modules/<slug>/` mit `module.json`, pro Lektion `lesson.md`, `slides.json`, `quiz.json`; Loader `lib/content/loadModules.ts` + `loadLesson.ts`; Videos per **CDN-URL** (Env). **Free-Module 1–3** sind in diesem Pfad befüllt.
 
-Agenten: Änderungen an Lerninhalten für **Live** weiter über den etablierten Import (`Module/` → `content/modules/` …), bis die neue Pipeline aktiv ist.
+Agenten: Inhaltsänderungen je nach Ziel-UI wählen — Legacy-Import (`Module/` → `moduleN`) **und/oder** Slug-Ordner für `/kurs/` pflegen, bis eine Pipeline beides vereinheitlicht.
 
 ---
 
@@ -96,11 +98,13 @@ Detail-Checkliste: **`docs/VIDEO_BATCH_ROADMAP.md`** (Titel dort: „4–17“, 
 
 ---
 
-## 8. Roadmap Produkt & Infrastruktur (aus `docs/ROADMAP.md`)
+## 8. Roadmap Produkt & Infrastruktur
+
+Vollständige Übersicht (Produkt, UX, Content, Video, CI): **`docs/ROADMAP.md`**. Kurzfassung:
 
 1. Video + Visuals-Qualität stabilisieren.  
-2. Automatisierung für alle Lektionen / Batch.  
-3. Langfristig: große MP4s nicht dauerhaft im Git — Hosting/CDN (Spezifikation: Cloudflare R2; ältere Doku erwähnte Vimeo — **Entscheidung offen**, Zielbild „schlankes Repo + Streaming“).
+2. Automatisierung / Batch Modul 4–17.  
+3. Repo schlank: CDN (R2 o. ä.; Vimeo historisch erwähnt) + konsistente Video-Quelle für **beide** UIs, wo nötig.
 
 ---
 
@@ -109,9 +113,9 @@ Detail-Checkliste: **`docs/VIDEO_BATCH_ROADMAP.md`** (Titel dort: „4–17“, 
 | Thema | Hinweis |
 |--------|---------|
 | **Modul 17** | Inhalt in `Module/modul-17-…-FINAL.md`; nach Import unter `content/modules/module17/`. |
-| **Modul 16 Quiz** | Validator-Warnung möglich — Quiz-Tab ausgeblendet bis Inhalt da. |
+| **Modul 16 Quiz** | `open-quiz.md`-Stub unter `content/modules/module16/` — später durch echtes `quiz.json` ersetzbar. |
 | **Auto-Import** | Ein Lauf (z. B. Modul 10) kann in Actions fehlgeschlagen sein — Logs prüfen. |
-| **UX-Build** | Phasen 2+ nach `defi-akademie-build-dokument.md`; Supabase nur mit Env. |
+| **UX-Build** | Phasen aus `defi-akademie-build-dokument.md` (Zahlung, Supabase produktiv, ggf. R2) — siehe `docs/ROADMAP.md` Abschnitt B.3. |
 
 Lebendes Backlog: **`docs/offeneAufgaben.md`**.
 
@@ -153,4 +157,4 @@ Lebendes Backlog: **`docs/offeneAufgaben.md`**.
 
 ## 12. Änderungen an diesem Handbuch
 
-- Bei Meilensteinen (neues Modul-Video, neuer Deploy-Kanal, fertiggestelltes UX-MVP): **dieses Datei aktualisieren** und eine Zeile in **`docs/SYSTEMKONTEXT.md` §9 Changelog** ergänzen.
+- Bei Meilensteinen (neues Modul-Video, neuer Deploy-Kanal, fertiggestelltes UX-MVP): **dieses Datei aktualisieren** und eine Zeile in **`docs/SYSTEMKONTEXT.md` Abschnitt 9 (Changelog)** ergänzen.

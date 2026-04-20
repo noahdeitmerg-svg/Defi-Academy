@@ -37,7 +37,7 @@ Dieses Dokument ist in zwei Teile gegliedert:
 
 | Komponente | Entscheidung |
 |---|---|
-| Frontend | Next.js 14 (App Router) + React 18 + TypeScript |
+| Frontend | Next.js 15 (App Router) + React 19 + TypeScript (Ist-Repo; Spez-Historie erwähnte teils Next 14) |
 | Styling | Tailwind CSS |
 | Hosting | Vercel |
 | Authentifizierung | Supabase Auth (Email + Passwort) |

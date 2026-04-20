@@ -1,36 +1,113 @@
-# Roadmap — Video-Pipeline & Distribution
+# Roadmap — DeFi Akademie (Gesamt)
 
-**Kontext:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) (Master) · Stand: wird bei Meilensteinen angepasst.
+**Stand:** 2026-04-20 · Master-Kontext: [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) · Kurz-Gedächtnis/Changelog: [`docs/SYSTEMKONTEXT.md`](./SYSTEMKONTEXT.md)
 
-## Phasen (Reihenfolge)
+Diese Datei bündelt **Produkt**, **Plattform/UX**, **Content**, **Video-Pipeline** und **Distribution**. Detail-Backlogs bleiben in [`docs/offeneAufgaben.md`](./offeneAufgaben.md).
 
-### Phase 1 — Video + Gamma „High Quality“ ans Laufen
+---
 
-**Ziel:** End-to-End-Qualität stabilisieren, bevor alles skaliert wird.
+## A. Produktvision (unverändertes Ziel)
 
-- **Remotion / Renderer:** Slide-Template, Timing, Stimme (ElevenLabs), Asset-Resolver — bei Bedarf Feinschliff (Parameter, Model `eleven_multilingual_v2`, etc.).
-- **Gamma:** Nur **Visual-Assets** (`visual01.png` …) laut `slides_prompt.txt` / `docs/SLIDE_GENERATION_RULES.md` — kein Slide-Layout in Gamma.
-- **Abnahme:** Mindestens ein Modul (z. B. Modul 1) visuell und inhaltlich „release-tauglich“ (nicht nur Platzhalter), inkl. Naming (`publish-videos` ↔ Plattform-Slugs `moduleM-M-N`).
+| Thema | Ziel |
+|--------|------|
+| Lernprogramm | **17 Module**, **102 Lektionen**, deutsch, technisch korrekt, **ohne Anlageberatung** |
+| Didaktik | Module 1–3 **Free**, 4–17 **Pro** (Zahlungslogik später) |
+| Autoren-Quelle | `Module/modul-NN-*-FINAL.md` (insb. Modul 17: Portfolio/RWA) |
 
-### Phase 2 — Alle Videos automatisch generieren
+---
 
-**Ziel:** Batch ohne manuelle Einzelschritte pro Lektion (soweit technisch möglich).
+## B. Plattform & UX (Next.js 15, statischer Export)
 
-- `academy-build` / `generate-assets` → Voice → Render-Batch mit sinnvoller Parallelität.
-- Optional: Restmodule content-final, dann ein Lauf über alle Lektionen.
-- **Qualitätssicherung:** `validate-lessons`, Spot-Checks, Logs (`logs/render-*.log`).
+### B.1 Ist-Stand (umgesetzt)
 
-### Phase 3 — Vor Push auf GitHub: Vimeo (o. ä.) statt großer MP4s im Repo
+- **Öffentliche Landing** `/` — Marketing, Stufen, Kursinhalt-Teaser, Free/Pro, FAQ (an SVG-Referenz angelehnt).
+- **Neue Lernshell** unter `app/(app)/` mit Auth-Gate (Demo ohne Supabase): **Dashboard**, **Kurs** `/kurs`, **Fortschritt**, **Profil**, dynamisch **`/kurs/[modulId]/[lektionId]`** (alle 102 Pfade SSG).
+- **Parallel:** Legacy-Kurs **`/module/[moduleSlug]/…`** und **`/klassisch`** bleiben erhalten, bis Inhalte vollständig migriert sind.
+- **Design:** `ux-*`-Tokens in `styles/globals.css`, Komponenten in `components/{layout,navigation,course,lesson,marketing,brand}`.
+- **Visuelle Referenz (versioniert):** `docs/ux-visuals/*.svg`.
 
-**Ziel:** Repository schlank halten; Streaming/Analytics über Host.
+### B.2 Videos in der neuen Shell
 
-- Videos auf **Vimeo** (oder vergleichbar) hochladen; **Embed-IDs/URLs** pro Lektion (Frontmatter oder `config/`), Plattform zeigt Embed statt `public/videos/*.mp4`.
-- **Erst danach** oder parallel: CI/Pages-Deploy ohne 100+ MB Binärdateien im Git — optional **LFS** nur falls lokal noch Roh-MP4s versioniert werden sollen.
+- URL-Konvention in Code: **`${NEXT_PUBLIC_VIDEO_CDN_URL}/modules/${modulId}/${lektionId}.mp4`** (Default-CDN siehe `.env.local.example` / Build-Dokument).
+- **Ohne** korrekte MP4s auf dem CDN zeigt der Player leere Streams — das Repo versioniert **keine** großen MP4s (`/videos/` ist gitignored).
 
-## Kurz merken
+### B.3 Offen (ohne externe Keys nur teilweise automatisierbar)
 
-1. **Erst** Qualität (Video + Gamma) sitzen.  
-2. **Dann** Automatisierung für alle Lektionen.  
-3. **Dann** vor dem „finalen“ GitHub-Push: **Vimeo/Hosting** statt großer Assets im Repo.
+| Thema | Beschreibung |
+|--------|----------------|
+| **Zahlung / Pro** | UI-Banner und Tier lokal; echte Kasse (Stripe o. ä.) fehlt. |
+| **Supabase produktiv** | Nur mit Env und Projekt-Setup. |
+| **Sidebar-Titel** | Slug-basierte Kurzlabels; optional echte Titel aus `lesson.md` pro Lektion laden. |
+| **Ein-Kurs-Pipeline** | Langfristig: eine Content-Quelle statt Legacy `moduleN` + UX-Slug-Ordnern parallel. |
 
-Siehe auch: `docs/offeneAufgaben.md`, `docs/VIDEO_PRODUCTION_WORKFLOW.md`, `docs/SLIDE_GENERATION_RULES.md`.
+---
+
+## C. Content-Pfade (zwei Stränge — nicht verwechseln)
+
+| Strang | Ordner | Nutzung |
+|--------|--------|---------|
+| **Legacy (Pages-Kurs)** | `content/modules/module1` … `module17` | `/module/…`, `validate:content`, alter Parser |
+| **UX-Build (Slug-Module)** | `content/modules/01-defi-grundlagen`, `02-wallets-sicherheit`, `03-blockchain-mechanik` | `/kurs/…`, `lib/content/loadLesson.ts` (`lesson.md`, `slides.json`, `quiz.json`) |
+
+**Stand Free-Module UX-Pfad:** Modul **1–3** mit je **6** Lektionsordnern und Texten/Folien/Quiz (Videos extern CDN).
+
+**Offen:** Modul **4–17** im UX-Pfad anlegen **oder** Import-Tool so erweitern, dass aus `Module/` konsistent Slug-Strukturen werden.
+
+---
+
+## D. Video-Pipeline & Distribution (Remotion, Gamma, ElevenLabs)
+
+Reihenfolge wie historisch beschlossen — weiterhin maßgeblich für **MP4-Produktion**:
+
+### Phase D.1 — Qualität (Video + Gamma „Visuals only“)
+
+- Remotion-Template, Timing, Voice; Gamma nur **Einzelvisuals** (`visualNN.png`), nie ganze Slides — [`docs/SLIDE_GENERATION_RULES.md`](./SLIDE_GENERATION_RULES.md).
+- Abnahme: mindestens ein Modul visuell/inhaltlich release-tauglich; Naming `publish-videos` ↔ Plattform-Konventionen dokumentiert in [`docs/academy-build.md`](./academy-build.md).
+
+### Phase D.2 — Automatisierung / Batch
+
+- Academy-Build → Voice → Render-Batch; Logs unter `logs/` (lokal; Ordner gitignored).
+- **Modul 1–3:** MP4s auf `main` unter `public/videos/` (Legacy) bzw. Upload auf CDN für **neue** Lektions-URLs.
+- **Modul 4–17:** Batch — Checkliste [`docs/VIDEO_BATCH_ROADMAP.md`](./VIDEO_BATCH_ROADMAP.md).
+
+### Phase D.3 — Schlankes Repo + Streaming
+
+- Große Binärdateien dauerhaft **nicht** im Git; Zielbild: **CDN** (Spez: Cloudflare R2 in `defi-akademie-build-dokument.md`; ältere Erwähnung Vimeo = optional).
+- Legacy-`LessonVideoHero` vs. neuer `VideoPlayer`: beide Welten bis Konsolidierung pflegen **oder** Embed-IDs zentral in Config.
+
+---
+
+## E. CI, Qualität, Betrieb
+
+- Push **`main`** → GitHub Actions (`nextjs.yml`): Lint, Typecheck, `next build`, Deploy GitHub Pages.
+- **`npm run check`** = `validate:content` + lint + typecheck + build (siehe [`docs/BUILD.md`](./BUILD.md)).
+- **Auto-Import** (`Module/**/*.md` → `content/modules/`): Workflow `auto-import.yml` — bei Fehlschlag Actions-Logs.
+
+---
+
+## F. Priorisierte Meilensteine (Überblick)
+
+| # | Meilenstein | Status | Anmerkung |
+|---|-------------|--------|------------|
+| F1 | UX-Shell + Landing + Kurs/Lektion SSG | **Erledigt** | SVG-Referenz `docs/ux-visuals/` |
+| F2 | Free-Module 1–3 im UX-Pfad inhaltlich | **Erledigt** | `lesson.md` / slides / quiz je Lektion |
+| F3 | CDN-MP4s für alle **18** Free-Lektionen (Slug-Pfade) | **Offen** | Upload/Hosting; Env setzen |
+| F4 | Video-Batch Modul 4–17 | **Offen** | Pipeline + Budget |
+| F5 | Modul 16 Quiz (Legacy) | **Erledigt** | `open-quiz.md` Platzhalter → Validator grün |
+| F6 | Zahlung + Pro-Zugang produktiv | **Offen** | Produkt/Compliance |
+| F7 | Content-Stränge zusammenführen | **Offen** | Architekturentscheid |
+
+---
+
+## G. Weiterführende Dokumente
+
+| Dokument | Inhalt |
+|----------|--------|
+| [`docs/offeneAufgaben.md`](./offeneAufgaben.md) | Detailliertes Backlog inkl. Pipeline-Tickets |
+| [`docs/defi-akademie-build-dokument.md`](./defi-akademie-build-dokument.md) | Volle UX-Spez (Phasen 1–12) |
+| [`docs/VIDEO_PRODUCTION_WORKFLOW.md`](./VIDEO_PRODUCTION_WORKFLOW.md) | Schritt-für-Schritt Video |
+| [`docs/GITHUB_PAGES.md`](./GITHUB_PAGES.md) | Deploy, Webhooks |
+
+---
+
+*Letzte inhaltliche Gesamtüberarbeitung dieser Roadmap: 2026-04-20.*
