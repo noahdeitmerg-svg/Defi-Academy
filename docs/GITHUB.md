@@ -1,5 +1,7 @@
 # GitHub & Git – Kurzanleitung
 
+**Repo-Gesamtüberblick:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md)
+
 ## Zielmodell: **ein Klon-Ordner** (wie AlphaCycle)
 
 - **Ein** Verzeichnis auf dem PC = **dieses Repository** (enthält `.git` + `package.json`).

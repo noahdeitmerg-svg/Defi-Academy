@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -16,6 +16,14 @@ const inter = Inter({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+/** UX-Build: Folien-/Slide-Zähler (Build-Dokument), unabhängig von Video-Geist-Mono */
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 function siteUrlToMetadataBase(raw: string | undefined): URL | null {
@@ -43,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="de" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${geistMono.variable} min-h-dvh font-sans`}
+        className={`${inter.variable} ${geistMono.variable} ${jetbrainsMono.variable} min-h-dvh font-sans`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}

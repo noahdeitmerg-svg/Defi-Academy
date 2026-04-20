@@ -1,5 +1,7 @@
 # GitHub Pages (statischer Next-Export)
 
+**Master-Kontext:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md)
+
 Die App baut als **statische Dateien** (`next build` mit `output: "export"`, Ordner `out/`).
 
 ## Einmalig im GitHub-Repo

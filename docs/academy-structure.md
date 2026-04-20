@@ -165,6 +165,9 @@ Wo die Regel **nicht** greift:
 
 ## 5. Beziehungen zu anderen Doku-Dokumenten
 
+- [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) — **Masterdokument**
+  für Agenten: aktueller Deploy-Ist, Ziel **17 Module / 102 Lektionen**,
+  Roadmaps, Verzeichnis-Index.
 - [`docs/defi_academy_system.md`](./defi_academy_system.md) — System-
   Ueberblick, Rollen-Kataster, Roadmap, Infrastruktur. Fuehrt im Kopf
   die Video-Pipeline-Regel (Gamma vs. Remotion) und verlinkt auf

@@ -6,6 +6,8 @@
 **Sprache:** Deutsch
 **Umfang:** 17 Module, 102 Lektionen
 
+**Repo-Ist (Parallelbetrieb):** Aktueller Deploy, Content-Ordner und Video-Stand — [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md).
+
 ---
 
 Dieses Dokument ist in zwei Teile gegliedert:

@@ -30,6 +30,24 @@
   --color-on-accent: #0B1F3B;
   --color-risk: #C2413A;           /* Rot, AA-stärker als #D9544E auf Weiß */
   --color-risk-soft: #FBE8E7;
+
+  /*
+   * UX-Plattform (Build-Dokument) — separat vom Video-/Slide-Brand oben.
+   * Utilities: bg-ux-background, text-ux-text-primary, border-ux-border, …
+   */
+  --color-ux-background: #0b0b0f;
+  --color-ux-surface: #15151c;
+  --color-ux-surface-elevated: #1e1e28;
+  --color-ux-border: #2a2a35;
+  --color-ux-text-primary: #f5f5f7;
+  --color-ux-text-secondary: #9a9aa8;
+  --color-ux-text-muted: #6b6b78;
+  --color-ux-accent-gold: #d4af37;
+  --color-ux-accent-gold-hover: #e6c14f;
+  --color-ux-success: #4ade80;
+  --color-ux-warning: #fbbf24;
+  --color-ux-locked: #4a4a55;
+  --font-ux-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /*
@@ -61,5 +79,12 @@
   }
   h1, h2, h3, h4 {
     letter-spacing: -0.015em;
+  }
+}
+
+@layer utilities {
+  /* Slide-Counter / technische Zähler (Build-Dokument) */
+  .font-ux-mono {
+    font-family: var(--font-ux-mono);
   }
 }

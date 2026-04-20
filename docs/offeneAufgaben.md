@@ -1,5 +1,7 @@
 # Offene Aufgaben
 
+> **Gesamtstand & Prioritäten:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) — dieses File bleibt detailliertes Backlog.
+
 > Lebendes Backlog für die DeFi-Academy-Pipeline. Nach jedem Prompt
 > aktualisiert: neue offene Punkte werden hinzugefügt, erledigte werden
 > mit Commit-Hash abgehakt. Priorität grob absteigend.

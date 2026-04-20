@@ -1,6 +1,6 @@
 # Roadmap — Video-Pipeline & Distribution
 
-Stand: wird bei Meilensteinen angepasst.
+**Kontext:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) (Master) · Stand: wird bei Meilensteinen angepasst.
 
 ## Phasen (Reihenfolge)
 

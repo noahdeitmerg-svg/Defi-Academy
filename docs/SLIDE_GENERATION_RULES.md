@@ -1,5 +1,7 @@
 # Slide-Generation-Rules
 
+**Agenten-Gesamtüberblick:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md)
+
 **Zielgruppe:** Content-Autor:innen, Asset-Produzent:innen, Agents,
 Entwickler:innen.
 

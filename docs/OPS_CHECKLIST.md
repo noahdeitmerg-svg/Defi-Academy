@@ -1,5 +1,7 @@
 # Ops-Checkliste (GitHub Pages + Webhooks, kein VPS)
 
+**Master-Kontext:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md)
+
 Kurze Routine fuer stabilen Betrieb, Auto-Import und schnelle Fehlerbehebung.
 Alle Builds/Deploys laufen in GitHub Actions.
 

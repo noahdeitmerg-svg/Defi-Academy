@@ -1,5 +1,7 @@
 # DeFi-Academy Video-Produktion — End-to-End-Workflow
 
+**Master-Kontext:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md)
+
 Dieses Dokument beschreibt den vollstaendigen Weg, wie aus einer Markdown-
 Lektion ein fertiges MP4 wird. Es richtet sich an Content-Autor:innen,
 Produzent:innen und neue Agenten/Entwickler:innen.

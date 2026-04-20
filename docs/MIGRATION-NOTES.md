@@ -1,5 +1,7 @@
 # Migration: Multi-Format Support
 
+> **Gesamtüberblick:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md)
+
 > **Kontext:** Diese Notizen stammen aus dem Video-Agent-Lieferpaket und
 > beschreiben die **Zwei-Format-Unterstützung** im Lesson-Asset-Generator.
 > Alle genannten Pfade `src/…` beziehen sich auf `lesson-asset-generator/src/`.

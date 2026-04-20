@@ -1,6 +1,6 @@
-# Roadmap: Video-Batch (Module 4–16)
+# Roadmap: Video-Batch (Module 4–17)
 
-Kurzliste **vor** dem massenhaften Rendern der restlichen Module.
+Kurzliste **vor** dem massenhaften Rendern der restlichen Module. Gesamt-Kontext: [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) §7.
 
 ## Erledigt
 
@@ -12,7 +12,7 @@ Kurzliste **vor** dem massenhaften Rendern der restlichen Module.
 - [x] **`npm run validate:content`** — durchgelaufen (Warnung Modul 16 Quiz optional)
 - [x] **`GITHUB_PAGES=true npm run build`** — lokal durchgelaufen
 
-## Vor dem Groß-Rollout (Module 4+)
+## Vor dem Groß-Rollout (Module 4–17)
 
 1. **Kosten/Zeit** — pro Modul `npm run videos:module -- --module N --live`; nicht alle Module ohne Budget-Check hintereinander.
 2. **Modul 16 Quiz** — `quiz.json` oder `open-quiz.md` ergänzen, falls Quiz-Tab erscheinen soll.

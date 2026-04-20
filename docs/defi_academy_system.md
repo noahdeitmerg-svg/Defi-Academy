@@ -1,5 +1,10 @@
 # DeFi Academy -- Systemdokument
 
+> **Operativer Gesamtstand (Deploy, Zahlen, Roadmaps, Doku-Index):**
+> [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md) — Masterdokument für alle Agenten.
+> Dieses Systemdokument bleibt tiefe Referenz (Rollen, Pipeline, Philosophie); bei Widerspruch
+> in **Zahlen** oder **aktuellen Meilensteinen** gewinnt das Handbuch.
+
 > **Kernregel Video-Pipeline (gilt fuer alle Agents ab 2026-04-17):**
 > Gamma generiert **nur Einzel-Visuals** (Diagramme, Illustrationen,
 > Charts), gespeichert als `assets-input/<lesson>/visual01.png`,
@@ -302,7 +307,7 @@ Geplantes Modell:
 
 ## 9. Roadmap
 
-Phase 1 -- Kursmodule erstellen (laufend, Modul 1-12 + 13A live; 13B-17 in Produktion)\
+Phase 1 -- Kursmodule erstellen (laufend; **Ziel 17 Module / 102 Lektionen** — Ist-Import siehe `docs/AGENTEN-HANDBUCH.md` §2)\
 Phase 2 -- Plattformstruktur definieren ✅\
 Phase 3 -- Website bauen ✅ (Next.js auf GitHub Pages live)\
 Phase 4 -- Stabilität & Content-Pipeline-Automation ✅ (Auto-Import, Webhook-Deploy, Content-Validator, MDX-Safety)\
@@ -619,7 +624,8 @@ Beide laufen unter `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` (Pflicht-Opt-in zum
 ### Dokumente im Repo
 
 -   `README.md` — Einstieg
--   `docs/defi_academy_system.md` — **dieses Dokument**, Single Source of Truth für alle Agenten
+-   `docs/AGENTEN-HANDBUCH.md` — **Masterdokument** für Agenten (Ist-Zustand, 17 Module / 102 Lektionen Ziel, Deploy, Roadmaps)
+-   `docs/defi_academy_system.md` — **dieses Dokument**, ausführliche Referenz (Rollen, Pipeline-Details)
 -   `docs/BUILD.md` — Build- und Dev-Setup
 -   `docs/GITHUB.md` — Git-/GitHub-Basics
 -   `docs/GITHUB_PAGES.md` — Deployment-Details, Webhook-Beispiele

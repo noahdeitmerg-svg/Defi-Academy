@@ -1,5 +1,7 @@
 # DeFi Academy – bereit zum Bauen (Checkliste)
 
+**Agenten:** Gesamtstand und Doku-Index — [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md).
+
 ## 1. Voraussetzungen
 
 - **Node.js 22 LTS** (oder 20+) inkl. **npm**: [nodejs.org](https://nodejs.org/)

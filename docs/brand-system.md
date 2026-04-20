@@ -1,5 +1,7 @@
 # DeFi Academy — Brand System
 
+**Agenten:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md)
+
 **Status:** ✅ Erstellt · Version 1.0.0
 **Zentrale Dateien:** `/brand/` · `/docs/brand-system.md` (diese Datei)
 **Verbunden mit:** `video-style-engine/theme.json`, `slide-template.jsx`,

@@ -1,5 +1,7 @@
 # DeFi Akademie — Academy-Build-Pipeline
 
+**Master-Kontext:** [`docs/AGENTEN-HANDBUCH.md`](./AGENTEN-HANDBUCH.md)
+
 **Ziel**: Aus finalen Lektions-Markdowns (`lessons/moduleXX-lessonYY.md`) mit
 möglichst wenigen manuellen Schritten fertige Videos
 (`videos/moduleXX-lessonYY.mp4`) produzieren.

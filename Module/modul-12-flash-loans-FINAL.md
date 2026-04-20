@@ -28,7 +28,7 @@
 
 ## Modul-Überblick
 
-Flash Loans sind eine der mächtigsten Innovationen in DeFi. Sie erlauben das Borgen von Millionen USD **ohne Sicherheiten**, unter einer Bedingung: Rückzahlung in derselben Transaktion. Diese Idee existiert nirgendwo in TradFi und ist ein direktes Resultat der atomaren Ausführungslogik von Blockchain-Transaktionen.
+Flash Loans (auf Deutsch auch als Blitzkredite bekannt) sind eine der mächtigsten Innovationen in DeFi. Sie erlauben das Borgen von Millionen USD **ohne Sicherheiten**, unter einer Bedingung: Rückzahlung in derselben Transaktion. Diese Idee existiert nirgendwo in TradFi und ist ein direktes Resultat der atomaren Ausführungslogik von Blockchain-Transaktionen. Im weiteren Verlauf des Moduls verwenden wir den etablierten englischen Fachbegriff Flash Loan.
 
 Flash Loans haben zwei Gesichter: **konstruktiv** (Arbitrage, Collateral-Swaps, Refinancing) und **destruktiv** (die spektakulärsten DeFi-Hacks — bZx, Euler, Beanstalk, Mango — wurden durch Flash Loans ermöglicht). Dieses Modul behandelt beide Seiten ehrlich.
 
@@ -61,6 +61,13 @@ Nach Abschluss dieser Lektion können die Lernenden:
 Ein Flash Loan ist ein Kredit, der **in derselben Transaktion aufgenommen und zurückgezahlt werden muss**. Wenn die Rückzahlung am Ende nicht erfolgt, wird die **gesamte Transaktion revertiert** — als hätte sie nie stattgefunden.
 
 **Die Grundmechanik: atomare Transaktionen**
+
+Die EVM-Atomarität folgt einem einfachen Prinzip:
+
+> **Transaction success → state committed**
+> **Transaction failure → full revert**
+>
+> Konzeptuell: `State(t+1) = State(t) + Δ` bei Erfolg, sonst `State(t+1) = State(t)`.
 
 Eine Ethereum-Transaktion kann beliebig viele Schritte enthalten: Contract-Calls, Token-Transfers, Berechnungen. Entscheidend: alle Schritte passieren **entweder komplett oder gar nicht**. Wenn am Ende eine Bedingung nicht erfüllt ist, wird alles rückgängig gemacht.
 
@@ -131,29 +138,24 @@ Ethereum-TX: alle Schritte atomisch
 Entweder komplett oder gar nicht
 Grundlage für Flash Loans
 
-**[Slide 4] — Sicherheits-Garantie**
-Risiko für Kreditgeber: mathematisch null
-Entweder Rückzahlung oder Revert
-Kein Flucht-Szenario
+**[Slide 4] — Sicherheits-Garantie vs. TradFi**
+Risiko für Kreditgeber: mathematisch null — entweder Rückzahlung oder Revert
+TradFi: Zeit zwischen Auszahlung/Rückzahlung → Sicherheiten nötig
+DeFi: Atomarität eliminiert Zeit, Flash Loans ohne Sicherheiten möglich
 
-**[Slide 5] — TradFi vs DeFi**
-TradFi: Zeit zwischen Auszahlung/Rückzahlung
-Braucht Sicherheiten
-DeFi: Atomarität eliminiert Zeit
-
-**[Slide 6] — Fee-Struktur**
+**[Slide 5] — Fee-Struktur**
 Aave V3: 0,05%
 Balancer V2: 0%
 Uniswap V3 Flash Swap: Swap-Fee
 Extrem günstig
 
-**[Slide 7] — Nutzer-Verteilung**
+**[Slide 6] — Nutzer-Verteilung**
 MEV-Searcher 60-70%
 Power-User 15-25%
 Angreifer 5-10% historisch
 Protokoll-Integration wachsend
 
-**[Slide 8] — Technische Hürde**
+**[Slide 7] — Technische Hürde**
 Normale Wallet: nicht nutzbar
 Smart Contract Programmierung nötig
 Oder: Aggregator-Tools (DeFi Saver)
@@ -166,26 +168,23 @@ Oder: Aggregator-Tools (DeFi Saver)
 
 **[Slide 3]** Grundmechanik ist die Atomarität von Ethereum-Transaktionen. Eine Transaktion kann viele Schritte enthalten. Alle passieren entweder komplett oder gar nicht. Es gibt kein "halb ausgeführt". Das ist die Grundlage für Flash Loans.
 
-**[Slide 4]** Sicherheits-Garantie für den Kreditgeber ist mathematisch. Entweder Rückzahlung plus Fee, oder die Transaktion wird revertiert und der Contract hat wieder sein Ausgangs-Kapital. Kein Zwischenfall möglich.
+**[Slide 4]** Sicherheits-Garantie für den Kreditgeber ist mathematisch — entweder Rückzahlung plus Fee, oder die Transaktion wird revertiert und der Contract hat wieder sein Ausgangs-Kapital. Kein Zwischenfall möglich. In TradFi funktioniert das nicht, weil keine Atomarität existiert. Bank-Überweisungen dauern Stunden oder Tage. Zwischen Auszahlung und Rückzahlung existiert Zeit zum Fliehen. Deshalb braucht TradFi Sicherheiten. In Ethereum: alles in einer 12-Sekunden-Transaktion — Atomarität eliminiert die Zeit, und Flash Loans ohne Sicherheiten werden möglich.
 
-**[Slide 5]** In TradFi funktioniert das nicht, weil keine Atomarität existiert. Bank-Überweisungen dauern Stunden oder Tage. Zwischen Auszahlung und Rückzahlung existiert Zeit zum Fliehen. Deshalb braucht TradFi Sicherheiten. In Ethereum: alles in einer 12-Sekunden-Transaktion.
+**[Slide 5]** Weil Risiko null ist, sind Fees extrem niedrig. Aave V3: 0,05 Prozent. Balancer V2: null Prozent komplett kostenlos. Uniswap V3 Flash Swap: entspricht Swap-Fee. Selbst bei 1 Million Dollar Flash Loan nur 0 bis 500 Dollar Fee plus Gas.
 
-**[Slide 6]** Weil Risiko null ist, sind Fees extrem niedrig. Aave V3: 0,05 Prozent. Balancer V2: null Prozent komplett kostenlos. Uniswap V3 Flash Swap: entspricht Swap-Fee. Selbst bei 1 Million Dollar Flash Loan nur 0 bis 500 Dollar Fee plus Gas.
+**[Slide 6]** Wer nutzt Flash Loans. MEV-Searcher 60 bis 70 Prozent — Arbitrage und Liquidationen. Power-User 15 bis 25 Prozent — Collateral-Swaps über Tools. Angreifer historisch 5 bis 10 Prozent — die spektakulärsten DeFi-Hacks. Protokoll-Integration wachsend.
 
-**[Slide 7]** Wer nutzt Flash Loans. MEV-Searcher 60 bis 70 Prozent — Arbitrage und Liquidationen. Power-User 15 bis 25 Prozent — Collateral-Swaps über Tools. Angreifer historisch 5 bis 10 Prozent — die spektakulärsten DeFi-Hacks. Protokoll-Integration wachsend.
-
-**[Slide 8]** Die technische Hürde. Flash Loans sind nicht über normale Wallets aufrufbar, weil gesamte Logik in einer atomaren Transaktion stehen muss. Erfordert Smart Contract Programmierung. Ausnahme: Aggregator-Tools wie DeFi Saver oder Instadapp bieten UIs für häufige Patterns.
+**[Slide 7]** Die technische Hürde. Flash Loans sind nicht über normale Wallets aufrufbar, weil gesamte Logik in einer atomaren Transaktion stehen muss. Erfordert Smart Contract Programmierung. Ausnahme: Aggregator-Tools wie DeFi Saver oder Instadapp bieten UIs für häufige Patterns.
 
 ### Visuelle Vorschläge
 
 **[Slide 1]** Titelfolie.
 **[Slide 2]** Flash-Loan-Ablauf: Borrow → Action → Repay in einer TX.
 **[Slide 3]** Atomarität als "All-or-Nothing"-Box.
-**[Slide 4]** Sicherheits-Flowchart.
-**[Slide 5]** TradFi vs DeFi Zeit-Dimension.
-**[Slide 6]** Fee-Vergleichstabelle der Anbieter.
-**[Slide 7]** Tortendiagramm der Nutzer-Kategorien.
-**[Slide 8]** **SCREENSHOT SUGGESTION:** DeFi Saver Flash-Loan-Interface.
+**[Slide 4]** Zwei-Spalten-Layout: links Sicherheits-Flowchart (atomare Garantie), rechts TradFi-vs-DeFi Zeit-Dimension.
+**[Slide 5]** Fee-Vergleichstabelle der Anbieter.
+**[Slide 6]** Tortendiagramm der Nutzer-Kategorien.
+**[Slide 7]** **SCREENSHOT SUGGESTION:** DeFi Saver Flash-Loan-Interface.
 
 ### Übung
 
@@ -221,7 +220,7 @@ Mehrere wichtige Punkte. Erstens: Flash Loans im Hintergrund. 1inch-Aggregator-R
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Was ist ein Flash Loan → Atomic Transaction → Flash-Loan-Flow-Diagramm → Revert-Mechanik → Vergleich zum klassischen Kredit → Praxis-Relevanz
+- `slides_prompt.txt` — 7 Folien: Titel → Was ist ein Flash Loan → Atomare Transaktion → Sicherheits-Garantie & TradFi-Vergleich → Fee-Struktur → Nutzer-Verteilung → Technische Hürde
 - `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Flash-Loan-Flow-Diagramm (Borrow → Action → Repay), Atomic-Transaction-Visualisierung, Revert-Mechanismus-Grafik, Vergleichstabelle TradFi-Kredit vs. Flash Loan
 
@@ -361,13 +360,9 @@ Sich selbst liquidieren
 Vermeidet 5-15% Bonus
 Notfall-Tool
 
-**[Slide 7] — Tools für Retail**
-DeFi Saver (defisaver.com)
-Instadapp
-Furucombo
-
-**[Slide 8] — Relevanz-Matrix**
-Arbitrage/Liquidation: niedrig
+**[Slide 7] — Retail-Tools und Relevanz**
+DeFi Saver (defisaver.com), Instadapp, Furucombo
+Arbitrage/Liquidation: niedrig für Retail
 Collateral-Swap/Refinancing: hoch
 Self-Liquidation: Notfall
 
@@ -385,9 +380,7 @@ Self-Liquidation: Notfall
 
 **[Slide 6]** Anwendung 5: Self-Liquidation, Notfall-Tool. Position nahe Liquidations-Schwelle. Externe Liquidation kostet 5 bis 15 Prozent Bonus. Self-Liquidation via Flash Loan vermeidet das. Kann mehrere Tausend Dollar sparen.
 
-**[Slide 7]** Tools für Retail-Nutzer. DeFi Saver als umfassendstes Angebot mit Drag-and-Drop-UI. Instadapp Lite für Ein-Klick-Lösungen. Furucombo als Visual Builder für eigene Logik. Alle kostenlos oder mit kleinen Service-Gebühren.
-
-**[Slide 8]** Die Relevanz-Matrix. Arbitrage und Liquidation: niedrig für Retail. Collateral-Swap und Refinancing: hoch — bei Portfolio-Umstrukturierungen oder Zins-Optimierung. Self-Liquidation: Notfall. Die praktische Empfehlung: DeFi Saver als Tool im Portfolio-Toolkit haben, für spezifische Situationen einsetzen.
+**[Slide 7]** Tools für Retail-Nutzer und ihre Relevanz. DeFi Saver als umfassendstes Angebot mit Drag-and-Drop-UI, Instadapp Lite für Ein-Klick-Lösungen, Furucombo als Visual Builder für eigene Logik — alle kostenlos oder mit kleinen Service-Gebühren. Die Relevanz-Matrix für Retail: Arbitrage und Liquidation sind niedrig — das überlassen normale Nutzer den professionellen Searchern. Collateral-Swap und Refinancing sind hoch relevant — bei Portfolio-Umstrukturierungen oder Zins-Optimierung. Self-Liquidation ist eine Notfall-Option. Die praktische Empfehlung: DeFi Saver als Tool im Portfolio-Toolkit haben, für spezifische Situationen einsetzen.
 
 ### Visuelle Vorschläge
 
@@ -397,8 +390,7 @@ Self-Liquidation: Notfall
 **[Slide 4]** **SCREENSHOT SUGGESTION:** DeFi Saver Collateral-Swap-Interface.
 **[Slide 5]** Debt-Migration-Diagramm Aave → Compound.
 **[Slide 6]** Self-Liquidation vs. externe Liquidation Vergleich.
-**[Slide 7]** **SCREENSHOT SUGGESTION:** Furucombo Visual-Builder.
-**[Slide 8]** Relevanz-Matrix tabellarisch.
+**[Slide 7]** Zwei-Spalten-Layout: links **SCREENSHOT SUGGESTION** Furucombo Visual-Builder, rechts Relevanz-Matrix tabellarisch.
 
 ### Übung
 
@@ -439,8 +431,8 @@ Die Kosten-Hierarchie: **Manuelles Deleveraging (beste Option):** 250-500 USD Ko
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → 5 Haupt-Anwendungsfälle → Collateral-Swap-Walkthrough → Self-Liquidation → Debt-Refinancing → Leverage-Eröffnung → Retail-Relevanz
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Arbitrage → Liquidationen → Collateral-Swap → Debt-Refinancing → Self-Liquidation → Retail-Tools und Relevanz
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Anwendungsfälle-Matrix, Collateral-Swap-Flowchart, Self-Liquidation-Diagramm, Debt-Refinancing-Szenario, Kostenhierarchie-Vergleich
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -455,7 +447,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Die wichtigsten Flash-Loan-Anbieter und ihre Unterschiede benennen
 - Für Anwendungsfälle den passenden Anbieter wählen
 - Zentrale Unterschiede bei Fees, Liquidität und technischen Details verstehen
-- Aave, Balancer und dYdX in Fee-Struktur, verfügbaren Assets und TVL-Tiefe vergleichen
+- Aave V3, Balancer V2 und Uniswap V3 Flash Swaps in Fee-Struktur, verfügbaren Assets und TVL-Tiefe vergleichen
 - Uniswap V3 Flash Swaps als alternative Mechanik (nicht klassischer Flash Loan) einordnen
 - Eine Anbieter-Wahl-Matrix nach Asset, Transaktionsgröße und Gas-Kosten aufstellen
 
@@ -550,16 +542,11 @@ Euler V2 (relaunch)
 **[Slide 6] — Vergleichstabelle**
 Anbieter × Fee × Liquidität × Use-Case
 
-**[Slide 7] — Entscheidungs-Regel**
-Arbitrage: Balancer
-Liquidationen: Aave
-Exotisch: Aave, sonst Balancer
-Via Aggregator: Tool wählt
-
-**[Slide 8] — Aggregator-Tools**
-DeFi Saver + Instadapp
-Optimieren automatisch
-Retail ohne selbst-wählen
+**[Slide 7] — Entscheidungs-Regel und Aggregator-Tools**
+Arbitrage: Balancer V2 (0% Fee)
+Liquidationen: Aave V3 (interne Integration)
+Exotische Assets: Aave zuerst, sonst Balancer
+Retail: DeFi Saver / Instadapp wählen automatisch
 
 ### Sprechertext
 
@@ -575,9 +562,7 @@ Retail ohne selbst-wählen
 
 **[Slide 6]** Die Vergleichstabelle fasst zusammen. Aave V3: 0,05 Prozent, sehr hohe Liquidität, Multi-Asset, mittlere Complexity. Balancer V2: 0 Prozent, hohe Liquidität, Multi-Asset, einfach. Uniswap V3: Swap-Fee, variable Liquidität, kein Multi-Asset, komplex. Es gibt nicht einen, der immer besser ist.
 
-**[Slide 7]** Praktische Entscheidungs-Regel. Arbitrage auf Standard-Assets: Balancer V2. Liquidationen: Aave V3. Exotische Assets: Aave V3, sonst Balancer. Multi-Asset: beide geeignet. Intra-Uniswap: Uniswap V3 Flash Swap.
-
-**[Slide 8]** Gute Nachricht für Retail: du musst nicht selbst entscheiden. DeFi Saver und Instadapp implementieren Router, die zur Laufzeit automatisch den optimalen Anbieter wählen. Für Entwickler ist die Wahl strategisch — ein falsch gewählter Anbieter kann eine profitable Arbitrage in einen Verlust verwandeln. Für typische Nutzer: nutze Aggregator-Tools.
+**[Slide 7]** Praktische Entscheidungs-Regel und Aggregator-Tools. Arbitrage auf Standard-Assets: Balancer V2 mit 0 Prozent Fee. Liquidationen: Aave V3 wegen interner Integration. Exotische Assets: Aave V3 zuerst, sonst Balancer. Multi-Asset: beide geeignet. Intra-Uniswap: Uniswap V3 Flash Swap. Die gute Nachricht für Retail: du musst nicht selbst entscheiden. DeFi Saver und Instadapp implementieren Router, die zur Laufzeit automatisch den optimalen Anbieter wählen. Für Entwickler ist die Wahl strategisch — ein falsch gewählter Anbieter kann eine profitable Arbitrage in einen Verlust verwandeln. Für typische Nutzer: nutze Aggregator-Tools.
 
 ### Visuelle Vorschläge
 
@@ -587,8 +572,7 @@ Retail ohne selbst-wählen
 **[Slide 4]** Uniswap V3 Flash Swap Mechanik-Diagramm.
 **[Slide 5]** Karten der weiteren Anbieter.
 **[Slide 6]** Vergleichstabelle.
-**[Slide 7]** Entscheidungsbaum.
-**[Slide 8]** **SCREENSHOT SUGGESTION:** DeFi Saver Router-Interface.
+**[Slide 7]** Zwei-Spalten-Layout: links Entscheidungsbaum nach Use Case, rechts **SCREENSHOT SUGGESTION** DeFi Saver Router-Interface.
 
 ### Übung
 
@@ -611,7 +595,7 @@ Für fünf Szenarien: optimaler Anbieter + 2-3 Sätze Begründung.
 <details>
 <summary>Antwort anzeigen</summary>
 
-Mehrere Limitierungen trotz 0%-Fee. Erstens: Asset-Verfügbarkeit. Balancer hat gute Liquidität für Standard-Assets, aber viele exotische Tokens fehlen. Aave V3 unterstützt mehr seltene Assets wie GHO, crvUSD. Wenn du Flash Loans für Asset brauchst, das Balancer nicht hat, ist Aave einzige Option. Zweitens: Liquiditäts-Tiefe. Auch bei unterstützten Assets kann Balancer-Liquidität niedriger sein. Bei 100M USD Flash Loan hat Aave tiefere Pools. Drittens: Integration-Komplexität. Aave-interne Liquidationen sind direkt mit Aave-Flash-Loans gebaut. Balancer-Flash-Loan plus Aave-Liquidation bedeutet Cross-Protocol-Interaktion, mehr Gas. Viertens: Multi-Asset-Patterns. Aave's Implementierung ist flexibler bei konditionalen Rückzahlungen. Fünftens: Risiko-Konzentration. Ausschließlich Balancer bedeutet Single-Protocol-Risk. Diversifikation reduziert das. Sechstens: indirekte Gas-Kosten. Balancer-Integration kann komplexer sein, höhere Gas-Kosten übertreffen die 0,05%-Fee von Aave. Siebtens: Fee-Refunds bei Aave möglich über Governance-Mechanismen. Achtens: Spezifische Features wie "flashLoanSimple" bei Aave. Richtige Strategie: Balancer als Standard für Arbitrage/häufige Operationen auf Standard-Assets. Aave für breitere Coverage, größere Liquidität, Aave-integrierte Operationen. Aggregator-Tools entscheiden automatisch.
+Mehrere Limitierungen trotz 0%-Fee. Erstens: Asset-Verfügbarkeit. Balancer hat gute Liquidität für Standard-Assets, aber viele exotische Tokens fehlen. Aave V3 unterstützt mehr seltene Assets wie GHO, crvUSD. Wenn du Flash Loans für Asset brauchst, das Balancer nicht hat, ist Aave einzige Option. Zweitens: Liquiditäts-Tiefe. Auch bei unterstützten Assets kann Balancer-Liquidität niedriger sein. Bei 100M USD Flash Loan hat Aave tiefere Pools. Drittens: Integration-Komplexität. Aave-interne Liquidationen sind direkt mit Aave-Flash-Loans gebaut. Balancer-Flash-Loan plus Aave-Liquidation bedeutet Cross-Protocol-Interaktion, mehr Gas. Viertens: Multi-Asset-Patterns. Aaves Implementierung ist flexibler bei konditionalen Rückzahlungen. Fünftens: Risiko-Konzentration. Ausschließlich Balancer bedeutet Single-Protocol-Risk. Diversifikation reduziert das. Sechstens: indirekte Gas-Kosten. Balancer-Integration kann komplexer sein, höhere Gas-Kosten übertreffen die 0,05%-Fee von Aave. Siebtens: Fee-Refunds bei Aave möglich über Governance-Mechanismen. Achtens: Spezifische Features wie "flashLoanSimple" bei Aave. Richtige Strategie: Balancer als Standard für Arbitrage/häufige Operationen auf Standard-Assets. Aave für breitere Coverage, größere Liquidität, Aave-integrierte Operationen. Aggregator-Tools entscheiden automatisch.
 </details>
 
 **Frage 2:** Warum nutzt ein Aave-Liquidations-Bot Aave V3 direkt, obwohl Balancer günstiger ist?
@@ -619,15 +603,15 @@ Mehrere Limitierungen trotz 0%-Fee. Erstens: Asset-Verfügbarkeit. Balancer hat 
 <details>
 <summary>Antwort anzeigen</summary>
 
-Technische und wirtschaftliche Gründe. Erstens: Gas-Effizienz durch protokoll-interne Calls. Aave-Liquidation mit Aave-Flash-Loan: Liquidator-Contract ruft Aave-Pool, der gewährt Flash Loan und führt Liquidation direkt durch. 2-3 externe Calls. Mit Balancer: Balancer-Vault (Flash Loan), Aave-Pool (Liquidation), DEX-Swap (Verkauf), zurück zu Balancer. 5-6 externe Calls. Gas-Differenz: typisch 50-100k Gas mehr für Cross-Protocol. Bei 30 Gwei: 5-10 USD mehr. Zweitens: atomare Logik. Aave-Flash-Loan passiert innerhalb desselben Contract-Calls wie Liquidation. Cross-Protocol erhöht Komplexität und Fehler-Anfälligkeit. Drittens: Race-Condition-Vorteil. Kompetitive Liquidationen — einfachere Transaktions-Struktur mit weniger Protokoll-Interaktionen hat bessere Erfolgs-Chance. Viertens: Oracle-Konsistenz. Aave nutzt interne Oracle für Liquidations-Entscheidungen. Direkt-Aave kennt diesen Preis exakt. Cross-Protocol mit DEX-Swap bewegt Preis (Slippage), Kalkulation komplizierter. Fünftens: Liquiditäts-Tiefe bei großen Liquidationen. Aave-Liquidität meist tiefer als Balancer bei 10M+ USDC. Sechstens: Fee-Logik. Aave's Fee wird teilweise als Reward an aToken-Holders verteilt. Indirekte Rückführung für Aave-Liquidator. Balancer: kein Rückfluss. Siebtens: Test-Coverage. Aave-Liquidations-Flash-Loan-Kombo am meisten getestet. Der Tradeoff in Zahlen: 500k USDC Liquidation — Aave-Fee 250 USD, Balancer-Einsparung 250 USD, aber zusätzliche Gas-Kosten 8-15 USD. Bei 5%-Bonus auf 500k sind 25.000 USDC Gewinn. Anbieter-Wahl macht unter 1% der Marge aus, aber Ausführungs-Wahrscheinlichkeit macht 100% aus. Für kompetitive Umgebungen: Aave-direkt bessere Wahl trotz höherer nomineller Kosten.
+Technische und wirtschaftliche Gründe. Erstens: Gas-Effizienz durch protokoll-interne Calls. Aave-Liquidation mit Aave-Flash-Loan: Liquidator-Contract ruft Aave-Pool, der gewährt Flash Loan und führt Liquidation direkt durch. 2-3 externe Calls. Mit Balancer: Balancer-Vault (Flash Loan), Aave-Pool (Liquidation), DEX-Swap (Verkauf), zurück zu Balancer. 5-6 externe Calls. Gas-Differenz: typisch 50-100k Gas mehr für Cross-Protocol. Bei 30 Gwei: 5-10 USD mehr. Zweitens: atomare Logik. Aave-Flash-Loan passiert innerhalb desselben Contract-Calls wie Liquidation. Cross-Protocol erhöht Komplexität und Fehler-Anfälligkeit. Drittens: Race-Condition-Vorteil. Kompetitive Liquidationen — einfachere Transaktions-Struktur mit weniger Protokoll-Interaktionen hat bessere Erfolgs-Chance. Viertens: Oracle-Konsistenz. Aave nutzt interne Oracle für Liquidations-Entscheidungen. Direkt-Aave kennt diesen Preis exakt. Cross-Protocol mit DEX-Swap bewegt Preis (Slippage), Kalkulation komplizierter. Fünftens: Liquiditäts-Tiefe bei großen Liquidationen. Aave-Liquidität meist tiefer als Balancer bei 10M+ USDC. Sechstens: Fee-Logik. Aaves Fee wird teilweise als Reward an aToken-Holders verteilt. Indirekte Rückführung für Aave-Liquidator. Balancer: kein Rückfluss. Siebtens: Test-Coverage. Aave-Liquidations-Flash-Loan-Kombo am meisten getestet. Der Tradeoff in Zahlen: 500k USDC Liquidation — Aave-Fee 250 USD, Balancer-Einsparung 250 USD, aber zusätzliche Gas-Kosten 8-15 USD. Bei 5%-Bonus auf 500k sind 25.000 USDC Gewinn. Anbieter-Wahl macht unter 1% der Marge aus, aber Ausführungs-Wahrscheinlichkeit macht 100% aus. Für kompetitive Umgebungen: Aave-direkt bessere Wahl trotz höherer nomineller Kosten.
 </details>
 
 ### Video-Pipeline-Assets
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Aave Flash Loan → Balancer Vault → dYdX → Uniswap V3 Flash Swaps → Fee- und Liquiditätsvergleich → Anbieter-Wahl-Matrix
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Aave V3 → Balancer V2 → Uniswap V3 Flash Swap → Weitere Anbieter → Vergleichstabelle → Entscheidungs-Regel und Aggregator-Tools
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Anbieter-Vergleichstabelle, Fee-Struktur-Chart, TVL-Tiefe-Visualisierung, Uniswap-V3-Flash-Swap-Diagramm, Anbieter-Auswahlmatrix
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -662,10 +646,10 @@ Markiert den Beginn der Flash-Loan-Angriffs-Ära.
 1. Flash-Loan 10.000 ETH von dYdX
 2. Teil für manipulierte bZx-Kurzposition
 3. Rest für Uniswap-WBTC-Kauf — bewegt Uniswap-Preis
-4. bZx nutzte Uniswap als Oracle → zeigt jetzt manipulierten Preis
+4. bZx nutzt Uniswap als Oracle → zeigt jetzt manipulierten Preis
 5. Position profitabel schließen, Rückzahlung
 
-**Verlust:** ~350k USD ersten, ~600k USD zweiten Angriff.
+**Verlust:** ca. 350k USD beim ersten Angriff, ca. 600k USD beim zweiten — zusammen ca. 1 Mio. USD.
 
 **Muster: Oracle-Manipulation** — Protokoll nutzt DEX-Pool als Oracle, Angreifer manipuliert DEX-Preis mit Flash-Loan-Kapital.
 
@@ -705,7 +689,7 @@ Auf Solana, aber Mechanismus EVM-übertragbar.
 **Angriff:**
 1. Große Position im dünn gehandelten MNGO-Token
 2. MNGO-Preis gepumpt auf anderen Exchanges
-3. Mango's interner Oracle reflektiert pumped Preis
+3. Mangos interner Oracle reflektiert den manipulierten Preis
 4. Position als Sicherheit für Millionen USDC-Borrow genutzt
 5. Mit geborgten Mitteln geflohen
 
@@ -719,7 +703,7 @@ Auf Solana, aber Mechanismus EVM-übertragbar.
 
 1. Flash-Loan 50M USDT
 2. USDC-Preis in Curve Y Pool manipulieren
-3. Harvest's fUSDC-Vault liest manipulierten Preis
+3. Harvests fUSDC-Vault liest manipulierten Preis
 4. Depositiert USDC bei niedrigem Preis, bekommt disproportional viele Shares
 5. Manipulation umgekehrt, Shares verkauft mit Gewinn
 
@@ -794,20 +778,9 @@ Illiquide-Asset-Manipulation
 117M USD
 Juristische Verurteilung
 
-**[Slide 7] — 5 Angriffs-Muster**
-Oracle-Manipulation
-Governance-Kaperung
-Reward-Fehler
-Bug-Verstärkung
-Illiquide Collateral
-
-**[Slide 8] — Resistenz-Checkliste**
-Chainlink/TWAP?
-Time-Lock?
-Time-Weighted Shares?
-Liquide Collateral?
-Mehrfach audited?
-Rate-Limits?
+**[Slide 7] — 5 Muster + 6-Punkt-Checkliste**
+Muster: Oracle-Manipulation, Governance-Kaperung, Reward-Fehler, Bug-Verstärkung, Illiquide Collateral
+Checkliste: Chainlink/TWAP | Time-Lock 24h-7d | Time-Weighted Shares | Liquide Collateral | Mehrere Audits | Rate-Limits
 
 ### Sprechertext
 
@@ -823,9 +796,7 @@ Rate-Limits?
 
 **[Slide 6]** Mango Markets Oktober 2022 auf Solana. Angreifer öffnete Position im illiquiden MNGO-Token, pumpte Preis, nutzte Position als Sicherheit für USDC-Borrow, floh. 117 Millionen Verlust. Angreifer argumentierte "legitime Strategie", wurde 2024 wegen Marktmanipulation verurteilt. Muster: illiquide Assets als Sicherheit.
 
-**[Slide 7]** Die fünf Haupt-Muster. Erstens: Oracle-Manipulation durch DEX-Pool-Bewegung. Zweitens: Governance-Kaperung ohne Time-Lock. Drittens: Reward- oder Share-Berechnungs-Fehler durch Single-Block-Snapshots. Viertens: existierende Bugs, die durch Flash-Loan-Skalierung ausnutzbar werden. Fünftens: illiquide Assets als Sicherheit mit manipulierbaren Preisen.
-
-**[Slide 8]** Die sechs-Punkt-Checkliste. Oracle: Chainlink oder TWAP 30+ Minuten resistent, Spot-Preis nicht. Governance: Time-Locks 24 Stunden bis 7 Tage. Shares: time-weighted, nicht Single-Block. Sicherheiten: nur liquide Assets mit 10M+ Tages-Volumen. Mehrere unabhängige Audits. Rate-Limits auf sensitive Funktionen. Prüfe vor jedem neuen Protokoll — 30-60 Minuten Recherche schützt vor katastrophalen Verlusten.
+**[Slide 7]** Die fünf Haupt-Muster und sechs-Punkt-Checkliste in einem. Die Muster: Erstens, Oracle-Manipulation durch DEX-Pool-Bewegung. Zweitens, Governance-Kaperung ohne Time-Lock. Drittens, Reward- oder Share-Berechnungs-Fehler durch Single-Block-Snapshots. Viertens, existierende Bugs, die durch Flash-Loan-Skalierung ausnutzbar werden. Fünftens, illiquide Assets als Sicherheit mit manipulierbaren Preisen. Die sechs-Punkt-Resistenz-Checkliste: Oracle Chainlink oder TWAP 30+ Minuten resistent, Spot-Preis nicht. Governance Time-Locks 24 Stunden bis 7 Tage. Shares time-weighted, nicht Single-Block. Sicherheiten nur liquide Assets mit 10M+ Tages-Volumen. Mehrere unabhängige Audits. Rate-Limits auf sensitive Funktionen. Prüfe vor jedem neuen Protokoll — 30 bis 60 Minuten Recherche schützt vor katastrophalen Verlusten.
 
 ### Visuelle Vorschläge
 
@@ -835,8 +806,7 @@ Rate-Limits?
 **[Slide 4]** Beanstalk-Hack-Flow.
 **[Slide 5]** Euler-Hack-Complexity.
 **[Slide 6]** **SCREENSHOT SUGGESTION:** Mango Exploit TX auf Solscan.
-**[Slide 7]** Fünf-Muster-Matrix.
-**[Slide 8]** Checkliste mit Ja/Nein-Markierungen.
+**[Slide 7]** Zwei-Spalten-Layout: links Fünf-Muster-Matrix, rechts Sechs-Punkt-Checkliste mit Ja/Nein-Markierungen.
 
 ### Übung
 
@@ -859,7 +829,7 @@ Wähle drei DeFi-Protokolle, prüfe für jedes die 6-Punkt-Checkliste:
 <details>
 <summary>Antwort anzeigen</summary>
 
-Beanstalk hatte fundamentale Schwachstelle: On-Chain-Governance ohne Time-Lock plus Flash-Loan-Verfügbarkeit plus liquider Governance-Token. Wenn alle drei Bedingungen erfüllt sind, ist Angriff nur Zeitfrage. Mathematische Certainty: mit 1 Mrd USD temporär Governance-Stimmen kaufen, abstimmen, verkaufen heißt effektiv jede Governance-Entscheidung treffen. Solange Transaktion profitabel (Wert extrahierbar > Gas + Fee), wird irgendwann jemand sie ausführen. Sicherheitsmodelle basierten auf falschen Annahmen — Designer gingen von "langsamer" Stimmrechts-Akkumulation aus, Flash Loans zerstörten das. Lehren für moderne Governance: Erstens: Time-Locks non-negotiable, 24-72h bis 7 Tage Delay. Flash-Loan-Stimmen können nichts bewirken, weil Time-Lock verhindert Ausnutzung. Zweitens: Snapshot-basierte Stimmrechts-Berechnung — Stimmrechte zum Zeitpunkt eines früheren Blocks. Drittens: Vesting-/Lock-basierte Stimmrechte wie Curve's veCRV — Flash-Loan-Nutzer haben 0 Lock-Zeit, minimal Stimmrechte. Viertens: Emergency-Mechanismen außerhalb Governance — Multisig-Zustimmung, Guardian-Role. Fünftens: wirtschaftliche Anreize gegen Governance-Angriffe. Praktische Anwendung: alle großen Protokolle (Aave, Compound, Maker, Curve) implementieren 2+ dieser Lehren. Seit 2023 keine großen Governance-Flash-Loan-Angriffe auf etablierte Protokolle. Neue Protokolle/Chains könnten Lehren ignorieren und Katastrophen wiederholen — deshalb bleibt Flash-Loan-Verständnis wichtig.
+Beanstalk hatte fundamentale Schwachstelle: On-Chain-Governance ohne Time-Lock plus Flash-Loan-Verfügbarkeit plus liquider Governance-Token. Wenn alle drei Bedingungen erfüllt sind, ist Angriff nur Zeitfrage. Mathematische Sicherheit: mit 1 Mrd USD temporär Governance-Stimmen kaufen, abstimmen, verkaufen heißt effektiv jede Governance-Entscheidung treffen. Solange Transaktion profitabel (Wert extrahierbar > Gas + Fee), wird irgendwann jemand sie ausführen. Sicherheitsmodelle basierten auf falschen Annahmen — Designer gingen von "langsamer" Stimmrechts-Akkumulation aus, Flash Loans zerstörten das. Lehren für moderne Governance: Erstens: Time-Locks non-negotiable, 24-72h bis 7 Tage Delay. Flash-Loan-Stimmen können nichts bewirken, weil Time-Lock verhindert Ausnutzung. Zweitens: Snapshot-basierte Stimmrechts-Berechnung — Stimmrechte zum Zeitpunkt eines früheren Blocks. Drittens: Vesting-/Lock-basierte Stimmrechte wie Curves veCRV — Flash-Loan-Nutzer haben 0 Lock-Zeit, minimal Stimmrechte. Viertens: Emergency-Mechanismen außerhalb Governance — Multisig-Zustimmung, Guardian-Role. Fünftens: wirtschaftliche Anreize gegen Governance-Angriffe. Praktische Anwendung: alle großen Protokolle (Aave, Compound, Maker, Curve) implementieren 2+ dieser Lehren. Seit 2023 keine großen Governance-Flash-Loan-Angriffe auf etablierte Protokolle. Neue Protokolle/Chains könnten Lehren ignorieren und Katastrophen wiederholen — deshalb bleibt Flash-Loan-Verständnis wichtig.
 </details>
 
 **Frage 2:** Entwirf einen Due-Diligence-Prozess (7-10 Schritte) für neues DeFi-Protokoll (3 Monate live)?
@@ -874,8 +844,8 @@ Systematischer 9-Schritte-Prozess: Schritt 1: Dokumentation lesen (30-45 Min). S
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → bZx (2020) → Harvest (2020) → Cream (2021) → Mango (2022) → Beanstalk (2022) → Gemeinsame Muster → Due-Diligence-Checkliste
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 11–13 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Grundmechanismus → bZx (Feb 2020) → Beanstalk (Apr 2022) → Euler (Mär 2023) → Mango (Okt 2022) → 5 Muster und 6-Punkt-Checkliste
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Angriffs-Zeitleiste, Oracle-Manipulations-Diagramme, Protokoll-Schwachstellen-Matrix, Due-Diligence-Flowchart, Exploit-Volumen-Chart
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1012,15 +982,9 @@ Schuld zahlen → Bonus
 FL → Mint → Swap → Burn → Repay
 LP-Fee-Extraktion
 
-**[Slide 7] — Searcher-Pyramide**
-Top (10): Millionen Gewinn
-Mid (100-500): 100k-1M
-Long-Tail (Tausende): Lern-Projekte
-
-**[Slide 8] — Retail-Relevanz**
-Schutz-Strategien besser einschätzen
-Protokoll-Health verstehen
-Unsichtbare Kosten sehen
+**[Slide 7] — Searcher-Pyramide und Retail-Relevanz**
+Top 10: Millionen Gewinn | Mid 100-500: 100k-1M | Long-Tail: Lern-Projekte
+Für Retail: Schutz-Strategien einschätzen, Protokoll-Health verstehen, unsichtbare Kosten erkennen
 
 ### Sprechertext
 
@@ -1036,9 +1000,7 @@ Unsichtbare Kosten sehen
 
 **[Slide 6]** JIT-Liquidity-Bots bei Uniswap V3. Flash Loan, Mint konzentrierte Liquidität vor Swap, Swap erfolgt durch Liquidität, Bot kassiert Fees, Burn sofort. Besonders gegen reguläre LPs schädliche MEV-Form.
 
-**[Slide 7]** Searcher-Pyramide. Top-Tier etwa 10 Teams mit Millionen Gewinn, dedizierter Infrastruktur, Block-Builder-Beziehungen. Mid-Tier 100-500 mit spezialisierten Strategien. Long-Tail Tausende mit Lern-Projekten. Für alle: Flash Loans gleiche Infrastruktur. Unterschied in Strategie-Qualität und Geschwindigkeit.
-
-**[Slide 8]** Relevanz für Retail, auch ohne Searcher zu werden. MEV auf deinen Trades nutzt Flash Loans — Verständnis hilft Schutz. Protokolle mit aktiven Searchern oft gesünder. Unsichtbare Kosten werden transparenter durch Searcher-Logik-Verständnis.
+**[Slide 7]** Die Searcher-Pyramide und Retail-Relevanz. Top-Tier etwa 10 Teams mit Millionen Gewinn, dedizierter Infrastruktur, Block-Builder-Beziehungen. Mid-Tier 100 bis 500 mit spezialisierten Strategien. Long-Tail Tausende mit Lern-Projekten. Für alle: Flash Loans als gleiche Infrastruktur, Unterschied in Strategie-Qualität und Geschwindigkeit. Relevanz für Retail, auch ohne selbst Searcher zu werden: MEV auf deinen Trades nutzt Flash Loans — Verständnis hilft beim Schutz. Protokolle mit aktiven Searchern sind oft gesünder. Unsichtbare Kosten werden transparenter durch Searcher-Logik-Verständnis.
 
 ### Visuelle Vorschläge
 
@@ -1048,8 +1010,7 @@ Unsichtbare Kosten sehen
 **[Slide 4]** Bundle-Struktur mit FL-Integration.
 **[Slide 5]** Liquidations-Bot-Wettbewerb.
 **[Slide 6]** JIT-Liquidity-Timing.
-**[Slide 7]** Searcher-Pyramide.
-**[Slide 8]** Retail-Perspektive-Checkliste.
+**[Slide 7]** Zwei-Spalten-Layout: links Searcher-Pyramide, rechts Retail-Perspektive-Checkliste.
 
 ### Übung
 
@@ -1085,8 +1046,8 @@ Negative Effekte: Erstens: DEX-Preis-Divergenz ohne Flash-Loan-Arbitrage. Preise
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → MEV + Flash Loans → Arbitrage-Beispiel mit Zahlen → Liquidations-MEV → Bundle-Struktur → Demokratisierung der Searcher → Grenzen im Wettbewerb
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 10–12 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Synergie MEV + FL → Arbitrage-Bot → Bundle-Integration → Liquidations-Bots → JIT-Liquidity → Searcher-Pyramide und Retail-Relevanz
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Flash-Loan-MEV-Arbitrage-Rechenbeispiel, Searcher-Landschaft-Grafik, MEV-Bundle-Diagramm, Pareto-Verteilung-Chart, Infrastruktur-Stack
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1101,7 +1062,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 - Entscheiden, ob Flash Loans persönlich sinnvoll sind
 - Die wichtigsten Tools konkret anwenden
 - Konservativ einschätzen, wann Flash Loans NICHT die Lösung sind
-- DeFi-Saver, Instadapp, Contango als Retail-taugliche Interfaces für Flash-Loan-Operationen konfigurieren
+- DeFi Saver, Instadapp, Furucombo als Retail-taugliche Interfaces für Flash-Loan-Operationen konfigurieren
 - Die Abwägung zwischen Smart-Contract-Risiko (zusätzliche Layer) und Kapitaleffizienz (keine Pre-Funding-Notwendigkeit) bewusst treffen
 - Eine eigene Entscheidungs-Heuristik entwickeln: "Flash Loan nutzen, wenn X; vermeiden, wenn Y"
 
@@ -1133,7 +1094,7 @@ Aus Lektionen 12.1-12.3:
 - Auto-Rebalancing (kostenpflichtig)
 - Positions-Dashboard
 
-UX: Web-App, MetaMask-Integration, drag-and-drop-artige Flows.
+UX: Web-App, MetaMask-Integration, Drag-and-Drop-ähnliche Flows.
 Kosten: 0,05-0,3% Service-Gebühr + Gas.
 
 **Instadapp (instadapp.io)** — Alternative mit ähnlichen Features.
@@ -1238,20 +1199,9 @@ Einfachere Lösung?
 Kosten vs. Nutzen?
 Verstehe ich es?
 
-**[Slide 7] — Sicherheits-Regeln**
-Kleine Test-Menge
-Aktuelle Tool-Version
-Nicht bei Kongestion
-Slippage konservativ
-Simulation prüfen
-Monitor nach Execution
-
-**[Slide 8] — Wann NICHT**
-Normale Swaps
-Unter $5.000
-Kein Verständnis
-Als Spekulation
-Ungetestet
+**[Slide 7] — Sicherheits-Regeln und Wann NICHT**
+Regeln: Test-Menge erst, aktuelle Tool-Version, konservative Slippage, Simulation lesen, Monitor nach Execution
+Wann NICHT: normale Swaps, unter $5k, kein Verständnis, als Spekulation, ungetestete Strategien
 
 ### Sprechertext
 
@@ -1261,15 +1211,13 @@ Ungetestet
 
 **[Slide 3]** Die vier legitimen Retail-Anwendungen. Collateral-Swap: Sicherheits-Asset ändern ohne Position aufzulösen, 1-3 Mal pro Jahr. Debt-Refinancing: Schulden zu günstigerem Protokoll, 1-3 Mal pro Jahr. Self-Liquidation: Notfall, hoffentlich nie genutzt. Leverage-Loop-Aufbau: einmalig pro Position, wie in Modul 10.
 
-**[Slide 4]** DeFi Saver, defisaver.com — umfassendster Retail-Aggregator. Collateral-Swap für Aave V3, Compound, Maker. Leverage-Loop-Builder. Debt-Refinancing. Self-Liquidation. Auto-Rebalancing gegen Gebühr. Web-App mit MetaMask-Integration, drag-and-drop-artige Flows. Kosten 0,05-0,3 Prozent Service-Gebühr plus Gas. Für die meisten Retail-Anwendungen erste Wahl.
+**[Slide 4]** DeFi Saver, defisaver.com — umfassendster Retail-Aggregator. Collateral-Swap für Aave V3, Compound, Maker. Leverage-Loop-Builder. Debt-Refinancing. Self-Liquidation. Auto-Rebalancing gegen Gebühr. Web-App mit MetaMask-Integration, Drag-and-Drop-ähnliche Flows. Kosten 0,05-0,3 Prozent Service-Gebühr plus Gas. Für die meisten Retail-Anwendungen erste Wahl.
 
 **[Slide 5]** Weitere Tools. Instadapp etwas technischer mit DSL für programmierbare Interaktionen. Furucombo als Visual Builder — drag-and-drop eigene Flash-Loan-Kombinationen ohne Solidity lernen. Beide Alternativen zu DeFi Saver.
 
 **[Slide 6]** Entscheidungs-Matrix vor jedem Einsatz. Erstens: konkretes Problem, das Flash Loans lösen? Nein → nicht nutzen. Zweitens: einfachere Lösung? Ja praktikabel → einfacher. Drittens: rechtfertigt Nutzen Komplexität? Gas plus Fee unter 30 Prozent Nutzen okay. Über 50 Prozent meist nicht. Viertens: verstehe ich es? Kann Schritte erklären okay. Blind klicken nicht ausführen.
 
-**[Slide 7]** Sechs Sicherheits-Regeln. Test mit kleiner Menge 500-2.000 Dollar zuerst. Aktuelle Tool-Version. Nicht bei Netzwerk-Kongestion. Slippage konservativ 0,1-0,5 Prozent. Simulation vor Execution wirklich lesen. Nach Ausführung auf Etherscan monitoren.
-
-**[Slide 8]** Wann NICHT. Für normale Swaps, DEX reicht. Unter 5.000 Dollar Operation, Gas zu hoch relativ. Bei fehlendem Verständnis, blind-Vertrauen gefährlich. Als Spekulations-Tool, FLs sind Effizienz-Tool. Bei ungetesteter Strategie, atomare Ausführung = keine Korrektur. Konservative Zusammenfassung: 95 Prozent der Fälle keine Flash Loans. 4 Prozent sinnvoll für spezifische Situationen. 1 Prozent Notfälle. Verstehe Konzept, nutze nur bei Bedarf.
+**[Slide 7]** Sicherheits-Regeln und wann NICHT — die Synthese der Lektion. Sechs Sicherheits-Regeln: Test mit kleiner Menge 500 bis 2.000 Dollar zuerst. Aktuelle Tool-Version. Nicht bei Netzwerk-Kongestion. Slippage konservativ 0,1 bis 0,5 Prozent. Simulation vor Execution wirklich lesen. Nach Ausführung auf Etherscan monitoren. Wann NICHT: für normale Swaps reicht ein DEX. Unter 5.000 Dollar Operation ist Gas zu hoch relativ. Bei fehlendem Verständnis ist blind-Vertrauen gefährlich. Als Spekulations-Tool unbrauchbar — Flash Loans sind Effizienz-Tool, nicht Hebel. Bei ungetesteter Strategie ist die atomare Ausführung gleichbedeutend mit keine Korrektur möglich. Konservative Zusammenfassung: 95 Prozent der Fälle keine Flash Loans, 4 Prozent sinnvoll für spezifische Situationen, 1 Prozent Notfälle. Verstehe das Konzept, nutze es nur bei Bedarf.
 
 ### Visuelle Vorschläge
 
@@ -1279,8 +1227,7 @@ Ungetestet
 **[Slide 4]** **SCREENSHOT SUGGESTION:** DeFi Saver Dashboard.
 **[Slide 5]** **SCREENSHOT SUGGESTION:** Furucombo Visual Builder.
 **[Slide 6]** Entscheidungsbaum mit 4 Fragen.
-**[Slide 7]** Sechs-Regeln-Checkliste.
-**[Slide 8]** Rote-Flaggen-Liste.
+**[Slide 7]** Zwei-Spalten-Layout: links Sechs-Regeln-Checkliste, rechts Rote-Flaggen-Liste „Wann NICHT".
 
 ### Übung
 
@@ -1316,8 +1263,8 @@ Kritische Situation, geordnete Entscheidungen. Schritt 1: Ruhig bleiben (2-3 Min
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 7 Folien: Titel → Retail-Tools Übersicht → DeFi Saver → Instadapp → Contango → Entscheidungs-Heuristik → Wann NICHT nutzen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 9–11 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Meistens nicht → 4 Retail-Anwendungen → DeFi Saver → Instadapp und Furucombo → Entscheidungs-Matrix → Sicherheits-Regeln und Wann NICHT
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Tool-Screenshots, Entscheidungsbaum, Risk-Reward-Matrix, Kostenkalkulations-Tabelle, Lern-Roadmap
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1347,7 +1294,7 @@ Die 5 Muster: **1. Oracle-Manipulation.** Protokoll nutzt DEX-Pool als Preis-Ora
 <details>
 <summary>Antwort anzeigen</summary>
 
-Alice hat mehrere Optionen, die sich in Komplexität, Kosten und Zwischenzustands-Risiken unterscheiden. **Option 1: Manueller mehrstufiger Ansatz.** (a) Zahle 25k ETH-Schuld zurück (brauche dafür ETH — wenn nicht verfügbar, muss Alice erst ETH kaufen, was Slippage und Gas kostet). (b) Entferne 50k USDC Sicherheit. (c) Swap 50k USDC → 50k USDT (auf Curve z.B. mit minimalem Slippage). (d) Hinterlege 50k USDT als neue Sicherheit. (e) Borge wieder 25k ETH. Probleme: 5 separate Transaktionen, jede mit Gas-Kosten (Mainnet: 150-300 USD total). Zwischen Schritt (b) und (d) hat Alice keine Sicherheit hinterlegt — wenn sie andere offene Positionen hätte, wären die unter Risiko. Vor allem: Alice muss 25k ETH verfügbar haben, um die Schuld überhaupt zurückzuzahlen. Das ist oft nicht der Fall — deshalb hat sie ja eine Schuld. **Option 2: Flash Loan via DeFi Saver (empfohlen).** Alice öffnet DeFi Saver, wählt "Collateral Swap" für ihre Aave-Position. Spezifiziert: 50k USDC → 50k USDT. Das Tool baut im Hintergrund: (a) Flash Loan 50k USDT von Balancer V2 (0% Fee). (b) Hinterlege 50k USDT als Sicherheit auf Aave. (c) Entferne 50k USDC Sicherheit von Aave. (d) Swap 50k USDC → 50k USDT auf Curve (sehr niedrige Slippage bei Stablecoin-Pair). (e) Rückzahlung Flash Loan mit den 50k USDT. Alles in einer atomaren Transaktion. Keine ETH-Schuld wird angerührt — sie bleibt bestehen während des gesamten Swaps. Gas-Kosten: ~80-150 USD. Service-Fee DeFi Saver: ~25-50 USD. Slippage: <0,1% bei USDC/USDT auf Curve = ~50 USD. Gesamt-Kosten: 155-250 USD. **Option 3: Direkt via Aave's native Features (wenn verfügbar).** Aave V3 hat teilweise native "Collateral Swap"-Features in der UI. Nutzt ähnliche Flash-Loan-Logik im Hintergrund. UX etwas weniger poliert als DeFi Saver, aber funktional. Kosten ähnlich. **Vergleich der Optionen:** Option 1: komplex, riskant (Zwischenzustände), teuer (mehr Gas), erfordert verfügbares ETH. Option 2: einfach, sicher, gesamt-kostengünstig, ein Klick. Option 3: Aave-integriert, je nach aktueller UI-Reife. **Empfehlung für Alice:** Option 2 über DeFi Saver ist klar beste Wahl für diese Situation. Die ~150-250 USD Kosten gegen die Alternative (500+ USD manuell + Zwischenzustands-Risiken + ETH-Verfügbarkeits-Problem) machen DeFi Saver überlegen. Alice sollte: DeFi Saver besuchen, "Collateral Swap" für Aave, Wallet verbinden, Swap-Parameter eingeben, Simulation prüfen (erwartete Ausführungs-Preise, Slippage, Gas), bestätigen. Gesamt-Prozess: 5-10 Minuten. Alice's ETH-Schuld bleibt unverändert durch den gesamten Prozess. Nach Abschluss: Aave-Position zeigt 50k USDT Sicherheit + 25k ETH Schuld. Perfekter Swap ohne Position-Auflösung.
+Alice hat mehrere Optionen, die sich in Komplexität, Kosten und Zwischenzustands-Risiken unterscheiden. **Option 1: Manueller mehrstufiger Ansatz.** (a) Zahle 25k ETH-Schuld zurück (brauche dafür ETH — wenn nicht verfügbar, muss Alice erst ETH kaufen, was Slippage und Gas kostet). (b) Entferne 50k USDC Sicherheit. (c) Swap 50k USDC → 50k USDT (auf Curve z.B. mit minimalem Slippage). (d) Hinterlege 50k USDT als neue Sicherheit. (e) Borge wieder 25k ETH. Probleme: 5 separate Transaktionen, jede mit Gas-Kosten (Mainnet: 150-300 USD total). Zwischen Schritt (b) und (d) hat Alice keine Sicherheit hinterlegt — wenn sie andere offene Positionen hätte, wären die unter Risiko. Vor allem: Alice muss 25k ETH verfügbar haben, um die Schuld überhaupt zurückzuzahlen. Das ist oft nicht der Fall — deshalb hat sie ja eine Schuld. **Option 2: Flash Loan via DeFi Saver (empfohlen).** Alice öffnet DeFi Saver, wählt "Collateral Swap" für ihre Aave-Position. Spezifiziert: 50k USDC → 50k USDT. Das Tool baut im Hintergrund: (a) Flash Loan 50k USDT von Balancer V2 (0% Fee). (b) Hinterlege 50k USDT als Sicherheit auf Aave. (c) Entferne 50k USDC Sicherheit von Aave. (d) Swap 50k USDC → 50k USDT auf Curve (sehr niedrige Slippage bei Stablecoin-Pair). (e) Rückzahlung Flash Loan mit den 50k USDT. Alles in einer atomaren Transaktion. Keine ETH-Schuld wird angerührt — sie bleibt bestehen während des gesamten Swaps. Gas-Kosten: ~80-150 USD. Service-Fee DeFi Saver: ~25-50 USD. Slippage: <0,1% bei USDC/USDT auf Curve = ~50 USD. Gesamt-Kosten: 155-250 USD. **Option 3: Direkt via Aaves native Features (wenn verfügbar).** Aave V3 hat teilweise native "Collateral Swap"-Features in der UI. Nutzt ähnliche Flash-Loan-Logik im Hintergrund. UX etwas weniger poliert als DeFi Saver, aber funktional. Kosten ähnlich. **Vergleich der Optionen:** Option 1: komplex, riskant (Zwischenzustände), teuer (mehr Gas), erfordert verfügbares ETH. Option 2: einfach, sicher, gesamt-kostengünstig, ein Klick. Option 3: Aave-integriert, je nach aktueller UI-Reife. **Empfehlung für Alice:** Option 2 über DeFi Saver ist klar beste Wahl für diese Situation. Die ~150-250 USD Kosten gegen die Alternative (500+ USD manuell + Zwischenzustands-Risiken + ETH-Verfügbarkeits-Problem) machen DeFi Saver überlegen. Alice sollte: DeFi Saver besuchen, "Collateral Swap" für Aave, Wallet verbinden, Swap-Parameter eingeben, Simulation prüfen (erwartete Ausführungs-Preise, Slippage, Gas), bestätigen. Gesamt-Prozess: 5-10 Minuten. Alices ETH-Schuld bleibt unverändert durch den gesamten Prozess. Nach Abschluss: Aave-Position zeigt 50k USDT Sicherheit + 25k ETH Schuld. Perfekter Swap ohne Position-Auflösung.
 </details>
 
 **Frage 4:** Warum war Beanstalk-Hack ein "Denial-of-Service gegen rationale Akteure" und wie hat DeFi daraus gelernt?
@@ -1355,7 +1302,7 @@ Alice hat mehrere Optionen, die sich in Komplexität, Kosten und Zwischenzustand
 <details>
 <summary>Antwort anzeigen</summary>
 
-Beanstalk-Hack war strukturell ein Denial-of-Service (DoS) gegen rationale Akteure, weil das Protokoll-Design mathematisch unvermeidbar zum Angriff einlud. Dekonstruktion: rationale Akteure (normale Beanstalk-Nutzer) hatten Stimmrechte proportional zu ihren Beanstalk-Holdings. Ein Angreifer konnte durch Flash Loan temporär mehr Stimmrechte akkumulieren als alle rationalen Akteure zusammen. Die rationalen Akteure konnten nichts dagegen tun — ihre eigene Stimmabgabe, wie auch immer sie aussah, wurde durch die Flash-Loan-Mehrheit überstimmt. Das ist strukturelles DoS: rationale Teilnahme am Protokoll wird durch Flash-Loan-Kapital entwertet. Die Schwachstelle war nicht, dass Beanstalk "gehackt" wurde — es war, dass rationale Teilnahme am Protokoll grundsätzlich unmöglich war, sobald TVL hoch genug wurde, um einen Angriff zu rentabilisieren. Beanstalk war zum Scheitern verurteilt, bevor TVL kritische Masse erreichte. Die Lehre für DeFi-Community: Erstens, Governance-Designs müssen Flash-Loan-Szenarien explizit berücksichtigen — nicht als "Edge-Case", sondern als Standard-Annahme. Zweitens, Time-Locks sind non-negotiable für jede Governance. Auch 24h-Delay macht Flash-Loan-Angriff unmöglich, weil Flash Loans nur Minuten-Sekunden existieren. Drittens, Stimmrechts-Berechnung muss von momentaner Balance entkoppelt werden — Snapshot-basiert zu früherem Zeitpunkt oder Vesting-basiert. Viertens, Emergency-Mechanismen außerhalb der Haupt-Governance. Multisig-Guardian mit Veto-Recht in extremen Fällen. Fünftens, wirtschaftliche Disincentives. Wenn Stimmrechte Lock-Zeit erfordern, sind Flash-Loan-Votes automatisch unmöglich. Adoption in der DeFi-Community: Aave, Compound, Maker haben 2-7 Tage Time-Locks seit langem. Post-Beanstalk haben neue Protokolle diese als Standard übernommen. Curve's veCRV-Modell (Lock bis 4 Jahre für maximales Voting Power) ist extrem flash-loan-resistent. Uniswap Governance hat 7-Tage-Time-Lock plus 4-Tage-Voting-Periode — effektiv 11 Tage. Das alles macht Beanstalk-Style-Angriffe gegen etablierte Protokolle nicht mehr möglich. Realistische Bewertung: Beanstalk war schmerzhafte Lehre für das ganze Ökosystem, aber eine wertvolle. 182 Millionen USD Verlust in einem Angriff — aber wahrscheinlich verhindert sie Milliarden in zukünftigen Angriffen, weil Lessons allgemein adoptiert wurden. Neue Protokolle, die die Lehren ignorieren (z.B. kleine Chains mit naiver Governance), sind Risiko-Kandidaten. Nutzer-Strategie: prüfe bei jedem Governance-basierten Protokoll vor Investment, ob Time-Locks existieren. Ohne: Red Flag. Diese einzelne Prüfung kostet 5 Minuten und schützt vor Beanstalk-Wiederholungen.
+Beanstalk-Hack war strukturell ein Denial-of-Service (DoS) gegen rationale Akteure, weil das Protokoll-Design mathematisch unvermeidbar zum Angriff einlud. Dekonstruktion: rationale Akteure (normale Beanstalk-Nutzer) hatten Stimmrechte proportional zu ihren Beanstalk-Holdings. Ein Angreifer konnte durch Flash Loan temporär mehr Stimmrechte akkumulieren als alle rationalen Akteure zusammen. Die rationalen Akteure konnten nichts dagegen tun — ihre eigene Stimmabgabe, wie auch immer sie aussah, wurde durch die Flash-Loan-Mehrheit überstimmt. Das ist strukturelles DoS: rationale Teilnahme am Protokoll wird durch Flash-Loan-Kapital entwertet. Die Schwachstelle war nicht, dass Beanstalk "gehackt" wurde — es war, dass rationale Teilnahme am Protokoll grundsätzlich unmöglich war, sobald TVL hoch genug wurde, um einen Angriff zu rentabilisieren. Beanstalk war zum Scheitern verurteilt, bevor TVL kritische Masse erreichte. Die Lehre für DeFi-Community: Erstens, Governance-Designs müssen Flash-Loan-Szenarien explizit berücksichtigen — nicht als "Edge-Case", sondern als Standard-Annahme. Zweitens, Time-Locks sind non-negotiable für jede Governance. Auch 24h-Delay macht Flash-Loan-Angriff unmöglich, weil Flash Loans nur Minuten-Sekunden existieren. Drittens, Stimmrechts-Berechnung muss von momentaner Balance entkoppelt werden — Snapshot-basiert zu früherem Zeitpunkt oder Vesting-basiert. Viertens, Emergency-Mechanismen außerhalb der Haupt-Governance. Multisig-Guardian mit Veto-Recht in extremen Fällen. Fünftens, wirtschaftliche Disincentives. Wenn Stimmrechte Lock-Zeit erfordern, sind Flash-Loan-Votes automatisch unmöglich. Adoption in der DeFi-Community: Aave, Compound, Maker haben 2-7 Tage Time-Locks seit langem. Post-Beanstalk haben neue Protokolle diese als Standard übernommen. Curves veCRV-Modell (Lock bis 4 Jahre für maximales Voting Power) ist extrem flash-loan-resistent. Uniswap Governance hat 7-Tage-Time-Lock plus 4-Tage-Voting-Periode — effektiv 11 Tage. Das alles macht Beanstalk-Style-Angriffe gegen etablierte Protokolle nicht mehr möglich. Realistische Bewertung: Beanstalk war schmerzhafte Lehre für das ganze Ökosystem, aber eine wertvolle. 182 Millionen USD Verlust in einem Angriff — aber wahrscheinlich verhindert sie Milliarden in zukünftigen Angriffen, weil Lessons allgemein adoptiert wurden. Neue Protokolle, die die Lehren ignorieren (z.B. kleine Chains mit naiver Governance), sind Risiko-Kandidaten. Nutzer-Strategie: prüfe bei jedem Governance-basierten Protokoll vor Investment, ob Time-Locks existieren. Ohne: Red Flag. Diese einzelne Prüfung kostet 5 Minuten und schützt vor Beanstalk-Wiederholungen.
 </details>
 
 **Frage 5:** Bist du nach diesem Modul ein "Flash-Loan-Nutzer"? Entwirf eine realistische persönliche DeFi-Strategie, die Flash-Loan-Erkenntnisse berücksichtigt.
