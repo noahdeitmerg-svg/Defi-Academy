@@ -89,41 +89,30 @@ Lesson-Asset-Generator
 
 ## 3. Was `slides_prompt.txt` Gamma (oder andere Generatoren) sagt
 
-`generate-slides-prompt.js` schreibt einen **kurzen** englischen Brief:
-Regeln einmal im Kopf, dann pro Slide ein Block mit Kontextzeile
-(Titel/ Typ) und **einem** Bildauftrag — ohne wiederholte
-„Do-not“-Absätze und ohne Repo-Pfade (Dateinamen `visualNN.png` legt
-die Pipeline per PDF-Reihenfolge fest).
+`generate-slides-prompt.js` schreibt einen **Micro-Brief**: wenige
+globale Regeln, dann **eine nummerierte Zeile pro Seite** — jeweils ein
+kurzer englischer Imperativ („Generate one image: …“). Keine
+Lektionsabsaetze, keine Markdown-Kontextbloecke; inhaltliche Details
+stehen in `lessons/*.md`, die Zeilen leiten aus **Slide-Titel + Section**
+nur noch das Motiv ab.
 
 Beispielstruktur:
 
 ```
-# Visual brief — one full-page graphic per item
-
-Hard rules:
-- No slide template …
-- One idea per page …
-
-Lesson: module04-lesson02 — …
-
-## N graphics (in this order)
-
-### 1 / N
-Context: <Kurztitel>
-Type: <section_type>
-
-Draw exactly one image for this page:
-- <konkrete Bildidee>
-
-### 2 / N
+Each numbered line = one PDF page = one full-bleed image.
 …
+
+Lesson module04-lesson02 — 7 page(s), in order:
+
+1. Generate one abstract image: …
+2. Generate one image: …
+…
+
+Print exactly 7 pages in this order. No extra pages.
 ```
 
-Der **Context**-Titel ist nur thematische Orientierung — nicht als
-Typografie ins Bild malen. Fuer **Midjourney / DALL·E / Firefly** kann
-derselbe Text Abschnitt fuer Abschnitt kopiert werden; die Pipeline
-bleibt auf Gamma-PDF + Slice optimiert, ist aber bewusst
-werkzeugneutral formuliert.
+Fuer **Midjourney / DALL·E / Firefly** kann jede Zeile 1..N einzeln
+kopiert werden. Die Pipeline bleibt auf Gamma-PDF + Slice optimiert.
 
 ---
 
