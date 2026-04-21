@@ -7,7 +7,6 @@ import { useProgress } from "@/lib/progress/useProgress";
 import { VideoPlayer } from "./VideoPlayer";
 import { KeyTakeaways } from "./KeyTakeaways";
 import { LearningObjectives } from "./LearningObjectives";
-import { KeyConcepts } from "./KeyConcepts";
 import { ExerciseBlock } from "./ExerciseBlock";
 import { QuizEngine } from "@/components/quiz/QuizEngine";
 import { UxTitleGoldBars } from "@/components/brand/UxLogo";
@@ -59,8 +58,6 @@ export function LessonView({
       </section>
 
       <KeyTakeaways takeaways={keyTakeaways} />
-
-      <KeyConcepts concepts={lesson.keyConcepts} />
 
       <ExerciseBlock html={exerciseHtml} />
 
