@@ -50,6 +50,8 @@ yarn-error.log*
 /.pilot-render-tmp/
 /.render-batch-tmp/
 /.tmp-voice-test/
+/.tmp-pdfjs-out/
+**/voice_script_clean.txt
 # Renderer-Bundle-Cache + Remotion-Output
 /video-renderer/**/public/assets/
 /video-renderer/**/output/

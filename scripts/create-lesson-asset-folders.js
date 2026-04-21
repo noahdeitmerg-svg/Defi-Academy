@@ -28,9 +28,8 @@
  *   node scripts/create-lesson-asset-folders.js --dry-run
  *
  * Flags
- *   --generator-output <path>  default: ./lesson-asset-generator/output
- *                              (Fallback: ./generator-output,
- *                               ./lesson-asset-generator/output)
+ *   --generator-output <path>  default: zuerst ./generated-assets, sonst
+ *                              ./lesson-asset-generator/output, ./generator-output
  *   --assets-input <path>      default: ./assets-input
  *   --only <csv>               nur diese Lesson-IDs anlegen
  *   --copy-prompt              slides_prompt.txt und voice_script.txt
@@ -67,9 +66,8 @@ Usage:
   node scripts/create-lesson-asset-folders.js [flags]
 
 Flags:
-  --generator-output <path>  default: ./lesson-asset-generator/output
-                             (Fallback: ./generator-output,
-                              ./lesson-asset-generator/output)
+  --generator-output <path>  default: ./generated-assets (sonst lesson-asset-
+                             generator/output, generator-output)
   --assets-input <path>      default: ./assets-input
   --only <csv>               explizite Lesson-IDs
   --copy-prompt              Prompt- und Script-Dateien mitkopieren
@@ -138,7 +136,7 @@ const LESSON_README = [
   '',
   '## Optional vom Slides-Generator',
   '',
-  '- slides_prompt.txt (Kopie aus lesson-asset-generator/output/)',
+  '- slides_prompt.txt (Kopie aus generated-assets/ o. a. Generator-Out)',
   '- SLIDES_HANDOFF.md (nur wenn generate:slides ohne API-Key lief)',
   '',
   '## Verboten',
@@ -181,7 +179,7 @@ function ensureLessonFolder({ lessonId, assetsInputDir, generatorOutputDir, copy
     for (const file of ['slides_prompt.txt', 'voice_script.txt']) {
       const src = path.join(srcGenDir, file);
       const dst = path.join(dir, file);
-      if (fs.existsSync(src) && !fs.existsSync(dst)) {
+      if (fs.existsSync(src)) {
         actions.push(`copy ${file}`);
         if (!dryRun) fs.copyFileSync(src, dst);
       }
@@ -202,11 +200,12 @@ function main() {
     ROOT,
     args['generator-output'] ||
       firstExisting([
+        path.join(ROOT, 'generated-assets'),
         path.join(ROOT, 'lesson-asset-generator/output'),
         path.join(ROOT, 'generator-output'),
         path.join(ROOT, 'lesson-asset-generator/lesson-asset-generator/output'),
       ]) ||
-      'lesson-asset-generator/output'
+      'generated-assets'
   );
 
   const assetsInputDir = path.resolve(ROOT, args['assets-input'] || 'assets-input');
@@ -273,11 +272,9 @@ function main() {
     console.log('Dry-Run — nichts geschrieben.');
   } else {
     console.log('Naechste Schritte:');
-    console.log('  1) In Gamma mit slides_prompt.txt pro Slide EIN Einzel-');
-    console.log('     Visual erzeugen (Diagramm/Illustration, KEIN Layout!)');
-    console.log('  2) Als visual01.png, visual02.png, ... in den Ordner legen');
-    console.log('  3) npm run generate:voice');
-    console.log('  4) npm run render:course');
+    console.log('  1) npm run generate:slides   (Gamma + PDF.js → visualNN.png)');
+    console.log('  2) npm run generate:voice');
+    console.log('  3) npm run render:course     (Gamma+Voice+Render — API-Kosten!)');
     console.log('');
     console.log('Regeln: docs/SLIDE_GENERATION_RULES.md');
   }

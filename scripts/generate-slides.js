@@ -19,8 +19,8 @@
  *
  * Flow pro Lektion (moduleXX-lessonYY)
  * ------------------------------------
- *   1. Finde `slides_prompt.txt` (priorisiert generator-output/<id>/,
- *      dann lessons/<id>/, dann assets-input/<id>/).
+ *   1. Finde `slides_prompt.txt` (priorisiert <generator-output>/<id>/,
+ *      default: generated-assets), dann lessons/<id>/, dann assets-input/<id>/).
  *   2. Idempotenz-Gate: Wenn visual01.png bereits in
  *      assets-input/<id>/ liegt und nicht `--force`, überspringen.
  *   3. Slicing-Shortcut: Liegt assets-input/<id>/slides.pdf bereits vor
@@ -28,10 +28,13 @@
  *      zerschnitten — kein API-Call.
  *   4. Gamma-API-Pfad: Mit `GAMMA_API_KEY` ruft das Skript Gamma
  *      `/generations` → polled bis `status=completed` → lädt das PDF →
- *      zerschneidet via `pdftoppm` → schreibt visual01.png, visual02.png, …
- *   5. Manual-Handoff-Fallback: Ohne Key oder ohne `pdftoppm` wird der
- *      Prompt nach assets-input/<id>/slides_prompt.txt kopiert und eine
- *      README hinterlegt, wie der User manuell weitermachen kann.
+ *      zerschneidet zu PNGs (bevorzugt `pdftoppm`, sonst PDF.js +
+ *      `@napi-rs/canvas` ohne Poppler) → visual01.png, visual02.png, …
+ *      Der API-Text ist absichtlich kurz; der Bildauftrag steht in
+ *      `slides_prompt.txt` (lesson-asset-generator, knapper Brief).
+ *   5. Manual-Handoff-Fallback: Ohne Key oder wenn PDF→PNG fehlschlägt,
+ *      wird der Prompt nach assets-input/<id>/slides_prompt.txt kopiert
+ *      und eine README hinterlegt.
  *
  * Ausgabestruktur
  *   assets-input/<id>/
@@ -48,7 +51,7 @@
  *   node scripts/generate-slides.js --dry-run
  *
  * Flags
- *   --generator-output <path>  default: ./generator-output
+ *   --generator-output <path>  default: ./generated-assets
  *   --assets-input <path>      default: ./assets-input
  *   --lessons-dir <path>       default: ./lessons (Fallback-Quelle für
  *                                                  slides_prompt.txt)
@@ -103,7 +106,7 @@ Usage:
   node scripts/generate-slides.js [flags]
 
 Flags:
-  --generator-output <path>  default: ./generator-output
+  --generator-output <path>  default: ./generated-assets
   --assets-input <path>      default: ./assets-input
   --lessons-dir <path>       default: ./lessons
   --only <csv>               explizite Lesson-ID-Liste
@@ -123,8 +126,8 @@ Env:
   GAMMA_THEME                optional Alias fuer themeId (Name funktioniert ggf. nicht)
   GAMMA_POLL_INTERVAL_MS     default: 4000
   GAMMA_POLL_TIMEOUT_MS      default: 300000
-  GAMMA_SLICE_DPI            optional: PNG-Aufloesung beim PDF-Slicing (default: --dpi / 150)
-  GAMMA_API_PROMPT_PREFIX    optional: ersetzt den eingebauten „nur Visuals“-Prefix
+  GAMMA_SLICE_DPI            optional: PNG-Aufloesung beim PDF-Slicing (default: --dpi / 150; pdftoppm + PDF.js)
+  GAMMA_API_PROMPT_PREFIX    optional: ersetzt den kurzen API-Prefix (sonst 2 Zeilen)
   GAMMA_DISABLE_API_PROMPT_PREFIX  set to 1 to skip any prefix
 `);
 }
@@ -331,9 +334,78 @@ function sliceePdfToPngs({ pdfPath, outputDir, dpi, pdftoppm, log, lessonId }) {
   return renamed;
 }
 
+/** Ohne Poppler: pdfjs-dist + @napi-rs/canvas (npm devDependencies). */
+function canSlicePdfWithPdfJs() {
+  try {
+    require.resolve('pdfjs-dist/package.json');
+    require.resolve('@napi-rs/canvas/package.json');
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * PDF → visual01.png … (reine Node-Abhaengigkeiten, kein pdftoppm).
+ * @returns {Promise<string[]>} Pfade der geschriebenen PNGs
+ */
+async function slicePdfToPngsPdfJs({ pdfPath, outputDir, dpi, log, lessonId }) {
+  fs.mkdirSync(outputDir, { recursive: true });
+  let getDocument;
+  let createCanvas;
+  try {
+    const pdfMod = await import('pdfjs-dist/legacy/build/pdf.mjs');
+    const canvasMod = await import('@napi-rs/canvas');
+    getDocument = pdfMod.getDocument;
+    createCanvas = canvasMod.createCanvas;
+  } catch (err) {
+    log.error(`PDF.js-Module laden fehlgeschlagen: ${err.message}`, lessonId);
+    return [];
+  }
+  const renamed = [];
+  try {
+    const data = new Uint8Array(fs.readFileSync(pdfPath));
+    const scale = dpi / 72;
+    const loadingTask = getDocument({
+      data,
+      verbosity: 0,
+      useSystemFonts: true,
+      isEvalSupported: false,
+    });
+    const doc = await loadingTask.promise;
+    for (let p = 1; p <= doc.numPages; p++) {
+      const page = await doc.getPage(p);
+      const viewport = page.getViewport({ scale });
+      const w = Math.max(1, Math.ceil(viewport.width));
+      const h = Math.max(1, Math.ceil(viewport.height));
+      const canvas = createCanvas(w, h);
+      const ctx = canvas.getContext('2d');
+      await page.render({
+        canvasContext: ctx,
+        viewport,
+        background: '#ffffff',
+      }).promise;
+      const pad = String(p).padStart(2, '0');
+      const finalName = path.join(outputDir, `visual${pad}.png`);
+      fs.writeFileSync(finalName, canvas.toBuffer('image/png'));
+      renamed.push(finalName);
+      log.info(`Saved visual${pad}.png (PDF.js)`, lessonId);
+    }
+  } catch (err) {
+    log.error(`PDF.js-Slicing: ${err.message}`, lessonId);
+    return [];
+  }
+  return renamed;
+}
+
 // --- Gamma-API --------------------------------------------------------------
 
-/** Vor den Lesson-Prompt haengen, damit Gamma weniger „Deck-Slides“ baut. */
+/**
+ * Sehr kurzer API-Prefix — der inhaltliche Brief steht in slides_prompt.txt
+ * (lesson-asset-generator) und ist absichtlich knapp gehalten.
+ * GAMMA_DISABLE_API_PROMPT_PREFIX=1 → nur promptText.
+ * GAMMA_API_PROMPT_PREFIX=... → ersetzt den eingebauten Mini-Prefix.
+ */
 function buildGammaInputText(promptText) {
   if (String(process.env.GAMMA_DISABLE_API_PROMPT_PREFIX || '').trim() === '1') {
     return promptText;
@@ -343,15 +415,8 @@ function buildGammaInputText(promptText) {
     return `${custom}\n\n---\n\n${promptText}`;
   }
   const builtIn = [
-    'STRICT VISUAL OUTPUT (DeFi-Academy pipeline):',
-    '- Deliver ONLY standalone diagrams, illustrations, or charts (one idea per page/slide in the export).',
-    '- NO slide titles, NO bullet lists, NO fake UI chrome, NO lesson/module branding on the images.',
-    '- NO full slide layouts — Remotion renders all text and layout.',
-    '- Prefer dark or neutral background, 16:9 feel, clean technical / infographic style, consistent line weight.',
-    '',
-    'Follow the detailed assignment below.',
-    '',
-    '---',
+    'Export requirement: each page = one full-bleed technical diagram only (no slide chrome).',
+    'Details follow.',
     '',
   ].join('\n');
   return `${builtIn}${promptText}`;
@@ -519,7 +584,7 @@ const HANDOFF_README = [
   '> Gamma liefert nur Einzel-Visuals, nicht komplette Slides.',
   '',
   'Der automatische Gamma-Pfad war diesmal nicht verfuegbar (kein',
-  'GAMMA_API_KEY oder pdftoppm fehlt).',
+  'GAMMA_API_KEY, oder PDF→PNG schlug fehl / pdfjs-dist fehlt).',
   '',
   '## Empfohlener Weg — Einzel-Visuals',
   '',
@@ -633,24 +698,46 @@ async function processLesson(lessonId, ctx) {
     return { lessonId, status: 'handoff' };
   }
 
-  if (!ctx.pdftoppm) {
+  let renamed = [];
+  if (ctx.pdftoppm) {
+    renamed = sliceePdfToPngs({
+      pdfPath,
+      outputDir: assetsDir,
+      dpi: ctx.dpi,
+      pdftoppm: ctx.pdftoppm,
+      log,
+      lessonId,
+    });
+  }
+  if (renamed.length === 0 && canSlicePdfWithPdfJs()) {
+    if (ctx.pdftoppm) {
+      log.warn(
+        'pdftoppm lieferte keine PNGs — Fallback: PDF.js (@napi-rs/canvas).',
+        lessonId
+      );
+    } else {
+      log.info(
+        'pdftoppm nicht im PATH — PDF-Slicing mit PDF.js (ohne Poppler).',
+        lessonId
+      );
+    }
+    renamed = await slicePdfToPngsPdfJs({
+      pdfPath,
+      outputDir: assetsDir,
+      dpi: ctx.dpi,
+      log,
+      lessonId,
+    });
+  }
+  if (renamed.length === 0) {
     log.warn(
-      'pdftoppm nicht verfügbar — PDF liegt da, aber kein Slicing. ' +
-        'Installiere poppler-utils (Windows: choco install poppler).',
+      'PDF→PNG nicht moeglich (weder pdftoppm noch PDF.js). ' +
+        'Windows: optional choco install poppler, oder npm ci fuer pdfjs-dist + @napi-rs/canvas.',
       lessonId
     );
     writeHandoff({ lessonId, promptText, assetsDir });
     return { lessonId, status: 'no-pdftoppm' };
   }
-
-  const renamed = sliceePdfToPngs({
-    pdfPath,
-    outputDir: assetsDir,
-    dpi: ctx.dpi,
-    pdftoppm: ctx.pdftoppm,
-    log,
-    lessonId,
-  });
 
   if (renamed.length === 0) {
     log.error('Slicing lieferte 0 Bilder.', lessonId);
@@ -704,7 +791,7 @@ async function main() {
   const ctx = {
     generatorOutputDir: path.resolve(
       ROOT,
-      args['generator-output'] || 'generator-output'
+      args['generator-output'] || 'generated-assets'
     ),
     assetsInputDir: path.resolve(ROOT, args['assets-input'] || 'assets-input'),
     lessonsDir: path.resolve(ROOT, args['lessons-dir'] || 'lessons'),
@@ -745,10 +832,20 @@ async function main() {
     typeof args.pdftoppm === 'string' ? args.pdftoppm : null,
     log
   );
+  const pdfJsOk = canSlicePdfWithPdfJs();
   log.info(
     `pdftoppm:       ${
       ctx.pdftoppm ||
-      'missing (Chocolatey: Shim unter %ChocolateyInstall%\\bin, EXE unter lib\\poppler\\tools — oder --pdftoppm "C:\\...\\pdftoppm.exe" ohne …)'
+      'missing (Chocolatey: Shim unter %ChocolateyInstall%\\bin — oder --pdftoppm "C:\\...\\pdftoppm.exe" ohne …)'
+    }`
+  );
+  log.info(
+    `PDF-Slicing:    ${
+      ctx.pdftoppm
+        ? 'Poppler zuerst, bei Fehlschlag PDF.js'
+        : pdfJsOk
+        ? 'PDF.js + @napi-rs/canvas (kein Poppler noetig)'
+        : 'FEHLT — npm install (pdfjs-dist, @napi-rs/canvas) ausfuehren'
     }`
   );
 

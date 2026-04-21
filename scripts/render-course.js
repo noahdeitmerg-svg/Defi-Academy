@@ -26,7 +26,7 @@
  *
  * Flags:
  *   --lessons-dir <path>       Quellverzeichnis (default: ./lessons)
- *   --generator-output <path>  Generator-Output (default: ./generator-output)
+ *   --generator-output <path>  Generator-Output (default: ./generated-assets)
  *   --assets-input <path>      Externe Assets (default: ./assets-input)
  *   --output-dir <path>        Video-Output (default: .; erzeugt videos/, posters/)
  *   --parallel <n>             Parallelitaet fuer Slides/Voice/Visuals + Render (default 2)
@@ -121,7 +121,7 @@ Usage:
 
 Flags:
   --lessons-dir <path>       Lektionen (default: ./lessons)
-  --generator-output <path>  Generator-Output (default: ./generator-output)
+  --generator-output <path>  Generator-Output (default: ./generated-assets)
   --assets-input <path>      Externe Assets (default: ./assets-input)
   --output-dir <path>        Video-Output-Root (default: .)
   --parallel <n>             Parallelitaet (default: 2)
@@ -686,7 +686,7 @@ async function main() {
   const lessonsDir = path.resolve(ROOT, args['lessons-dir'] || 'lessons');
   const generatorOutputDir = path.resolve(
     ROOT,
-    args['generator-output'] || 'generator-output'
+    args['generator-output'] || 'generated-assets'
   );
   const assetsInputDir = path.resolve(ROOT, args['assets-input'] || 'assets-input');
   const outputDir = path.resolve(ROOT, args['output-dir'] || '.');

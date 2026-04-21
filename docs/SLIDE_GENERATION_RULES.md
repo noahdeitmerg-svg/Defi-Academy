@@ -87,55 +87,43 @@ Lesson-Asset-Generator
 
 ---
 
-## 3. Was `slides_prompt.txt` Gamma sagt
+## 3. Was `slides_prompt.txt` Gamma (oder andere Generatoren) sagt
 
-Seit der Regel-Einfuehrung schreibt `generate-slides-prompt.js` im
-Prompt-Kopf **explizit**:
+`generate-slides-prompt.js` schreibt einen **kurzen** englischen Brief:
+Regeln einmal im Kopf, dann pro Slide ein Block mit Kontextzeile
+(Titel/ Typ) und **einem** Bildauftrag — ohne wiederholte
+„Do-not“-Absätze und ohne Repo-Pfade (Dateinamen `visualNN.png` legt
+die Pipeline per PDF-Reihenfolge fest).
 
-```
-# GAMMA VISUAL ASSET PROMPT
-
-> This prompt produces individual visual assets (diagrams,
-> illustrations, charts, conceptual visuals). It is NOT a
-> slide-layout prompt.
-
-Gamma's job:
-- Generate one standalone visual per lesson slide.
-- Output: PNG 16:9 (1920x1080) or square.
-- Transparent or dark navy background, no frames, no branding.
-
-Gamma must NOT:
-- Design slide layouts.
-- Embed slide titles, bullet text or written copy.
-- Pick brand colors, fonts or spacing.
-- Produce a deck. Deliver N discrete PNG files.
-
-File naming:
-    visual01.png
-    visual02.png
-    visual03.png
-    ...
-  into assets-input/<lesson_id>/
-```
-
-Gefolgt von pro Slide einem **Visual-Auftrag** (keine Layout-
-Anweisungen). Der Abschnitt pro Slide enthaelt gezielt:
+Beispielstruktur:
 
 ```
-### Slide <N> – <Titel>
-Save as: visual<NN>.png
-Section (context only): <section_type>
+# Visual brief — one full-page graphic per item
 
-**Visual to generate:**
-- <Beschreibung nur des Einzelbilds>
+Hard rules:
+- No slide template …
+- One idea per page …
 
-**Do NOT include on the image:** slide title, bullet points, slide
-counters, logos, or any piece of UI chrome.
+Lesson: module04-lesson02 — …
+
+## N graphics (in this order)
+
+### 1 / N
+Context: <Kurztitel>
+Type: <section_type>
+
+Draw exactly one image for this page:
+- <konkrete Bildidee>
+
+### 2 / N
+…
 ```
 
-Der Slide-Titel und die Bullets erscheinen im Prompt nur als
-**Sequencing-Kontext** fuer Gamma, damit das Visual thematisch passt —
-nicht als Inhalt, der ins Bild hinein soll.
+Der **Context**-Titel ist nur thematische Orientierung — nicht als
+Typografie ins Bild malen. Fuer **Midjourney / DALL·E / Firefly** kann
+derselbe Text Abschnitt fuer Abschnitt kopiert werden; die Pipeline
+bleibt auf Gamma-PDF + Slice optimiert, ist aber bewusst
+werkzeugneutral formuliert.
 
 ---
 

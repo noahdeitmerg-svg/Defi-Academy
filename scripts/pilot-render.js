@@ -26,7 +26,7 @@
  * Flags:
  *   --lessons <csv>            Override der Pilot-IDs (default: 5 vorgegebene)
  *   --lessons-dir <path>       default: ./lessons
- *   --generator-output <path>  default: ./generator-output
+ *   --generator-output <path>  default: ./generated-assets
  *   --assets-input <path>      default: ./assets-input
  *   --parallel <n>             default: 1
  *   --allow-missing-voice      rendert auch ohne voice.mp3 (Renderer nutzt
@@ -119,7 +119,7 @@ Usage:
 Flags:
   --lessons <csv>            Komma-Liste (default: ${DEFAULT_PILOT_LESSONS.join(',')})
   --lessons-dir <path>       default: ./lessons
-  --generator-output <path>  default: ./generator-output
+  --generator-output <path>  default: ./generated-assets
   --assets-input <path>      default: ./assets-input
   --parallel <n>             default: 1
   --allow-missing-voice      auch ohne voice.mp3 rendern (default: skip)
@@ -395,7 +395,7 @@ async function main() {
     lessonsDir: path.resolve(ROOT, args['lessons-dir'] || 'lessons'),
     generatorOutputDir: path.resolve(
       ROOT,
-      args['generator-output'] || 'generator-output'
+      args['generator-output'] || 'generated-assets'
     ),
     assetsInputDir: path.resolve(ROOT, args['assets-input'] || 'assets-input'),
     parallel: parseInt(args.parallel || '1', 10),

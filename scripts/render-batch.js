@@ -31,7 +31,7 @@
  *   node scripts/render-batch.js --chunk-size 5 --force
  *
  * Flags
- *   --generator-output <path>  default: ./generator-output
+ *   --generator-output <path>  default: ./generated-assets
  *   --assets-input <path>      default: ./assets-input
  *   --lessons-dir <path>       default: ./lessons (fuer MD-Lookup, optional)
  *   --videos-out <path>        default: ./videos
@@ -103,7 +103,7 @@ Usage:
   node scripts/render-batch.js [flags]
 
 Flags:
-  --generator-output <path>  default: ./generator-output
+  --generator-output <path>  default: ./generated-assets
   --assets-input <path>      default: ./assets-input
   --lessons-dir <path>       default: ./lessons
   --videos-out <path>        default: ./videos
@@ -322,7 +322,7 @@ async function main() {
   }
 
   const ctx = {
-    generatorOutputDir: path.resolve(ROOT, args['generator-output'] || 'generator-output'),
+    generatorOutputDir: path.resolve(ROOT, args['generator-output'] || 'generated-assets'),
     assetsInputDir: path.resolve(ROOT, args['assets-input'] || 'assets-input'),
     lessonsDir: path.resolve(ROOT, args['lessons-dir'] || 'lessons'),
     videosOut: path.resolve(ROOT, args['videos-out'] || 'videos'),
