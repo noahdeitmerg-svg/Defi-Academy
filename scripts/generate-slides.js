@@ -63,7 +63,7 @@
  * Env
  *   GAMMA_API_KEY              Gamma Generate API Key (Beta). Fehlt er,
  *                              läuft das Skript im Manual-Handoff-Modus.
- *   GAMMA_API_URL              default: https://public-api.gamma.app/v0.2/generations
+ *   GAMMA_API_URL              default: https://public-api.gamma.app/v1.0/generations
  *   GAMMA_FORMAT               default: presentation
  *   GAMMA_THEME                optional, Theme-Name aus Gamma-Account
  *   GAMMA_POLL_INTERVAL_MS     default: 4000
@@ -116,9 +116,11 @@ Flags:
 
 Env:
   GAMMA_API_KEY              Gamma Generate API Key
-  GAMMA_API_URL              default: https://public-api.gamma.app/v0.2/generations
+  GAMMA_API_URL              default: https://public-api.gamma.app/v1.0/generations
+  GAMMA_TEXT_MODE            generate | condense | preserve (default: preserve)
   GAMMA_FORMAT               default: presentation
-  GAMMA_THEME                optional
+  GAMMA_THEME_ID             optional Theme-UUID (API v1)
+  GAMMA_THEME                optional Alias fuer themeId (Name funktioniert ggf. nicht)
   GAMMA_POLL_INTERVAL_MS     default: 4000
   GAMMA_POLL_TIMEOUT_MS      default: 300000
   GAMMA_SLICE_DPI            optional: PNG-Aufloesung beim PDF-Slicing (default: --dpi / 150)
@@ -195,13 +197,95 @@ function findPromptPath(lessonId, { generatorOutputDir, lessonsDir, assetsInputD
 
 // --- pdftoppm ---------------------------------------------------------------
 
-function resolvePdftoppm(explicit) {
+/**
+ * Chocolatey: echte EXE oft tief unter lib\\poppler\\tools, Shim dagegen unter
+ * %ChocolateyInstall%\\bin (steht oft nicht in der PATH-Session).
+ */
+function findPdftoppmOnWindows() {
+  if (process.platform !== 'win32') return [];
+  const programData = process.env.ProgramData || 'C:\\ProgramData';
+  const chocoInstall = (process.env.ChocolateyInstall || path.join(programData, 'chocolatey')).replace(
+    /[/\\]+$/,
+    ''
+  );
+  const roots = [
+    path.join(chocoInstall, 'bin'),
+    path.join(programData, 'chocolatey', 'bin'),
+    path.join(programData, 'chocolatey', 'lib', 'poppler', 'tools'),
+    path.join(programData, 'chocolatey', 'lib-bad', 'poppler', 'tools'),
+  ];
+  const found = new Set();
+  for (const shimDir of [roots[0], roots[1]]) {
+    const shim = path.join(shimDir, 'pdftoppm.exe');
+    if (fs.existsSync(shim)) found.add(path.resolve(shim));
+  }
+  function walk(dir, depth) {
+    if (depth > 10 || found.size >= 5) return;
+    let entries;
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) walk(full, depth + 1);
+      else if (e.name.toLowerCase() === 'pdftoppm.exe') found.add(path.resolve(full));
+    }
+  }
+  for (const root of roots.slice(2)) {
+    if (fs.existsSync(root)) walk(root, 0);
+  }
+  return [...found];
+}
+
+/** Windows: `where.exe pdftoppm` falls doch irgendwo im PATH. */
+function wherePdftoppmOnWindows() {
+  if (process.platform !== 'win32') return null;
+  const r = spawnSync('where.exe', ['pdftoppm'], { encoding: 'utf8', windowsHide: true });
+  if (r.status !== 0 || !r.stdout) return null;
+  const line = r.stdout.split(/\r?\n/).map((s) => s.trim()).filter(Boolean)[0];
+  return line && fs.existsSync(line) ? line : null;
+}
+
+function normalizeExplicitPdftoppmArg(raw) {
+  if (raw == null || typeof raw !== 'string') return null;
+  let t = raw.trim().replace(/^["']|["']$/g, '');
+  if (!t || t.includes('\u2026') || t.includes('...')) return null;
+  t = path.resolve(t);
+  return t;
+}
+
+function resolvePdftoppm(explicitRaw, log) {
   const probes = [];
-  if (explicit) probes.push(explicit);
+  const explicit = normalizeExplicitPdftoppmArg(
+    typeof explicitRaw === 'string' ? explicitRaw : null
+  );
+  if (explicitRaw && typeof explicitRaw === 'string' && explicitRaw.trim() && !explicit) {
+    if (log && log.warn) {
+      log.warn(
+        '--pdftoppm ungueltig (Pfad mit … oder nicht aufloesbar). Bitte echte pdftoppm.exe angeben.'
+      );
+    }
+  }
+  if (explicit) {
+    if (fs.existsSync(explicit)) probes.push(explicit);
+    else if (log && log.warn) {
+      log.warn(`--pdftoppm Datei nicht gefunden: ${explicit}`);
+    }
+  }
+  const whereWin = wherePdftoppmOnWindows();
+  if (whereWin) probes.push(whereWin);
   probes.push('pdftoppm');
+  probes.push(...findPdftoppmOnWindows());
+  const seen = new Set();
   for (const bin of probes) {
-    const r = spawnSync(bin, ['-v'], { encoding: 'utf8' });
-    // pdftoppm -v schreibt nach stderr und exit=0
+    if (!bin || seen.has(bin)) continue;
+    seen.add(bin);
+    const r = spawnSync(bin, ['-v'], {
+      encoding: 'utf8',
+      windowsHide: true,
+    });
     if (r.status === 0 || (r.stderr || '').toLowerCase().includes('pdftoppm')) {
       return bin;
     }
@@ -273,20 +357,33 @@ function buildGammaInputText(promptText) {
   return `${builtIn}${promptText}`;
 }
 
+function gammaGenerationsPostUrl() {
+  const u = (process.env.GAMMA_API_URL || '').trim().replace(/\/$/, '');
+  if (u) return u;
+  return 'https://public-api.gamma.app/v1.0/generations';
+}
+
+function gammaGenerationStatusUrl(generationId) {
+  const post = gammaGenerationsPostUrl();
+  return `${post}/${encodeURIComponent(generationId)}`;
+}
+
 async function gammaCreateGeneration(promptText, log, lessonId) {
   const apiKey = process.env.GAMMA_API_KEY;
   if (!apiKey) return null;
 
-  const apiUrl =
-    process.env.GAMMA_API_URL ||
-    'https://public-api.gamma.app/v0.2/generations';
+  const apiUrl = gammaGenerationsPostUrl();
   const format = process.env.GAMMA_FORMAT || 'presentation';
+  const textMode = (process.env.GAMMA_TEXT_MODE || 'preserve').trim();
   const body = {
     inputText: buildGammaInputText(promptText),
+    textMode,
     format,
     exportAs: 'pdf',
   };
-  if (process.env.GAMMA_THEME) body.themeName = process.env.GAMMA_THEME;
+  const themeId =
+    (process.env.GAMMA_THEME_ID || process.env.GAMMA_THEME || '').trim();
+  if (themeId) body.themeId = themeId;
 
   try {
     const res = await fetch(apiUrl, {
@@ -331,10 +428,10 @@ async function gammaCreateGeneration(promptText, log, lessonId) {
 function extractPdfUrl(statusBody) {
   if (!statusBody || typeof statusBody !== 'object') return null;
   const probes = [
-    statusBody.pdfUrl,
-    statusBody.pdf_url,
     statusBody.exportUrl,
     statusBody.export_url,
+    statusBody.pdfUrl,
+    statusBody.pdf_url,
     statusBody.export && statusBody.export.pdfUrl,
     statusBody.export && statusBody.export.url,
     statusBody.exports && statusBody.exports.pdf,
@@ -346,10 +443,7 @@ function extractPdfUrl(statusBody) {
 
 async function gammaPollGeneration(generationId, log, lessonId) {
   const apiKey = process.env.GAMMA_API_KEY;
-  const base =
-    process.env.GAMMA_API_URL ||
-    'https://public-api.gamma.app/v0.2/generations';
-  const statusUrl = `${base.replace(/\/$/, '')}/${encodeURIComponent(generationId)}`;
+  const statusUrl = gammaGenerationStatusUrl(generationId);
   const interval = parseInt(process.env.GAMMA_POLL_INTERVAL_MS || '4000', 10);
   const timeout = parseInt(process.env.GAMMA_POLL_TIMEOUT_MS || '300000', 10);
   const deadline = Date.now() + timeout;
@@ -638,14 +732,25 @@ async function main() {
   log.info(`DPI:            ${ctx.dpi}`);
   log.info(`Force:          ${ctx.force}`);
   log.info(`Dry-Run:        ${ctx.dryRun}`);
-  log.info(`Gamma-API:      ${process.env.GAMMA_API_KEY ? 'configured' : 'missing (Handoff-Modus)'}`);
+  const gammaKey = process.env.GAMMA_API_KEY;
+  log.info(
+    `Gamma-API:      ${
+      gammaKey && String(gammaKey).trim()
+        ? 'configured'
+        : 'missing (Handoff-Modus) — .env/.env.local: GAMMA_API_KEY=... (UTF-8), keine leere Zeile in .env.local die den Key überschreibt'
+    }`
+  );
 
-  if (!ctx.dryRun) {
-    ctx.pdftoppm = resolvePdftoppm(
-      typeof args.pdftoppm === 'string' ? args.pdftoppm : null
-    );
-    log.info(`pdftoppm:       ${ctx.pdftoppm || 'missing'}`);
-  }
+  ctx.pdftoppm = resolvePdftoppm(
+    typeof args.pdftoppm === 'string' ? args.pdftoppm : null,
+    log
+  );
+  log.info(
+    `pdftoppm:       ${
+      ctx.pdftoppm ||
+      'missing (Chocolatey: Shim unter %ChocolateyInstall%\\bin, EXE unter lib\\poppler\\tools — oder --pdftoppm "C:\\...\\pdftoppm.exe" ohne …)'
+    }`
+  );
 
   // --- Lesson-Liste ---------------------------------------------------------
   let lessons = discoverLessons(

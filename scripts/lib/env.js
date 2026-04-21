@@ -38,7 +38,9 @@ function parseLine(raw) {
 
 function loadEnvFile(filePath, { override = false } = {}) {
   if (!fs.existsSync(filePath)) return { loaded: 0, path: filePath, existed: false };
-  const content = fs.readFileSync(filePath, 'utf8');
+  let content = fs.readFileSync(filePath, 'utf8');
+  // UTF-8 BOM (häufig nach „Speichern unter“) würde sonst den ersten Key unlesbar machen.
+  if (content.charCodeAt(0) === 0xfeff) content = content.slice(1);
   let loaded = 0;
   for (const raw of content.split(/\r?\n/)) {
     const entry = parseLine(raw);

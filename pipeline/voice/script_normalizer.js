@@ -75,6 +75,20 @@ function numberToWords(n) {
   return r ? `${numberToWords(b)} billion ${numberToWords(r)}` : `${numberToWords(b)} billion`;
 }
 
+/** z. B. 85,7 → "eighty five point seven" (englische Silben für Multilingual-TTS) */
+function commaDecimalToEnglishWords(intPartRaw, fracPartRaw) {
+  const intNum = parseInt(String(intPartRaw).replace(/\./g, ""), 10);
+  if (!Number.isFinite(intNum)) return `${intPartRaw},${fracPartRaw}`;
+  const fracDigits = String(fracPartRaw)
+    .split("")
+    .map((ch) => {
+      const d = Number(ch);
+      return Number.isFinite(d) ? numberToWords(d) : ch;
+    })
+    .join(" ");
+  return `${numberToWords(intNum)} point ${fracDigits}`;
+}
+
 /**
  * Prozent, Währungs-Kürzel ($10B), k/M/B-Suffixe, gängige lateinische Abkürzungen.
  */
@@ -82,7 +96,17 @@ function normalizeVoiceScript(rawText) {
   const { out: prot, map } = protectVoiceSegments(rawText);
   let text = prot;
 
-  text = text.replace(/(?<![\p{L}\p{N}_])(\d{1,3})%(?![\p{L}\p{N}_])/gu, (_m, n) => {
+  // Deutsch: Komma-Dezimal vor %-Zeichen (85,7 %)
+  text = text.replace(
+    /(?<![\p{L}\p{N}_])(\d+),(\d+)\s*%(?![\p{L}\p{N}_])/gu,
+    (_m, a, b) => `${commaDecimalToEnglishWords(a, b)} percent`
+  );
+  text = text.replace(
+    /\b(\d+),(\d+)\s+Prozent\b/giu,
+    (_m, a, b) => `${commaDecimalToEnglishWords(a, b)} Prozent`
+  );
+
+  text = text.replace(/(?<![\p{L}\p{N}_])(\d+)%(?![\p{L}\p{N}_])/gu, (_m, n) => {
     return `${numberToWords(Number(n))} percent`;
   });
 
@@ -117,6 +141,15 @@ function normalizeVoiceScript(rawText) {
     }
     return numberToWords(scaled);
   });
+
+  // Deutsch: Tausenderpunkt (173.600, 1.000.000) — nach k/M/B, damit "2.5M" nicht bricht
+  text = text.replace(/\b\d{1,3}(?:\.\d{3})+\b/g, (m) => {
+    const n = Number(m.replace(/\./g, ""));
+    return Number.isFinite(n) ? numberToWords(n) : m;
+  });
+
+  // Deutsch: Dezimalkomma (3,5 / 0,95 / 1,4) — übrig nach Tausenderpunkten
+  text = text.replace(/\b(\d+),(\d{1,3})\b/g, (_full, a, b) => commaDecimalToEnglishWords(a, b));
 
   const abbrevs = [
     [/\b(?:e\.g\.|eg\.)\s*/gi, "for example "],
@@ -163,4 +196,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { normalizeVoiceScript, numberToWords };
+module.exports = { normalizeVoiceScript, numberToWords, commaDecimalToEnglishWords };

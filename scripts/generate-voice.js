@@ -28,6 +28,7 @@
  *   ELEVENLABS_STABILITY     default: 0.4
  *   ELEVENLABS_SIMILARITY    default: 0.8
  *   ELEVENLABS_STYLE         default: 0.2
+ *   ELEVENLABS_SPEED         default: 0.88 (1.0 = normal; kleiner = langsamer, ruhiger)
  *
  * Usage:
  *   npm run generate:voice
@@ -99,7 +100,7 @@ Flags:
 Env:
   ELEVENLABS_API_KEY (pflicht), ELEVENLABS_MODEL (default eleven_multilingual_v3),
   ELEVENLABS_VOICE (default Florian), ELEVENLABS_VOICE_ID (override),
-  ELEVENLABS_STABILITY, ELEVENLABS_SIMILARITY, ELEVENLABS_STYLE
+  ELEVENLABS_STABILITY, ELEVENLABS_SIMILARITY, ELEVENLABS_STYLE, ELEVENLABS_SPEED (default 0.88)
 `);
 }
 
@@ -206,7 +207,15 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity, style }) {
+function resolveElevenLabsSpeed() {
+  const rawStr = process.env.ELEVENLABS_SPEED;
+  if (rawStr == null || String(rawStr).trim() === '') return 0.88;
+  const raw = Number(rawStr);
+  if (!Number.isFinite(raw)) return 0.88;
+  return Math.min(4, Math.max(0.25, raw));
+}
+
+async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity, style, speed }) {
   const url = `${ELEVEN_BASE}/text-to-speech/${encodeURIComponent(voiceId)}`;
   const res = await fetch(url, {
     method: 'POST',
@@ -222,6 +231,7 @@ async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity, 
         stability,
         similarity_boost: similarity,
         style,
+        speed,
         use_speaker_boost: true,
       },
     }),
@@ -305,6 +315,7 @@ async function main() {
   log.info(`Stability:    ${process.env.ELEVENLABS_STABILITY || '0.4 (default)'}`);
   log.info(`Similarity:   ${process.env.ELEVENLABS_SIMILARITY || '0.8 (default)'}`);
   log.info(`Style:        ${process.env.ELEVENLABS_STYLE || '0.2 (default)'}`);
+  log.info(`Speed:        ${resolveElevenLabsSpeed()} (1.0 = ElevenLabs-Standard)`);
   log.info(`Concurrency:  ${concurrency}`);
   log.info(`Dry-run:      ${dryRun}`);
   log.info(`Force:        ${force}`);
@@ -342,6 +353,7 @@ async function main() {
   const stability = Number(process.env.ELEVENLABS_STABILITY || '0.4');
   const similarity = Number(process.env.ELEVENLABS_SIMILARITY || '0.8');
   const style = Number(process.env.ELEVENLABS_STYLE || '0.2');
+  const speed = resolveElevenLabsSpeed();
 
   let voiceId = null;
   if (!dryRun) {
@@ -396,7 +408,7 @@ async function main() {
     }
 
     const audio = await ttsWithRetry(
-      { apiKey, voiceId, modelId, text, stability, similarity, style },
+      { apiKey, voiceId, modelId, text, stability, similarity, style, speed },
       log,
       lessonId
     );

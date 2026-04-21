@@ -1,0 +1,6 @@
+# Wird von Cloudflare Pages / Netlify ausgewertet (nicht von GitHub Pages).
+# Bei statischem Export: Datei liegt nach `next build` unter `out/_headers`.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

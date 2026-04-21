@@ -16,7 +16,15 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity, style }) {
+function resolveElevenLabsSpeed() {
+  const rawStr = process.env.ELEVENLABS_SPEED;
+  if (rawStr == null || String(rawStr).trim() === '') return 0.88;
+  const raw = Number(rawStr);
+  if (!Number.isFinite(raw)) return 0.88;
+  return Math.min(4, Math.max(0.25, raw));
+}
+
+async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity, style, speed }) {
   const url = `${ELEVEN_BASE}/text-to-speech/${encodeURIComponent(voiceId)}`;
   const res = await fetch(url, {
     method: 'POST',
@@ -32,6 +40,7 @@ async function ttsOnce({ apiKey, voiceId, modelId, text, stability, similarity, 
         stability,
         similarity_boost: similarity,
         style,
+        speed,
         use_speaker_boost: true,
       },
     }),
@@ -82,6 +91,7 @@ async function synthesizeToMp3({ fullText, outPath, log }) {
   const stability = parseFloat(process.env.ELEVENLABS_STABILITY || '0.4', 10);
   const similarity = parseFloat(process.env.ELEVENLABS_SIMILARITY || '0.8', 10);
   const style = parseFloat(process.env.ELEVENLABS_STYLE || '0.2', 10);
+  const speed = resolveElevenLabsSpeed();
 
   const chunks = [];
   let rest = text;
@@ -109,6 +119,7 @@ async function synthesizeToMp3({ fullText, outPath, log }) {
       stability,
       similarity,
       style,
+      speed,
     });
     fs.writeFileSync(part, buf);
     partPaths.push(part);

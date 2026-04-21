@@ -30,6 +30,24 @@ test("normalizer: k/M/B-Suffixe", () => {
   assert.match(normalizeVoiceScript("2.5M TVL"), /two point 5 million|two million/);
 });
 
+test("normalizer: deutsche Tausenderpunkte und Komma-Dezimal", () => {
+  assert.match(
+    normalizeVoiceScript("Bei 173.600 ETH und 1,4 Prozent."),
+    /one hundred seventy three thousand six hundred/
+  );
+  assert.match(normalizeVoiceScript("Bei 173.600 ETH und 1,4 Prozent."), /one point four Prozent/);
+  assert.match(normalizeVoiceScript("Wert 85,7% ist hoch."), /eighty five point seven percent/);
+  assert.match(normalizeVoiceScript("Pool mit 50.000 USD."), /fifty thousand/);
+});
+
+test("prepareVoice: englische Fachbegriffe (Bug, Deploy)", () => {
+  const input = "Ein Bug im Deploy nach dem Merge.";
+  const out = prepareVoiceForElevenLabs(input);
+  assert.match(out, /buhg/i);
+  assert.match(out, /dee-ploy/i);
+  assert.match(out, /merj/i);
+});
+
 test("optimizer splittet sehr lange Sätze", () => {
   const input =
     "Dieses Modul erklaert die Marktmechanik sehr detailliert und zeigt wie Liquiditaet, Slippage und Preiswirkung zusammenarbeiten damit du die Folgen fuer Positionen in volatilen Maerkten sauber einschaetzen kannst.";
@@ -72,6 +90,13 @@ test("prosody: Pausen nach Schluesselwort Wichtig", () => {
   const input = "Wichtig: Wir pruefen das jetzt.";
   const out = applyProsody(input);
   assert.match(out, /\.\.\./);
+});
+
+test("prepareVoice: Lido und stETH Aussprache", () => {
+  const input = "Bei Lido erhältst du stETH für dein ETH.";
+  const out = prepareVoiceForElevenLabs(input);
+  assert.match(out, /Lee-doh/);
+  assert.match(out, /\bsteth\b/i);
 });
 
 test("prepareVoice: Woerterbuch nach Pipeline", () => {
