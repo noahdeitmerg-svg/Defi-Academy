@@ -77,6 +77,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
+require('./lib/env').loadProjectEnv({ cwd: ROOT });
 const LOG_DIR = path.join(ROOT, 'logs');
 const LOG_FILE = path.join(LOG_DIR, 'generate-slides.log');
 
@@ -120,6 +121,9 @@ Env:
   GAMMA_THEME                optional
   GAMMA_POLL_INTERVAL_MS     default: 4000
   GAMMA_POLL_TIMEOUT_MS      default: 300000
+  GAMMA_SLICE_DPI            optional: PNG-Aufloesung beim PDF-Slicing (default: --dpi / 150)
+  GAMMA_API_PROMPT_PREFIX    optional: ersetzt den eingebauten „nur Visuals“-Prefix
+  GAMMA_DISABLE_API_PROMPT_PREFIX  set to 1 to skip any prefix
 `);
 }
 
@@ -245,6 +249,30 @@ function sliceePdfToPngs({ pdfPath, outputDir, dpi, pdftoppm, log, lessonId }) {
 
 // --- Gamma-API --------------------------------------------------------------
 
+/** Vor den Lesson-Prompt haengen, damit Gamma weniger „Deck-Slides“ baut. */
+function buildGammaInputText(promptText) {
+  if (String(process.env.GAMMA_DISABLE_API_PROMPT_PREFIX || '').trim() === '1') {
+    return promptText;
+  }
+  const custom = (process.env.GAMMA_API_PROMPT_PREFIX || '').trim();
+  if (custom) {
+    return `${custom}\n\n---\n\n${promptText}`;
+  }
+  const builtIn = [
+    'STRICT VISUAL OUTPUT (DeFi-Academy pipeline):',
+    '- Deliver ONLY standalone diagrams, illustrations, or charts (one idea per page/slide in the export).',
+    '- NO slide titles, NO bullet lists, NO fake UI chrome, NO lesson/module branding on the images.',
+    '- NO full slide layouts — Remotion renders all text and layout.',
+    '- Prefer dark or neutral background, 16:9 feel, clean technical / infographic style, consistent line weight.',
+    '',
+    'Follow the detailed assignment below.',
+    '',
+    '---',
+    '',
+  ].join('\n');
+  return `${builtIn}${promptText}`;
+}
+
 async function gammaCreateGeneration(promptText, log, lessonId) {
   const apiKey = process.env.GAMMA_API_KEY;
   if (!apiKey) return null;
@@ -254,7 +282,7 @@ async function gammaCreateGeneration(promptText, log, lessonId) {
     'https://public-api.gamma.app/v0.2/generations';
   const format = process.env.GAMMA_FORMAT || 'presentation';
   const body = {
-    inputText: promptText,
+    inputText: buildGammaInputText(promptText),
     format,
     exportAs: 'pdf',
   };
@@ -589,7 +617,15 @@ async function main() {
     force: Boolean(args.force),
     dryRun: Boolean(args['dry-run']),
     concurrency: Math.max(1, parseInt(args.concurrency || '1', 10)),
-    dpi: Math.max(72, parseInt(args.dpi || '150', 10)),
+    dpi: Math.max(
+      72,
+      parseInt(
+        args.dpi != null && args.dpi !== true
+          ? args.dpi
+          : process.env.GAMMA_SLICE_DPI || '150',
+        10
+      )
+    ),
     pdftoppm: null,
     log,
   };
