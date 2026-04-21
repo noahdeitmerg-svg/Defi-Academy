@@ -29,7 +29,40 @@ const HEADER = [
   '- Dark background **#0B0F14** or transparent; technical / didactic line style; 16:9 composition.',
   '- One idea per page, in the order listed below (page 1 = first block, …).',
   '',
+  'Critical — do NOT “illustrate the brief”:',
+  '- Never paint the assignment as a **spec sheet**, wireframe, sticky-note, or design doc (no headings like “Visual 04”, no yellow warning boxes, no paragraph-long instructions on canvas).',
+  '- The bullets under each block are **private notes for you** — output only the actual subject (curve, pool schematic, numbers on axes, etc.), not a screenshot of those notes.',
+  '- If the brief mentions “dashboard” or “screenshot”, draw a **clean stylized UI mock** with neutral fake numbers — not a poster that repeats the written requirements.',
+  '',
+  'Layout discipline (one chart, not a mini-slide):',
+  '- **Exactly one** primary graphic per page (one curve, one flow, one schematic, or one simple UI mock) — no fishbone/Ishikawa, no SWOT, no multi-panel “storyboard”.',
+  '- **No boxed paragraphs** or footer “takeaway” strips; no big German/English titles or lesson copy on the canvas.',
+  '- On-canvas text: **at most a few short labels** (e.g. axis names, x, y, k, token tickers) — not full sentences.',
+  '',
 ].join('\n');
+
+/**
+ * Lektions-Markdown enthält oft Meta-Zeilen (SCREENSHOT SUGGESTION, „auf der Folie“).
+ * Die sollen Gamma nicht als Bildinhalt interpretieren.
+ */
+function stripMetaInstructions(raw) {
+  if (raw == null || typeof raw !== 'string') return raw;
+  let s = raw.trim();
+  const parts = s.split(
+    /\*\*\s*SCREENSHOT\s+SUGGESTION:\*\*|\bSCREENSHOT\s+SUGGESTION:\s*|\*\*SUGGESTION:\*\*|\bSUGGESTION:\s*/i
+  );
+  s = (parts[0] || '').trim();
+  s = s
+    .replace(/\s+auf der Folie\.?/gi, '')
+    .replace(/\s+auf die Folie\.?/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const max = 240;
+  if (s.length > max) {
+    s = `${s.slice(0, max - 1).trim()}…`;
+  }
+  return s.length > 0 ? s : raw.trim();
+}
 
 const FOOTER = [
   '',
@@ -57,12 +90,18 @@ function buildSlidesPrompt(lesson, slidePlan) {
     lines.push(`Context: ${slide.title}`);
     lines.push(`Type: ${slide.section}`);
     lines.push('');
-    lines.push('Draw exactly one image for this page:');
+    lines.push('Draw exactly one image for this page (graphic only — not a text poster of these notes):');
     if (slide.visuals && slide.visuals.length > 0) {
-      slide.visuals.forEach((v) => lines.push(`- ${v}`));
+      slide.visuals.forEach((v) => {
+        const cleaned = stripMetaInstructions(String(v));
+        lines.push(`- ${cleaned}`);
+      });
     } else {
       lines.push(getDefaultVisualHint(slide.section));
     }
+    lines.push(
+      '- Execution: one central figure only (plot/schematic/mock). No infographic template, no multi-box summaries.'
+    );
     lines.push('');
   });
 
@@ -93,7 +132,8 @@ function getDefaultVisualHint(section) {
       );
     case 'risk_layer':
       return (
-        '- Neutral grayscale risk illustration (matrix or simple curves). No alarmist text blocks.'
+        '- Single plot only: e.g. the x·y=k hyperbola on axes with light shading where liquidity is dense vs sparse. ' +
+          'No title block, no extra panels, no bullet boxes.'
       );
     case 'protocol_example':
       return (

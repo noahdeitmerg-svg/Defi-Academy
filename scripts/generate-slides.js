@@ -415,7 +415,9 @@ function buildGammaInputText(promptText) {
     return `${custom}\n\n---\n\n${promptText}`;
   }
   const builtIn = [
-    'Export requirement: each page = one full-bleed technical diagram only (no slide chrome).',
+    'Export: each page = one full-bleed graphic only (no slide chrome).',
+    'Do not render assignment/spec text, yellow callouts, or “Visual NN” title cards as the image.',
+    'One primary chart or schematic per page — no fishbone, no multi-panel infographic, no boxed paragraphs.',
     'Details follow.',
     '',
   ].join('\n');
