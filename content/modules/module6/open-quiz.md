@@ -50,7 +50,7 @@ Du hast in Modul 6 die Lending-Infrastruktur systematisch verstanden:
 
 **Architektur:** Pool-based Modell dominiert. Supplier zahlen ein, erhalten aTokens. Borrower hinterlegen Collateral, zahlen variable Zinsen. Überbesicherung ist Kern-Prinzip.
 
-**Zinsmodell:** Utilization-basiert. Stückweise lineare Kurve mit Kink-Point bei 80–90%. Oberhalb des Kinks dramatischer Zinsanstieg. Supply-Rate = Borrow-Rate × Utilization × (1 − Reserve Factor).
+**Zinsmodell:** Utilization-basiert. Stückweise lineare Kurve mit Kink-Point bei 80–90%. Oberhalb des Kinks starker Zinsanstieg. Supply-Rate = Borrow-Rate × Utilization × (1 − Reserve Factor).
 
 **Aave V3:** Marktführer, etabliert, featurenreich (E-Mode, Isolation Mode, Safety Module). Typische Stablecoin-Supply-Raten 3–6%. Längster Track-Record ohne direkten Hack.
 

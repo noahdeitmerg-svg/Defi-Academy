@@ -2,7 +2,7 @@
 
 Die folgenden fünf Fragen testen dein integriertes Verständnis des gesamten Moduls. Plane 15–20 Minuten.
 
-**Frage 1:** Eine Person nutzt MetaMask auf einem Browser, hat ihre Seed-Phrase in einem verschlüsselten Passwort-Manager mit Cloud-Sync gespeichert, und gibt DeFi-Protokollen standardmäßig Unlimited Approvals. Welche drei Schwachstellen bestehen, und wie addressierst du sie?
+**Frage 1:** Eine Person nutzt MetaMask auf einem Browser, hat ihre Seed-Phrase in einem verschlüsselten Passwort-Manager mit Cloud-Sync gespeichert, und gibt DeFi-Protokollen standardmäßig Unlimited Approvals. Welche drei Schwachstellen bestehen, und wie adressierst du sie?
 
 <details>
 <summary>Antwort anzeigen</summary>
@@ -64,7 +64,7 @@ In Modul 2 hast du das Sicherheits-Fundament gelegt, das alle weiteren Aktivitä
 
 **Notfall-Plan:** Bei Kompromittierungsverdacht — sofort Assets zu neuer Wallet, Positionen schließen, Approvals widerrufen, dann Ursachenanalyse. Geschwindigkeit entscheidet.
 
-**Das Sicherheits-Mindset:** Annahme der Kompromittierung, Slow is Security, keine Nachsorge möglich. Prävention ist alles.
+**Das Sicherheits-Mindset:** Annahme der Kompromittierung, Langsamkeit ist Sicherheit („Slow is Security"), keine Rettung im Nachhinein möglich. Prävention ist alles.
 
 **Was in Modul 3 kommt:** Blockchain-Mechanik. Wie Gas funktioniert (EIP-1559, Burn-Mechanismus). Was EIP-4844-Blobs für L2-Gebühren bedeuten. Der ERC-20-Token-Standard im Detail. Etherscan als Untersuchungs-Tool. Mit dem Sicherheits-Fundament aus Modul 2 kannst du ab Modul 3 selbst in kritische Protokoll-Details schauen, ohne dich zu gefährden.
 

@@ -23,7 +23,7 @@ Aus Swapper-Sicht ist V3 meist besser — engere Spreads, weil konzentrierte Liq
 <details>
 <summary>Antwort anzeigen</summary>
 
-Ein Sandwich-Bot sieht deine pending Swap-Transaktion im öffentlichen Mempool, schaltet vor dir einen Kauf, der den Preis nach oben treibt, lässt deinen Swap zum schlechteren Preis ausführen und verkauft direkt nach dir zu einem höheren Preis — der Gewinn ist ungefähr dein Slippage-Verlust. Schutz: Nutze einen privaten Mempool (Flashbots Protect, MEV Blocker, CoW Swap), damit die Transaktion nicht im öffentlichen Mempool sichtbar ist. Zusätzlich konservative Slippage-Toleranz setzen — 0,5% bei liquiden Paaren begrenzt den maximalen Angreifer-Gewinn strukturell.
+Ein Sandwich-Bot sieht deine ausstehende Swap-Transaktion im öffentlichen Mempool, schaltet vor dir einen Kauf, der den Preis nach oben treibt, lässt deinen Swap zum schlechteren Preis ausführen und verkauft direkt nach dir zu einem höheren Preis — der Gewinn ist ungefähr dein Slippage-Verlust. Schutz: Nutze einen privaten Mempool (Flashbots Protect, MEV Blocker, CoW Swap), damit die Transaktion nicht im öffentlichen Mempool sichtbar ist. Zusätzlich konservative Slippage-Toleranz setzen — 0,5% bei liquiden Paaren begrenzt den maximalen Angreifer-Gewinn strukturell.
 </details>
 
 **Frage 4:** Du willst 50.000 USD von USDC in ETH tauschen. Welche Swap-Strategie ist vernünftig?

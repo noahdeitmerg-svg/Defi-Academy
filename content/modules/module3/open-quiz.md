@@ -15,7 +15,7 @@ Ein Uniswap V3 Swap verbraucht typischerweise 150.000 Gas. Die effektive Gas Pri
 <details>
 <summary>Antwort anzeigen</summary>
 
-Vor EIP-4844 posteten Rollups ihre Daten als normale Calldata auf Ethereum Mainnet, was 80–95% der L2-Transaktionskosten ausmachte. EIP-4844 führte Blobs ein — einen neuen Datentyp mit drei Eigenschaften: (1) eigener, niedriger Gas-Markt entkoppelt von Calldata, (2) nur 18 Tage temporäre Speicherung, (3) KZG-Commitments statt direktem EVM-Zugriff. Technisch möglich, weil Rollups die Daten nur kurzfristig brauchen — für Verifikation, Fraud-Proofs oder ZK-Proof-Generation. Dauerhaftes Speichern in Ethereum-State ist unnötig. Diese Einsicht hat L2-Gebühren um den Faktor 10 reduziert. Ein Arbitrum-Swap ging von 0,30 USD auf 0,03 USD, was ganz neue Nutzungsmuster ermöglicht (häufiges Rebalancing, Micro-Trades).
+Vor EIP-4844 posteten Rollups ihre Daten als normale Calldata auf Ethereum Mainnet, was 80–95% der L2-Transaktionskosten ausmachte. EIP-4844 führte Blobs ein — einen neuen Datentyp mit drei Eigenschaften: (1) eigener, niedriger Gas-Markt entkoppelt von Calldata, (2) nur 18 Tage temporäre Speicherung, (3) KZG-Commitments statt direktem EVM-Zugriff. Technisch möglich, weil Rollups die Daten nur kurzfristig brauchen — für Verifikation, Fraud-Proofs oder ZK-Proof-Generation. Dauerhaftes Speichern in Ethereum-State ist unnötig. Diese Einsicht hat L2-Gebühren um den Faktor 10 reduziert. Ein Arbitrum-Swap ging von 0,30 USD auf 0,03 USD, was neue Nutzungsmuster ermöglicht (häufiges Rebalancing, Micro-Trades).
 </details>
 
 **Frage 3:** Ein Token-Contract zeigt auf Etherscan: Name = "USDC", Symbol = "USDC", aber die Contract-Adresse ist nicht `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`. Ist das der echte USDC?
@@ -60,7 +60,7 @@ Modul 3 hat die technische Schicht unter DeFi geöffnet:
 
 **Etherscan-Forensik:** Address, Transaction und Block Pages. Wichtigkeit von Internal Transactions und Token Transfers neben normalen Transactions. Decoded Input Data und Event-Logs für forensische Analyse. Read/Write Contract für direkte Interaktion. Verifiziert vs. unverifiziert als binäres Sicherheits-Signal.
 
-**Was in Modul 4 kommt:** DEX-Mechanik. Wie Automated Market Makers funktionieren (Constant-Product-Formel). Uniswap V2 vs. V3. Slippage, Price Impact und MEV. Was du als Swapper verstehen musst, um systematisch nicht verlierst.
+**Was in Modul 4 kommt:** DEX-Mechanik. Wie Automated Market Makers funktionieren (Constant-Product-Formel). Uniswap V2 vs. V3. Slippage, Price Impact und MEV. Was du als Swapper verstehen musst, um systematisch nicht zu verlieren.
 
 ---
 
