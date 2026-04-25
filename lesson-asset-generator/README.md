@@ -154,14 +154,12 @@ abgeleitet (z. B. `module04-lesson02.md`). Alternativ per
 
 ### `slides_prompt.txt` (Gamma)
 
-Strukturierter Prompt mit Designvorgaben (Dark Theme, Inter, #4F8BFF
-Akzent) und 6–7 durchnummerierten Slide-Definitionen. Jede Slide hat:
-
-- Titel
-- Bullet Points (aus Slide Summary, sektionsgerecht verteilt)
-- Visual Description (aus Visual Suggestions oder Default je Sektion)
-
-Die Risk-Layer-Slide markiert automatisch die rote Akzentfarbe.
+**Micro-Brief:** Kopf mit **Brand-2.0-Hex-Palette** (aus
+`../video-style-engine/brand/colors.json`), dann 6–7 nummerierte Zeilen
+— jeweils ein kurzer englischer Bildbefehl aus Slide-Section + Titel
+(kein Lektions-Markdown, kein Slide-Layout). Risk-Layer-Zeilen dürfen
+explizit Brand-Risk-Rot (#D9544E) nennen; sonst nur die gesperrte
+Palette.
 
 ### `voice_script.txt` (ElevenLabs)
 

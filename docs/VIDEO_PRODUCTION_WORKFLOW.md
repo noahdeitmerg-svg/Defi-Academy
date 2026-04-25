@@ -237,6 +237,41 @@ nicht von Gamma gebaut — das macht Remotion zur Render-Zeit aus dem
 - **API-Limits:** Gamma-API ist in Beta; 100 Visuals rauszupushen
   ist unzuverlaessiger als ein Produzent:innen-Batch in Gamma-UI.
 
+### 3.3 Midjourney / manuelle Tools — **Export statt Gamma-API**
+
+Wenn `npm run generate:slides` (Gamma-API + PDF-Slice) **keine**
+brauchbaren PNGs liefert, nutze **diesen Pfad**:
+
+1. **Prompts erzeugen** (aus `generated-assets/`; vorher ggf.
+   `npm run generate-assets`):
+
+   ```powershell
+   npm run export:image-prompts
+   ```
+
+   Optional nur ein Modul:
+
+   ```powershell
+   npm run export:image-prompts -- --only module01-lesson01,module01-lesson02
+   ```
+
+2. **Ausgabe:** `exports/image-tool-prompts/<lessonId>/`
+   - `GLOBAL-PROMPT.txt` — Brand-Block + Verbote
+   - `visual01-MJ.txt`, `visual02-MJ.txt`, … — je **ein** Copy-Paste-
+     Prompt pro Bild (GLOBAL + eine nummerierte Zeile)
+
+3. **Bilder** in Midjourney / DALL·E / Gamma-Web / … erzeugen, als PNG
+   speichern und nach `assets-input/<lessonId>/` legen:
+   `visual01.png`, `visual02.png`, … (Reihenfolge = Nummerierung im
+   Export). Siehe auch `README.md` im jeweiligen Unterordner.
+
+4. **Render** wie gehabt (`generate:voice`, `render-batch`, …).
+
+`npm run collect-prompts` legt weiterhin flache `gamma-prompts/*.txt`
+an (Drag&Drop in die Gamma-UI); `export:image-prompts` ist die
+**feinere** Variante pro Frame fuer Tools mit Zeichenlimits oder
+einzelner Bildgenerierung.
+
 Ein Video ohne Visuals wird trotzdem gerendert — der
 `VisualRenderer.jsx` zeichnet einen neutralen Placeholder mit der
 Visual-Beschreibung aus `visual_plan.json`. Visuals sind **kein**

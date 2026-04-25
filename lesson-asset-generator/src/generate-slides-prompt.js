@@ -8,6 +8,10 @@
  * Lektionsabsaetze, keine Kontext-Markdown-Blöcke — die verleiten Gamma
  * dazu, ganze „Slides“ statt nackter Grafiken zu malen.
  *
+ * **Brand:** Kernfarben und Chart-Reihenfolge kommen aus
+ * `video-style-engine/brand/colors.json` (Single Source of Truth), damit
+ * Gamma-Bilder zur Remotion-Brand-2.0-Passung passen.
+ *
  * Laengere inhaltliche Vorschläge bleiben in `lessons/*.md` fuer Menschen;
  * die Pipeline mappt pro Slide-Typ + Titel auf eine Micro-Brief-Zeile.
  *
@@ -16,13 +20,106 @@
 
 'use strict';
 
-/** Kurz — alles Weitere steht in den nummerierten Zeilen. */
-const HEADER = [
-  'Each numbered line = one PDF page = one full-bleed image.',
-  'Style: dark #0B0F14 or transparent, technical, 16:9 feel.',
-  'Forbidden on the canvas: slide chrome, multi-column layouts, info boxes, fishbone diagrams, English/German lesson paragraphs, titles, bullet lists. At most a few axis tick numbers or single letters (x, y, k).',
-  '',
-].join('\n');
+const fs = require('fs');
+const path = require('path');
+
+/** Minimal-Fallback wenn colors.json fehlt (z. B. isolierter Checkout). */
+const FALLBACK_COLORS = {
+  brand: {
+    primary_background: { hex: '#0B1F3B' },
+    primary_accent: { hex: '#F5B841' },
+    text_primary: { hex: '#FFFFFF' },
+    text_secondary: { hex: '#A0AEC0' },
+    risk_highlight: { hex: '#D9544E' },
+  },
+  surfaces: {
+    background_primary: '#0B1F3B',
+    background_elevated: '#11284A',
+    background_overlay: '#1A355F',
+    border: '#1F3A66',
+    divider: '#1A355F',
+  },
+  text: { primary: '#FFFFFF', secondary: '#A0AEC0', muted: '#6B7A8F' },
+  semantic: {
+    info: '#5EA9F0',
+    success: '#3FB58B',
+    warning: '#F5B841',
+    risk: '#D9544E',
+    risk_soft: '#3B1F1E',
+  },
+  chart_palette: [
+    '#F5B841',
+    '#5EA9F0',
+    '#3FB58B',
+    '#D9544E',
+    '#B388E8',
+    '#5DC7D1',
+  ],
+};
+
+function resolveColorsJsonPath() {
+  return path.join(
+    __dirname,
+    '..',
+    '..',
+    'video-style-engine',
+    'brand',
+    'colors.json'
+  );
+}
+
+function loadBrandColors() {
+  const fp = resolveColorsJsonPath();
+  try {
+    const raw = fs.readFileSync(fp, 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return FALLBACK_COLORS;
+  }
+}
+
+/**
+ * Englischer Brand-Lock fuer Gamma: exakte Hex-Werte, keine freien Regenbogen.
+ */
+function buildBrandLockBlock(colors) {
+  const c = colors || FALLBACK_COLORS;
+  const bg = c.brand?.primary_background?.hex || c.surfaces?.background_primary;
+  const acc = c.brand?.primary_accent?.hex || c.accent?.primary;
+  const tx = c.brand?.text_primary?.hex || c.text?.primary;
+  const tx2 = c.brand?.text_secondary?.hex || c.text?.secondary;
+  const muted = c.text?.muted || '#6B7A8F';
+  const el = c.surfaces?.background_elevated;
+  const ov = c.surfaces?.background_overlay;
+  const br = c.surfaces?.border;
+  const div = c.surfaces?.divider;
+  const info = c.semantic?.info;
+  const ok = c.semantic?.success;
+  const risk = c.brand?.risk_highlight?.hex || c.semantic?.risk;
+  const riskSoft = c.semantic?.risk_soft;
+  const charts = Array.isArray(c.chart_palette) ? c.chart_palette.join(', ') : FALLBACK_COLORS.chart_palette.join(', ');
+
+  return [
+    'BRAND 2.0 — use ONLY these hex colors (no extra rainbow, no random neon):',
+    `- Full-bleed background / large fills: ${bg}; elevated panels ${el}, ${ov}; subtle borders/dividers ${br}, ${div}.`,
+    `- Primary accent (highlights, key curves, connectors, markers): ${acc}.`,
+    `- Secondary ink (thin lines, de-emphasized shapes, grid): ${tx2}, ${muted}; rare bright strokes: ${tx}.`,
+    `- Multi-series data (prefer this order): ${charts}.`,
+    `- Risk red ${risk} and tinted risk panels ${riskSoft} ONLY for explicit danger / loss / attack / depeg motifs — never as a generic accent.`,
+    'Visual language: flat vector, calm fintech-docs (Stripe-like), generous whitespace, no skeuomorphic metal/glass; optional very soft radial gold glow at low opacity on intro pages only.',
+    'Forbidden on the canvas: slide chrome, multi-column layouts, info boxes, fishbone diagrams, lesson paragraphs, slide titles, bullet lists, watermarks, real protocol logos. At most a few axis tick numbers or single letters (x, y, k).',
+    '',
+  ].join('\n');
+}
+
+function buildPromptHeader() {
+  const colors = loadBrandColors();
+  return [
+    'Each numbered line = one PDF page = one full-bleed 16:9 illustration (not a slide layout).',
+    'Keep every page visually consistent with the palette below (same family as DeFi Academy video slides).',
+    '',
+    buildBrandLockBlock(colors),
+  ].join('\n');
+}
 
 const FOOTER = (n) =>
   `\nPrint exactly ${n} pages in this order. No extra pages.\n`;
@@ -46,10 +143,10 @@ function microBrief(slide) {
   const t = foldForMatch(slide.title);
 
   if (sec === 'lesson_title') {
-    return 'Generate one abstract image: soft neon arcs and particles on dark navy, liquidity metaphor, zero readable words.';
+    return 'Generate one abstract image: deep navy field #0B1F3B, sparse gold #F5B841 particles and thin arcs (liquidity metaphor), very soft radial gold glow, zero readable words.';
   }
   if (sec === 'key_takeaways') {
-    return 'Generate one image: three small flat icons in a horizontal row, monochrome, no captions.';
+    return 'Generate one image: three small flat icons in a horizontal row using accent #F5B841 on shapes with #11284A tiles, no captions.';
   }
 
   if (sec === 'mechanism') {
@@ -74,12 +171,12 @@ function microBrief(slide) {
 
   if (sec === 'risk_layer') {
     if (t.includes('kurve') || t.includes('hyperbel')) {
-      return 'Generate one image: one hyperbola on a faint grid, light glow along the bend, axis tick numbers only, no titles or side panels.';
+      return 'Generate one image: one hyperbola on #0B1F3B with faint #1F3A66 grid, curve stroke #F5B841 or thin #FFFFFF, soft gold glow on bend, axis tick numbers only, no titles or side panels.';
     }
     if (t.includes('arbitrage')) {
-      return 'Generate one image: two small pool circles and one looping arrow between them, letters A and B at most, no explanatory text.';
+      return 'Generate one image: on #0B1F3B, two small pool discs as #11284A rings with #F5B841 looping arrow between, letters A and B at most, no explanatory text.';
     }
-    return 'Generate one image: one simple curve or heat strip on dark background, numeric ticks only, no callout boxes.';
+    return 'Generate one image: one simple curve or heat strip on #0B1F3B, use brand risk red #D9544E only where the graphic implies danger or loss, numeric ticks only, no callout boxes.';
   }
 
   if (sec === 'concept') {
@@ -90,7 +187,7 @@ function microBrief(slide) {
     return 'Generate one image: four small rectangles as nodes with arrows, short one-word role labels max, dark schematic.';
   }
 
-  return 'Generate one image: one clean technical diagram on dark background, minimal text, no slide layout.';
+  return 'Generate one image: one clean technical diagram on #0B1F3B using only the BRAND 2.0 palette from the header, minimal text, no slide layout.';
 }
 
 function buildSlidesPrompt(lesson, slidePlan) {
@@ -98,7 +195,7 @@ function buildSlidesPrompt(lesson, slidePlan) {
   const { slides } = slidePlan;
 
   const lines = [];
-  lines.push(HEADER);
+  lines.push(buildPromptHeader());
   lines.push(`Lesson ${meta.lesson_id} — ${slides.length} page(s), in order:`);
   lines.push('');
 
@@ -111,4 +208,9 @@ function buildSlidesPrompt(lesson, slidePlan) {
   return lines.join('\n');
 }
 
-module.exports = { buildSlidesPrompt };
+module.exports = {
+  buildSlidesPrompt,
+  buildBrandLockBlock,
+  loadBrandColors,
+  resolveColorsJsonPath,
+};

@@ -10,14 +10,4 @@ BRAND 2.0 — use ONLY these hex colors (no extra rainbow, no random neon):
 Visual language: flat vector, calm fintech-docs (Stripe-like), generous whitespace, no skeuomorphic metal/glass; optional very soft radial gold glow at low opacity on intro pages only.
 Forbidden on the canvas: slide chrome, multi-column layouts, info boxes, fishbone diagrams, lesson paragraphs, slide titles, bullet lists, watermarks, real protocol logos. At most a few axis tick numbers or single letters (x, y, k).
 
-Lesson module04-lesson02 — 7 page(s), in order:
-
-1. Generate one abstract image: deep navy field #0B1F3B, sparse gold #F5B841 particles and thin arcs (liquidity metaphor), very soft radial gold glow, zero readable words.
-2. Generate one image: four small rectangles as nodes with arrows, short one-word role labels max, dark schematic.
-3. Generate one image: single x-y plot with hyperbola curve for constant product x times y equals k, numeric axis ticks only, no text blocks.
-4. Generate one image: three rounded nodes with arrows between them, flat icon style, almost no text.
-5. Generate one image: two vertical bar stacks before and after trade with one curved arrow between them, numeric labels only, no paragraphs.
-6. Generate one image: one simple curve or heat strip on #0B1F3B, use brand risk red #D9544E only where the graphic implies danger or loss, numeric ticks only, no callout boxes.
-7. Generate one image: three rounded nodes with arrows between them, flat icon style, almost no text.
-
-Print exactly 7 pages in this order. No extra pages.
+5. Generate one image: stylized fake DEX tiles with placeholder numbers, no logos, no readable addresses.

@@ -31,7 +31,7 @@
 
 ## Modul-Überblick
 
-Modul 17 ist das Abschluss-Modul der DeFi Academy. Während die Module 1–16 die fundamentalen Werkzeuge aufgebaut haben — von den Grundlagen von DeFi (Module 1–3) über spezifische Protokoll-Kategorien (Module 4–10) zu fortgeschrittenen Themen wie Governance, Cross-Chain-Infrastructure, On-Chain-Analytics und Composability Risk (Module 11–16) —, synthetisiert Modul 17 diese Werkzeuge in einen integrativen Rahmen und erweitert den Horizont in drei Richtungen.
+Modul 17 ist das Abschluss-Modul der DeFi Akademie. Während die Module 1–16 die fundamentalen Werkzeuge aufgebaut haben — von den Grundlagen von DeFi (Module 1–3) über spezifische Protokoll-Kategorien (Module 4–10) zu fortgeschrittenen Themen wie Governance, Cross-Chain-Infrastructure, On-Chain-Analytics und Composability Risk (Module 11–16) —, synthetisiert Modul 17 diese Werkzeuge in einen integrativen Rahmen und erweitert den Horizont in drei Richtungen.
 
 Erstens, die Konstruktion eines DeFi-Portfolios als eigenständige Disziplin. Bisher haben wir individuelle Positions-Entscheidungen und Risiko-Frameworks behandelt. In Modul 17 gehen wir einen Schritt zurück und betrachten das Portfolio als Ganzes — mit expliziter Betrachtung von Asset-Klassen-Allokation, Zeit-Horizonten und Rebalancing-Strategien.
 
@@ -54,13 +54,29 @@ Die Frameworks aus Modul 17 sind konsistent mit der Kapitalerhalt-First-Philosop
 
 Das Modul ist bewusst darauf ausgelegt, dass die meisten Leser nach Abschluss nicht alle vorgestellten Strategien umsetzen sollen. Viele der Strategien — insbesondere im institutionellen Bereich und bei sophisticated Yield-Trading — sind nur für Portfolios ab einer gewissen Größe (typisch 100.000+ USD) sinnvoll. Für Einsteiger-Portfolios (5.000–25.000 USD) ist ein wesentlich einfacheres Setup angemessen. Das Modul macht diese Differenzierung explizit.
 
+---
+
+## Das DeFi Portfolio Framework — Vier Layer
+
+Bevor wir in die einzelnen Lektionen eintauchen, etablieren wir das strukturelle Modell, das dieses Modul durchgängig verwendet. Ein DeFi-Portfolio besteht nicht aus einer Ansammlung einzelner Positionen, sondern aus vier klar trennbaren Schichten mit jeweils eigener Rolle, eigenem Ziel und eigener Risiko-Charakteristik. Wer diese vier Layer nicht explizit trennt, mischt unbewusst Sicherheits- mit Spekulations-Logik und erzeugt systematisch schlechte Portfolio-Ergebnisse.
+
+**Layer 1 — Core Allocation (50–70 % des Portfolios).** Der konservative Kern, der das Portfolio überhaupt erst tragfähig macht. Hier liegen etablierte Blue-Chip-Assets und die stabilsten DeFi-Positionen: direkt gehaltenes ETH und BTC, gestaktes ETH bei Top-Tier-LST-Providern (Lido, Rocket Pool), Stablecoin-Lending bei etablierten Protokollen (Aave V3, Compound V3, Sky/MakerDAO), und zunehmend tokenisierte US-Treasury-Produkte (BUIDL, OUSG). **Ziel:** Kapitalerhalt, inflationsresistenter Werterhalt, mäßige aber verlässliche Rendite (3–6 % p.a. auf Stable-Anteil, Beta-Exposure auf ETH/BTC-Anteil). Dieser Layer ist langfristig, wenig bewegt, mit minimalem Monitoring-Aufwand.
+
+**Layer 2 — Yield Layer (20–40 % des Portfolios).** Aktive Rendite-Generierung mit moderatem Risiko-Profil. Hier liegen Lending-Positionen mit besserer Rendite aber etwas höherem Protokoll-Risiko, Liquid-Staking-Strategien mit moderatem Leverage (Health Factor mindestens 1,8), Liquidity-Provision in etablierten Stablecoin-Pools (Curve 3pool, Aave-Stablecoin-Märkte), und ausgewählte Yield-Aggregator-Positionen bei auditierten Vaults. **Ziel:** Erzielen von 6–10 % p.a. bei überschaubarem Zusatz-Risiko gegenüber dem Core. Regelmäßiges Monitoring (wöchentlich), aktive Rebalancing-Bereitschaft, aber keine intensive Intervention.
+
+**Layer 3 — Risk Layer (0–20 % des Portfolios).** Positionen mit bewusst erhöhtem Risiko, bei denen Dependency-Komplexität oder Composability-Verkettung bereits signifikant ist. Hier liegen Leveraged-Strategien (stETH-Aave-Loops mit Health Factor 1,7–2,0), Pendle-Yield-Trading, Morpho-Curated-Vaults, sophistiziertere Cross-Chain-Positionen auf etablierten L2s, und veTokenomics-Plays (Convex, Aura). Jede Position in diesem Layer hat typischerweise 3–5 Composability-Layer und mehrere gleichzeitige Infrastruktur-Dependencies. **Ziel:** Zusätzliche 8–15 % p.a. als Kompensation für das erhöhte Risiko. Aktives Monitoring (mindestens wöchentlich), pre-committed Exit-Trigger obligatorisch, Größe pro Einzelposition typisch 2–5 % des Gesamtportfolios.
+
+**Layer 4 — Optional Experimental Layer (0–10 % des Portfolios).** Explorative Positionen in neuen Protokollen, neuen Asset-Klassen oder experimentellen Strategien. Hier liegen Positionen in Protokollen unter 12 Monate Track Record, neue LRT-Varianten, RWA-Produkte mit neuen Issuer-Strukturen, oder Test-Positionen in aufkommenden Kategorien. **Ziel:** Lern-Budget plus asymmetrische Upside-Optionalität. Die Akzeptanz ist strukturell eingebaut, dass Positions in diesem Layer im schlimmsten Fall **vollständig verloren gehen können** — daher das strenge 10 %-Limit. Jede einzelne Position typisch unter 2 % des Gesamtportfolios. Dieser Layer ist optional — für konservative Portfolios kann er bei 0 % bleiben.
+
+**Wie die vier Layer zusammenwirken.** Die Layer sind nicht als starre Silos gedacht, sondern als bewusste Balance. Ein Anfänger-Portfolio (5.000–25.000 USD) hat typisch 65-70 % Core, 25-30 % Yield, 0-5 % Risk, 0-5 % Experimental. Ein erfahrenes Portfolio (100.000+ USD) kann bei 50-55 % Core, 30-35 % Yield, 10-15 % Risk, 0-5 % Experimental landen. Die Verschiebung zwischen den Layern folgt nicht zunehmender Risikobereitschaft, sondern zunehmender Fähigkeit, Risk- und Experimental-Positionen tatsächlich aktiv zu managen. Wer die Aufmerksamkeits-Ressourcen für Layer 3 und 4 nicht hat, sollte diese Layer bewusst leer lassen — das ist keine Schwäche, sondern realistische Selbsteinschätzung.
+
+---
+
 Mit diesem Kontext beginnen wir.
 
 ---
 
 ## Lektion 17.1 — Portfolio Construction als eigenständige Disziplin
-
-### Lektion
 
 **Die Konstruktion eines DeFi-Portfolios: Asset-Klassen-Allokation, Zeit-Horizonte und Rebalancing-Strategien**
 
@@ -78,7 +94,7 @@ Nach Abschluss dieser Lektion können die Lernenden:
 
 ### Erklärung
 
-Bisher haben wir in der Academy viele Positions-Entscheidungen durchdacht: Ob man in einem bestimmten Lending-Protokoll supplied, welcher Leverage-Faktor für einen LST-Loop akzeptabel ist, wie man Cross-Chain-Bridge-Risiken bewertet. Diese Entscheidungen sind "bottom-up" — sie beginnen bei einem spezifischen Protokoll oder einer Strategie und analysieren, ob sie in das Portfolio passen.
+Bisher haben wir in der Academy viele Positions-Entscheidungen durchdacht: Ob man in einem bestimmten Lending-Protokoll deponiert, welcher Leverage-Faktor für einen LST-Loop akzeptabel ist, wie man Cross-Chain-Bridge-Risiken bewertet. Diese Entscheidungen sind "bottom-up" — sie beginnen bei einem spezifischen Protokoll oder einer Strategie und analysieren, ob sie in das Portfolio passen.
 
 Portfolio Construction ist die "top-down"-Ergänzung. Anstatt zu fragen "Soll ich in Protokoll X einsteigen?", fragt Portfolio Construction: "Welche Rolle spielt Protokoll X in der Gesamt-Struktur meines Vermögens? Welcher Prozentsatz meines DeFi-Exposures sollte in dieser Asset-Klasse sein? Welcher Zeit-Horizont ist für diese Position angemessen?" Beide Ebenen der Analyse — top-down und bottom-up — sind notwendig, um kohärente Entscheidungen zu treffen. Eine ausschließlich bottom-up-orientierte Herangehensweise führt oft zu Portfolios mit versteckten Konzentrationen und unausgewogenen Risiko-Profilen, weil jede Einzel-Entscheidung rational erscheint aber die aggregate Struktur chaotisch bleibt.
 
@@ -146,7 +162,7 @@ Diese breitere Perspektive ist wichtig, weil DeFi-spezifische Optimierungen triv
 
 Verschiedene Bucket-Typen implizieren verschiedene Zeit-Horizonte, und die Positions-Struktur sollte diesen Horizonten entsprechen.
 
-**Lang (3+ Jahre):** Bucket 1 und 2 sollten primär lang-horizont sein. Du supplied USDC bei Aave nicht für 2 Wochen — du supplied es, weil du eine stabile Rendite-Quelle über Jahre willst. Du hältst stETH nicht für einen Short-Term-Trade — du hältst es, weil du ETH-Exposure mit Staking-Yield willst. Positions-Management für lange Horizonte: wenige Entscheidungen pro Jahr, primäres Ziel ist Vermeidung von Protokoll-Katastrophen, nicht Rendite-Optimierung.
+**Lang (3+ Jahre):** Bucket 1 und 2 sollten primär lang-horizont sein. Du deponierst USDC bei Aave nicht für 2 Wochen — du deponierst es, weil du eine stabile Rendite-Quelle über Jahre willst. Du hältst stETH nicht für einen Short-Term-Trade — du hältst es, weil du ETH-Exposure mit Staking-Yield willst. Positions-Management für lange Horizonte: wenige Entscheidungen pro Jahr, primäres Ziel ist Vermeidung von Protokoll-Katastrophen, nicht Rendite-Optimierung.
 
 **Mittel (3–18 Monate):** Bucket 3 ist mittel-horizont. Eine Convex-Strategy, eine Pendle-Fixed-Yield-Position, ein konservativer Leverage-Loop — diese Strategien werden periodisch re-evaluiert, oft vierteljährlich. Positions-Management: aktiver, mit regelmäßigen Rebalancing-Entscheidungen und Response auf sich ändernde Bedingungen.
 
@@ -169,7 +185,7 @@ In der Praxis kombinieren die meisten disziplinierten Teilnehmer beide Ansätze:
 - Bucket 1 (Stable Yield): Strenges Mean-Reversion-Rebalancing. Die Target-Allokation ist präzise, weil diese Tranche den Kapitalerhalt-Anker darstellt.
 - Bucket 2 (ETH/BTC): Moderat-momentumbasiert. Erlaube Drift in wohlperformenden ETH-Positionen, aber rebalance bei großen Abweichungen (z. B. wenn ETH von Target 30 % auf 45 % durch Markt-Rally wächst).
 - Bucket 3 (Active Yield): Präzises Rebalancing auf Positions-Ebene (nicht Bucket-Ebene). Jede einzelne aktive Position hat ihre eigene Target-Größe und wird einzeln überwacht.
-- Bucket 4 (Speculative): Kein Rebalancing. Positionen werden entweder gehalten oder komplett exitiert; keine Zwischen-Anpassungen.
+- Bucket 4 (Speculative): Kein Rebalancing. Positionen werden entweder gehalten oder komplett aufgelöst; keine Zwischen-Anpassungen.
 
 **Rebalancing-Trigger:**
 
@@ -197,49 +213,49 @@ Diese psychologischen Dynamiken sind schwer in der Theorie zu vermitteln, weil s
 
 ### Folien-Zusammenfassung
 
-**Slide 1: Portfolio Construction vs. Positions-Analyse**
+**[Slide 1] — Portfolio Construction vs. Positions-Analyse**
 
 - Positions-Analyse (bottom-up): "Soll ich in Protokoll X einsteigen?"
 - Portfolio Construction (top-down): "Welche Rolle spielt Protokoll X in meiner Gesamt-Struktur?"
 - Beide Ebenen notwendig für kohärente Entscheidungen
 - Ausschließlich bottom-up → versteckte Konzentrations-Risiken
 
-**Slide 2: Die vier Asset-Klassen des DeFi-Portfolios**
+**[Slide 2] — Die vier Asset-Klassen des DeFi-Portfolios**
 
 - Bucket 1 — Stable Yield: 4–8 % p.a., niedrige Volatilität, langer Horizont, "Kapitalerhalt-Kern"
 - Bucket 2 — ETH/BTC Beta: direkte Krypto-Preis-Exposure + optional Staking-Yield, hohe Volatilität
 - Bucket 3 — Active Yield Strategies: 7–12 % p.a., mittlere Volatilität, aktives Monitoring
 - Bucket 4 — Speculative Exploration: max 5–10 %, "Lern-Budget", 100 %-Verlust-Akzeptanz
 
-**Slide 3: Allokations-Beispiele nach Portfolio-Profil**
+**[Slide 3] — Allokations-Beispiele nach Portfolio-Profil**
 
 - Konservativer Einsteiger: Bucket 1: 60–70 %, Bucket 4: 0–5 %
 - Moderater Mittelstand: Bucket 1: 45–55 %, Bucket 3: 10–20 %
 - Engagierter Praktiker: Bucket 1: 35–45 %, Bucket 3: 20–30 %
 - In keinem Profil Bucket 4 > 10 %
 
-**Slide 4: Integration mit breiterem Portfolio**
+**[Slide 4] — Integration mit breiterem Portfolio**
 
 - Gesamt-Krypto: 40–60 % Cold Storage, 25–40 % DeFi, 10–20 % CEX
 - Gesamt-Vermögen: typisch 5–25 % Krypto-Allokation
 - Krypto-Optimierung trivial, wenn Gesamt-Vermögen schlecht strukturiert
 - DeFi ist Komponente, nicht Ganzes
 
-**Slide 5: Zeit-Horizonte und Positions-Matching**
+**[Slide 5] — Zeit-Horizonte und Positions-Matching**
 
 - Lang (3+ Jahre): Bucket 1 und 2 → wenige Entscheidungen, Katastrophen-Vermeidung
 - Mittel (3–18 Monate): Bucket 3 → vierteljährliche Re-Evaluation, aktiv
 - Kurz (Wochen bis 3 Monate): Bucket 4 → klare Exit-Trigger
 - Fehl-Passung zwischen Positions-Charakteristik und Horizont = häufige Schadens-Quelle
 
-**Slide 6: Rebalancing-Strategien**
+**[Slide 6] — Rebalancing-Strategien**
 
 - Mean-Reversion: trim wohlperformende, stock schwach-performende auf
 - Momentum-Respect: lasse gute Positionen laufen bis zu extremen Abweichungen
 - Praktische Kombination: Bucket 1 streng mean-reversion, Bucket 2 moderat-momentum
 - Trigger: quartärlich + threshold (> 30 % Abweichung) + event-basiert
 
-**Slide 7: Psychologische Dimensionen**
+**[Slide 7] — Psychologische Dimensionen**
 
 - Drawdown-Management: nicht-handeln in 6–18 monatigen 30–50 %-Crashes
 - FOMO-Resistenz: in Bull-Markets keine Bucket-4-Drift erlauben
@@ -248,28 +264,26 @@ Diese psychologischen Dynamiken sind schwer in der Theorie zu vermitteln, weil s
 
 ### Sprechertext
 
-Willkommen zum letzten Modul der DeFi Academy. Wir haben in den vorherigen sechzehn Modulen viele einzelne Werkzeuge aufgebaut — Verständnis von Lending-Protokollen, DEXes, LSTs, Stablecoins, Governance, Cross-Chain-Infrastructure, On-Chain-Analytics, Composability-Risk. In diesem Modul treten wir einen Schritt zurück und fragen: Wie fügen sich all diese Werkzeuge zusammen? Wie konstruiert man ein DeFi-Portfolio als Ganzes? Das ist Portfolio Construction, und es ist eine eigenständige Disziplin, die über einzelne Positions-Entscheidungen hinausgeht.
+**[Slide 1]** Willkommen zum letzten Modul der DeFi Akademie. Wir haben in den vorherigen sechzehn Modulen viele einzelne Werkzeuge aufgebaut — Verständnis von Lending-Protokollen, DEXes, LSTs, Stablecoins, Governance, Cross-Chain-Infrastructure, On-Chain-Analytics, Composability-Risk. In diesem Modul treten wir einen Schritt zurück und fragen: Wie fügen sich all diese Werkzeuge zusammen? Wie konstruiert man ein DeFi-Portfolio als Ganzes? Der Unterschied zwischen Positions-Analyse und Portfolio Construction ist der Unterschied zwischen Bottom-up und Top-down. Positions-Analyse fragt: "Soll ich in Protokoll X einsteigen?" Portfolio Construction fragt: "Welche Rolle spielt Protokoll X in meiner Gesamt-Struktur?" Beide Ebenen sind notwendig. Eine ausschließlich bottom-up-orientierte Herangehensweise führt oft zu Portfolios mit versteckten Konzentrationen.
 
-Der Unterschied zwischen Positions-Analyse und Portfolio Construction ist der Unterschied zwischen Bottom-up und Top-down. Positions-Analyse fragt: "Soll ich in Protokoll X einsteigen?" Du startest bei einem spezifischen Protokoll und analysierst, ob es passt. Portfolio Construction fragt: "Welche Rolle spielt Protokoll X in meiner Gesamt-Struktur? Welcher Prozentsatz meines DeFi-Exposures sollte in dieser Asset-Klasse sein?" Beide Ebenen der Analyse sind notwendig. Eine ausschließlich bottom-up-orientierte Herangehensweise führt oft zu Portfolios mit versteckten Konzentrationen — jede Einzel-Entscheidung scheint rational, aber die aggregate Struktur ist chaotisch.
+**[Slide 2]** Ich schlage ein Vier-Bucket-Framework als Ausgangspunkt vor. Das ist nicht die einzig richtige Struktur, aber es ist pragmatisch. Bucket 1 ist Stable Yield — Stablecoin-Supply in etablierten Lending-Protokollen, Curve-Stablecoin-LPs, Pendle Fixed-Yield auf Stablecoins, und zunehmend Real-World Assets wie tokenisierte US-Treasuries. Typische Rendite 4 bis 8 Prozent, niedrige Volatilität, langer Horizont. Das ist dein Kapitalerhalt-Kern. Bucket 2 ist ETH und BTC Beta — direktes Halten von ETH und BTC, plus Liquid Staking Tokens. Hohe Volatilität, aber das ist bewusst — es ist die Krypto-Überzeugungs-Tranche. Bucket 3 ist Active Yield Strategies — Convex-Boost, Morpho Curated Vaults, Pendle PT-YT-Strategien, konservative Leverage-Loops. Typisch 7 bis 12 Prozent Rendite, aktives Monitoring erforderlich. Bucket 4 ist Speculative Exploration — neuere Protokolle, Lern-Budget, maximal 5 bis 10 Prozent der Gesamt-Allokation.
 
-Ich schlage ein Vier-Bucket-Framework als Ausgangspunkt vor. Das ist nicht die einzig richtige Struktur, aber es ist pragmatisch. Bucket 1 ist Stable Yield — Stablecoin-Supply in etablierten Lending-Protokollen, Curve-Stablecoin-LPs, Pendle Fixed-Yield auf Stablecoins, und zunehmend Real-World Assets wie tokenisierte US-Treasuries. Typische Rendite 4 bis 8 Prozent, niedrige Volatilität, langer Horizont. Das ist dein Kapitalerhalt-Kern. Bucket 2 ist ETH und BTC Beta — direktes Halten von ETH und BTC, plus Liquid Staking Tokens. Hohe Volatilität, aber das ist bewusst — es ist die Krypto-Überzeugungs-Tranche. Bucket 3 ist Active Yield Strategies — Convex-Boost, Morpho Curated Vaults, Pendle PT-YT-Strategien, konservative Leverage-Loops. Typisch 7 bis 12 Prozent Rendite, aktives Monitoring erforderlich. Bucket 4 ist Speculative Exploration — neuere Protokolle, Lern-Budget, maximal 5 bis 10 Prozent der Gesamt-Allokation.
+**[Slide 3]** Die prozentuale Aufteilung zwischen diesen Buckets hängt von deiner Portfolio-Größe und Risiko-Toleranz ab. Für einen konservativen Einsteiger mit 5 bis 25 Tausend USD empfehle ich 60 bis 70 Prozent in Bucket 1, 20 bis 30 Prozent in Bucket 2, und nur 5 bis 10 Prozent kombiniert in Buckets 3 und 4. Für einen moderaten Mittelstand mit 25 bis 100 Tausend USD verschiebt sich das leicht — 45 bis 55 Prozent in Bucket 1, mehr Raum für Bucket 3. Für einen engagierten Praktiker mit über 100 Tausend USD kann Bucket 1 auf 35 bis 45 Prozent sinken, Bucket 3 auf 20 bis 30 Prozent steigen. Beachte aber: In keinem der Profile geht Bucket 4 über 10 Prozent. Das ist bewusst. Die Kombination aus strukturell unbegrenzten Verlust-Risiken, kurzen Zeit-Horizonten und hohem Management-Aufwand macht größere Bucket-4-Allokationen suboptimal für Langzeit-Performance.
 
-Die prozentuale Aufteilung zwischen diesen Buckets hängt von deiner Portfolio-Größe und Risiko-Toleranz ab. Für einen konservativen Einsteiger mit 5 bis 25 Tausend USD empfehle ich 60 bis 70 Prozent in Bucket 1, 20 bis 30 Prozent in Bucket 2, und nur 5 bis 10 Prozent kombiniert in Buckets 3 und 4. Für einen moderaten Mittelstand mit 25 bis 100 Tausend USD verschiebt sich das leicht — 45 bis 55 Prozent in Bucket 1, mehr Raum für Bucket 3. Für einen engagierten Praktiker mit über 100 Tausend USD kann Bucket 1 auf 35 bis 45 Prozent sinken, Bucket 3 auf 20 bis 30 Prozent steigen. Beachte aber: In keinem der Profile geht Bucket 4 über 10 Prozent. Das ist bewusst. Die Kombination aus strukturell unbegrenzten Verlust-Risiken, kurzen Zeit-Horizonten und hohem Management-Aufwand macht größere Bucket-4-Allokationen suboptimal für Langzeit-Performance.
+**[Slide 4]** Wichtig: DeFi ist nicht dein gesamtes Vermögen. Es sollte in zwei weiteren Schichten eingebettet sein. Deine Krypto-Allokation insgesamt sollte DeFi mit Cold-Storage-ETH-BTC und CEX-Holdings kombinieren — typisch 40 bis 60 Prozent Cold Storage, 25 bis 40 Prozent DeFi, 10 bis 20 Prozent CEX. Und deine gesamte Krypto-Exposure sollte eine sinnvolle Fraktion deines Gesamt-Vermögens sein — für die meisten professionellen Teilnehmer 5 bis 25 Prozent. Hoch genug, um bedeutend zu sein, niedrig genug, um einen vollständigen Krypto-Crash zu überstehen. DeFi-spezifische Optimierungen werden trivial, wenn das Gesamt-Vermögens-Portfolio schlecht konstruiert ist.
 
-Wichtig: DeFi ist nicht dein gesamtes Vermögen. Es sollte in zwei weiteren Schichten eingebettet sein. Deine Krypto-Allokation insgesamt sollte DeFi mit Cold-Storage-ETH-BTC und CEX-Holdings kombinieren — typisch 40 bis 60 Prozent Cold Storage, 25 bis 40 Prozent DeFi, 10 bis 20 Prozent CEX. Und deine gesamte Krypto-Exposure sollte eine sinnvolle Fraktion deines Gesamt-Vermögens sein — für die meisten professionellen Teilnehmer 5 bis 25 Prozent. Hoch genug, um bedeutend zu sein, niedrig genug, um einen vollständigen Krypto-Crash zu überstehen. DeFi-spezifische Optimierungen werden trivial, wenn das Gesamt-Vermögens-Portfolio schlecht konstruiert ist.
+**[Slide 5]** Zeit-Horizonte müssen zur Positions-Charakteristik passen. Bucket 1 und 2 sind lang-horizont — Jahre oder Jahrzehnte. Du deponierst USDC bei Aave nicht für zwei Wochen, du deponierst es für eine stabile Rendite-Quelle über Jahre. Bucket 3 ist mittel-horizont, drei bis achtzehn Monate, mit regelmäßigen Re-Evaluations. Bucket 4 kann kurz sein, Wochen bis drei Monate, mit klaren Exit-Triggern. Eine häufige Fehl-Passung: eine spekulative Position als lange Position halten, weil du deine Initial-These nicht aktualisieren möchtest. Das ist eine der häufigsten Schadens-Quellen.
 
-Zeit-Horizonte müssen zur Positions-Charakteristik passen. Bucket 1 und 2 sind lang-horizont — Jahre oder Jahrzehnte. Du supplied USDC bei Aave nicht für zwei Wochen, du supplied es für eine stabile Rendite-Quelle über Jahre. Bucket 3 ist mittel-horizont, drei bis achtzehn Monate, mit regelmäßigen Re-Evaluations. Bucket 4 kann kurz sein, Wochen bis drei Monate, mit klaren Exit-Triggern. Eine häufige Fehl-Passung: eine spekulative Position als lange Position halten, weil du deine Initial-These nicht aktualisieren möchtest. Das ist eine der häufigsten Schadens-Quellen.
+**[Slide 6]** Rebalancing ist der Prozess, Positionen zurück zu Target-Allokationen zu bringen. Es gibt zwei Philosophien. Mean-Reversion-Rebalancing trimmt wohlperformende Positionen zurück und stockt schwach-performende auf. Die Logik: Über lange Zeit sind Markt-Bewegungen teils mean-reverting. Momentum-Respect-Rebalancing lässt gute Positionen laufen, bis sie extreme Abweichungen erreichen. Die Logik: Gute Positionen tendieren dazu, weiter gut zu performen. In der Praxis kombinieren die meisten disziplinierten Teilnehmer beides. Bucket 1 ist streng mean-reversion, weil diese Tranche der Kapitalerhalt-Anker ist. Bucket 2 ist moderat momentum-respekt, weil ETH-Rallies Raum zum Laufen bekommen sollten. Für Rebalancing-Trigger empfehle ich eine Kombination: quartärliche Reviews, plus Threshold-basiert bei über 30 Prozent Abweichung, plus Event-basiert nach größeren Markt-Bewegungen. Das produziert typisch zwei bis vier Rebalancing-Events pro Jahr.
 
-Rebalancing ist der Prozess, Positionen zurück zu Target-Allokationen zu bringen. Es gibt zwei Philosophien. Mean-Reversion-Rebalancing trimmt wohlperformende Positionen zurück und stockt schwach-performende auf. Die Logik: Über lange Zeit sind Markt-Bewegungen teils mean-reverting. Momentum-Respect-Rebalancing lässt gute Positionen laufen, bis sie extreme Abweichungen erreichen. Die Logik: Gute Positionen tendieren dazu, weiter gut zu performen. In der Praxis kombinieren die meisten disziplinierten Teilnehmer beides. Bucket 1 ist streng mean-reversion, weil diese Tranche der Kapitalerhalt-Anker ist. Bucket 2 ist moderat momentum-respekt, weil ETH-Rallies Raum zum Laufen bekommen sollten. Für Rebalancing-Trigger empfehle ich eine Kombination: quartärliche Reviews, plus Threshold-basiert bei über 30 Prozent Abweichung, plus Event-basiert nach größeren Markt-Bewegungen. Das produziert typisch zwei bis vier Rebalancing-Events pro Jahr.
-
-Zum Schluss: Portfolio Management ist zu mindestens 50 Prozent Psychologie, nicht Technik. Drei Dynamiken sind besonders relevant. Drawdown-Management — jedes ernsthafte Krypto-Portfolio wird Phasen von 30 bis 50 Prozent Drawdowns erleben, oft über 6 bis 18 Monate. Die kritische Fähigkeit ist nicht-handeln in solchen Phasen. Kein Panik-Verkauf in Bucket 2, keine Abkehr von Bucket 1. FOMO-Resistenz in Bull-Markets — die Versuchung ist stark, Bucket 4 zu vergrößern, wenn neue Protokolle mit spektakulären Renditen auftauchen. Diese Drift ist oft die Ursache für die größten Verluste im nachfolgenden Bear-Market. Capitulation-Pressure in Bear-Markets — am Ende eines langen Bear-Markets wird die Versuchung stark, ganz auszusteigen. Paradoxerweise sind das oft die Punkte, an denen langfristige Compound-Positionen am wertvollsten sind. Diese psychologischen Dimensionen sind schwer in der Theorie zu vermitteln, aber das Wissen darüber hilft, sie zu überstehen.
+**[Slide 7]** Zum Schluss: Portfolio Management ist zu mindestens 50 Prozent Psychologie, nicht Technik. Drei Dynamiken sind besonders relevant. Drawdown-Management — jedes ernsthafte Krypto-Portfolio wird Phasen von 30 bis 50 Prozent Drawdowns erleben, oft über 6 bis 18 Monate. Die kritische Fähigkeit ist nicht-handeln in solchen Phasen. Kein Panik-Verkauf in Bucket 2, keine Abkehr von Bucket 1. FOMO-Resistenz in Bull-Markets — die Versuchung ist stark, Bucket 4 zu vergrößern, wenn neue Protokolle mit spektakulären Renditen auftauchen. Diese Drift ist oft die Ursache für die größten Verluste im nachfolgenden Bear-Market. Capitulation-Pressure in Bear-Markets — am Ende eines langen Bear-Markets wird die Versuchung stark, ganz auszusteigen. Paradoxerweise sind das oft die Punkte, an denen langfristige Compound-Positionen am wertvollsten sind. Diese psychologischen Dimensionen sind schwer in der Theorie zu vermitteln, aber das Wissen darüber hilft, sie zu überstehen.
 
 ### Visuelle Vorschläge
 
-**Visual 1: Top-down vs. Bottom-up Analysis**
+**[Slide 1] — Top-down vs. Bottom-up Analysis**
 Split-Screen-Diagramm. Links: "Positions-Analyse (Bottom-up)" — Box mit "Protokoll X" in der Mitte, Pfeile nach oben zu "Passt in Portfolio?"-Entscheidung. Rechts: "Portfolio Construction (Top-down)" — Box mit "Gesamt-Ziel" oben, Pfeile nach unten zu Buckets, dann zu einzelnen Positionen. Subtitle: "Beide Ebenen notwendig; eine ohne die andere produziert strukturelle Fehl-Konstruktionen."
 
-**Visual 2: Die Vier-Bucket-Struktur als Pyramide**
+**[Slide 2] — Die Vier-Bucket-Struktur als Pyramide**
 Pyramiden-Diagramm mit vier Ebenen, von unten nach oben:
 
 - Basis (breit): Bucket 1 — Stable Yield, 4–8 % p.a., lang
@@ -278,7 +292,7 @@ Pyramiden-Diagramm mit vier Ebenen, von unten nach oben:
 - Spitze (schmal): Bucket 4 — Speculative, max 5–10 %, kurz
 Links der Pyramide: Risiko-Skala (niedrig unten, hoch oben). Rechts: Zeit-Horizont-Skala (lang unten, kurz oben).
 
-**Visual 3: Allokations-Beispiele nach Profil**
+**[Slide 3] — Allokations-Beispiele nach Profil**
 Drei vertikale Balkendiagramme nebeneinander, jeweils mit 4 Farb-Segmenten für die Buckets.
 
 - Balken 1: "Konservativer Einsteiger" — 65 % Bucket 1 (blau), 25 % Bucket 2 (grün), 7 % Bucket 3 (gelb), 3 % Bucket 4 (rot)
@@ -286,7 +300,7 @@ Drei vertikale Balkendiagramme nebeneinander, jeweils mit 4 Farb-Segmenten für 
 - Balken 3: "Engagierter Praktiker" — 40 %, 30 %, 25 %, 5 %
 Legende oben mit Farb-Bedeutungen.
 
-**Visual 4: Portfolio-Schichtung**
+**[Slide 4] — Portfolio-Schichtung**
 Konzentrische Kreise, von innen nach außen:
 
 - Kleinster Kern: DeFi-Portfolio (vier Buckets)
@@ -294,10 +308,10 @@ Konzentrische Kreise, von innen nach außen:
 - Äußerer Ring: Gesamt-Vermögens-Portfolio (Krypto + tradFi-Assets)
 Annotations mit typischen Prozent-Anteilen für jede Schicht.
 
-**Visual 5: Zeit-Horizont-Matching**
+**[Slide 5] — Zeit-Horizont-Matching**
 Horizontale Zeit-Achse von "Wochen" bis "Jahrzehnte". Vier Balken darüber, jeweils für einen Bucket, zeigen den passenden Zeit-Bereich. Unter jedem Balken ein Icon für "Management-Intensität" (niedrig bis hoch).
 
-**Visual 6: Rebalancing-Trigger-Entscheidungsbaum**
+**[Slide 6] — Rebalancing-Trigger-Entscheidungsbaum**
 Flussdiagramm:
 
 - Start: "Quartärliche Review?"
@@ -307,7 +321,7 @@ Flussdiagramm:
 - Falls Abweichung < 15 %: Keine Aktion
 Parallel: "Major Market Event (> 20 % Bewegung)?" → zusätzlicher Review-Trigger
 
-**Visual 7: Psychologische Phasen im Markt-Zyklus**
+**[Slide 7] — Psychologische Phasen im Markt-Zyklus**
 Zyklische Kurve (Euphorie oben, Capitulation unten, zyklisch wiederholend). Auf verschiedenen Punkten der Kurve kleine Icons mit psychologischem Muster: "FOMO-Drift zu Bucket 4", "Drawdown-Panic", "Capitulation-Ausstieg", "Methodische Disziplin". Unterhalb: "Die methodische Disziplin-Kurve ist flach; sie überschneidet sich nicht mit dem emotionalen Zyklus."
 
 ### Übung
@@ -560,8 +574,8 @@ Rebalancing-Entscheidungen sind nicht binär. Die interessanten Fälle sind die 
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Portfolio Construction als Disziplin → 4-Bucket-Framework → Zeit-Horizonte → Rebalancing-Strategien → Portfolio Risk Layering → Psychologische Dynamik → Zusammenfassung
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 12–14 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → 4-Bucket-Framework → Portfolio-Profile und Allokations-Beispiele → Integration mit breiterem Portfolio → Zeit-Horizonte und Positions-Matching → Rebalancing-Strategien → Psychologische Dimensionen
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — 4-Bucket-Pie-Chart, Risk-Layering-Diagramm, Zeit-Horizont-Matrix, Rebalancing-Flowchart, Drawdown-Psychologie-Grafik
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -569,8 +583,6 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ---
 
 ## Lektion 17.2 — Real-World Assets (RWA) in DeFi: Landscape und Haupt-Protokolle
-
-### Lektion
 
 **Real-World Assets in DeFi: tokenisierte US-Treasuries, Corporate-Credit und die Brücke zwischen tradFi und DeFi**
 
@@ -587,9 +599,9 @@ Nach Abschluss dieser Lektion können die Lernenden:
 
 ### Erklärung
 
-Real-World Assets (RWA) ist der Sammelbegriff für Finanzinstrumente und Vermögenswerte, die in der traditionellen Finanzwelt (tradFi) existieren und durch Tokenisierung auf Blockchain-Ebene zugänglich gemacht werden. Die Idee selbst ist nicht neu — Diskussionen über tokenisierte Aktien, Immobilien und Anleihen gab es schon 2017. Was sich ab 2023–2024 fundamental geändert hat, ist die tatsächliche Umsetzung durch ernsthafte institutionelle Akteure. BlackRock, Franklin Templeton, WisdomTree, Ondo Finance, und andere haben Produkte launched, die bedeutende Kapitalzuflüsse erreicht haben und damit RWA von einer theoretischen Kategorie zu einer praktischen Portfolio-Komponente gemacht haben.
+Real-World Assets (RWA) ist der Sammelbegriff für Finanzinstrumente und Vermögenswerte, die in der traditionellen Finanzwelt (tradFi) existieren und durch Tokenisierung auf Blockchain-Ebene zugänglich gemacht werden. Die Idee selbst ist nicht neu — Diskussionen über tokenisierte Aktien, Immobilien und Anleihen gab es schon 2017. Was sich ab 2023–2024 fundamental geändert hat, ist die tatsächliche Umsetzung durch ernsthafte institutionelle Akteure. BlackRock, Franklin Templeton, WisdomTree, Ondo Finance, und andere haben Produkte veröffentlicht, die bedeutende Kapitalzuflüsse erreicht haben und damit RWA von einer theoretischen Kategorie zu einer praktischen Portfolio-Komponente gemacht haben.
 
-Der Grund, warum RWAs in diesem Modul ihr eigenes Lektion bekommen, ist ihre strategische Bedeutung für die Bucket-1-Konstruktion. Vor 2023 war die einzige Quelle für "Stable Yield" in DeFi die Stablecoin-Lending-Rendite — USDC oder DAI in Aave, Compound, Morpho supplied, mit typischen Renditen von 4–6 %. Diese Renditen waren abhängig von der Borrow-Nachfrage im DeFi-Ökosystem, die wiederum oft an Krypto-Markt-Zyklen gekoppelt war. In Bull-Markets stiegen die Borrow-Raten (Teilnehmer wollten Stablecoin leihen, um Krypto-Positionen zu erweitern); in Bear-Markets fielen sie drastisch. Damit war selbst die "stabile" Tranche deines Portfolios indirekt an Krypto-Zyklen gekoppelt.
+Der Grund, warum RWAs in diesem Modul ihr eigenes Lektion bekommen, ist ihre strategische Bedeutung für die Bucket-1-Konstruktion. Vor 2023 war die einzige Quelle für "Stable Yield" in DeFi die Stablecoin-Lending-Rendite — USDC oder DAI in Aave, Compound, Morpho hinterlegt, mit typischen Renditen von 4–6 %. Diese Renditen waren abhängig von der Borrow-Nachfrage im DeFi-Ökosystem, die wiederum oft an Krypto-Markt-Zyklen gekoppelt war. In Bull-Markets stiegen die Borrow-Raten (Teilnehmer wollten Stablecoin leihen, um Krypto-Positionen zu erweitern); in Bear-Markets fielen sie drastisch. Damit war selbst die "stabile" Tranche deines Portfolios indirekt an Krypto-Zyklen gekoppelt.
 
 RWA-Produkte — insbesondere tokenisierte US-Treasuries — brechen diese Kopplung. Wenn du in tokenisierten 3-Monats-T-Bills investierst, verdienst du den tatsächlichen T-Bill-Zinssatz (in 2024–2026 typisch 4,5–5,5 %, abhängig von Fed-Policy), unabhängig von DeFi-Markt-Zyklen. Der Yield kommt aus der US-Regierung, die Zinsen auf ihre kurzfristigen Anleihen zahlt, nicht aus Krypto-Teilnehmern, die Stablecoin leihen wollen. Das ist eine fundamentale strukturelle Diversifikation der Rendite-Quelle.
 
@@ -616,7 +628,7 @@ Für konservative Bucket-1-Allokation sind Kategorie 1 (Treasuries) und teilweis
 - Chain-Support: Primär Ethereum, Expansion auf Polygon, Arbitrum, Optimism, Base, Avalanche, Aptos in 2024–2025
 - Ticker / Token: BUIDL
 - Yield-Distribution: Monatlich in BUIDL-Token (rebasing-artig); effektiver Yield folgt Fed Funds Rate minus Management-Fee
-- Minimum-Investment: 5 Mio USD für Direkt-Teilnehmer (institutionell); Retail-Zugang via Partner-Plattformen (Ondo's USDY ist beispielsweise in bedeutendem Maße durch BUIDL unterlegt)
+- Minimum-Investment: 5 Mio USD für Direkt-Teilnehmer (institutionell); Retail-Zugang via Partner-Plattformen (Ondos USDY ist beispielsweise in bedeutendem Maße durch BUIDL unterlegt)
 - TVL (Anfang 2026): Führendes Produkt in der Kategorie, mehrere Mrd USD
 - Legale Struktur: BlackRock fungiert als Asset Manager, SPV für die zugrunde liegenden Assets, BNY Mellon als Custodian für Off-Chain-Assets
 - Redemption: Durch berechtigte Teilnehmer; Fiat-Abwicklung zu Stablecoins (USDC) möglich
@@ -624,7 +636,7 @@ Für konservative Bucket-1-Allokation sind Kategorie 1 (Treasuries) und teilweis
 **Ondo OUSG (Ondo Short-Term US Government Bond):**
 
 - Launch: Januar 2023 (einer der frühesten Produkte in der Kategorie)
-- Struktur: Tokenized exposure zu kurzfristigen US-Treasuries, historisch unterlegt mit BlackRock's iShares Short Treasury Bond ETF (SHV), später migriert zu mehreren Backend-Fonds inklusive BUIDL
+- Struktur: Tokenized exposure zu kurzfristigen US-Treasuries, historisch unterlegt mit BlackRocks iShares Short Treasury Bond ETF (SHV), später migriert zu mehreren Backend-Fonds inklusive BUIDL
 - Chain-Support: Ethereum, Polygon, Solana (über entsprechende Ondo-Produkte)
 - Yield-Distribution: Rebasing (OUSG-Token-Balance wächst über Zeit), oder in bestimmten Varianten separate Yield-Token
 - Minimum: Für OUSG direkt typisch 100.000 USD für accredited investors; verwandtes Produkt USDY ist für nicht-US-Teilnehmer auch in kleineren Größen zugänglich
@@ -645,9 +657,9 @@ Für konservative Bucket-1-Allokation sind Kategorie 1 (Treasuries) und teilweis
 
 **Maple Cash Management:**
 
-- Launch: 2023 (Cash-Management-Pool-Produkt als Erweiterung von Maple's Private-Credit-Ursprung)
+- Launch: 2023 (Cash-Management-Pool-Produkt als Erweiterung von Maples Private-Credit-Ursprung)
 - Struktur: Pool, der primär in US-Treasuries und Repo investiert, gemanaget durch Maple
-- Chain-Support: Ethereum, Solana (über Maple's Solana-Expansion)
+- Chain-Support: Ethereum, Solana (über Maples Solana-Expansion)
 - Yield-Distribution: Rebasing in entsprechende Pool-Tokens
 - Minimum: Typisch 100k+ USD für Direkt-Zugang, einige Pools retail-zugänglich
 - TVL (Anfang 2026): Bedeutende Größe, oft dreistellig in Millionen
@@ -709,7 +721,7 @@ Eine der wichtigsten Fragen bei jedem RWA-Produkt ist: Wie komme ich aus der Pos
 
 **Gated Redemption Windows:** Einige Produkte (Maple Cash Management, ältere Centrifuge-Pools) haben wöchentliche oder monatliche Redemption-Fenster. Während der Windows kannst du exit; dazwischen musst du warten oder den Secondary-Markt nutzen.
 
-Die praktische Implikation für Portfolio-Konstruktion: RWA-Produkte mit guten Secondary-Markets (BUIDL, Ondo's USDY) sind fast so liquide wie Stablecoin-Lending-Positionen. RWA-Produkte ohne gute Secondary-Markets (viele Private-Credit-Pools) erfordern Planungs-Horizonte, die länger sind als typische DeFi-Positionen.
+Die praktische Implikation für Portfolio-Konstruktion: RWA-Produkte mit guten Secondary-Markets (BUIDL, Ondos USDY) sind fast so liquide wie Stablecoin-Lending-Positionen. RWA-Produkte ohne gute Secondary-Markets (viele Private-Credit-Pools) erfordern Planungs-Horizonte, die länger sind als typische DeFi-Positionen.
 
 **Regulatorischer Kontext:**
 
@@ -739,7 +751,7 @@ Für einen moderat-konservativen Mittelstand-Investor mit 100.000 USD DeFi-Allok
 
 - 20.000 USD in Stablecoin-Lending (Aave, Compound, Morpho) — traditionelle DeFi-Yield
 - 20.000 USD in RWA-Treasury-Exposure (BUIDL via Ondo, oder direkt Franklin BENJI) — diversifizierte Rendite-Quelle
-- 10.000 USD in DAI mit Sky Savings Rate — kombiniert DeFi-Native mit teilweiser RWA-Exposure (Sky's Reserven sind zunehmend in RWAs)
+- 10.000 USD in DAI mit Sky Savings Rate — kombiniert DeFi-Native mit teilweiser RWA-Exposure (Skys Reserven sind zunehmend in RWAs)
 
 Diese Struktur erreicht sowohl die klassischen DeFi-Native-Positionen als auch die diversifizierende RWA-Exposure.
 
@@ -760,14 +772,14 @@ Die praktische Empfehlung für die meisten Retail-DeFi-Teilnehmer: 10–30 % der
 
 ### Folien-Zusammenfassung
 
-**Slide 1: Was sind RWAs und warum jetzt?**
+**[Slide 1] — Was sind RWAs und warum jetzt?**
 
 - Tokenisierte Finanzinstrumente aus der tradFi-Welt (Treasuries, Credit, Real Estate, Commodities)
 - Vor 2023 theoretisch; ab 2023–2024 praktisch durch BlackRock, Ondo, Franklin und andere
 - Strategische Bedeutung: Rendite-Quelle außerhalb DeFi-Zyklen
 - Brechen die Kopplung zwischen Bucket 1 und Krypto-Markt-Zyklen
 
-**Slide 2: Die fünf RWA-Kategorien**
+**[Slide 2] — Die fünf RWA-Kategorien**
 
 - US-Treasuries: 4,5–5,5 % p.a., niedrigstes Risiko, größte Kategorie
 - Investment-Grade Corporate Credit: 5–7 %, moderate Risiko
@@ -775,42 +787,36 @@ Die praktische Empfehlung für die meisten Retail-DeFi-Teilnehmer: 10–30 % der
 - Real Estate: kleine Kategorie, komplex legal
 - Commodities: Gold-Tokens (PAXG, XAUT), Inflation-Hedge
 
-**Slide 3: Die vier führenden Treasury-Produkte**
+**[Slide 3] — Die vier führenden Treasury-Produkte**
 
-- BlackRock BUIDL: 2024 launch, institutionell (5 Mio min direkt)
+- BlackRock BUIDL: Launch 2024, institutionell (5 Mio min direkt)
 - Ondo OUSG: 2023, accredited, 100k min
 - Franklin BENJI: 2021/2023, retail-zugänglich
 - Maple Cash: 2023, 100k+ typisch, wöchentliche Redemption
 
-**Slide 4: RWA legale Struktur**
+**[Slide 4] — RWA legale Struktur**
 
 - On-Chain-Token ≠ zugrunde liegende Assets; On-Chain-Token = legaler Anspruch
 - Struktur: Asset Manager + SPV + Custodian + Transfer Agent
 - Retail-Teilnehmer meist über Zwischen-Schichten (Ondo USDY statt direkt BUIDL)
 - Legale Ansprüche über mehrere Entitäten verkettet
 
-**Slide 5: Private Credit ist strukturell anders**
+**[Slide 5] — Private Credit ist strukturell anders**
 
 - Goldfinch: Emerging-Markets-Lending, 2023 Default-Event als Risiko-Demonstration
 - Centrifuge: Infrastructure für diverse Asset-backed Pools
 - Maple: Post-FTX-Anpassungen, gemischte Private-Credit + Cash-Management
 - Höhere Renditen = reale Risiko-Prämien, nicht gratis Yield
 
-**Slide 6: Redemption-Mechaniken**
+**[Slide 6] — Redemption-Mechaniken und regulatorischer Kontext**
 
-- Direct Redemption: T+0 oder T+1, institutionell
-- DEX Secondary: 0,1–0,5 % Slippage ruhig, mehr im Stress
-- Gated Windows: wöchentlich oder monatlich, Planungs-Horizont nötig
-- Liquidität variiert stark zwischen Produkten
-
-**Slide 7: Regulatorischer Kontext**
-
+- Direct Redemption: T+0 oder T+1 institutionell; DEX Secondary mit 0,1–0,5 % Slippage ruhig
+- Gated Windows wöchentlich/monatlich bei einigen Produkten; Liquidität variiert stark
 - US-Securities-Recht: viele Produkte accredited-gated
 - EU MiCA: teils MiFID II, teils MiCA, in Entwicklung
-- Jurisdiction-Geo-Blocking ist real und praktisch relevant
-- Entwicklung 2023–2026: schnelle Klärung, mehr Retail-Zugang
+- Jurisdiction-Geo-Blocking real; 2023–2026: schnelle Klärung, mehr Retail-Zugang
 
-**Slide 8: RWA-Positionierung in Bucket 1**
+**[Slide 7] — RWA-Positionierung in Bucket 1**
 
 - Rolle: Rendite-Quellen-Diversifikation, Bear-Market-Resilienz, Counterparty-Diversifikation
 - Typisch 10–30 % von Bucket 1 bei moderat-konservativen Investoren
@@ -819,33 +825,25 @@ Die praktische Empfehlung für die meisten Retail-DeFi-Teilnehmer: 10–30 % der
 
 ### Sprechertext
 
-Real-World Assets, oder RWAs, sind der Sammelbegriff für tradFi-Finanzinstrumente, die durch Tokenisierung auf Blockchain-Ebene zugänglich gemacht werden. Die Idee ist nicht neu — Diskussionen darüber gab es seit 2017. Was sich aber seit 2023 und 2024 fundamental geändert hat, ist die tatsächliche Umsetzung durch institutionelle Akteure wie BlackRock, Franklin Templeton und Ondo Finance. RWAs sind von einer theoretischen Kategorie zu einer praktischen Portfolio-Komponente geworden, und das verdient ein eigenes Lektion in dieser Academy.
+**[Slide 1]** Real-World Assets, oder RWAs, sind der Sammelbegriff für tradFi-Finanzinstrumente, die durch Tokenisierung auf Blockchain-Ebene zugänglich gemacht werden. Diskussionen gab es seit 2017, aber was sich seit 2023/2024 fundamental geändert hat, ist die tatsächliche Umsetzung durch institutionelle Akteure wie BlackRock, Franklin Templeton und Ondo Finance. Der Grund, warum RWAs strategisch wichtig sind, liegt in Bucket 1: Vor 2023 war die einzige Stable-Yield-Quelle das Stablecoin-Lending — USDC oder DAI in Aave, Compound, Morpho, typisch 4 bis 6 Prozent. Diese Renditen waren aber an Krypto-Markt-Zyklen gekoppelt. RWAs brechen diese Kopplung: Der Yield kommt aus der US-Regierung über kurzfristige T-Bills, unabhängig von DeFi-Markt-Zyklen. Das ist eine fundamentale strukturelle Diversifikation der Rendite-Quelle.
 
-Der Grund, warum RWAs strategisch wichtig sind, liegt in Bucket 1 deines Portfolios. Vor 2023 war die einzige "Stable Yield"-Quelle in DeFi das Stablecoin-Lending — USDC oder DAI in Aave, Compound, Morpho supplied, mit typisch 4 bis 6 Prozent Rendite. Diese Renditen waren abhängig von der Borrow-Nachfrage, die wiederum an Krypto-Markt-Zyklen gekoppelt war. In Bull-Markets stiegen die Raten, in Bear-Markets fielen sie drastisch. Damit war selbst deine "stabile" Portfolio-Tranche indirekt krypto-zyklen-gekoppelt. RWAs brechen diese Kopplung. Wenn du in tokenisierten 3-Monats-Treasuries investierst, verdienst du den tatsächlichen T-Bill-Zinssatz — in 2024 bis 2026 typisch 4,5 bis 5,5 Prozent — unabhängig von DeFi-Markt-Zyklen. Der Yield kommt aus der US-Regierung, die Zinsen auf ihre kurzfristigen Anleihen zahlt. Das ist eine fundamentale strukturelle Diversifikation der Rendite-Quelle.
+**[Slide 2]** Fünf Haupt-Kategorien. Tokenisierte US-Treasuries sind die größte und reifste — 4,5 bis 5,5 Prozent, niedrigstes Risiko, mehrere Milliarden USD TVL. Investment-Grade Corporate Credit bietet 5 bis 7 Prozent mit moderate Counterparty-Risk. Private Credit bietet 8 bis 12 Prozent mit echtem Default-Risiko — das haben mehrere Protokolle in den letzten Jahren real gezeigt. Real Estate und Commodities sind kleinere Kategorien mit spezifischeren Use-Cases. Für konservative Bucket-1-Allokation sind Treasuries die primären Kandidaten; Private Credit ist risikoreicher und braucht bewusste Allokations-Entscheidungen.
 
-Es gibt fünf Haupt-Kategorien von RWAs. Tokenisierte US-Treasuries sind die größte und reifste — Renditen 4,5 bis 5,5 Prozent, niedrigstes Risiko, mehrere Milliarden USD TVL. Investment-Grade Corporate Credit bietet 5 bis 7 Prozent mit moderate Counterparty-Risk. Private Credit bietet 8 bis 12 Prozent mit echtem Default-Risiko — das haben mehrere Protokolle in den letzten Jahren auch real gezeigt. Real Estate und Commodities sind kleinere Kategorien mit spezifischeren Use-Cases. Für konservative Bucket-1-Allokation sind Treasuries und teilweise Investment-Grade Corporate Credit die primären Kandidaten; Private Credit ist risikoreicher und braucht bewusste Allokations-Entscheidungen.
+**[Slide 3]** Die vier führenden Treasury-Produkte sind BlackRock BUIDL, Ondo OUSG, Franklin Templeton BENJI und Maple Cash. BUIDL wurde 2024 veröffentlicht und wurde schnell TVL-Leader, ist aber institutionell — 5 Millionen USD Minimum. Retail-Zugang läuft über Ondos USDY, das einen Teil seines Backings von BUIDL bezieht. Ondo OUSG seit 2023, 100 Tausend USD Minimum, accredited. Franklin BENJI ist einer der wenigen wirklich retail-zugänglichen Produkte. Maple Cash kommt aus dem Private-Credit-Hintergrund und hat auf Cash-Management mit Treasuries expandiert.
 
-Die vier führenden tokenisierten Treasury-Produkte sind BlackRock BUIDL, Ondo OUSG, Franklin Templeton BENJI, und Maple Cash Management. BUIDL, das 2024 launched wurde, ist das größte und wurde innerhalb kürzester Zeit zum TVL-Leader. Es ist aber primär institutionell — 5 Millionen USD Minimum für Direkt-Teilnehmer. Retail-Zugang läuft über Partner-Plattformen, insbesondere Ondo's USDY-Produkt, das einen Teil seines Backings von BUIDL bezieht. Ondo OUSG selbst ist seit 2023 einer der frühesten Produkte in der Kategorie, 100 Tausend USD Minimum, accredited investor status erforderlich. Franklin BENJI ist interessant, weil es einer der wenigen wirklich retail-zugänglichen Produkte ist — geringe Mindestanlage, Multi-Chain-Support. Maple Cash Management kommt aus dem Private-Credit-Hintergrund und hat sich auf Cash-Management mit Treasuries ausgeweitet.
+**[Slide 4]** Ein kritischer strukturelle Punkt: Die On-Chain-Token sind nicht die zugrunde liegenden Assets. Sie sind legaler Anspruch, vermittelt durch komplexe Ketten. Typische Struktur: Asset Manager wie BlackRock, SPV in Delaware oder Cayman, Custodian wie BNY Mellon, Transfer und Paying Agents. Als Retail interagierst du oft nicht direkt — du gehst durch Zwischen-Schichten wie Ondo. Das addiert eine Vertrauens-Ebene: Du vertraust nicht nur BlackRock, sondern auch dem Ondo-Team. Diese Vertrauens-Kette zu verstehen ist kritisch für Risiko-Einschätzung.
 
-Ein kritischer strukturelle Punkt: Die On-Chain-Token sind nicht die zugrunde liegenden Assets. Sie sind legaler Anspruch auf diese Assets, vermittelt durch komplexe Ketten von Verträgen. Eine typische Struktur hat: Asset Manager wie BlackRock, ein SPV in einer Finanz-Jurisdiction wie Delaware oder Cayman, ein Custodian wie BNY Mellon für die Off-Chain-Assets, Transfer Agents und Paying Agents für die Synchronisation zwischen On-Chain-Balance und Off-Chain-SPV-Struktur. Wenn du als Retail-Teilnehmer investierst, interagierst du oft nicht direkt mit dieser Struktur — du gehst durch eine Zwischen-Schicht wie Ondo. Das addiert eine Vertrauens-Ebene: Du vertraust nicht nur BlackRock, sondern auch dem Ondo-Team. Diese Vertrauens-Kette zu verstehen ist wichtig für die Risiko-Einschätzung.
+**[Slide 5]** Private Credit ist strukturell anders als Treasuries. Bei Treasuries ist Hauptrisiko strukturell-technisch. Bei Private Credit ist Hauptrisiko wirtschaftlich — der Borrower kann nicht zurückzahlen. Goldfinch hatte 2023 einen prominenten Default-Event. Maple hatte 2022 signifikante Defaults im FTX- und 3AC-Crash. Die höheren Renditen von 8 bis 12 Prozent sind echte Risiko-Prämien, nicht einfach mehr Yield. Sie kompensieren real höheres Default-Risiko. Für Bucket 1 sind Private-Credit-RWAs in kleinen Allokationen akzeptabel, sollten aber nicht als Äquivalent zu Treasuries behandelt werden.
 
-Private Credit ist strukturell anders als Treasuries. Bei Treasuries ist das Hauptrisiko strukturell-technisch — Smart Contract, Tokenisierung, Custody-Setup. Bei Private Credit ist das Hauptrisiko wirtschaftlich — der zugrunde liegende Borrower kann nicht zurückzahlen. Goldfinch hatte 2023 einen prominenten Default-Event, als einer ihrer Emerging-Markets-Lending-Partner in Schwierigkeiten geriet. Maple hatte 2022 signifikante Defaults im FTX- und 3AC-Crash. Diese Events sind nicht Ausnahmen — sie sind die strukturelle Realität von Private Credit. Die höheren Renditen von 8 bis 12 Prozent sind echte Risiko-Prämien, nicht einfach "mehr Yield". Sie kompensieren für real höheres Default-Risiko. Für Bucket 1 des konservativen Portfolios sind Private-Credit-RWAs in kleinen Allokationen akzeptabel, sollten aber nicht als Äquivalent zu Treasuries behandelt werden.
+**[Slide 6]** Redemption: Direct Redemption institutionell T+0 oder T+1. DEX Secondary Markets mit 0,1 bis 0,5 Prozent Slippage in ruhigen Phasen. Gated Redemption Windows bei einigen Private-Credit-Produkten. Der regulatorische Kontext ist jurisdictions-abhängig. In den USA sind viele Produkte accredited-gated. In der EU adressiert MiCA Teile der Tokenisierung, RWA-Klassifikation in Entwicklung. Geo-Blocking ist real. Praktische Empfehlung: Vor Investition prüfen, was in deiner Jurisdiction legal zugänglich ist.
 
-Redemption ist die Frage, wie du aus einer RWA-Position rauskommst. Direct Redemption für institutionelle Teilnehmer ist typisch T+0 oder T+1. DEX Secondary Markets erlauben sofortiges Exit, meist mit 0,1 bis 0,5 Prozent Slippage in ruhigen Markt-Phasen. Gated Redemption Windows — wöchentlich oder monatlich — existieren bei einigen Private-Credit-Produkten und erfordern Planungs-Horizonte, die länger sind als typische DeFi-Positionen.
-
-Der regulatorische Kontext ist jurisdictions-abhängig. In den USA sind viele Produkte unter Securities-Recht registriert und damit accredited-gated. In der EU adressiert MiCA Teile der Tokenisierung, aber RWA-Klassifikation ist in Entwicklung. Geo-Blocking ist real — nicht alle Produkte sind in allen Jurisdictions zugänglich. Die praktische Empfehlung: Vor Investition prüfen, was in deiner Jurisdiction legal zugänglich ist.
-
-Wie positionierst du RWAs in deinem Portfolio? Sie gehören primär in Bucket 1, als Teil deiner Stable-Yield-Allokation. Für einen moderat-konservativen Investor mit 100 Tausend USD DeFi und Bucket 1 bei 50 Prozent — also 50 Tausend in Bucket 1 — empfehle ich etwa 20 Tausend in traditionelles Stablecoin-Lending, 20 Tausend in RWA-Treasury-Exposure, und 10 Tausend in DAI mit Sky Savings Rate, das zunehmend durch RWAs unterlegt ist. Diese Struktur kombiniert klassische DeFi-Native-Positionen mit der diversifizierenden RWA-Exposure. Typisch sind 10 bis 30 Prozent von Bucket 1 in RWAs — genug für bedeutende Diversifikation, nicht so viel, dass du die Flexibilität von DeFi-Native-Stablecoin-Lending verlierst.
-
-Zum Schluss, was RWAs nicht sind. Sie sind keine Krypto-Preis-Exposure — das ist Feature, nicht Bug. Sie bieten keine spektakulären Renditen — 4,5 bis 5,5 Prozent ist die Baseline, nicht 15 bis 20. Sie schützen nicht voll gegen Inflation. Und sie schützen nicht gegen systemisches tradFi-Risiko — wenn das US-Treasury-System selbst in Frage gestellt würde, wären tokenisierte Treasuries natürlich betroffen. Dies ist extremes Tail-Risk aber nicht null. Für sehr große Portfolios ist das eine Überlegung; für die meisten Teilnehmer ist es akademisch.
-
-RWAs sind der strategisch bedeutendste Portfolio-Baustein, der zwischen 2023 und 2026 in DeFi verfügbar geworden ist. Sie gehören in die Tool-Box jedes ernsthaften DeFi-Teilnehmers.
+**[Slide 7]** RWAs gehören primär in Bucket 1. Für einen moderat-konservativen Investor mit 100 Tausend USD DeFi und Bucket 1 bei 50 Prozent empfehle ich etwa 20 Tausend in traditionelles Stablecoin-Lending, 20 Tausend in RWA-Treasury-Exposure, 10 Tausend in DAI mit Sky Savings Rate. Typisch sind 10 bis 30 Prozent von Bucket 1 in RWAs — genug für bedeutende Diversifikation, nicht so viel, dass du Flexibilität verlierst. Was RWAs nicht sind: keine Krypto-Preis-Exposure, keine spektakulären Renditen, kein vollständiger Inflations-Schutz, kein Schutz gegen systemisches tradFi-Risiko. Sie sind der strategisch bedeutendste neue Portfolio-Baustein in DeFi — und gehören in die Tool-Box jedes ernsthaften Teilnehmers.
 
 ---
 
 ### Visuelle Vorschläge
 
-**Visual 1: RWA-Kategorien als Risiko-Rendite-Matrix**
+**[Slide 1] — RWA-Kategorien als Risiko-Rendite-Matrix**
 Scatter-Plot. X-Achse: Risiko (niedrig bis hoch). Y-Achse: Rendite (niedrig bis hoch).
 
 - Treasuries: niedrig Risiko, 4,5–5,5 % Rendite, großer Kreis (großes TVL)
@@ -855,7 +853,7 @@ Scatter-Plot. X-Achse: Risiko (niedrig bis hoch). Y-Achse: Rendite (niedrig bis 
 - Commodities (Gold): mittel Risiko, 0–3 % (Gold zahlt keinen Yield), kleiner Kreis
 Legende mit Kreis-Größe = TVL.
 
-**Visual 2: Die vier Treasury-Produkte Vergleich**
+**[Slide 2] — Die vier Treasury-Produkte Vergleich**
 Tabellarische Matrix-Grafik mit Produkten als Spalten (BUIDL, OUSG, BENJI, Maple Cash) und Attributen als Zeilen:
 
 - Launch-Jahr
@@ -866,7 +864,7 @@ Tabellarische Matrix-Grafik mit Produkten als Spalten (BUIDL, OUSG, BENJI, Maple
 - TVL-Range
 Farb-Codierung nach Zugänglichkeit (grün = retail, gelb = limited, rot = institutionell).
 
-**Visual 3: Die RWA-Struktur als geschichtetes Diagramm**
+**[Slide 3] — Die RWA-Struktur als geschichtetes Diagramm**
 Vertikales Schichtdiagramm, unten nach oben:
 
 - Unterste Schicht: "Underlying Asset" (z. B. US-Treasury Bill) — gelb
@@ -877,14 +875,14 @@ Vertikales Schichtdiagramm, unten nach oben:
 - Oberste Schicht: "On-Chain Token" (z. B. BUIDL) — grün
 Pfeile zeigen "legaler Anspruch" von Token nach unten. Caption: "Jede Schicht ist eine Vertrauens-Relation."
 
-**Visual 4: Treasuries vs Private Credit Risk-Profile**
+**[Slide 4] — Treasuries vs Private Credit Risk-Profile**
 Split-Screen-Vergleich:
 
 - Links: "Treasuries" — Balken zeigen Haupt-Risiken: Smart Contract (klein), Custody (klein), SPV-legal (klein), Counterparty-Default (nahe null). Gesamt-Risiko-Pfeil: niedrig.
 - Rechts: "Private Credit" — Balken zeigen gleiche Kategorien, aber Counterparty-Default (groß), plus Underwriting-Quality (mittel). Gesamt-Risiko-Pfeil: hoch.
 Caption: "Höhere Rendite bei Private Credit = reale Risiko-Prämie, nicht gratis Yield."
 
-**Visual 5: Redemption-Mechaniken-Spektrum**
+**[Slide 5] — Redemption-Mechaniken-Spektrum**
 Horizontaler Pfeil von "Sofort (T+0)" nach "Monate". Auf dem Pfeil Icons:
 
 - Ganz links: DEX Secondary Markets (BUIDL auf Curve etc.)
@@ -893,13 +891,16 @@ Horizontaler Pfeil von "Sofort (T+0)" nach "Monate". Auf dem Pfeil Icons:
 - Ganz rechts: Private Credit Quartalsweise oder längere Notice Periods
 Annotations mit Slippage-/Liquiditäts-Implikationen.
 
-**Visual 6: Integration in Bucket 1**
+**[Slide 6] — Integration in Bucket 1**
 Torten-Diagramm für Bucket 1 eines moderaten Investors mit 50.000 USD:
 
 - 40 % = 20.000 Stablecoin-Lending (Aave + Morpho + Compound)
 - 40 % = 20.000 RWA Treasuries (BUIDL via USDY + Franklin BENJI)
 - 20 % = 10.000 DAI/Sky Savings (hybrid DeFi-Native + RWA-Backing)
 Subtitle: "Diversifizierte Rendite-Quellen innerhalb Bucket 1"
+
+**[Slide 7] — Regulatorische Trajectory 2023-2026**
+Zeitachsen-Diagramm mit vier Phasen: "2023 Proof-of-Concept" (erste SEC-Klarheit, BUIDL-Launch), "2024 Regulatory Maturation" (MiCA, Multi-Milliarden-TVL), "2025 Institutional Scale" (JP Morgan Onyx, Canton Network), "2026+ Retail-Zugang" (graduelle Öffnung für non-accredited EU). Parallele Linien zeigen TVL-Wachstum (exponentiell), Jurisdictions-Coverage (erweitert), Retail-Zugang (beschränkt bis moderat). Annotation unten: "RWA wird in den nächsten 24 Monaten vom experimentellen Segment zum Mainstream-Baustein jedes konservativen DeFi-Portfolios."
 
 ### Übung
 
@@ -923,7 +924,7 @@ Für das gewählte Produkt, dokumentiere:
 - Welcher Asset Manager ist verantwortlich?
 - Welches SPV hält die zugrunde liegenden Assets?
 - Welcher Custodian verwahrt die Off-Chain-Assets?
-- Welche On-Chain-Chain(s) ist das Produkt deployt?
+- Auf welchen On-Chain-Chains ist das Produkt verfügbar?
 - Wer ist der Transfer Agent, Paying Agent?
 
 **2. Underlying Assets:**
@@ -1025,7 +1026,7 @@ Die 4,2-Prozentpunkte-Differenz klingt substantiell, aber sie reflektiert fundam
 
 - Underlying Asset: US-Treasuries (nahezu risikofrei im konventionellen Kredit-Sinne)
 - Counterparty-Kette: US-Regierung → BlackRock → SPV → Ondo → Token-Holder
-- Haupt-Risiken: Smart Contract, SPV-legal, Custody (BNY Mellon), Ondo's operationelle Integrität
+- Haupt-Risiken: Smart Contract, SPV-legal, Custody (BNY Mellon), Ondos operationelle Integrität
 - Default-Wahrscheinlichkeit bei intaktem US-Treasury-System: praktisch null
 - Credit-Rating: AAA (effektiv)
 
@@ -1063,7 +1064,7 @@ Die 4,2-Prozentpunkte-Differenz über 5 Jahre ist etwa 5.000–8.000 USD in erwa
 **Grund 3: Diversifikations-Kontext.**
 Wenn du bereits andere Private-Credit- oder Emerging-Markets-Exposures in deinem Bucket 3 (Active Yield) hast, ist zusätzliche Private-Credit-Exposure in Bucket 1 eine unnötige Konzentration. Konservative Bucket-1-Allokation sollte strukturell anders sein als Bucket 3.
 
-**Grund 4: Goldfinch's demonstriertes Default-Risiko.**
+**Grund 4: Goldfinchs demonstriertes Default-Risiko.**
 Das Protokoll hatte 2023 einen prominenten Default. Das ist keine theoretische Wahrscheinlichkeit mehr — es ist real demonstriertes Risiko. Die fortlaufende 9 %-Prämie über Treasuries preist dieses Risiko ein; sie eliminiert es nicht.
 
 **Situationen, in denen Goldfinch richtig sein könnte:**
@@ -1080,7 +1081,7 @@ Die Meta-Lehre: Bucket-Zuordnung ist nicht arbitär. Bucket 1 und Bucket 3 haben
 
 
 
-**Frage 2:** Ein fortgeschrittener DeFi-Teilnehmer argumentiert: "Tokenisierte Treasuries sind eigentlich schlechter als einfach direkt USDC bei Aave zu supplyen, weil beide ähnliche Yields haben, aber bei RWAs hast du zusätzliche SPV-Risiken und Legal-Chain-Komplexität. Warum überhaupt RWAs, wenn DeFi-Native-Yields vergleichbar sind?" Wie beantwortest du dieses Argument? Welche strukturellen Vorteile haben RWAs, die dieses Argument übersieht?
+**Frage 2:** Ein fortgeschrittener DeFi-Teilnehmer argumentiert: "Tokenisierte Treasuries sind eigentlich schlechter als einfach direkt USDC bei Aave zu hinterlegen, weil beide ähnliche Yields haben, aber bei RWAs hast du zusätzliche SPV-Risiken und Legal-Chain-Komplexität. Warum überhaupt RWAs, wenn DeFi-Native-Yields vergleichbar sind?" Wie beantwortest du dieses Argument? Welche strukturellen Vorteile haben RWAs, die dieses Argument übersieht?
 
 Antwort anzeigen
 
@@ -1126,7 +1127,7 @@ Die richtige Antwort ist nicht "entweder-oder", sondern "beide" — mit variiere
 
 **Punkt 5: Das SPV-Risk-Argument muss quantifiziert werden.**
 
-Das Argument betont SPV-Risk. Aber in der Praxis, wie hoch ist dieses Risiko wirklich? BNY Mellon ist eine der größten Custodian-Banken der Welt, mit über 45 Billionen USD an custody. Die Wahrscheinlichkeit, dass BNY Mellon selbst scheitert, ist extrem niedrig. Die SPV-Struktur in Delaware ist Standard-Finanzpraxis. BlackRock's operationelle Integrität ist hervorragend.
+Das Argument betont SPV-Risk. Aber in der Praxis, wie hoch ist dieses Risiko wirklich? BNY Mellon ist eine der größten Custodian-Banken der Welt, mit über 45 Billionen USD an custody. Die Wahrscheinlichkeit, dass BNY Mellon selbst scheitert, ist extrem niedrig. Die SPV-Struktur in Delaware ist Standard-Finanzpraxis. BlackRocks operationelle Integrität ist hervorragend.
 
 Das SPV-Risiko ist nicht null, aber es ist wahrscheinlich niedriger als das Smart-Contract-Risiko von Aave oder das Stablecoin-Peg-Risiko von USDC. Das Argument behandelt SPV-Risk als "zusätzliches Risiko", ohne es zu quantifizieren und gegen andere Risiken zu vergleichen.
 
@@ -1152,8 +1153,8 @@ Die Art, wie der fortgeschrittene Teilnehmer das Argument formuliert hat, ist ty
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → RWA-Landscape → Tokenisierte T-Bills (BUIDL, OUSG, BENJI) → Private Credit (Maple, Goldfinch) → Centrifuge → SPV-Struktur → Regulatorischer Kontext → Portfolio-Positionierung
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 13–15 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → RWA-Kategorien → Führende Treasury-Produkte → Legale Struktur und SPV → Private Credit → Redemption und Regulatorik → Bucket-1-Positionierung
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — RWA-Kategorien-Matrix, T-Bill-Vergleichstabelle, SPV-Flussdiagramm, Regulatorische-Jurisdiktions-Karte, Yield-Comparison RWA-vs-DeFi-Native
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1161,8 +1162,6 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ---
 
 ## Lektion 17.3 — RWA-Risiko-Klassen und strategische Portfolio-Integration
-
-### Lektion
 
 **RWA-spezifische Risiko-Klassen, Due-Diligence-Anpassungen und die langfristige strategische Integration von RWAs in DeFi-Portfolios**
 
@@ -1346,7 +1345,7 @@ RWAs haben sich von einer theoretischen Kategorie zu einer strategischen Portfol
 
 ### Folien-Zusammenfassung
 
-**Slide 1: Die sechs RWA-spezifischen Risiko-Klassen**
+**[Slide 1] — Die sechs RWA-spezifischen Risiko-Klassen**
 
 - Smart Contract Risk: wie bei DeFi-Native, aber typisch einfachere Contracts
 - SPV/Legal Structure Risk: legale Durchsetzbarkeit, Jurisdiction-Stabilität
@@ -1355,7 +1354,7 @@ RWAs haben sich von einer theoretischen Kategorie zu einer strategischen Portfol
 - Regulatory Risk: Klassifikations-Änderungen, Access-Restrictions, Reporting-Pflichten
 - Operational Risk of Tokenization Provider: Bridge zwischen Off-Chain-SPV und On-Chain-Token
 
-**Slide 2: Adaption des Six-Dimension-Frameworks**
+**[Slide 2] — Adaption des Six-Dimension-Frameworks**
 
 - Dimension 1 (Smart Contract): weniger komplex, gleiche Audit-Standards
 - Dimension 2 (Governance): Asset-Manager-Kontrolle statt On-Chain-DAO
@@ -1364,14 +1363,14 @@ RWAs haben sich von einer theoretischen Kategorie zu einer strategischen Portfol
 - Dimension 5 (Team): tradFi-Asset-Manager-Reputation zusätzlich
 - Dimension 6 (Track Record): pragmatische 12-Monats-Schwelle bei Top-Tier-Issuers
 
-**Slide 3: Regulatorische Trends 2023–2026**
+**[Slide 3] — Regulatorische Trends 2023–2026**
 
 - Trend 1: Zunehmende Klarheit (positiv für RWA-Wachstum)
 - Trend 2: Jurisdiction-Divergenz (USA restriktiver, Asien offener)
 - Trend 3: Institutionalisierung (BlackRock, JP Morgan, Goldman)
 - Trend 4: Retail-Expansion mit Compliance-Overhead
 
-**Slide 4: Makroökonomische Kontext-Abhängigkeit**
+**[Slide 4] — Makroökonomische Kontext-Abhängigkeit**
 
 - Szenario A (steigende Rates): 30–40 % Bucket 1 in RWAs
 - Szenario B (fallende Rates): 20–30 % Bucket 1 in RWAs
@@ -1379,21 +1378,21 @@ RWAs haben sich von einer theoretischen Kategorie zu einer strategischen Portfol
 - Szenario D (hohe Rates + Bear): 40–50 % Bucket 1 in RWAs
 - Allokation ist dynamisch, nicht statisch
 
-**Slide 5: Monitoring-Routinen für RWAs**
+**[Slide 5] — Monitoring-Routinen für RWAs**
 
 - Wöchentlich: Position-Wert, Yield-Realisierung
 - Monatlich: Asset-Manager-Updates, Kategorie-Nachrichten
 - Quartärlich: SPV-Reports, Allokations-Kalibrierung
 - Jährlich: Annual Audits, Regime-Assessment, Strategie-Review
 
-**Slide 6: Exit-Trigger für RWA-Positionen**
+**[Slide 6] — Exit-Trigger für RWA-Positionen**
 
 - Regulatory Hard-Stop: sofortiger Exit bei regulatorischer Blockade
 - Asset-Manager-Change: Re-Evaluation bei Team-Wechsel
 - Yield-Compression: Teil-Rebalance wenn Net-Yield unter Schwelle
 - Structural-Concern: sofortiger Exit bei SPV/Custody-Problemen
 
-**Slide 7: Evolution 2027–2030**
+**[Slide 7] — Evolution 2027–2030**
 
 - Tokenisierte Equities (mit regulatorischen Hürden)
 - Komplexere Credit-Produkte (IG-Bonds, CLO-Tranchen)
@@ -1403,53 +1402,49 @@ RWAs haben sich von einer theoretischen Kategorie zu einer strategischen Portfol
 
 ### Sprechertext
 
-In der vorherigen Lektion haben wir die RWA-Landschaft kartographiert. Diese Lektion geht tiefer in die Risiko-Analyse und die strategische Integration. Das Ziel: Du sollst nach dieser Lektion in der Lage sein, jedes spezifische RWA-Produkt systematisch zu evaluieren und bewusst in dein langfristiges Portfolio einzubauen.
+**[Slide 1]** In der vorherigen Lektion haben wir die RWA-Landschaft kartographiert. Diese Lektion geht tiefer in die Risiko-Analyse und strategische Integration. Ziel: Du sollst nach dieser Lektion jedes spezifische RWA-Produkt systematisch evaluieren und bewusst in dein langfristiges Portfolio einbauen können. RWA-Positionen haben sechs spezifische Risiko-Klassen, die teilweise mit DeFi-Native-Risiken überlappen, aber wichtige Unterschiede haben. Smart Contract Risk: typisch einfacher als komplexe DeFi-Protokolle, oft ERC20-Derivate. SPV und Legal Structure Risk: On-Chain-Token repräsentieren legale Ansprüche an Off-Chain-SPV — legale Durchsetzbarkeit, operationelle Integrität, Jurisdiction-Stabilität. Custodian Risk: BNY Mellon, State Street, JP Morgan verwahren die echten T-Bills — niedriges, aber nicht null Solvenz-Risiko. Counterparty/Underlying Asset Risk: bei Treasuries nahezu null, bei Private Credit echtes Default-Risiko. Regulatory Risk: besonders stark bei RWAs. Operational Risk des Tokenization Providers: Ondo, Maple, Centrifuge als operationelle Brücke.
 
-RWA-Positionen haben sechs spezifische Risiko-Klassen, die teilweise mit DeFi-Native-Risiken überlappen, aber wichtige Unterschiede haben. Erste Klasse: Smart Contract Risk — wie bei jeder On-Chain-Position gibt es einen Smart Contract für Token-Emission und Yield-Distribution. Die gute Nachricht: diese Contracts sind typisch einfacher als komplexe DeFi-Protokolle, oft ERC20-Derivate mit Yield-Distribution-Features. Zweite Klasse: SPV und Legal Structure Risk. Die On-Chain-Token repräsentieren legale Ansprüche an einer Off-Chain-SPV. Das Risiko ist mehrdimensional — legale Durchsetzbarkeit in Stress-Szenarien, operationelle Integrität des SPV, Stabilität der Jurisdiction. Bewertungs-Kriterien: etablierte Jurisdiction wie Delaware oder Cayman, etablierter Law Firm als Administrator, klare Redemption-Rechte. Dritte Klasse: Custodian Risk. Die tatsächlichen Treasury-Bills werden von einer Bank verwahrt — typisch BNY Mellon, State Street, JP Morgan. Diese haben hervorragende Credit-Ratings und extrem niedriges Solvenz-Risiko, aber nicht null. 2008 hat uns gezeigt, dass "zu groß zum Scheitern" nicht absolut ist.
+**[Slide 2]** Das Six-Dimension-Framework aus Lektion 16.2 lässt sich auf RWAs adaptieren. Dimension 1 Smart Contract: weniger komplex, aber gleiche Audit-Standards. Dimension 2 Governance: oft keine On-Chain-Governance — stattdessen: Wer kontrolliert die SPV? Dimension 3 Economic Design: ist der Yield aus echten Underlying-Asset-Erträgen? Dimension 4 Liquidität: Redemption-Mechanismen, Secondary-Markets. Dimension 5 Team und Transparenz: Fokus auf tradFi-Asset-Manager und legale Beratung. Dimension 6 Track Record: pragmatische Anpassung — BUIDL ist von 2024, die 18-Monats-Schwelle aus Modul 16 ist oft nicht erfüllt. Für Top-Tier-Produkte kannst du auf 12 Monate reduzieren, wenn der Asset Manager etabliert ist.
 
-Vierte Klasse: Counterparty oder Underlying Asset Risk. Das ist das Kredit-Risiko der zugrunde liegenden Finanzinstrumente. Bei Treasuries ist das nahezu null — US-Sovereign-Credit. Bei Investment-Grade Corporate Credit hast du Default-Risk der Firmen. Bei Private Credit hast du echtes Default-Risk der Underwriting-Firmen oder individueller Borrower. Fünfte Klasse: Regulatory Risk. RWAs sind in einem besonders regulatorisch-fokussierten Bereich. Neue SEC-Aktionen, MiCA-Entwicklungen, lokale Wertpapier-Gesetze können die Funktionsfähigkeit eines Produkts beeinträchtigen. Klassifikations-Änderungen können Produkte blockieren; Access-Restrictions können deinen Zugang beenden. Sechste Klasse: Operational Risk of the Tokenization Provider. Der Provider — Ondo, Maple, Centrifuge — ist die operationelle Brücke zwischen Off-Chain-SPV und On-Chain-Token. Falls der Provider scheitert durch Insolvenz, Fraud oder Team-Konflikte, kann das zu Diskrepanz zwischen Token und Assets führen.
+**[Slide 3]** Die regulatorische Trajektorie 2023 bis 2026 hat vier Trends: zunehmende Klarheit (netto positiv für RWA-Wachstum), Jurisdiction-Divergenz (USA restriktiver, Singapur und Hong Kong offener, EU dazwischen), Institutionalisierung (BlackRock, JP Morgan, Goldman, Franklin engagiert — hohe reputationale Qualität), Retail-Expansion mit Compliance-Overhead (BENJI, USDY mit KYC). Dein Jurisdictions-Status beeinflusst deine Zugangs-Möglichkeiten direkt.
 
-Das Six-Dimension-Framework aus Lektion 16.2 lässt sich auf RWAs adaptieren, aber mit Anpassungen. Dimension 1, Smart Contract Security: weniger komplex als bei DeFi-Protokollen, aber gleiche Audit-Standards. Dimension 2, Governance: anders als bei DeFi-Protokollen gibt es oft keine On-Chain-Governance. Stattdessen fragst du: wer kontrolliert die SPV? Welche Entscheidungen kann der Asset Manager treffen? Dimension 3, Economic Design: bei DeFi-Protokollen fragst du nach Fee-to-Emission-Ratio. Bei RWAs fragst du: ist der Yield aus echten Underlying-Asset-Erträgen, oder subventioniert? Wer profitiert von den Management Fees? Dimension 4, Liquidität: sehr wichtig bei RWAs. Redemption-Mechanismen, Secondary-Markets, Gated Windows. Dimension 5, Team und Transparenz: zusätzlicher Fokus auf den tradFi-Asset-Manager und die legale Beratung. Dimension 6, Track Record: pragmatische Anpassung. BUIDL ist von 2024, OUSG von 2023 — die 18-Monats-Schwelle aus Modul 16 ist oft nicht erfüllt. Für Top-Tier-Produkte mit BlackRock- oder Franklin-Backing kannst du auf 12 Monate reduzieren, gegeben dass der Asset Manager selbst etabliert ist.
+**[Slide 4]** Strategische Kern-Einsicht: RWA-Attraktivität variiert mit makroökonomischen Regimes. Vier Szenarien. Szenario A steigende Fed-Rates: Treasury-Yields steigen, RWA-Attraktivität steigt — 30 bis 40 Prozent von Bucket 1. Szenario B fallende Rates: 20 bis 30 Prozent. Szenario C niedrige Rates mit starkem Bull-Market: DeFi-Native-Yields über 10 Prozent, Treasury-Yields nahe null — 10 bis 20 Prozent primär für Diversifikation. Szenario D hohe Rates mit Bear-Market: DeFi-Native 1 bis 3 Prozent, Treasury 4 bis 5 — RWA-Attraktivität maximal, 40 bis 50 Prozent. Meta-Lehre: RWA-Allokation ist nicht statisch. Ein Fixed-Target ist suboptimal — definiere die Allokation als Range mit Anpassungen bei Regime-Shifts.
 
-Die regulatorische Trajektorie ist wichtig zu verstehen. Vier Haupt-Trends haben sich 2023 bis 2026 entwickelt. Trend 1: zunehmende Klarheit. Was 2023 ambiguos war, ist 2026 klarer. Das ist netto positiv für RWA-Wachstum, weil Klarheit regulatorisches Tail-Risk reduziert. Trend 2: Jurisdiction-Divergenz. USA sind restriktiver bei Retail-Zugang; Singapur und Hong Kong sind offener; EU ist dazwischen. Dein Jurisdictions-Status beeinflusst deine Zugangs-Möglichkeiten direkt. Trend 3: Institutionalisierung. BlackRock, JP Morgan, Goldman Sachs, Franklin Templeton sind alle in RWAs engagiert. Reputationale und operationelle Qualität ist hoch. Trend 4: Retail-Expansion mit Compliance-Overhead. Parallel zur institutionellen Entwicklung gibt es retail-orientierte Produkte wie Franklin BENJI und Ondo USDY, aber mit KYC und Compliance-Anforderungen.
+**[Slide 5]** RWA-Positionen erfordern spezielle Monitoring-Aspekte. Quartärliche SPV-Reports — viele Produkte veröffentlichen Reports über Underlying-Assets, die du lesen solltest. Annual Audits der SPV-Struktur. Asset-Manager-Kommunikation über Fund-Performance und Regulatory-Entwicklungen. Regulatorisches Umfeld in deiner Jurisdiction. Typische Frequenz: wöchentlich Position-Wert und Yield-Realisierung, monatlich Asset-Manager-Updates, quartärlich SPV-Reports und Kalibrierung, jährlich vollständige Strategie-Review.
 
-Die strategische Kern-Einsicht: RWA-Attraktivität variiert mit makroökonomischen Regimes. Vier Szenarien. Szenario A, steigende Fed-Rates wie 2022 bis 2023: Treasury-Yields steigen. RWA-Attraktivität relativ zu DeFi-Native steigt. Empfohlene Allokation: 30 bis 40 Prozent von Bucket 1 in RWAs. Szenario B, fallende Rates wie 2024 bis 2025 teilweise: Treasury-Yields sinken. RWA-Attraktivität relativ kann sinken, wenn DeFi-Markt-Zyklen stark sind. Empfohlene Allokation: 20 bis 30 Prozent. Szenario C, niedrige Rates mit starkem Bull-Market wie 2020 bis 2021: DeFi-Native-Yields waren 10 Prozent plus, Treasury-Yields waren 0 bis 2. RWA-Attraktivität war niedrig. Empfohlene Allokation: 10 bis 20 Prozent primär für Diversifikations-Zwecke. Szenario D, hohe Rates mit Bear-Market wie 2022: DeFi-Native-Yields waren 1 bis 3 Prozent, Treasury-Yields 4 bis 5. RWA-Attraktivität maximal. Empfohlene Allokation: 40 bis 50 Prozent. Die Meta-Lehre: RWA-Allokation ist nicht statisch. Ein Fixed-Target-Prozent ist suboptimal. Stattdessen definiere die Allokation als Range, mit Anpassungen bei Regime-Shifts.
+**[Slide 6]** Exit-Trigger für RWA-Positionen haben eigene Kategorien. Regulatory Hard-Stop: falls neue Regulierung den Fortbestand in Frage stellt, sofortiger Exit. Asset-Manager-Change: falls das Team wechselt, Re-Evaluation. Yield-Compression: falls der Net-Yield unter eine Schwelle fällt, Teil-Rebalance zu anderen Bucket-1-Komponenten. Structural-Concern: falls SPV oder Custody sich ungünstig ändern, sofortiger Exit.
 
-RWA-Positionen erfordern spezielle Monitoring-Aspekte, die DeFi-Native-Positionen nicht haben. Quartärliche SPV-Reports — viele RWA-Produkte veröffentlichen Reports über die zugrunde liegenden Assets, die du lesen solltest. Annual Audits der SPV-Struktur. Asset-Manager-Kommunikation über Fund-Performance und Regulatory-Entwicklungen. Regulatorisches Umfeld in deiner Jurisdiction. Typische Frequenz: wöchentlich Position-Wert und Yield-Realisierung, monatlich Asset-Manager-Updates, quartärlich SPV-Reports und Kalibrierung, jährlich vollständige Strategie-Review.
-
-Exit-Trigger für RWA-Positionen haben eigene Kategorien. Regulatory Hard-Stop: falls neue Regulierung den Fortbestand in Frage stellt, sofortiger Exit. Asset-Manager-Change: falls das Team wechselt, Re-Evaluation. Yield-Compression: falls der Net-Yield unter eine Schwelle fällt, Teil-Rebalance zu anderen Bucket-1-Komponenten. Structural-Concern: falls SPV oder Custody sich ungünstig ändern, sofortiger Exit.
-
-Zum Schluss, die Evolution durch 2027 bis 2030. Die aktuelle RWA-Landschaft fokussiert auf Treasuries und teilweise Private Credit. Erwartete Entwicklungen: tokenisierte Equities mit regulatorischen Hürden, komplexere Credit-Produkte wie Investment-Grade Corporate Bonds und CLO-Tranchen, tokenisierte Real Estate und REITs, Infrastruktur-Assets wie Renewable Energy und Transport. Für aktuelle Portfolio-Konstruktion bedeutet das: Flexibilität einbauen, Diversifikation innerhalb RWAs pflegen, alle 12 Monate re-evaluieren, regulatorische Awareness pflegen. Die Kategorie ist dynamisch, und ein gut-konstruiertes Portfolio heute baut Flexibilität für diese Evolution ein.
+**[Slide 7]** Evolution durch 2027 bis 2030. Die aktuelle RWA-Landschaft fokussiert auf Treasuries und teilweise Private Credit. Erwartete Entwicklungen: tokenisierte Equities mit regulatorischen Hürden, komplexere Credit-Produkte wie Corporate Bonds und CLO-Tranchen, tokenisierte Real Estate und REITs, Infrastruktur-Assets wie Renewable Energy. Für aktuelle Portfolio-Konstruktion bedeutet das: Flexibilität einbauen, Diversifikation innerhalb RWAs pflegen, alle 12 Monate re-evaluieren, regulatorische Awareness pflegen. Die Kategorie ist dynamisch, und ein gut-konstruiertes Portfolio heute baut Flexibilität für diese Evolution ein.
 
 ---
 
 ### Visuelle Vorschläge
 
-**Visual 1: Die sechs RWA-spezifischen Risiko-Klassen als hierarchisches Diagramm**
+**[Slide 1] — Die sechs RWA-spezifischen Risiko-Klassen als hierarchisches Diagramm**
 
 Zentrales Element: "RWA Position" als Box in der Mitte. Um die zentrale Box herum sechs farbige Cluster, jede repräsentiert eine Risiko-Klasse: Smart Contract (grün, links oben), SPV/Legal (orange, oben), Custodian (blau, rechts oben), Counterparty (rot, rechts), Regulatory (violett, unten rechts), Operational Tokenization (gelb, links). Jede Cluster-Box enthält: Name, Kurz-Beschreibung (1 Satz), typische Bewertungs-Fragen (3 Bullet-Points), Mitigations-Strategie. Pfeile zeigen von jeder Cluster auf die zentrale RWA Position. Unter dem Diagramm eine horizontale Leiste: "Eine RWA-Position ist nicht ein einzelnes Risiko, sondern ein Vektor aus sechs teilweise unabhängigen Risiken."
 
-**Visual 2: Six-Dimension-Framework Adaption für RWAs**
+**[Slide 2] — Six-Dimension-Framework Adaption für RWAs**
 
 Zwei parallele Säulen-Diagramme, nebeneinander. Linke Säule: "DeFi-Native Framework (Lektion 16.2)". Rechte Säule: "RWA-Adapted Framework". Jede Säule enthält sechs Boxen — eine pro Dimension. In jeder Box: Dimension-Name, "Key Question" (1 Zeile), "Typische Evidence-Quellen" (2–3 Zeilen). Die rechte Säule zeigt durch abweichende Text-Farbe oder Icon, wo die Adaption substanziell ist. Beispiel: Dimension 2 Governance bei DeFi-Native = "Wer kontrolliert Smart Contracts?"; bei RWA-Adapted = "Wer kontrolliert die SPV und welche Discretion hat der Asset Manager?". Zwischen den beiden Säulen Pfeile, die Dimension-Pairs verbinden, mit kurzen Labels wie "Adaptiert für Off-Chain-Struktur".
 
-**Visual 3: Regulatorische Trajektorie 2023–2030 als Timeline**
+**[Slide 3] — Regulatorische Trajektorie 2023–2030 als Timeline**
 
 Horizontale Timeline von 2023 links bis 2030 rechts. Vier farbkodierte Trend-Bänder, die entlang der Timeline verlaufen: Trend 1 Zunehmende Klarheit (grün, wachsende Breite zeigt zunehmende Klarheit); Trend 2 Jurisdiction-Divergenz (orange, divergierend in drei Unter-Linien für USA, EU, Asien); Trend 3 Institutionalisierung (blau, stetig wachsend von klein auf groß); Trend 4 Retail-Expansion (violett, erscheint ab 2024, wächst bis 2026, wird dann konstant). Kritische Ereignisse als Marker: 2023 Ondo OUSG Launch, 2024 BUIDL Launch, 2024 MiCA in Kraft, 2025 SEC Stablecoin-Guidance, 2026 MiCA RWA-Framework. Jedes Event hat eine kurze 1-Zeilen-Beschreibung. Am rechten Ende der Timeline: Projektion 2027–2030 in gepunkteten Linien mit Frage-Markern.
 
-**Visual 4: Makroökonomische Kontext-Matrix für RWA-Allokation**
+**[Slide 4] — Makroökonomische Kontext-Matrix für RWA-Allokation**
 
 Eine 2x2-Matrix. X-Achse: "Interest Rate Environment" (low ↔ high). Y-Achse: "Risk-On/Risk-Off Market" (Risk-Off oben ↔ Risk-On unten). Vier Quadranten, jeder mit einem Szenario. Quadrant oben-links (Low Rates, Risk-Off): "Szenario niedrige Rates + Bear, RWA 20–30 % von Bucket 1, moderate Attraktivität". Quadrant oben-rechts (High Rates, Risk-Off): "Szenario D, hohe Rates + Bear, RWA 40–50 % von Bucket 1, maximal attraktiv". Quadrant unten-links (Low Rates, Risk-On): "Szenario C, niedrige Rates + Bull, RWA 10–20 %, primär Diversifikation". Quadrant unten-rechts (High Rates, Risk-On): "Szenarien A/B, steigende/fallende Rates + gemischter Markt, RWA 20–40 %, dynamische Kalibrierung". Jeder Quadrant farblich unterschieden. Im Zentrum der Matrix Text: "RWA-Allokation ist regime-sensitiv. Fixed-Target-Prozent ist suboptimal."
 
-**Visual 5: Monitoring-Frequenz-Matrix für RWA-Positionen**
+**[Slide 5] — Monitoring-Frequenz-Matrix für RWA-Positionen**
 
 Tabelle mit vier Spalten (Wöchentlich, Monatlich, Quartärlich, Jährlich) und mehreren Zeilen (Monitoring-Kategorien). Zeilen: Position-Value, Yield-Realisierung, Asset-Manager-Kommunikation, SPV-Reports, Kategorie-News, Regulatory-Environment, Strategie-Review, Audit-Reports. In jeder Zelle farblich markiert, ob diese Kategorie in dieser Frequenz gemonitort werden sollte (grün = ja, grau = nein, orange = optional). Unter der Tabelle: Zeit-Budget-Schätzung pro Frequenz (wöchentlich ~10 Min, monatlich ~45 Min, quartärlich ~2 h, jährlich ~4 h). Fußnote: "Eine etablierte RWA-Position erfordert weniger Monitoring-Aufwand als eine DeFi-Native-Position, aber die strukturellen Reviews sind tiefer."
 
-**Visual 6: Exit-Trigger-Kategorien mit Severity-Farbkodierung**
+**[Slide 6] — Exit-Trigger-Kategorien mit Severity-Farbkodierung**
 
 Vier farbkodierte Boxen, in einer horizontalen Reihe. Box 1 (rot, Severity: Hard-Stop): "Regulatory Hard-Stop — neue Regulierung macht Produkt unzugänglich oder illegal. Aktion: sofortiger Exit innerhalb von 24 Stunden." Box 2 (orange, Severity: Re-Evaluation): "Asset-Manager-Change — wesentlicher Team-Wechsel beim Provider. Aktion: Re-Evaluation innerhalb von 30 Tagen; Teil-Reduktion bis zur neuen Evaluierung." Box 3 (gelb, Severity: Rebalance): "Yield-Compression — Net-Yield fällt unter Bucket-1-Alternativen. Aktion: Teil-Rebalance zu alternativen Bucket-1-Komponenten; keine Panic." Box 4 (rot, Severity: Hard-Stop): "Structural-Concern — SPV-, Custody- oder legale Struktur-Änderung. Aktion: sofortiger Exit, detaillierte Ursachen-Analyse vor Wieder-Einstieg." Unter den Boxen: "Trigger sind pre-committed. Die Severity bestimmt die Response-Zeit, nicht die Situation-im-Moment-Bewertung."
 
-**Visual 7: Evolution der RWA-Landschaft 2026 → 2030**
+**[Slide 7] — Evolution der RWA-Landschaft 2026 → 2030**
 
 Zwei Kreise: Linker Kreis "RWA-Landschaft 2026" mit den Kategorien Treasuries (groß, ~~70 %), Money Markets (~~15 %), Private Credit (~~10 %), Andere (~~5 %). Rechter Kreis "Projektion RWA-Landschaft 2030" mit deutlich diversifizierteren Kategorien: Treasuries (~~30 %), Money Markets (~~10 %), Private Credit (~~15 %), Corporate Bonds IG (~~10 %), Tokenisierte Equities (~~15 %), Real Estate (~~10 %), Infrastructure (~~5 %), Andere (~~5 %). Zwischen den beiden Kreisen ein Pfeil mit Label "2026–2030: Kategorie-Expansion und Diversifikation". Unterhalb beider Kreise Text: "Dein Portfolio heute sollte Flexibilität für diese Evolution einbauen. Feste Commit-Strategien in spezifische aktuelle Kategorien sind risikoreich für langfristige Planung."
 
@@ -1794,8 +1789,8 @@ Mit diesem Ausblick wechseln wir zum nächsten Lektions-Block.
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → 6 RWA-Risiko-Klassen → Adaption des Six-Dimension-Frameworks → Regulatorische Trajectory → Macro Regime Impact → Portfolio-Integration → Monitoring-Kadenz → Ausblick 2027-2030
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 13–15 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → 6 RWA-Risiko-Klassen → Adaption des Six-Dimension-Frameworks → Regulatorische Trajectory → Monitoring-Kadenz → Exit-Trigger → Evolution 2027-2030
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — RWA-Risiko-Klassen-Matrix, adaptiertes Framework-Diagramm, Fed-Rate-vs-RWA-Attractiveness-Chart, Macro-Regime-Matrix, Portfolio-Evolutions-Pfad
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -1803,8 +1798,6 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ---
 
 ## Lektion 17.4 — Institutional DeFi: Landscape, Signale und Retail-Implikationen
-
-### Lektion
 
 **Die Institutionalisierung von DeFi: Wie etablierte Finanz-Akteure das Ökosystem verändern und was Retail-Teilnehmer daraus lernen können**
 
@@ -1831,7 +1824,7 @@ Um die institutionelle Landschaft zu verstehen, lohnt es sich, zunächst die ver
 
 **Asset Manager** (BlackRock, Fidelity, Franklin Templeton, etc.) sind die jüngste und transformativste Kategorie. Ihr Einstieg in DeFi ist primär durch Produkt-Innovation motiviert: sie entwickeln tokenisierte Versionen ihrer traditionellen Produkte (BUIDL, BENJI, FBOX) statt direkt in bestehende DeFi-Protokolle zu investieren. Diese Kategorie verändert die DeFi-Landschaft am stärksten, weil sie massive Kapital-Flüsse mitbringt und gleichzeitig starken regulatorischen Druck auf die gesamte Landschaft ausübt. BlackRock allein verwaltet über 10 Billionen USD; selbst eine 0,01 % Allokation in DeFi wäre 1 Milliarde USD.
 
-**Banken** sind die konservativste Kategorie mit der höchsten regulatorischen Hürde. In 2025–2026 haben mehrere Banken begonnen, DeFi-Infrastruktur für institutionelle Kunden zu nutzen (JP Morgan's Onyx Platform, Goldman Sachs' Canton Network Integration, HSBC's Orion). Ihre primäre Motivation ist nicht direkte Rendite, sondern Infrastruktur-Transformation: die Effizienz-Vorteile der DeFi-Infrastruktur (schnellere Settlement, 24/7-Operation, Composability) auf traditionelle Finanz-Workflows anwenden. Für Retail-Teilnehmer ist Banken-Aktivität primär ein regulatorisches Signal: wo Banken sich engagieren, folgt regulatorische Klarheit oft nach.
+**Banken** sind die konservativste Kategorie mit der höchsten regulatorischen Hürde. In 2025–2026 haben mehrere Banken begonnen, DeFi-Infrastruktur für institutionelle Kunden zu nutzen (JP Morgans Onyx Platform, Goldman Sachs' Canton Network Integration, HSBCs Orion). Ihre primäre Motivation ist nicht direkte Rendite, sondern Infrastruktur-Transformation: die Effizienz-Vorteile der DeFi-Infrastruktur (schnellere Settlement, 24/7-Operation, Composability) auf traditionelle Finanz-Workflows anwenden. Für Retail-Teilnehmer ist Banken-Aktivität primär ein regulatorisches Signal: wo Banken sich engagieren, folgt regulatorische Klarheit oft nach.
 
 **Pension Funds und Insurance Companies** sind die letzten in der Adoption-Reihenfolge. In 2026 gibt es erste explorative Pension-Fund-Allokationen (vor allem in kanadischen und australischen Pensionsfonds), aber die Größenordnungen sind noch klein. Ihre Motivation, wenn sie eintreten, ist langfristige Yield-Enhancement in einem strukturell niedrig-Zins-Umfeld.
 
@@ -1887,8 +1880,8 @@ Diese Protokolle nehmen bewusst eine andere Position ein als rein retail-orienti
 Manche Entwicklungen sind primär Infrastruktur, nicht Anwendungen:
 
 - **Canton Network**: Privacy-fokussierte Blockchain, entwickelt von Digital Asset Holdings, mit Nutzung durch Goldman Sachs und andere Banken für institutionelle Settlement
-- **JP Morgan Onyx**: JP Morgan's interne DeFi-Platform, mit selektiver Integration in Public-Chain-DeFi
-- **BlackRock's Partnership mit Securitize**: Infrastruktur-Grundlage für BUIDL und zukünftige tokenisierte Produkte
+- **JP Morgan Onyx**: JP Morgans interne DeFi-Platform, mit selektiver Integration in Public-Chain-DeFi
+- **BlackRocks Partnership mit Securitize**: Infrastruktur-Grundlage für BUIDL und zukünftige tokenisierte Produkte
 - **Fnality**: Cross-Border-Settlement-Platform mit Bank-Konsortium
 
 Diese Infrastruktur-Entwicklungen signalisieren langfristige Commitments der traditionellen Finanz-Akteure zu DeFi-Technologie, auch wenn die direkte Retail-Interaktion limitiert ist.
@@ -1935,7 +1928,7 @@ Retail-Adaption: Für jede DeFi-Position sollte dokumentiert werden — welches 
 
 Institutionen evaluieren nicht nur das technische und ökonomische Risiko eines Protokolls, sondern auch die operationelle Qualität der Teams: Entwicklungs-Prozesse, Release-Management, Incident-Response-Prozeduren, Kommunikations-Standards, Governance-Reaktions-Zeiten.
 
-Retail-Adaption: Vor größeren Positionen sollte man beobachten, wie ein Team Incidents handhabt. Gibt es historische Incidents? Wie wurden sie kommuniziert? Wie schnell wurden Fixes deployed? Gibt es transparente Post-Mortems? Diese Beobachtungen ergänzen die technischen Due-Diligence-Aspekte.
+Retail-Adaption: Vor größeren Positionen sollte man beobachten, wie ein Team Incidents handhabt. Gibt es historische Incidents? Wie wurden sie kommuniziert? Wie schnell wurden Fixes ausgerollt? Gibt es transparente Post-Mortems? Diese Beobachtungen ergänzen die technischen Due-Diligence-Aspekte.
 
 **Standard 3: Szenario-Analyse und Stress-Testing**
 
@@ -2005,7 +1998,13 @@ Die Institutionalisierung von DeFi ist eine der bedeutendsten strukturellen Entw
 
 ### Folien-Zusammenfassung
 
-**Slide 1: Die fünf Institutions-Typen in DeFi**
+**[Slide 1] — Titel**
+
+- Institutional DeFi: Landscape, Signale und Retail-Implikationen
+- Fünf Institutions-Typen, fünf Produkt-Kategorien, vier Signal-Interpretationen
+- Retail-Nutzen: institutionelle Adoption als Signal, nicht als Zugangsnotwendigkeit
+
+**[Slide 2] — Die fünf Institutions-Typen in DeFi**
 
 - Family Offices: 50M+ AUM, flexible Entscheidungen, Yield-Enhancement-fokussiert
 - Hedge Funds: sophisticated, risikoadjustierte Returns, Standard-Setter für Excellence
@@ -2013,7 +2012,7 @@ Die Institutionalisierung von DeFi ist eine der bedeutendsten strukturellen Entw
 - Banken: Infrastruktur-Transformation, regulatorische Signale, konservativ
 - Pension Funds: noch klein, langfristige Yield-Enhancement, zukünftige Kategorie
 
-**Slide 2: Fünf institutionelle Produkt-Kategorien**
+**[Slide 3] — Fünf institutionelle Produkt-Kategorien**
 
 - Permissioned Pools und KYC-Gated Protocols (Morpho Institutional Vaults, Maple)
 - Institutional-Grade Custody Solutions (Fireblocks, BitGo, Coinbase Custody)
@@ -2021,14 +2020,14 @@ Die Institutionalisierung von DeFi ist eine der bedeutendsten strukturellen Entw
 - Institutional-Focused Protocol-Layers (Ondo, Securitize, Centrifuge, Clearpool)
 - Infrastruktur-Layer (Canton Network, JP Morgan Onyx, Fnality)
 
-**Slide 3: Vier Signal-Interpretationen institutioneller Aktivität**
+**[Slide 4] — Vier Signal-Interpretationen institutioneller Aktivität**
 
 - Adoption als Qualitäts-Filter (positive Signale)
 - Exit-Muster als Warnung (Institutionen sehen oft strukturelle Probleme früher)
 - Spezifische-Produkt-Adoption als Konzentrations-Indikator
 - Infrastruktur-Investments als langfristige Commitments
 
-**Slide 4: Fünf institutionelle Due-Diligence-Standards für Retail-Adaption**
+**[Slide 5] — Fünf institutionelle Due-Diligence-Standards für Retail-Adaption**
 
 - Counterparty-Risk-Mapping (explizite Abhängigkeits-Dokumentation)
 - Operational Due Diligence (Team-Qualität, Incident-Response)
@@ -2036,7 +2035,7 @@ Die Institutionalisierung von DeFi ist eine der bedeutendsten strukturellen Entw
 - Dokumentation und Nachvollziehbarkeit (DeFi-Journal)
 - Regelmäßige Portfolio-Reviews
 
-**Slide 5: Fünf legitime Bedenken zur Institutionalisierung**
+**[Slide 6] — Fünf legitime Bedenken zur Institutionalisierung**
 
 - Reduzierte Dezentralisierung durch KYC-Gates
 - Regulatory-Capture-Risiken
@@ -2044,7 +2043,7 @@ Die Institutionalisierung von DeFi ist eine der bedeutendsten strukturellen Entw
 - Too-Big-To-Fail-Dynamiken
 - Alignment-Probleme zwischen Institutional und Retail
 
-**Slide 6: Vier praktische Implikationen für Retail-Strategien**
+**[Slide 7] — Vier praktische Implikationen für Retail-Strategien**
 
 - Institutional Adoption als ein Due-Diligence-Signal nutzen
 - Nicht naiv-maximieren auf institutional-focused Protocols
@@ -2053,45 +2052,47 @@ Die Institutionalisierung von DeFi ist eine der bedeutendsten strukturellen Entw
 
 ### Sprechertext
 
-Willkommen zurück. Diese Lektion adressiert eine der strukturell wichtigsten Entwicklungen in DeFi seit 2024: die Institutionalisierung. Wir werden verstehen, welche Typen von Institutionen aktiv sind, welche Produkte sie nutzen, welche Signale sie senden, und — am wichtigsten — was das für deine eigene Retail-Strategie bedeutet.
+**[Slide 1]** Willkommen zurück. Diese Lektion adressiert eine der strukturell wichtigsten Entwicklungen in DeFi seit 2024: die Institutionalisierung. Wir werden verstehen, welche Typen von Institutionen aktiv sind, welche Produkte sie nutzen, welche Signale sie senden, und — am wichtigsten — was das für deine eigene Retail-Strategie bedeutet. Die Kern-These: Institutional Adoption ist für Retail primär relevant als Signal-Filter und Quellenmaterial für operationelle Disziplin, nicht als Zugangsweg zu speziellen Produkten.
 
-Lass uns mit den Institutionen-Typen beginnen. Sie sind nicht homogen. Family Offices sind oft die ersten Adopters, typisch 50 Millionen USD und mehr Assets under Management, mit flexiblen Entscheidungs-Strukturen. Ihre Motivation ist eine Mischung aus Diversifikation, Yield-Enhancement und generationaler Vermögensplanung. Hedge Funds sind die sophistizierteste Kategorie — crypto-native Hedge Funds existieren seit 2017/2018 und haben sich zu den operationell excellenten Teilnehmern entwickelt. Sie suchen risikoadjustierte Outperformance durch komplexe Strategien und setzen Standards für operationelle Excellence. Asset Manager — BlackRock, Fidelity, Franklin Templeton — sind die transformativste Kategorie. Ihr Einstieg ist primär durch Produkt-Innovation motiviert: sie entwickeln tokenisierte Versionen traditioneller Produkte statt direkt in bestehende DeFi-Protokolle zu investieren. BlackRock allein verwaltet über 10 Billionen USD. Selbst eine 0,01 Prozent-Allokation wäre 1 Milliarde USD. Banken — JP Morgan, Goldman, HSBC — sind die konservativste Kategorie mit höchster regulatorischer Hürde. Ihre Aktivität ist primär Infrastruktur-Transformation, nicht direkte Rendite. Pension Funds sind die letzte Kategorie in der Adoption-Reihenfolge, mit ersten explorativen Allokationen 2026.
+**[Slide 2]** Institutionen-Typen. Family Offices sind oft die ersten Adopters, typisch 50 Millionen USD und mehr, mit flexiblen Entscheidungs-Strukturen. Hedge Funds sind die sophistizierteste Kategorie — crypto-native Funds existieren seit 2017/2018 und haben sich zu den operativ exzellenten Teilnehmern entwickelt. Asset Manager — BlackRock, Fidelity, Franklin Templeton — sind die transformativste Kategorie durch Produkt-Innovation; BlackRock allein verwaltet über 10 Billionen USD, eine 0,01-Prozent-Allokation wäre 1 Milliarde. Banken — JP Morgan, Goldman, HSBC — sind die konservativste Kategorie mit höchster regulatorischer Hürde; ihre Aktivität ist primär Infrastruktur-Transformation. Pension Funds sind die letzte Kategorie in der Adoption-Reihenfolge, mit ersten explorativen Allokationen 2026.
 
-Die institutionellen Produkte teilen sich in fünf Kategorien. Kategorie 1: Permissioned Pools und KYC-Gated Protocols. Das sind Versionen von DeFi-Protokollen mit KYC/AML-Requirements. Aave Arc war ein frühes Experiment (2021 bis 2023), das eingestellt wurde. Aktuellere Beispiele sind Morpho Institutional Vaults — auf Morpho Blue, kuratiert von regulierten Entities wie Gauntlet und Steakhouse Financial — und Maple Finance Institutional Pools. Kategorie 2: Institutional-Grade Custody. Institutionen brauchen MPC-basierte, compliant Custody-Lösungen. Fireblocks, BitGo, Coinbase Custody, Anchorage Digital und Copper sind die führenden Provider. Kategorie 3: Tokenisierte Asset-Produkte wie BUIDL, BENJI und FOBXX — bereits in Lektion 17.2 detailliert besprochen. Kategorie 4: Institutional-Focused Protocol-Layers wie Ondo, Securitize, Centrifuge, Clearpool. Diese fokussieren auf Compliance und institutionelle Standards. Kategorie 5: Infrastruktur-Layer wie Canton Network, JP Morgan Onyx und Fnality — Privacy-fokussierte Blockchains und Bank-Konsortien.
+**[Slide 3]** Institutionelle Produkte in fünf Kategorien. Kategorie 1 Permissioned Pools und KYC-Gated Protocols — Aave Arc historisch, aktuell Morpho Institutional Vaults mit Gauntlet/Steakhouse als Kuratoren, Maple Finance Institutional Pools. Kategorie 2 Institutional-Grade Custody — Fireblocks, BitGo, Coinbase Custody, Anchorage, Copper. Kategorie 3 Tokenisierte Asset-Produkte wie BUIDL, BENJI, FOBXX. Kategorie 4 Institutional-Focused Protocol-Layers wie Ondo, Securitize, Centrifuge, Clearpool. Kategorie 5 Infrastruktur-Layer wie Canton Network, JP Morgan Onyx, Fnality.
 
-Für Retail-Teilnehmer ist das Verständnis institutioneller Aktivität primär als Signal-Filter relevant, weniger als direkte Produktnutzung. Vier Signal-Interpretationen. Signal 1: Institutionelle Adoption als Qualitäts-Filter. Wenn ein Protokoll prominente institutionelle Teilnehmer anzieht, hat es hohe Due-Diligence-Standards erfüllt — multiple Audits, Track Record, rechtliche Analyse, Governance-Strukturen. Signal 2: Institutionelle Exits als Warnung. Institutionen ziehen sich nicht aus kurzfristiger Volatilität zurück. Wenn prominente Positionen reduziert werden, deutet das oft auf strukturelle Bedenken hin, die die durchschnittliche Retail-Analyse nicht sieht. Signal 3: Adoption spezifischer Produkte als Konzentrations-Indikator. Wenn institutional-specific Versions nicht angenommen werden, während die retail-Version wächst, signalisiert das Protokoll-Stärke. Signal 4: Infrastruktur-Investments als langfristige Commitments. Wenn Banken signifikante Infrastruktur bauen, sind das typisch nicht rückgängig gemachte strategische Richtungs-Entscheidungen.
+**[Slide 4]** Vier Signal-Interpretationen institutioneller Aktivität. Signal 1 Institutionelle Adoption als Qualitäts-Filter: Wenn ein Protokoll prominente institutionelle Teilnehmer anzieht, hat es hohe Due-Diligence-Standards erfüllt. Signal 2 Institutionelle Exits als Warnung: Institutionen ziehen sich nicht aus kurzfristiger Volatilität zurück. Signal 3 Adoption spezifischer Produkte als Konzentrations-Indikator: Wenn institutional-specific Versions nicht angenommen werden, während retail-Versionen wachsen, signalisiert das Protokoll-Stärke. Signal 4 Infrastruktur-Investments als langfristige Commitments: Wenn Banken signifikante Infrastruktur bauen, sind das typisch unumkehrbare strategische Richtungs-Entscheidungen.
 
-Fünf institutionelle Due-Diligence-Standards lassen sich für Retail adaptieren. Standard 1: Counterparty-Risk-Mapping — dokumentiere explizit alle Abhängigkeiten jeder Position (Protokoll, Smart Contracts, Oracles, Bridges, Stablecoin-Issuer). Standard 2: Operational Due Diligence — beobachte, wie Teams Incidents handhaben, bevor du größere Positionen eingehst. Standard 3: Szenario-Analyse und Stress-Testing — explizite Was-wäre-wenn-Analysen für die größten Positionen. Standard 4: Dokumentation und Nachvollziehbarkeit — ein strukturiertes DeFi-Journal ist einer der wertvollsten Schritte, die ein Retail-Teilnehmer machen kann. Standard 5: Regelmäßige Portfolio-Reviews — wöchentlich, monatlich, quartalsweise, jährlich.
+**[Slide 5]** Fünf institutionelle Due-Diligence-Standards für Retail-Adaption. Counterparty-Risk-Mapping: dokumentiere explizit alle Abhängigkeiten jeder Position. Operational Due Diligence: beobachte, wie Teams Incidents handhaben, bevor du größere Positionen eingehst. Szenario-Analyse und Stress-Testing: explizite Was-wäre-wenn-Analysen für größte Positionen. Dokumentation und Nachvollziehbarkeit: ein strukturiertes DeFi-Journal ist einer der wertvollsten Retail-Schritte. Regelmäßige Portfolio-Reviews: wöchentlich, monatlich, quartalsweise, jährlich. Institutional Adoption Timeline: 2020 erste Family-Office-Experimente, 2022 Hedge Funds Mainstream, 2024 Asset Manager Durchbruch mit BUIDL, 2025 Bank-Infrastruktur, 2026 erste Pension-Fund-Explorationen.
 
-Die Institutionalisierung ist nicht eindimensional positiv. Fünf legitime Bedenken. Erstens: reduzierte Dezentralisierung durch KYC-Gates. Zweitens: Regulatory-Capture-Risiken, wenn institutionelle Lobby-Stimmen dominant werden. Drittens: Transparenz-Reduktion durch institutionelle Privacy-Requirements. Viertens: Too-Big-To-Fail-Dynamiken, wenn große Institutionen erhebliche Prozentsätze der TVL kontrollieren. Fünftens: Alignment-Probleme zwischen institutionellen und retail Interests in Governance-Entscheidungen.
+**[Slide 6]** Fünf legitime Bedenken zur Institutionalisierung. Reduzierte Dezentralisierung durch KYC-Gates. Regulatory-Capture-Risiken, wenn institutionelle Lobby-Stimmen dominant werden. Transparenz-Reduktion durch institutionelle Privacy-Requirements. Too-Big-To-Fail-Dynamiken, wenn große Institutionen erhebliche TVL-Anteile kontrollieren. Alignment-Probleme zwischen institutionellen und retail Interests in Governance-Entscheidungen. Eine ausbalancierte Perspektive erkennt sowohl positive als auch negative Aspekte an.
 
-Vier praktische Implikationen für deine Retail-Strategie. Erstens: nutze Institutional Adoption als ein Signal in deiner Due Diligence — nicht das einzige, aber eines von mehreren. Zweitens: maximiere nicht naiv auf institutional-focused Protocols; die Strukturen können für retail-Zwecke ungünstiger sein. Drittens: fokussiere auf institutional-retail aligned Protocols wie Aave, Morpho, Compound und MakerDAO/Sky, wo beide Gruppen gleiche Interessen haben. Viertens — und am wichtigsten — die wertvollste Retail-Adaption institutioneller Standards ist nicht Zugang zu speziellen Produkten, sondern die Adoption operationeller Disziplin: Journaling, Szenario-Analyse, strukturierte Reviews, Dokumentation. Diese Praktiken kosten nur Zeit, nicht Kapital, und verbessern die Entscheidungs-Qualität über Zeit erheblich.
-
-Die Institutionalisierung von DeFi wird sich in den kommenden Jahren weiter entfalten. Als Retail-Teilnehmer profitierst du indirekt durch höhere Protokoll-Qualitäts-Standards, kannst einige institutionelle Praktiken für deine eigene Disziplin adoptieren, und solltest Institutionalisierung als Signal-Filter in deine Due Diligence integrieren. Gleichzeitig solltest du die legitimen Bedenken nicht ignorieren. Eine ausbalancierte Perspektive — die sowohl positive als auch negative Aspekte anerkennt — ist die produktivste Haltung für die navigation durch diese sich entwickelnde Landschaft.
+**[Slide 7]** Vier praktische Implikationen für deine Retail-Strategie. Erstens: Institutional Adoption als ein Signal in deiner Due Diligence, nicht das einzige. Zweitens: maximiere nicht naiv auf institutional-focused Protocols — die Strukturen können für retail-Zwecke ungünstiger sein. Drittens: fokussiere auf institutional-retail-aligned Protocols wie Aave, Morpho, Compound und MakerDAO/Sky. Viertens und am wichtigsten: die wertvollste Retail-Adaption institutioneller Standards ist nicht Zugang zu speziellen Produkten, sondern die Adoption operationeller Disziplin — Journaling, Szenario-Analyse, strukturierte Reviews, Dokumentation. Diese Praktiken kosten nur Zeit, nicht Kapital, und verbessern die Entscheidungs-Qualität über Zeit erheblich.
 
 ### Visuelle Vorschläge
 
-**Visual 1: Die fünf Institutions-Typen als horizontale Spektrum-Grafik**
+**[Slide 1] — Die fünf Institutions-Typen als horizontale Spektrum-Grafik**
 
 Horizontales Spektrum mit fünf Segmenten. Von links (am flexibelsten, schnellste Adoption) nach rechts (konservativster, langsamste Adoption): Family Offices → Hedge Funds → Asset Manager → Banken → Pension Funds. Jedes Segment hat einen Icon, eine kurze Charakterisierung (1 Zeile) und Beispiele von Prominent-Akteuren. Unter dem Spektrum ein Zeitstrahl: "2020: erste Family-Office-Experimente" → "2022: Hedge Fund Mainstream" → "2024: Asset Manager Durchbruch mit BUIDL" → "2025: Bank-Infrastruktur (Onyx, Canton)" → "2026: erste Pension Fund Explorationen".
 
-**Visual 2: Die fünf Produkt-Kategorien als Matrix**
+**[Slide 2] — Die fünf Produkt-Kategorien als Matrix**
 
 Matrix mit fünf Zeilen (Produkt-Kategorien) und drei Spalten: Beispiele, Retail-Zugang, Primäre Retail-Implikation. Zeile 1 Permissioned Pools: Beispiele "Morpho Institutional Vaults, Maple"; Retail-Zugang "Teilweise (Morpho ja, Maple ja)"; Implikation "Niedrige direkte Relevanz, aber Qualitäts-Signal". Zeile 2 Custody: Beispiele "Fireblocks, BitGo, Coinbase Custody"; Retail-Zugang "Praktisch nein"; Implikation "Keine direkte Relevanz, aber Infrastruktur-Signal". Zeile 3 Tokenisierte Assets: Beispiele "BUIDL, BENJI, FOBXX"; Retail-Zugang "Teilweise via Accredited-Status"; Implikation "Hohe direkte Relevanz (siehe Lektion 17.2)". Zeile 4 Institutional-Focused: Beispiele "Ondo, Securitize, Centrifuge"; Retail-Zugang "Gemischt"; Implikation "Selektive Nutzung je nach Produkt". Zeile 5 Infrastruktur-Layer: Beispiele "Canton Network, Onyx, Fnality"; Retail-Zugang "Nein"; Implikation "Langfristige Commitment-Signale".
 
-**Visual 3: Die vier Signal-Interpretationen als Entscheidungs-Flow**
+**[Slide 3] — Die vier Signal-Interpretationen als Entscheidungs-Flow**
 
 Flowchart mit vier Entscheidungs-Knoten. Start-Knoten: "Evaluiere Protokoll X". Knoten 1 (grün): "Signifikante institutionelle Adoption?" → ja: +1 Qualitäts-Punkt; nein: 0 Punkte. Knoten 2 (rot): "Institutionelle Positions-Reduktion beobachtbar?" → ja: -2 Punkte (starkes Warnsignal); nein: 0 Punkte. Knoten 3 (gelb): "Separate institutional vs retail Pools?" → ja: Aufmerksamkeit auf Alignment-Probleme; nein: positiv für Retail-Alignment. Knoten 4 (blau): "Infrastruktur-Investments von Banken?" → ja: langfristige Commitment-Signal; nein: neutral. Am Ende: Summe-Score und Interpretations-Leitfaden.
 
-**Visual 4: Fünf Retail-Adaptionen institutioneller Standards als Checklist**
+**[Slide 4] — Fünf Retail-Adaptionen institutioneller Standards als Checklist**
 
 Checkliste-Format mit fünf Items, jedes mit: Name des Standards, Zeit-Investment ("5 Minuten pro Position" bis "2 Stunden quartalsweise"), Kosten (fast alle "0 USD — nur Zeit"), und Implementations-Schwierigkeit (1–5 Sterne). Standard 1 Counterparty-Risk-Mapping: 30 Min/Position, Schwierigkeit 2/5. Standard 2 Operational Due Diligence: 1 Std initial + 10 Min/Woche Monitoring, Schwierigkeit 3/5. Standard 3 Szenario-Analyse: 45 Min/Position, Schwierigkeit 3/5. Standard 4 Dokumentation/DeFi-Journal: 15 Min/Entry, laufend, Schwierigkeit 1/5. Standard 5 Portfolio-Reviews: Wöchentlich 15 Min, Monatlich 1 Std, Quartal 2–3 Std, Jährlich 4–6 Std. Schwierigkeit 2/5 (einfach), aber Disziplin 4/5 (erfordert Durchhalten).
 
-**Visual 5: Die fünf legitimen Bedenken als Risk-Analyse**
+**[Slide 5] — Die fünf legitimen Bedenken als Risk-Analyse**
 
 Tabelle mit fünf Zeilen (Bedenken) und drei Spalten: Beschreibung, Wahrscheinlichkeit der Realisation, Potenzieller Impact. Bedenken 1 KYC-Erosion: Wahrscheinlichkeit Hoch, Impact Mittel. Bedenken 2 Regulatory Capture: Wahrscheinlichkeit Mittel, Impact Hoch. Bedenken 3 Transparenz-Reduktion: Wahrscheinlichkeit Hoch, Impact Mittel. Bedenken 4 Too-Big-To-Fail: Wahrscheinlichkeit Mittel, Impact Hoch. Bedenken 5 Alignment-Konflikte: Wahrscheinlichkeit Hoch, Impact Mittel. Unter der Tabelle: "Diese Bedenken sind real, aber die meisten haben vorläufig Mittel-Impact. Langfristig relevant sind primär Regulatory Capture und Too-Big-To-Fail Dynamiken."
 
-**Visual 6: Das Institutional-Retail-Alignment-Spektrum**
+**[Slide 6] — Institutional Adoption Timeline 2020-2026**
+
+Horizontale Zeitachse mit Meilensteinen pro Jahr. 2020: erste Family-Office-Experimente (Coinbase-Custody-Integrationen). 2022: Hedge Funds gehen Mainstream (3AC-Kollaps als negatives Katalysator für professionalisierte Due-Diligence). 2024: Asset Manager-Durchbruch mit BUIDL (BlackRock/Securitize), Franklin BENJI. 2025: Bank-Infrastruktur produktiv (JP Morgans Onyx, Canton Network, HSBCs Orion). 2026: erste Pension-Fund-Explorationen (zunächst über RWA-Produkte, nicht direktes DeFi). Annotation: "Institutional Adoption folgt Maturity-Kurve — jede Phase hebt die Einstiegshürde für die nächste Welle."
+
+**[Slide 7] — Das Institutional-Retail-Alignment-Spektrum**
 
 Horizontales Spektrum. Links-Pol: "Voll-retail-fokussiert" (Beispiele: kleinere DEXes ohne institutionelle Teilnahme, early-stage Yield-Farming-Protokolle). Rechts-Pol: "Voll-institutionell" (Beispiele: Maple institutional pools, permissioned Aave Arc historisch). Zentrum: "Aligned" (Beispiele: Aave V3, Morpho Blue, Compound V3, MakerDAO/Sky). Pfeil zeigt: "Ideale Protokolle für sophisticated Retail sind typisch im aligned-Zentrum positioniert, nicht an den Polen." Farbkodierung: Links-Pol gelb (Experimental-Qualität), Zentrum grün (Ideal), Rechts-Pol orange (zu restriktiv für retail).
 
@@ -2151,7 +2152,7 @@ Setze ein Monitoring-System für die operationelle Qualität der Teams der Proto
 
 a) **Incident-Tracking**: Folge offiziellen Kommunikations-Kanälen (Twitter, Discord, Governance-Foren) der Top-5-Protokolle in deinem Portfolio. Dokumentiere alle Incident-Kommunikationen der letzten 12 Monate.
 
-b) **Release-Cadence**: Wie oft deployed das Team Updates? Welcher Prozentsatz sind Security-Updates vs. Feature-Updates vs. Parameter-Anpassungen?
+b) **Release-Cadence**: Wie oft veröffentlicht das Team Updates? Welcher Prozentsatz sind Security-Updates vs. Feature-Updates vs. Parameter-Anpassungen?
 
 c) **Community-Interaktion-Qualität**: Wie interagiert das Team mit kritischen Fragen? Transparente, substantielle Antworten vs. defensive oder ausweichende Kommunikation?
 
@@ -2215,13 +2216,13 @@ Diese Governance-Frage sollte vor einer Entscheidung konkret recherchiert werden
 
 **Überlegung 4: Langfristige Strategische Position**
 
-Morpho Blue's Design-Philosophie (aligned infrastructure für alle) passt zu einer längerfristigen DeFi-Vision, in der die Grenzen zwischen institutional und retail weniger scharf werden. Wenn die Institutionalisierung sich fortsetzt, wird Morpho Blue voraussichtlich davon profitieren, weil es strukturell beide Teilnehmer-Typen bedient.
+Morpho Blues Design-Philosophie (aligned infrastructure für alle) passt zu einer längerfristigen DeFi-Vision, in der die Grenzen zwischen institutional und retail weniger scharf werden. Wenn die Institutionalisierung sich fortsetzt, wird Morpho Blue voraussichtlich davon profitieren, weil es strukturell beide Teilnehmer-Typen bedient.
 
-InstituLend's Design (separate pools für separate Teilnehmer) passt zu einer Vision, in der institutional und retail DeFi sich auseinanderentwickeln. Wenn diese Vision sich durchsetzt, könnte InstituLend's institutional-Pool wachsen, während der retail-Pool möglicherweise stagniert oder sogar an Attraktivität verliert. Als retail-Teilnehmer wärst du in der weniger bevorzugten Kategorie.
+InstituLends Design (separate pools für separate Teilnehmer) passt zu einer Vision, in der institutional und retail DeFi sich auseinanderentwickeln. Wenn diese Vision sich durchsetzt, könnte InstituLends institutional-Pool wachsen, während der retail-Pool möglicherweise stagniert oder sogar an Attraktivität verliert. Als retail-Teilnehmer wärst du in der weniger bevorzugten Kategorie.
 
 **Überlegung 5: Konkrete Rendite-Implikationen**
 
-Die Tatsache, dass InstituLend's retail-pool "etwas niedrigere Rendite" als der institutional-pool bietet, ist wichtig. Das ist die explizite Benachteiligung retail-Teilnehmer. Wenn du 20 % deines Portfolios allokierst, kann selbst ein Renditen-Delta von 50 Basispunkten über Jahre erheblich sein.
+Die Tatsache, dass InstituLends retail-pool "etwas niedrigere Rendite" als der institutional-pool bietet, ist wichtig. Das ist die explizite Benachteiligung retail-Teilnehmer. Wenn du 20 % deines Portfolios allokierst, kann selbst ein Renditen-Delta von 50 Basispunkten über Jahre erheblich sein.
 
 Bei Morpho Blue gibt es keine solche strukturelle Benachteiligung. Du erhältst die gleiche Rendite wie institutionelle Teilnehmer in der gleichen Vault.
 
@@ -2284,7 +2285,7 @@ Die Signale kommen nicht von einem isolierten Teilnehmer. BlackRock (Asset Manag
 
 **2. Die explizite regulatorische Referenz**
 
-BlackRock's Ankündigung bezüglich "regulatorischer Unsicherheiten" ist besonders bedeutsam. Asset Manager wie BlackRock haben interne regulatorische und rechtliche Teams, die Informationen haben, die du nicht hast. Sie sprechen mit Regulatoren, sie haben rechtliche Analysen, die nicht öffentlich sind. Wenn sie explizit regulatorische Bedenken kommunizieren, ist das ein Signal, dass sie Informationen haben, die dir nicht zugänglich sind.
+BlackRocks Ankündigung bezüglich "regulatorischer Unsicherheiten" ist besonders bedeutsam. Asset Manager wie BlackRock haben interne regulatorische und rechtliche Teams, die Informationen haben, die du nicht hast. Sie sprechen mit Regulatoren, sie haben rechtliche Analysen, die nicht öffentlich sind. Wenn sie explizit regulatorische Bedenken kommunizieren, ist das ein Signal, dass sie Informationen haben, die dir nicht zugänglich sind.
 
 **3. Das 70-Prozent-Hedge-Fund-Exit**
 
@@ -2379,8 +2380,8 @@ Due Diligence hat Limits. Selbst die beste retail-Analyse kann nicht alle instit
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Institutional DeFi Landscape → Typen von Institutionen → Permissioned Pools → KYC-gated Protokolle → Adoption-Signale → Retail-Anwendung → Limitationen und Trade-offs
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 13–15 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Fünf Institutions-Typen → Produkt-Kategorien → Signal-Interpretationen → Retail-Adaption der Standards → Legitime Bedenken → Praktische Retail-Implikationen
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Institutions-Typologie-Matrix, Permissioned-Pool-Architektur, Adoption-Signal-Interpretations-Framework, Aave Arc vs. Standard Aave Vergleich, Retail-Anwendungs-Workflow
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -2388,8 +2389,6 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 ---
 
 ## Lektion 17.5 — Sophisticated Retail Strategies: Pendle, Morpho Curated, Advanced LST und Portfolio-Integration
-
-### Lektion
 
 **Fortgeschrittene DeFi-Strategien für mittelgroße Portfolios: Wann sich operationelle Komplexität lohnt und wie sie strukturiert wird**
 
@@ -2560,7 +2559,7 @@ Mehrere Curators haben sich etabliert:
 
 **Strategie 1: Single-Curator-Vault als Supply-Ersatz**
 
-Statt direkt in Aave USDC-Pool zu supplyen, allokierst du zu einem Gauntlet-kuratierten Morpho-USDC-Vault. Der Vault allokiert automatisch zu den attraktivsten USDC-Märkten innerhalb von Morpho, mit Gauntlet's Risk-Parametern.
+Statt direkt in Aave USDC-Pool zu deponieren, allokierst du zu einem Gauntlet-kuratierten Morpho-USDC-Vault. Der Vault verteilt automatisch zu den attraktivsten USDC-Märkten innerhalb von Morpho, mit Gauntlets Risk-Parametern.
 
 Vorteile gegenüber direktem Aave-Supply:
 
@@ -2813,14 +2812,14 @@ Sophisticated Strategien sind Werkzeuge. Wie alle Werkzeuge sind sie für spezif
 
 ### Folien-Zusammenfassung
 
-**Slide 1: Drei Kosten-Komponenten sophisticated Strategien**
+**[Slide 1] — Drei Kosten-Komponenten sophisticated Strategien**
 
 - Direkte Transaktions-Kosten (Gas: 80–200 USD auf Mainnet, 3–15 USD auf L2)
 - Zeit-Opportunity-Kosten (Setup + Monitoring + Tax-Docs, 10–20 Std/Monat bei mehreren Positionen)
 - Kognitiver Overhead (mentaler Raum für komplexe Entscheidungen)
 - Break-Even-Punkt typisch bei 100.000+ USD Portfolio
 
-**Slide 2: Pendle PT/YT-Kernmechanik**
+**[Slide 2] — Pendle PT/YT-Kernmechanik**
 
 - Yield-bearing Asset wird gesplittet in Principal Token (PT) und Yield Token (YT)
 - PT repräsentiert den Principal zur Maturität, handelt zu Discount
@@ -2828,13 +2827,13 @@ Sophisticated Strategien sind Werkzeuge. Wie alle Werkzeuge sind sie für spezif
 - Kombiniert: PT + YT = underlying Asset
 - Ermöglicht Fixed-Yield, Yield-Speculation, und strukturierte Kombinationen
 
-**Slide 3: Drei Pendle-Strategien**
+**[Slide 3] — Drei Pendle-Strategien**
 
 - PT-Kauf für Fixed Yield (Bucket 1, 15–25 % von Bucket 1)
 - YT-Kauf für Yield Spekulation (Bucket 4, max 3–5 % des Gesamt-Portfolios)
 - Strukturierte Kombinationen (nur für 500k+ Portfolios)
 
-**Slide 4: Morpho Curated Vaults**
+**[Slide 4] — Morpho Curated Vaults**
 
 - Meta-Struktur über mehrere Morpho-Blue-Märkte
 - Curators (Gauntlet, Steakhouse, MEV Capital, Re7, Yearn) verwalten Allokation
@@ -2842,13 +2841,13 @@ Sophisticated Strategien sind Werkzeuge. Wie alle Werkzeuge sind sie für spezif
 - Vorteile: höhere Efficiency, Risk-Management, Diversifikations-Option
 - Nachteile: Fee-Drag, zusätzliches Counterparty-Risk
 
-**Slide 5: Advanced LST-Strategien**
+**[Slide 5] — Advanced LST-Strategien**
 
 - Multi-Provider-Diversifikation: stETH (40 %), rETH (25 %), cbETH (15 %), METH (10 %), Andere (10 %)
 - Liquid Restaking via EigenLayer: ezETH, rsETH, weETH, pufETH — zusätzliche 1–3 Prozent-Punkte, Bucket 3
 - LST-Leverage-Strategien: nur für 500k+ Portfolios mit konservativen Ratios und strengem Monitoring
 
-**Slide 6: Portfolio-Integration für 200k-Teilnehmer**
+**[Slide 6] — Portfolio-Integration für 200k-Teilnehmer**
 
 - Bucket 1 (60 %): Aave USDC + Morpho Curated + Pendle PT + RWAs
 - Bucket 2 (20 %): Diversifizierte LSTs mit geringem LRT-Anteil
@@ -2856,68 +2855,53 @@ Sophisticated Strategien sind Werkzeuge. Wie alle Werkzeuge sind sie für spezif
 - Bucket 4 (5 %): Pendle YT + neuere Protokolle + ad-hoc Exploration
 - Cash Reserve (5 %): Hardware Wallet
 
-**Slide 7: Fünf Behavioral Risks und Gegenregeln**
+**[Slide 7] — Behavioral Risks, Gegenregeln und Kriterien für sophisticated Strategien**
 
-- Over-Engineering → Simplicity Bias
-- Time-Opportunity-Cost-Trap → Explicit Time-ROI-Kalkulation
-- Mental-Overhead → Mental-Capacity-Limit (3–5 sophisticated Positions max)
-- Clever-Strategy-Over-Simple → Effectiveness-Over-Cleverness
-- Social-Signal-Effect → Privacy and Silence
-
-**Slide 8: Sechs Kriterien für sophisticated Strategien**
-
-- Portfolio-Größe 100.000+ USD
-- Zeit 5–10 Std/Woche ohne Vernachlässigung anderer Lebens-Aspekte
-- Kognitive Kapazität für multiple komplexe Positionen
-- Due-Diligence-Disziplin (aus Modul 16) bewiesen
-- Emotional Stability in Stress-Situationen
+- Fünf Behavioral Risks: Over-Engineering (Simplicity Bias), Time-Opportunity-Cost-Trap (Explicit Time-ROI), Mental-Overhead (3–5 sophisticated Positions max), Clever-Strategy-Over-Simple (Effectiveness-Over-Cleverness), Social-Signal-Effect (Privacy and Silence)
+- Sechs Kriterien für sophisticated Strategien: Portfolio-Größe 100.000+ USD, Zeit 5–10 Std/Woche, kognitive Kapazität für multiple komplexe Positionen, Due-Diligence-Disziplin (aus Modul 16), Emotional Stability in Stress-Situationen, klarer Zusatz-Yield vs. Alternative
+- Wenn auch nur ein Kriterium nicht erfüllt: einfachere Strategien beibehalten
+- Rückkehr zu Blue-Chip ist kein Versagen, sondern strukturelle Anpassung
 - Mindestens ein voller Markt-Zyklus (3+ Jahre) Erfahrung
 
 ### Sprechertext
 
-Willkommen zu Lektion 17.5. Diese Lektion behandelt sophisticated DeFi-Strategien, aber mit einem klaren Caveat: nicht für jeden und nicht für jede Portfolio-Größe. Die explizite Differenzierung ist wichtig — für Einsteiger-Portfolios unter 50.000 USD sind viele dieser Strategien nicht effizient, und die operationelle Komplexität kompensiert nicht die marginalen Ertrags-Vorteile. Für mittlere Portfolios sind selektive Anwendungen sinnvoll. Für größere Portfolios ab 100.000 USD können diese Strategien signifikante Performance-Beiträge leisten.
+**[Slide 1]** Willkommen zu Lektion 17.5. Diese Lektion behandelt sophisticated DeFi-Strategien, aber mit klarem Caveat: nicht für jeden und nicht für jede Portfolio-Größe. Für Einsteiger-Portfolios unter 50.000 USD sind viele dieser Strategien nicht effizient. Für mittlere Portfolios sind selektive Anwendungen sinnvoll. Für Portfolios ab 100.000 USD können sie signifikante Performance-Beiträge leisten. Jede komplexe Strategie hat drei Kosten-Komponenten: direkte Transaktions-Kosten (auf Ethereum Mainnet leicht 80 bis 200 USD Gas), Zeit-Opportunity-Kosten (bei mehreren sophisticated Positionen 10 bis 20 Stunden pro Monat), kognitiver Overhead (komplexe Positionen belasten deinen mentalen Entscheidungs-Kontext). Die Break-Even-Rechnung zeigt: bei einer 10.000-USD-Position und 2 Prozent-Punkten zusätzlicher Rendite machst du oft Verlust; bei 100.000-USD-Position wird es signifikant positiv.
 
-Bevor wir in spezifische Strategien einsteigen, muss eine kritische Vorüberlegung adressiert werden: wann sind sophisticated Strategies überhaupt gerechtfertigt? Jede komplexe Strategie hat drei Kosten-Komponenten. Direkte Transaktions-Kosten: auf Ethereum Mainnet leicht 80 bis 200 USD in Gas über die Lebensdauer einer Strategie. Zeit-Opportunity-Kosten: bei mehreren sophisticated Positionen 10 bis 20 Stunden pro Monat, die einen Wert haben. Kognitiver Overhead: komplexe Positionen belasten deinen mentalen Entscheidungs-Kontext. Die Break-Even-Rechnung zeigt: bei einer 10.000-USD-Position und 2 Prozent-Punkten zusätzlicher Rendite machst du oft Verlust. Bei 100.000-USD-Position wird es signifikant positiv.
+**[Slide 2]** Erste Kategorie: Pendle PT/YT-Strategien. Pendle separiert yield-bearing Assets in Principal Token (repräsentiert den Principal-Wert zur Maturität) und Yield Token (repräsentiert alle Yields bis zur Maturität). Beispiel: PT-sUSDS bei 0,965 USD, redeemed zu 1,00 USD zur Maturität in 9 Monaten, annualisiert 4,8 Prozent fixed. Pendle-spezifische Risiken: Smart-Contract-Risiko höher als bei einfachen Lending-Protokollen, Liquiditäts-Risiko bei Exit vor Maturität, Implicit-Rate-Risiko, Underlying-Asset-Risiko, Oracle-Risiko.
 
-Die erste Kategorie sind Pendle PT/YT-Strategien. Pendle separiert yield-bearing Assets in zwei Tokens: Principal Token, der den Principal-Wert zur Maturität repräsentiert, und Yield Token, der alle Yields bis zur Maturität repräsentiert. Diese Separation erlaubt drei Haupt-Strategien. Strategie 1: Fixed Yield via PT-Kauf. Du kaufst PT zu einem Discount. Beispiel: PT-sUSDS bei 0,965 USD, redeemed zu 1,00 USD zur Maturität in 9 Monaten, annualized 4,8 Prozent fixed. Attraktiv wenn du zukünftige Yield-Kompression erwartest oder Planungssicherheit brauchst. Bucket 1, 15 bis 25 Prozent von Bucket 1. Strategie 2: Yield Speculation via YT-Kauf. Du kaufst YT — wenn tatsächliche Yields höher sind als impliziert, Gewinn; wenn niedriger, Verlust. Spekulativ, Bucket 4, max 3 bis 5 Prozent des Gesamt-Portfolios. Strategie 3: Strukturierte Kombinationen wie Multi-Maturity Laddering — nur für 500k+ Portfolios.
+**[Slide 3]** Drei Pendle-Strategien. Strategie 1: Fixed Yield via PT-Kauf — attraktiv wenn du zukünftige Yield-Kompression erwartest oder Planungssicherheit brauchst; Bucket 1, 15 bis 25 Prozent von Bucket 1. Strategie 2: Yield Speculation via YT-Kauf — wenn tatsächliche Yields höher sind als impliziert, Gewinn; spekulativ, Bucket 4, max 3 bis 5 Prozent. Strategie 3: Strukturierte Kombinationen wie Multi-Maturity Laddering — nur für 500k+ Portfolios.
 
-Pendle-spezifische Risiken: Smart-Contract-Risiko höher als bei einfachen Lending-Protokollen, Liquiditäts-Risiko bei Exit vor Maturität, Implicit-Rate-Risiko falls Markt-Zinsen vor Maturität stark steigen, Underlying-Asset-Risiko, Oracle-Risiko.
+**[Slide 4]** Zweite Kategorie: Morpho Curated Vaults. Morpho Blue separiert jede Asset-Kombination in isolierte Märkte. Vaults sind Meta-Strukturen, die Kapital in multiple Märkte allokieren nach Curator-Entscheidungen. Prominente Curators: Gauntlet (quantitatives Risk-Management, konservative Parameter), Steakhouse Financial (Money-Market-ähnlich), MEV Capital (Efficiency-Optimierung), Re7 Labs (neuere Assets, höhere Yields), Yearn (breiteres Ökosystem). Performance-Fee typisch 5 bis 15 Prozent. Vorteile: höhere Renditen durch Efficiency, Risk-Management durch Curator, Transparenz. Nachteile: zusätzliche Fee-Schicht, zusätzliches Counterparty-Risk. Positionierung: primär Bucket 1, max 20 bis 30 Prozent von Bucket 1 in einem einzelnen Curator, max 40 bis 50 Prozent total.
 
-Die zweite Kategorie sind Morpho Curated Vaults. Morpho Blue separiert jede Asset-Kombination in isolierte Märkte. Vaults sind Meta-Strukturen, die Kapital in multiple Märkte allokieren, nach Entscheidungen eines Curators. Prominente Curators: Gauntlet für quantitatives Risk-Management mit konservativen Parametern, Steakhouse Financial für Money-Market-ähnliche Strategien, MEV Capital für Efficiency-Optimierung, Re7 Labs für neuere Assets mit höheren Yields, Yearn für das breitere Ökosystem. Performance-Fee typisch 5 bis 15 Prozent. Vorteile: höhere Renditen durch Efficiency, Risk-Management durch Curator, Transparenz durch Vault-Strukturen. Nachteile: zusätzliche Fee-Schicht, zusätzliches Counterparty-Risk, Komplexität durch Governance-Doppel-Struktur. Portfolio-Positionierung: primär Bucket 1, max 20 bis 30 Prozent von Bucket 1 in einem einzelnen Curator, max 40 bis 50 Prozent total in Morpho Curated Structures.
+**[Slide 5]** Dritte Kategorie: Advanced LST-Strategien. Die Standard-Retail-Herangehensweise — 100 Prozent stETH — hat Konzentrations-Risiken. Multi-Provider-Diversifikation: 40 Prozent stETH, 25 Prozent rETH, 15 Prozent cbETH, 10 Prozent METH, 10 Prozent andere. Vorteile: Slashing-, Governance-, regulatorische Diversifikation. Nachteile: operationeller Overhead, niedrigere Liquidität in kleineren LSTs. Liquid Restaking via EigenLayer: ezETH, rsETH, weETH, pufETH — zusätzliche 1 bis 3 Prozent-Punkte, aber zusätzliche EigenLayer- und AVS-Slashing-Risiken. Bucket 3, max 15 bis 20 Prozent der LST-Gesamt-Allokation. LST-Leverage-Strategien: nur für 500k+ Portfolios mit aktivem Monitoring.
 
-Die dritte Kategorie sind advanced LST-Strategien. Die Standard-Retail-Herangehensweise — 100 Prozent stETH — hat Konzentrations-Risiken. Multi-Provider-Diversifikation: 40 Prozent stETH, 25 Prozent rETH, 15 Prozent cbETH, 10 Prozent METH, 10 Prozent andere. Vorteile: Slashing-Risiko, Governance und regulatorische Diversifikation. Nachteile: operationeller Overhead, niedrigere Liquidität in kleineren LSTs, komplexes Yield-Tracking, höhere Gas-Kosten. Liquid Restaking via EigenLayer: ezETH, rsETH, weETH, pufETH — zusätzliche 1 bis 3 Prozent-Punkte, aber zusätzliche Risiken durch EigenLayer-Layer und AVS-Slashing-Risiken. Bucket 3, max 15 bis 20 Prozent der LST-Gesamt-Allokation. LST-Leverage-Strategien: nur für 500k+ Portfolios mit aktivem Monitoring und konservativen Ratios — für die meisten Teilnehmer nicht empfehlenswert.
+**[Slide 6]** Portfolio-Integration für einen 200.000-USD-Teilnehmer in moderat-engagiertem Modus. Bucket 1 bei 60 Prozent, diversifiziert über direktes Aave, Morpho Curated, Pendle PT und RWAs. Bucket 2 bei 20 Prozent, multi-provider LST-Diversifikation mit selektivem LRT-Exposure. Bucket 3 bei 10 Prozent für Active Yield wie LP-Positionen und zusätzliche Morpho-Curator-Diversifikation. Bucket 4 bei 5 Prozent für Speculation inklusive Pendle YT. Cash Reserve 5 Prozent in Cold Storage. Erwartete Rendite: 5 bis 6 Prozent annualisiert nach Fees.
 
-Portfolio-Integration für einen 200.000-USD-Teilnehmer in moderat engagiertem Modus: Bucket 1 bei 60 Prozent, diversifiziert über direktes Aave, Morpho Curated, Pendle PT und RWAs. Bucket 2 bei 20 Prozent, multi-provider LST-Diversifikation mit selektivem LRT-Exposure. Bucket 3 bei 10 Prozent für Active Yield wie LP-Positionen und zusätzliche Morpho-Curator-Diversifikation. Bucket 4 bei 5 Prozent für Speculation inklusive Pendle YT. Cash Reserve 5 Prozent in Cold Storage. Erwartete Rendite: 5 bis 6 Prozent annualisiert nach Fees.
-
-Der entscheidende Teil dieser Lektion sind die Behavioral Risks. Falle 1: Over-Engineering. Die Versuchung, die Strategie immer komplexer zu machen. Gegenregel: Simplicity Bias. Falle 2: Time-Opportunity-Cost-Trap. Bei 15 Stunden pro Woche und 2 Prozent-Punkten Mehr-Rendite auf 200k Portfolio sind das 5,13 USD pro Stunde — weit unter typischem Opportunity-Cost. Gegenregel: explizite Time-ROI-Kalkulation, monatliche Überprüfung. Falle 3: Mental-Overhead und Decision-Fatigue. Sophisticated Strategien belegen mentalen Raum. Gegenregel: Mental-Capacity-Limit, typisch 3 bis 5 sophisticated Positions maximum. Falle 4: Clever-Strategy-Over-Simple. Komplexe Strategien fühlen sich professionell an, aber einfache Strategien performen oft ähnlich über 10 Jahre. Gegenregel: Effectiveness-Over-Cleverness. Falle 5: Social-Signal-Effect. DeFi-Communities belohnen Sophistication, was zu Drift führt. Gegenregel: Privacy and Silence — deine Strategie ist deine eigene.
-
-Sechs Kriterien müssen erfüllt sein, bevor du sophisticated Strategien anwendest. Portfolio ab 100.000 USD. Zeit 5 bis 10 Stunden pro Woche ohne Vernachlässigung anderer Lebens-Aspekte. Kognitive Kapazität für multiple komplexe Positionen. Due-Diligence-Disziplin aus Modul 16 bewiesen. Emotional Stability in Stress-Situationen. Mindestens ein voller Markt-Zyklus Erfahrung. Wenn diese Kriterien nicht voll erfüllt sind, ist eine einfachere Strategie typisch besser.
-
-Sophisticated Strategien sind Werkzeuge. Wie alle Werkzeuge sind sie für spezifische Zwecke designed. Ihre Anwendung außerhalb ihres Design-Zwecks produziert schlechte Outcomes. Die Kunst liegt nicht darin, alle verfügbaren Werkzeuge zu nutzen, sondern die richtigen Werkzeuge für deine spezifische Situation zu wählen. Die meisten langfristig erfolgreichen DeFi-Teilnehmer haben einfachere Strategien als die lautesten Twitter-Accounts suggerieren. Es gibt keine Schande in Simplicity — es ist oft die optimale Strategie.
+**[Slide 7]** Behavioral Risks und Sophistication-Kriterien. Fünf Fallen mit Gegenregeln: Over-Engineering → Simplicity Bias; Time-Opportunity-Cost-Trap (bei 15 Std/Woche und 2 Prozent-Punkten auf 200k Portfolio sind das 5,13 USD/Stunde) → explizite Time-ROI-Kalkulation; Mental-Overhead → Mental-Capacity-Limit, typisch 3 bis 5 sophisticated Positions maximum; Clever-Strategy-Over-Simple → Effectiveness-Over-Cleverness; Social-Signal-Effect → Privacy and Silence. Sechs Kriterien für sophisticated Strategien: Portfolio ab 100.000 USD, Zeit 5 bis 10 Stunden/Woche, kognitive Kapazität für multiple Positionen, Due-Diligence-Disziplin bewiesen, Emotional Stability in Stress, mindestens ein voller Markt-Zyklus Erfahrung. Wenn nicht voll erfüllt, ist eine einfachere Strategie typisch besser. Die Kunst liegt nicht darin, alle verfügbaren Werkzeuge zu nutzen, sondern die richtigen für deine spezifische Situation zu wählen.
 
 ### Visuelle Vorschläge
 
-**Visual 1: Break-Even-Kalkulation für sophisticated Strategien**
+**[Slide 1] — Break-Even-Kalkulation für sophisticated Strategien**
 
 Zweidimensionale Matrix-Grafik. X-Achse: Portfolio-Größe (10.000 bis 500.000 USD logarithmische Skala). Y-Achse: Expected Extra-Return (0 bis 5 Prozent-Punkte). Farbkodierte Zonen: Rot (nicht rentabel, Kosten übersteigen Nutzen), Gelb (marginal, selektiv einsetzen), Grün (klar rentabel, mehrere Strategien sinnvoll). Die Zonen-Grenzen zeigen die Break-Even-Kurven basierend auf: 100 USD Gas-Kosten, 50 USD/Stunde Zeitwert, 10 Stunden/Monat Management. Bezugspunkte im Diagramm: "10k-Portfolio bei 2 PP Extra = verliert ~150/Jahr (rot)"; "200k-Portfolio bei 2 PP Extra = gewinnt ~3.650/Jahr (grün)"; "100k-Portfolio bei 1 PP Extra = marginal positiv (gelb)".
 
-**Visual 2: Pendle PT/YT-Mechanik als Visual Flow**
+**[Slide 2] — Pendle PT/YT-Mechanik als Visual Flow**
 
 Diagramm mit drei Boxen-Reihen. Obere Reihe: Ein yield-bearing Asset (z. B. sUSDS-Token, abgebildet als Icon). Pfeil nach unten "Deposit auf Pendle". Mittlere Reihe: Zwei separate Tokens nebeneinander — PT (blaue Box "Principal Token, redeemable zur Maturität für 1:1") und YT (orange Box "Yield Token, accrues alle Yields bis Maturität"). Pfeil nach unten "Secondary Market Trading". Untere Reihe: Drei Strategien als Cards — "Kaufe PT: Fixed Yield", "Kaufe YT: Speculation", "Halte Beide: Equivalent zum underlying". Am unteren Rand ein Disclaimer: "Beide Tokens addieren sich immer zum Wert des underlying Assets. Secondary Markets preisen PT und YT basierend auf impliziten Rate-Expectations."
 
-**Visual 3: Die fünf Morpho-Curators im Vergleich**
+**[Slide 3] — Die fünf Morpho-Curators im Vergleich**
 
 Tabelle mit fünf Zeilen (Curators) und fünf Spalten: Name, Spezialisierung, Typische Fee, Risk-Konservativität (1–5 Sterne), Track Record (Jahre aktiv). Gauntlet: "Quantitatives Risk-Management, etablierte Assets, 10–15 % Fee, 5 Sterne, 3+ Jahre". Steakhouse Financial: "Money-Market-ähnlich, stable yield, 8–12 % Fee, 4 Sterne, 2+ Jahre". MEV Capital: "Efficiency-Optimierung, tiefere Markt-Analyse, 8–12 % Fee, 3–4 Sterne, 2+ Jahre". Re7 Labs: "Newer Asset-Strategien, höhere Yields/Risiko, 10–15 % Fee, 3 Sterne, 1–2 Jahre". Yearn Team: "Teil des breiteren Yearn-Ökosystems, diversifizierter Ansatz, 7–10 % Fee, 4 Sterne, 4+ Jahre DeFi seit 2020". Unter der Tabelle: "Auswahl-Kriterium: passe Curator zu deiner spezifischen Asset-Klasse und Risk-Toleranz an."
 
-**Visual 4: LST-Diversifikations-Pie-Chart mit Provider-Details**
+**[Slide 4] — LST-Diversifikations-Pie-Chart mit Provider-Details**
 
 Pie-Chart mit fünf Segmenten, jeweils in verschiedener Farbe: stETH (40 %, blau), rETH (25 %, grün), cbETH (15 %, orange), METH (10 %, gelb), Andere (10 %, grau). Neben jedem Segment ein kleiner Info-Block: Provider-Name, Staker-Model (solo vs permissioned vs liquid), aktueller APY, Markt-Dominanz. Unter dem Chart: "Diversifikations-Rationale: verschiedene Staker-Models haben verschiedene Failure-Modes. Single-Provider-Exposure ist Konzentrations-Risiko, nicht Rendite-Maximierung."
 
-**Visual 5: LRT-Ökosystem-Map**
+**[Slide 5] — LRT-Ökosystem-Map**
 
 Zentrale Box: "EigenLayer" als Basis-Layer. Pfeile nach außen zu vier LRT-Providers: Renzo (ezETH), Kelp DAO (rsETH), ether.fi (weETH), Puffer Finance (pufETH). Jeder Provider hat unter seinem Namen einen Kurz-Descriptor: "Aggregatives LRT" (Renzo), "Flexibilität zwischen Underlying-LSTs" (Kelp), "Schnellstes Wachstum, starke DeFi-Integration" (ether.fi), "Fokus auf Slashing-Protection" (Puffer). Zweite Ebene von Pfeilen: von jedem LRT-Provider zu "AVS-Services" (als graue Wolke) mit Label "Actively Validated Services, die EigenLayer nutzen". Warnung am unteren Rand in Rot: "Jeder Layer addiert Smart-Contract-Risiko. Ein Issue auf EigenLayer kann ALLE LRTs gleichzeitig betreffen."
 
-**Visual 6: 200k-Portfolio-Architektur**
+**[Slide 6] — 200k-Portfolio-Architektur**
 
 Vertikaler Bar-Chart, von unten nach oben: Cash Reserve (5 %, grau), Bucket 4 Speculation (5 %, rot), Bucket 3 Active Yield (10 %, orange), Bucket 2 ETH-BTC Beta (20 %, blau), Bucket 1 Stable Yield (60 %, grün). Rechts vom Chart eine detaillierte Breakdown jedes Buckets mit USD-Beträgen und konkreten Positionen:
 
@@ -2928,7 +2912,7 @@ Vertikaler Bar-Chart, von unten nach oben: Cash Reserve (5 %, grau), Bucket 4 Sp
 - Cash Reserve: Hardware Wallet 10k
 Unter dem Chart: "Erwartete Rendite 5–6 % nach Fees. Moderate Komplexität. Ca. 5–7 Stunden/Woche Management."
 
-**Visual 7: Die fünf Behavioral Risks als Warning-Cards**
+**[Slide 7] — Die fünf Behavioral Risks als Warning-Cards**
 
 Fünf farbkodierte Karten in einer Reihe. Jede Karte hat: Titel des Risks, Ein-Zeilen-Beschreibung, Gegenregel, kurzes Beispiel. Karte 1 Over-Engineering (rot): "Versuchung zunehmender Komplexität" → "Simplicity Bias: wähle die einfachere bei gleicher Expected Return". Karte 2 Time-Opportunity-Cost (orange): "Stunden-Wert unter Opportunity-Cost" → "Explizite Time-ROI-Kalkulation monatlich". Karte 3 Mental-Overhead (gelb): "Decision-Fatigue, Burnout" → "Mental-Capacity-Limit: 3–5 sophisticated Positions max". Karte 4 Clever-Over-Simple (orange): "Sophisticated fühlt sich besser an, performt oft gleich" → "Effectiveness über Cleverness". Karte 5 Social-Signal (rot): "Community-Validation treibt Komplexität" → "Privacy and Silence, deine Strategie ist deine eigene".
 
@@ -3324,8 +3308,8 @@ Die Lernchance hier: jede solche Situation, die du rational navigierst, ist eine
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Wann sind Sophisticated Strategies gerechtfertigt → Pendle PT/YT Mechaniken → Morpho Curated Vaults → Advanced LST Strategies → Liquid Restaking via EigenLayer → Portfolio-Integration → Operationeller Burden und Fallen
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 13–15 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → Kosten sophisticated Strategien → Pendle PT/YT → Morpho Curated Vaults → Advanced LST → Portfolio-Integration → Behavioral Risks und Kriterien
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — Pendle-PT-YT-Mechanik-Diagramm, Morpho-Curator-Modell-Grafik, LST-Diversifikations-Matrix, EigenLayer-Restaking-Flow, Portfolio-Integrations-Schema, Over-Engineering-Warnsignale
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -3334,20 +3318,18 @@ Pipeline: Gamma → ElevenLabs → CapCut.
 
 ## Lektion 17.6 — Der 12-Monats-Action-Plan und Academy-Abschluss
 
-### Lektion
-
 **Vom Theorie-First zum Praxis-First: Ein konkreter 12-Monats-Plan für die Integration der Academy-Frameworks in deine DeFi-Praxis**
 
 ### Lernziele
 
 Nach Abschluss dieser Lektion können die Lernenden:
 
-1. Implement a structured 12-month plan that systematically transitions from Academy-completion to confident, methodical DeFi practice, with clear milestones for each quarter.
-2. Execute the Foundation-Setup phase (Months 1–3) — establishing infrastructure, initial positions, journal system, and baseline monitoring routines that form the operational foundation of long-term DeFi practice.
-3. Deploy the Framework-Activation phase (Months 4–6) — activating systematic due diligence processes, establishing rebalancing cycles, building community engagement, and developing feedback loops that enable continuous calibration.
-4. Navigate the Strategy-Expansion phase (Months 7–9) — conducting careful allocation experiments, integrating lessons-learned from the first 6 months, and selectively expanding portfolio complexity when and where it's justified.
-5. Complete the Consolidation-and-Planning phase (Months 10–12) — consolidating insights from the first year, conducting comprehensive portfolio reviews, and planning for Year 2 with realistic, experience-informed goals.
-6. Reflect on the complete Academy journey — integrating the frameworks from all 17 modules into a coherent personal practice philosophy and positioning yourself for long-term (5+ years, multiple market cycles) DeFi engagement.
+1. Einen strukturierten 12-Monats-Plan implementieren, der systematisch vom Academy-Abschluss zu einer selbstbewussten, methodischen DeFi-Praxis überleitet, mit klaren Milestones pro Quartal.
+2. Die Foundation-Setup-Phase (Monate 1–3) umsetzen — Infrastruktur etablieren, initiale Positionen aufbauen, ein Journal-System einrichten und Baseline-Monitoring-Routinen entwickeln, die das operative Fundament der Langzeit-DeFi-Praxis bilden.
+3. Die Framework-Activation-Phase (Monate 4–6) aktivieren — systematische Due-Diligence-Prozesse, regelmäßige Rebalancing-Zyklen, Community-Engagement und Feedback-Schleifen etablieren, die kontinuierliche Kalibrierung ermöglichen.
+4. Die Strategy-Expansion-Phase (Monate 7–9) navigieren — bewusste Allokations-Experimente durchführen, Lessons-Learned aus den ersten 6 Monaten integrieren, und Portfolio-Komplexität selektiv erweitern, wo und wann sie gerechtfertigt ist.
+5. Die Consolidation-and-Planning-Phase (Monate 10–12) abschließen — Erkenntnisse aus dem ersten Jahr konsolidieren, umfassende Portfolio-Reviews durchführen und das Year 2 mit realistischen, erfahrungsinformierten Zielen planen.
+6. Die gesamte Academy-Reise reflektieren — die Frameworks aus allen 17 Modulen zu einer kohärenten persönlichen Praxis-Philosophie integrieren und sich für langfristiges Engagement (5+ Jahre, mehrere Markt-Zyklen) positionieren.
 
 ### Erklärung
 
@@ -3968,14 +3950,14 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 
 ### Folien-Zusammenfassung
 
-**Slide 1: Der 12-Monats-Action-Plan in vier Phasen**
+**[Slide 1] — Der 12-Monats-Action-Plan in vier Phasen**
 
 - Phase 1 (Monat 1–3): Foundation-Setup — Infrastructure, initiale Positionen, Journal
 - Phase 2 (Monat 4–6): Framework-Activation — systematische DD, Rebalancing, Community
 - Phase 3 (Monat 7–9): Strategy-Expansion — selektive Bucket-3, bedingte Sophistication, RWA-Kalibrierung
 - Phase 4 (Monat 10–12): Consolidation und Year-2-Planning
 
-**Slide 2: Phase 1 Foundation-Setup Milestones**
+**[Slide 2] — Phase 1 Foundation-Setup Milestones**
 
 - Sichere Hardware-Wallet-Infrastruktur mit Backups
 - Segmentierte Wallet-Architektur (Hot, Main, Cold, Ops)
@@ -3985,7 +3967,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - DD-Dokumente für alle Positionen
 - Stablecoin-Dependency-Analyse
 
-**Slide 3: Phase 2 Framework-Activation Milestones**
+**[Slide 3] — Phase 2 Framework-Activation Milestones**
 
 - Erweiterte DD mit institutional-inspired Standards
 - Neue-Position-Evaluation-Prozess in 5 Schritten
@@ -3993,7 +3975,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - Governance-Engagement-Approach (aktiv oder bewusst-passiv)
 - Selektive Community-Integration mit hochwertigen Quellen
 
-**Slide 4: Phase 3 Strategy-Expansion Milestones**
+**[Slide 4] — Phase 3 Strategy-Expansion Milestones**
 
 - Bucket-3-Aktivierung mit LP-Position
 - Rebalancing-Prozess optimiert
@@ -4001,7 +3983,7 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - Falls bereit: ONE sophisticated Strategy eingeführt
 - RWA-Allocation basierend auf Makro-Regime-Assessment
 
-**Slide 5: Phase 4 Consolidation Milestones**
+**[Slide 5] — Phase 4 Consolidation Milestones**
 
 - Quantitative und qualitative Performance-Analyse
 - Strategische Anpassungen basierend auf Learnings
@@ -4009,23 +3991,12 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 - Year-2-Strategic-Plan dokumentiert
 - Long-Term-Vision (5+ Jahre) formuliert
 
-**Slide 6: Fünf Verhaltensweisen erfolgreicher DeFi-Teilnehmer**
+**[Slide 6] — Fünf Verhaltensweisen und internalisierte Academy-Frameworks**
 
-- Disziplin über Expertise
-- Humility über Sophistication
-- Long-Term-Perspektive (Jahre, nicht Wochen)
-- Journaling und Reflexion
-- Balance mit anderen Lebens-Aspekten
+- Verhaltensweisen erfolgreicher DeFi-Teilnehmer: Disziplin über Expertise, Humility über Sophistication, Long-Term-Perspektive (Jahre, nicht Wochen), Journaling und Reflexion, Balance mit anderen Lebens-Aspekten
+- Internalisierte Academy-Frameworks nach 12 Monaten: Six-Dimension-Framework als automatisches Denk-Muster, 4-Bucket-Struktur als Portfolio-Intuition, Sophistication-Kriterien als Expansion-Filter, Counterparty-Risk-Mapping als Default-Analyse, Institutional-Signal-Interpretation als Due-Diligence-Layer
 
-**Slide 7: Die internalisierten Academy-Frameworks nach 12 Monaten**
-
-- Six-Dimension-Framework als automatisches Denk-Muster
-- 4-Bucket-Struktur als Portfolio-Intuition
-- Sophistication-Kriterien als Expansion-Filter
-- Counterparty-Risk-Mapping als Default-Analyse
-- Institutional-Signal-Interpretation als Due-Diligence-Layer
-
-**Slide 8: Ausblick auf die langfristige Trajectory**
+**[Slide 7] — Ausblick auf die langfristige Trajectory**
 
 - Volle Markt-Zyklen durchleben (3–5 Jahre)
 - Technologie-Evolution navigieren
@@ -4035,57 +4006,47 @@ Das ist die tiefere Vision der Academy: nicht kurze-Term-Gewinne, sondern ein la
 
 ### Sprechertext
 
-Willkommen zur finalen Lektion der DeFi Academy. Diese Lektion ist anders als die vorherigen. Statt neue technische oder analytische Konzepte einzuführen, strukturiert sie die Integration aller bisher erlernten Frameworks in eine konkrete, quartalsweise Roadmap für die ersten 12 Monate nach Academy-Abschluss. Die Frage ist nicht "was sollst du wissen?", sondern "wie gehst du von Wissen zu Praxis?".
+**[Slide 1]** Willkommen zur finalen Lektion der DeFi Akademie. Diese Lektion ist anders als die vorherigen. Statt neue technische oder analytische Konzepte einzuführen, strukturiert sie die Integration aller bisher erlernten Frameworks in eine konkrete, quartalsweise Roadmap für die ersten 12 Monate nach Academy-Abschluss. Die Frage ist nicht „was sollst du wissen?", sondern „wie gehst du von Wissen zu Praxis?". Der Plan ist in vier Quartals-Phasen strukturiert, die aufeinander aufbauen. Jede Phase hat spezifische Milestones, die erreicht werden müssen, bevor man zur nächsten übergeht. Die Disziplin, nicht zu beschleunigen oder Phasen zu überspringen, ist eine der wichtigsten Übungen in dieser Struktur.
 
-Der Plan ist in vier Quartals-Phasen strukturiert, die aufeinander aufbauen. Jede Phase hat spezifische Milestones, die erreicht werden müssen, bevor man zur nächsten übergeht. Die Disziplin, nicht zu beschleunigen oder Phasen zu überspringen, ist eine der wichtigsten Übungen in dieser Struktur.
+**[Slide 2]** Phase 1, Monat 1 bis 3, ist Foundation-Setup. Das sind die wichtigsten drei Monate. Hier etablierst du die operationelle Infrastruktur, die alle späteren Aktivitäten tragen wird. Monat 1 fokussiert auf Hardware-Wallet-Setup, Wallet-Segmentierung, Monitoring-Tools und das DeFi-Journal-System. Monat 2 auf initiale Bucket-1 und Bucket-2 Positionen und Baseline-Metriken. Monat 3 auf strukturierte Due Diligence und Stablecoin-Dependency-Analyse. Am Ende von Monat 3 solltest du eine vollständige, funktionierende DeFi-Basis haben. Wenn Milestones nicht erreicht sind, ist Monat 4 die Zeit zum Nachholen, bevor du weitergehst.
 
-Phase 1, Monat 1 bis 3, ist Foundation-Setup. Das sind die wichtigsten drei Monate. Hier etablierst du die operationelle Infrastruktur, die alle späteren Aktivitäten tragen wird. Monat 1 fokussiert auf Hardware-Wallet-Setup, Wallet-Segmentierung, Monitoring-Tools und das DeFi-Journal-System. Monat 2 auf initiale Bucket-1 und Bucket-2 Positionen und Baseline-Metriken. Monat 3 auf strukturierte Due Diligence und Stablecoin-Dependency-Analyse. Am Ende von Monat 3 solltest du eine vollständige, funktionierende DeFi-Basis haben. Wenn eines der Milestones nicht erreicht ist, ist Monat 4 die Zeit, es nachzuholen, bevor du weitergehst.
+**[Slide 3]** Phase 2, Monat 4 bis 6, ist Framework-Activation. Hier gehst du von passivem Halten zu aktivem, systematischem Management über. Monat 4: erweitere die Due Diligence um institutional-inspired Standards aus Lektion 17.4, etabliere einen formalen Neue-Position-Evaluation-Prozess. Monat 5: führe dein erstes strukturiertes Rebalancing durch, etabliere deinen Governance-Engagement-Approach. Monat 6: integriere dich selektiv in DeFi-Communities, etabliere Peer-Learning-Strukturen falls möglich. Am Ende von Monat 6 sind deine Academy-Frameworks gelebte Praxis.
 
-Phase 2, Monat 4 bis 6, ist Framework-Activation. Hier gehst du von passivem Halten zu aktivem, systematischem Management über. Monat 4: erweitere die DD um institutional-inspired Standards aus Lektion 17.4, etabliere einen formalen Neue-Position-Evaluation-Prozess. Monat 5: führe dein erstes strukturiertes Rebalancing durch, etabliere deinen Governance-Engagement-Approach. Monat 6: integriere dich selektiv in DeFi-Communities, etabliere Peer-Learning-Strukturen falls möglich. Am Ende von Monat 6 sind deine Academy-Frameworks gelebte Praxis.
+**[Slide 4]** Phase 3, Monat 7 bis 9, ist Strategy-Expansion. Wichtig: Expansion ist nicht automatisch. Sie muss durch die Ergebnisse der ersten 6 Monate gerechtfertigt sein. Monat 7: selektive Bucket-3-Aktivierung mit einer LP-Position, Rebalancing-Optimierung. Monat 8: Sophistication-Readiness-Check basierend auf den sechs Kriterien aus Lektion 17.5, und falls bereit, Einführung einer einzigen sophisticated Strategie. Monat 9: RWA-Allocation-Kalibrierung basierend auf Makro-Regime-Assessment. Der kritischste Moment in dieser Phase ist der Sophistication-Readiness-Check in Monat 8 — die ehrliche Selbst-Bewertung, ob sophisticated Strategies wirklich angemessen sind.
 
-Phase 3, Monat 7 bis 9, ist Strategy-Expansion. Wichtig: Expansion ist nicht automatisch. Sie muss durch die Ergebnisse der ersten 6 Monate gerechtfertigt sein. Monat 7: selektive Bucket-3-Aktivierung mit einer LP-Position, Rebalancing-Optimierung. Monat 8: Sophistication-Readiness-Check basierend auf den sechs Kriterien aus Lektion 17.5, und falls bereit, Einführung EINER sophisticated Strategie. Monat 9: RWA-Allocation-Kalibrierung basierend auf Makro-Regime-Assessment. Der kritischste Moment in dieser Phase ist der Sophistication-Readiness-Check in Monat 8 — die ehrliche Selbst-Bewertung, ob sophisticated Strategies wirklich angemessen sind.
+**[Slide 5]** Phase 4, Monat 10 bis 12, ist Consolidation und Year-2-Planning. Monat 10: umfassende quantitative und qualitative Performance-Analyse der ersten 9 Monate. Monat 11: strategische Anpassungen basierend auf Learnings, Evolution des Journal-Systems. Monat 12: Year-2-Strategic-Plan und Long-Term-Vision. Die entscheidende Arbeit in dieser Phase ist die Reflexion über das erste Jahr und die Positionierung für die langfristige Trajektorie.
 
-Phase 4, Monat 10 bis 12, ist Consolidation und Year-2-Planning. Monat 10: umfassende quantitative und qualitative Performance-Analyse der ersten 9 Monate. Monat 11: strategische Anpassungen basierend auf Learnings, Evolution des Journal-Systems. Monat 12: Year-2-Strategic-Plan und Long-Term-Vision. Die entscheidende Arbeit in dieser Phase ist die Reflexion über das erste Jahr und die Positionierung für die langfristige Trajektorie.
+**[Slide 6]** Beobachtungen vieler DeFi-Teilnehmer zeigen: erfolgreiche separieren sich von nicht-erfolgreichen durch wenige konsequente Verhaltensweisen. Disziplin über Expertise — sie sind nicht die klügsten, aber sie sind konsequent. Humility über Sophistication — sie erkennen die Limits ihres Wissens. Long-Term-Perspektive — sie denken in Jahren und Markt-Zyklen, nicht in Wochen. Journaling und Reflexion — sie dokumentieren und kalibrieren über Zeit. Balance — DeFi als wichtigen Teil ihres Lebens, aber nicht das ganze Leben. Nach 12 Monaten methodischer Praxis sind die Academy-Frameworks nicht mehr externe Regelwerke, sondern internalisierte Denk-Muster: Six-Dimension-Framework kommt automatisch bei neuen Protokollen, 4-Bucket-Struktur formt deine Portfolio-Intuition, Sophistication-Kriterien tauchen bei jeder Expansion-Versuchung auf.
 
-Basierend auf Beobachtungen vieler DeFi-Teilnehmer über mehrere Jahre, separieren sich erfolgreiche von nicht-erfolgreichen Teilnehmern durch wenige aber konsequente Verhaltensweisen. Erste: Disziplin über Expertise. Erfolgreiche Teilnehmer sind nicht notwendigerweise die klügsten, aber sie sind konsequent. Zweite: Humility über Sophistication. Sie erkennen die Limits ihres Wissens. Dritte: Long-Term-Perspektive. Sie denken in Jahren und Markt-Zyklen, nicht in Wochen. Vierte: Journaling und Reflexion. Sie dokumentieren und kalibrieren über Zeit. Fünfte: Balance. Sie haben DeFi als wichtigen Teil ihres Lebens, aber nicht als das ganze Leben.
-
-Die einfacheren Verhaltensweisen sind oft die wichtigeren. Komplexe Strategien, clevere Analysen, sophisticated Tools — sie alle haben ihren Platz, aber sie sind sekundär zu Disziplin, Humility, Long-Term-Perspektive, Journaling und Balance.
-
-Nach 12 Monaten methodischer Praxis sind die Academy-Frameworks nicht mehr externe Regelwerke, sondern internalisierte Denk-Muster. Das Six-Dimension-Framework kommt automatisch, wenn du ein neues Protokoll siehst. Die 4-Bucket-Struktur formt deine Portfolio-Intuition. Die Sophistication-Kriterien tauchen bei jeder Expansion-Versuchung auf. Wenn diese Frameworks nach 12 Monaten noch als "Academy-Regeln" empfunden werden, ist die Integration unvollständig und weitere Praxis nötig.
-
-Die langfristige Trajektorie über die nächsten 3 bis 5 Jahre wird wahrscheinlich einen vollen Markt-Zyklus, signifikante Technologie-Evolution, regulatorische Veränderungen und persönliche Lebens-Umstände bringen. Ein solides Fundament aus methodischer Praxis — das du in Year 1 etablierst — ermöglicht dir, diese Veränderungen produktiv zu navigieren.
-
-Das ist die tiefere Vision der Academy. Nicht kurz-frist-Gewinne, sondern ein langes, reflektiertes, produktives Engagement mit einer der signifikantesten technologischen Entwicklungen unserer Zeit. Der 12-Monats-Plan ist nur der Anfang. Die wirkliche Reise dauert Jahre und wird durch die Disziplin und Frameworks, die du jetzt etablierst, wesentlich mitgestaltet.
-
-Nimm dir die Zeit für jede Phase. Beschleunige nicht. Reflektiere nach jedem Monat. Und vor allem: sei geduldig mit dir selbst. DeFi-Meisterschaft entwickelt sich über Jahre, nicht Monate. Der 12-Monats-Plan gibt dir die Struktur, um auf diesem langen Weg kompetent zu starten.
+**[Slide 7]** Die langfristige Trajektorie über die nächsten 3 bis 5 Jahre wird wahrscheinlich einen vollen Markt-Zyklus, signifikante Technologie-Evolution, regulatorische Veränderungen und persönliche Lebens-Umstände bringen. Ein solides Fundament aus methodischer Praxis — das du in Year 1 etablierst — ermöglicht dir, diese Veränderungen produktiv zu navigieren. Das ist die tiefere Vision der Academy: nicht kurz-frist-Gewinne, sondern ein langes, reflektiertes, produktives Engagement. Der 12-Monats-Plan ist nur der Anfang. Nimm dir die Zeit für jede Phase. Beschleunige nicht. Reflektiere nach jedem Monat. Und vor allem: sei geduldig mit dir selbst. DeFi-Meisterschaft entwickelt sich über Jahre, nicht Monate.
 
 ### Visuelle Vorschläge
 
-**Visual 1: Der 12-Monats-Plan als horizontale Timeline**
+**[Slide 1] — Der 12-Monats-Plan als horizontale Timeline**
 
 Horizontale Timeline von Monat 1 bis Monat 12, in vier farbcodierten Phasen: Phase 1 (grün, Monate 1–3), Phase 2 (blau, Monate 4–6), Phase 3 (orange, Monate 7–9), Phase 4 (violett, Monate 10–12). Über jeder Phase ein Haupt-Titel: "Foundation-Setup", "Framework-Activation", "Strategy-Expansion", "Consolidation und Year-2-Planning". Unter jedem Monat die wichtigsten Milestones als Mini-Icons (Wallet-Icon für Monat 1, Chart-Icon für Monat 2, DD-Icon für Monat 3, etc.). Zwischen den Phasen klare Phase-Gate-Markierungen mit Checkliste-Icons. Am Ende der Timeline ein Pfeil nach rechts mit Label "Year 2 und beyond — langfristige Praxis".
 
-**Visual 2: Foundation-Setup Wallet-Architektur**
+**[Slide 2] — Foundation-Setup Wallet-Architektur**
 
 Vier Boxen nebeneinander, jeweils für eine Wallet-Kategorie. Box 1 "Hot Wallet" (gelb): Browser-Extension-Icon, "5–10 % des Portfolios", "Kleinere aktive Positionen, Experimente". Box 2 "Main Hardware Wallet" (grün): Hardware-Device-Icon, "Bucket 1 und 2 Haupt-Positionen", "Hoch-Security". Box 3 "Cold Storage" (blau): Safe-Icon, "Langfristige ETH/BTC außerhalb DeFi", "Offline, nicht DeFi-vernetzt". Box 4 "Ops Wallet" (lila, optional): Community-Icon, "Community-Aktivitäten, NFTs, Experimente, die separate von Haupt-Wallet sein sollen". Unter den Boxen: "Segmentierung schützt gegen Compromise-Propagation und ermöglicht klare mentale Kategorisierung."
 
-**Visual 3: Das DeFi-Journal-Struktur-Template**
+**[Slide 3] — Das DeFi-Journal-Struktur-Template**
 
 Sechs Sections als vertikale Boxen. Section 1 "Portfolio Overview" (grün): "Aktuelle Allocations, Target Allocations, Performance-Tracking". Section 2 "Position-Logs" (blau): "Pro Position: Entry-Rationale, Monitoring-Notes, Exit-Entscheidungen". Section 3 "Due Diligence Archive" (orange): "Alle DD-Dokumente aus Modulen 16 und 17". Section 4 "Decision-Journal" (gelb): "Chronologische Dokumentation wichtiger Entscheidungen mit Rationale". Section 5 "Monthly Reviews" (rot): "Strukturierte monatliche Reviews mit Template". Section 6 "Strategy Evolution" (violett): "Dokumentation von Änderungen in übergreifender Strategie über Zeit". Am unteren Rand: "Das Journal ist nicht ein Buch, sondern ein lebendes Dokumentations-System."
 
-**Visual 4: Phase 2 Neue-Position-Evaluation-Prozess Flow**
+**[Slide 4] — Phase 2 Neue-Position-Evaluation-Prozess Flow**
 
 Fünf nummerierte Boxen als Flowchart. Box 1 "Initial-Filter" (30 Min): "Min. 12 Monate aktiv, mehrere Audits, keine kritischen Incidents". Pfeil nach unten mit "Pass". Box 2 "Six-Dimension-DD" (3–6 h): "Volle DD-Analyse nach Modul 16 Framework". Pfeil nach unten. Box 3 "Portfolio-Fit-Analyse" (1–2 h): "Welche Bucket-Kategorie? Composability-Interaktionen?". Pfeil nach unten. Box 4 "Decision und Size" (1 h): "Explizite Entscheidung mit Rationale und Target-Size". Pfeil nach unten. Box 5 "Post-Entry-Monitoring-Plan" (30 Min): "Wie wird die Position überwacht?". Am Ende ein Hinweis-Icon: "Bei jedem Schritt kann der Prozess abgebrochen werden. Ablehnung ist gleich wertvoll wie Annahme."
 
-**Visual 5: Phase 3 Sophistication-Readiness-Check Decision Tree**
+**[Slide 5] — Phase 3 Sophistication-Readiness-Check Decision Tree**
 
 Entscheidungs-Baum. Start: "Soll ich sophisticated Strategies einführen?". Sechs Entscheidungs-Knoten, jeder mit ja/nein-Verzweigung: Knoten 1 "Portfolio 100k+?" → nein: STOP, bleibe bei simple. Knoten 2 "Min 5 Std/Woche verfügbar?" → nein: STOP. Knoten 3 "Kognitive Kapazität für mehrere komplexe Positionen?" → nein: STOP. Knoten 4 "DD-Disziplin bewiesen in 6+ Monaten?" → nein: STOP (erstmal DD-Praxis verbessern). Knoten 5 "Emotional Stability in Stress gezeigt?" → nein: STOP. Knoten 6 "Min 1 voller Markt-Zyklus erlebt?" → nein: WARTEN bis Jahr 2+. Alle ja: "Dann EINE sophisticated Strategy, nicht mehrere gleichzeitig." Am Ende: "Wenn irgend einer der sechs ein 'nein' ist, ist die ehrliche Antwort 'noch nicht'."
 
-**Visual 6: Phase 4 Year-1-zu-Year-2-Transition**
+**[Slide 6] — Phase 4 Year-1-zu-Year-2-Transition**
 
 Zwei Rundblick-Boxen nebeneinander. Linke Box "Year 1 Reflection" (blau): Bulletpoints mit "Performance-Analyse", "Qualitative Reflexion", "Entscheidungs-Kalibrierung", "Emotional Kalibrierung", "Framework-Internalisierung". Pfeil nach rechts: "Transition und Learnings-Integration". Rechte Box "Year 2 Plan" (grün): Bulletpoints mit "Portfolio-Ziel Ende Year 2", "Strategie-Evolution", "Time-Commitment-Plan", "Lernens-Ziele", "Milestones". Unter beiden Boxen: "Das Ende von Year 1 ist nicht das Ende der Academy — es ist der Übergang zur selbst-geführten langfristigen Praxis."
 
-**Visual 7: Fünf Verhaltensweisen erfolgreicher DeFi-Teilnehmer**
+**[Slide 7] — Fünf Verhaltensweisen erfolgreicher DeFi-Teilnehmer**
 
 Fünf Icon-Karten. Karte 1 "Disziplin über Expertise" (Icon: Checkliste mit Haken): "Konsequenz in Routine ist wichtiger als höchste Intelligenz". Karte 2 "Humility über Sophistication" (Icon: offene Hände): "Limits des eigenen Wissens erkennen und danach handeln". Karte 3 "Long-Term-Perspektive" (Icon: Teleskop): "Denken in Jahren und Markt-Zyklen, nicht in Wochen". Karte 4 "Journaling und Reflexion" (Icon: Notizbuch und Stift): "Dokumentation ermöglicht Kalibrierung über Zeit". Karte 5 "Balance" (Icon: Waage): "DeFi als wichtiger Teil des Lebens, nicht als ganzes Leben". Über den Karten: "Diese fünf Verhaltensweisen differenzieren erfolgreiche von nicht-erfolgreichen Teilnehmern über 3–5 Jahre — nicht technische Sophistication, sondern menschliche Qualitäten."
 
@@ -4429,7 +4390,7 @@ Es ist leichter, Disziplin aufrechtzuerhalten, als sie wiederherzustellen. Eine 
 
 **Die Integration dieser Erfahrung:**
 
-Wenn du diese Situation erfolgreich navigierst, wird sie zu einer der wertvollsten Lerndungs-Erfahrungen deines ersten Jahres. Dokumentiere sie ausführlich in deinem Journal, weil:
+Wenn du diese Situation erfolgreich navigierst, wird sie zu einer der wertvollsten Lernerfahrungen deines ersten Jahres. Dokumentiere sie ausführlich in deinem Journal, weil:
 
 - Du wirst in Year 2, 3, 4 ähnliche Versuchungen haben
 - Die Lernen aus dieser Erfahrung werden dich immun machen gegen die gleiche Erosion
@@ -4454,8 +4415,8 @@ Und die innere Haltung: "Good-Times sind nicht eine Entschuldigung für Diszipli
 
 Für die automatisierte Video-Produktion dieser Lektion werden folgende Assets erzeugt:
 
-- `slides_prompt.txt` — 8 Folien: Titel → Warum 12-Monats-Plan → Quartal 1 Foundation-Setup → Quartal 2 Framework-Activation → Quartal 3 Strategy-Expansion → Quartal 4 Consolidation → Academy-Gesamt-Reflexion → Langfrist-Perspektive 5+ Jahre
-- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 14–16 Min.)
+- `slides_prompt.txt` — 7 Folien: Titel → 4 Phasen-Übersicht → Phase 1 Foundation-Setup → Phase 2 Framework-Activation → Phase 3 Strategy-Expansion → Phase 4 Consolidation und Year-2 → Academy-Frameworks und Langfrist-Perspektive
+- `voice_script.txt` — *Sprechertext* (120–140 WPM, Zielvideo 8–10 Min.)
 - `visual_plan.json` — 12-Monats-Roadmap-Gantt, Quartals-Milestones-Diagramm, Academy-Integrations-Framework, Langzeit-Kompetenz-Entwicklungs-Pfad, Academy-Abschluss-Visual
 
 Pipeline: Gamma → ElevenLabs → CapCut.
@@ -5119,7 +5080,7 @@ Das ist die Academy-Antwort. Das ist der Weg.
 
 ## Zusammenfassung von Modul 17
 
-Dieses Modul hat die finalen Bausteine der DeFi Academy gelegt: die strukturelle Integration aller bisherigen Lernerfahrungen in ein konkretes Portfolio-Framework, eine klare Orientierung in der Real-World-Asset-Landschaft, die Unterscheidung zwischen Institutional- und Retail-DeFi, der disziplinierte Umgang mit sophisticated Strategies, und schließlich der 12-Monats-Action-Plan als praktische Brücke vom Lernen zum langfristigen Anwenden.
+Dieses Modul hat die finalen Bausteine der DeFi Akademie gelegt: die strukturelle Integration aller bisherigen Lernerfahrungen in ein konkretes Portfolio-Framework, eine klare Orientierung in der Real-World-Asset-Landschaft, die Unterscheidung zwischen Institutional- und Retail-DeFi, der disziplinierte Umgang mit sophisticated Strategies, und schließlich der 12-Monats-Action-Plan als praktische Brücke vom Lernen zum langfristigen Anwenden.
 
 Die sechs Lektionen bauten systematisch aufeinander auf. Die Portfolio-Konstruktion mit dem 4-Bucket-Framework etablierte die Grundstruktur, in der alle nachfolgenden Elemente eingeordnet werden können. Die RWA-Landschaft wurde nicht als Hype-Thema behandelt, sondern als strukturelle Entwicklung mit spezifischen Integrationsmöglichkeiten — jeweils begleitet von klaren Risiko-Klassen und Szenario-Analysen. Die Betrachtung von Institutional DeFi machte deutlich, warum bestimmte Trends für Retail-Teilnehmer relevant sind, ohne in Nachahmungs-Fallen zu geraten. Die sophisticated Strategies wurden transparent dargestellt: wer bereit ist, wer nicht, welche Kriterien entscheidend sind, welche Behavioral Risks überwunden werden müssen.
 
@@ -5129,9 +5090,210 @@ Zusammen genommen markiert dieses Modul den Übergang vom Academy-Schüler zum s
 
 ---
 
-## Abschluss der DeFi Academy
+## Teil II — Der Werkzeugkasten: Composability-Integration, Portfolio-Beispiel, Risk Management, Lifecycle, Template
 
-Mit diesem Modul endet die DeFi Academy in ihrer aktuellen Form. Siebzehn Module, verteilt über mehrere hundert Stunden Lernmaterial, haben den Weg vom ersten Kontakt mit DeFi bis zur methodisch fundierten Portfolio-Führung gezeichnet. Dieser Abschluss ist kein Ende, sondern ein Übergang — vom strukturierten Lernen zum eigenständigen, langfristigen Anwenden.
+Die bisherigen Lektionen haben die konzeptuellen und strategischen Grundlagen gelegt. Dieser abschließende Teil überführt das Wissen in sofort anwendbare Werkzeuge für die praktische Portfolio-Führung.
+
+---
+
+### Die Verbindung zu Modul 16: Composability-Framework in der Portfolio-Praxis
+
+Jede einzelne Position in deinem Portfolio muss das 6-Dimensionen-Framework aus Modul 16 durchlaufen haben, bevor sie einen Platz bekommt. Die vier Portfolio-Layer aus der Einleitung geben die **strategische Rolle** vor; das Composability-Framework aus Modul 16 entscheidet über die **taktische Zuweisung**. Diese beiden Sichten zusammen bestimmen, in welchem Layer eine Position landet und in welcher Größe.
+
+**Die Logik der Layer-Zuweisung nach Composability-Komplexität:**
+
+- Eine Position mit **0–1 Layern und wenigen Infrastruktur-Dependencies** (z.B. direkt gehaltenes ETH, stETH als reines Holding ohne Collateral-Nutzung, Stablecoin-Lending bei Aave V3 mit konservativem Setup) → gehört typischerweise in den **Core Allocation Layer**. Das Composability-Risiko ist niedrig, die Position kann größer dimensioniert werden (10–25 % des Portfolios möglich).
+
+- Eine Position mit **2–3 Layern und moderaten Dependencies** (z.B. Curve Stablecoin LP mit Convex-Boost, Morpho-Isolated-Märkte, Yearn-Stable-Vaults) → gehört in den **Yield Layer**. Composability-Risiko ist moderat, typische Position-Size 5–10 % des Portfolios.
+
+- Eine Position mit **3–5 Layern und signifikanten Dependencies** (z.B. stETH-Aave-Leverage-Loop, Pendle-Fixed-Yield auf sUSDe, Cross-Chain-Position auf Arbitrum) → gehört in den **Risk Layer**. Das Composability-Beispiel aus Modul 16 (Aave + stETH + Chainlink + Arbitrum) ist ein prototypisches Risk-Layer-Asset: mehrere Composability-Schichten, mehrere gleichzeitige Dependencies (Chainlink, Lido, L2-Bridge), aktives Monitoring erforderlich. Position-Size typisch 2–5 %.
+
+- Eine Position mit **unbekannten oder sich dynamisch verändernden Dependencies** (neue Protokolle, experimentelle Mechanismen) → gehört in den **Experimental Layer**, unabhängig von der nominellen Composability-Tiefe. Position-Size typisch unter 2 %.
+
+**Beispiel der konkreten Anwendung:** „Aave + stETH + Chainlink + Arbitrum" — die Fallstudie aus Modul 16 — läuft durch das 6-Dimensionen-Framework mit moderatem bis hohem Gesamt-Risiko (hohes Dependency-Risk, moderates Liquidity-Risk auf L2, moderates Oracle-Risk). Die Position gehört damit eindeutig in den **Risk Layer**. Die richtige Größe ergibt sich aus der Dependency-Analyse: da Chainlink und stETH bereits in anderen Portfolio-Positionen vorkommen, wird die Gesamt-Exposure auf diese Abhängigkeiten gebündelt bewertet — die individuelle Position bekommt entsprechend 3–5 % des Portfolios, nicht 10 %. Wer das Composability-Framework nicht anwendet, stapelt unbewusst Dependency-Exposure und landet bei effektiven Konzentrationen, die das Portfolio an einem einzigen Point-of-Failure verletzbar machen.
+
+---
+
+### Konkretes Portfolio-Beispiel: Engagiertes mittleres Portfolio (50.000 USD)
+
+Ein realistisches Beispiel für ein mittleres, engagiert geführtes Portfolio mit 50.000 USD Gesamtvolumen. Die Allokation ist nicht als Empfehlung gemeint, sondern als Illustration der Framework-Anwendung. Sie zeigt, wie die vier Layer konkret ausgefüllt werden können.
+
+**Core Allocation — 60 % (30.000 USD)**
+
+| Position | Größe | Begründung |
+|----------|-------|------------|
+| ETH (direkt gehalten, in Cold-Storage) | 30 % (15.000 USD) | Blue-Chip-Exposure auf das dominante DeFi-Asset; Selbst-Custody; keine Protokoll-Dependencies |
+| stETH bei Lido (direkt gehalten) | 15 % (7.500 USD) | ETH-Exposure plus Staking-Yield (~3,5 % p.a.); etabliertes LST mit mehrjährigem Track Record |
+| USDC in Aave V3 Lending (Mainnet) | 15 % (7.500 USD) | Stabile Basis-Rendite (~4–5 % p.a.); etabliertestes DeFi-Lending-Protokoll; konservativer Layer |
+
+Der Core deckt 60 % ab und erfüllt seine Kapitalerhalt-Funktion. Monitoring-Aufwand: minimal (monatlicher Check).
+
+**Yield Layer — 25 % (12.500 USD)**
+
+| Position | Größe | Begründung |
+|----------|-------|------------|
+| Curve-3pool-LP (USDC/USDT/DAI) | 10 % (5.000 USD) | Moderate Zusatzrendite auf Stablecoin-Exposure; etablierter Pool; 2 Layer Composability |
+| Morpho-Curated-Vault (Stablecoin) | 10 % (5.000 USD) | Kuratierte Lending-Märkte mit Yield-Aufschlag; auditiert; moderate Dependency-Komplexität |
+| rETH bei Rocket Pool (LST-Diversifikation) | 5 % (2.500 USD) | Diversifikation gegenüber stETH; dezentralere Validator-Set |
+
+Monitoring-Aufwand: wöchentlicher Check von Peg-Stabilität, APY-Entwicklung, und Pool-Liquidität.
+
+**Risk Layer — 12 % (6.000 USD)**
+
+| Position | Größe | Begründung |
+|----------|-------|------------|
+| stETH-Aave-Leverage-Loop, HF 1,8 | 5 % (2.500 USD) | Moderates Leverage mit konservativem Health Factor; Risk-Layer-typisch |
+| Pendle Fixed-Yield auf sUSDe (3 Monate Laufzeit) | 4 % (2.000 USD) | Yield-Trading mit festem Zinssatz; mehrere Composability-Layer |
+| Convex-Staking auf Curve-LP-Tokens | 3 % (1.500 USD) | veTokenomics-Play auf bestehende Curve-Position; Boost-Yield |
+
+Monitoring-Aufwand: mehrmals wöchentlich Health-Factor-Check, Peg-Monitoring, pre-committed Exit-Trigger sind dokumentiert.
+
+**Experimental Layer — 3 % (1.500 USD)**
+
+| Position | Größe | Begründung |
+|----------|-------|------------|
+| Neuer LRT (EigenLayer-basierend) | 2 % (1.000 USD) | Exploration einer neuen Asset-Klasse; voller Verlust akzeptiert |
+| Neues Yield-Aggregator-Protokoll (< 12 Monate alt) | 1 % (500 USD) | Lern-Position; strukturell volatil |
+
+**Aggregierte Kennzahlen des Portfolios:**
+- Erwartete Brutto-Rendite: rund 5–7 % p.a. (Core) + 8–10 % auf Yield-Layer + 12–18 % auf Risk-Layer + unsicher auf Experimental = **gewichtete erwartete Rendite etwa 6–8 % p.a.**
+- Maximum Drawdown-Szenario (stETH-Depeg + Oracle-Event + Leverage-Liquidation): rund **8–12 % des Portfolios** im Worst Case, nicht 50 %, weil die Layer-Disziplin große Einzelverluste strukturell ausschließt.
+- Dependency-Konzentration: Chainlink erscheint in 5 von 11 Positionen, stETH-Variante in 3 von 11 — beide sind bewusst akzeptiert und mit Mitigations-Plänen (Stable-Core, sofortige Liquidations-Bereitschaft) versehen.
+
+---
+
+### Risk Management Framework
+
+**Maximale Positionsgröße pro Einzel-Asset:**
+
+- Core-Layer-Assets (ETH, BTC): bis **25 %** pro Asset akzeptabel
+- Core-Layer-Protokolle (Aave, Lido): bis **15 %** pro Protokoll
+- Yield-Layer-Positionen: maximal **10 %** pro Position
+- Risk-Layer-Positionen: maximal **5 %** pro Position
+- Experimental-Layer-Positionen: maximal **2 %** pro Position
+
+Diese Grenzen sind nicht verhandelbar. Wer sie im Einzelfall überschreitet — „diesmal ist es wirklich anders" — hat erfahrungsgemäß in 80–90 % der Fälle später Gründe, es zu bereuen.
+
+**Risk Budget — das Gesamt-Verlust-Szenario:**
+
+Ein durchdachtes Portfolio definiert explizit, wie viel Verlust im Worst Case akzeptabel ist. Die Disziplin: Das Portfolio wird so konstruiert, dass auch das worst-case-realistische Szenario (gleichzeitiges Versagen von zwei bis drei der größten Einzelpositionen, plus eines systemweiten Events) keinen Portfolio-Verlust über **20–25 %** erzeugt. Wenn die Rechnung zeigt, dass ein Worst-Case 40 % Verlust bedeuten würde, ist das Portfolio zu risikoreich strukturiert und muss auf mehr Core-Anteil umgeschichtet werden.
+
+**Layer-basierte Risiko-Verteilung — die 10er-Regel:**
+
+Als Merkhilfe: Der erwartete Maximum Loss pro Layer sollte ungefähr gleichmäßig verteilt sein. Wenn Core 60 % des Portfolios ausmacht und bei schweren Crashes 15 % Verlust erwartet werden kann, tragen Core zu 9 %-Punkten bei. Yield Layer (25 %) bei 30 % Stress-Loss trägt weitere 7,5 %-Punkte bei. Risk Layer (12 %) bei 50 % Stress-Loss trägt 6 %-Punkte bei. Experimental Layer (3 %) bei 100 % Loss trägt 3 %-Punkte bei. Gesamtes Stress-Szenario: ungefähr 25 % Portfolio-Drawdown. Wenn einer dieser Beiträge dominiert (z.B. Risk Layer trägt 15 %-Punkte wegen Überkonzentration), ist das Portfolio strukturell unausgewogen.
+
+---
+
+### Portfolio Lifecycle — die vier Phasen jeder Position
+
+Jede Position durchläuft vier distincte Phasen. Die meisten DeFi-Teilnehmer konzentrieren sich stark auf Entry und unterschätzen die Folgephasen dramatisch — das ist einer der größten strukturellen Fehler in der Retail-Praxis.
+
+**Phase 1 — Entry.**
+
+Der Einstieg erfolgt nach der vollständigen 6-Dimensions-Analyse (Modul 16-Framework), der Layer-Zuweisung (Portfolio-Framework) und der Definition der Position-Größe. Bevor eine Transaktion ausgeführt wird: Das Protocol Analysis Template (Modul 16) und das Portfolio Template (unten) sind ausgefüllt. Der Entry passiert nicht aus einem impulsiven Moment heraus, sondern als dokumentierter Schritt mit explizitem Kontext: Warum diese Position? Warum jetzt? Warum diese Größe? Warum in diesem Layer?
+
+**Phase 2 — Monitoring.**
+
+Die Überwachungs-Frequenz hängt vom Layer ab: Core monatlich, Yield wöchentlich, Risk mehrmals wöchentlich oder bei definierten Events, Experimental täglich in der Anfangsphase. Was wird geprüft? Der aktuelle USD-Wert im Vergleich zur letzten Prüfung, die Gesundheit der zugrundeliegenden Protokolle (TVL-Trend, Fee-Einnahmen, Social Signals), kritische Parameter wie Health Factor oder Peg-Stabilität, und neue Informationen über Dependencies (Oracle-Updates, Governance-Proposals, Regulatory-News). Das Monitoring ist kein passives Beobachten, sondern eine strukturierte Routine.
+
+**Phase 3 — Rebalance.**
+
+Periodische Rebalancing-Punkte (typisch vierteljährlich oder bei größeren Markt-Bewegungen) bringen das Portfolio zurück zu den Ziel-Allokationen. Wenn Core durch ETH-Rally auf 75 % gestiegen ist statt 60 %, wird ein Teil in Yield oder Stable umgeschichtet. Wenn Experimental sich verdoppelt hat, wird der Gewinn-Anteil in Core verlagert. Rebalancing ist struktureller Gewinn-Mitnahme-Mechanismus, nicht emotionale Reaktion auf Marktbewegungen. Explizite Rebalancing-Regeln (z.B. „wenn ein Layer um mehr als 15 Prozentpunkte von der Ziel-Allokation abweicht, rebalancen") entfernen Emotionen aus diesem Prozess.
+
+**Phase 4 — Exit.**
+
+Der Ausstieg erfolgt entweder nach Zielerreichung (geplanter Ausstieg bei erreichtem Renditeziel), nach Trigger-Auslösung (pre-committed Soft- oder Hard-Trigger aktiviert), oder nach strukturellem Invaliditäts-Urteil (die ursprüngliche Analyse ist durch neue Informationen obsolet geworden). Der Exit wird dokumentiert: was war der Trigger, wie wurde reagiert, was ist die Post-Mortem-Erkenntnis. Diese Dokumentation ist die Quelle zukünftiger Verbesserung — ohne sie wiederholen sich dieselben Fehlermuster über Jahre hinweg.
+
+---
+
+### Praktisches Portfolio-Template
+
+Das folgende Template ist die operative Form des Portfolio-Managements. Kopiere es, nutze es als Spreadsheet oder Markdown-Datei, und aktualisiere es monatlich. Die Disziplin, dieses Template zu führen, ist eine der effektivsten Techniken, emotionale Entscheidungen im DeFi-Alltag zu vermeiden.
+
+```
+═══════════════════════════════════════════════════════════
+PORTFOLIO TRACKER TEMPLATE
+═══════════════════════════════════════════════════════════
+
+Gesamt-Portfolio-Wert (USD):      ________________
+Stichtag:                         ________________
+Ziel-Allokation (Core/Yield/Risk/Exp): __/__/__/__ %
+Aktuelle Allokation:              __/__/__/__ %
+Abweichung > 15%-Punkte?          [ ] Ja  [ ] Nein  → Rebalance nötig
+
+───────────────────────────────────────────────────────────
+POSITIONS-LISTE
+───────────────────────────────────────────────────────────
+
+┌────┬──────────────┬───────┬────────┬──────────────┬───────┬──────────────┐
+│ #  │ Asset        │ Layer │ Größe  │ Dependencies │ Risk  │ Exit-Trigger │
+│    │              │       │ (%/USD)│              │ Level │              │
+├────┼──────────────┼───────┼────────┼──────────────┼───────┼──────────────┤
+│ 1  │              │       │        │              │       │              │
+│ 2  │              │       │        │              │       │              │
+│ 3  │              │       │        │              │       │              │
+│ 4  │              │       │        │              │       │              │
+│ 5  │              │       │        │              │       │              │
+│ 6  │              │       │        │              │       │              │
+│ 7  │              │       │        │              │       │              │
+│ 8  │              │       │        │              │       │              │
+│ 9  │              │       │        │              │       │              │
+│10  │              │       │        │              │       │              │
+└────┴──────────────┴───────┴────────┴──────────────┴───────┴──────────────┘
+
+Legende:
+  Layer:        Core / Yield / Risk / Experimental
+  Dependencies: Oracle-Quelle(n), Stablecoin-Exposure, Bridge, LST-Exposure
+  Risk Level:   Niedrig / Moderat / Hoch
+  Exit-Trigger: Konkrete Bedingungen für Soft-/Hard-Exit
+
+───────────────────────────────────────────────────────────
+AGGREGIERTE DEPENDENCY-ANALYSE
+───────────────────────────────────────────────────────────
+Chainlink-Exposure (%):           ________________
+USDC-Exposure (%):                ________________
+stETH/LST-Exposure (%):           ________________
+L2-Bridge-Exposure (%):           ________________
+Top-3 Konzentrations-Risiken:     ________________
+
+───────────────────────────────────────────────────────────
+MONATLICHES REVIEW
+───────────────────────────────────────────────────────────
+Änderungen seit letztem Monat:    ________________
+Lessons Learned:                  ________________
+Anpassungen für nächsten Monat:   ________________
+Nächste Rebalancing-Prüfung:      ________________
+
+═══════════════════════════════════════════════════════════
+```
+
+Die Disziplin ist wichtig: monatliches Ausfüllen, nicht spontan. Die Struktur ist wichtig: die Felder zwingen zu Klarheit in Aspekten, die man ohne Template leicht übersieht (aggregierte Dependency-Analyse, Exit-Trigger-Dokumentation).
+
+---
+
+### Was du nach diesem Modul kannst
+
+Nach Abschluss dieses Moduls verfügst du über die konkreten Fähigkeiten, die für eigenständige DeFi-Portfolio-Führung erforderlich sind:
+
+1. **Ein vollständiges 4-Layer-Portfolio konstruieren** — du kannst Assets gemäß Core, Yield, Risk und Experimental klassifizieren, Ziel-Allokationen definieren und konkrete Positionen in diesen Rahmen einordnen.
+
+2. **Die Verbindung zwischen Composability-Risk und Portfolio-Strategie herstellen** — du nutzt das 6-Dimensionen-Framework aus Modul 16, um jede Position systematisch zu bewerten, und leitest daraus die Layer-Zuweisung und Position-Größe ab.
+
+3. **Ein komplettes Portfolio-Beispiel nachvollziehen und auf die eigene Situation anpassen** — du verstehst, warum eine 50.000-USD-Allokation die gezeigte Struktur hat, und kannst sie auf dein eigenes Portfolio-Volumen (5.000 bis 500.000 USD) skalieren.
+
+4. **Risk Management strukturell betreiben** — du definierst maximale Positionsgrößen pro Asset, ein explizites Risk Budget für das Gesamtportfolio, und layerbasierte Risiko-Verteilung, die Worst-Case-Szenarien auf akzeptable Niveaus begrenzt.
+
+5. **Den Portfolio-Lifecycle diszipliniert durchlaufen** — du trennst Entry, Monitoring, Rebalance und Exit als distincte Phasen, dokumentierst sie und behandelst sie mit der jeweils angemessenen Aufmerksamkeit.
+
+6. **Ein praktisches Portfolio-Tracking-System führen** — du nutzt das Template regelmäßig, trackst Positionen und Dependencies strukturiert, und generierst dir selbst die Daten-Basis für monatliche Review-Entscheidungen.
+
+Diese sechs Fähigkeiten sind das Fundament, auf dem die disziplinierte mehrjährige DeFi-Praxis aufbaut. Die Module der Academy haben die Werkzeuge geliefert; diese abschließenden Werkzeuge — Layer-Framework, Template, Lifecycle-Modell — sind die Form, in der diese Werkzeuge im Alltag angewendet werden. Wer sie konsequent nutzt, hat die entscheidende strukturelle Basis für langfristigen DeFi-Erfolg.
+
+---
+
+## Abschluss der DeFi Akademie
+
+Mit diesem Modul endet die DeFi Akademie in ihrer aktuellen Form. Siebzehn Module, verteilt über mehrere hundert Stunden Lernmaterial, haben den Weg vom ersten Kontakt mit DeFi bis zur methodisch fundierten Portfolio-Führung gezeichnet. Dieser Abschluss ist kein Ende, sondern ein Übergang — vom strukturierten Lernen zum eigenständigen, langfristigen Anwenden.
 
 ### Der Weg, den diese Academy zeichnete
 
@@ -5237,6 +5399,6 @@ Das ist der Weg.
 
 ---
 
-*Ende der DeFi Academy — Modul 17*
+*Ende der DeFi Akademie — Modul 17*
 
-*Ende der DeFi Academy*
+*Ende der DeFi Akademie*

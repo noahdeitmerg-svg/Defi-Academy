@@ -415,7 +415,8 @@ function buildGammaInputText(promptText) {
     return `${custom}\n\n---\n\n${promptText}`;
   }
   const builtIn = [
-    'Each numbered line in the file = one page = one image only (no slide layout, no paragraphs on canvas).',
+    'DeFi Academy Brand 2.0: every page must use the locked hex palette at the top of the following brief (navy base, gold accent; red only for explicit risk motifs).',
+    'Each numbered line in the file = one page = one full-bleed illustration only (no slide layout, no paragraphs on canvas).',
     '',
   ].join('\n');
   return `${builtIn}${promptText}`;
@@ -588,7 +589,8 @@ const HANDOFF_README = [
   '## Empfohlener Weg — Einzel-Visuals',
   '',
   '1. Oeffne slides_prompt.txt aus diesem Ordner in https://gamma.app/',
-  '   (oder einem anderen AI-Bildgenerator).',
+  '   (Midjourney, DALL·E, …). Tipp: `npm run export:image-prompts`',
+  '   erzeugt pro Frame eigene Copy-Paste-Dateien unter exports/image-tool-prompts/.',
   '2. Erzeuge pro Slide EIN Einzel-Visual (Diagramm/Illustration/',
   '   Chart, 16:9 oder 1:1, transparent oder dunkler Hintergrund).',
   '3. KEINE Slide-Titel, KEINE Bullets, KEINE Branding-Chrome auf',

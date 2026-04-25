@@ -24,9 +24,12 @@ Daraus folgen zwei harte Verbote:
    Gamma-Export-PDF-Slicing in `slide01.png` … `slide07.png` als
    Slide-Frames. Wer ein Gamma-Deck exportiert, benutzt es hoechstens
    als Ideenskizze — **nie** als Pipeline-Input.
-2. **Gamma setzt keine Marken-Entscheidungen.** Farben, Fonts, Spacing,
-   Layout-Ratios werden ausschliesslich in
-   `video-style-engine/theme.json` gepflegt.
+2. **Gamma setzt kein Slide-Chrome** (keine Titelzeile, keine Bullets,
+   kein Footer). Fonts, Spacing und Layout-Ratios des fertigen Frames
+   kommen aus `video-style-engine/theme.json` + `slide-template.jsx`.
+   **Farben der Einzelbilder** (Diagramme/Illustrationen) werden in
+   `slides_prompt.txt` an `video-style-engine/brand/colors.json`
+   gebunden, damit Visuals nahtlos unter das Remotion-Layout passen.
 
 ---
 
@@ -89,9 +92,11 @@ Lesson-Asset-Generator
 
 ## 3. Was `slides_prompt.txt` Gamma (oder andere Generatoren) sagt
 
-`generate-slides-prompt.js` schreibt einen **Micro-Brief**: wenige
-globale Regeln, dann **eine nummerierte Zeile pro Seite** — jeweils ein
-kurzer englischer Imperativ („Generate one image: …“). Keine
+`generate-slides-prompt.js` schreibt einen **Micro-Brief**: globale Regeln
+inkl. **Brand-2.0-Farblock** (Hex-Werte werden aus
+`video-style-engine/brand/colors.json` eingelesen — dieselbe Quelle wie
+Videos/Slides im Renderer), dann **eine nummerierte Zeile pro Seite** —
+jeweils ein kurzer englischer Imperativ („Generate one image: …“). Keine
 Lektionsabsaetze, keine Markdown-Kontextbloecke; inhaltliche Details
 stehen in `lessons/*.md`, die Zeilen leiten aus **Slide-Titel + Section**
 nur noch das Motiv ab.
@@ -100,6 +105,7 @@ Beispielstruktur:
 
 ```
 Each numbered line = one PDF page = one full-bleed image.
+BRAND 2.0 — use ONLY these hex colors …
 …
 
 Lesson module04-lesson02 — 7 page(s), in order:
@@ -112,7 +118,11 @@ Print exactly 7 pages in this order. No extra pages.
 ```
 
 Fuer **Midjourney / DALL·E / Firefly** kann jede Zeile 1..N einzeln
-kopiert werden. Die Pipeline bleibt auf Gamma-PDF + Slice optimiert.
+kopiert werden. Praktischer: **`npm run export:image-prompts`**
+schreibt pro Lektion unter `exports/image-tool-prompts/<id>/` je eine
+Datei `visualNN-MJ.txt` (Brand-Block + eine Zeile) — siehe
+`docs/VIDEO_PRODUCTION_WORKFLOW.md` §3.3. Die Pipeline bleibt zusaetzlich
+auf Gamma-PDF + Slice optimiert, ist aber **optional**.
 
 ---
 

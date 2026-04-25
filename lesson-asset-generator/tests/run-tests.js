@@ -118,12 +118,18 @@ function run() {
   assert(vs.includes('Slide 1'), 'contains slide markers');
   console.log('    ok: ElevenLabs-compatible script with break markers');
 
-  // Step 8: slides_prompt contains 6-7 slide sections
+  // Step 8: slides_prompt — Micro-Brief + Brand-Lock aus colors.json
   console.log('\n[8] slides_prompt.txt validation');
   const sp = fs.readFileSync(path.join(lessonDir, 'slides_prompt.txt'), 'utf8');
-  const slideHeaders = sp.match(/### Slide \d+ – /g) || [];
-  assert(slideHeaders.length >= 6 && slideHeaders.length <= 7, `slide headers 6-7, got ${slideHeaders.length}`);
-  console.log(`    ok: ${slideHeaders.length} slide sections found`);
+  assert(sp.includes('BRAND 2.0'), 'slides_prompt contains brand lock');
+  assert(sp.includes('#0B1F3B') && sp.includes('#F5B841'), 'slides_prompt locks core brand hex');
+  const numbered = sp.match(/^\d+\./gm) || [];
+  assert(
+    numbered.length >= 6 && numbered.length <= 7,
+    `numbered slide lines 6-7, got ${numbered.length}`
+  );
+  assert(/Print exactly \d+ pages/m.test(sp), 'slides_prompt footer with page count');
+  console.log(`    ok: brand lock + ${numbered.length} numbered lines`);
 
   console.log('\n' + '─'.repeat(60));
   console.log('✅ All tests passed.');
