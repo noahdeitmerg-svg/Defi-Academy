@@ -7,7 +7,7 @@ Fünf Fragen zum integrierten Verständnis von Modul 7.
 <details>
 <summary>Antwort anzeigen</summary>
 
-HF ändert sich proportional. Neuer Collateral-Wert: 85% des ursprünglichen. Neue Schuld: 108% des ursprünglichen. HF = (Collateral × LT) / Schuld. Mit ursprünglichem HF = 2,0: neuer HF = 2,0 × (0,85 / 1,08) = 2,0 × 0,787 = 1,57. Der HF ist auf 1,57 gefallen — nach den konservativen Schwellen dieser Lektion ist das in der Warn-Zone zwischen 1,5 und 1,7. Aktion: entweder Schuld teilweise zurückzahlen (z.B. 30% der Schuld, würde HF auf etwa 2,2 anheben) oder Collateral hinzufügen (z.B. 20% mehr Collateral, ähnlicher Effekt). Wenn Zinsen weiter akkumulieren oder Preis weiter fällt, kann HF schnell unter 1,5 fallen. Handeln, nicht warten.
+HF ändert sich proportional. Neuer Collateral-Wert: 85% des ursprünglichen. Neue Schuld: 108% des ursprünglichen. Health Factor = (Collateral Value × Liquidation Threshold) / Borrowed Value. Mit ursprünglichem HF = 2,0: neuer HF = 2,0 × (0,85 / 1,08) = 2,0 × 0,787 = 1,57. Der HF ist auf 1,57 gefallen — nach den konservativen Schwellen dieser Lektion ist das in der Warn-Zone zwischen 1,5 und 1,7. Aktion: entweder Schuld teilweise zurückzahlen (z.B. 30% der Schuld, würde HF auf etwa 2,2 anheben) oder Collateral hinzufügen (z.B. 20% mehr Collateral, ähnlicher Effekt). Wenn Zinsen weiter akkumulieren oder Preis weiter fällt, kann HF schnell unter 1,5 fallen. Handeln, nicht warten.
 </details>
 
 **Frage 2:** Erkläre, warum das Protokoll-Design mit LTV, LT und LB als drei separate Parameter mathematisch und ökonomisch sinnvoll ist.
@@ -63,7 +63,7 @@ Du hast in Modul 7 die Borrow-Seite systematisch verstanden:
 
 **Collateral-Parameter:** LTV (max. Borrow-Quote), LT (Liquidations-Grenze), LB (Liquidations-Bonus). Pro Asset unterschiedlich kalibriert nach Volatilität und Liquidität. E-Mode für hoch korrelierte Assets erlaubt bis zu 93% LTV.
 
-**Health Factor:** Die zentrale Risiko-Metrik. HF = (Collateral × LT) / Schuld. Über 1: sicher. Unter 1: liquidierbar. Konservative Zielwerte: 2,0–2,5+ für Normalpositionen. Handlungs-Schwelle bei HF unter 1,5.
+**Health Factor:** Die zentrale Risiko-Metrik. Health Factor = (Collateral Value × Liquidation Threshold) / Borrowed Value. HF > 1: Position sicher. HF = 1: Liquidation möglich. HF < 1: Liquidation wahrscheinlich. Konservative Zielwerte: 2,0–2,5+ für Normalpositionen. Handlungs-Schwelle bei HF unter 1,5.
 
 **Liquidations-Mechanik:** Automatisiert, Bot-getrieben, sekundenschnell. Close Factor 50% bei HF 0,95–1,0, 100% bei HF < 0,95 (Aave V3). Liquidations-Penalty: 5–15% des Collaterals. Transparent auf Etherscan einsehbar.
 
