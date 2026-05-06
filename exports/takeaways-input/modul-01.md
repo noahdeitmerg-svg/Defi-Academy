@@ -11,6 +11,7 @@ Anzahl Lektionen: 6
 Lektions-ID: 01-was-ist-defi
 Pfad-Schlüssel: 01-defi-grundlagen/01-was-ist-defi
 Lernziele:
+
 - Definition von DeFi verstehen
 - Unterschiede zu traditioneller Finanz
 - Grundprinzipien erkennen
@@ -86,6 +87,7 @@ Vollständige Rohdaten (für didaktischen Kontext):
 Lektions-ID: 02-lektion
 Pfad-Schlüssel: 01-defi-grundlagen/02-lektion
 Lernziele:
+
 - CeFi und TradFi von DeFi abgrenzen
 - Typische Vermittlerrollen erkennen
 
@@ -144,6 +146,7 @@ Vollständige Rohdaten (für didaktischen Kontext):
 Lektions-ID: 03-lektion
 Pfad-Schlüssel: 01-defi-grundlagen/03-lektion
 Lernziele:
+
 - Den Zweck von Smart Contracts in DeFi nennen
 - Unveränderlichkeit vs. Upgrade-Pfade einordnen
 
@@ -202,6 +205,7 @@ Vollständige Rohdaten (für didaktischen Kontext):
 Lektions-ID: 04-lektion
 Pfad-Schlüssel: 01-defi-grundlagen/04-lektion
 Lernziele:
+
 - Liquidität als Voraussetzung für DeFi-Märkte verstehen
 - AMM vs. Orderbuch grob unterscheiden
 
@@ -260,6 +264,7 @@ Vollständige Rohdaten (für didaktischen Kontext):
 Lektions-ID: 05-lektion
 Pfad-Schlüssel: 01-defi-grundlagen/05-lektion
 Lernziele:
+
 - Technische, ökonomische und Bedienfehler unterscheiden
 - Keine Einzelfall-Illusion: Systemrisiken nennen
 
@@ -318,6 +323,7 @@ Vollständige Rohdaten (für didaktischen Kontext):
 Lektions-ID: 06-lektion
 Pfad-Schlüssel: 01-defi-grundlagen/06-lektion
 Lernziele:
+
 - Checkliste vor der ersten On-Chain-Aktion
 - Testnet vs. Mainnet einordnen
 
@@ -368,4 +374,3 @@ Vollständige Rohdaten (für didaktischen Kontext):
   ]
 }
 ```
-
